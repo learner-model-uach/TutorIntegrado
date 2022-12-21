@@ -1,0 +1,80 @@
+[
+    {
+        "code": "pot2",
+        "meta": {},
+        "title":"Evaluar expresión",
+        "text": "Evalúe las siguientes expresiones:",
+        "type":"lvltutor",
+        "steps": [
+          {
+            "stepId": "0",
+            "KCs":["FactExp"],
+            "expression": "\\left(2^{-3}-2^{-5}\\right)^{-2}",
+            "stepTitle": "Adentro del paréntesis identifica el factor común y factoriza con su menor exponente.",
+            "displayResult": ["\\left(2^{-5}\\cdot\\left(2^{2}-1\\right)\\right)^{-2}"],
+            "hints": [
+              { "hintId": 0, "hint": "Factoriza los términos semejantes dentro del paréntesis." },
+              { "hintId": 1, "hint": "Identifica el termino semejante con el menor exponente y utilízalo para factorizar." },
+              { "hintId": 2, "hint": "La solución deseada para este paso es: \\left(2^{-5}\\left(2^{2}-1\\right)\\right)^{-2}" }
+            ],
+            "matchingError":[
+              {"error":["",""],"hintId":3,"hint": "algo"},
+              {"error":["","*"],"hintId":4,"hint": "algo"},
+              {"error":["*",""],"hintId":5,"hint": "algo"}
+            ],
+            "answers": [
+              { "answer": ["\\left(2^{-5}\\cdot\\left(2^2-1\\right)\\right)^{-2}"], "nextStep": "1" }
+            ],
+            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+            "correctMsg": "Has logrado factorizar y identificar el menor exponente en numeros de misma base.",
+            "summary": "1)Se identifica el -5 como el menor exponente entre los números de base 2 y luego se factoriza por la base 2 elevada a -5."
+          },
+          {
+            "stepId": "1",
+            "KCs":["MultExp","EvalExp"],
+            "expression": "\\left(2^{-5}\\cdot\\left(2^{2}-1\\right)\\right)^{-2}",
+            "stepTitle": "Resuelve el paréntesis que contiene la resta, luego multiplica los exponentes.",
+            "displayResult": ["2^{10}\\cdot3^{-2}"],
+            "hints": [
+              { "hintId": 0, "hint": "Identifica si hay operaciones realizables dentro de cada paréntesis sin evaluar exponentes que dificulten el cálculo." },
+              { "hintId": 1, "hint": "Aplica la propiedad de multiplicación de potencias en el exponente con mayor dificultad." },
+              { "hintId": 2, "hint": "La solución deseada para este paso es: 2^{10}3^{-2}" }
+            ],
+            "matchingError":[
+              {"error":["",""],"hintId":3,"hint": "algo"},
+              {"error":["","*"],"hintId":4,"hint": "algo"},
+              {"error":["*",""],"hintId":5,"hint": "algo"}
+            ],
+            "answers": [
+              { "answer": ["2^{10}\\cdot3^{-2}"], "nextStep": "2" }
+            ],
+            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+            "correctMsg": "Has multiplicado potencias correctamente.",
+            "summary": "2)Se procede a resolver cada paréntesis y luego se multiplican los exponentes de cada factor resultante por el exponente fuera del paréntesis."
+          },
+          {
+            "stepId": "2",
+            "KCs":["EvalExp","TransExpFrac"],
+            "expression": "2^{10}\\cdot3^{-2}",
+            "stepTitle": "Evalúa la expresión y expresa el resultado como una fracción.",
+            "displayResult": ["\\frac{1024}{9}"],
+            "hints": [
+              { "hintId": 0, "hint": "Expresa como un numero racional." },
+              { "hintId": 1, "hint": "Luego de expresar como un numero racional, calcula las potencias en cada termino." },
+              { "hintId": 2, "hint": "La solución deseada para este paso es: \\frac{1024}{9}" }
+            ],
+            "matchingError":[
+              {"error":["",""],"hintId":3,"hint": "algo"},
+              {"error":["","*"],"hintId":4,"hint": "algo"},
+              {"error":["*",""],"hintId":5,"hint": "algo"}
+            ],
+            "answers": [
+              { "answer": ["\\frac{1024}{9}"], "nextStep": "-1" }
+            ],
+            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+            "correctMsg": "Has logrado evaluar la expresion original.",
+            "summary": "3)Finalmente se evalúa cada factor expresando el resultado como un numero racional."
+          }
+        ]
+      }
+]

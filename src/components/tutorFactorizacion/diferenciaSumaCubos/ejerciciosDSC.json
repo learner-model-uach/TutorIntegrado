@@ -1,0 +1,173 @@
+[
+  {
+    "code": "dsc1",
+    "title": "Factorización por diferencia de cubos.",
+    "contentType": "DSC",
+    "sign": "-",
+    "level": "1",
+    "text": "Factorice la siguiente expresión",
+    "selectSteps": true,
+    "steps": [
+      {
+        "stepId": "0",
+        "expression": "x^3-y^3",
+        "stepTitle": "Identificar los términos al cubo x₁ y x₂",
+        "displayResult": "x₁ = x, \\hspace{1cm} x₂=y",
+        "KCs": [3],
+        "hints": [
+          { "hintId": 0, "hint": "Calcular raices cúbicas de cada sumando" },
+          { "hintId": 1, "hint": "Un valor al cubo a ingresar es x" },
+          { "hintId": 2, "hint": "Los cubos a ingresar son: (x)³ - (y)³" }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha ingresado el primer término al cubo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha ingresado el segundo término al cubo"
+          }
+        ],
+        "answers": [{ "answer": ["x", "y"], "nextStep": "1" }],
+        "incorrectMsg": "no se han ingresado correctamente los términos que al cubos dan como resultado la expresión",
+        "correctMsg": "Haz encontrado los términos al cubo",
+        "summary": "1) Para aplicar factorización por diferencia de cubos, se deben identificar los términos que están al cubo de la forma (x₁)³ - (x₂)³, donde: "
+      },
+      {
+        "stepId": "1",
+        "expression": "(x)^3-(y)^3",
+        "stepTitle": "Ingresar la identidad (diferencia de cubos) (x₁ - x₂)(x₁² + x₁x₂ + x₂²)",
+        "displayResult": "(x-y)(x^2+xy+y^2)",
+        "KCs": [4],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Reemplace la identidad de cubos con x₁ y x₂"
+          },
+          { "hintId": 1, "hint": "x₁ = x y x₂ = y" },
+          { "hintId": 2, "hint": "(x-y)(x²+xy+y²)" }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha ingresado x₁ - x₂"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha ingresado x₁² + x₁x₂ + x₂²"
+          }
+        ],
+        "answers": [{ "answer": ["x-y", "x^2+xy+y^2"], "nextStep": null }],
+        "incorrectMsg": "valores mal ingresados",
+        "correctMsg": "Haz encontrado la diferencia de cubos",
+        "summary": "2) Ya identificado x₁ y x₂ se puede aplicar la fórmula que permite factorizar la expresión por diferencia de cubos (x₁-x₂)(x₁²+x₁x₂+x₂²)"
+      }
+    ]
+  },
+  {
+    "code": "dsc2",
+    "title": "Factorice la siguiente expresión",
+    "contentType": "DSC",
+    "sign": "+",
+    "level": "1",
+    "text": "Factorice la siguiente expresión:",
+    "selectSteps": true,
+    "steps": [
+      {
+        "stepId": "0",
+        "expression": "8x^3+y^3",
+        "stepTitle": "Identificar términos al cubo  x₁ y x₂",
+        "displayResult": "x₁ = 2x, \\hspace{1cm} x₂=y",
+        "KCs": [3],
+        "hints": [
+          { "hintId": 0, "hint": "Calcular raices cúbicas de cada sumando" },
+          { "hintId": 1, "hint": "Un valor al cubo a ingresar es 2x" },
+          {
+            "hintId": 2,
+            "hint": "los cubos son: (2x)^3 + (y)^3, donde los valores a ingresar son x e y"
+          }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha ingresado el primer término al cubo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha ingresado el segundo término al cubo"
+          },
+          {
+            "error": ["x", "y"],
+            "hintId": 3,
+            "hint": "x₁ corresponde a la raíz cúbica del primer sumando: x₁ ≠ x"
+          }
+        ],
+        "answers": [{ "answer": ["2x", "y"], "nextStep": "1" }],
+        "incorrectMsg": "no se han ingresado correctamente los términos que al cubos dan como resultado la expresión",
+        "correctMsg": "Haz encontrado los términos al cubo",
+        "summary": "1) Para aplicar factorización por suma de cubos, se deben identificar los términos que están al cubo de la forma (x₁)³ + (x₂)³, donde: "
+      },
+      {
+        "stepId": "1",
+        "expression": "(2x)^3+(y)^3",
+        "stepTitle": "Ingresar la identidad (suma de cubos) (x₁ + x₂)(x₁² - x₁x₂ + x₂²)",
+        "displayResult": "(2x+y)(4x^2-2xy+y^2)",
+        "KCs": [4],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Reemplace la identidad de cubos con x₁ y x₂"
+          },
+          { "hintId": 1, "hint": "x₁ = x y x₂ = y" },
+          {
+            "hintId": 2,
+            "hint": "Factorización por suma de cubos: (2x+y)(4x^2-2xy+y^2)"
+          }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha ingresado x₁ + x₂"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha ingresado x₁² - x₁x₂ + x₂²"
+          }
+        ],
+        "answers": [{ "answer": ["2x+y", "4x^2-2xy+y^2"], "nextStep": null }],
+        "incorrectMsg": "Valores mal ingresados",
+        "correctMsg": "Haz encontrado la diferencia de cubos",
+        "summary": "2) Ya identificado x₁ y x₂ se puede aplicar la fórmula que permite factorizar la expresión por suma de cubos (x₁+x₂)(x₁²-x₁x₂+x₂²)"
+      }
+    ]
+  }
+]

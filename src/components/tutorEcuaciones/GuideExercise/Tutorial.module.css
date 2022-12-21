@@ -1,0 +1,30 @@
+.Button {
+  background-color: #f04;
+  color: #fff;
+  padding: 1.1rem;
+}
+.TooltipBody {
+  background-color: #fff;
+  min-width: 290px;
+  max-width: 420px;
+  position: relative;
+}
+
+.TooltipContent {
+  color: #000;
+  padding: 20px;
+}
+
+.TooltipTitle {
+  color: #f04;
+  padding: 20px;
+  margin: 0;
+}
+
+.TooltipFooter {
+  background-color: #ffccda;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding: 5px;
+}

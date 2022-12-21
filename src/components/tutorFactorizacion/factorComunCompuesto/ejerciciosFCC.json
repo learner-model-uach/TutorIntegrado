@@ -1,0 +1,343 @@
+[
+  {
+    "code": "fcc1",
+    "title": "Factor común compuesto",
+    "contentType": "FCC",
+    "KCs": [
+      { "code": "", "label": "" },
+      { "code": "", "label": "" }
+    ],
+    "level": "3",
+    "text": "Resolver el siguiente ejercicio de factorización por factor común compuesto",
+    "selectSteps": false,
+    "steps": [
+      {
+        "stepId": "0",
+        "KCs": [2],
+        "expression": "ax + bx + ay + by",
+        "stepTitle": "Agrupar los sumandos",
+        "displayResult": ["(ax + ay) + (bx + by)", "(ax + bx) + (ay + by)"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "agrupa los sumandos con los términos que se repiten"
+          },
+          { "hintId": 1, "hint": "agrupa los sumandos que contengan x" },
+          {
+            "hintId": 2,
+            "hint": "los grupos a ingresar son: (ax + ay) + (bx + by)"
+          }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha ingresado el primer grupo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha ingresado el segundo grupo"
+          }
+        ],
+        "answers": [
+          { "answer": ["ax+ay", "bx+by"], "nextStep": "1" },
+          { "answer": ["ay+ax", "bx+by"], "nextStep": "1" },
+          { "answer": ["ax+ay", "by+bx"], "nextStep": "1" },
+          { "answer": ["ay+ax", "by+bx"], "nextStep": "1" },
+          { "answer": ["ax+bx", "ay+by"], "nextStep": "2" },
+          { "answer": ["bx+ax", "ay+by"], "nextStep": "2" },
+          { "answer": ["ax+bx", "by+ay"], "nextStep": "2" },
+          { "answer": ["bx+ax", "by+ay"], "nextStep": "2" }
+        ],
+        "incorrectMsg": "no se ha agrupado correctamente la expresión",
+        "correctMsg": "Has agrupado los sumandos",
+        "summary": "1) se agrupan los sumandos que contengan factores en común en dos grupos diferentes (este ejercicio puede desarrollarse de dos formas diferentes)"
+      },
+      {
+        "stepId": "1",
+        "expression": "(ax + ay) + (bx + by)",
+        "stepTitle": "Ingresar factor común a cada grupo",
+        "displayResult": [
+          ["(a)", "(x+y)"],
+          ["(b)", "(x+y)"]
+        ],
+        "KCs": [1],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "El factor común del primer grupo es el término que se repite en ambos sumando del primer grupo"
+          },
+          { "hintId": 1, "hint": "El factor común del primer grupo es a" },
+          { "hintId": 2, "hint": "Los factores comunes a ingresar son a y b" }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha factorizado el primer grupo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha factorizado el segundo grupo"
+          }
+        ],
+        "answers": { "answer": ["a", "b"], "nextStep": "3" },
+        "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
+        "correctMsg": "Has encontrado el factor común",
+        "summary": "2) De los grupos creados en el paso anterior, se busca el factor común a cada grupo"
+      },
+      {
+        "stepId": "2",
+        "expression": "(ax + bx) + (ay + by)",
+        "stepTitle": "Ingresar factor común a cada grupo",
+        "displayResult": [
+          ["(x)", "(a+b)"],
+          ["(y)", "(a+b)"]
+        ],
+        "KCs": [1],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "El factor común del primer grupo es el término que se repite en ambos sumando del primer grupo"
+          },
+          { "hintId": 1, "hint": "El factor común del primer grupo es x" },
+          { "hintId": 2, "hint": "Los factores comunes a ingresar son x e y" }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha factorizado el primer grupo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha factorizado el segundo grupo"
+          }
+        ],
+        "answers": { "answer": ["x", "y"], "nextStep": "4" },
+        "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
+        "correctMsg": "Haz encontrado el factor común",
+        "summary": "2) De los grupos creados en el paso anterior, se busca el factor común a cada grupo"
+      },
+      {
+        "stepId": "3",
+        "expression": "a(x+y)+b(x+y)",
+        "stepTitle": "Ingresar factor común de toda la expresión",
+        "displayResult": "(a+b)",
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Ver variables que se repite en ambos sumandos"
+          },
+          { "hintId": 1, "hint": "El factor común es una suma de variables" },
+          { "hintId": 2, "hint": "El factor común de la expresión es: x + y" }
+        ],
+        "matchingError": [
+          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
+        ],
+        "answers": [{ "answer": "x+y", "nextStep": null }],
+        "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
+        "correctMsg": "Haz encontrado el factor común  compuesto",
+        "summary": "3) Finalmente se factoriza por factor común la expresión general"
+      },
+      {
+        "stepId": "4",
+        "expression": "x(a+b)+y(a+b)",
+        "stepTitle": "Ingresar factor común de toda la expresión",
+        "displayResult": "(x+y)",
+        "KCs": [1],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Ver variables que se repite en ambos sumandos"
+          },
+          { "hintId": 1, "hint": "El factor común es una suma de variables" },
+          { "hintId": 2, "hint": "El factor común de la expresión es: a + b" }
+        ],
+        "matchingError": [
+          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
+        ],
+        "answers": [{ "answer": "a+b", "nextStep": null }],
+        "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
+        "correctMsg": "Has factorizado por factor común compuesto",
+        "summary": "3) Finalmente se factoriza por factor común la expresión general"
+      }
+    ]
+  },
+  {
+    "code": "fcc2",
+    "title": "Factorización por factor común compuesto.",
+    "contentType": "FCC",
+    "level": "3",
+    "text": "Texto problema/ejercicio, planteamiento",
+    "selectSteps": true,
+    "steps": [
+      {
+        "stepId": "0",
+        "expression": "2ax + 2bx - ay + 5a - by + 5b",
+        "stepTitle": "Agrupar los sumandos",
+        "displayResult": ["(2ax - ay + 5a) + (2bx - by + 5b)"],
+        "KCs": [2],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "agrupa los sumandos que contengan 𝑎"
+          },
+          { "hintId": 1, "hint": "agrupa los sumandos con constantes iguales" },
+          {
+            "hintId": 2,
+            "hint": "los grupos son: (2𝑎𝑥 - 𝑎𝑦 + 5𝑎) + (2𝑏𝑥 - 𝑏𝑦 + 5𝑏)"
+          }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha ingresado el primer grupo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha ingresado el segundo grupo"
+          }
+        ],
+        "answers": [
+          { "answer": ["2ax-ay+5a", "2bx-by+5b"], "nextStep": "1" },
+          { "answer": ["2ax-ay+5a", "2bx+5b-by"], "nextStep": "1" },
+          { "answer": ["2ax-ay+5a", "-by+2bx+5b"], "nextStep": "1" },
+          { "answer": ["2ax-ay+5a", "-by+5b+2bx"], "nextStep": "1" },
+          { "answer": ["2ax-ay+5a", "5b+2bx-by"], "nextStep": "1" },
+          { "answer": ["2ax-ay+5a", "5b-by+2bx"], "nextStep": "1" },
+
+          { "answer": ["2ax+5a-ay", "2bx-by+5b"], "nextStep": "1" },
+          { "answer": ["2ax+5a-ay", "2bx+5b-by"], "nextStep": "1" },
+          { "answer": ["2ax+5a-ay", "-by+2bx+5b"], "nextStep": "1" },
+          { "answer": ["2ax+5a-ay", "-by+5b+2bx"], "nextStep": "1" },
+          { "answer": ["2ax+5a-ay", "5b+2bx-by"], "nextStep": "1" },
+          { "answer": ["2ax+5a-ay", "5b-by+2bx"], "nextStep": "1" },
+
+          { "answer": ["-ay+2ax+5a", "2bx-by+5b"], "nextStep": "1" },
+          { "answer": ["-ay+2ax+5a", "2bx+5b-by"], "nextStep": "1" },
+          { "answer": ["-ay+2ax+5a", "-by+2bx+5b"], "nextStep": "1" },
+          { "answer": ["-ay+2ax+5a", "-by+5b+2bx"], "nextStep": "1" },
+          { "answer": ["-ay+2ax+5a", "5b+2bx-by"], "nextStep": "1" },
+          { "answer": ["-ay+2ax+5a", "5b-by+2bx"], "nextStep": "1" },
+
+          { "answer": ["-ay+5a+2ax", "2bx-by+5b"], "nextStep": "1" },
+          { "answer": ["-ay+5a+2ax", "2bx+5b-by"], "nextStep": "1" },
+          { "answer": ["-ay+5a+2ax", "-by+2bx+5b"], "nextStep": "1" },
+          { "answer": ["-ay+5a+2ax", "-by+5b+2bx"], "nextStep": "1" },
+          { "answer": ["-ay+5a+2ax", "5b+2bx-by"], "nextStep": "1" },
+          { "answer": ["-ay+5a+2ax", "5b-by+2bx"], "nextStep": "1" },
+
+          { "answer": ["5a+2ax-ay", "2bx-by+5b"], "nextStep": "1" },
+          { "answer": ["5a+2ax-ay", "2bx+5b-by"], "nextStep": "1" },
+          { "answer": ["5a+2ax-ay", "-by+2bx+5b"], "nextStep": "1" },
+          { "answer": ["5a+2ax-ay", "-by+5b+2bx"], "nextStep": "1" },
+          { "answer": ["5a+2ax-ay", "5b+2bx-by"], "nextStep": "1" },
+          { "answer": ["5a+2ax-ay", "5b-by+2bx"], "nextStep": "1" },
+
+          { "answer": ["5a-ay+2ax", "2bx-by+5b"], "nextStep": "1" },
+          { "answer": ["5a-ay+2ax", "2bx+5b-by"], "nextStep": "1" },
+          { "answer": ["5a-ay+2ax", "-by+2bx+5b"], "nextStep": "1" },
+          { "answer": ["5a-ay+2ax", "-by+5b+2bx"], "nextStep": "1" },
+          { "answer": ["5a-ay+2ax", "5b+2bx-by"], "nextStep": "1" },
+          { "answer": ["5a-ay+2ax", "5b-by+2bx"], "nextStep": "1" }
+        ],
+        "incorrectMsg": "no se ha agrupado correctamente la expresión",
+        "correctMsg": "Haz agrupado los sumandos",
+        "summary": "1) se agrupan los sumandos que contengan factores en común en dos grupos diferentes"
+      },
+      {
+        "stepId": "1",
+        "expression": "(2ax-ay+5a) + (2bx-by+5b)",
+        "stepTitle": "Ingresar factor común a cada grupo",
+        "displayResult": [
+          ["(a)", "(2x-y+5)"],
+          ["(b)", "(2x-y+5)"]
+        ],
+        "KCs": [1],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "los grupos de sumandos son los que estan en parentesis"
+          },
+          { "hintId": 1, "hint": "hint2" },
+          { "hintId": 2, "hint": "hint3" }
+        ],
+        "matchingError": [
+          {
+            "error": ["", ""],
+            "hintId": 3,
+            "hint": "No ha ingresado respuesta"
+          },
+          {
+            "error": ["", "*"],
+            "hintId": 4,
+            "hint": "No ha factorizado el primer grupo"
+          },
+          {
+            "error": ["*", ""],
+            "hintId": 5,
+            "hint": "No ha factorizado el segundo grupo"
+          }
+        ],
+        "answers": { "answer": ["a", "b"], "nextStep": "2" },
+        "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
+        "correctMsg": "Haz encontrado el factor común",
+        "summary": "2) De los grupos creados en el paso anterior, se busca el factor común a cada grupo"
+      },
+      {
+        "stepId": "2",
+        "expression": "a(2x-y+5)+b(2x-y+5)",
+        "stepTitle": "Ingresar factor común de toda la expresión",
+        "displayResult": "(a+b)",
+        "KCs": [1],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "ver variable que se repite en ambos sumandos"
+          },
+          { "hintId": 2, "hint": "el factor común de la expresión es: x + y" }
+        ],
+        "matchingError": [
+          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
+        ],
+        "answers": [
+          { "answer": "2x-y+5", "nextStep": null },
+          { "answer": "2x+5-y", "nextStep": null },
+          { "answer": "-y+2x+5", "nextStep": null },
+          { "answer": "-y+5+2x", "nextStep": null },
+          { "answer": "5+2x-y", "nextStep": null },
+          { "answer": "5-y+2x", "nextStep": null }
+        ],
+        "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
+        "correctMsg": "Haz encontrado el factor común compuesto",
+        "summary": "3) Finalmente se factoriza por factor común la expresión general"
+      }
+    ]
+  }
+]
