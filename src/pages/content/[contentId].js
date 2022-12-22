@@ -32,12 +32,8 @@ export default withAuth(function Content() {
   const { data: dataFC, isLoading } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData0 {
-        project(code: "NivPreAlg") {
-          content(pagination: { first: 25 }, filters: { topics: 3 }) {
-            nodes {
-              json
-            }
-          }
+			  contentByCode(code: "fc1"){
+          json
         }
       }
     `)
@@ -189,7 +185,7 @@ export default withAuth(function Content() {
       <div>
         {router.query.type == 4 && !isLoading ? (
           <DynamicTutorFac
-            exercise={dataFC?.project?.content?.nodes[0]?.json}
+            exercise={dataFC?.contentByCode?.json}
             nextRouter="/"
           ></DynamicTutorFac>
         ) : //<DynamicTutorFac exercise={data1[0]} nextRouter="/" />

@@ -1755,16 +1755,10 @@ export type ProjectData0QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData0Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -2059,73 +2053,18 @@ export const ProjectData0Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "fc1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "3" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },

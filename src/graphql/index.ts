@@ -5,7 +5,7 @@ import * as graphql from "./graphql";
 const documents = {
   '\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n          tags\n          projects {\n            id\n            code\n            label\n          }\n          groups {\n            id\n            code\n            label\n            tags\n          }\n        }\n        project(code: "NivPreAlg") {\n          id\n          code\n          label\n        }\n      }\n    ':
     graphql.CurrentUserDocument,
-  '\n      query ProjectData0 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 3 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData0Document,
   '\n      query ProjectData1 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 6 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
     graphql.ProjectData1Document,
@@ -35,8 +35,8 @@ export function gql(
   source: '\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n          tags\n          projects {\n            id\n            code\n            label\n          }\n          groups {\n            id\n            code\n            label\n            tags\n          }\n        }\n        project(code: "NivPreAlg") {\n          id\n          code\n          label\n        }\n      }\n    '
 ): typeof documents['\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n          tags\n          projects {\n            id\n            code\n            label\n          }\n          groups {\n            id\n            code\n            label\n            tags\n          }\n        }\n        project(code: "NivPreAlg") {\n          id\n          code\n          label\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData0 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 3 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData0 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 3 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    '];
 export function gql(
   source: '\n      query ProjectData1 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 6 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
 ): typeof documents['\n      query ProjectData1 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 6 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
