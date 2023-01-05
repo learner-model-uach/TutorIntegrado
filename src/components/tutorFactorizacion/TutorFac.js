@@ -2,8 +2,7 @@ import { Button } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import React from "react";
 
-export const TutorFac = ({ exercise }) => {
-  const DynamicTutorFC = dynamic(() =>
+const DynamicTutorFC = dynamic(() =>
     import("./factorComun/FactorComun").then((mod) => mod.FC)
   );
   const DynamicTutorFCC = dynamic(() =>
@@ -18,6 +17,9 @@ export const TutorFac = ({ exercise }) => {
   const DynamicTutorTC = dynamic(() =>
     import("./trinomiosCuadraticos/TrinomiosCuadraticos").then((mod) => mod.TC)
   );
+
+export const TutorFac = ({ exercise }) => {
+  
 
   return (
     <>

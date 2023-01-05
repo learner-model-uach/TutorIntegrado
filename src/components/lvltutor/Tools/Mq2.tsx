@@ -1,4 +1,4 @@
-import {Alert, AlertIcon,Button, Stack, Box, HStack, VStack, StyledStepper} from '@chakra-ui/react';
+import {Alert, AlertIcon,Button, Stack, Box, HStack, VStack} from '@chakra-ui/react';
 import {useState, useCallback,memo, useEffect,useRef} from "react";
 import { addStyles, EditableMathField } from 'react-mathquill';
 import { MathComponent } from "../../../components/MathJax";
@@ -61,11 +61,11 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
         let answer1 = "";
         let answer2 = "";
         if (step.values != undefined) {
-            answer1= MQPostfixSolver(parse1.substring(0),step.values);
-            answer2= MQPostfixSolver(parse2.substring(0),step.values);
+            answer1= ""+MQPostfixSolver(parse1.substring(0),step.values);
+            answer2= ""+MQPostfixSolver(parse2.substring(0),step.values);
         } else {
-            answer1= MQPostfixSolver(parse1.substring(0));
-            answer2= MQPostfixSolver(parse2.substring(0),step.values);
+            answer1= ""+MQPostfixSolver(parse1.substring(0),[{}]);
+            answer2= ""+MQPostfixSolver(parse2.substring(0),step.values);
         }
         if(answer1==answer2) {
             result.current=true;

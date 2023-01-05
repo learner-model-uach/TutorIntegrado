@@ -1768,16 +1768,10 @@ export type ProjectData1QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData1Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1787,16 +1781,10 @@ export type ProjectData2QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData2Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1806,16 +1794,10 @@ export type ProjectData3QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData3Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1825,16 +1807,10 @@ export type ProjectData4QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData4Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1844,16 +1820,10 @@ export type ProjectData5QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData5Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1863,16 +1833,10 @@ export type ProjectData6QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData6Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1882,16 +1846,10 @@ export type ProjectData7QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData7Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1901,16 +1859,10 @@ export type ProjectData8QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData8Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1920,16 +1872,10 @@ export type ProjectData9QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData9Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -1939,16 +1885,10 @@ export type ProjectData10QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData10Query = {
   __typename?: "Query";
-  project?:
+  contentByCode?:
     | {
-        __typename?: "Project";
-        content: {
-          __typename?: "ContentConnection";
-          nodes: Array<{
-            __typename?: "Content";
-            json?: Record<string, unknown> | null | undefined;
-          }>;
-        };
+        __typename?: "Content";
+        json?: Record<string, unknown> | null | undefined;
       }
     | null
     | undefined;
@@ -2085,73 +2025,18 @@ export const ProjectData1Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "dc1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "6" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2172,73 +2057,18 @@ export const ProjectData2Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "fcc1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "5" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2259,73 +2089,18 @@ export const ProjectData3Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "dsc1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "7" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2346,73 +2121,18 @@ export const ProjectData4Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "fracc1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "17" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2433,73 +2153,18 @@ export const ProjectData5Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "fracc2", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "18" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2520,73 +2185,18 @@ export const ProjectData6Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "tc1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "8" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2607,73 +2217,18 @@ export const ProjectData7Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "pot1", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "20" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2694,73 +2249,18 @@ export const ProjectData8Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "pot2", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "21" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2781,73 +2281,18 @@ export const ProjectData9Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "pot3", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "22" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },
@@ -2868,73 +2313,18 @@ export const ProjectData10Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "project" },
+            name: { kind: "Name", value: "contentByCode" },
             arguments: [
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "pot4", block: false },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "content" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "first" },
-                            value: { kind: "IntValue", value: "25" },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "topics" },
-                            value: { kind: "IntValue", value: "23" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "nodes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "json" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
               ],
             },
           },

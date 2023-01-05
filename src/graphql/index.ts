@@ -7,25 +7,25 @@ const documents = {
     graphql.CurrentUserDocument,
   '\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData0Document,
-  '\n      query ProjectData1 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 6 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData1 {\n        contentByCode(code: "dc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData1Document,
-  '\n      query ProjectData2 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 5 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData2 {\n        contentByCode(code: "fcc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData2Document,
-  '\n      query ProjectData3 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 7 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData3 {\n        contentByCode(code: "dsc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData3Document,
-  '\n      query ProjectData4 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 17 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData4 {\n        contentByCode(code: "fracc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData4Document,
-  '\n      query ProjectData5 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 18 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData5 {\n        contentByCode(code: "fracc2"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData5Document,
-  '\n      query ProjectData6 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 8 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData6 {\n        contentByCode(code: "tc1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData6Document,
-  '\n      query ProjectData7 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 20 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData7 {\n        contentByCode(code: "pot1"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData7Document,
-  '\n      query ProjectData8 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 21 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData8 {\n        contentByCode(code: "pot2"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData8Document,
-  '\n      query ProjectData9 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 22 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData9 {\n        contentByCode(code: "pot3"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData9Document,
-  '\n      query ProjectData10 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 23 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    ':
+  '\n      query ProjectData10 {\n        contentByCode(code: "pot4"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData10Document,
   "\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    ":
     graphql.ActionDocument,
@@ -38,35 +38,35 @@ export function gql(
   source: '\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    '
 ): typeof documents['\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData1 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 6 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData1 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 6 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData1 {\n        contentByCode(code: "dc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData1 {\n        contentByCode(code: "dc1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData2 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 5 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData2 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 5 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData2 {\n        contentByCode(code: "fcc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData2 {\n        contentByCode(code: "fcc1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData3 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 7 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData3 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 7 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData3 {\n        contentByCode(code: "dsc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData3 {\n        contentByCode(code: "dsc1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData4 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 17 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData4 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 17 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData4 {\n        contentByCode(code: "fracc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData4 {\n        contentByCode(code: "fracc1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData5 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 18 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData5 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 18 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData5 {\n        contentByCode(code: "fracc2"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData5 {\n        contentByCode(code: "fracc2"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData6 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 8 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData6 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 8 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData6 {\n        contentByCode(code: "tc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData6 {\n        contentByCode(code: "tc1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData7 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 20 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData7 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 20 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData7 {\n        contentByCode(code: "pot1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData7 {\n        contentByCode(code: "pot1"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData8 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 21 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData8 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 21 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData8 {\n        contentByCode(code: "pot2"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData8 {\n        contentByCode(code: "pot2"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData9 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 22 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData9 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 22 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData9 {\n        contentByCode(code: "pot3"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData9 {\n        contentByCode(code: "pot3"){\n          json\n        }\n      }\n    '];
 export function gql(
-  source: '\n      query ProjectData10 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 23 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData10 {\n        project(code: "NivPreAlg") {\n          content(pagination: { first: 25 }, filters: { topics: 23 }) {\n            nodes {\n              json\n            }\n          }\n        }\n      }\n    '];
+  source: '\n      query ProjectData10 {\n        contentByCode(code: "pot4"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData10 {\n        contentByCode(code: "pot4"){\n          json\n        }\n      }\n    '];
 export function gql(
   source: "\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    "
 ): typeof documents["\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    "];

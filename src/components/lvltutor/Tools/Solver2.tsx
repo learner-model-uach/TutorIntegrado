@@ -11,6 +11,44 @@ import dynamic from "next/dynamic";
 //reporte de acciones
 import { useAction } from "../../../utils/action";
 
+const Mq2 = dynamic(
+    () => {
+        return import("./Mq2");
+    },
+    { ssr: false }
+);
+
+class passingPotato {
+    private states = {
+        "disabled":true,
+        "hidden":false,
+        "answer":false,
+        "value":{},
+        "open":false
+    }
+
+    private respuestaState;
+
+    public counter=0;
+
+    public getStates()
+    {
+        return this.states;
+    }
+
+    public setStates(a){
+        this.states=a;
+    }
+
+    public getRespuestaState(){
+        return this.respuestaState;
+    }
+
+    public setRespuestaState(a){
+        this.respuestaState=a;
+    }
+}
+
 const Solver2 = ({topicId,steps,nextRouter}) => {
     const [cdateS,setCdateS]=useState(Date.now());
     const [cdateE,setCdateE]=useState(Date.now());
@@ -28,48 +66,14 @@ const Solver2 = ({topicId,steps,nextRouter}) => {
     const [iv,setIv]=useState();
     const [submit,setSubmit]=useState(false);
 
-    const Mq2 = dynamic(
-        () => {
-            return import("./Mq2");
-        },
-        { ssr: false }
-    );
+    
 
     //segun next api reference router y routing dynamic routes
     const router = useRouter();
     const { pid } = router.query;
 
 
-    class passingPotato {
-        private states = {
-            "disabled":true,
-            "hidden":false,
-            "answer":false,
-            "value":{},
-            "open":false
-        }
-
-        private respuestaState;
-
-        public counter=0;
-
-        public getStates()
-        {
-            return this.states;
-        }
-
-        public setStates(a){
-            this.states=a;
-        }
-
-        public getRespuestaState(){
-            return this.respuestaState;
-        }
-
-        public setRespuestaState(a){
-            this.respuestaState=a;
-        }
-    }
+    
 
     const cantidadDePasos= steps.steps.length;
 

@@ -2,7 +2,7 @@
   {
     "code": "fc1",
     "title": "Factor común",
-    "contentType": "FC",
+    "type": "fc1s",
     "level": "1",
     "text": "Factorizar la siguiente expresión:",
     "selectSteps": false,

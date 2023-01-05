@@ -35,7 +35,7 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?type=8"}>
               Trinomios Cuadraticos
             </SidebarLink>
-            <Text fontWeight="medium">-Función Algebraica</Text>
+            <Text fontWeight="medium">-Fracción Algebraica</Text>
             <SidebarLink href={"contentSelect?type=9"}>
               Operatoria de Fracciones
             </SidebarLink>
