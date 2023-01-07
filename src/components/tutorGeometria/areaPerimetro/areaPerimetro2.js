@@ -523,8 +523,8 @@ const AP2 = ({ exercise }) => {
             step2={exercise.steps[1]}
             step3={exercise.steps[2]}
             step4={exercise.steps[3]}
-            step3={exercise.steps[4]}
-            step4={exercise.steps[5]}
+            step5={exercise.steps[4]}
+            step6={exercise.steps[5]}
           />
         </>
       )}
