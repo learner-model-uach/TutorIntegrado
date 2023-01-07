@@ -9,7 +9,7 @@ import { APstep4 } from "./steps/APstep4";
 import { APstepF } from "./steps/APstepF";
 
 import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
-import { Summary4 } from "../tools/Summary";
+import { Summary6 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
 import ejercicioAP2 from "./ejercicioAP2.json"
