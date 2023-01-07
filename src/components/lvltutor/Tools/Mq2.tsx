@@ -1,6 +1,6 @@
 import {Alert, AlertIcon,Button, Stack, Box, HStack, VStack} from '@chakra-ui/react';
-import {useState, useCallback,memo, useEffect,useRef} from "react";
-import { addStyles, EditableMathField } from 'react-mathquill';
+import {useState,memo, useEffect,useRef} from "react";
+import { addStyles, EditableMathField,MathField } from 'react-mathquill';
 import { MathComponent } from "../../../components/MathJax";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../Tools/Hint";
@@ -9,10 +9,13 @@ import MQPostfixparser from './MQPostfixparser';
 //reporte de acciones
 import { useAction } from "../../../utils/action";
 
+import type {Step} from "./ExcerciseType";
+
 addStyles();
 
 
-const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSubmitValues,setCdateE}) => {
+const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSubmitValues,setCdateE}:
+    {step:Step,content:string,topicId:string,disablehint:boolean,setDefaultIndex:Function,setSubmit:Function,setSubmitValues:Function,setCdateE:Function}) => {
 
     const action = useAction();
 
@@ -26,19 +29,14 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
         width: "190px",
         maxHeight: "120px",
         marginBottom: "12px",
-        border: "3px solid #73AD21",
-        userSelect: "none"
+        border: "3px solid #73AD21"
     }
     const [placeholder,setPlaceholder] = useState(true);
 
-    const [ta,setTa] = useState();
-
-    //hooks utilizados poara forzar el re-renderizado
-    const [, updateState] = useState();
-    const forceUpdate = useCallback(() => updateState({}), []);
+    const [ta,setTa] = useState<MathField | null>(null);
 
     //Inputsimple
-    const [alerta,setAlerta] = useState("success");
+    const [alerta,setAlerta] = useState<"info" | "warning" | "success" | "error" | undefined>("success");
     const [alertaMSG,setAlertaMSG] = useState("");
     const [alertaVisibility,setAlertaVisibility] = useState(true);
     
@@ -47,7 +45,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
     const [fc,setFC] = useState(true);
     const [attempts,setAttempts]=useState(0);
     const [hints,setHints]=useState(0);
-    const [lastHint,setLastHint]=useState(false);
+    //const [lastHint,setLastHint]=useState(false);
 
     const result=useRef(false);
     
@@ -55,8 +53,8 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
     //Ademas, se manejan los componentes de alerta utilizado en el componente padre(solver2) y el componente hijo(Mq2)
     //finalmente, se maneja la activacion del siguiente paso o resumen en caso de que la respuesta ingresada es correcta
     const handleAnswer = () => {
-        let exp=step.answers[0].answer[0];
-        let parse1=MQPostfixparser(exp);
+        let exp=step.answers[0]!.answer[0];
+        let parse1=MQPostfixparser(exp!);
         let parse2=MQPostfixparser(latex);
         let answer1 = "";
         let answer2 = "";
@@ -67,7 +65,10 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
             answer1= ""+MQPostfixSolver(parse1.substring(0),[{}]);
             answer2= ""+MQPostfixSolver(parse2.substring(0),step.values);
         }
-        if(answer1==answer2) {
+        let relativeError=Math.abs(1-(parseFloat(answer1)/parseFloat(answer2)));
+        console.log(relativeError,parseInt(answer1),parseInt(answer2));
+        //la validacion considera una precision con un 0.5% de error relativo
+        if(relativeError<0.005) {
             result.current=true;
             setCdateE(Date.now());
             setAlerta("success");
@@ -75,7 +76,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
             setAlertaVisibility(false);
             setFC(true);
             if(setDefaultIndex)setDefaultIndex([parseInt(step.stepId)+1])
-            setSubmitValues({ans:latex,att:attempts,hints:hints,lasthint:lastHint,fail:false,duration:0})
+            setSubmitValues({ans:latex,att:attempts,hints:hints,lasthint:false,fail:false,duration:0})
             setError(false);
         } else {
             result.current=false;
@@ -83,7 +84,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
             setAlertaMSG("La expresion ingresada no es correcta.");
             setAlertaVisibility(false);
             setError(true);
-            setSubmitValues({ans:latex,att:attempts,hints:hints,lasthint:lastHint,fail:true,duration:0})
+            setSubmitValues({ans:latex,att:attempts,hints:hints,lasthint:false,fail:true,duration:0})
         }
         action({
             verbName: "tryStep",
@@ -105,13 +106,13 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
     }
 
 
-    const refMQElement = (mathquill) => { 
+    const refMQElement = (mathquill:MathField) => { 
         if (ta==undefined) {
-            setTa(()=>{return mathquill});
+            setTa(mathquill);
         }
     }
 
-    const MQtools = (operation,action,label) => {
+    const MQtools = (operation:string) => {
         if(ta!=undefined)ta.cmd(operation);
     }
 
@@ -137,7 +138,6 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
-                setLastHint={setLastHint}
                 ></Hint>
             )
         }
@@ -157,18 +157,18 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
                 <Box>
                     <Stack spacing={4} direction='row' align='center' pb={4}>
                         {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("(","MOUSEDOWN","MOUSEDOWN")}}>{"\("}</Button>
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools(")","MOUSEDOWN","MOUSEDOWN")}}>{"\)"}</Button>
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("^","MOUSEDOWN","MOUSEDOWN")}}>^</Button>
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("\\sqrt","MOUSEDOWN","MOUSEDOWN")}}>√</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("(")}}>{"\("}</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools(")")}}>{"\)"}</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("^")}}>^</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("\\sqrt")}}>√</Button>
                     </Stack>
                     <Stack spacing={4} direction='row' align='center' pb={4}>
                         {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
                            Ademas con mousedown se puede usar preventDefault*/}
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("+","MOUSEDOWN","MOUSEDOWN")}}>+</Button>
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("-","MOUSEDOWN","MOUSEDOWN")}}>-</Button>
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("*","MOUSEDOWN","MOUSEDOWN")}}>*</Button>
-                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("\\frac","MOUSEDOWN","MOUSEDOWN")}}>/</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("+")}}>+</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("-")}}>-</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("*")}}>*</Button>
+                        <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();MQtools("\\frac")}}>/</Button>
                         <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault();clear()}}>C</Button>
                     </Stack>
                     <HStack spacing='4px' alignItems="center" justifyContent="center" margin={"auto"}>
@@ -191,7 +191,6 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
                                     refMQElement(mathField);
                                 }
                             }
-                            disabled={true}
                         >
                         </EditableMathField>
                         <Button colorScheme='teal' onMouseDown={(e)=>{e.preventDefault(); if(ta!=undefined)ta.keystroke('Right');}} size='xs'>R</Button>
