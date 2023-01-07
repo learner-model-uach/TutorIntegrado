@@ -1,0 +1,77 @@
+[
+    {
+      "code": "th2",
+      "title": "Teorema de thales II.",
+      "type": "thales2",
+      "meta": {},
+      "text": "Un edificio de A metros de altura proyecta una sombra sobre el suelo. Un árbol ubicado a B metros del edificio proyecta una sombra de C metros. ¿Cuál es la altura del árbol (H)? ",
+      "selectSteps": false,
+      "image" : "",
+      "conclusion" : "La altura del árbol es B+C / AC",
+      "steps": [
+        {
+          "stepId": "0",
+          "expression": "",
+          "stepTitle": "Dada las variables propuestas, exprese la sombra del edificio en razón de la sombra del árbol.",
+          "displayResult": "B + C",
+          "KCs": ["AD"],
+          "hints": [
+            { "hintId": 0, "hint": "Debes sumar la distancia entre el árbol y el edificio, y a este valor sumarle la sombra del árbol ." },
+            { "hintId": 1, "hint": "La disntacia entre el árbol y el edficio es B." },
+            { "hintId": 2, "hint": "La sombra que nos da el árbol es C." },
+            { "hintId": 3, "hint": "Escribe B+C en la casilla." }
+          ],
+          "matchingError": [
+            { "error": [""], "hintId": 4, "hint": "No ha ingresado respuesta" }
+          ],
+          "answers": [{ "answer": ["b+c"], "nextStep": "1" }, { "answer": ["c+b"], "nextStep": "1" }],
+          "incorrectMsg": "La respuesta ingresada no corresponde a la sombra del edificio.",
+          "correctMsg": "La respuesta ingresada corresponde a la sombra del edificio.",
+          "summary": "1) La sombra del árbol en razón de las variables conocidas es B + C."
+        },
+        {
+          "stepId": "1",
+          "expression": "\\frac{C}{H} = ",
+          "stepTitle": "Ahora que sabemos el tamaño de la sombra, completa la igualdad que nos proporciona el teorema de Thales.",
+          "displayResult": "\\frac{C}{H} = \\frac{B+C}{A}",
+          "KCs": ["PlanTH"],
+          "hints": [
+            { "hintId": 0, "hint": "La razón del triángulo más pequeño es \\frac{C}{H}." },
+            { "hintId": 1, "hint": "La razón del triágulo mayor es la sombra del edificio sobre su altura." },
+            { "hintId": 2, "hint": "Esribe \\frac{B+C}{A}." }
+          ],
+          "matchingError": [
+            { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
+          ],
+          "answers": [{ "answer": ["b+c", "a"], "nextStep": "2" }, { "answer": ["c+b", "a"], "nextStep": "2" }],
+          "incorrectMsg": "La expresión ingresada no corresponde al planteamiento del teorema de Thales.",
+          "correctMsg": "La expresión ingresada corresponde al planteamiento del teorema de Thales.",
+          "summary": "2) La igualdad del Teorema de Thales nos permite tener claridad de la relación entre las variables. "
+        },
+        {
+          "stepId": "2",
+          "expression": "H = ",
+          "stepTitle": "Calcula la altura del árbol.",
+          "displayResult": "H = \\frac{B+C}{AC}",
+          "KCs": ["DespEcu", "R3"],
+          "hints": [
+            { "hintId": 0, "hint": "Debes aplicar la regla de 3 simple." },
+            { "hintId": 1, "hint": "Debes dividir por AC." },
+            { "hintId": 2, "hint": "Escribe B+C / AC." }
+          ],
+          "matchingError": [
+            {
+              "error": [""],
+              "hintId": 3,
+              "hint": "Debe ingresar una respuesta"
+            }
+          ],
+          "answers": [{ "answer": ["b+c", "ac"], "nextStep": "Terminado" }, { "answer": ["c+b", "ac"], "nextStep": "Terminado" }, { "answer": ["b+c", "ca"], "nextStep": "Terminado" }, { "answer": ["c+b", "ca"], "nextStep": "Terminado" }],
+          "incorrectMsg": "La expresión ingresada corresponde a la altura del árbol.",
+          "correctMsg": "La expresión ingresada no corresponde a la altura del árbol.",
+          "summary": "3) Una vez que conocemos las distintas variables que interactuan en la figura podemos despejar la altura del árbol."
+        }
+      ]
+    }
+  ]
+  

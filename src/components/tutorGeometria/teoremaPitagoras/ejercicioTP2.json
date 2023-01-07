@@ -1,0 +1,97 @@
+[
+    {
+      "code": "pit2",
+      "title": "Teorema de Pitágoras II.",
+      "type": "pitagoras2",
+      "meta": {},
+      "text": "Dos trenes se separan entre sí de manera perpendicular. El tren rojo lleva una velocidad constante de V1 km/h, mientras que el tren azul viaja a una velocidad de V2 km/h. Luego de transcurrido un tiempo T ¿A qué disntacia se encuentra el tren rojo del tren azul?",
+      "selectSteps": false,
+      "image" : "",
+      "conclusion" : "Ambos trenes se encuentran a una distancia de √a² + b²",
+      "steps": [
+        {
+          "stepId": "0",
+          "expression": "a = ",
+          "stepTitle": "Escribe la expresión de la distancia recorrida por el tren azul.",
+          "displayResult": "a = V1 * T",
+          "KCs": [],
+          "hints": [
+            { "hintId": 0, "hint": "Recuerda que para calcular la distancia necesitamos multiplicar la velocidad por el tiempo." },
+            { "hintId": 1, "hint": "La distancia es la velocidad (V1) multiplicada por el tiempo (T)." },
+            { "hintId": 2, "hint": "Escribe V1 * T en la casilla." }
+          ],
+          "matchingError": [
+            { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta." },
+            { "error": ["V1"], "hintId": 4, "hint": "El valor ingresado corresponde a la velocidad del tren azul." },
+            { "error": ["V2*T"], "hintId": 5, "hint": "V2 corresponde a la velocidad del tren rojo." }
+          ],
+          "answers": [{ "answer": ["v1t"], "nextStep": "1" }, { "answer": ["tv1"], "nextStep": "1" }],
+          "incorrectMsg": "La respuesta ingresada no corresponde a la distancia recorrida por el tren azul.",
+          "correctMsg": "La respuesta ingresada corresponde a la distancia recorrida por el tren azul.",
+          "summary": "1) La distancia recorrida por el tren azul en razón de su velocidad (V1) y el tiempo (T) es la multilpicación de ambos factores."
+        },
+        {
+            "stepId": "1",
+            "expression": "b = ",
+            "stepTitle": "Escribe la expresión de la distancia recorrida por el tren rojo.",
+            "displayResult": "b = V2 * T",
+            "KCs": [],
+            "hints": [
+              { "hintId": 0, "hint": "Recuerda que para calcular la distancia necesitamos multiplicar la velocidad por el tiempo." },
+              { "hintId": 1, "hint": "La distancia es la velocidad (V2) multiplicada por el tiempo (T)." },
+              { "hintId": 2, "hint": "Escribe V2 * T en la casilla." }
+            ],
+            "matchingError": [
+              { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta." },
+              { "error": ["V2"], "hintId": 4, "hint": "El valor ingresado corresponde a la velocidad del tren rojo." },
+              { "error": ["V1*T"], "hintId": 5, "hint": "V2 corresponde a la velocidad del tren azul." }
+            ],
+            "answers": [{ "answer": ["v2t"], "nextStep": "1" }, { "answer": ["tv2"], "nextStep": "1" }],
+            "incorrectMsg": "La respuesta ingresada no corresponde a la distancia recorrida por el tren rojo.",
+            "correctMsg": "La respuesta ingresada corresponde a la distancia recorrida por el tren rojo.",
+            "summary": "1) La distancia recorrida por el tren rojo en razón de su velocidad (V2) y el tiempo (T) es la multilpicación de ambos factores."
+        },
+        {
+          "stepId": "2",
+          "expression": "",
+          "stepTitle": "La distancia entre los trenes, x, se puede calcular usando el teorema de Pitágoras. Plantea la fórmula del teorema con las variables de este problema.",
+          "displayResult": "x² = a² + b²",
+          "KCs": ["CatHip"],
+          "hints": [
+            { "hintId": 0, "hint": "La fórmula de Pitágoras nos dice que el cuadrado de la hipotenusa de un triángulo rectángulo es la suma de los cuadrados de sus lados." },
+            { "hintId": 1, "hint": "Recuerda que nuestros catetos para este triángulo con 'a' y 'b'." },
+            { "hintId": 2, "hint": "Recuerda que nuestra hipotenusa para este triángulo es 'x'." },
+            { "hintId": 3, "hint": "Escribe x² = a² + b² en la casilla."}
+          ],
+          "matchingError": [
+            {"error": [""], "hintId": 4, "hint": "Debe ingresar una respuesta"}
+          ],
+          "answers": [{ "answer": ["x","a","b"], "nextStep": "3" }, { "answer": ["x","b","a"], "nextStep": "3" }],
+          "incorrectMsg": "Los valores no crresponden al plateamiento del Teorema de Pitágoras",
+          "correctMsg": "Los valores ingresados corresponden al planteamiento del Teorema de Pitágoras",
+          "summary": "3) Dada la figura, el planteamiendo del Teorema de Pitágoras es de la forma x² = a² + b²."
+        },
+        {
+          "stepId": "3",
+          "expression": "x = ",
+          "stepTitle": "Calcula la distancia entre ambos trenes.",
+          "displayResult": "c = √a² + b²",
+          "KCs": [],
+          "showPanel" : true,
+          "hints": [
+            { "hintId": 0, "hint": "La fórmula del teorema nos entrega la relación de los cuadrados de los catetos y la hipotenusa. Ahora neesitamos aplicar raíz cuadrada." },
+            { "hintId": 1, "hint": "Aplica la raíz sobre la suma de los cuadrados de los catetos." },
+            { "hintId": 2, "hint": "Escribe √a² + b² en la casilla." }
+          ],
+          "matchingError": [
+            {"error": [""],"hintId": 3,"hint": "No se ha ingresado ninguna expresión"}
+          ],
+          "answers": [{ "answer": "b2^a2^+\\sqrt", "nextStep": "Terminado" },{ "answer": "a2^b2^+\\sqrt", "nextStep": "Terminado" }],
+          "incorrectMsg": "La expresión ingresada no corresponde a la distancia entre los trenes. ",
+          "correctMsg": "La expresión ingresada corresponde a la distancia entre los trenes. ",
+          "summary": "4) La expresión de la distancia entre los trenes 'x' expresada en función de 'a' y 'b' es √b² + a²."
+        }
+      ]
+    }
+  ]
+  

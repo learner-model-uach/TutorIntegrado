@@ -63,7 +63,7 @@ export function Navigation() {
               Racionalización
             </SidebarLink>
             <Text fontWeight="black">Geometría</Text>
-            <SidebarLink href={"contentSelect?type=17"}>Triángulos</SidebarLink>
+            <SidebarLink href={"contentSelect?type=17"}>Área y Perímetro</SidebarLink>
             <SidebarLink href={"contentSelect?type=18"}>
               Teorema de Thales
             </SidebarLink>

@@ -10,6 +10,12 @@ import data3 from "../../components/tutorFactorizacion/diferenciaCuadrados/ejerc
 import data4 from "../../components/tutorFactorizacion/diferenciaSumaCubos/ejerciciosDSC.json";
 import data5 from "../../components/tutorFactorizacion/trinomiosCuadraticos/ejerciciosTC.json";
 import data6 from "../../components/lvltutor/tutor/fracciones/fracciones1.json";
+import ejercicioAP1 from "../../components/tutorGeometria/areaPerimetro/ejercicioAP1.json";
+import AP1 from "../../components/tutorGeometria/areaPerimetro/areaPerimetro1";
+import ejercicioTH from "../../components/tutorGeometria/teoremaThales/ejercicioTH.json";
+import TH1 from "../../components/tutorGeometria/teoremaThales/teoremaThales1";
+import ejercicioTP1 from "../../components/tutorGeometria/teoremaPitagoras/ejercicioTP1.json";
+import TP1 from "../../components/tutorGeometria/teoremaPitagoras/teoremaPitagoras1";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import { useRef } from "react";
@@ -215,12 +221,19 @@ export default withAuth(function Content() {
             topicId="pot4"
           ></DynamicPlain>
         ) : router.query.type == 17  ? (
-          "Triángulos"
+          <AP1
+          exercise = {ejercicioAP1}
+          ></AP1>
         ) : router.query.type == 18  ? (
-          "Teorema de Thales"
-        ) : (
-          router.query.type == 19 && "Teorema de Pitágoras"
-        )}
+          <TH1
+          exercise = {ejercicioTH}
+          ></TH1>
+        ) : router.query.type == 19 ? (
+          <TP1
+          exercise = {ejercicioTP1}
+          ></TP1>
+        ):null
+        }
       </div>
       <Button
         onClick={() => router.push("/contentSelect?type=" + router.query.type)}
