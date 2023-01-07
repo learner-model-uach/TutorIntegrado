@@ -1,4 +1,4 @@
-const MQPostfixparser = (MQinfixInput:string) => {
+const MQPostfixparser = (MQinfixInput) => {
     const precedense = {
         'sin':4,
         'cos':4,
@@ -31,7 +31,7 @@ const MQPostfixparser = (MQinfixInput:string) => {
         return word.substring(0, index) + replacement + word.substring(index + replacement.length);
     }
 
-    const MQinfixToPostfix = (a:string) => {
+    const MQinfixToPostfix = (a) => {
         a=a.replace(/\\right\)/g,")");
         a=a.replace(/\\left\(/g,"(");
         a=a.replace(/}/g,")");
