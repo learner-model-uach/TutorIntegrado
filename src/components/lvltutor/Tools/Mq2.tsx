@@ -1,9 +1,9 @@
 import {Alert, AlertIcon,Button, Stack, Box, HStack, VStack} from '@chakra-ui/react';
 import {useState,memo, useEffect,useRef} from "react";
-import { addStyles, EditableMathField,MathField } from 'react-mathquill';
-import { MathComponent } from "../../../components/MathJax";
+import { addStyles, EditableMathField,MathField,StaticMathField } from 'react-mathquill';
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../Tools/Hint";
+//traductor y calculadora postfija
 import MQPostfixSolver from '../../../utils/MQPostfixSolver';
 import MQPostfixparser from '../../../utils/MQPostfixparser';
 //reporte de acciones
@@ -151,7 +151,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
         <>
             <VStack alignItems="center" justifyContent="center" margin={"auto"}>
                 <Box>
-                    <MathComponent tex={step.expression} display={true} />
+                    <StaticMathField>{step.expression}</StaticMathField>
                 </Box>
                 <Box>
                     <Stack spacing={4} direction='row' align='center' pb={4}>
