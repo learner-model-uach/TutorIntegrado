@@ -31,7 +31,6 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
         marginBottom: "12px",
         border: "3px solid #73AD21"
     }
-    const [placeholder,setPlaceholder] = useState(true);
 
     const [ta,setTa] = useState<MathField | null>(null);
 
@@ -177,16 +176,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
                             key={"EMF"+entero}
                             latex={latex}
                             style={EMFStyle}
-                            onMouseDown={
-                                ()=>{
-                                    if(placeholder){
-                                        setPlaceholder(false);
-                                        setLatex("");
-                                    }
-                                }
-                            }
                             onChange={(mathField) => {
-                                    //if(placeholder){setLatex("\\text{Ingresa la expresion aqui}")}
                                     setLatex(()=>mathField.latex());
                                     refMQElement(mathField);
                                 }
