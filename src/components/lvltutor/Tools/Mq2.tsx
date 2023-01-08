@@ -150,9 +150,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
     return (
         <>
             <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-                <Box>
-                    <StaticMathField>{step.expression}</StaticMathField>
-                </Box>
+                <StaticMathField>{step.expression}</StaticMathField>
                 <Box>
                     <Stack spacing={4} direction='row' align='center' pb={4}>
                         {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
