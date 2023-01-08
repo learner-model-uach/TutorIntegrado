@@ -1,7 +1,6 @@
 import { useState,memo, useEffect,useRef} from 'react';
 
 import { Flex, Box, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Heading, Alert,Text,AlertIcon,HStack,VStack} from '@chakra-ui/react'
-import { MathComponent } from "../../MathJax";
 import { StaticMathField } from 'react-mathquill';
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
