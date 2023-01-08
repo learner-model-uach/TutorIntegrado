@@ -2,6 +2,7 @@ import { useState,memo, useEffect,useRef} from 'react';
 
 import { Flex, Box, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Heading, Alert,Text,AlertIcon,HStack,VStack} from '@chakra-ui/react'
 import { MathComponent } from "../../MathJax";
+import { StaticMathField } from 'react-mathquill';
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
 import dynamic from "next/dynamic";
@@ -133,11 +134,11 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
         if(a.answer){
             return(
                 <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-                    <MathComponent
-                    key={"respuesta"+i}
-                    tex={a.value.ans}
-                    display={true}
-                    />
+                    <StaticMathField
+                        key={"respuesta"+i}
+                    >
+                       {a.value.ans}
+                    </StaticMathField>
                 </VStack>
                 );
         }else{
@@ -150,7 +151,7 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
             <Flex direction="column" background="gray.100" p={12} rounded={6} w='100%' maxW='3xl' alignItems="center" justifyContent="center" margin={"auto"}>
                 <Heading as='h1' size='lg' noOfLines={3}>{steps.title}</Heading>
                 <Heading as='h5' size='sm' mt={2}>{steps.text}</Heading>
-                <MathComponent tex={steps.steps[0]!.expression} display={true} />
+                {steps.steps[0]?(<StaticMathField>{steps.steps[0].expression}</StaticMathField>):null}
                 <Accordion
                     onChange={(algo)=>setDefaultIndex(algo as Array<number>)}
                     index={defaultIndex}
@@ -222,19 +223,16 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                                 <Text >
                                     Expresión:
                                 </Text>
-                                <MathComponent
-                                        tex={steps.steps[0]!.expression}
-                                        display={true}
-                                />
+                                {steps.steps[0]?(<StaticMathField>{steps.steps[0].expression}</StaticMathField>):null}
                             </HStack>
                             {steps.steps.map( (step,i) =>(
                                         <Box key={"ResumenBox"+i}>
                                             <Text key={"ResumenText"+i} w="100%" justifyContent={"space-between"}>{step.summary}</Text>
-                                            <MathComponent
+                                            <StaticMathField
                                                 key={"ResumenMC"+i}
-                                                tex={step.displayResult[0]}
-                                                display={true}
-                                            />
+                                            >
+                                            {step.displayResult[0]}
+                                            </StaticMathField>
                                         </Box>
                                     )
                                 )
