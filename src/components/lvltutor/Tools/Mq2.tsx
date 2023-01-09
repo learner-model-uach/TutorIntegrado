@@ -14,8 +14,8 @@ import type {Step} from "./ExcerciseType";
 addStyles();
 
 
-const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSubmitValues,setCdateE}:
-    {step:Step,content:string,topicId:string,disablehint:boolean,setDefaultIndex:Function,setSubmit:Function,setSubmitValues:Function,setCdateE:Function}) => {
+const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSubmitValues,setCdateE,flag}:
+    {step:Step,content:string,topicId:string,disablehint:boolean,setDefaultIndex:Function,setSubmit:Function,setSubmitValues:Function,setCdateE:Function,flag:boolean}) => {
 
     const action = useAction();
 
@@ -41,7 +41,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
     
     //hooks de miguel definido para los hints
     const [error, setError] = useState(false); //true when the student enters an incorrect answers
-    const [fc,setFC] = useState(true);
+    const [fc,setFC] = useState(false);
     const [attempts,setAttempts]=useState(0);
     const [hints,setHints]=useState(0);
     //const [lastHint,setLastHint]=useState(false);
@@ -74,8 +74,8 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
             setAlertaMSG("Has ingresado la expresion correctamente!.");
             setAlertaVisibility(false);
             setFC(true);
-            if(setDefaultIndex)setDefaultIndex([parseInt(step.stepId)+1])
-            setSubmitValues({ans:latex,att:attempts,hints:hints,lasthint:false,fail:false,duration:0})
+            if(setDefaultIndex)setDefaultIndex([entero+1]);
+            setSubmitValues({ans:latex,att:attempts,hints:hints,lasthint:false,fail:false,duration:0});
             setError(false);
         } else {
             result.current=false;
@@ -147,10 +147,31 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
         }
     },[latex]);
 
+    //el siguiente segmento se implemento para forzar el rerenderizado del componente staticmathfield
+    
+    const [exptext,setExptext]=useState("");
+    useEffect(()=>{
+        setExptext("");
+        setTimeout(() => {
+        setExptext(step.expression);
+        }, 1)
+    },[])
+
+    useEffect(()=>{
+        setExptext("");
+        setExptext(" ");
+        setTimeout(() => {
+        setExptext(step.expression);
+        }, 1)
+    }
+    ,[flag])
+
+
     return (
         <>
             <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-                <StaticMathField>{step.expression}</StaticMathField>
+                <Box><StaticMathField style={{display:"block"}}>{exptext}</StaticMathField></Box>
+                
                 <Box>
                     <Stack spacing={4} direction='row' align='center' pb={4}>
                         {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}

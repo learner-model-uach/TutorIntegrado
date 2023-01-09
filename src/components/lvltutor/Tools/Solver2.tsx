@@ -1,4 +1,4 @@
-import { useState,memo, useEffect,useRef} from 'react';
+import { useState,memo, useEffect} from 'react';
 
 import { Flex, Box, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Heading, Alert,Text,AlertIcon,HStack,VStack} from '@chakra-ui/react'
 import { StaticMathField } from 'react-mathquill';
@@ -77,56 +77,30 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
 
     const [submitValues,setSubmitValues]=useState({ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0})
 
-    const listaDePasos = steps.steps.map((step,i) => (
-        <Mq2 
-                key={"Mq2"+i}
-                step={step}
-                content={steps.code}
-                topicId={topicId}
-                disablehint={false}
-                setDefaultIndex={setDefaultIndex}
-                setSubmit={setSubmit}
-                setSubmitValues={setSubmitValues}
-                setCdateE={setCdateE}
-            >
-        </Mq2>
+    const [sflag,setSflag]=useState(false)
+
+    function listaDePasos() { 
+        let ldp=steps.steps.map(
+            (step,i) => (
+            <Mq2 
+                    key={"Mq2"+i}
+                    step={step}
+                    content={steps.code}
+                    topicId={topicId}
+                    disablehint={false}
+                    setDefaultIndex={setDefaultIndex}
+                    setSubmit={setSubmit}
+                    setSubmitValues={setSubmitValues}
+                    setCdateE={setCdateE}
+                    flag={sflag}
+                >
+            </Mq2>
+            )
         )
-    )
+        return ldp
+    }
 
-    useEffect(
-       ()=>{ 
-        if(submit){
-            if(!submitValues.fail){
-                let a=test;
-                let duration=(cdateE-cdateS)/1000;
-                let sv=submitValues;
-                sv.duration=duration;
-                setCdateS(Date.now());
-                a[defaultIndex[0]!-1]!.setStates({"disabled":false,"hidden":false,"answer":true,"value":sv,"open":false});
-                if(defaultIndex[0]!<cantidadDePasos){
-                    a[defaultIndex[0]!]!.setStates({"disabled":false,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true});
-                } else {
-                    let completecontent = [];
-                    for(let i=0;i<test.length;i++)completecontent.push(test[i]?.getStates().value);
-                    let extra={
-                        steps:Object.assign({}, completecontent)
-                    }
-                    action({
-                        verbName: "completeContent",
-                        result: 1,
-                        contentID: steps?.code,
-                        topicID: topicId,
-                        extra:extra
-                    });
-                    setResumen(false)
-                }
-                setTest(a);
-            }
-            setSubmit(false);
-        }
-    },[submit])
-
-    const pasos= useRef(listaDePasos);
+    const [pasos,setPasos]= useState(listaDePasos);
 
     const steporans = (step:Step,i:number) => {
         let a=test[parseInt(step.stepId)!]!.getStates();
@@ -141,9 +115,53 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                 </VStack>
                 );
         }else{
-            return(pasos.current[i]);
+            return(pasos[i]);
         }
     }
+
+    useEffect(
+        ()=>{ 
+        sflag?setSflag(!sflag):setSflag(!sflag);
+        setPasos(listaDePasos());
+         if(submit){
+             if(!submitValues.fail){
+                 let a=test;
+                 let duration=(cdateE-cdateS)/1000;
+                 let sv=submitValues;
+                 sv.duration=duration;
+                 setCdateS(Date.now());
+                 a[defaultIndex[0]!-1]!.setStates({"disabled":false,"hidden":false,"answer":true,"value":sv,"open":false});
+                 if(defaultIndex[0]!<cantidadDePasos){
+                     a[defaultIndex[0]!]!.setStates({"disabled":false,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true});
+                 } else {
+                     let completecontent = [];
+                     for(let i=0;i<test.length;i++)completecontent.push(test[i]?.getStates().value);
+                     let extra={
+                         steps:Object.assign({}, completecontent)
+                     }
+                     action({
+                         verbName: "completeContent",
+                         result: 1,
+                         contentID: steps?.code,
+                         topicID: topicId,
+                         extra:extra
+                     });
+                     setResumen(false)
+                 }
+                 setTest(a);
+             }
+             setSubmit(false);
+         }
+     },[submit])
+
+     const [frr,setFrr]=useState("")
+     useEffect(()=>{
+        setFrr(" ")
+        setTimeout(()=>{
+            setFrr("  ")
+        },200)
+    },[resumen])
+
 
     return(
         <Flex alignItems="center" justifyContent="center" margin={"auto"}>
@@ -204,7 +222,7 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                         <AccordionPanel key={"AIAccordionPanel"+i} pb={4}>
                         {/*En el siguiente elemento es un estado que almacena el componente que maneja el paso del ejercicio correspondiente*/}
                         {
-                            steporans(step,i)
+                            pasos?steporans(step,i):null
                         }
                         </AccordionPanel>
                     </AccordionItem>
@@ -222,7 +240,7 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                                 <Text >
                                     Expresión:
                                 </Text>
-                                {steps.steps[0]?(<StaticMathField>{steps.steps[0].expression}</StaticMathField>):null}
+                                {steps.steps[0]?(<StaticMathField>{steps.steps[0].expression+frr}</StaticMathField>):null}
                             </HStack>
                             {steps.steps.map( (step,i) =>(
                                         <Box key={"ResumenBox"+i}>
@@ -230,7 +248,7 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                                             <StaticMathField
                                                 key={"ResumenMC"+i}
                                             >
-                                            {step.displayResult[0]}
+                                            {step.displayResult[0]+frr}
                                             </StaticMathField>
                                         </Box>
                                     )
