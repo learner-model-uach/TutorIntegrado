@@ -1,5 +1,6 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { FaHome } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
@@ -13,6 +14,11 @@ export function Navigation() {
         <SidebarLink icon={<FaHome />} href="/">
           Inicio
         </SidebarLink>
+        <Text fontWeight="black">Selección por Código</Text>
+        <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
+          Search by Code
+        </SidebarLink>
+        
       </Stack>
 
       <Stack pb="6">
@@ -70,6 +76,7 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?type=19"}>
               Teorema de Pitágoras
             </SidebarLink>
+
           </>
         )}
       </Stack>

@@ -20,7 +20,7 @@ import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import { useRef } from "react";
 
-const DynamicTutorEcu = dynamic(() =>
+  const DynamicTutorEcu = dynamic(() =>
     import("../../components/tutorEcuaciones/Tutor").then((mod) => mod.Tutor)
   );
   const DynamicTutorFac = dynamic(() =>
@@ -35,7 +35,7 @@ export default withAuth(function Content() {
   const router = useRouter();
 
   
-  const { data: dataFC, isLoading } = useGQLQuery(
+  const { data: dataFC} = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData0 {
 			  contentByCode(code: "fc1"){
@@ -55,7 +55,7 @@ export default withAuth(function Content() {
     `)
   );
 
-  const { data: dataFCC, isLoading1 } = useGQLQuery(
+  const { data: dataFCC} = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData2 {
         contentByCode(code: "fcc1"){
@@ -65,7 +65,7 @@ export default withAuth(function Content() {
     `)
   );
 
-  const { data: dataDSC, isLoading2 } = useGQLQuery(
+  const { data: dataDSC} = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData3 {
         contentByCode(code: "dsc1"){
@@ -75,7 +75,7 @@ export default withAuth(function Content() {
     `)
   );
 
-  const { data: dataFracc1, isLoading3 } = useGQLQuery(
+  const { data: dataFracc1} = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData4 {
         contentByCode(code: "fracc1"){
@@ -85,7 +85,7 @@ export default withAuth(function Content() {
     `)
   );
 
-  const { data: dataFracc2, isLoading4 } = useGQLQuery(
+  const { data: dataFracc2} = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData5 {
         contentByCode(code: "fracc2"){
@@ -95,7 +95,7 @@ export default withAuth(function Content() {
     `)
   );
 
-  const { data: dataTC, isLoading5 } = useGQLQuery(
+  const { data: dataTC } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData6 {
         contentByCode(code: "tc1"){
