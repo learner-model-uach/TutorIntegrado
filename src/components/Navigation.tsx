@@ -13,6 +13,9 @@ export function Navigation() {
         <SidebarLink icon={<FaHome />} href="/">
           Inicio
         </SidebarLink>
+        <SidebarLink href="/hello">
+          Hello
+        </SidebarLink>
       </Stack>
 
       <Stack pb="6">
