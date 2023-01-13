@@ -6,6 +6,7 @@ import Hint from "../Tools/Hint";
 //traductor y calculadora postfija
 import MQPostfixSolver from '../../../utils/MQPostfixSolver';
 import MQPostfixparser from '../../../utils/MQPostfixparser';
+import MQPostfixstrict from '../../../utils/MQPostfixstrict';
 //reporte de acciones
 import { useAction } from "../../../utils/action";
 
@@ -67,7 +68,7 @@ const Mq2 =  ({step,content,topicId,disablehint,setDefaultIndex,setSubmit,setSub
         let relativeError=Math.abs(1-(parseFloat(answer1)/parseFloat(answer2)));
         console.log(relativeError,parseInt(answer1),parseInt(answer2));
         //la validacion considera una precision con un 0.5% de error relativo
-        if(relativeError<0.005) {
+        if(relativeError<0.005 && MQPostfixstrict(parse1,parse2)) {
             result.current=true;
             setCdateE(Date.now());
             setAlerta("success");
