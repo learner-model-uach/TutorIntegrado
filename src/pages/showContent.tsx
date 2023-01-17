@@ -4,21 +4,31 @@ import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import dynamic from "next/dynamic";
 
-const DynamicTutorFac = dynamic(() =>
+const DynamicTutorFac = dynamic<{exercise?: Object}>(() =>
     import("../components/tutorFactorizacion/TutorFac").then((mod) => mod.TutorFac)
   );
 
-  const DynamicPlain = dynamic(() =>
+/*const DynamicTutorFac = dynamic(
+  () => {
+    return import("../components/tutorFactorizacion/TutorFac")
+  },
+  { ssr: false}
+);*/
+
+const DynamicPlain = dynamic<{
+  topicId: string;
+  steps: Object;
+}>(() =>
     import("../components/lvltutor/Plain").then((mod) => mod.Plain)
   );
 
-export default withAuth(function showContent() {
-
+export default withAuth(function ShowContent() {
+  
   const codigo = sessionState.currentContent.code;
  
   const { data } = useGQLQuery(
     gql(`
-    query ProjectData0 {
+    query {
       contentByCode(code: "${codigo}" ){
         json
       }

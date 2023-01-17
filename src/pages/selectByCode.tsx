@@ -6,7 +6,7 @@ import { sessionState, sessionStateBD } from "../components/SessionState";
 import Link from "next/link";
 
 
-export default function selectByCode() {
+export default function SelectByCode() {
 
   const [codigo, setCodigo] = useState('');
   const [texto, setTexto] = useState('');

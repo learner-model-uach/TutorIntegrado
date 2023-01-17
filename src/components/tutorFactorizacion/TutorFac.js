@@ -18,7 +18,7 @@ const DynamicTutorFC = dynamic(() =>
     import("./trinomiosCuadraticos/TrinomiosCuadraticos").then((mod) => mod.TC)
   );
 
-export const TutorFac = ({ exercise }) => {
+export const TutorFac = ({ exercise : Object }) => {
   
 
   return (
