@@ -2,7 +2,7 @@ import localforage from "localforage";
 import { proxy } from "valtio";
 import type { AuthState } from "./Auth";
 import type { User } from "@auth0/auth0-react";
-import type { UserRole } from "../graphql";
+   import type { UserRole } from "../graphql";
 
 export const sessionState = proxy<{
   currentUser: typeof AuthState.user | null;
