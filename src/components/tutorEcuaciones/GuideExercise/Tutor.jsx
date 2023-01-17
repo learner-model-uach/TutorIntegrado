@@ -18,9 +18,7 @@ export function Tutor({ id, setIntro, intro }) {
   const [nextPhase, setNextPhase] = useState(true);
   useEffect(() => {
     setIdExercise(id % 14);
-    const selet = problems.filter(
-      (exercise) => exercise.id === parseInt(idExercise)
-    );
+    const selet = problems.filter(exercise => exercise.id === parseInt(idExercise));
     setOrderFirst(selet[0].order_steps.position === "initial");
     setShowOrder(selet[0].order_steps.show);
     setNextPhase(true);
@@ -39,13 +37,8 @@ export function Tutor({ id, setIntro, intro }) {
             fontSize={{ base: "15px", sm: "20px", lg: "25px" }}
             className="eq-exercise"
           >
-            <TeX as="figcaption">
-              {exerciseSelected && exerciseSelected.tittle}
-            </TeX>
-            <TeX
-              math={exerciseSelected ? exerciseSelected.eqc : ""}
-              as="figcaption"
-            />
+            <TeX as="figcaption">{exerciseSelected && exerciseSelected.tittle}</TeX>
+            <TeX math={exerciseSelected ? exerciseSelected.eqc : ""} as="figcaption" />
           </Stack>
           <Stack marginTop="20px">
             <AccordionSteps

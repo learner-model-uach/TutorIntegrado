@@ -30,7 +30,7 @@ export const CardSelection = ({
     /*update currentContent*/
     sessionStateBD.setItem(
       "currentContent",
-      JSON.parse(JSON.stringify(sessionState.currentContent))
+      JSON.parse(JSON.stringify(sessionState.currentContent)),
     );
   });
 
@@ -64,10 +64,7 @@ export const CardSelection = ({
         <Center>
           <HStack>
             <Heading size="md" my="2" textAlign="center">
-              <NextLink
-                href={"content/solve?type=" + router.query.type}
-                passHref
-              >
+              <NextLink href={"content/solve?type=" + router.query.type} passHref>
                 <LinkOverlay>{exercise}</LinkOverlay>
               </NextLink>
             </Heading>

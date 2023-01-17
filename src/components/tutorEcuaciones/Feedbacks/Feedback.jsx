@@ -3,9 +3,7 @@ import { Text, Container, Stack, Flex, Box } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 export const Feedback = () => {
   return (
-    <Container
-      style={{ justifyContent: "center", margin: "auto", display: "flex" }}
-    >
+    <Container style={{ justifyContent: "center", margin: "auto", display: "flex" }}>
       <Stack>
         <Flex
           textAlign="center"
@@ -55,9 +53,7 @@ export const Feedback = () => {
             style={{ alignItems: "center" }}
           />
           <TeX
-            math={
-              "S = \\Big \\{\\frac {-b }{2a} \\Big \\}  , si \\hspace{0.2cm}  b²-4ac = 0  "
-            }
+            math={"S = \\Big \\{\\frac {-b }{2a} \\Big \\}  , si \\hspace{0.2cm}  b²-4ac = 0  "}
             as="figcaption"
             style={{ alignItems: "center" }}
           />

@@ -62,9 +62,9 @@ export const HintEqSystem = ({
     }
   }, [answerId]);
 
-  const getHint = (idAnswer) => {
+  const getHint = idAnswer => {
     if (allHints != undefined && idAnswer) {
-      let filterHint = allHints.find((hint) => {
+      let filterHint = allHints.find(hint => {
         return hint.answers.includes(idAnswer[0]);
       });
 
@@ -73,11 +73,9 @@ export const HintEqSystem = ({
       } else {
         filterHint = filterHint
           ? filterHint
-          : allHints.find((hint) => hint.answers.includes(idAnswer[1]));
+          : allHints.find(hint => hint.answers.includes(idAnswer[1]));
 
-        filterHint = filterHint
-          ? filterHint
-          : allHints.find((hint) => hint.generic);
+        filterHint = filterHint ? filterHint : allHints.find(hint => hint.generic);
 
         return filterHint;
       }
@@ -85,7 +83,7 @@ export const HintEqSystem = ({
     return null;
   };
 
-  const handOnClickNext = (e) => {
+  const handOnClickNext = e => {
     startAction({
       verbName: "requestHint",
       stepID: nStep,
@@ -96,7 +94,7 @@ export const HintEqSystem = ({
     setCount(count + 1);
   };
 
-  const handOnClickBack = (e) => {
+  const handOnClickBack = e => {
     startAction({
       verbName: "requestHint",
       stepID: nStep,
@@ -107,7 +105,7 @@ export const HintEqSystem = ({
     setCount(count - 1);
   };
 
-  const handOnClickHint = (e) => {
+  const handOnClickHint = e => {
     setCountNotication(0);
     if (lastHint && newHintAvaliable) {
       startAction({
@@ -117,34 +115,26 @@ export const HintEqSystem = ({
         hintID: count + 1,
         extra: { open: "new" },
       });
-      setHintsAvaliableList((prev) => [...prev, lastHint]);
-      setAllHints((prev) => prev.filter((hint) => hint.id !== lastHint.id));
-      setCount((prev) => prev + 1);
+      setHintsAvaliableList(prev => [...prev, lastHint]);
+      setAllHints(prev => prev.filter(hint => hint.id !== lastHint.id));
+      setCount(prev => prev + 1);
       setNewHintAvaliable(false);
     }
   };
 
   return (
-    <Popover
-      initialFocusRef={initialFocusRef}
-      placement="left"
-      closeOnBlur={false}
-    >
+    <Popover initialFocusRef={initialFocusRef} placement="left" closeOnBlur={false}>
       <PopoverTrigger>
         <Button
           className={
-            shake
-              ? `${styles["notification"]} ${styles["shake"]}`
-              : styles["notification"]
+            shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
           }
           disabled={disabledHint}
           onClick={handOnClickHint}
           colorScheme={HINT_BUTTOM_COLOR}
         >
           {HINT_BUTTOM_NAME}
-          {countNotification > 0 && (
-            <span className={styles["badge"]}>{countNotification}</span>
-          )}
+          {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent color="white" bg="blue.800" borderColor="blue.800">
@@ -155,9 +145,7 @@ export const HintEqSystem = ({
         <PopoverCloseButton />
         <PopoverBody>
           <Flex>
-            <TeX>
-              {hintsAvaliableList.length > 0 && hintsAvaliableList[count].text}
-            </TeX>
+            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[count].text}</TeX>
           </Flex>
         </PopoverBody>
         <PopoverFooter
@@ -169,10 +157,7 @@ export const HintEqSystem = ({
         >
           <ButtonGroup size="sm">
             {count != 0 && (
-              <Button
-                colorScheme={POPOVER_BACK_BUTTOM_COLOR}
-                onClick={handOnClickBack}
-              >
+              <Button colorScheme={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
                 {HINT_BACK_BUTTOM}
               </Button>
             )}

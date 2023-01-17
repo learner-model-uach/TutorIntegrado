@@ -1,16 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Input,
-  Wrap,
-  WrapItem,
-  Center,
-  Spacer,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
 import Hint from "../../tools/Hint";
 
@@ -19,7 +10,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
   const response = useRef(null); // answer entered by the student
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
-  const correctAlternatives = step1.answers.map((element) => element.answer); //list of answers valid
+  const correctAlternatives = step1.answers.map(element => element.answer); //list of answers valid
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
 
@@ -28,11 +19,9 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
     //contador de intentos
     setAttempts(attempts + 1);
     //responseStudent equals response with replace "space" and "*" (work string in lower case)
-    const responseStudent = response.current.value
-      .replace(/[*]| /g, "")
-      .toLowerCase();
+    const responseStudent = response.current.value.replace(/[*]| /g, "").toLowerCase();
     //validate is a function that compares each element with response of student
-    const validate = (element) => element === responseStudent;
+    const validate = element => element === responseStudent;
 
     //if response of student is correct (response == one element of correctAlternatives)
     if (correctAlternatives.some(validate)) {
@@ -42,7 +31,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
             <AlertIcon />
             {step1.correctMsg}
           </Alert>
-        </>
+        </>,
       );
       setStep1Valid((step1Valid = "Terminado"));
       action({
@@ -57,7 +46,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
         <Alert status="error">
           <AlertIcon />
           {step1.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };
@@ -66,10 +55,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
     <>
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
-          <MathComponent
-            tex={String.raw`${step1.expression}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step1.expression}`} display={false} />
         </WrapItem>
 
         <Spacer />
@@ -96,10 +82,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
               <label>&nbsp;(?)</label>
             ) : (
               <>
-                <MathComponent
-                  tex={String.raw`${step1.displayResult}`}
-                  display={false}
-                />
+                <MathComponent tex={String.raw`${step1.displayResult}`} display={false} />
               </>
             )}
           </Center>

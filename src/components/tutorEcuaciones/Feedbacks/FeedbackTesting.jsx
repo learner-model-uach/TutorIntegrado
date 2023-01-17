@@ -32,10 +32,7 @@ export const FeedbackTesting = ({ showFeedback }) => {
           </ModalHeader>
           <ModalCloseButton onClick={() => setShowF(false)} />
           <ModalBody style={{ fontSize: "20px", margin: "auto" }}>
-            <Text>
-              {" "}
-              Gracias por participar de esta prueba general de usabilidad.
-            </Text>
+            <Text> Gracias por participar de esta prueba general de usabilidad.</Text>
             <Text>Tu feedback nos sera de gran ayuda.</Text>
           </ModalBody>
           <ModalFooter>

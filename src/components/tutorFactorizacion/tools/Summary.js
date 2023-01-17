@@ -12,10 +12,7 @@ export const FCsummary = ({ exercise }) => {
           </Heading>
           <Text w="100%" />
           &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent
-            tex={String.raw`${exercise.expression}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${exercise.expression}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{exercise.summary}</Text>
           <MathComponent
@@ -39,10 +36,7 @@ export const FCCsummary = ({ exercise }) => {
           </Heading>
           <Text w="100%" />
           &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent
-            tex={String.raw`${exercise.steps[0].expression}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${exercise.steps[0].expression}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{exercise.steps[0].summary}</Text>
           {exercise.steps.length > 3 ? (
@@ -50,27 +44,18 @@ export const FCCsummary = ({ exercise }) => {
               <Text>
                 {" "}
                 Forma 1:{" "}
-                <MathComponent
-                  tex={String.raw`${exercise.steps[1].expression}`}
-                  display={false}
-                />
+                <MathComponent tex={String.raw`${exercise.steps[1].expression}`} display={false} />
               </Text>
               <Spacer />
               <Text>
                 {" "}
                 Forma 2:
-                <MathComponent
-                  tex={String.raw`${exercise.steps[2].expression}`}
-                  display={false}
-                />
+                <MathComponent tex={String.raw`${exercise.steps[2].expression}`} display={false} />
               </Text>
               <Spacer />
             </> //si no
           ) : (
-            <MathComponent
-              tex={String.raw`${exercise.steps[1].expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${exercise.steps[1].expression}`} display={false} />
           )}
           <Text w="100%" />
           <Text w="100%">{exercise.steps[1].summary}</Text>
@@ -79,27 +64,18 @@ export const FCCsummary = ({ exercise }) => {
               <Text>
                 {" "}
                 Forma 1:{" "}
-                <MathComponent
-                  tex={String.raw`${exercise.steps[3].expression}`}
-                  display={false}
-                />
+                <MathComponent tex={String.raw`${exercise.steps[3].expression}`} display={false} />
               </Text>
               <Spacer />
               <Text>
                 {" "}
                 Forma 2:
-                <MathComponent
-                  tex={String.raw`${exercise.steps[4].expression}`}
-                  display={false}
-                />
+                <MathComponent tex={String.raw`${exercise.steps[4].expression}`} display={false} />
               </Text>
               <Spacer />
             </> //si no
           ) : (
-            <MathComponent
-              tex={String.raw`${exercise.steps[2].expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${exercise.steps[2].expression}`} display={false} />
           )}
           <Text w="100%" />
           {exercise.steps.length > 3 ? (
@@ -149,46 +125,31 @@ export const DCsummary = ({ exercise }) => {
           </Heading>
           <Text w="100%" />
           &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent
-            tex={String.raw`${exercise.steps[0].expression}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${exercise.steps[0].expression}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{exercise.steps[0].summary}</Text>
           <Text>
             {" "}
             Forma 1:{" "}
-            <MathComponent
-              tex={String.raw`${exercise.steps[1].displayResult}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${exercise.steps[1].displayResult}`} display={false} />
           </Text>
           <Spacer />
           <Text>
             {" "}
             Forma 2:
-            <MathComponent
-              tex={String.raw`${exercise.steps[2].displayResult}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${exercise.steps[2].displayResult}`} display={false} />
           </Text>
           <Spacer />
           <Text>
             {" "}
             Forma 3:{" "}
-            <MathComponent
-              tex={String.raw`${exercise.steps[3].displayResult}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${exercise.steps[3].displayResult}`} display={false} />
           </Text>
           <Spacer />
           <Text>
             {" "}
             Forma 4:
-            <MathComponent
-              tex={String.raw`${exercise.steps[4].displayResult}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${exercise.steps[4].displayResult}`} display={false} />
           </Text>
           <Spacer />
           <Text w="100%">{exercise.steps[1].summary}</Text>
@@ -244,22 +205,13 @@ export const DSCsummary = ({ step1, step2 }) => {
           </Heading>
           <Text w="100%" />
           &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent
-            tex={String.raw`${step1.expression}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step1.expression}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{step1.summary}</Text>
-          <MathComponent
-            tex={String.raw`${step1.displayResult}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step1.displayResult}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{step2.summary}</Text>
-          <MathComponent
-            tex={String.raw`${step2.displayResult}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
         </Wrap>
       </Alert>
     </Box>
@@ -276,36 +228,21 @@ export const TCsummary = ({ step1, step2, step3, step4, step5 }) => {
           </Heading>
           <Text w="100%" />
           &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent
-            tex={String.raw`${step1.expression}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step1.expression}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{step1.summary}</Text>
-          <MathComponent
-            tex={String.raw`${step1.displayResult}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step1.displayResult}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{step2.summary}</Text>
-          <MathComponent
-            tex={String.raw`${step2.displayResult}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
           <Text w="100%" />
           <Text w="100%">{step3.summary}</Text>
           <Text w="100%">{step3.displayResult}</Text>
           <Text w="100%" />
           <Text w="100%">{step4.summary}</Text>
-          <MathComponent
-            tex={String.raw`${step4.displayResult}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step4.displayResult}`} display={false} />
           <Text w="100%">{step5.summary}</Text>
-          <MathComponent
-            tex={String.raw`${step5.displayResult}`}
-            display={false}
-          />
+          <MathComponent tex={String.raw`${step5.displayResult}`} display={false} />
         </Wrap>
       </Alert>
     </Box>

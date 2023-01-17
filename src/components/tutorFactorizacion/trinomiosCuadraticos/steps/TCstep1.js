@@ -2,30 +2,15 @@ import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Center,
-  Spacer,
-  Input,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const TCstep1 = ({
-  step1,
-  setStep1Valid,
-  step1Valid,
-  contentID,
-  topicID,
-}) => {
+export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
   const response1 = useRef(null); //1st input response
   const response2 = useRef(null); //2nd input response
   const response3 = useRef(null); //3nd input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
-  const correctAlternatives = step1.answers.map((elemento) => elemento.answer); //list of answers valid
+  const correctAlternatives = step1.answers.map(elemento => elemento.answer); //list of answers valid
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
@@ -38,15 +23,12 @@ export const TCstep1 = ({
       response2.current.value.replace(/[*]| /g, "").toLowerCase(),
       response3.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
-    const validate = (element) =>
+    const validate = element =>
       element[0] === responseStudent[0] &&
       element[1] === responseStudent[1] &&
       element[2] === responseStudent[2];
     if (correctAlternatives.some(validate)) {
-      setStep1Valid(
-        (step1Valid =
-          step1.answers[correctAlternatives.findIndex(validate)].nextStep)
-      );
+      setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
     } else {
       setError(true);
       setFeedbackMsg(
@@ -54,7 +36,7 @@ export const TCstep1 = ({
         <Alert status="error">
           <AlertIcon />
           {step1.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };
@@ -63,10 +45,7 @@ export const TCstep1 = ({
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
           <Center>
-            <MathComponent
-              tex={String.raw`${step1.expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${step1.expression}`} display={false} />
           </Center>
         </WrapItem>
 

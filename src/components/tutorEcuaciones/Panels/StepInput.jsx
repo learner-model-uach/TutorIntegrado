@@ -1,14 +1,6 @@
 import React, { useState, useContext } from "react";
 import TeX from "@matejmazur/react-katex";
-import {
-  Flex,
-  Button,
-  Grid,
-  Stack,
-  Input,
-  VStack,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Button, Grid, Stack, Input, VStack, Text } from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
   CORRECT_BUTTOM_NAME,
@@ -40,7 +32,7 @@ export const StepInput = ({
   const [answerInput, setAnswerInput] = useState("");
 
   const startAction = useAction({});
-  const onChange = (e) => {
+  const onChange = e => {
     setAnswer(e.target.value);
   };
 
@@ -55,7 +47,7 @@ export const StepInput = ({
     }
   };
 
-  const checkAnswers = (e) => {
+  const checkAnswers = e => {
     e.preventDefault();
     setOpenAlert(true);
     if (answer.length === 0) {
@@ -73,14 +65,14 @@ export const StepInput = ({
             stepID: step.n_step,
             extra: { response: answer },
           });
-          setStepCorrect((state) => [...state, answer]);
-          setColor((prev) => [
+          setStepCorrect(state => [...state, answer]);
+          setColor(prev => [
             ...prev.slice(0, nStep),
             CORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
           ]);
-          setNumStep((prevState) => prevState + 1);
-          setDisableState((prevState) => [...prevState, true]);
+          setNumStep(prevState => prevState + 1);
+          setDisableState(prevState => [...prevState, true]);
 
           setAlert({
             status: "success",
@@ -100,7 +92,7 @@ export const StepInput = ({
             stepID: step.n_step,
             extra: { response: answer },
           });
-          setColor((prev) => [
+          setColor(prev => [
             ...prev.slice(0, nStep),
             INCORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
@@ -129,10 +121,7 @@ export const StepInput = ({
         >
           <Stack direction={{ base: ["row", "column"], xl: ["column", "row"] }}>
             <Flex marginRight={{ xl: "250px" }} margin={{ base: "auto" }}>
-              <Text
-                display={{ base: "none", xl: "block" }}
-                margin={{ base: "auto" }}
-              >
+              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
                 {step.left_text}
               </Text>
               <Flex padding={{ base: "5px" }}>

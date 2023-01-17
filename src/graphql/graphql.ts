@@ -2,15 +2,9 @@
 import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -681,6 +675,76 @@ export type ContentConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Return selected content and properties for further analysis (model, codes of content, probabilities and tables) */
+export type ContentSelectedPropsReturn = {
+  __typename?: "ContentSelectedPropsReturn";
+  /** All code of contents of last N contents done */
+  PU: Array<Scalars["String"]>;
+  /** Content selected for learner */
+  contentResult: Array<ContentsSelectedReturn>;
+  /** Model structure of learner composed for KC level and KC threshold */
+  model: Scalars["JSON"];
+  /** All codes of contents without last N contents and content dominated */
+  newP: Array<Scalars["String"]>;
+  /** All codes of contents of topic chapters */
+  oldP: Array<Scalars["String"]>;
+  /** Probability of success by average PK of exercise most difficult */
+  pAVGdif: Scalars["Float"];
+  /** Probability of success by average PK of exercise most similar */
+  pAVGsim: Scalars["Float"];
+  /** table of newP with TableReturn attributes */
+  table: Array<TableReturn>;
+  /** table filter with similarity less than 1 and difficulty less than difficulty of last content done (PU[0]) */
+  tableDifEasy: Array<TableReturn>;
+  /** table filter with similarity less than 1 and difficulty greater than difficulty of last content done (PU[0]) */
+  tableDifHarder: Array<TableReturn>;
+  /** table filter with similarity equals to 1 */
+  tableSim: Array<TableReturn>;
+  /** Return message of service */
+  topicCompletedMsg: Message;
+};
+
+/** ContentSelection input data */
+export type ContentSelectionInput = {
+  /** Discard last N contents done (optional in query), default N= 10 */
+  discardLast?: Scalars["Int"];
+  /** Domain identifier */
+  domainId: Scalars["IntID"];
+  /** Project identifier */
+  projectId: Scalars["IntID"];
+  /** Topic identifier */
+  topicId: Array<Scalars["IntID"]>;
+  /** User identifier */
+  userId: Scalars["IntID"];
+  /** Range Zone proximal development(ZPD) (optional in query), default [0.4,0.6] */
+  zpdRange?: InputMaybe<Array<Scalars["Float"]>>;
+};
+
+/** ContentSelection Queries */
+export type ContentSelectionQueries = {
+  __typename?: "ContentSelectionQueries";
+  /** Get all contentSelected properties associated with the specified ContentSelectionInput */
+  contentSelected: ContentSelectedPropsReturn;
+};
+
+/** ContentSelection Queries */
+export type ContentSelectionQueriesContentSelectedArgs = {
+  input: ContentSelectionInput;
+};
+
+/** Main structure of content selected return */
+export type ContentsSelectedReturn = {
+  __typename?: "ContentsSelectedReturn";
+  /** Message associated to Content */
+  Msg: Message;
+  /** Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion */
+  Order: Scalars["IntID"];
+  /** Content P */
+  P: Content;
+  /** Preferred is true when Content is the best option for learner, else false */
+  Preferred: Scalars["Boolean"];
+};
+
 /** Content creation input data */
 export type CreateContent = {
   /**
@@ -1007,6 +1071,15 @@ export type KCsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Structure of message return in content selected */
+export type Message = {
+  __typename?: "Message";
+  /** Label of message of content selected */
+  label: Scalars["String"];
+  /** Text of message of content selected */
+  text: Scalars["String"];
+};
+
 /** Model State Entity */
 export type ModelState = {
   __typename?: "ModelState";
@@ -1016,7 +1089,6 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
@@ -1028,6 +1100,12 @@ export type ModelState = {
   user: User;
 };
 
+/** Different types of Model State */
+export const ModelStateAlgorithm = {
+  Bkt: "BKT",
+} as const;
+
+export type ModelStateAlgorithm = typeof ModelStateAlgorithm[keyof typeof ModelStateAlgorithm];
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
   __typename?: "ModelStateConnection";
@@ -1137,10 +1215,16 @@ export type Mutation = {
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -1338,6 +1422,8 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
+  /** ContentSelection Query */
+  contentSelection: ContentSelectionQueries;
   /** Authenticated user information */
   currentUser?: Maybe<User>;
   /**
@@ -1451,6 +1537,21 @@ export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
+};
+
+/** Structure of TableReturn for check result of criterion and further analysis */
+export type TableReturn = {
+  __typename?: "TableReturn";
+  /** Code of content */
+  contentCode?: Maybe<Scalars["String"]>;
+  /** Value of difficulty of content */
+  diff?: Maybe<Scalars["Float"]>;
+  /** Probability of success by average of KCs levels of the Content */
+  probSuccessAvg?: Maybe<Scalars["Float"]>;
+  /** Probability of success by multiplication of KCs levels of the Content */
+  probSuccessMult?: Maybe<Scalars["Float"]>;
+  /** Value of similarity of content */
+  sim?: Maybe<Scalars["Float"]>;
 };
 
 /** Topic entity */
@@ -1582,6 +1683,13 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 /** Project update input data */
@@ -1729,12 +1837,7 @@ export type CurrentUserQuery = {
         role: UserRole;
         picture?: string | null | undefined;
         tags: Array<string>;
-        projects: Array<{
-          __typename?: "Project";
-          id: string;
-          code: string;
-          label: string;
-        }>;
+        projects: Array<{ __typename?: "Project"; id: string; code: string; label: string }>;
         groups: Array<{
           __typename?: "Group";
           id: string;
@@ -1745,10 +1848,7 @@ export type CurrentUserQuery = {
       }
     | null
     | undefined;
-  project?:
-    | { __typename?: "Project"; id: string; code: string; label: string }
-    | null
-    | undefined;
+  project?: { __typename?: "Project"; id: string; code: string; label: string } | null | undefined;
 };
 
 export type ProjectData0QueryVariables = Exact<{ [key: string]: never }>;
@@ -1756,10 +1856,7 @@ export type ProjectData0QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData0Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1769,10 +1866,7 @@ export type ProjectData1QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData1Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1782,10 +1876,7 @@ export type ProjectData2QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData2Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1795,10 +1886,7 @@ export type ProjectData3QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData3Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1808,10 +1896,7 @@ export type ProjectData4QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData4Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1821,10 +1906,7 @@ export type ProjectData5QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData5Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1834,10 +1916,7 @@ export type ProjectData6QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData6Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1847,10 +1926,7 @@ export type ProjectData7QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData7Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1860,10 +1936,7 @@ export type ProjectData8QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData8Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1873,10 +1946,7 @@ export type ProjectData9QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData9Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1886,10 +1956,7 @@ export type ProjectData10QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData10Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1960,11 +2027,7 @@ export const CurrentUserDocument = {
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "NivPreAlg", block: false },
               },
             ],
             selectionSet: {
@@ -2003,9 +2066,7 @@ export const ProjectData0Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2035,9 +2096,7 @@ export const ProjectData1Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2067,9 +2126,7 @@ export const ProjectData2Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2099,9 +2156,7 @@ export const ProjectData3Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2131,9 +2186,7 @@ export const ProjectData4Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2163,9 +2216,7 @@ export const ProjectData5Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2195,9 +2246,7 @@ export const ProjectData6Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2227,9 +2276,7 @@ export const ProjectData7Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2259,9 +2306,7 @@ export const ProjectData8Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2291,9 +2336,7 @@ export const ProjectData9Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2323,9 +2366,7 @@ export const ProjectData10Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2346,10 +2387,7 @@ export const ActionDocument = {
           variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
           type: {
             kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "ActionInput" },
-            },
+            type: { kind: "NamedType", name: { kind: "Name", value: "ActionInput" } },
           },
         },
       ],
@@ -2363,10 +2401,7 @@ export const ActionDocument = {
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "data" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "data" },
-                },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
               },
             ],
           },

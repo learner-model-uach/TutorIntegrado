@@ -5,12 +5,7 @@ export const Loading = () => {
     <>
       <Box>
         <Text w="100%"></Text>
-        <Spinner
-          thickness="3px"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="md"
-        />
+        <Spinner thickness="3px" emptyColor="gray.200" color="blue.500" size="md" />
         <Text w="100%"></Text>
       </Box>
     </>

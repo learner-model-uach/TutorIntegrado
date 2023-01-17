@@ -23,22 +23,9 @@ import {
   DRAG_FIXED_TWO,
 } from "../../../types";
 
-export const AccordionSteps = ({
-  exercise,
-  setNextExercise,
-  setIntro,
-  intro,
-}) => {
+export const AccordionSteps = ({ exercise, setNextExercise, setIntro, intro }) => {
   const inputRef = useRef([]);
-  const listPanels = [
-    "panel1",
-    "panel2",
-    "panel3",
-    "panel4",
-    "panel5",
-    "panel6",
-    "panel7",
-  ];
+  const listPanels = ["panel1", "panel2", "panel3", "panel4", "panel5", "panel6", "panel7"];
   const listBox = ["box1", "box2", "box3", "box4", "box5", "box6", "box7"];
 
   const [totalSteps, setTotalSteps] = useState(0);
@@ -55,7 +42,7 @@ export const AccordionSteps = ({
     setColor(
       Array(exercise.steps.length)
         .fill(0)
-        .map((e) => ACCORDION_COLOR)
+        .map(e => ACCORDION_COLOR),
     );
     setDisableState([true]);
     setIndexStep([0]);
@@ -75,11 +62,11 @@ export const AccordionSteps = ({
   useEffect(() => {
     if (intro.backStep && firstPanelOpen) {
       inputRef.current[0].click();
-      setIntro((prev) => ({ ...prev, backStep: false }));
+      setIntro(prev => ({ ...prev, backStep: false }));
     }
   }, [intro.backStep]);
 
-  const handleExpanded = (expandedIndex) => {
+  const handleExpanded = expandedIndex => {
     if (expandedIndex.includes(0)) {
       setFirstPanelOpen(false);
     } else {
@@ -93,7 +80,7 @@ export const AccordionSteps = ({
         defaultIndex={indexStep}
         key={exercise.id}
         style={{ width: "100%" }}
-        onChange={(expandedIndex) => handleExpanded(expandedIndex)}
+        onChange={expandedIndex => handleExpanded(expandedIndex)}
       >
         {exercise &&
           exercise.steps.map((step, index) => (
@@ -106,7 +93,7 @@ export const AccordionSteps = ({
               className={styles["accordionPadding"]}
             >
               <AccordionButton
-                ref={(element) => (inputRef.current[index] = element)}
+                ref={element => (inputRef.current[index] = element)}
                 bg={
                   color[index] === ACCORDION_COLOR
                     ? ACCORDION_COLOR

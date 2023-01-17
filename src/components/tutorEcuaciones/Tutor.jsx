@@ -31,9 +31,7 @@ export function Tutor({ id }) {
 
   useEffect(() => {
     setIdExercise(id % 14);
-    const selet = problems.filter(
-      (exercise) => exercise.id === parseInt(idExercise)
-    );
+    const selet = problems.filter(exercise => exercise.id === parseInt(idExercise));
     settingContent(selet[0]?.content);
     startAction({
       verbName: "loadContent",
@@ -48,29 +46,21 @@ export function Tutor({ id }) {
     setNextExercise(false);
   }, [id]);
 
-  const handlerNextExercise = (e) => {
+  const handlerNextExercise = e => {
     e.preventDefault();
     startAction({
       verbName: "nextContent",
     });
-    setIdExercise((prev) => (idExercise % 14) + 1);
+    setIdExercise(prev => (idExercise % 14) + 1);
     push(`/exercise/${(idExercise % 14) + 1}`);
   };
   return (
     <>
       {exerciseSelected && (
         <>
-          <Stack
-            textAlign="center"
-            fontSize={{ base: "15px", sm: "20px", lg: "25px" }}
-          >
-            <TeX as="figcaption">
-              {exerciseSelected && exerciseSelected.tittle}
-            </TeX>
-            <TeX
-              math={exerciseSelected ? exerciseSelected.eqc : ""}
-              as="figcaption"
-            />
+          <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
+            <TeX as="figcaption">{exerciseSelected && exerciseSelected.tittle}</TeX>
+            <TeX math={exerciseSelected ? exerciseSelected.eqc : ""} as="figcaption" />
           </Stack>
           <Stack marginTop="20px">
             {showOrder ? (
@@ -83,10 +73,7 @@ export function Tutor({ id }) {
                   />
                 ) : (
                   <>
-                    <AccordionSteps
-                      exercise={exerciseSelected}
-                      setNextExercise={setNextExercise}
-                    />
+                    <AccordionSteps exercise={exerciseSelected} setNextExercise={setNextExercise} />
                     {nextExercise && (
                       <>
                         <Feedback />
@@ -111,10 +98,7 @@ export function Tutor({ id }) {
                 )
               ) : nextPhase ? (
                 <>
-                  <AccordionSteps
-                    exercise={exerciseSelected}
-                    setNextExercise={setNextExercise}
-                  />
+                  <AccordionSteps exercise={exerciseSelected} setNextExercise={setNextExercise} />
                   {nextExercise && (
                     <>
                       <Feedback />
@@ -127,7 +111,7 @@ export function Tutor({ id }) {
                           lg: "16px",
                         }}
                         colorScheme="blue"
-                        onClick={() => setNextPhase((prev) => !prev)}
+                        onClick={() => setNextPhase(prev => !prev)}
                         style={{ float: "right" }}
                       >
                         {NEXT_STEP_BUTTOM_NAME}
@@ -145,10 +129,7 @@ export function Tutor({ id }) {
               )
             ) : (
               <>
-                <AccordionSteps
-                  exercise={exerciseSelected}
-                  setNextExercise={setNextExercise}
-                />
+                <AccordionSteps exercise={exerciseSelected} setNextExercise={setNextExercise} />
                 {nextExercise && (
                   <>
                     <Feedback />

@@ -2,16 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Input,
-  Wrap,
-  WrapItem,
-  Center,
-  Spacer,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
 const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
   const response1 = useRef(null); //first input response
@@ -44,7 +35,7 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
         <Alert status="error">
           <AlertIcon />
           {step2.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };
@@ -53,10 +44,7 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
           <Center>
-            <MathComponent
-              tex={String.raw`${step2.expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${step2.expression}`} display={false} />
           </Center>
         </WrapItem>
 
@@ -123,10 +111,7 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
                     result: step2Valid === null ? 0 : 1,
                     kcsIDs: step2.KCs,
                     extra: {
-                      response: [
-                        response1.current.value,
-                        response2.current.value,
-                      ],
+                      response: [response1.current.value, response2.current.value],
                       attempts: attempts,
                       hints: hints,
                     },

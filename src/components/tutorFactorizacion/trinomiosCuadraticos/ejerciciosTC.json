@@ -62,9 +62,7 @@
           },
           { "hintId": 2, "hint": "El valor del discriminante (Δ) es 196" }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": "196", "nextStep": "2" }],
         "incorrectMsg": "no se han ingresado correctamente el discriminante de la expresión",
         "correctMsg": "Haz calculado correctamente el discriminante",
@@ -106,10 +104,7 @@
         "stepId": "3",
         "expression": "Δ = 196, a = 3, b = 8",
         "stepTitle": "Calcular raíces x₁ = (-b + √Δ)/2a, x₂ = (-b - √Δ)/2a ",
-        "formula": [
-          "x_{1}=\\frac{-b+\\sqrt{Δ}}{2a}",
-          "x_{2}=\\frac{-b-\\sqrt{Δ}}{2a}"
-        ],
+        "formula": ["x_{1}=\\frac{-b+\\sqrt{Δ}}{2a}", "x_{2}=\\frac{-b-\\sqrt{Δ}}{2a}"],
         "displayResult": "x_{1}=1, x_{2}=-11/3",
         "KCs": [7],
         "hints": [
@@ -257,9 +252,7 @@
           },
           { "hintId": 2, "hint": "El valor del discriminante es 16" }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": "16", "nextStep": "2" }],
         "incorrectMsg": "no se han ingresado correctamente el discriminante de la expresión",
         "correctMsg": "Haz calculado correctamente el discriminante",
@@ -301,10 +294,7 @@
         "stepId": "3",
         "expression": "Δ = 16, a = 1, b = 8 ",
         "stepTitle": "Calcular raíces x₁ = (-b + √Δ)/2a, x₂ = (-b - √Δ)/2a ",
-        "formula": [
-          "x_{1}=\\frac{-b+\\sqrt{Δ}}{2a}",
-          "x_{2}=\\frac{-b-\\sqrt{Δ}}{2a}"
-        ],
+        "formula": ["x_{1}=\\frac{-b+\\sqrt{Δ}}{2a}", "x_{2}=\\frac{-b-\\sqrt{Δ}}{2a}"],
         "displayResult": "x_{1}=-2, x_{2}=-6",
         "KCs": [7],
         "hints": [
@@ -451,9 +441,7 @@
         "expression": "a=5, b=4, c=-1",
         "incorrectMsg": "no se han ingresado correctamente el discriminante de la expresión",
         "displayResult": "Δ=36",
-        "matchingError": [
-          { "hint": "No ha ingresado respuesta", "error": [""], "hintId": 3 }
-        ]
+        "matchingError": [{ "hint": "No ha ingresado respuesta", "error": [""], "hintId": 3 }]
       },
       {
         "KCs": [6],
@@ -499,10 +487,7 @@
         ],
         "stepId": "3",
         "answers": [{ "answer": ["1/5", "-1"], "nextStep": "5" }],
-        "formula": [
-          "x_{1}=\\frac{-b+\\sqrt{Δ}}{2a}",
-          "x_{2}=\\frac{-b-\\sqrt{Δ}}{2a}"
-        ],
+        "formula": ["x_{1}=\\frac{-b+\\sqrt{Δ}}{2a}", "x_{2}=\\frac{-b-\\sqrt{Δ}}{2a}"],
         "summary": "4) Obtenidos los valores de a, b y Δ se puede calcular x₁= (-b + √Δ)/2a y x₂= (-b - √Δ)/2a, entonces:",
         "stepTitle": "Calcular raíces x₁ = (-b + √Δ)/2a, x₂ = (-b - √Δ)/2a ",
         "correctMsg": "Haz encontrado las raices del polinomio",
@@ -643,9 +628,7 @@
         "expression": "a=5, b=4, c=-1",
         "incorrectMsg": "no se han ingresado correctamente el discriminante de la expresión",
         "displayResult": "Δ=-16",
-        "matchingError": [
-          { "hint": "No ha ingresado respuesta", "error": [""], "hintId": 3 }
-        ]
+        "matchingError": [{ "hint": "No ha ingresado respuesta", "error": [""], "hintId": 3 }]
       },
       {
         "KCs": [6],

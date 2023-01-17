@@ -20,13 +20,7 @@ import { useAction } from "../../../utils/action";
 import ExerciseContext from "../context/exercise/exerciseContext";
 import { useRouter } from "next/router";
 
-export const SortSteps = ({
-  steps,
-  setNextPhase,
-  linkNext,
-  idExercise,
-  setIdExercise,
-}) => {
+export const SortSteps = ({ steps, setNextPhase, linkNext, idExercise, setIdExercise }) => {
   const [cards, setCards] = useState([]);
   const [correctOrder, setCorrectOrder] = useState(false);
   const [cardColor, setCardColor] = useState([]);
@@ -36,7 +30,7 @@ export const SortSteps = ({
   const { push } = useRouter();
   useEffect(() => {
     if (steps) {
-      const getTextCards = steps.map((step) => {
+      const getTextCards = steps.map(step => {
         return { id: step.n_step, text: step.left_text };
       });
       shuffleCard(getTextCards);
@@ -45,14 +39,14 @@ export const SortSteps = ({
   }, [steps]);
 
   const findCard = useCallback(
-    (id) => {
-      const card = cards.filter((c) => `${c.id}` === id)[0];
+    id => {
+      const card = cards.filter(c => `${c.id}` === id)[0];
       return {
         card,
         index: cards.indexOf(card),
       };
     },
-    [cards]
+    [cards],
   );
 
   const moveCard = useCallback(
@@ -64,10 +58,10 @@ export const SortSteps = ({
             [index, 1],
             [atIndex, 0, card],
           ],
-        })
+        }),
       );
     },
-    [findCard, cards, setCards]
+    [findCard, cards, setCards],
   );
 
   const [, drop] = useDrop(() => ({ accept: BOX }));
@@ -86,7 +80,7 @@ export const SortSteps = ({
     );
   };
 
-  const correctOrderHandler = (e) => {
+  const correctOrderHandler = e => {
     const isCorrect = cards.map((card, id) => {
       if (card.id === id) {
         return CORRECT_ANSWER_COLOR;
@@ -96,7 +90,7 @@ export const SortSteps = ({
     });
     setCardColor(isCorrect);
 
-    if (isCorrect.some((color) => color === INCORRECT_ANSWER_COLOR)) {
+    if (isCorrect.some(color => color === INCORRECT_ANSWER_COLOR)) {
       startAction({
         verbName: "checkOrder",
         result: 0,
@@ -114,12 +108,12 @@ export const SortSteps = ({
     }
   };
 
-  const handlerNextExercise = (e) => {
+  const handlerNextExercise = e => {
     e.preventDefault();
     startAction({
       verbName: "nextContent",
     });
-    setIdExercise((prev) => (idExercise % 14) + 1);
+    setIdExercise(prev => (idExercise % 14) + 1);
     push(`/exercise/${(idExercise % 14) + 1}`);
   };
 
@@ -187,10 +181,7 @@ export const SortSteps = ({
                     </Button>
                   </Link>
                 ) : (
-                  <Button
-                    onClick={() => setNextPhase(false)}
-                    colorScheme="twitter"
-                  >
+                  <Button onClick={() => setNextPhase(false)} colorScheme="twitter">
                     {NEXT_STEP_BUTTOM_NAME}
                   </Button>
                 )}

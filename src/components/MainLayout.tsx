@@ -47,12 +47,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
         left={isOpen ? "var(--sidebar-width)" : "0"}
         transition="left 0.2s"
       >
-        <Box
-          bg={contentContainerBackground}
-          height="100%"
-          pb="6"
-          rounded={{ md: "lg" }}
-        >
+        <Box bg={contentContainerBackground} height="100%" pb="6" rounded={{ md: "lg" }}>
           <Flex direction="column" height="full">
             <Flex
               w="full"

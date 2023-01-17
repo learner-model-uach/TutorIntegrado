@@ -2,24 +2,9 @@ import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Center,
-  Spacer,
-  Input,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const TCstep5 = ({
-  step5,
-  setStep5Valid,
-  step5Valid,
-  contentID,
-  topicID,
-}) => {
+export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }) => {
   const response1 = useRef(null); //1st input response
   const response2 = useRef(null); //2nd input response
   const response3 = useRef(null); //3nd input response
@@ -38,7 +23,7 @@ export const TCstep5 = ({
       response2.current.value.replace(/[*]| /g, "").toLowerCase(),
       response3.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
-    const validate = (element) =>
+    const validate = element =>
       (element[0] === responseStudent[0] &&
         element[1] === responseStudent[1] &&
         element[2] === responseStudent[2]) ||
@@ -52,7 +37,7 @@ export const TCstep5 = ({
           {step5.correctMsg}
           &nbsp;
           <MathComponent tex={step5.displayResult} display={false} />
-        </Alert>
+        </Alert>,
       );
       setStep5Valid((step5Valid = "Terminado"));
       action({
@@ -69,7 +54,7 @@ export const TCstep5 = ({
         <Alert status="error">
           <AlertIcon />
           {step5.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };
@@ -78,10 +63,7 @@ export const TCstep5 = ({
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="8px 0px 10px 0px">
           <Center>
-            <MathComponent
-              tex={String.raw`${step5.expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${step5.expression}`} display={false} />
           </Center>
         </WrapItem>
 
