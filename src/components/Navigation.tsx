@@ -18,6 +18,7 @@ export function Navigation() {
         <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
           Search by Code
         </SidebarLink>
+        
         <SidebarLink href="/hello">
           Hello
         </SidebarLink>
