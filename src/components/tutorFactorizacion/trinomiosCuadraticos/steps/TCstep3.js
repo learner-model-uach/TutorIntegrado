@@ -13,13 +13,7 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 
-export const TCstep3 = ({
-  step3,
-  setStep3Valid,
-  step3Valid,
-  contentID,
-  topicID,
-}) => {
+export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }) => {
   const [feedbackMsg, setFeedbackMsg] = useState(null); // feedback message
   const [value, setValue] = React.useState(); //checked radio
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
@@ -40,7 +34,7 @@ export const TCstep3 = ({
         <Alert status="error">
           <AlertIcon />
           {step3.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };

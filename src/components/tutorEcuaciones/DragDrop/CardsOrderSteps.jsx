@@ -16,19 +16,13 @@ const style = {
   textAlign: "center",
 };
 
-export const CardsOrderSteps = memo(function Card({
-  id,
-  text,
-  moveCard,
-  findCard,
-  color,
-}) {
+export const CardsOrderSteps = memo(function Card({ id, text, moveCard, findCard, color }) {
   const originalIndex = findCard(id).index;
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: BOX,
       item: { id, originalIndex },
-      collect: (monitor) => ({
+      collect: monitor => ({
         isDragging: monitor.isDragging(),
       }),
       end: (item, monitor) => {
@@ -39,7 +33,7 @@ export const CardsOrderSteps = memo(function Card({
         }
       },
     }),
-    [id, originalIndex, moveCard]
+    [id, originalIndex, moveCard],
   );
   const [, drop] = useDrop(
     () => ({
@@ -52,7 +46,7 @@ export const CardsOrderSteps = memo(function Card({
         }
       },
     }),
-    [findCard, moveCard]
+    [findCard, moveCard],
   );
   const opacity = isDragging ? 0 : 1;
   return (
@@ -63,7 +57,7 @@ export const CardsOrderSteps = memo(function Card({
       height={{
         base: "50px",
       }}
-      ref={(node) => drag(drop(node))}
+      ref={node => drag(drop(node))}
       style={{
         ...style,
         opacity,

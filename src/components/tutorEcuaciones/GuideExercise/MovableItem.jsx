@@ -16,16 +16,7 @@ const style = {
   cursor: "move",
 };
 
-export const MovableItem = ({
-  value,
-  column,
-  setItems,
-  items,
-  answer,
-  type,
-  isCorrect,
-  nStep,
-}) => {
+export const MovableItem = ({ value, column, setItems, items, answer, type, isCorrect, nStep }) => {
   const [isCorrecto, setIsCorrect] = useState(true);
   const exerciseContext = useContext(ExerciseContext);
   const { content } = exerciseContext;
@@ -42,8 +33,8 @@ export const MovableItem = ({
   }
 
   const changeItemColumn = (value, columnName) => {
-    setItems((prevState) => {
-      return prevState.map((e) => {
+    setItems(prevState => {
+      return prevState.map(e => {
         return {
           ...e,
           column: e.value === value ? columnName : e.column,
@@ -53,7 +44,7 @@ export const MovableItem = ({
   };
 
   const findItem = () => {
-    const itemAnswer = items.find((item) => item.column === COLUMN2);
+    const itemAnswer = items.find(item => item.column === COLUMN2);
     return itemAnswer;
   };
 
@@ -107,7 +98,7 @@ export const MovableItem = ({
         }
       }
     },
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -168,11 +159,7 @@ export const MovableItem = ({
       fontSize={{ base: "10px" }}
       style={{ textAlign: "center", opacity: opacity }}
     >
-      {type == "drag-text" ? (
-        <Text>{newValue}</Text>
-      ) : (
-        <TeX math={value} as="figcaption" />
-      )}
+      {type == "drag-text" ? <Text>{newValue}</Text> : <TeX math={value} as="figcaption" />}
     </Flex>
   );
 };

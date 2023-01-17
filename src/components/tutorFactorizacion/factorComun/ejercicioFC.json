@@ -24,9 +24,7 @@
           },
           { "hintId": 2, "hint": "El factor común de la expresión es x^2." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": "x^2", "nextStep": null }],
         "incorrectMsg": "Factor común incorrecto, ingrese el factor común correspondiente a la expresión dada.",
         "correctMsg": "Has encontrado el factor común.",
@@ -151,9 +149,7 @@
           },
           { "hintId": 2, "hint": "El factor común de la expresión es 6." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": "6", "nextStep": null }],
         "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
         "correctMsg": "Has encontrado el factor común",

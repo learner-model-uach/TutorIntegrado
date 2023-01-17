@@ -72,7 +72,7 @@ export const sessionStateInitial = (
       }
     | null
     | undefined,
-  auth0User: User | null
+  auth0User: User | null,
 ) => {
   sessionState.currentUser = JSON.parse(JSON.stringify(user));
   sessionState.sessionId = `${auth0User?.updated_at}`;
@@ -82,12 +82,7 @@ export const sessionStateInitial = (
       if (value == null) {
         //create valuekey in sessionState in indexedBD
         sessionStateBD
-          .setItem(
-            key,
-            JSON.parse(
-              JSON.stringify(sessionState[key as keyof typeof sessionState])
-            )
-          )
+          .setItem(key, JSON.parse(JSON.stringify(sessionState[key as keyof typeof sessionState])))
           .then(function () {
             // Do other things once the value has been saved.
             console.log("create 'key' in sessionState");

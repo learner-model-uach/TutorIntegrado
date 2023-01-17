@@ -21,15 +21,7 @@ interface SidebarLinkProps extends BoxProps {
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const {
-    children,
-    icon = <ArrowRight />,
-    avatar,
-    href,
-    isExternal,
-    target,
-    ...rest
-  } = props;
+  const { children, icon = <ArrowRight />, avatar, href, isExternal, target, ...rest } = props;
   const { push, prefetch, pathname, query } = useRouter();
 
   const activeBg = useColorModeValue("blue.900", "gray.700");
@@ -45,11 +37,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       py="1"
       rounded="md"
       cursor="pointer"
-      bg={
-        query.type === href.substring(href.indexOf("=") + 1)
-          ? activeBg
-          : undefined
-      }
+      bg={query.type === href.substring(href.indexOf("=") + 1) ? activeBg : undefined}
       _hover={{ color: "white", bg: hoverBg }}
       className="group"
       fontWeight="medium"
@@ -68,7 +56,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
             </Link>
           ) : (
             <LinkOverlay
-              onClick={(ev) => {
+              onClick={ev => {
                 ev.preventDefault();
 
                 pathname !== href && push(href);

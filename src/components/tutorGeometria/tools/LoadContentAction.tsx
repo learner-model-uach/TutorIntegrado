@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useAction } from "../../../utils/action";
 
-export const LoadContentAction = (exercise: {
-  code: string | any;
-  type: string | any;
-}) => {
+export const LoadContentAction = (exercise: { code: string | any; type: string | any }) => {
   const action = useAction();
   useEffect(() => {
     action({

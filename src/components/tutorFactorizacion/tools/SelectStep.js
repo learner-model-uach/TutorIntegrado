@@ -12,10 +12,10 @@ export const SelectStep = ({ steps, correct, setSelect, contentID, topic }) => {
     setNewSteps2(
       newSteps2.sort(function () {
         return Math.random() - 0.5;
-      })
+      }),
     );
   }, []);
-  const resp = (e) => {
+  const resp = e => {
     e == correct && setSelect(false);
   };
 
@@ -40,7 +40,7 @@ export const SelectStep = ({ steps, correct, setSelect, contentID, topic }) => {
             //kcsIDs:[] ver mas adelante
           });
         }}
-        onChange={(e) => {
+        onChange={e => {
           resp(e.target.value);
           action({
             verbName: "chooseNextStep",
@@ -54,7 +54,7 @@ export const SelectStep = ({ steps, correct, setSelect, contentID, topic }) => {
           });
         }}
       >
-        {newSteps2.map((step) => (
+        {newSteps2.map(step => (
           <option key={step} value={newSteps.indexOf(step)}>
             {"" + step}
           </option>
