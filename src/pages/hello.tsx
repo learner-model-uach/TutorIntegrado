@@ -26,7 +26,7 @@ function Hello() {
     <>
       <p>Hola!</p>
       <NextLink
-                href={"chao"}
+                href={"cargarContenido"}
         >Ir a otra pagina</NextLink>
     </>
   );

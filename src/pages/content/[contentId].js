@@ -184,7 +184,7 @@ export default withAuth(function Content() {
           <DynamicPlain
             key = "9"
             steps={dataFracc1?.contentByCode?.json}
-            //topicId="fracc1"
+            topicId="fracc1"
           ></DynamicPlain>
         ) : router.query.type == 10 && dataFracc2 ? (
           <DynamicPlain

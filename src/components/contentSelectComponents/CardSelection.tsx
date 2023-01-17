@@ -50,7 +50,7 @@ export const CardSelection = ({
         rounded="md"
         textAlign="center"
         onClick={() => {
-          sessionState.currentContent.code = "1"; //code de sessionState
+          sessionState.currentContent.code = "fc1"; //code de sessionState
           sessionState.currentContent.description = msg + ""; //descripcion del ejercicio ofrecido
           sessionState.currentContent.id = 1; //identificador del ejercicio
           sessionState.currentContent.json = { json: "json del ejercicio" }; //json del ejercicio
