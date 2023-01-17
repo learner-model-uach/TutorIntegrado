@@ -53,7 +53,7 @@ export default withAuth(function Content() {
     `),
   );
 
-  const { data: dataFCC, isLoading1 } = useGQLQuery(
+  const { data: dataFCC } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData2 {
         contentByCode(code: "fcc1") {
@@ -63,7 +63,7 @@ export default withAuth(function Content() {
     `),
   );
 
-  const { data: dataDSC, isLoading2 } = useGQLQuery(
+  const { data: dataDSC } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData3 {
         contentByCode(code: "dsc1") {
@@ -73,7 +73,7 @@ export default withAuth(function Content() {
     `),
   );
 
-  const { data: dataFracc1, isLoading3 } = useGQLQuery(
+  const { data: dataFracc1 } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData4 {
         contentByCode(code: "fracc1") {
@@ -83,7 +83,7 @@ export default withAuth(function Content() {
     `),
   );
 
-  const { data: dataFracc2, isLoading4 } = useGQLQuery(
+  const { data: dataFracc2 } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData5 {
         contentByCode(code: "fracc2") {
@@ -93,7 +93,7 @@ export default withAuth(function Content() {
     `),
   );
 
-  const { data: dataTC, isLoading5 } = useGQLQuery(
+  const { data: dataTC } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData6 {
         contentByCode(code: "tc1") {
@@ -181,7 +181,7 @@ export default withAuth(function Content() {
           <DynamicPlain
             key="9"
             steps={dataFracc1?.contentByCode?.json}
-            //topicId="fracc1"
+            topicId="fracc1"
           ></DynamicPlain>
         ) : router.query.type == 10 && dataFracc2 ? (
           <DynamicPlain
