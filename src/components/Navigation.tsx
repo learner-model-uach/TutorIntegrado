@@ -14,17 +14,13 @@ export function Navigation() {
         <SidebarLink icon={<FaHome />} href="/">
           Inicio
         </SidebarLink>
-<<<<<<< HEAD
         <Text fontWeight="black">Selección por Código</Text>
         <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
           Search by Code
         </SidebarLink>
-        
-=======
         <SidebarLink href="/hello">
           Hello
         </SidebarLink>
->>>>>>> b23d2cea27c780e23a561048bd71b751b51eaac7
       </Stack>
 
       <Stack pb="6">
