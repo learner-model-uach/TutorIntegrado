@@ -69,7 +69,7 @@ export function SyncAuth() {
       onSettled() {
         AuthState.isLoading = false;
       },
-    }
+    },
   );
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export function SyncAuth() {
   useEffect(() => {
     if (user) {
       AuthState.isLoading = true;
-      latestGetIdToken.current().then((data) => {
+      latestGetIdToken.current().then(data => {
         AuthState.authorizationToken = rqGQLClient.headers.authorization = data
           ? `Bearer ${data.__raw}`
           : undefined;
@@ -118,9 +118,7 @@ const OnStart = memo(function OnStart() {
 
 export const useAuth = () => useSnapshot(AuthState);
 
-export function withAuth<Props extends Record<string, unknown>>(
-  Cmp: FC<Props>
-) {
+export function withAuth<Props extends Record<string, unknown>>(Cmp: FC<Props>) {
   const WithAuth: {
     (props: Props): JSX.Element;
     displayName: string;

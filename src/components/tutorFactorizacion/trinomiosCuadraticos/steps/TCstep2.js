@@ -2,24 +2,9 @@ import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Center,
-  Spacer,
-  Input,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const TCstep2 = ({
-  step2,
-  setStep2Valid,
-  step2Valid,
-  contentID,
-  topicID,
-}) => {
+export const TCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
   const response = useRef(null); //input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
@@ -32,9 +17,7 @@ export const TCstep2 = ({
     //contador de intentos
     setAttempts(attempts + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
-    const responseStudent = response.current.value
-      .replace(/[*]| /g, "")
-      .toLowerCase();
+    const responseStudent = response.current.value.replace(/[*]| /g, "").toLowerCase();
 
     if (correctAlternatives === responseStudent) {
       //valida que la entrada es correcta
@@ -46,7 +29,7 @@ export const TCstep2 = ({
         <Alert status="error">
           <AlertIcon />
           {step2.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };
@@ -56,10 +39,7 @@ export const TCstep2 = ({
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
           <Center>
-            <MathComponent
-              tex={String.raw`${step2.expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${step2.expression}`} display={false} />
           </Center>
         </WrapItem>
 

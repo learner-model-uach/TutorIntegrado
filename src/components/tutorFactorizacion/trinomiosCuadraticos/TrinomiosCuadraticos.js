@@ -43,7 +43,7 @@ export const TC = ({ exercise, nextRouter }) => {
   const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 3 correct
   const [select5, setSelect5] = useState(exercise.selectSteps); //select is false when the student select the step 4 correct
-  const steps = exercise.steps.map((i) => i.stepTitle); //select is false when the student select the step 5 correct
+  const steps = exercise.steps.map(i => i.stepTitle); //select is false when the student select the step 5 correct
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
   const action = useAction(); //send action to central system
 
@@ -79,10 +79,7 @@ export const TC = ({ exercise, nextRouter }) => {
 
   return (
     <>
-      <BreadcrumbTutor
-        root="Factorización"
-        item={exercise.title}
-      ></BreadcrumbTutor>
+      <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
       <Wrap>
         {exercise.text}
@@ -94,11 +91,7 @@ export const TC = ({ exercise, nextRouter }) => {
 
       <Wrap justify="center">
         {loading && <Loading />}
-        <MathComponent
-          tex={exercise.steps[0].expression}
-          display={true}
-          onSuccess={change}
-        />
+        <MathComponent tex={exercise.steps[0].expression} display={true} onSuccess={change} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -106,8 +99,8 @@ export const TC = ({ exercise, nextRouter }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0)) {
-                  setIndex(index.filter((e) => e !== 0));
+                if (index.some(element => element === 0)) {
+                  setIndex(index.filter(e => e !== 0));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
@@ -159,18 +152,12 @@ export const TC = ({ exercise, nextRouter }) => {
 
         <AccordionItem isDisabled={select2}>
           <Alert
-            colorScheme={
-              step2Valid == null
-                ? step1Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 1)) {
-                  setIndex(index.filter((e) => e !== 1));
+                if (index.some(element => element === 1)) {
+                  setIndex(index.filter(e => e !== 1));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
@@ -222,18 +209,12 @@ export const TC = ({ exercise, nextRouter }) => {
 
         <AccordionItem isDisabled={select3}>
           <Alert
-            colorScheme={
-              step3Valid == null
-                ? step2Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step3Valid == null ? (step2Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 2)) {
-                  setIndex(index.filter((e) => e !== 2));
+                if (index.some(element => element === 2)) {
+                  setIndex(index.filter(e => e !== 2));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[2].stepId,
@@ -285,18 +266,12 @@ export const TC = ({ exercise, nextRouter }) => {
 
         <AccordionItem isDisabled={select4}>
           <Alert
-            colorScheme={
-              step4Valid == null
-                ? step3Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step4Valid == null ? (step3Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 3)) {
-                  setIndex(index.filter((e) => e !== 3));
+                if (index.some(element => element === 3)) {
+                  setIndex(index.filter(e => e !== 3));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[3].stepId,
@@ -348,18 +323,12 @@ export const TC = ({ exercise, nextRouter }) => {
 
         <AccordionItem isDisabled={select5}>
           <Alert
-            colorScheme={
-              step5Valid == null
-                ? step4Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step5Valid == null ? (step4Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 4)) {
-                  setIndex(index.filter((e) => e !== 4));
+                if (index.some(element => element === 4)) {
+                  setIndex(index.filter(e => e !== 4));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[4].stepId,

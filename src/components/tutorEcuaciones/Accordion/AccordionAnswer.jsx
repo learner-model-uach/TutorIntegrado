@@ -3,13 +3,7 @@ import TeX from "@matejmazur/react-katex";
 import { Flex, Text, Box } from "@chakra-ui/react";
 import { DRAG_TEXT, DRAG_FIXED, DRAG_FIXED_TWO, INPUT } from "../types";
 
-export const AccordionAnswer = ({
-  nStep,
-  text,
-  inputLabels,
-  stepType,
-  answer,
-}) => {
+export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) => {
   let newValue = "";
   if (answer && stepType === DRAG_TEXT) {
     newValue = answer.replace("\\text", "");
@@ -19,10 +13,7 @@ export const AccordionAnswer = ({
   return (
     <div>
       <Flex>
-        <Text
-          fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }}
-          style={{}}
-        >
+        <Text fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }} style={{}}>
           Paso {nStep}. {text}{" "}
         </Text>
 
@@ -42,10 +33,7 @@ export const AccordionAnswer = ({
               }}
             >
               <TeX
-                math={inputLabels
-                  .concat(answer[0])
-                  .concat("=")
-                  .concat(answer[1])}
+                math={inputLabels.concat(answer[0]).concat("=").concat(answer[1])}
                 as="figcaption"
                 style={{
                   alignItems: "center",
@@ -55,9 +43,7 @@ export const AccordionAnswer = ({
           )}
           {inputLabels != null &&
             answer &&
-            (stepType === DRAG_FIXED ||
-              stepType === INPUT ||
-              stepType === DRAG_TEXT) && (
+            (stepType === DRAG_FIXED || stepType === INPUT || stepType === DRAG_TEXT) && (
               <Box
                 fontSize={{ sm: "12px", md: "15px", base: "9px" }}
                 width={{

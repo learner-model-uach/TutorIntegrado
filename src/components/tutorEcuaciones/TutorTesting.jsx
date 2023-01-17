@@ -13,12 +13,7 @@ import { useAuth } from "../Auth";
 import ExerciseContext from "../../context/exercise/exerciseContext";
 import { useRouter } from "next/router";
 
-export function TutorTesting({
-  id,
-  setTabIndex,
-  setColorTab,
-  setShowFeedback,
-}) {
+export function TutorTesting({ id, setTabIndex, setColorTab, setShowFeedback }) {
   const [idExercise, setIdExercise] = useState(id % 14);
   const [exerciseSelected, setExerciseSelected] = useState(null);
   const [totalSteps, setTotalSteps] = useState(0);
@@ -36,9 +31,7 @@ export function TutorTesting({
 
   useEffect(() => {
     setIdExercise(id % 14);
-    const selet = problems.filter(
-      (exercise) => exercise.id === parseInt(idExercise)
-    );
+    const selet = problems.filter(exercise => exercise.id === parseInt(idExercise));
     settingContent(selet[0]?.content);
     startAction({
       verbName: "loadContent",
@@ -53,37 +46,25 @@ export function TutorTesting({
     setNextExercise(false);
   }, [id]);
 
-  const handlerNextExercise = (e) => {
+  const handlerNextExercise = e => {
     e.preventDefault();
     startAction({
       verbName: "nextContent",
     });
     if (id < 7) {
-      setTabIndex((prev) => prev + 1);
+      setTabIndex(prev => prev + 1);
     } else {
       setShowFeedback(true);
     }
-    setColorTab((prev) => [
-      ...prev.slice(0, id),
-      "#91e87b",
-      ...prev.slice(id + 1),
-    ]);
+    setColorTab(prev => [...prev.slice(0, id), "#91e87b", ...prev.slice(id + 1)]);
   };
   return (
     <>
       {exerciseSelected && (
         <>
-          <Stack
-            textAlign="center"
-            fontSize={{ base: "15px", sm: "20px", lg: "25px" }}
-          >
-            <TeX as="figcaption">
-              {exerciseSelected && exerciseSelected.tittle}
-            </TeX>
-            <TeX
-              math={exerciseSelected ? exerciseSelected.eqc : ""}
-              as="figcaption"
-            />
+          <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
+            <TeX as="figcaption">{exerciseSelected && exerciseSelected.tittle}</TeX>
+            <TeX math={exerciseSelected ? exerciseSelected.eqc : ""} as="figcaption" />
           </Stack>
           <Stack marginTop="20px">
             {showOrder ? (
@@ -100,16 +81,11 @@ export function TutorTesting({
                   />
                 ) : (
                   <>
-                    <AccordionSteps
-                      exercise={exerciseSelected}
-                      setNextExercise={setNextExercise}
-                    />
+                    <AccordionSteps exercise={exerciseSelected} setNextExercise={setNextExercise} />
                     {nextExercise && (
                       <>
                         {exerciseSelected.content !== "sys_eq0" &&
-                          exerciseSelected.content !== "sys_eq1" && (
-                            <Feedback />
-                          )}
+                          exerciseSelected.content !== "sys_eq1" && <Feedback />}
                         <Button
                           marginRight="12px"
                           fontSize={{
@@ -129,10 +105,7 @@ export function TutorTesting({
                 )
               ) : nextPhase ? (
                 <>
-                  <AccordionSteps
-                    exercise={exerciseSelected}
-                    setNextExercise={setNextExercise}
-                  />
+                  <AccordionSteps exercise={exerciseSelected} setNextExercise={setNextExercise} />
                   {nextExercise && (
                     <>
                       {exerciseSelected.content !== "sys_eq0" &&
@@ -146,7 +119,7 @@ export function TutorTesting({
                           lg: "16px",
                         }}
                         colorScheme="blue"
-                        onClick={() => setNextPhase((prev) => !prev)}
+                        onClick={() => setNextPhase(prev => !prev)}
                         style={{ float: "right" }}
                       >
                         {NEXT_STEP_BUTTOM_NAME}
@@ -168,10 +141,7 @@ export function TutorTesting({
               )
             ) : (
               <>
-                <AccordionSteps
-                  exercise={exerciseSelected}
-                  setNextExercise={setNextExercise}
-                />
+                <AccordionSteps exercise={exerciseSelected} setNextExercise={setNextExercise} />
                 {nextExercise && (
                   <>
                     {exerciseSelected.content !== "sys_eq0" &&

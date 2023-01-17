@@ -2,30 +2,14 @@ import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Input,
-  Wrap,
-  WrapItem,
-  Center,
-  Spacer,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
-const FCCstep1 = ({
-  step1,
-  setStep1Valid,
-  step1Valid,
-  loading,
-  contentID,
-  topicID,
-}) => {
+const FCCstep1 = ({ step1, setStep1Valid, step1Valid, loading, contentID, topicID }) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
-  const correctAlternatives = step1.answers.map((elemento) => elemento.answer); //list of answers valid
+  const correctAlternatives = step1.answers.map(elemento => elemento.answer); //list of answers valid
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
@@ -39,17 +23,13 @@ const FCCstep1 = ({
       response2.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
     //valida que la entrada es correctas
-    const validate = (element) =>
-      (element[0] === responseStudent[0] &&
-        element[1] === responseStudent[1]) ||
+    const validate = element =>
+      (element[0] === responseStudent[0] && element[1] === responseStudent[1]) ||
       (element[0] === responseStudent[1] && element[1] === responseStudent[0]);
     //El método some() comprueba si al menos un elemento del array
     //cumple con la condición implementada por la función proporcionada.
     if (correctAlternatives.some(validate)) {
-      setStep1Valid(
-        (step1Valid =
-          step1.answers[correctAlternatives.findIndex(validate)].nextStep)
-      );
+      setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
     } else {
       setError(true);
 
@@ -58,7 +38,7 @@ const FCCstep1 = ({
         <Alert status="error">
           <AlertIcon />
           {step1.incorrectMsg}
-        </Alert>
+        </Alert>,
       );
     }
   };
@@ -68,10 +48,7 @@ const FCCstep1 = ({
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
           <Center>
-            <MathComponent
-              tex={String.raw`${step1.expression}`}
-              display={false}
-            />
+            <MathComponent tex={String.raw`${step1.expression}`} display={false} />
           </Center>
         </WrapItem>
 
@@ -129,10 +106,7 @@ const FCCstep1 = ({
                     result: step1Valid === null ? 0 : 1,
                     kcsIDs: step1.KCs,
                     extra: {
-                      response: [
-                        response1.current.value,
-                        response2.current.value,
-                      ],
+                      response: [response1.current.value, response2.current.value],
                       attempts: attempts,
                       hints: hints,
                     },

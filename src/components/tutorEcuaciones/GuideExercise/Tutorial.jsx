@@ -1,14 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import React, { Component, useEffect, useState } from "react";
 import { Tutor } from "./Tutor";
-import Joyride, {
-  CallBackProps,
-  STATUS,
-  Step,
-  StoreHelpers,
-  ACTIONS,
-  EVENTS,
-} from "react-joyride";
+import Joyride, { CallBackProps, STATUS, Step, StoreHelpers, ACTIONS, EVENTS } from "react-joyride";
 import { isParseTreeNode } from "typescript";
 export default function Tutorial() {
   const [intro, setIntro] = useState({
@@ -18,10 +11,7 @@ export default function Tutorial() {
 
   const CloseBtn = ({ ...props }) => {
     return (
-      <button
-        style={{ padding: 15, position: "absolute", right: 0, top: 0 }}
-        {...props}
-      >
+      <button style={{ padding: 15, position: "absolute", right: 0, top: 0 }} {...props}>
         <svg
           width={"14px"}
           height={"14px"}
@@ -68,13 +58,9 @@ export default function Tutorial() {
       >
         {isLastStep && index === 6 && <CloseBtn {...closeProps} />}
         {step.title && (
-          <div style={{ color: " #f04", padding: "20px", margin: 0 }}>
-            {step.title}
-          </div>
+          <div style={{ color: " #f04", padding: "20px", margin: 0 }}>{step.title}</div>
         )}
-        {step.content && (
-          <div style={{ color: "#000", padding: "20px" }}>{step.content}</div>
-        )}
+        {step.content && <div style={{ color: "#000", padding: "20px" }}>{step.content}</div>}
         <div
           style={{
             alignItems: "center",
@@ -118,9 +104,7 @@ export default function Tutorial() {
               }}
               {...primaryProps}
             >
-              {index === 9 || (index === 6 && isLastStep)
-                ? "Finalizar"
-                : "Siguiente"}
+              {index === 9 || (index === 6 && isLastStep) ? "Finalizar" : "Siguiente"}
             </button>
           )}
         </div>
@@ -135,8 +119,7 @@ export default function Tutorial() {
       steps: [
         {
           target: ".eq-exercise",
-          content:
-            "En la parte superior se presenta el ejercicio que debes resolver",
+          content: "En la parte superior se presenta el ejercicio que debes resolver",
           hideCloseButton: true,
           spotlightClicks: true,
           disableOverlayClose: true,
@@ -184,7 +167,7 @@ export default function Tutorial() {
     });
   }, []);
 
-  const handleJoyrideCallback = (data) => {
+  const handleJoyrideCallback = data => {
     const { action, index, type, status } = data;
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
 

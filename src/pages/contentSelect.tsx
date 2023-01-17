@@ -74,13 +74,7 @@ function ContentSelect() {
   return (
     <>
       <p>Selección del contenido del tópico: {topic.type}</p>
-      <SimpleGrid
-        columns={control ? 1 : 3}
-        spacing="8"
-        p="10"
-        textAlign="center"
-        rounded="lg"
-      >
+      <SimpleGrid columns={control ? 1 : 3} spacing="8" p="10" textAlign="center" rounded="lg">
         {control /*&& !isLoading*/ ? (
           <Center>
             <CardSelection
