@@ -562,141 +562,6 @@ type ContentConnection implements Connection {
 Return selected content and properties for further analysis (model, codes of content, probabilities and tables)
 """
 type ContentSelectedPropsReturn {
-  """
-  All code of contents of last N contents done
-  """
-  PU: [String!]!
-
-  """
-  Content selected for learner
-  """
-  contentResult: [ContentsSelectedReturn!]!
-
-  """
-  Model structure of learner composed for KC level and KC threshold
-  """
-  model: JSON!
-
-  """
-  All codes of contents without last N contents and content dominated
-  """
-  newP: [String!]!
-
-  """
-  All codes of contents of topic chapters
-  """
-  oldP: [String!]!
-
-  """
-  Probability of success by average PK of exercise most difficult
-  """
-  pAVGdif: Float!
-
-  """
-  Probability of success by average PK of exercise most similar
-  """
-  pAVGsim: Float!
-
-  """
-  table of newP with TableReturn attributes
-  """
-  table: [TableReturn!]!
-
-  """
-  table filter with similarity less than 1 and difficulty less than difficulty of last content done (PU[0])
-  """
-  tableDifEasy: [TableReturn!]!
-
-  """
-  table filter with similarity less than 1 and difficulty greater than difficulty of last content done (PU[0])
-  """
-  tableDifHarder: [TableReturn!]!
-
-  """
-  table filter with similarity equals to 1
-  """
-  tableSim: [TableReturn!]!
-
-  """
-  Return message of service
-  """
-  topicCompletedMsg: Message!
-}
-
-"""
-ContentSelection input data
-"""
-input ContentSelectionInput {
-  """
-  Discard last N contents done (optional in query), default N= 10
-  """
-  discardLast: Int! = 10
-
-  """
-  Domain identifier
-  """
-  domainId: IntID!
-
-  """
-  Project identifier
-  """
-  projectId: IntID!
-
-  """
-  Topic identifier
-  """
-  topicId: [IntID!]!
-
-  """
-  User identifier
-  """
-  userId: IntID!
-
-  """
-  Range Zone proximal development(ZPD) (optional in query), default [0.4,0.6]
-  """
-  zpdRange: [Float!] = [0.4, 0.6]
-}
-
-"""
-ContentSelection Queries
-"""
-type ContentSelectionQueries {
-  """
-  Get all contentSelected properties associated with the specified ContentSelectionInput
-  """
-  contentSelected(input: ContentSelectionInput!): ContentSelectedPropsReturn!
-}
-
-"""
-Main structure of content selected return
-"""
-type ContentsSelectedReturn {
-  """
-  Message associated to Content
-  """
-  Msg: Message!
-
-  """
-  Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion
-  """
-  Order: IntID!
-
-  """
-  Content P
-  """
-  P: Content!
-
-  """
-  Preferred is true when Content is the best option for learner, else false
-  """
-  Preferred: Boolean!
-}
-
-"""
-Content creation input data
-"""
-type ContentSelectedPropsReturn {
   """All code of contents of last N contents done"""
   PU: [String!]!
 
@@ -1206,24 +1071,16 @@ type KCsConnection implements Connection {
   pageInfo: PageInfo!
 }
 
-"""
-Structure of message return in content selected
-"""
+"""Structure of message return in content selected"""
 type Message {
-  """
-  Label of message of content selected
-  """
+  """Label of message of content selected"""
   label: String!
 
-  """
-  Text of message of content selected
-  """
+  """Text of message of content selected"""
   text: String!
 }
 
-"""
-Model State Entity
-"""
+"""Model State Entity"""
 type ModelState {
   """Date of creation"""
   createdAt: DateTime!
@@ -1248,16 +1105,12 @@ type ModelState {
   user: User!
 }
 
-"""
-Different types of Model State
-"""
+"""Different types of Model State"""
 enum ModelStateAlgorithm {
   BKT
 }
 
-"""
-Paginated Model States
-"""
+"""Paginated Model States"""
 type ModelStateConnection implements Connection {
   """Nodes of the current page"""
   nodes: [ModelState!]!
@@ -1385,9 +1238,7 @@ type Mutation {
   """Returns 'Hello World!'"""
   hello: String!
 
-  """
-  Update model state with new state
-  """
+  """Update model state with new state"""
   updateModelState(input: UpdateModelStateInput!): Void
 }
 
@@ -1614,14 +1465,10 @@ type Query {
   """
   contentByCode(code: String!): Content
 
-  """
-  ContentSelection Query
-  """
+  """ContentSelection Query"""
   contentSelection: ContentSelectionQueries!
 
-  """
-  Authenticated user information
-  """
+  """Authenticated user information"""
   currentUser: User
 
   """
@@ -1709,29 +1556,19 @@ type Subscription {
 Structure of TableReturn for check result of criterion and further analysis
 """
 type TableReturn {
-  """
-  Code of content
-  """
+  """Code of content"""
   contentCode: String
 
-  """
-  Value of difficulty of content
-  """
+  """Value of difficulty of content"""
   diff: Float
 
-  """
-  Probability of success by average of KCs levels of the Content
-  """
+  """Probability of success by average of KCs levels of the Content"""
   probSuccessAvg: Float
 
-  """
-  Probability of success by multiplication of KCs levels of the Content
-  """
+  """Probability of success by multiplication of KCs levels of the Content"""
   probSuccessMult: Float
 
-  """
-  Value of similarity of content
-  """
+  """Value of similarity of content"""
   sim: Float
 }
 
@@ -1906,18 +1743,14 @@ input UpdateKCInput {
   label: String!
 }
 
-"""
-Input to update model state
-"""
+"""Input to update model state"""
 input UpdateModelStateInput {
   domainID: IntID!
   typeModel: ModelStateAlgorithm!
   userID: IntID!
 }
 
-"""
-Project update input data
-"""
+"""Project update input data"""
 input UpdateProject {
   """Unique string identifier"""
   code: String!
