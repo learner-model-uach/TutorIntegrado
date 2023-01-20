@@ -15,7 +15,7 @@ const DynamicQuery=()=>{
         }
     },[submit])
 
-    const { data: dataPot4 } = useGQLQuery(gql(/* GraphQL */ `
+    const { data: potato } = useGQLQuery(gql(/* GraphQL */ `
     query potatoquery($code:String!){
       contentByCode(code: $code){
         json
@@ -27,7 +27,7 @@ const DynamicQuery=()=>{
         <>
             <Input onChange={(e)=>{setText(e.target.value)}}/>
             <Button onClick={()=>{setSubmit(true)}}>Consultar</Button>
-            <Text>{JSON.stringify(dataPot4?.contentByCode?.json)}</Text>
+            <Text>{JSON.stringify(potato?.contentByCode?.json)}</Text>
         </>
     )
 }
