@@ -4,51 +4,57 @@ const MQPostfixSolver = (MQPostfixExpression:string,ValuesObject:object[]) => {
     const valueReplace = (input:string,values:typeof value[]) => {
         let l = values.length;
         let output=input;
-        for (let i=0;i<l;i++) output=output.replaceAll(" "+values[i]!.name," "+values[i]!.value);
+        for (let i=0;i<l;i++) {
+            let value=values[i];
+            if(!value)continue;
+            output=output.replaceAll(" "+value.name," "+value.value);
+        }
         return output;
     }
 
     const solveExpresion = (expression:String) => {
-        var exp=expression.split(" ");
-        var stack:number[]=[];
-        var alphabet = new RegExp(/^[a-zA-Z]$/);
-        var number = new RegExp(/^[0-9]+[.0-9]*$/);
+        let exp=expression.split(" ");
+        let stack:number[]=[];
+        let alphabet = new RegExp(/^[a-zA-Z]$/);
+        let number = new RegExp(/^[0-9]+[.0-9]*$/);
         for (let i=0;i<exp.length;i++){
-            if (exp[i]!.length==1 && alphabet.test(exp[i]!)){
+            let value=exp[i];
+            if(!value)continue;
+            if (value.length==1 && alphabet.test(value)){
                 stack.push(1);
-            } else if(number.test(exp[i]!)){
-                stack.push(parseFloat(exp[i]!));
+            } else if(number.test(value)){
+                stack.push(parseFloat(value));
             } else {
-                if(exp[i]!.localeCompare("/")==0){
+                if(value.localeCompare("/")==0){
                     let a:number = stack.pop()!;
                     let b:number = stack.pop()!;
                     stack.push(b/a);
-                } else if (exp[i]!.localeCompare("*")==0) {
+                } else if (value.localeCompare("*")==0) {
                     let a:number = stack.pop()!;
                     let b:number = stack.pop()!;
                     stack.push(b*a);
-                } else if (exp[i]!.localeCompare("sqrt")==0 ) {
+                } else if (value.localeCompare("sqrt")==0 ) {
                     let a:number = stack.pop()!;
                     stack.push(Math.sqrt(a));
-                } else if (exp[i]!.localeCompare("sin")==0 ) {
+                } else if (value.localeCompare("sin")==0 ) {
                     let a:number = stack.pop()!;
                     stack.push(Math.sin(a));                    
-                } else if (exp[i]!.localeCompare("cos")==0 ) {
+                } else if (value.localeCompare("cos")==0 ) {
                     let a:number = stack.pop()!;
                     stack.push(Math.cos(a));                    
-                } else if (exp[i]!.localeCompare("^")==0 ) {
+                } else if (value.localeCompare("^")==0 ) {
                     let a:number = stack.pop()!;
                     let b:number = stack.pop()!;
                     stack.push(b**a);                    
-                } else if (exp[i]!.localeCompare("+")==0 ) {
+                } else if (value.localeCompare("+")==0 ) {
                     let a:number = stack.pop()!;
                     let b:number = stack.pop()!;
                     stack.push(b+a);                    
-                } else if (exp[i]!.localeCompare("-")==0 ) {
+                } else if (value.localeCompare("-")==0 ) {
                     let a:number= stack.pop()!;
                     let b:number = stack.pop()!;
                     stack.push(b-a);                    
-                } else if (exp[i]!.localeCompare("\\um")==0) {
+                } else if (value.localeCompare("\\um")==0) {
                     let a:number= stack.pop()!;
                     stack.push(-a);
                 }

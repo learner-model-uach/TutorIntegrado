@@ -47,41 +47,52 @@ const MQPostfixparser = (MQinfixInput:string) => {
         let a=word;
         let l=a.length;
         let literal='';
-        var alphabet = new RegExp(/^[a-zA-Z]$/);
-        var number = new RegExp(/^[0-9.]$/);
+        let alphabet = new RegExp(/^[a-zA-Z]$/);
+        let number = new RegExp(/^[0-9.]$/);
         let replacePositions=[];
         for (let i=0; i<l; i++){
-            if (alphabet.test(a[i]!)) {
-                literal=literal+a[i];
+            let value=a[i];
+            let lvalue;
+            let rvalue;
+            if(i>0){
+                lvalue=a[i-1];
+            }
+            if(i<(l-1)){
+                rvalue=a[i+1];
+            }
+            if(!value)continue;
+            if (alphabet.test(value)) {
+                literal=literal+value;
                 if(i==(l-1)) replacePositions.push({i:i+1,lit:literal})
-                if((i-1)>-1) {if(number.test(a[i-1]!)) replacePositions.push({i:i,lit:" "});};
-                if((i+1)<l) {if(number.test(a[i+1]!)) replacePositions.push({i:i+1,lit:" "});};
+                if((i-1)>-1) {if(lvalue!=undefined && number.test(lvalue)) replacePositions.push({i:i,lit:" "});};
+                if((i+1)<l) {if(rvalue!=undefined && number.test(rvalue)) replacePositions.push({i:i+1,lit:" "});};
             } else if (typeof reservedWords[literal as keyof typeof reservedWords]!="undefined") {
                 literal="";
             } else {
                 if(literal.length>1) replacePositions.push({i:i,lit:literal})
                 literal="";
             }
-            if (a[i]!.localeCompare("(")==0) {
-                if((i-1)>-1) {if(number.test(a[i-1]!)||alphabet.test(a[i-1]!)) replacePositions.push({i:i,lit:" "});};
+            if (value.localeCompare("(")==0) {
+                if((i-1)>-1) {if(lvalue!=undefined && (number.test(lvalue)||alphabet.test(lvalue))) replacePositions.push({i:i,lit:" "});};
                 
             }
-            if (a[i]!.localeCompare(")")==0) {
-                if((i+1)<l) {if(number.test(a[i+1]!)||alphabet.test(a[i+1]!)) replacePositions.push({i:i+1,lit:" "});};
+            if (value.localeCompare(")")==0) {
+                if((i+1)<l) {if(rvalue!=undefined && (number.test(rvalue)||alphabet.test(rvalue))) replacePositions.push({i:i+1,lit:" "});};
             }
         }
         let acc=0;
         for (let i=0; i<replacePositions.length;i++) {      
             let lit=replacePositions[i]?.lit;
-            if(lit?.localeCompare(" ")!=0){
-                let llit=lit!.length;
-                let litAr=lit!.split("");
+            let repPos=replacePositions[i];
+            if(lit?.localeCompare(" ")!=0 && lit!=undefined){
+                let llit=lit.length;
+                let litAr=lit.split("");
                 lit=litAr[0]!;
                 for(let j=1; j<litAr.length;j++)lit=lit+"*"+litAr[j];
-                a=replaceAt(a,replacePositions[i]!.i-llit+acc,replacePositions[i]!.i+acc,lit);
+                if(repPos!=undefined)a=replaceAt(a,repPos.i-llit+acc,repPos.i+acc,lit);
                 acc=acc+litAr.length-1;
             } else {
-                a=replaceAt(a,replacePositions[i]!.i+acc,replacePositions[i]!.i+acc,"*");
+                if(repPos!=undefined)a=replaceAt(a,repPos.i+acc,repPos.i+acc,"*");
                 acc=acc+1;
             }
             
@@ -94,14 +105,16 @@ const MQPostfixparser = (MQinfixInput:string) => {
         let word=a;
         let l=word.length;
         let literal="";
-        var alphabet = new RegExp(/^[a-zA-Z]$/);
+        let alphabet = new RegExp(/^[a-zA-Z]$/);
         let stack=[];
         let replacePositions=[];
         //stack 1:first mark, 2:second mark, 18: (, 19: )
         for (let i=0; i<l; i++){
-            if (alphabet.test(word[i]!)) {
-                literal=literal+word[i];
-            } else if ("\\".localeCompare(word[i]!)==0) {
+            let value=word[i]
+            if(!value)continue;
+            if (alphabet.test(value)) {
+                literal=literal+value;
+            } else if ("\\".localeCompare(value)==0) {
                 literal="\\";
             } else if (literal.localeCompare("\\frac")==0) {
                 stack.push(1);
@@ -111,7 +124,7 @@ const MQPostfixparser = (MQinfixInput:string) => {
             } else {
                 literal="";
             }
-            if (word[i]!.localeCompare("(")==0){
+            if (value.localeCompare("(")==0){
                 if(stack[stack.length-1]==2){
                     stack.pop();
                     replacePositions.push(i);
@@ -122,18 +135,22 @@ const MQPostfixparser = (MQinfixInput:string) => {
                 }
                 stack.push(18);
             }
-            if (word[i]!.localeCompare(")")==0){
-                while(18!=stack[stack.length-1]) if(stack.length>0) stack.pop();
+            if (value.localeCompare(")")==0){
+                while(stack.length>0 && 18!=stack[stack.length-1])stack.pop();
                 if (stack.length>0 && 18==stack[stack.length-1]) stack.pop();
             }
         }
-        for (let i=0; i<replacePositions.length;i++) word=replaceAt(word,replacePositions[i]!+i,replacePositions[i]!+i+1,"/(");
+        for (let i=0; i<replacePositions.length;i++) {
+            let value=replacePositions[i];
+            if(!value)continue;
+            word=replaceAt(word,value+i,value+i+1,"/(");
+        }
         word=word.replace(/\\frac/g,"");
         return word;
     }
 
     const MQinfixToPostfix = (word:String) => {
-        var a=word;
+        let a=word;
         a=a.replace(/\\right\)/g,")");
         a=a.replace(/\\left\(/g,"(");
         a=a.replace(/}/g,")");
@@ -143,18 +160,20 @@ const MQPostfixparser = (MQinfixInput:string) => {
         if(a.search("frac")!=-1) a=fracctoInfix(a);
         a=lazymath(a);
         a=a.replace(/\)\(/g,")*(");
-        var l=a.length;
-        var literal="";
-        var numeric="";
-        var cOp="";
-        var stack=[];
-        var output="";
+        let l=a.length;
+        let literal="";
+        let numeric="";
+        let cOp="";
+        let stack:Array<string>=[];
+        let output="";
         //^:start of string,+:1 or more times,*:0 or more times,$:end of string,flag i:case insensetive
-        var alphabet = new RegExp(/^[a-zA-Z]$/);
-        var number = new RegExp(/^[0-9.]$/);
+        let alphabet = new RegExp(/^[a-zA-Z]$/);
+        let number = new RegExp(/^[0-9.]$/);
         for (let i=0; i<l; i++){
-            if (alphabet.test(a[i]!)) {
-                literal=literal+a[i];
+            let value=a[i]
+            if(!value)continue;
+            if (alphabet.test(value)) {
+                literal=literal+value;
                 if(i==(l-1)) output=output+" "+literal;
             } else if (typeof reservedWords[literal as keyof typeof reservedWords]!="undefined") {
                 //if the literal word formed is a function push into operator stack
@@ -168,8 +187,8 @@ const MQPostfixparser = (MQinfixInput:string) => {
                 }
                     
             }
-            if (number.test(a[i]!)) {
-                numeric=numeric+a[i];
+            if (number.test(value)) {
+                numeric=numeric+value;
                 if(i==(l-1)) output=output+" "+numeric;
             } else {
                 if (numeric.length>0){
@@ -177,42 +196,62 @@ const MQPostfixparser = (MQinfixInput:string) => {
                     numeric="";
                 }
             }
-            if (typeof operator[a[i] as keyof typeof operator]!="undefined" || typeof operator[literal as keyof typeof operator]!="undefined"){
-                if (typeof operator[a[i] as keyof typeof operator]!="undefined") cOp=operator[a[i] as keyof typeof operator];
+            if (typeof operator[value as keyof typeof operator]!="undefined" || typeof operator[literal as keyof typeof operator]!="undefined"){
+                if (typeof operator[value as keyof typeof operator]!="undefined") cOp=operator[value as keyof typeof operator];
                 else {
                     cOp=literal;
                     literal="";
                 }
                 if ("-".localeCompare(cOp)==0 && l-i>1){ //detecting if "-" is an unary operator
-                    if(i==0 || i>0 && (typeof operator[a[i-1] as keyof typeof operator]!="undefined" || "(".localeCompare(a[i-1]!)==0)){
+                    let leftvalue=a[i-1];
+                    if(i==0 || (leftvalue!=undefined
+                        && (i>0 && (typeof operator[leftvalue as keyof typeof operator]!="undefined"
+                            || "(".localeCompare(leftvalue)==0)
+                        ))
+                    ){
                         cOp="\\um"
-                    } 
+                    }
                 }
-                while(stack.length!=0 //if the stack has an operator
-                    && "(".localeCompare(stack[stack.length-1]!)!=0 //if the top operator is not "("
-                    && (
-                        precedense[stack[stack.length-1] as keyof typeof precedense]>precedense[cOp as keyof typeof precedense] //if the top operator has greater precedense
+                let skip=true;
+                while(stack.length>0 //if the stack has an operator
+                    && skip
+                    && ( //if the top operator has greater precedense
+                        precedense[stack[stack.length-1] as keyof typeof precedense]>precedense[cOp as keyof typeof precedense]
                         ||
-                        ((precedense[stack[stack.length-1] as keyof typeof precedense]==precedense[cOp as keyof typeof precedense]) //if they have same precedense
-                        &&
-                        (typeof associativity[a[i] as keyof typeof associativity]!="undefined"?(associativity[a[i] as keyof typeof associativity]=='left'):false) //if current operator is left associative
+                        (//if they have same precedense
+                            (precedense[stack[stack.length-1] as keyof typeof precedense]==precedense[cOp as keyof typeof precedense])
+                        &&//if current operator is left associative
+                            (typeof associativity[value as keyof typeof associativity]!="undefined"?(associativity[value as keyof typeof associativity]=='left'):false) 
                         )
                     )
-                    )output=output+" "+stack.pop();
+                    ){
+                        let leftvalue=stack[stack.length-1]
+                        //if the top operator is not "("
+                        if(leftvalue!=undefined && ("(".localeCompare(leftvalue)!=0))output=output+" "+stack.pop();
+                        else skip=false
+                    }
                 stack.push(cOp);
-            } else if (a[i]!.localeCompare("(")==0) {
+            } else if (value.localeCompare("(")==0) {
                 stack.push("(");
-            }else if (a[i]!.localeCompare(")")==0) {
-                while("(".localeCompare(stack[stack.length-1]!)!=0) //if the top operator is not "(" 
+            }else if (value.localeCompare(")")==0) {
+                let skip=true;
+                while(stack.length>0 && skip)
                 {
-                    if(stack.length>0) output=output+" "+stack.pop();
+                    let leftvalue=stack[stack.length-1]
+                    //if the top operator is not "(" 
+                    if(leftvalue!=undefined && "(".localeCompare(leftvalue)!=0) output=output+" "+stack.pop();
+                    else{skip=false}
                 }
-                if (stack.length>0 && "(".localeCompare(stack[stack.length-1]!)==0) stack.pop();
+                let leftvalue=stack[stack.length-1]
+                if (stack.length>0 && leftvalue!=undefined && "(".localeCompare(leftvalue)==0) stack.pop();
                 if (stack.length>0 && typeof reservedWords[stack[stack.length-1] as keyof typeof reservedWords]!="undefined") output=output+" "+stack.pop();
             }
         }
-        while(stack.length>0){
-            if("(".localeCompare(stack[stack.length-1]!)!=0) output=output+" "+stack.pop();
+        let skip=true;
+        while(stack.length>0 && skip){
+            let leftvalue=stack[stack.length-1]
+            if(leftvalue!=undefined && "(".localeCompare(leftvalue)!=0) output=output+" "+stack.pop();
+            else skip=false;
         }
         return output;
     }

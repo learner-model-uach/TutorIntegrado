@@ -6,27 +6,29 @@ interface uniqueTokens {
 const MQPostfixstrict = (ExpA:string,ExpB:string) => {
 
     function arrayBuilder(MQPostfixExpression:string){
-        var exp=MQPostfixExpression.split(" ");
+        let exp=MQPostfixExpression.split(" ");
 
-        var uTarray:Array<uniqueTokens>=new Array<uniqueTokens>();
+        let uTarray:Array<uniqueTokens>=[];
 
         for(let i=0;i<exp.length;i++){
-            if(uTarray){
+            let valueI=exp[i];
+            if(!valueI)continue;
+            if(uTarray.length>0){
                 let belongs=false;
-                for(let j;j<uTarray.length;j++){
-                    if (uTarray[j].token.localeCompare(exp[i])==0){
-                        uTarray[j].quatity=uTarray[j].quatity+1;
+                for(let j=0;j<uTarray.length;j++){
+                    let valueJ=uTarray[j];
+                    if(!valueJ)continue;
+                    if (valueJ.token.localeCompare(valueI)==0){
+                        valueJ.quatity=valueJ.quatity+1;
                         belongs=true;
                     }
                 }
-                if(!belongs)uTarray.push({"token":exp[0],"quatity":1});
-
+                if(!belongs)uTarray.push({"token":valueI,"quatity":1});
             }else{
-                uTarray.push({"token":exp[0],"quatity":1});
+                uTarray.push({"token":valueI,"quatity":1});
             }
 
         }
-
         return uTarray
     }
 
@@ -39,8 +41,12 @@ const MQPostfixstrict = (ExpA:string,ExpB:string) => {
         if(lea==leb){
             for(let i=0;i<lea;i++){
                 let belong=false;
+                let valueA=ea[i];
+                if(!valueA)continue;
                 for(let j=0;j<leb;j++){
-                    if(ea[i].token.localeCompare(eb[j].token,"en", { sensitivity: 'base' })==0 && ea[i].quatity==eb[j].quatity)belong=true;
+                    let valueB=eb[j];
+                    if(!valueB)continue;
+                    if(valueA.token.localeCompare(valueB.token,"en", { sensitivity: 'base' })==0 && valueA.quatity==valueB.quatity)belong=true;
                 }
                 if(!belong)equal=false;
             }

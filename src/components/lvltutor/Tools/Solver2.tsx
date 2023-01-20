@@ -1,5 +1,4 @@
-import { useState,memo, useEffect} from 'react';
-
+import { useState, useEffect,useRef} from 'react';
 import { Flex, Box, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Heading, Alert,Text,AlertIcon,HStack,VStack} from '@chakra-ui/react'
 import { StaticMathField } from 'react-mathquill';
 
@@ -11,6 +10,10 @@ import { useAction } from "../../../utils/action";
 
 import type {ExType,Step} from "./ExcerciseType";
 
+import { useSnapshot } from 'valtio';
+import MQProxy,{reset} from './MQProxy';
+
+
 const Mq2 = dynamic(
     () => {
         return import("./Mq2");
@@ -18,40 +21,76 @@ const Mq2 = dynamic(
     { ssr: false }
 );
 
+const MQStatic = ({tex,resumen}:{tex:string,resumen?:boolean})  => {
+    const [texExp,setTexExp] = useState("");
+    useEffect(
+        ()=>{
+            if(!resumen)setTexExp(tex)
+    },[,resumen]);
+
+    return <StaticMathField>{texExp}</StaticMathField>
+}
+
 interface value {
     ans:string;att:number;hints:number;lasthint:boolean;fail:boolean;duration:number;
 }
 interface potato {
-    "disabled":boolean;"hidden":boolean;"answer":boolean;"value":value;"open":boolean;
+    disabled:boolean;hidden:boolean;answer:boolean;value:value;open:boolean;
 }
-class passingPotato {
-    private states= {
-        "disabled":true,
-        "hidden":false,
-        "answer":false,
-        "value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},
-        "open":false
-    }
 
-    public counter=0;
+const Steporans = ({step,topicId,content,i,answer}:{step:Step,topicId:string,content:string,i:number,answer?:string}) => {
+    const [currentComponent,setCC]=useState(<></>)
+    useEffect(()=>{
+        if(answer && answer!=""){
+            setCC(
+                    <>
+                        <MQStatic
+                        key={"respuesta"+i}
+                        tex={answer}
+                        />
+                        <Alert key={"Alert"+topicId+"i"} status={"success"} mt={2}>
+                        <AlertIcon key={"AlertIcon"+topicId+"i"}/>
+                                {step.correctMsg}
+                        </Alert>
+                    </>
+                );
+        }else{
+            setCC(<Mq2 
+            key={"Mq2"+i}
+            step={step}
+            content={topicId}
+            topicId={content}
+            disablehint={false}
+            />)
+        }
+        }
+    ,[,answer]);
 
-    public getStates()
-    {
-        return this.states;
-    }
-
-    public setStates(a:potato){
-        this.states=a;
-    }
+    return currentComponent
 }
 
 const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
-    const [cdateS,setCdateS]=useState(Date.now());
-    const [cdateE,setCdateE]=useState(Date.now());
+    const mqSnap=useSnapshot(MQProxy);
 
     const action = useAction();
+    const currentStep=useRef(0);
+
+    const cantidadDePasos= steps.steps.length;
+
+    let potatoStates:Array<potato>=[{"disabled":false,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true}];
+
+    for (let i=1; i< cantidadDePasos;i++) {
+        potatoStates.push({"disabled":true,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true});
+    }
+    
+    const [test,setTest] = useState<Array<potato>>(potatoStates);  
+    const [resumen,setResumen]= useState(true);
+
     useEffect(() => {
-        setCdateS(Date.now())
+        reset();
+        MQProxy.startDate=Date.now();
+        MQProxy.content=steps.code;
+        MQProxy.topicId=topicId;
         action({
         verbName: "loadContent",
         contentID: steps?.code,
@@ -59,108 +98,43 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
         });
     }, []);
 
-    const [submit,setSubmit]=useState(false);
-
-    const cantidadDePasos= steps.steps.length;
-
-    let potatoStates = [new passingPotato()];
-    potatoStates[0]!.setStates({"disabled":false,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true});
-
-    const [defaultIndex,setDefaultIndex]=useState([0]);
-
-    for (let i=0; i< cantidadDePasos;i++) {
-        potatoStates.push(new passingPotato());
-    }
-    
-    const [test,setTest] = useState(potatoStates);  
-    const [resumen,setResumen]= useState(true);
-
-    const [submitValues,setSubmitValues]=useState({ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0})
-
-    const [sflag,setSflag]=useState(false)
-
-    function listaDePasos() { 
-        let ldp=steps.steps.map(
-            (step,i) => (
-            <Mq2 
-                    key={"Mq2"+i}
-                    step={step}
-                    content={steps.code}
-                    topicId={topicId}
-                    disablehint={false}
-                    setDefaultIndex={setDefaultIndex}
-                    setSubmit={setSubmit}
-                    setSubmitValues={setSubmitValues}
-                    setCdateE={setCdateE}
-                    flag={sflag}
-                >
-            </Mq2>
-            )
-        )
-        return ldp
-    }
-
-    const [pasos,setPasos]= useState(listaDePasos);
-
-    const steporans = (step:Step,i:number) => {
-        let a=test[parseInt(step.stepId)!]!.getStates();
-        if(a.answer){
-            return(
-                <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-                    <StaticMathField
-                        key={"respuesta"+i}
-                    >
-                       {a.value.ans}
-                    </StaticMathField>
-                </VStack>
-                );
-        }else{
-            return(pasos[i]);
-        }
-    }
-
     useEffect(
-        ()=>{ 
-        sflag?setSflag(!sflag):setSflag(!sflag);
-        setPasos(listaDePasos());
-         if(submit){
-             if(!submitValues.fail){
-                 let a=test;
-                 let duration=(cdateE-cdateS)/1000;
-                 let sv=submitValues;
-                 sv.duration=duration;
-                 setCdateS(Date.now());
-                 a[defaultIndex[0]!-1]!.setStates({"disabled":false,"hidden":false,"answer":true,"value":sv,"open":false});
-                 if(defaultIndex[0]!<cantidadDePasos){
-                     a[defaultIndex[0]!]!.setStates({"disabled":false,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true});
-                 } else {
-                     let completecontent = [];
-                     for(let i=0;i<test.length;i++)completecontent.push(test[i]?.getStates().value);
-                     let extra={
-                         steps:Object.assign({}, completecontent)
-                     }
-                     action({
-                         verbName: "completeContent",
-                         result: 1,
-                         contentID: steps?.code,
-                         topicID: topicId,
-                         extra:extra
-                     });
-                     setResumen(false)
-                 }
-                 setTest(a);
-             }
-             setSubmit(false);
-         }
-     },[submit])
-
-     const [frr,setFrr]=useState("")
-     useEffect(()=>{
-        setFrr(" ")
-        setTimeout(()=>{
-            setFrr("  ")
-        },200)
-    },[resumen])
+       ()=>{ 
+        if(mqSnap.submit){
+            if(!mqSnap.submitValues.fail){
+                currentStep.current=mqSnap.deefaultIndex[0]!
+                let a=test;
+                let duration=(MQProxy.endDate-MQProxy.startDate)/1000;
+                let sv=MQProxy.submitValues;
+                sv.duration=duration;
+                MQProxy.startDate=Date.now();
+                a[mqSnap.deefaultIndex[0]!-1]={"disabled":false,"hidden":false,"answer":true,"value":sv,"open":false};
+                if(mqSnap.deefaultIndex[0]!<cantidadDePasos){
+                    a[mqSnap.deefaultIndex[0]!]={"disabled":false,"hidden":false,"answer":false,"value":{ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0},"open":true};
+                } else {
+                    let completecontent:Array<value> = [];
+                    for(let i=0;i<test.length;i++){
+                        const value=a[i];
+                        if(!value) continue;
+                        completecontent.push(value.value);
+                    }
+                    let extra={
+                        steps:Object.assign({}, completecontent)
+                    }
+                    action({
+                        verbName: "completeContent",
+                        result: 1,
+                        contentID: steps?.code,
+                        topicID: topicId,
+                        extra:extra
+                    });
+                    setResumen(false)
+                }
+                setTest(a);
+            }
+            MQProxy.submit=false;
+        }
+    },[mqSnap.submit])
 
 
     return(
@@ -168,36 +142,40 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
             <Flex direction="column" background="gray.100" p={12} rounded={6} w='100%' maxW='3xl' alignItems="center" justifyContent="center" margin={"auto"}>
                 <Heading as='h1' size='lg' noOfLines={3}>{steps.title}</Heading>
                 <Heading as='h5' size='sm' mt={2}>{steps.text}</Heading>
-                {steps.steps[0]?(<StaticMathField>{steps.steps[0].expression}</StaticMathField>):null}
+                <MQStatic tex={steps.steps[0]!.expression} />
                 <Accordion
-                    onChange={(algo)=>setDefaultIndex(algo as Array<number>)}
-                    index={defaultIndex}
+                    onChange={(algo)=>MQProxy.deefaultIndex=(algo as Array<number>)}
+                    index={MQProxy.deefaultIndex}
                     allowToggle={true}
                     allowMultiple={true}
                 >
                     {steps.steps.map((step,i) => (
                     <AccordionItem
                     key={"AccordionItem"+i} 
-                    isDisabled={test[parseInt(step.stepId)]!.getStates().disabled}
-                    hidden={test[parseInt(step.stepId)]!.getStates().hidden}
+                    isDisabled={
+                        test[parseInt(step.stepId)]?.disabled
+                    }
+                    hidden={
+                        test[parseInt(step.stepId)]?.hidden
+                    }
                     >
                         <h2 key={"AIh2"+i}>
-                        <Alert key={"AIAlert"+i} status={test[parseInt(step.stepId)]!.getStates().answer ? "success" : "info"}>
+                        <Alert key={"AIAlert"+i} status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}>
                             <AlertIcon key={"AIAlertIcon"+i}  />
                             <AccordionButton 
                                 key={"AIAccordionButton"+i}
                                 onClick={() => {
                                     let potstates = test;
-                                    let potstate = potstates[parseInt(step.stepId)]?.getStates()
-                                    if(!potstate?.open){
+                                    let potstate = potstates[parseInt(step.stepId)]
+                                    if(potstate){if(!potstate.open){
                                         action({
                                             verbName: "openStep",
                                             stepID: "" + i,
                                             contentID: steps?.code,
                                             topicID: topicId
                                         });
-                                        potstate!.open=true;
-                                        potstates[parseInt(step.stepId)]?.setStates(potstate!);
+                                        potstate.open=true;
+                                        potstates[parseInt(step.stepId)]=potstate;
                                         setTest(potstates);
                                     }else{
                                         action({
@@ -206,10 +184,10 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                                             contentID: steps?.code,
                                             topicID: topicId
                                         });
-                                        potstate!.open=false;
-                                        potstates[parseInt(step.stepId)]?.setStates(potstate!);
+                                        potstate.open=false;
+                                        potstates[parseInt(step.stepId)]=potstate;
                                         setTest(potstates);
-                                    };
+                                    };}
                                   }}
                             >
                                 <Box key={"AIBox"+i}flex='1' textAlign='left'>
@@ -220,10 +198,7 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                         </Alert>
                         </h2>
                         <AccordionPanel key={"AIAccordionPanel"+i} pb={4}>
-                        {/*En el siguiente elemento es un estado que almacena el componente que maneja el paso del ejercicio correspondiente*/}
-                        {
-                            pasos?steporans(step,i):null
-                        }
+                        <Steporans step={step} topicId={topicId} content={steps.code} i={i} answer={test[parseInt(step.stepId)]?.value?.ans}/>
                         </AccordionPanel>
                     </AccordionItem>
                     ))
@@ -240,16 +215,19 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
                                 <Text >
                                     Expresión:
                                 </Text>
-                                {steps.steps[0]?(<StaticMathField>{steps.steps[0].expression+frr}</StaticMathField>):null}
+                                <MQStatic
+                                    tex={steps.steps[0]!.expression}
+                                    resumen={resumen}
+                                />
                             </HStack>
                             {steps.steps.map( (step,i) =>(
                                         <Box key={"ResumenBox"+i}>
                                             <Text key={"ResumenText"+i} w="100%" justifyContent={"space-between"}>{step.summary}</Text>
-                                            <StaticMathField
+                                            <MQStatic
                                                 key={"ResumenMC"+i}
-                                            >
-                                            {step.displayResult[0]+frr}
-                                            </StaticMathField>
+                                                tex={step.displayResult[0]!}
+                                                resumen={resumen}
+                                            />
                                         </Box>
                                     )
                                 )
@@ -262,4 +240,4 @@ const Solver2 = ({topicId,steps}:{topicId:string,steps:ExType}) => {
     )
 } 
 
-export default memo(Solver2)
+export default Solver2
