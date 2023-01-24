@@ -26,6 +26,8 @@ export const StepPanel = ({
   setColor,
   setNextExercise,
   content,
+  code, // "code" field of json file
+  id // "id" field in the system
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -35,6 +37,10 @@ export const StepPanel = ({
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState(-1);
+  const [attempts, setAttempts] = useState(0); // number of user attempts
+  const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
+  const [dataCompleteContent, setDataCompleteContent] = useState({}); // object used in the "steps" field for the completeContent action
+  
   const exerciseContext = useContext(ExerciseContext);
 
   const startAction = useAction({});
@@ -81,14 +87,28 @@ export const StepPanel = ({
       ));
   };
 
+  const updateData = () => { // update the data in the "steps" field of the completeContent action
+    let idObject = {};
+    idObject[id] = { // create an object with key "id"
+      att: attempts, // number of user attempts to response
+      hints: hintsShow, // number of times the user saw a hint
+      lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
+      duration: 0
+	}
+    setDataCompleteContent((prev) => ({...prev, idObject}));
+  }
+
   const checkLastStep = () => {
     if (nStep == totalSteps - 1) {
       startAction({
         verbName: "completeContent",
-        contentID: content,
-        result: 1,
+        contentID: code, // it is "code" field of the json file
+        topicID: id, // it is "id" field in the system
+        result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
+        extra: {
+          steps: dataCompleteContent // object defined in updateData
+        }
       });
-
       setNextExercise(true);
     }
   };
@@ -105,14 +125,21 @@ export const StepPanel = ({
         text: "Escoge una respuesta",
       });
     } else {
+      updateData();
       if (step.n_step === nStep) {
         if (answer[0].id === step.correct_answer) {
           startAction({
             verbName: "tryStep",
-            contentID: content,
-            result: 1,
+            contentID: code,
+            topicID: id,
             stepID: step.n_step,
-            extra: { response: answer },
+            result: 1,
+            KCs: step.kcs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow
+            },
           });
           setStepCorrect((state) => [...state, answer[0].value]);
           setColor((prev) => [
@@ -129,12 +156,19 @@ export const StepPanel = ({
           setIsCorrect(true);
           checkLastStep();
         } else {
+          setAttempts((prev) => prev + 1);
           startAction({
             verbName: "tryStep",
-            contentID: content,
-            result: 0,
+            contentID: code,
+            topicID: id,
             stepID: step.n_step,
-            extra: { response: answer },
+            result: 0,
+            KCs: step.kcs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow
+            },
           });
           setIdAnswer(answer[0].id);
           setFirstTimeHint(false);
@@ -221,7 +255,8 @@ export const StepPanel = ({
                   answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
                   nStep={nStep}
-                  content={content}
+                  code={code}
+                  setHintsShow={setHintsShow}
                 />
               </Grid>
 
@@ -240,7 +275,8 @@ export const StepPanel = ({
                       setNewHintAvaliable={setNewHintAvaliable}
                       answerId={idAnswer}
                       newHintAvaliable={newHintAvaliable}
-                      content={content}
+                      code={code}
+                      setHintsShow={setHintsShow}
                     />
                   </div>
                 </Flex>

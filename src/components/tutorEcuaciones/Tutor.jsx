@@ -14,7 +14,7 @@ import ExerciseContext from "./context/exercise/exerciseContext";
 import { useRouter } from "next/router";
 
 export function Tutor({ id }) {
-  const [idExercise, setIdExercise] = useState(id % 14);
+  const [idExercise, setIdExercise] = useState(id % 2); // For now, two exercises are being used with the fields of the correct json files.
   const [exerciseSelected, setExerciseSelected] = useState(null);
   const [totalSteps, setTotalSteps] = useState(0);
   const [disableState, setDisableState] = useState([true]);
@@ -30,14 +30,25 @@ export function Tutor({ id }) {
   const startAction = useAction({});
 
   useEffect(() => {
-    setIdExercise(id % 14);
+    // json file has no id field
+    /*setIdExercise(id % 14); 
     const selet = problems.filter(
       (exercise) => exercise.id === parseInt(idExercise)
-    );
-    settingContent(selet[0]?.content);
+    );*/
+
+	// For now, two exercises are being used with the fields of the correct json files.
+    let selet = [];
+    if (id === 0) {
+      selet.push(problems[0]);
+    };
+    if (id === 6) {
+      selet.push(problems[1]);
+    };
+	
+    settingContent(selet[0]?.code); // useContext is not reused
     startAction({
       verbName: "loadContent",
-      contentID: selet[0]?.content,
+      contentID: selet[0]?.code, // "code" field of the json file
     });
     setOrderFirst(selet[0].order_steps.position === "initial");
     setShowOrder(selet[0].order_steps.show);
@@ -53,8 +64,9 @@ export function Tutor({ id }) {
     startAction({
       verbName: "nextContent",
     });
-    setIdExercise((prev) => (idExercise % 14) + 1);
-    push(`/exercise/${(idExercise % 14) + 1}`);
+    // For now, two exercises are being used with the fields of the correct json files.
+    setIdExercise((prev) => (idExercise % 2) + 1);
+    push(`/exercise/${(idExercise % 2) + 1}`);
   };
   return (
     <>
@@ -85,6 +97,7 @@ export function Tutor({ id }) {
                   <>
                     <AccordionSteps
                       exercise={exerciseSelected}
+                      id={id}
                       setNextExercise={setNextExercise}
                     />
                     {nextExercise && (
@@ -113,6 +126,7 @@ export function Tutor({ id }) {
                 <>
                   <AccordionSteps
                     exercise={exerciseSelected}
+                    id={id}
                     setNextExercise={setNextExercise}
                   />
                   {nextExercise && (
@@ -147,6 +161,7 @@ export function Tutor({ id }) {
               <>
                 <AccordionSteps
                   exercise={exerciseSelected}
+                  id={id}
                   setNextExercise={setNextExercise}
                 />
                 {nextExercise && (

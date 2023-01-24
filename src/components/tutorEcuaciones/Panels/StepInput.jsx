@@ -20,36 +20,74 @@ import ExerciseContext from "../context/exercise/exerciseContext";
 import { useAction } from "../../../utils/action";
 
 export const StepInput = ({
-  step,
+  step, //content of "steps" field of json file
   setNumStep,
-  nStep,
+  nStep, //"nStep" field of json file
   setDisableState,
   totalSteps,
   setStepCorrect,
   setColor,
   setNextExercise,
-  content,
+  code, // "code" field of json file
+  id // "id" field in the system
 }) => {
-  const [isCorrect, setIsCorrect] = useState(0);
-  const [answer, setAnswer] = useState("");
-  const [alert, setAlert] = useState({});
-  const [openAlert, setOpenAlert] = useState(false);
   const exerciseContext = useContext(ExerciseContext);
-  const [newHintAvaliable, setNewHintAvaliable] = useState(false);
-  const [firstTimeHint, setFirstTimeHint] = useState(true);
+  
+  const [alert, setAlert] = useState({});
+  const [answer, setAnswer] = useState("");
   const [answerInput, setAnswerInput] = useState("");
-
+  const [firstTimeHint, setFirstTimeHint] = useState(true);
+  const [idAnswer, setIdAnswer] = useState(-1); // id corresponding to the answer
+  const [isCorrect, setIsCorrect] = useState(0);
+  const [newHintAvaliable, setNewHintAvaliable] = useState(false); // hints that are displayed to the user
+  const [openAlert, setOpenAlert] = useState(false);
+  const [attempts, setAttempts] = useState(0); // number of user attempts
+  const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
+  const [dataCompleteContent, setDataCompleteContent] = useState({}); // object used in the "steps" field for the completeContent action
+  
   const startAction = useAction({});
+
   const onChange = (e) => {
     setAnswer(e.target.value);
   };
+  
+  // gets the id of the user's response, if there is not then the id is set to 0,
+  // this is so that if the user's response does not have a hint associated with it,
+  // then a generic hint can be displayed.
+  const getId = (userAnswer) => {
+    setIdAnswer(-1);
+    userAnswer = userAnswer.replaceAll(" ", "");
+    if (userAnswer.length ==! 0) {
+      setIdAnswer(0);
+    }
+    step.answers.map((answer) => {
+      if (answer.value === userAnswer) {
+        setIdAnswer(answer.id);
+      }
+    })
+  }
 
+  const updateData = () => { // update the data in the "steps" field of the completeContent action
+    let idObject = {};
+    idObject[id] = { // create an object with key "id"
+      att: attempts, // number of user attempts to response
+      hints: hintsShow, // number of times the user saw a hint
+      lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
+      duration: 0
+	}
+    setDataCompleteContent((prev) => ({...prev, idObject}));
+  }
+  
   const checkLastStep = () => {
     if (nStep == totalSteps - 1) {
       startAction({
         verbName: "completeContent",
-        contentID: content,
-        result: 1,
+        contentID: code, // it is "code" field of the json file
+        topicID: id, // it is "id" field in the system
+        result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
+        extra: {
+          steps: dataCompleteContent // object defined in updateData
+        }
       });
       setNextExercise(true);
     }
@@ -64,14 +102,21 @@ export const StepInput = ({
         text: "Escribe alguna respuesta",
       });
     } else {
+      updateData();
       if (step.n_step === nStep) {
         if (answer === step.correct_answer.toString()) {
           startAction({
             verbName: "tryStep",
-            contentID: content,
-            result: 1,
+            contentID: code,
+            topicID: id,
             stepID: step.n_step,
-            extra: { response: answer },
+            result: 1,
+            KCs: step.kcs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow
+            },
           });
           setStepCorrect((state) => [...state, answer]);
           setColor((prev) => [
@@ -89,16 +134,22 @@ export const StepInput = ({
           setIsCorrect(true);
           checkLastStep();
         } else {
+          setAttempts((prev) => prev + 1);
           setAnswerInput(answer);
-
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
           startAction({
             verbName: "tryStep",
-            contentID: content,
-            result: 0,
+            contentID: code,
+            topicID: id,
             stepID: step.n_step,
-            extra: { response: answer },
+            result: 0,
+            KCs: step.kcs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow
+            },
           });
           setColor((prev) => [
             ...prev.slice(0, nStep),
@@ -174,10 +225,11 @@ export const StepInput = ({
                   firstTimeHint={firstTimeHint}
                   hints={step.hints}
                   setNewHintAvaliable={setNewHintAvaliable}
-                  answerId={parseInt(answerInput)}
+                  answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
-                  content={content}
+                  code={code}
                   nStep={nStep}
+                  setHintsShow={setHintsShow}
                 />
               </Grid>
 
@@ -193,10 +245,11 @@ export const StepInput = ({
                       firstTimeHint={firstTimeHint}
                       hints={step.hints}
                       setNewHintAvaliable={setNewHintAvaliable}
-                      answerId={parseInt(answerInput)}
+                      answerId={idAnswer}
                       newHintAvaliable={newHintAvaliable}
-                      content={content}
+                      code={code}
                       nStep={nStep}
+                      setHintsShow={setHintsShow}
                     />
                   </div>
                 </Flex>

@@ -25,7 +25,7 @@ import {
 import { useAction } from "../../../utils/action";
 import ExerciseContext from "../context/exercise/exerciseContext";
 
-export const AccordionSteps = ({ exercise, setNextExercise }) => {
+export const AccordionSteps = ({ exercise, id, setNextExercise }) => {
   const inputRef = useRef([]);
   const [totalSteps, setTotalSteps] = useState(0);
   const [disableState, setDisableState] = useState([true]);
@@ -36,7 +36,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
   const [isOpenIndexes, setIsOpenIndexes] = useState([0]);
   const startAction = useAction({});
   const exerciseContext = useContext(ExerciseContext);
-  const { content } = exerciseContext;
+  const { content } = exerciseContext; // the useContext is not use
 
   useEffect(() => {
     setTotalSteps(exercise.steps.length);
@@ -65,14 +65,14 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
       startAction({
         verbName: "openStep",
         stepID: stepID,
-        contentID: exercise.content,
+        contentID: exercise.code,
       });
     } else {
       let stepID = isOpenIndexes.filter((id) => !index.includes(id));
       startAction({
         verbName: "closeStep",
         stepID: stepID.at(0),
-        contentID: exercise.content,
+        contentID: exercise.code,
       });
     }
     setIsOpenIndexes(index);
@@ -83,7 +83,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
       <Accordion
         allowMultiple={true}
         defaultIndex={indexStep}
-        key={exercise.id}
+        key={exercise.code}
         style={{ width: "100%" }}
         onChange={(index) => onClickAccordionStep(index)}
       >
@@ -138,8 +138,9 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
                     totalSteps={totalSteps}
                     setStepCorrect={setStepCorrect}
                     setColor={setColor}
-                    content={exercise.content}
+                    code={exercise.code}
                     setNextExercise={setNextExercise}
+                    id={id}
                   />
                 ) : step.type === INPUT ? (
                   <StepInput
@@ -151,8 +152,9 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
                     totalSteps={totalSteps}
                     setStepCorrect={setStepCorrect}
                     setColor={setColor}
-                    content={exercise.content}
+                    code={exercise.code}
                     setNextExercise={setNextExercise}
+                    id={id}
                   />
                 ) : (
                   <StepPanel
@@ -164,8 +166,9 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
                     totalSteps={totalSteps}
                     setStepCorrect={setStepCorrect}
                     setColor={setColor}
-                    content={exercise.content}
+                    code={exercise.code}
                     setNextExercise={setNextExercise}
+                    id={id}
                   />
                 )}
               </AccordionPanel>
