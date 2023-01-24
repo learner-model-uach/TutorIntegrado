@@ -80,7 +80,7 @@
         ]
       },
       {
-        "stepId": 1,
+        "stepId": "1",
         "left_text": "Calcule el discriminante de la ecuación: ",
         "input_labels": "b^2 -4ac = ",
         "correct_answer": 1,
@@ -140,7 +140,7 @@
         ]
       },
       {
-        "stepId": 2,
+        "stepId": "2",
         "left_text": "Indique qué tipo de soluciones tiene la ecuación: ",
         "input_labels": "",
         "correct_answer": 1,
@@ -188,7 +188,7 @@
         ]
       },
       {
-        "stepId": 3,
+        "stepId": "3",
         "left_text": "Calcule la primera raíz de la ecuación: ",
         "input_labels": "x_1 = ",
         "correct_answer": 2,
@@ -254,7 +254,7 @@
         ]
       },
       {
-        "stepId": 4,
+        "stepId": "4",
         "left_text": "Calcule la segunda raíz de la ecuación: ",
         "input_labels": "x_2 = ",
         "correct_answer": 3,
