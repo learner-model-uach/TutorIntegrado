@@ -5,12 +5,11 @@ import type { User } from "@auth0/auth0-react";
 import type { UserRole } from "../graphql";
 
 interface ContentJson {
-  code : string;
-  title : string;
-  type : string;
-  meta : Object;
-  steps : Array<Object>
-
+  code: string;
+  title: string;
+  type: string;
+  meta: Object;
+  steps: Array<Object>;
 }
 
 export const sessionState = proxy<{

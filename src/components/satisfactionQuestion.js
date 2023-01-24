@@ -10,7 +10,6 @@ export const saveUserSatisfaction = (satisfaction) => {
     // Dispatch una acción para guardar la respuesta en el estado global
     dispatch*/
 
-
 function SatisfactionQuestion() {
   const [selectedOption, setSelectedOption] = useState("");
   //const dispatch = useDispatch();
@@ -29,7 +28,7 @@ function SatisfactionQuestion() {
           name="satisfaction"
           value="satisfied"
           checked={selectedOption === "satisfied"}
-          onChange={(e) => setSelectedOption(e.target.value)}
+          onChange={e => setSelectedOption(e.target.value)}
         />
         <label htmlFor="satisfied">Conforme</label>
       </div>
@@ -40,7 +39,7 @@ function SatisfactionQuestion() {
           name="satisfaction"
           value="medium-satisfied"
           checked={selectedOption === "medium-satisfied"}
-          onChange={(e) => setSelectedOption(e.target.value)}
+          onChange={e => setSelectedOption(e.target.value)}
         />
         <label htmlFor="medium-satisfied">Medianamente conforme</label>
       </div>
@@ -51,11 +50,10 @@ function SatisfactionQuestion() {
           name="satisfaction"
           value="unsatisfied"
           checked={selectedOption === "unsatisfied"}
-          onChange={(e) => setSelectedOption(e.target.value)}
+          onChange={e => setSelectedOption(e.target.value)}
         />
         <label htmlFor="unsatisfied">Disconforme</label>
       </div>
-      
     </div>
   );
 }
