@@ -29,10 +29,7 @@ export const CardSelection = ({
 }) => {
   const router = useRouter();
 
-  sessionStateBD.setItem(
-    "currentContent",
-    JSON.parse(JSON.stringify(sessionState.currentContent))
-  );
+  sessionStateBD.setItem("currentContent", JSON.parse(JSON.stringify(sessionState.currentContent)));
   sessionStateBD.setItem("topic", sessionState.topic);
 
   return (
@@ -53,8 +50,8 @@ export const CardSelection = ({
         onClick={() => {
           sessionState.currentContent.code = code; //code de sessionState
           sessionState.currentContent.description = text + ""; //descripcion del ejercicio ofrecido
-          sessionState.currentContent.id = 1; //identificador del ejercicio
-          sessionState.currentContent.json = json; //json del ejercicio
+          sessionState.currentContent.id = "1"; //identificador del ejercicio
+          //sessionState.currentContent.json = json; //json del ejercicio
           sessionState.currentContent.kcs = [1, 2, 3]; //kcs del ejercicio
           sessionState.currentContent.label = ""; //enunciado o tipo de ejercicio
           if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
@@ -65,10 +62,7 @@ export const CardSelection = ({
         <Center>
           <HStack>
             <Heading size="md" my="2" textAlign="center">
-              <NextLink
-                href={"content/solve?type=" + router.query.type}
-                passHref
-              >
+              <NextLink href={"content/solve?type=" + router.query.type} passHref>
                 <LinkOverlay>{title}</LinkOverlay>
               </NextLink>
             </Heading>

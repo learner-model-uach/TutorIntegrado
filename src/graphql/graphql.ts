@@ -1871,116 +1871,6 @@ export type PotatoqueryQuery = {
     | undefined;
 };
 
-export type ProjectData0QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData0Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData1QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData1Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData2QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData2Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData3QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData3Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData4QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData4Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData5QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData5Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData6QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData6Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData7QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData7Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData8QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData8Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData9QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData9Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
-export type ProjectData10QueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectData10Query = {
-  __typename?: "Query";
-  contentByCode?:
-    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
-    | null
-    | undefined;
-};
-
 export type ActionMutationVariables = Exact<{
   data: ActionInput;
 }>;
@@ -2127,350 +2017,17 @@ export const PotatoqueryDocument = {
     },
   ],
 } as unknown as DocumentNode<PotatoqueryQuery, PotatoqueryQueryVariables>;
-export const ProjectData0Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData0" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "fc1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData0Query, ProjectData0QueryVariables>;
-export const ProjectData1Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData1" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "action" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "dc1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData1Query, ProjectData1QueryVariables>;
-export const ProjectData2Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData2" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "fcc1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData2Query, ProjectData2QueryVariables>;
-export const ProjectData3Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData3" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "dsc1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData3Query, ProjectData3QueryVariables>;
-export const ProjectData4Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData4" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "fracc1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData4Query, ProjectData4QueryVariables>;
-export const ProjectData5Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData5" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "fracc2", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData5Query, ProjectData5QueryVariables>;
-export const ProjectData6Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData6" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "tc1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData6Query, ProjectData6QueryVariables>;
-export const ProjectData7Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData7" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "pot1", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData7Query, ProjectData7QueryVariables>;
-export const ProjectData8Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData8" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "pot2", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData8Query, ProjectData8QueryVariables>;
-export const ProjectData9Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData9" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "pot3", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData9Query, ProjectData9QueryVariables>;
-export const ProjectData10Document = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "ProjectData10" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "code" },
-                value: { kind: "StringValue", value: "pot4", block: false },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<ProjectData10Query, ProjectData10QueryVariables>;
 export const ActionDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "updateModelState" },
+      name: { kind: "Name", value: "Action" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "input" },
-          },
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
           type: {
             kind: "NonNullType",
             type: { kind: "NamedType", name: { kind: "Name", value: "ActionInput" } },
@@ -2482,7 +2039,7 @@ export const ActionDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "updateModelState" },
+            name: { kind: "Name", value: "action" },
             arguments: [
               {
                 kind: "Argument",
@@ -2495,7 +2052,40 @@ export const ActionDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<
-  UpdateModelStateMutation,
-  UpdateModelStateMutationVariables
->;
+} as unknown as DocumentNode<ActionMutation, ActionMutationVariables>;
+export const UpdateModelStateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "updateModelState" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "UpdateModelStateInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateModelState" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateModelStateMutation, UpdateModelStateMutationVariables>;

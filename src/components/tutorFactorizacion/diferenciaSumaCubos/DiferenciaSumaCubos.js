@@ -189,22 +189,7 @@ export const DSC = ({ exercise, topic }) => {
       </Accordion>
       {step2Valid != null && (
         <>
-<<<<<<< HEAD
           <DSCsummary step1={exercise.steps[0]} step2={exercise.steps[1]} sign={exercise.sign} />
-          <Stack padding="1em" alignItems="center">
-            <Link href={nextRouter}>
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
-=======
-          <DSCsummary
-            step1={exercise.steps[0]}
-            step2={exercise.steps[1]}
-            sign={exercise.sign}
-          />
->>>>>>> seleccion-contenido
         </>
       )}
     </>
