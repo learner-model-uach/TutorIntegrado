@@ -20,10 +20,9 @@ const DynamicTutorFC = dynamic(() =>
 
 export const TutorFac = ({ exercise, topicId : string }) => {
   
-
   return (
     <>
-      {exercise?.type == "fc1s" ? ( 
+      {exercise?.type == "fc1s" ? (
         <DynamicTutorFC exercise={exercise} nextRouter="/" />
       ) : exercise?.type == "fcc3s" ? (
         <DynamicTutorFCC exercise={exercise} nextRouter="/" />
@@ -34,10 +33,7 @@ export const TutorFac = ({ exercise, topicId : string }) => {
       ) : exercise?.type == "ftc5s" ? (
         <DynamicTutorTC exercise={exercise} nextRouter="/" />
       ) : (
-        <p>
-          error en exercise.contentType, exercise.contentType !=
-          FC,FCC,DC,DSC,TC{" "}
-        </p>
+        <p>error en exercise.contentType, exercise.contentType != FC,FCC,DC,DSC,TC </p>
       )}
     </>
   );

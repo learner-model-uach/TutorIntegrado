@@ -1,107 +1,127 @@
 [
-    {
-      "code": "th1",
-      "title": "Teorema de thales I.",
-      "type": "thales1",
-      "meta": {},
-      "text": "Un filtro de café de altura 10 cm. tiene un diámetro de 16 cm. Si el filtro de café contiene café hasta una altura de 5 cm. ¿Cuál es el área de la circunferencia que se genera en el filtro sobre la cantidad de café?",
-      "selectSteps": false,
-      "image" : "",
-      "conclusion" : "El área de la circuenferencia de radio r que se genera por el  café en el filtro es de 16π ",
-      "steps": [
-        {
-          "stepId": "0",
-          "expression": "\\frac{5}{r} = ",
-          "stepTitle": "Debido a que se trata de una figura cónica es posible aplicar el Teorema de Thales haciendole un corte transversal a la figura, Si r es el radio de la circunferencia de la cual queremos encontrar el área, plantea el Teorema de Thales dada la información entregada",
-          "displayResult": "5/r = 10/8",
-          "KCs": ["PlanTH"],
-          "hints": [
-            { "hintId": 0, "hint": "La razón de la altura por el radio del filtro es igual a la razón de la altura por el radio del café." },
-            { "hintId": 1, "hint": "La altura del filtro es 10." },
-            { "hintId": 2, "hint": "El diámetro es 2 veces el radio del filtro." },
-            { "hintId": 3, "hint": "El radio del filtro es 8." },
-            { "hintId": 4, "hint": "Escribe 10/8." }
-          ],
-          "matchingError": [
-            { "error": [""], "hintId": 5, "hint": "No ha ingresado respuesta" }
-          ],
-          "answers": [{ "answer": ["10","8"], "nextStep": "1" }],
-          "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del Teorema de Thales.",
-          "correctMsg": "Haz planteado correctamente el Teorema de Thales",
-          "summary": "1) Para plantear el Teorema de Thales es necesario identificar los triángulos semejantes, en este caso al hacer un corte transversal a la figura cónica se cumple la semenjanza."
-        },
-        {
-          "stepId": "1",
-          "expression": "r = ",
-          "stepTitle": "Calcula el radio de la circunferencia formada por el café en el filtro.",
-          "displayResult": "r = 4",
-          "KCs": ["AN","R3"],
-          "hints": [
-            { "hintId": 0, "hint": "Necesitas despejar r con una regla de 3 simple." },
-            { "hintId": 1, "hint": "10 veces r es igual a 40." },
-            { "hintId": 2, "hint": "Escribe 4." }
-          ],
-          "matchingError": [
-            { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" },
-            { "error": ["8"], "hintId": 3, "hint": "Has ingresado el diámetro de la circunferencia formada por el café en el filtro." }
-          ],
-          "answers": [{ "answer": "4", "nextStep": "2" }],
-          "incorrectMsg": "El valor ingresado no corresponde al radio de la circunferencia formado por el café en el filtro.",
-          "correctMsg": "Haz calculado correctamente el radio de la circunferencia formada por el café en el filtro.",
-          "summary": "2) La igualdad del Teorema de Thales nos permite despejar el radio de la circunferencia formada por el café en el filtro con una regla de tres simple. "
-        },
-        {
-          "stepId": "2",
-          "expression": "A = ",
-          "stepTitle": "Plantea la fórmula del área de la circunferencia de radio r.",
-          "displayResult": "A = π r²",
-          "KCs": ["AreaC"],
-          "ShowPanel" : true,
-          "hints": [
-            { "hintId": 0, "hint": "El área es el cuadrado del radio multiplicado por pi." },
-            { "hintId": 1, "hint": "Escribe πr²." }
-          ],
-          "matchingError": [
-            {
-              "error": [""],
-              "hintId": 2,
-              "hint": "Debe ingresar una respuesta"
-            },
-            {
-                "error": ["2pir"],
-                "hintId": 3,
-                "hint": "Has ingresado la fórmula del perímetro del círculo."
-              }
-          ],
-          "answers": [{ "answer": "\\pirr", "nextStep": "3" }, { "answer": "\\pir2^", "nextStep": "3" }, { "answer": "r2\\pi^", "nextStep": "3" }],
-          "incorrectMsg": "La expresión ingresada no corresponde al área de la circunferencia de radio r.",
-          "correctMsg": "La expresión ingresada corresponde al área de la circunfernecia de radio r",
-          "summary": "3) El área de la circunferencia es el cuadrado de su radio multiplicado por π."
-        },
-        {
-          "stepId": "3",
-          "expression": "A = ",
-          "stepTitle": "Calcula el área de la circunferencia.",
-          "displayResult": "A =  16π",
-          "KCs": ["AN"],
-          "ShowPanel" : true,
-          "hints": [
-            { "hintId": 0, "hint": "El radio es 4." },
-            { "hintId": 1, "hint": "Escribe 16π." }
-          ],
-          "matchingError": [
-            {
-              "error": [""],
-              "hintId": 2,
-              "hint": "No se ha ingresado el área"
-            }
-          ],
-          "answers": [{ "answer": "16\\pi", "nextStep": "Terminado" }, { "answer": "\\pi16", "nextStep": "Terminado" }],
-          "incorrectMsg": "El valor ingresado no corresponde al área de la cirncuferencia formada por el café en el filtro. ",
-          "correctMsg": "Haz calculado correctamente el área de la circunfernecia formada por en café en el filtro. ",
-          "summary": "4) Obtenido el valor del radio de la circuenferencia es posible calcular su área."
-        }
-      ]
-    }
-  ]
-  
+  {
+    "code": "th1",
+    "title": "Teorema de thales I.",
+    "type": "thales1",
+    "meta": {},
+    "text": "Un filtro de café de altura 10 cm. tiene un diámetro de 16 cm. Si el filtro de café contiene café hasta una altura de 5 cm. ¿Cuál es el área de la circunferencia que se genera en el filtro sobre la cantidad de café?",
+    "selectSteps": false,
+    "image": "",
+    "conclusion": "El área de la circuenferencia de radio r que se genera por el  café en el filtro es de 16π ",
+    "steps": [
+      {
+        "stepId": "0",
+        "expression": "\\frac{5}{r} = ",
+        "stepTitle": "Debido a que se trata de una figura cónica es posible aplicar el Teorema de Thales haciendole un corte transversal a la figura, Si r es el radio de la circunferencia de la cual queremos encontrar el área, plantea el Teorema de Thales dada la información entregada",
+        "displayResult": "5/r = 10/8",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "La razón de la altura por el radio del filtro es igual a la razón de la altura por el radio del café."
+          },
+          { "hintId": 1, "hint": "La altura del filtro es 10." },
+          {
+            "hintId": 2,
+            "hint": "El diámetro es 2 veces el radio del filtro."
+          },
+          { "hintId": 3, "hint": "El radio del filtro es 8." },
+          { "hintId": 4, "hint": "Escribe 10/8." }
+        ],
+        "matchingError": [{ "error": [""], "hintId": 5, "hint": "No ha ingresado respuesta" }],
+        "answers": [{ "answer": ["10", "8"], "nextStep": "1" }],
+        "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del Teorema de Thales.",
+        "correctMsg": "Haz planteado correctamente el Teorema de Thales",
+        "summary": "1) Para plantear el Teorema de Thales es necesario identificar los triángulos semejantes, en este caso al hacer un corte transversal a la figura cónica se cumple la semenjanza."
+      },
+      {
+        "stepId": "1",
+        "expression": "r = ",
+        "stepTitle": "Calcula el radio de la circunferencia formada por el café en el filtro.",
+        "displayResult": "r = 4",
+        "KCs": ["AN", "R3"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Necesitas despejar r con una regla de 3 simple."
+          },
+          { "hintId": 1, "hint": "10 veces r es igual a 40." },
+          { "hintId": 2, "hint": "Escribe 4." }
+        ],
+        "matchingError": [
+          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" },
+          {
+            "error": ["8"],
+            "hintId": 3,
+            "hint": "Has ingresado el diámetro de la circunferencia formada por el café en el filtro."
+          }
+        ],
+        "answers": [{ "answer": "4", "nextStep": "2" }],
+        "incorrectMsg": "El valor ingresado no corresponde al radio de la circunferencia formado por el café en el filtro.",
+        "correctMsg": "Haz calculado correctamente el radio de la circunferencia formada por el café en el filtro.",
+        "summary": "2) La igualdad del Teorema de Thales nos permite despejar el radio de la circunferencia formada por el café en el filtro con una regla de tres simple. "
+      },
+      {
+        "stepId": "2",
+        "expression": "A = ",
+        "stepTitle": "Plantea la fórmula del área de la circunferencia de radio r.",
+        "displayResult": "A = π r²",
+        "KCs": ["AreaC"],
+        "ShowPanel": true,
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "El área es el cuadrado del radio multiplicado por pi."
+          },
+          { "hintId": 1, "hint": "Escribe πr²." }
+        ],
+        "matchingError": [
+          {
+            "error": [""],
+            "hintId": 2,
+            "hint": "Debe ingresar una respuesta"
+          },
+          {
+            "error": ["2pir"],
+            "hintId": 3,
+            "hint": "Has ingresado la fórmula del perímetro del círculo."
+          }
+        ],
+        "answers": [
+          { "answer": "\\pirr", "nextStep": "3" },
+          { "answer": "\\pir2^", "nextStep": "3" },
+          { "answer": "r2\\pi^", "nextStep": "3" }
+        ],
+        "incorrectMsg": "La expresión ingresada no corresponde al área de la circunferencia de radio r.",
+        "correctMsg": "La expresión ingresada corresponde al área de la circunfernecia de radio r",
+        "summary": "3) El área de la circunferencia es el cuadrado de su radio multiplicado por π."
+      },
+      {
+        "stepId": "3",
+        "expression": "A = ",
+        "stepTitle": "Calcula el área de la circunferencia.",
+        "displayResult": "A =  16π",
+        "KCs": ["AN"],
+        "ShowPanel": true,
+        "hints": [
+          { "hintId": 0, "hint": "El radio es 4." },
+          { "hintId": 1, "hint": "Escribe 16π." }
+        ],
+        "matchingError": [
+          {
+            "error": [""],
+            "hintId": 2,
+            "hint": "No se ha ingresado el área"
+          }
+        ],
+        "answers": [
+          { "answer": "16\\pi", "nextStep": "Terminado" },
+          { "answer": "\\pi16", "nextStep": "Terminado" }
+        ],
+        "incorrectMsg": "El valor ingresado no corresponde al área de la cirncuferencia formada por el café en el filtro. ",
+        "correctMsg": "Haz calculado correctamente el área de la circunfernecia formada por en café en el filtro. ",
+        "summary": "4) Obtenido el valor del radio de la circuenferencia es posible calcular su área."
+      }
+    ]
+  }
+]

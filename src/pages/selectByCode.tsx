@@ -3,8 +3,7 @@ import Link from "next/link";
 import DQ2 from '../components/lvltutor/Tools/DQ2';
 
 export default function SelectByCode() {
-
-
+  
   /*const [codigo, setCodigo] = useState('');
   const [texto, setTexto] = useState('');
   
@@ -44,10 +43,9 @@ export default function SelectByCode() {
     /*update currentContent
     sessionStateBD.setItem(
       "currentContent",
-      JSON.parse(JSON.stringify(sessionState.currentContent))
+      JSON.parse(JSON.stringify(sessionState.currentContent)),
     );
   });*/
-
 
   return (
     <>
@@ -60,11 +58,9 @@ export default function SelectByCode() {
           <Button >Mostrar Ejercicio</Button>
        </Link>
       </div>
-    </> 
+    </>
   );
-  
 }
-
 
 /*export default function Index() {
     //content/content/solve?type=5
@@ -86,7 +82,6 @@ export default function SelectByCode() {
     ) 
 
   }*/
-
 
 //return <div></div>;
 

@@ -34,7 +34,7 @@ export const DSC = ({ exercise, nextRouter }) => {
   const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
   const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const steps = exercise.steps.map((i) => i.stepTitle); //list of all stepTitle for selectStep
+  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
   const action = useAction(); //send action to central system
 
@@ -49,10 +49,7 @@ export const DSC = ({ exercise, nextRouter }) => {
 
   return (
     <>
-      <BreadcrumbTutor
-        root="Factorización"
-        item={exercise.title}
-      ></BreadcrumbTutor>
+      <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
       <Wrap>
         {exercise.text}
@@ -64,11 +61,7 @@ export const DSC = ({ exercise, nextRouter }) => {
 
       <Wrap justify="center">
         {loading && <Loading />}
-        <MathComponent
-          tex={exercise.steps[0].expression}
-          display={true}
-          onSuccess={change}
-        />
+        <MathComponent tex={exercise.steps[0].expression} display={true} onSuccess={change} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -76,8 +69,8 @@ export const DSC = ({ exercise, nextRouter }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0)) {
-                  setIndex(index.filter((e) => e !== 0));
+                if (index.some(element => element === 0)) {
+                  setIndex(index.filter(e => e !== 0));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
@@ -134,18 +127,12 @@ export const DSC = ({ exercise, nextRouter }) => {
 
         <AccordionItem isDisabled={select2}>
           <Alert
-            colorScheme={
-              step2Valid == null
-                ? step1Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 1)) {
-                  setIndex(index.filter((e) => e !== 1));
+                if (index.some(element => element === 1)) {
+                  setIndex(index.filter(e => e !== 1));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
@@ -201,11 +188,7 @@ export const DSC = ({ exercise, nextRouter }) => {
       </Accordion>
       {step2Valid != null && (
         <>
-          <DSCsummary
-            step1={exercise.steps[0]}
-            step2={exercise.steps[1]}
-            sign={exercise.sign}
-          />
+          <DSCsummary step1={exercise.steps[0]} step2={exercise.steps[1]} sign={exercise.sign} />
           <Stack padding="1em" alignItems="center">
             <Link href={nextRouter}>
               <Button colorScheme="cyan" variant="outline" size="sm">

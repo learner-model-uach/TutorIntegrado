@@ -39,7 +39,7 @@ export const StepPanel = ({
 
   const startAction = useAction({});
   useEffect(() => {
-    setItems(step.answers.map((id) => ({ ...id, column: COLUMN1 })));
+    setItems(step.answers.map(id => ({ ...id, column: COLUMN1 })));
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -64,8 +64,8 @@ export const StepPanel = ({
 
   const returnItemsForColumn = (columnName, valores, isCorrect) => {
     return valores
-      .filter((item) => item.column === columnName)
-      .map((item) => (
+      .filter(item => item.column === columnName)
+      .map(item => (
         <MovableItem
           type={step.type}
           key={item.id}
@@ -93,7 +93,7 @@ export const StepPanel = ({
     }
   };
 
-  const checkAnswers = (e) => {
+  const checkAnswers = e => {
     e.preventDefault();
 
     const answer = checkCorrectAnswer();
@@ -114,14 +114,14 @@ export const StepPanel = ({
             stepID: step.n_step,
             extra: { response: answer },
           });
-          setStepCorrect((state) => [...state, answer[0].value]);
-          setColor((prev) => [
+          setStepCorrect(state => [...state, answer[0].value]);
+          setColor(prev => [
             ...prev.slice(0, nStep),
             CORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
           ]);
-          setNumStep((prevState) => prevState + 1);
-          setDisableState((prevState) => [...prevState, true]);
+          setNumStep(prevState => prevState + 1);
+          setDisableState(prevState => [...prevState, true]);
           setAlert({
             status: "success",
             text: "Respuesta Correcta",
@@ -140,7 +140,7 @@ export const StepPanel = ({
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
 
-          setColor((prev) => [
+          setColor(prev => [
             ...prev.slice(0, nStep),
             INCORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
@@ -156,7 +156,7 @@ export const StepPanel = ({
   };
 
   const checkCorrectAnswer = () => {
-    return items.filter((item) => item.column === COLUMN2);
+    return items.filter(item => item.column === COLUMN2);
   };
 
   return (
@@ -173,10 +173,7 @@ export const StepPanel = ({
         >
           <Stack direction={{ base: ["row", "column"], xl: ["column", "row"] }}>
             <Flex marginRight={{ xl: "250px" }} margin={{ base: "auto" }}>
-              <Text
-                display={{ base: "none", xl: "block" }}
-                margin={{ base: "auto" }}
-              >
+              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
                 {step.left_text}
               </Text>
 
@@ -197,9 +194,7 @@ export const StepPanel = ({
                   title={COLUMN2}
                   className={`${styles["column"]} ${styles["second-column"]}`}
                 >
-                  <div>
-                    {items && returnItemsForColumn(COLUMN2, items, isCorrect)}
-                  </div>
+                  <div>{items && returnItemsForColumn(COLUMN2, items, isCorrect)}</div>
                 </ColumnDragPanel>
               </Flex>
             </Flex>

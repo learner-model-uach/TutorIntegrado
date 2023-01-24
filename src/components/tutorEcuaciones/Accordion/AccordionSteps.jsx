@@ -43,7 +43,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
     setColor(
       Array(exercise.steps.length)
         .fill(0)
-        .map((e) => ACCORDION_COLOR)
+        .map(e => ACCORDION_COLOR),
     );
     setDisableState([true]);
     setIndexStep([0]);
@@ -59,7 +59,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
       }, 1000);
     }
   }, [numStep]);
-  const onClickAccordionStep = (index) => {
+  const onClickAccordionStep = index => {
     if (index.length > isOpenIndexes.length) {
       let stepID = index.at(-1);
       startAction({
@@ -68,7 +68,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
         contentID: exercise.content,
       });
     } else {
-      let stepID = isOpenIndexes.filter((id) => !index.includes(id));
+      let stepID = isOpenIndexes.filter(id => !index.includes(id));
       startAction({
         verbName: "closeStep",
         stepID: stepID.at(0),
@@ -85,7 +85,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
         defaultIndex={indexStep}
         key={exercise.id}
         style={{ width: "100%" }}
-        onChange={(index) => onClickAccordionStep(index)}
+        onChange={index => onClickAccordionStep(index)}
       >
         {exercise &&
           exercise.steps.map((step, index) => (
@@ -98,7 +98,7 @@ export const AccordionSteps = ({ exercise, setNextExercise }) => {
               className={styles["accordionPadding"]}
             >
               <AccordionButton
-                ref={(element) => (inputRef.current[index] = element)}
+                ref={element => (inputRef.current[index] = element)}
                 bg={
                   color[index] === ACCORDION_COLOR
                     ? ACCORDION_COLOR

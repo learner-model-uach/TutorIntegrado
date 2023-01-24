@@ -43,7 +43,7 @@ export const StepEquations = ({
   const startAction = useAction({});
 
   useEffect(() => {
-    setItems(step.answers.map((id) => ({ ...id, column: COLUMN1 })));
+    setItems(step.answers.map(id => ({ ...id, column: COLUMN1 })));
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -73,8 +73,8 @@ export const StepEquations = ({
 
   const returnItemsForColumn = (columnName, valores, isCorrect) => {
     return valores
-      .filter((item) => item.column === columnName)
-      .map((item) => (
+      .filter(item => item.column === columnName)
+      .map(item => (
         <MovableItemEquation
           type={step.type}
           key={item.id}
@@ -101,7 +101,7 @@ export const StepEquations = ({
     }
   };
 
-  const checkAnswers = (e) => {
+  const checkAnswers = e => {
     e.preventDefault();
 
     const answerLeft = checkCorrectAnswer(COLUMN2);
@@ -128,17 +128,14 @@ export const StepEquations = ({
             stepID: step.n_step,
             extra: { response: { answerLeft, answerRigth } },
           });
-          setStepCorrect((state) => [
-            ...state,
-            [answerLeft[0].value, answerRigth[0].value],
-          ]);
-          setColor((prev) => [
+          setStepCorrect(state => [...state, [answerLeft[0].value, answerRigth[0].value]]);
+          setColor(prev => [
             ...prev.slice(0, nStep),
             CORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
           ]);
-          setNumStep((prevState) => prevState + 1);
-          setDisableState((prevState) => [...prevState, true]);
+          setNumStep(prevState => prevState + 1);
+          setDisableState(prevState => [...prevState, true]);
           setAlert({
             status: "success",
             text: "Respuesta Correcta",
@@ -157,7 +154,7 @@ export const StepEquations = ({
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
 
-          setColor((prev) => [
+          setColor(prev => [
             ...prev.slice(0, nStep),
             INCORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
@@ -172,8 +169,8 @@ export const StepEquations = ({
     }
   };
 
-  const checkCorrectAnswer = (column) => {
-    return items.filter((item) => item.column === column);
+  const checkCorrectAnswer = column => {
+    return items.filter(item => item.column === column);
   };
 
   return (
@@ -189,10 +186,7 @@ export const StepEquations = ({
         >
           <Stack direction={{ base: ["row", "column"], xl: ["column", "row"] }}>
             <Flex marginRight={{ xl: "250px" }} margin={{ base: "auto" }}>
-              <Text
-                display={{ base: "none", xl: "block" }}
-                margin={{ base: "auto" }}
-              >
+              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
                 {step.left_text}
               </Text>
 
@@ -215,9 +209,7 @@ export const StepEquations = ({
                     className={`${styles["column"]} ${styles["second-column"]}`}
                     style={{ padding: 10 }}
                   >
-                    <div>
-                      {items && returnItemsForColumn(COLUMN2, items, isCorrect)}
-                    </div>
+                    <div>{items && returnItemsForColumn(COLUMN2, items, isCorrect)}</div>
                   </ColumnDragPanel>
                   <Text
                     style={{
@@ -232,9 +224,7 @@ export const StepEquations = ({
                     title={COLUMN3}
                     className={`${styles["column"]} ${styles["second-column"]}`}
                   >
-                    <div>
-                      {items && returnItemsForColumn(COLUMN3, items, isCorrect)}
-                    </div>
+                    <div>{items && returnItemsForColumn(COLUMN3, items, isCorrect)}</div>
                   </ColumnDragPanel>
                 </Flex>
               </Flex>

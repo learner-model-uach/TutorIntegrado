@@ -150,9 +150,7 @@
           { "hintId": 1, "hint": "El factor común es una suma de variables" },
           { "hintId": 2, "hint": "El factor común de la expresión es: x + y" }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": "x+y", "nextStep": null }],
         "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
         "correctMsg": "Haz encontrado el factor común  compuesto",
@@ -172,9 +170,7 @@
           { "hintId": 1, "hint": "El factor común es una suma de variables" },
           { "hintId": 2, "hint": "El factor común de la expresión es: a + b" }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": "a+b", "nextStep": null }],
         "incorrectMsg": "factor común incorrecto, ingrese el factor común correspondiente a la expresión dada",
         "correctMsg": "Has factorizado por factor común compuesto",
@@ -323,9 +319,7 @@
           },
           { "hintId": 2, "hint": "el factor común de la expresión es: x + y" }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": "2x-y+5", "nextStep": null },
           { "answer": "2x+5-y", "nextStep": null },

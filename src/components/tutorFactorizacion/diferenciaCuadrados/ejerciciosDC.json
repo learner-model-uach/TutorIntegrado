@@ -490,9 +490,7 @@
           },
           { "error": ["*", ""], "hintId": 5, "hint": "No ha ingresado x₁ - x₂" }
         ],
-        "answers": [
-          { "answer": ["-2xy^2+4xy", "-2xy^2-4xy"], "nextStep": null }
-        ],
+        "answers": [{ "answer": ["-2xy^2+4xy", "-2xy^2-4xy"], "nextStep": null }],
         "incorrectMsg": "suma por diferencia mal ingresado",
         "correctMsg": "Haz encontrado la diferencia de cuadradros",
         "summary": "2) Ya identificado x₁ y x₂ se puede aplicar la fórmula que permite factorizar la expresión en suma por su diferencia  (x₁+x₂)(x₁-x₂)"
@@ -550,9 +548,7 @@
           },
           { "error": ["*", ""], "hintId": 5, "hint": "No ha ingresado x₁ - x₂" }
         ],
-        "answers": [
-          { "answer": ["-2xy^2-4xy", "-2xy^2+4xy"], "nextStep": null }
-        ],
+        "answers": [{ "answer": ["-2xy^2-4xy", "-2xy^2+4xy"], "nextStep": null }],
         "incorrectMsg": "suma por diferencia mal ingresado",
         "correctMsg": "Haz encontrado la diferencia de cuadradros",
         "summary": "2) Ya identificado x₁ y x₂ se puede aplicar la fórmula que permite factorizar la expresión en suma por su diferencia  (x₁+x₂)(x₁-x₂)"

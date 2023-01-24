@@ -12,9 +12,7 @@ const DynamicTutorFac = dynamic<{exercise?: Object, topicId?: string }>(() =>
 const DynamicPlain = dynamic<{
   topicId: string;
   steps: Object;
-}>(() =>
-    import("../components/lvltutor/Plain").then((mod) => mod.Plain)
-  );
+}>(() => import("../components/lvltutor/Plain").then(mod => mod.Plain));
 
 export default withAuth(function ShowContent() {
   
@@ -49,4 +47,4 @@ export default withAuth(function ShowContent() {
       </div>
     </>
   );
-})
+});

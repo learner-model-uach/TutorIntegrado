@@ -2,15 +2,9 @@
 import type { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -1111,8 +1105,7 @@ export const ModelStateAlgorithm = {
   Bkt: "BKT",
 } as const;
 
-export type ModelStateAlgorithm =
-  typeof ModelStateAlgorithm[keyof typeof ModelStateAlgorithm];
+export type ModelStateAlgorithm = typeof ModelStateAlgorithm[keyof typeof ModelStateAlgorithm];
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
   __typename?: "ModelStateConnection";
@@ -1844,12 +1837,7 @@ export type CurrentUserQuery = {
         role: UserRole;
         picture?: string | null | undefined;
         tags: Array<string>;
-        projects: Array<{
-          __typename?: "Project";
-          id: string;
-          code: string;
-          label: string;
-        }>;
+        projects: Array<{ __typename?: "Project"; id: string; code: string; label: string }>;
         groups: Array<{
           __typename?: "Group";
           id: string;
@@ -1860,10 +1848,7 @@ export type CurrentUserQuery = {
       }
     | null
     | undefined;
-  project?:
-    | { __typename?: "Project"; id: string; code: string; label: string }
-    | null
-    | undefined;
+  project?: { __typename?: "Project"; id: string; code: string; label: string } | null | undefined;
 };
 
 export type PotatoqueryQueryVariables = Exact<{
@@ -1891,10 +1876,7 @@ export type ProjectData0QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData0Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1904,10 +1886,7 @@ export type ProjectData1QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData1Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1917,10 +1896,7 @@ export type ProjectData2QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData2Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1930,10 +1906,7 @@ export type ProjectData3QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData3Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1943,10 +1916,7 @@ export type ProjectData4QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData4Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1956,10 +1926,7 @@ export type ProjectData5QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData5Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1969,10 +1936,7 @@ export type ProjectData6QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData6Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1982,10 +1946,7 @@ export type ProjectData7QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData7Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -1995,10 +1956,7 @@ export type ProjectData8QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData8Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -2008,10 +1966,7 @@ export type ProjectData9QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData9Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -2021,10 +1976,7 @@ export type ProjectData10QueryVariables = Exact<{ [key: string]: never }>;
 export type ProjectData10Query = {
   __typename?: "Query";
   contentByCode?:
-    | {
-        __typename?: "Content";
-        json?: Record<string, unknown> | null | undefined;
-      }
+    | { __typename?: "Content"; json?: Record<string, unknown> | null | undefined }
     | null
     | undefined;
 };
@@ -2095,11 +2047,7 @@ export const CurrentUserDocument = {
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "StringValue",
-                  value: "NivPreAlg",
-                  block: false,
-                },
+                value: { kind: "StringValue", value: "NivPreAlg", block: false },
               },
             ],
             selectionSet: {
@@ -2200,9 +2148,7 @@ export const ProjectData0Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2232,9 +2178,7 @@ export const ProjectData1Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2264,9 +2208,7 @@ export const ProjectData2Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2296,9 +2238,7 @@ export const ProjectData3Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2328,9 +2268,7 @@ export const ProjectData4Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2360,9 +2298,7 @@ export const ProjectData5Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2392,9 +2328,7 @@ export const ProjectData6Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2424,9 +2358,7 @@ export const ProjectData7Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2456,9 +2388,7 @@ export const ProjectData8Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2488,9 +2418,7 @@ export const ProjectData9Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2520,9 +2448,7 @@ export const ProjectData10Document = {
             ],
             selectionSet: {
               kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "json" } },
-              ],
+              selections: [{ kind: "Field", name: { kind: "Name", value: "json" } }],
             },
           },
         ],
@@ -2543,10 +2469,7 @@ export const ActionDocument = {
           variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
           type: {
             kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "ActionInput" },
-            },
+            type: { kind: "NamedType", name: { kind: "Name", value: "ActionInput" } },
           },
         },
       ],
@@ -2560,10 +2483,7 @@ export const ActionDocument = {
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "data" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "data" },
-                },
+                value: { kind: "Variable", name: { kind: "Name", value: "data" } },
               },
             ],
           },

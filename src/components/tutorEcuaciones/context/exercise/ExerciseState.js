@@ -4,7 +4,7 @@ import ExerciseReducer from "./exerciseReducer";
 import { SET_CONTENT } from "../../types";
 import React, { useReducer } from "react";
 
-const ExerciseState = (props) => {
+const ExerciseState = props => {
   const initialState = {
     content: "",
   };
@@ -12,7 +12,7 @@ const ExerciseState = (props) => {
   const [state, dispatch] = useReducer(ExerciseReducer, initialState);
 
   //Set Alert
-  const settingContent = (contentId) => {
+  const settingContent = contentId => {
     dispatch({ type: SET_CONTENT, payload: contentId });
   };
 

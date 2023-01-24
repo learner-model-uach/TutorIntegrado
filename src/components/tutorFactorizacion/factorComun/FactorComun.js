@@ -30,17 +30,14 @@ export const FC = ({ exercise, nextRouter }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
   const [select, setSelect] = useState(exercise.selectSteps); //select is true when step is chosen, false when not selectStep
-  const steps = exercise.steps.map((i) => i.stepTitle); //list of all stepTitle for selectStep
+  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
   return (
     <div>
-      <BreadcrumbTutor
-        root="Factorización"
-        item={exercise.title}
-      ></BreadcrumbTutor>
+      <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
       <Wrap>
         {exercise.text}
@@ -52,11 +49,7 @@ export const FC = ({ exercise, nextRouter }) => {
 
       <Wrap justify="center">
         {loading && <Loading />}
-        <MathComponent
-          tex={exercise.steps[0].expression}
-          display={true}
-          onSuccess={change}
-        />
+        <MathComponent tex={exercise.steps[0].expression} display={true} onSuccess={change} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -64,9 +57,9 @@ export const FC = ({ exercise, nextRouter }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0) && !select) {
+                if (index.some(element => element === 0) && !select) {
                   //closeTab
-                  setIndex(index.filter((e) => e !== 0));
+                  setIndex(index.filter(e => e !== 0));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise?.steps[0]?.stepId,
