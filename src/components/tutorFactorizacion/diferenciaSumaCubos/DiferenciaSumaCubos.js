@@ -25,9 +25,10 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
 //react functional component
-export const DSC = ({ exercise, nextRouter }) => {
+export const DSC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -75,7 +76,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -83,7 +84,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -101,7 +102,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.contentType}
+                          topic={topic}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -119,7 +120,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                 step1Valid={step1Valid}
                 sign={exercise.sign}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></DSCstep1>
             )}
           </AccordionPanel>
@@ -137,7 +138,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(1));
@@ -145,7 +146,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -163,7 +164,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                           steps={steps}
                           setSelect={setSelect2}
                           contentID={exercise.code}
-                          topic={exercise.contentType}
+                          topic={topic}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -180,7 +181,7 @@ export const DSC = ({ exercise, nextRouter }) => {
                 setStep2Valid={setStep2Valid}
                 step2Valid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></DSCstep2>
             )}
           </AccordionPanel>
@@ -188,6 +189,7 @@ export const DSC = ({ exercise, nextRouter }) => {
       </Accordion>
       {step2Valid != null && (
         <>
+<<<<<<< HEAD
           <DSCsummary step1={exercise.steps[0]} step2={exercise.steps[1]} sign={exercise.sign} />
           <Stack padding="1em" alignItems="center">
             <Link href={nextRouter}>
@@ -196,6 +198,13 @@ export const DSC = ({ exercise, nextRouter }) => {
               </Button>
             </Link>
           </Stack>
+=======
+          <DSCsummary
+            step1={exercise.steps[0]}
+            step2={exercise.steps[1]}
+            sign={exercise.sign}
+          />
+>>>>>>> seleccion-contenido
         </>
       )}
     </>

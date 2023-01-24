@@ -32,7 +32,6 @@ export const DSCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID 
         contentID: contentID,
         topicID: topicID,
         result: 1,
-        // topicID: ""+ejercicio.code,
       });
       setFeedbackMsg(
         <Alert status="success">

@@ -2,7 +2,7 @@
   {
     "code": "dsc1",
     "title": "Factorización por diferencia de cubos.",
-    "contentType": "DSC",
+    "type": "DSC",
     "sign": "-",
     "level": "1",
     "text": "Factorice la siguiente expresión",
@@ -82,7 +82,7 @@
   {
     "code": "dsc2",
     "title": "Factorice la siguiente expresión",
-    "contentType": "DSC",
+    "type": "DSC",
     "sign": "+",
     "level": "1",
     "text": "Factorice la siguiente expresión:",

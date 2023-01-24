@@ -12,27 +12,28 @@ import {
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { FaStar } from "react-icons/fa";
-import { subscribe } from "valtio";
 import { sessionState, sessionStateBD } from "../SessionState";
 
 export const CardSelection = ({
-  exercise,
-  msg,
+  title,
+  text,
+  json,
+  code,
   best,
 }: {
-  exercise: string | undefined;
-  msg: string | undefined;
+  title: string | undefined;
+  text: string | undefined;
+  json: Object | undefined;
+  code: string | undefined;
   best: boolean;
 }) => {
   const router = useRouter();
 
-  subscribe(sessionState.currentContent, () => {
-    /*update currentContent*/
-    sessionStateBD.setItem(
-      "currentContent",
-      JSON.parse(JSON.stringify(sessionState.currentContent)),
-    );
-  });
+  sessionStateBD.setItem(
+    "currentContent",
+    JSON.parse(JSON.stringify(sessionState.currentContent))
+  );
+  sessionStateBD.setItem("topic", sessionState.topic);
 
   return (
     <>
@@ -50,28 +51,31 @@ export const CardSelection = ({
         rounded="md"
         textAlign="center"
         onClick={() => {
-          sessionState.currentContent.code = "fc1"; //code de sessionState
-          sessionState.currentContent.description = msg + ""; //descripcion del ejercicio ofrecido
-          sessionState.currentContent.id = "1"; //identificador del ejercicio
-          sessionState.currentContent.json = null; //json del ejercicio
+          sessionState.currentContent.code = code; //code de sessionState
+          sessionState.currentContent.description = text + ""; //descripcion del ejercicio ofrecido
+          sessionState.currentContent.id = 1; //identificador del ejercicio
+          sessionState.currentContent.json = json; //json del ejercicio
           sessionState.currentContent.kcs = [1, 2, 3]; //kcs del ejercicio
           sessionState.currentContent.label = ""; //enunciado o tipo de ejercicio
-          //sessionState.currentContent.state={}
+          if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
+            sessionState.topic = "RudAlg";
+          }
         }}
-        //onClick={() => router.push("exercise/solve?type=" + router.query.type)}
-        //cursor="pointer"
       >
         <Center>
           <HStack>
             <Heading size="md" my="2" textAlign="center">
-              <NextLink href={"content/solve?type=" + router.query.type} passHref>
-                <LinkOverlay>{exercise}</LinkOverlay>
+              <NextLink
+                href={"content/solve?type=" + router.query.type}
+                passHref
+              >
+                <LinkOverlay>{title}</LinkOverlay>
               </NextLink>
             </Heading>
             {best && <FaStar size={20} color="yellow" />}
           </HStack>
         </Center>
-        <Text>{msg}</Text>
+        <Text>{text}</Text>
       </LinkBox>
     </>
   );

@@ -10,7 +10,7 @@
         "stepId": "0",
         "KCs": ["TransDivRac"],
         "expression": "\\left(\\frac{a}{b}+\\frac{c}{d}\\right):\\left(\\frac{a}{b}-\\frac{c}{d}\\right)",
-        "stepTitle": "Expresa la siguiente division como una fraccion.",
+        "stepTitle": "Expresa la siguiente division como una fracción.",
         "displayResult": [
           "\\frac{\\left(\\frac{a}{b}+\\frac{c}{d}\\right)}{\\left(\\frac{a}{b}-\\frac{c}{d}\\right)}"
         ],
@@ -23,7 +23,8 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "El lado izquierdo de una división se conoce como dividendo, el lado derecho se conoce como divisor."
+            "hint": "El lado izquierdo de una división se conoce como dividendo, el lado derecho se conoce como divisor.",
+            "expression": "\\frac{\\left(\\textcolor{gray}{\\frac{a^x}{\\sqrt{b}}}+\\frac{c}{d}\\right)}{\\left(\\frac{a}{b}-\\frac{c}{d}\\right)}"
           },
           {
             "hintId": 1,
@@ -56,7 +57,9 @@
         "KCs": ["SRFrac", "MCM"],
         "expression": "\\frac{\\left(\\frac{a}{b}+\\frac{c}{d}\\right)}{\\left(\\frac{a}{b}-\\frac{c}{d}\\right)}",
         "stepTitle": "Realiza la suma de fracciones en el numerador y expresa el resultado final del numerador.",
-        "displayResult": ["\\left(\\frac{a\\cdot d+b\\cdot c}{b\\cdot d}\\right)"],
+        "displayResult": [
+          "\\left(\\frac{a\\cdot d+b\\cdot c}{b\\cdot d}\\right)"
+        ],
         "values": [
           { "name": "a", "value": 1 },
           { "name": "b", "value": 2 },
@@ -97,7 +100,9 @@
         "KCs": ["SRFrac", "MCM"],
         "expression": "\\frac{\\left(\\frac{a\\cdot d+b\\cdot c}{b\\cdot d}\\right)}{\\left(\\frac{a}{b}-\\frac{c}{d}\\right)}",
         "stepTitle": "Realiza la resta de fracciones en el denominador y expresa el resultado final del denominador.",
-        "displayResult": ["\\left(\\frac{a\\cdot d-b\\cdot c}{b\\cdot d}\\right)"],
+        "displayResult": [
+          "\\left(\\frac{a\\cdot d-b\\cdot c}{b\\cdot d}\\right)"
+        ],
         "values": [
           { "name": "a", "value": 1 },
           { "name": "b", "value": 2 },

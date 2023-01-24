@@ -2,7 +2,7 @@
   {
     "code": "fcc1",
     "title": "Factor común compuesto",
-    "contentType": "FCC",
+    "type": "FCC",
     "KCs": [
       { "code": "", "label": "" },
       { "code": "", "label": "" }
@@ -181,7 +181,7 @@
   {
     "code": "fcc2",
     "title": "Factorización por factor común compuesto.",
-    "contentType": "FCC",
+    "type": "FCC",
     "level": "3",
     "text": "Texto problema/ejercicio, planteamiento",
     "selectSteps": true,

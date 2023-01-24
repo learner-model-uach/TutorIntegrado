@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { StaticMathField } from "react-mathquill";
 import {
   Button,
   Popover,
@@ -11,6 +12,7 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { useAction } from "../../../utils/action";
+import { MathComponent } from "mathjax-react";
 
 const Hint = ({
   hints, //all hints
@@ -120,6 +122,7 @@ const Hint = ({
         hintID: "" + list[j].hintId,
         extra: {
           source: "next",
+          lastHint: hints.length == i + 1 ? true : false,
         },
       });
     }
@@ -136,6 +139,7 @@ const Hint = ({
         hintID: "" + list[j].hintId,
         extra: {
           source: "prev",
+          lastHint: hints.length == i + 1 ? true : false,
         },
       });
     }
@@ -160,6 +164,7 @@ const Hint = ({
                 hintID: "" + list[j].hintId,
                 extra: {
                   source: "Open",
+                  lastHint: hints.length == i + 1 ? true : false,
                 },
               });
             }}
@@ -185,6 +190,9 @@ const Hint = ({
           <PopoverBody>
             <br />
             {list[j].hint} <br />
+            {list[j].expression ? (
+              <StaticMathField>{list[j].expression}</StaticMathField>
+            ) : null}
             <br />
             <Center>
               {list[j - 1] && (

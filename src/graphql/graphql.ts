@@ -1990,6 +1990,15 @@ export type ActionMutation = {
   action?: void | undefined | null | null | undefined;
 };
 
+export type UpdateModelStateMutationVariables = Exact<{
+  input: UpdateModelStateInput;
+}>;
+
+export type UpdateModelStateMutation = {
+  __typename?: "Mutation";
+  updateModelState?: void | undefined | null | null | undefined;
+};
+
 export const CurrentUserDocument = {
   kind: "Document",
   definitions: [
@@ -2160,7 +2169,7 @@ export const ProjectData1Document = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "contentByCode" },
+            name: { kind: "Name", value: "action" },
             arguments: [
               {
                 kind: "Argument",
@@ -2454,11 +2463,14 @@ export const ActionDocument = {
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "Action" },
+      name: { kind: "Name", value: "updateModelState" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "input" },
+          },
           type: {
             kind: "NonNullType",
             type: { kind: "NamedType", name: { kind: "Name", value: "ActionInput" } },
@@ -2470,7 +2482,7 @@ export const ActionDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "action" },
+            name: { kind: "Name", value: "updateModelState" },
             arguments: [
               {
                 kind: "Argument",
@@ -2483,4 +2495,7 @@ export const ActionDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<ActionMutation, ActionMutationVariables>;
+} as unknown as DocumentNode<
+  UpdateModelStateMutation,
+  UpdateModelStateMutationVariables
+>;

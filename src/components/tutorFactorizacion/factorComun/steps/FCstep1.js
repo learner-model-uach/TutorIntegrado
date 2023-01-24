@@ -38,6 +38,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
         verbName: "completeContent",
         contentID: contentID,
         topicID: topicID,
+        result: 1,
       });
     } else {
       /*if response is incorrect*/

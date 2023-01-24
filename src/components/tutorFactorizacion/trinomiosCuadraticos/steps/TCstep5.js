@@ -45,7 +45,6 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
         contentID: contentID,
         topicID: topicID,
         result: 1,
-        // topicID: ""+ejercicio.code,
       });
     } else {
       setError(true);

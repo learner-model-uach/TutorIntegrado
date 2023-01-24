@@ -2,7 +2,7 @@
   {
     "code": "tc1",
     "title": "Trinomios cuadráticos.",
-    "contentType": "TC",
+    "type": "TC",
     "level": "4",
     "text": "Factorice la expresión de la forma: 𝑎(x - x₁)(x - x₂)",
     "selectSteps": true,
@@ -192,7 +192,7 @@
   {
     "code": "tc2",
     "title": "Trinomios cuadráticos.",
-    "contentType": "TC",
+    "type": "TC",
     "level": "1",
     "text": "Factorice la expresión de la forma: a(x - x₁)(x - x₂)",
     "selectSteps": true,
@@ -377,7 +377,7 @@
   {
     "code": "tc3",
     "title": "Trinomios cuadráticos.",
-    "contentType": "TC",
+    "type": "TC",
     "level": "4",
     "text": "Factorice la expresión de la forma: a(x - x₁)(x - x₂)",
     "selectSteps": true,
@@ -564,7 +564,7 @@
   {
     "code": "tc4",
     "title": "Trinomios cuadráticos.",
-    "contentType": "TC",
+    "type": "TC",
     "level": "4",
     "text": "Factorice la expresión de la forma: a(x - x₁)(x - x₂)",
     "selectSteps": true,

@@ -31,6 +31,8 @@ const documents = {
     graphql.ProjectData10Document,
   "\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    ":
     graphql.ActionDocument,
+  "\n      mutation updateModelState($input: UpdateModelStateInput!) {\n        updateModelState(input: $input)\n      }\n    ":
+    graphql.UpdateModelStateDocument,
 };
 
 export function gql(
@@ -75,6 +77,9 @@ export function gql(
 export function gql(
   source: "\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    ",
 ): typeof documents["\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    "];
+export function gql(
+  source: "\n      mutation updateModelState($input: UpdateModelStateInput!) {\n        updateModelState(input: $input)\n      }\n    "
+): typeof documents["\n      mutation updateModelState($input: UpdateModelStateInput!) {\n        updateModelState(input: $input)\n      }\n    "];
 
 export function gql(source: string): DocumentNode | string;
 export function gql(source: string) {
