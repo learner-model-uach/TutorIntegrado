@@ -3,7 +3,7 @@ import { Button, Stack, Link } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
-import problems from "./practiceproblem.json";
+//import problems from "./practiceproblem.json";
 import { AccordionSteps } from "./Accordion/AccordionSteps";
 import { Feedback } from "./Feedbacks/Feedback";
 import { SortSteps } from "./SortSteps/SortSteps";
@@ -13,8 +13,10 @@ import { useAuth } from "../Auth";
 import ExerciseContext from "./context/exercise/exerciseContext";
 import { useRouter } from "next/router";
 
-export function Tutor({ id }) {
-  const [idExercise, setIdExercise] = useState(id % 2); // For now, two exercises are being used with the fields of the correct json files.
+export function Tutor({ exercise, topicId }) {
+  const code = exercise.code;
+
+  const [idExercise, setIdExercise] = useState(code); // For now, two exercises are being used with the fields of the correct json files.
   const [exerciseSelected, setExerciseSelected] = useState(null);
   const [totalSteps, setTotalSteps] = useState(0);
   const [disableState, setDisableState] = useState([true]);
@@ -37,36 +39,31 @@ export function Tutor({ id }) {
     );*/
 
 	// For now, two exercises are being used with the fields of the correct json files.
-    let selet = [];
-    if (id === 0) {
-      selet.push(problems[0]);
-    };
-    if (id === 6) {
-      selet.push(problems[1]);
-    };
+   
 	
-    settingContent(selet[0]?.code); // useContext is not reused
+    settingContent(exercise?.code); // useContext is not reused
     startAction({
       verbName: "loadContent",
-      contentID: selet[0]?.code, // "code" field of the json file
+      contentID: exercise?.code, // "code" field of the json file
     });
-    setOrderFirst(selet[0].order_steps.position === "initial");
-    setShowOrder(selet[0].order_steps.show);
+    setOrderFirst(exercise.order_steps.position === "initial");
+    setShowOrder(exercise.order_steps.show);
     setNextPhase(true);
-    setExerciseSelected(selet[0]);
-    setTotalSteps(selet[0].steps.length);
+    setExerciseSelected(exercise);
+    setTotalSteps(exercise.steps.length);
     setDisableState([true]);
     setNextExercise(false);
-  }, [id]);
+  }, []);
 
   const handlerNextExercise = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     startAction({
       verbName: "nextContent",
     });
     // For now, two exercises are being used with the fields of the correct json files.
-    setIdExercise((prev) => (idExercise % 2) + 1);
-    push(`/exercise/${(idExercise % 2) + 1}`);
+    //setIdExercise((prev) => (idExercise % 2) + 1);
+    //push(`/exercise/${(idExercise % 2) + 1}`);
+    
   };
   return (
     <>
@@ -77,7 +74,7 @@ export function Tutor({ id }) {
             fontSize={{ base: "15px", sm: "20px", lg: "25px" }}
           >
             <TeX as="figcaption">
-              {exerciseSelected && exerciseSelected.tittle}
+              {exerciseSelected && exerciseSelected.title}
             </TeX>
             <TeX
               math={exerciseSelected ? exerciseSelected.eqc : ""}
@@ -97,13 +94,16 @@ export function Tutor({ id }) {
                   <>
                     <AccordionSteps
                       exercise={exerciseSelected}
-                      id={id}
+                      topicId={topicId}
                       setNextExercise={setNextExercise}
                     />
                     {nextExercise && (
                       <>
                         <Feedback />
-                        <Link href={`/exercise/${(idExercise % 14) + 1}`}>
+                        {
+                          //<Link href={`/exercise/${(idExercise % 14) + 1}`}>
+                        }
+                        <Link href={`contentSelect`}>
                           <Button
                             marginRight="12px"
                             fontSize={{
@@ -126,7 +126,7 @@ export function Tutor({ id }) {
                 <>
                   <AccordionSteps
                     exercise={exerciseSelected}
-                    id={id}
+                    topicId={topicId}
                     setNextExercise={setNextExercise}
                   />
                   {nextExercise && (
@@ -161,7 +161,7 @@ export function Tutor({ id }) {
               <>
                 <AccordionSteps
                   exercise={exerciseSelected}
-                  id={id}
+                  topicId={topicId}
                   setNextExercise={setNextExercise}
                 />
                 {nextExercise && (

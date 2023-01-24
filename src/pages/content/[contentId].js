@@ -145,6 +145,16 @@ export default withAuth(function Content() {
     `)
   );
 
+  const { data: ecuCuad } = useGQLQuery(
+    gql(/* GraphQL */ `
+      query ProjectData10 {
+        contentByCode(code: "ecc1"){
+          json
+        }
+      }
+    `)
+  );
+
   return (
     <>
       <div>
@@ -193,7 +203,7 @@ export default withAuth(function Content() {
             topicId="fracc2"
           ></DynamicPlain>
         ) : router.query.type == 11 ? (
-          <DynamicTutorEcu id={0} />
+          <DynamicTutorEcu exercise={ecuCuad?.contentByCode?.json} topicId={25} />
         ) : router.query.type == 12 ? (
           <DynamicTutorEcu id={6} />
         ) : router.query.type == 13 ? (

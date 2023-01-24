@@ -29,7 +29,7 @@ export const StepInput = ({
   setColor,
   setNextExercise,
   code, // "code" field of json file
-  id // "id" field in the system
+  topicId // "id" field in the system
 }) => {
   const exerciseContext = useContext(ExerciseContext);
   
@@ -69,7 +69,7 @@ export const StepInput = ({
 
   const updateData = () => { // update the data in the "steps" field of the completeContent action
     let idObject = {};
-    idObject[id] = { // create an object with key "id"
+    idObject[step.stepId] = { // create an object with key "id"
       att: attempts, // number of user attempts to response
       hints: hintsShow, // number of times the user saw a hint
       lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
@@ -83,7 +83,7 @@ export const StepInput = ({
       startAction({
         verbName: "completeContent",
         contentID: code, // it is "code" field of the json file
-        topicID: id, // it is "id" field in the system
+        topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
           steps: dataCompleteContent // object defined in updateData
@@ -103,15 +103,15 @@ export const StepInput = ({
       });
     } else {
       updateData();
-      if (step.n_step === nStep) {
+      if (step.stepId === nStep) {
         if (answer === step.correct_answer.toString()) {
           startAction({
             verbName: "tryStep",
             contentID: code,
-            topicID: id,
-            stepID: step.n_step,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 1,
-            KCs: step.kcs,
+            kcsIDs: step.kcs,
             extra: {
               response: answer,
               attemps: attempts,
@@ -141,10 +141,10 @@ export const StepInput = ({
           startAction({
             verbName: "tryStep",
             contentID: code,
-            topicID: id,
-            stepID: step.n_step,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 0,
-            KCs: step.kcs,
+            kcsIDs: step.kcs,
             extra: {
               response: answer,
               attemps: attempts,
