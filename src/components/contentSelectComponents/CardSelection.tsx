@@ -13,6 +13,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { FaStar } from "react-icons/fa";
 import { sessionState, sessionStateBD } from "../SessionState";
+import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
 
 export const CardSelection = ({
   title,
@@ -23,14 +24,11 @@ export const CardSelection = ({
 }: {
   title: string | undefined;
   text: string | undefined;
-  json: Object | undefined;
+  json: ExType | undefined;
   code: string | undefined;
   best: boolean;
 }) => {
   const router = useRouter();
-
-  sessionStateBD.setItem("currentContent", JSON.parse(JSON.stringify(sessionState.currentContent)));
-  sessionStateBD.setItem("topic", sessionState.topic);
 
   return (
     <>
@@ -51,11 +49,14 @@ export const CardSelection = ({
           sessionState.currentContent.code = code; //code de sessionState
           sessionState.currentContent.description = text + ""; //descripcion del ejercicio ofrecido
           sessionState.currentContent.id = "1"; //identificador del ejercicio
-          //sessionState.currentContent.json = json; //json del ejercicio
+          sessionState.currentContent.json = json; //json del ejercicio
           sessionState.currentContent.kcs = [1, 2, 3]; //kcs del ejercicio
           sessionState.currentContent.label = ""; //enunciado o tipo de ejercicio
+          sessionStateBD.setItem("currentContent", JSON.parse(JSON.stringify(sessionState.currentContent)));
+          
           if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
             sessionState.topic = "RudAlg";
+            sessionStateBD.setItem("topic", sessionState.topic);
           }
         }}
       >
