@@ -37,6 +37,7 @@ specifiers:
   react-mathquill: 1.0.2
   react-notification-badge: 1.5.0
   react-query: ^3.34.12
+  react-star-rating-component: ^1.4.1
   rq-gql: ^0.4.3
   serialize-error: ^9.0.0
   typescript: ^4.5.5
@@ -71,6 +72,7 @@ dependencies:
   react-mathquill: 1.0.2_react@17.0.2
   react-notification-badge: 1.5.0_sfoxds7t5ydpegc3knd667wn6m
   react-query: 3.34.12_sfoxds7t5ydpegc3knd667wn6m
+  react-star-rating-component: 1.4.1_react@17.0.2
   rq-gql: 0.4.3_2mp2wo6aldjtpsvljscdi5ehju
   serialize-error: 9.0.0
   valtio: 1.2.9_react@17.0.2
@@ -3167,6 +3169,10 @@ packages:
       fsevents: 2.3.2
     dev: false
 
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+    dev: false
+
   /clean-stack/2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
     engines: {node: '>=6'}
@@ -6147,6 +6153,17 @@ packages:
       tslib: 1.14.1
       use-callback-ref: 1.2.5_wchdyfjsjs7jbjx7r7guc3etfq
       use-sidecar: 1.0.5_react@17.0.2
+    dev: false
+
+  /react-star-rating-component/1.4.1_react@17.0.2:
+    resolution: {integrity: sha512-i0YEvQzToS0s0GDkxn01Jy4EeLpVEyh023NXJTJ+/1+xkvhpACyD4d1YeBhYWZab53ppUnUxs5gmp75gJr3khA==}
+    engines: {node: '>=8.0.0', npm: '>=5.5.0'}
+    peerDependencies:
+      react: ^16.2.0
+    dependencies:
+      classnames: 2.3.2
+      prop-types: 15.8.1
+      react: 17.0.2
     dev: false
 
   /react-style-singleton/2.1.1_wchdyfjsjs7jbjx7r7guc3etfq:

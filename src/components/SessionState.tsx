@@ -4,7 +4,17 @@ import type { AuthState } from "./Auth";
 import type { User } from "@auth0/auth0-react";
 import type { UserRole } from "../graphql";
 
+interface ContentJson {
+  code : string;
+  title : string;
+  type : string;
+  meta : Object;
+  steps : Array<Object>
+
+}
+
 export const sessionState = proxy<{
+  [x: string]: any;
   currentUser: typeof AuthState.user | null;
   tag: string[];
   domain: string;
@@ -12,13 +22,13 @@ export const sessionState = proxy<{
   sessionId: string;
   learnerModel: Object;
   currentContent: {
-    id: number | null;
+    id: string | null;
     code: string;
     label: string;
     description: string;
     kcs: Object[];
-    json: Object;
-    state: Object;
+    json: ContentJson;
+    state?: Object;
   };
   learnerTraces: Object[];
 }>({
@@ -36,7 +46,7 @@ export const sessionState = proxy<{
     label: "",
     description: "",
     kcs: [],
-    json: {},
+    json: null,
     state: {},
   },
   learnerTraces: [],

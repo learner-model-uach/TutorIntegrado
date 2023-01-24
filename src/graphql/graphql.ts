@@ -1866,6 +1866,26 @@ export type CurrentUserQuery = {
     | undefined;
 };
 
+export type PotatoqueryQueryVariables = Exact<{
+  code: Scalars["String"];
+}>;
+
+export type PotatoqueryQuery = {
+  __typename?: "Query";
+  contentByCode?:
+    | {
+        __typename?: "Content";
+        id: string;
+        code: string;
+        description: string;
+        label: string;
+        json?: Record<string, unknown> | null | undefined;
+        kcs: Array<{ __typename?: "KC"; code: string }>;
+      }
+    | null
+    | undefined;
+};
+
 export type ProjectData0QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectData0Query = {
@@ -2096,6 +2116,68 @@ export const CurrentUserDocument = {
     },
   ],
 } as unknown as DocumentNode<CurrentUserQuery, CurrentUserQueryVariables>;
+export const PotatoqueryDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "potatoquery" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "code" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "contentByCode" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "code" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "code" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "code" } },
+                { kind: "Field", name: { kind: "Name", value: "description" } },
+                { kind: "Field", name: { kind: "Name", value: "label" } },
+                { kind: "Field", name: { kind: "Name", value: "json" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "kcs" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PotatoqueryQuery, PotatoqueryQueryVariables>;
 export const ProjectData0Document = {
   kind: "Document",
   definitions: [

@@ -52,8 +52,8 @@ export const CardSelection = ({
         onClick={() => {
           sessionState.currentContent.code = "fc1"; //code de sessionState
           sessionState.currentContent.description = msg + ""; //descripcion del ejercicio ofrecido
-          sessionState.currentContent.id = 1; //identificador del ejercicio
-          sessionState.currentContent.json = { json: "json del ejercicio" }; //json del ejercicio
+          sessionState.currentContent.id = "1"; //identificador del ejercicio
+          sessionState.currentContent.json = null; //json del ejercicio
           sessionState.currentContent.kcs = [1, 2, 3]; //kcs del ejercicio
           sessionState.currentContent.label = ""; //enunciado o tipo de ejercicio
           //sessionState.currentContent.state={}

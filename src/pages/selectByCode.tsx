@@ -1,26 +1,34 @@
-import React, {useState} from 'react';
 import { Button } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { subscribe } from "valtio";
-import { sessionState, sessionStateBD } from "../components/SessionState";
 import Link from "next/link";
-
+import DQ2 from '../components/lvltutor/Tools/DQ2';
 
 export default function SelectByCode() {
 
-  const [codigo, setCodigo] = useState('');
+
+  /*const [codigo, setCodigo] = useState('');
   const [texto, setTexto] = useState('');
   
   
   useEffect(() => {
+
+    const { data } = useGQLQuery(
+      gql(`
+      query {
+        contentByCode(code: "${codigo}" ){
+          code
+          id
+          description
+          label
+          json
+          kcs{code}
+        }
+      }
+    `)
+    );
+
     console.log(codigo)
-    sessionState.currentContent.code = codigo;
-    sessionState.currentContent.description = "hola"; //descripcion del ejercicio ofrecido
-    sessionState.currentContent.id = 1; //identificador del ejercicio
-    sessionState.currentContent.json = { json: "json del ejercicio" }; //json del ejercicio
-    sessionState.currentContent.kcs = [1, 2, 3]; //kcs del ejercicio
-    sessionState.currentContent.label = ""; //enunciado o tipo de ejercicio
-    
+    sessionState.currentContent = data?.contentByCode;
+    data?.contentByCode.json.type;
   
   }, [codigo])
   
@@ -28,31 +36,29 @@ export default function SelectByCode() {
     setCodigo(texto);
   }
 
-  function handleChange(event) {
+  function handleChange(event: { target: { value: React.SetStateAction<string>; }; }) {
     setTexto(event.target.value);
   }
 
   subscribe(sessionState.currentContent, () => {
-    /*update currentContent*/
+    /*update currentContent
     sessionStateBD.setItem(
       "currentContent",
       JSON.parse(JSON.stringify(sessionState.currentContent))
     );
-  });
+  });*/
 
 
   return (
     <>
+      
       <div>
-          <div>
-            <input onChange={handleChange} />
-            <Link href="showContent">
-              <Button onClick={() => guardar()} >
-                Cargar
-              </Button>
-            </Link>
-            
-          </div>
+        <DQ2/>
+      </div>
+      <div>
+       <Link href="showContent">
+          <Button >Mostrar Ejercicio</Button>
+       </Link>
       </div>
     </> 
   );
