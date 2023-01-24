@@ -7,12 +7,9 @@ const DynamicTutorFac = dynamic<{exercise?: Object, topicId?: string }>(() =>
     import("../components/tutorFactorizacion/TutorFac").then((mod) => mod.TutorFac)
   );
 
-
-
-const DynamicPlain = dynamic<{
-  topicId: string;
-  steps: Object;
-}>(() => import("../components/lvltutor/Plain").then(mod => mod.Plain));
+const DynamicPlain = dynamic<{topicId: string; steps: Object;}>(() => 
+    import("../components/lvltutor/Plain").then(mod => mod.Plain)
+  );
 
 export default withAuth(function ShowContent() {
   
