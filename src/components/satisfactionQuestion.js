@@ -31,7 +31,7 @@ function SatisfactionQuestion() {
           checked={selectedOption === "satisfied"}
           onChange={(e) => setSelectedOption(e.target.value)}
         />
-        <label for="satisfied">Conforme</label>
+        <label htmlFor="satisfied">Conforme</label>
       </div>
       <div>
         <input
@@ -42,7 +42,7 @@ function SatisfactionQuestion() {
           checked={selectedOption === "medium-satisfied"}
           onChange={(e) => setSelectedOption(e.target.value)}
         />
-        <label for="medium-satisfied">Medianamente conforme</label>
+        <label htmlFor="medium-satisfied">Medianamente conforme</label>
       </div>
       <div>
         <input
@@ -53,7 +53,7 @@ function SatisfactionQuestion() {
           checked={selectedOption === "unsatisfied"}
           onChange={(e) => setSelectedOption(e.target.value)}
         />
-        <label for="unsatisfied">Disconforme</label>
+        <label htmlFor="unsatisfied">Disconforme</label>
       </div>
       
     </div>

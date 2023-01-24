@@ -2077,10 +2077,7 @@ export const PotatoqueryDocument = {
           variable: { kind: "Variable", name: { kind: "Name", value: "code" } },
           type: {
             kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
           },
         },
       ],
@@ -2094,10 +2091,7 @@ export const PotatoqueryDocument = {
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "code" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "code" },
-                },
+                value: { kind: "Variable", name: { kind: "Name", value: "code" } },
               },
             ],
             selectionSet: {
@@ -2113,9 +2107,7 @@ export const PotatoqueryDocument = {
                   name: { kind: "Name", value: "kcs" },
                   selectionSet: {
                     kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "code" } },
-                    ],
+                    selections: [{ kind: "Field", name: { kind: "Name", value: "code" } }],
                   },
                 },
               ],

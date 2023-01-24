@@ -7,7 +7,7 @@ const documents = {
     graphql.CurrentUserDocument,
   "\n    query potatoquery($code:String!){\n      contentByCode(code: $code){\n        id\n        code\n        description\n        label\n        json\n        kcs{code}\n      }\n    }\n    ":
     graphql.PotatoqueryDocument,
-  '\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    ':
+  '\n      query ProjectData0 {\n        contentByCode(code: "fc1") {\n          json\n        }\n      }\n    ':
     graphql.ProjectData0Document,
   '\n      query ProjectData1 {\n        contentByCode(code: "dc1") {\n          json\n        }\n      }\n    ':
     graphql.ProjectData1Document,
@@ -37,11 +37,11 @@ export function gql(
   source: '\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n          tags\n          projects {\n            id\n            code\n            label\n          }\n          groups {\n            id\n            code\n            label\n            tags\n          }\n        }\n        project(code: "NivPreAlg") {\n          id\n          code\n          label\n        }\n      }\n    ',
 ): typeof documents['\n      query currentUser {\n        currentUser {\n          id\n          email\n          name\n          role\n          picture\n          tags\n          projects {\n            id\n            code\n            label\n          }\n          groups {\n            id\n            code\n            label\n            tags\n          }\n        }\n        project(code: "NivPreAlg") {\n          id\n          code\n          label\n        }\n      }\n    '];
 export function gql(
-  source: "\n    query potatoquery($code:String!){\n      contentByCode(code: $code){\n        id\n        code\n        description\n        label\n        json\n        kcs{code}\n      }\n    }\n    "
+  source: "\n    query potatoquery($code:String!){\n      contentByCode(code: $code){\n        id\n        code\n        description\n        label\n        json\n        kcs{code}\n      }\n    }\n    ",
 ): typeof documents["\n    query potatoquery($code:String!){\n      contentByCode(code: $code){\n        id\n        code\n        description\n        label\n        json\n        kcs{code}\n      }\n    }\n    "];
 export function gql(
-  source: '\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    '
-): typeof documents['\n      query ProjectData0 {\n\t\t\t  contentByCode(code: "fc1"){\n          json\n        }\n      }\n    '];
+  source: '\n      query ProjectData0 {\n        contentByCode(code: "fc1") {\n          json\n        }\n      }\n    ',
+): typeof documents['\n      query ProjectData0 {\n        contentByCode(code: "fc1") {\n          json\n        }\n      }\n    '];
 export function gql(
   source: '\n      query ProjectData1 {\n        contentByCode(code: "dc1") {\n          json\n        }\n      }\n    ',
 ): typeof documents['\n      query ProjectData1 {\n        contentByCode(code: "dc1") {\n          json\n        }\n      }\n    '];
