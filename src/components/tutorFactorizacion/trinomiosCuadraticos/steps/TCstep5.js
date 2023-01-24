@@ -60,7 +60,6 @@ export const TCstep5 = ({
         contentID: contentID,
         topicID: topicID,
         result: 1,
-        // topicID: ""+ejercicio.code,
       });
     } else {
       setError(true);

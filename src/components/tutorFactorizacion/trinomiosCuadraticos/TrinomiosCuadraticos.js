@@ -28,9 +28,10 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
 //react functional component
-export const TC = ({ exercise, nextRouter }) => {
+export const TC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -112,7 +113,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -120,7 +121,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -136,7 +137,7 @@ export const TC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -151,7 +152,7 @@ export const TC = ({ exercise, nextRouter }) => {
                 setStep1Valid={setStep1Valid}
                 step1Valid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></TCstep1>
             )}
           </AccordionPanel>
@@ -175,7 +176,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(1));
@@ -183,7 +184,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -199,7 +200,7 @@ export const TC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect2}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -214,7 +215,7 @@ export const TC = ({ exercise, nextRouter }) => {
                 setStep2Valid={setStep2Valid}
                 step2Valid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></TCstep2>
             )}
           </AccordionPanel>
@@ -238,7 +239,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[2].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(2));
@@ -246,7 +247,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[2].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -262,7 +263,7 @@ export const TC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect3}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -277,7 +278,7 @@ export const TC = ({ exercise, nextRouter }) => {
                 setStep3Valid={setStep3Valid}
                 step3Valid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></TCstep3>
             )}
           </AccordionPanel>
@@ -301,7 +302,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[3].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(3));
@@ -309,7 +310,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[3].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -325,7 +326,7 @@ export const TC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect4}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -340,7 +341,7 @@ export const TC = ({ exercise, nextRouter }) => {
                 setStep4Valid={setStep4Valid}
                 step4Valid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></TCstep4>
             )}
           </AccordionPanel>
@@ -364,7 +365,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[4].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(4));
@@ -372,7 +373,7 @@ export const TC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[4].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -388,7 +389,7 @@ export const TC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect5}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -404,7 +405,7 @@ export const TC = ({ exercise, nextRouter }) => {
                 step5Valid={step5Valid}
                 //a={exercise.steps[0].answers[0].answer[0]}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></TCstep5>
             )}
           </AccordionPanel>
@@ -419,13 +420,6 @@ export const TC = ({ exercise, nextRouter }) => {
             step4={exercise.steps[3]}
             step5={exercise.steps[4]}
           />
-          <Stack padding="1em" alignItems="center">
-            <Link href={nextRouter}>
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
         </>
       )}
     </>

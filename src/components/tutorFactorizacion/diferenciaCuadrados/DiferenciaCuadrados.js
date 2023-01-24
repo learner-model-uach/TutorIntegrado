@@ -26,8 +26,9 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
-export const DC = ({ exercise }) => {
+export const DC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -82,7 +83,7 @@ export const DC = ({ exercise }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -90,7 +91,7 @@ export const DC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -108,7 +109,7 @@ export const DC = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.contentType}
+                          topic={topic}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -125,7 +126,7 @@ export const DC = ({ exercise }) => {
                 setStep1Valid={setStep1Valid}
                 step1Valid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></DCstep1>
             )}
           </AccordionPanel>
@@ -149,7 +150,7 @@ export const DC = ({ exercise }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(1));
@@ -157,7 +158,7 @@ export const DC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -175,7 +176,7 @@ export const DC = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect2}
                           contentID={exercise.code}
-                          topic={exercise.contentType}
+                          topic={topic}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -192,7 +193,7 @@ export const DC = ({ exercise }) => {
                 setStep2Valid={setStep2Valid}
                 step2Valid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></DCstep2>
             )}
           </AccordionPanel>

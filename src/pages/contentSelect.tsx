@@ -1,110 +1,132 @@
 import { useRouter } from "next/router";
 import { CardSelection } from "../components/contentSelectComponents/CardSelection";
-import { SimpleGrid, Center } from "@chakra-ui/react";
-//import { useGQLQuery } from "rq-gql";
-//import { gql } from "../graphql";
+import { SimpleGrid, Center, Text } from "@chakra-ui/react";
+import { useUpdateModel } from "../utils/updateModel";
+import { useEffect } from "react";
+import { useAuth, withAuth } from "../components/Auth";
+import { useGQLQuery } from "rq-gql";
+import { gql } from "../graphql";
 
-function ContentSelect() {
+export default withAuth(function ContentSelect() {
+  const { user, project } = useAuth();
   const router = useRouter();
-  const topic = router.query; //topico
-  // *** Lógica por implementar para obtener 3 ejercicios grupo experimental o 1 ejercicio grupo control ***
+  const topics = "[" + router.query.topic + "]"; //topics in array
+  const domainId = 1;
+  const model = useUpdateModel();
 
-  //lógica para obtener los ejercicios
-  /*const { data, isLoading } =
-    topic.type == "4"
-      ? useGQLQuery(
-          gql(`
-            query ProjectData {
-              project(code: "NivPreAlg") {
-                content(
-                  pagination: { first: 25 }
-                  filters: { topics: [3, 5, 6, 7, 8] }
-                ) {
-                  nodes {
-                    json
-                  }
-                }
-              }
-            }
-          `)
-        )
-      : useGQLQuery(
-          gql(`
-            query ProjectData {
-              project(code: "NivPreAlg") {
-                content(pagination: { first: 25 }, filters: { topics: [4] }) {
-                  nodes {
-                    json
-                  }
-                }
-              }
-            }
-          `)
-        );
+  useEffect(() => {
+    model({
+      typeModel: "BKT",
+      domainID: "1",
+    });
+  }, []);
 
-  const listEjercicio = data?.project?.content?.nodes.map(
-    (data: { json: any }) => {
-      return data.json;
-    }
+  const { data, isLoading } = useGQLQuery(
+    gql(`
+      query ProjectData {
+        contentSelection{
+          contentSelected(input:{
+            domainId:${domainId},projectId:${project.id},userId:${user.id}, topicId:${topics}, discardLast:2
+          }){
+            contentResult{
+                     P{
+                code
+                json
+              }
+              Msg{
+                label
+                text
+              }
+              Order
+              Preferred
+            }
+            model
+            newP
+            PU
+            pAVGsim
+            pAVGdif
+            tableSim{
+              contentCode
+              sim
+              diff
+              probSuccessAvg
+              probSuccessMult
+            }
+            tableDifEasy{
+              contentCode
+              sim
+              diff
+              probSuccessAvg
+              probSuccessMult
+            }
+            tableDifHarder{
+              contentCode
+              sim
+              diff
+              probSuccessAvg
+              probSuccessMult
+            }
+            topicCompletedMsg{
+              label
+              text
+            }
+          }
+        }
+      }
+    `)
   );
-
-  console.log(listEjercicio);*/
+  const contentResult = data?.contentSelection?.contentSelected?.contentResult;
+  // *** Lógica por implementar para obtener 3 ejercicios grupo experimental o 1 ejercicio grupo control ***
+  console.log(data?.contentSelection.contentSelected);
+  const bestExercise =
+    (contentResult ?? [])
+      .map((x) => x.Preferred)
+      .reduce((out, bool, index) => (bool ? out.concat(index) : out), [])[0] ??
+    0;
 
   // *** data manual ***
   const control = false; //false = 3 exersices, true = 1 exercise
 
-  const exercises2 = [
-    ///////////// json, sub-topic, msg ///////////////////////////
-    {
-      exercise: "ej 1", //listEjercicio[0].itemTitle,
-      msg: "explicación (prerequisitos - más fácil)",
-    },
-    {
-      exercise: "ej 2", //listEjercicio[4].itemTitle,
-      msg: "explicación (similar - seguir practicando)",
-    },
-    {
-      exercise: "ej 3", //listEjercicio[6].itemTitle,
-      msg: "explicación (más difícil - aprender más)",
-    },
-  ]; //id ejercicio
-  const bestExercise = 1;
-
-  //console.log(query.type);
   return (
     <>
-      <p>Selección del contenido del tópico: {topic.type}</p>
+      <p>Selección del contenido del tópico: {topics}</p>
       <SimpleGrid
-        columns={control ? 1 : 3}
+        columns={control ? 1 : (contentResult ?? []).length}
         spacing="8"
         p="10"
         textAlign="center"
         rounded="lg"
       >
-        {control /*&& !isLoading*/ ? (
-          <Center>
-            <CardSelection
-              exercise={exercises2[bestExercise]?.exercise}
-              msg={exercises2[bestExercise]?.msg}
-              best={false}
-              key={0}
-            ></CardSelection>
-          </Center>
-        ) : (
-          <>
-            {exercises2.map(({ exercise, msg }, index) => (
+        {!isLoading ? (
+          control ? (
+            <Center>
               <CardSelection
-                exercise={exercise}
-                msg={msg}
-                best={index == bestExercise}
-                key={index}
+                title={contentResult[bestExercise]?.Msg.label}
+                text={contentResult[bestExercise]?.Msg.text}
+                json={contentResult[bestExercise]?.P.json}
+                code={contentResult[bestExercise]?.P.code}
+                best={false}
+                key={0}
               ></CardSelection>
-            ))}
-          </>
+            </Center>
+          ) : (
+            <>
+              {contentResult.map((content, index) => (
+                <CardSelection
+                  title={content.Msg.label}
+                  text={content.Msg.text}
+                  json={content.P.json}
+                  code={content.P.code}
+                  best={index == bestExercise}
+                  key={index}
+                ></CardSelection>
+              ))}
+            </>
+          )
+        ) : (
+          <Text>Cargando ejercicios</Text>
         )}
       </SimpleGrid>
     </>
   );
-}
-
-export default ContentSelect;
+});

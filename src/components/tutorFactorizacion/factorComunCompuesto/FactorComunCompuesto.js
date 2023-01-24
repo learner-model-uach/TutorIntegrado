@@ -24,8 +24,9 @@ import {
 import { VideoScreen } from "../tools/VideoScreen";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
-export const FCC = ({ exercise }) => {
+export const FCC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   //info usuario, ---
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
@@ -91,7 +92,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -99,7 +100,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -115,7 +116,7 @@ export const FCC = ({ exercise }) => {
                       steps={steps}
                       setSelect={setSelect}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -131,7 +132,7 @@ export const FCC = ({ exercise }) => {
                 step1Valid={step1Valid}
                 stepId={"" + exercise.steps[0].stepId}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></FCCstep1>
             )}
           </AccordionPanel>
@@ -155,7 +156,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(1));
@@ -163,7 +164,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -179,7 +180,7 @@ export const FCC = ({ exercise }) => {
                       steps={steps}
                       setSelect={setSelect2}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -194,7 +195,7 @@ export const FCC = ({ exercise }) => {
                 setStep2Valid={setStep2Valid}
                 step2Valid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
               ></FCCstep2>
             )}
           </AccordionPanel>
@@ -218,7 +219,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[2].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(2));
@@ -226,7 +227,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[2].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -243,7 +244,7 @@ export const FCC = ({ exercise }) => {
                       steps={steps}
                       setSelect={setSelect3}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -258,6 +259,7 @@ export const FCC = ({ exercise }) => {
                 setStep1Valid={setStep3Valid}
                 step1Valid={step3Valid}
                 contentID={exercise.code}
+                topicID={topic}
               ></FCstep1>
             )}
           </AccordionPanel>
@@ -266,16 +268,7 @@ export const FCC = ({ exercise }) => {
 
       {step3Valid != null && (
         <>
-          {/*<FCCsummary 
-            exercise={exercise}
-      />*/}
-          <Stack padding="1em" alignItems="center">
-            <Link href="/DC1">
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
+          <FCCsummary exercise={exercise} />
         </>
       )}
     </>

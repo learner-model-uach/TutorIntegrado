@@ -48,7 +48,6 @@ export const DCstep2 = ({
         contentID: contentID,
         topicID: topicID,
         result: 1,
-        // topicID: ""+ejercicio.code,
       });
       setFeedbackMsg(
         <Alert status="success">

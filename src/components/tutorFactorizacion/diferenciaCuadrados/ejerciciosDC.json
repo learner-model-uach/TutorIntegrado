@@ -2,7 +2,7 @@
   {
     "code": "dc1",
     "title": "Diferencia de cuadrados",
-    "contentType": "DC",
+    "type": "DC",
     "level": "1",
     "text": "Factorice la siguiente expresión:",
     "selectSteps": true,
@@ -185,7 +185,7 @@
   {
     "code": "dc2",
     "title": "Factorización por diferencia de cuadrados.",
-    "contentType": "DC",
+    "type": "DC",
     "level": "1",
     "text": "Factorice la siguiente expresión:",
     "selectSteps": true,
@@ -370,7 +370,7 @@
   {
     "code": "dc3",
     "title": "Factorización por diferencia de cuadrados.",
-    "contentType": "DC",
+    "type": "DC",
     "level": "1",
     "text": "Factorice la siguiente expresión:",
     "selectSteps": true,

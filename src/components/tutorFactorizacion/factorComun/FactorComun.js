@@ -23,8 +23,9 @@ import { SelectStep } from "../tools/SelectStep";
 //import { VideoScreen } from "../tools/VideoScreen";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
-export const FC = ({ exercise, nextRouter }) => {
+export const FC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const action = useAction(); //send action to central system
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
@@ -71,7 +72,7 @@ export const FC = ({ exercise, nextRouter }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise?.steps[0]?.stepId,
                     contentID: exercise?.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   //no select= false (openTab)
@@ -80,7 +81,7 @@ export const FC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise?.steps[0]?.stepId,
                     contentID: exercise?.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -96,7 +97,7 @@ export const FC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -112,7 +113,7 @@ export const FC = ({ exercise, nextRouter }) => {
                   setStep1Valid={setStep1Valid}
                   step1Valid={step1Valid}
                   contentID={exercise.code}
-                  topicID={exercise.contentType}
+                  topicID={sessionState.topic}
                 ></FCstep1>
               )}
             </>
@@ -123,13 +124,6 @@ export const FC = ({ exercise, nextRouter }) => {
       {step1Valid != null && (
         <>
           <FCsummary exercise={exercise.steps[0]} />
-          <Stack padding="1em" alignItems="center">
-            <Link href={nextRouter}>
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
         </>
       )}
     </div>
