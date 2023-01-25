@@ -25,58 +25,28 @@ export function Navigation() {
           <>
             <Text fontWeight="black">Rudimentos Algebraicos</Text>
 
-            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8" /*17,18*/}>
+            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=16" /*17,18*/}>
               Rudimentos Algebraicos
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=5"}>
-              Factor Común Compuesto
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=6"}>
-              Diferencia de Cuadrados
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=7"}>
-              Diferencia y Suma de Cubos
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=8"}>
-              Trinomios Cuadraticos
-            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=5"}>Factor Común Compuesto</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=6"}>Diferencia de Cuadrados</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=7"}>Diferencia y Suma de Cubos</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=8"}>Trinomios Cuadraticos</SidebarLink>
             <Text fontWeight="medium">-Fracción Algebraica</Text>
-            <SidebarLink href={"contentSelect?topic=9"}>
-              Operatoria de Fracciones
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=10"}>
-              Suma de Fracciones MCM
-            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=9"}>Operatoria de Fracciones</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=10"}>Suma de Fracciones MCM</SidebarLink>
             <Text fontWeight="black">Ecuaciones</Text>
-            <SidebarLink href={"contentSelect?topic=11"}>
-              Ecuaciones
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=12"}>
-              Sistema de ecuaciones
-            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=11"}>Ecuaciones</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=12"}>Sistema de ecuaciones</SidebarLink>
             <Text fontWeight="black">Potencias y Raices</Text>
-            <SidebarLink href={"contentSelect?topic=13"}>
-              Notación Cientifica
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=14"}>
-              Evaluar Expresión
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=15"}>
-              Reducción de Expresión
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=16"}>
-              Racionalización
-            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=13"}>Notación Cientifica</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=14"}>Evaluar Expresión</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=15"}>Reducción de Expresión</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=16"}>Racionalización</SidebarLink>
             <Text fontWeight="black">Geometría</Text>
-            <SidebarLink href={"contentSelect?topic=17"}>
-              Área y Perímetro
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=18"}>
-              Teorema de Thales
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=19"}>
-              Teorema de Pitágoras
-            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=17"}>Área y Perímetro</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=18"}>Teorema de Thales</SidebarLink>
+            <SidebarLink href={"contentSelect?topic=19"}>Teorema de Pitágoras</SidebarLink>
           </>
         )}
       </Stack>

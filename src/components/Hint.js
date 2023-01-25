@@ -190,9 +190,7 @@ const Hint = ({
           <PopoverBody>
             <br />
             {list[j].hint} <br />
-            {list[j].expression ? (
-              <StaticMathField>{list[j].expression}</StaticMathField>
-            ) : null}
+            {list[j].expression ? <StaticMathField>{list[j].expression}</StaticMathField> : null}
             <br />
             <Center>
               {list[j - 1] && (

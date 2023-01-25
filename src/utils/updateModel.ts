@@ -33,7 +33,7 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
         }
       },
       retry: 3,
-    }
+    },
   );
 
   const latestMutation = useLatestRef(mutation.mutate);
@@ -66,6 +66,6 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
         },
       });
     },
-    [userID, latestMutation, latestBaseState]
+    [userID, latestMutation, latestBaseState],
   );
 };

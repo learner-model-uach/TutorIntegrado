@@ -3,7 +3,7 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 
 const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
   const action = useAction(); //send action to central system

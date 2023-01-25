@@ -16,17 +16,27 @@ import { sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
 
 export const CardSelection = ({
-  title,
-  text,
-  json,
+  id,
   code,
-  best,
+  description,
+  label,
+  json,
+  kcs,
+  selectionTitle,
+  selectionText,
+  selectionBest,
+  registerTopic,
 }: {
-  title: string | undefined;
-  text: string | undefined;
-  json: ExType | undefined;
+  id: string;
   code: string | undefined;
-  best: boolean;
+  description: string | undefined;
+  label: string | undefined;
+  json: ExType | undefined;
+  kcs: Object[];
+  selectionTitle: string | undefined;
+  selectionText: string | undefined;
+  selectionBest: boolean;
+  registerTopic: string;
 }) => {
   const router = useRouter();
 
@@ -46,31 +56,44 @@ export const CardSelection = ({
         rounded="md"
         textAlign="center"
         onClick={() => {
+          sessionState.currentContent.id = id; //identificador del ejercicio
           sessionState.currentContent.code = code; //code de sessionState
-          sessionState.currentContent.description = text + ""; //descripcion del ejercicio ofrecido
-          sessionState.currentContent.id = "1"; //identificador del ejercicio
+          sessionState.currentContent.description = description; //descripcion del ejercicio ofrecido
+          sessionState.currentContent.label = label; //enunciado o tipo de ejercicio
           sessionState.currentContent.json = json; //json del ejercicio
-          sessionState.currentContent.kcs = [1, 2, 3]; //kcs del ejercicio
-          sessionState.currentContent.label = ""; //enunciado o tipo de ejercicio
-          sessionStateBD.setItem("currentContent", JSON.parse(JSON.stringify(sessionState.currentContent)));
+          sessionState.currentContent.kcs = kcs; //kcs del ejercicio
+          sessionState.selectionData.selectionTitle = selectionTitle;
+          sessionState.selectionData.selectionText = selectionText;
+          sessionState.selectionData.selectionBest = selectionBest;
+          sessionStateBD.setItem(
+            "currentContent",
+            JSON.parse(JSON.stringify(sessionState.currentContent)),
+          );
+          sessionStateBD.setItem(
+            "selectionData",
+            JSON.parse(JSON.stringify(sessionState.selectionData)),
+          );
           
-          if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
-            sessionState.topic = "RudAlg";
-            sessionStateBD.setItem("topic", sessionState.topic);
-          }
+          
+          //if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
+          //  sessionState.topic = "RudAlg";
+          //  sessionStateBD.setItem("topic", sessionState.topic);
+          //}
+          sessionState.topic = registerTopic;
+          sessionStateBD.setItem("topic", sessionState.topic);
         }}
       >
         <Center>
           <HStack>
             <Heading size="md" my="2" textAlign="center">
-              <NextLink href={"content/solve?type=" + router.query.type} passHref>
-                <LinkOverlay>{title}</LinkOverlay>
+              <NextLink href={"showContent"} passHref>
+                <LinkOverlay>{selectionTitle}</LinkOverlay>
               </NextLink>
             </Heading>
-            {best && <FaStar size={20} color="yellow" />}
+            {selectionBest && <FaStar size={20} color="yellow" />}
           </HStack>
         </Center>
-        <Text>{text}</Text>
+        <Text>{selectionText}</Text>
       </LinkBox>
     </>
   );

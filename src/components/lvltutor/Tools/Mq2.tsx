@@ -3,7 +3,7 @@ import { useState, memo, useEffect, useRef } from "react";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
 import { MathComponent } from "../../../components/MathJax";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
-import Hint from "../Tools/Hint";
+import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
 import MQPostfixparser from "../../../utils/MQPostfixparser";
 //reporte de acciones

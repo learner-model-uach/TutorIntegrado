@@ -29,6 +29,11 @@ export const sessionState = proxy<{
     json: ContentJson;
     state?: Object;
   };
+  selectionData: {
+    selectionTitle: string | undefined;
+    selectionText: string | undefined;
+    selectionBest: boolean;
+  };
   learnerTraces: Object[];
 }>({
   currentUser: null,
@@ -47,6 +52,11 @@ export const sessionState = proxy<{
     kcs: [],
     json: null,
     state: {},
+  },
+  selectionData: {
+    selectionTitle: "",
+    selectionText: "",
+    selectionBest: false,
   },
   learnerTraces: [],
 });

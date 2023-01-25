@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";

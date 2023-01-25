@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 import { useAction } from "../../../../utils/action";
 import {
   Alert,
