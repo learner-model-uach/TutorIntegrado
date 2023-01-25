@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import type { ExType } from "./ExcerciseType";
 import { sessionState, sessionStateBD } from "../../SessionState";
 
-function Dq({ params, b }: { params: ExType; b: Array<string> }) {
+function Dq({ params, b, c }: { params: ExType; b: Array<string>; c: Array<Object> }) {
   useEffect(() => {
     console.log(params.code);
     sessionState.currentContent.json = params;
@@ -13,11 +13,12 @@ function Dq({ params, b }: { params: ExType; b: Array<string> }) {
     sessionState.currentContent.code = b[1];
     sessionState.currentContent.description = b[2];
     sessionState.currentContent.label = b[3];
+    sessionState.currentContent.kcs = c;
     sessionStateBD.setItem(
       "currentContent",
       JSON.parse(JSON.stringify(sessionState.currentContent)),
     );
-  }, [params, b]);
+  }, [params, b, c]);
 
   return <Text>{JSON.stringify(params.code)}</Text>;
 }
@@ -25,7 +26,7 @@ function Dq({ params, b }: { params: ExType; b: Array<string> }) {
 const ParsedQuery = ({ obj }: { obj: PotatoqueryQuery }) => {
   const [potatoQ, setPotatoQ] = useState<ExType | null>();
   const [pb, setPB] = useState<Array<string>>(null);
-  //const [pc,setPC]=useState<Array<Object>>(null);
+  const [pc,setPC]=useState<Array<Object>>(null);
   useEffect(() => {
     let value: Object | unknown = obj?.contentByCode?.json;
     let valueB: Array<string> = [
@@ -34,15 +35,15 @@ const ParsedQuery = ({ obj }: { obj: PotatoqueryQuery }) => {
       obj?.contentByCode?.description,
       obj?.contentByCode?.label,
     ];
-    //let valueC:Array<Object> | unknown=[obj?.contentByCode?.kcs]
+    let valueC:Array<Object> = [obj?.contentByCode?.kcs];
     if (value) {
       let a = value as ExType;
       setPotatoQ(a);
       setPB(valueB);
-      //setPC(valueC);
+      setPC(valueC);
     }
   }, [obj]);
-  return potatoQ ? <Dq params={potatoQ} b={pb} /> : null;
+  return potatoQ ? <Dq params={potatoQ} b={pb} c={pc} /> : null;
 };
 
 const DQ2 = () => {
