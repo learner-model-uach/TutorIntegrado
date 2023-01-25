@@ -10,7 +10,6 @@ import {
 
 //import Link from "next/link";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import { FaStar } from "react-icons/fa";
 import { sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
@@ -38,8 +37,6 @@ export const CardSelection = ({
   selectionBest: boolean;
   registerTopic: string;
 }) => {
-  const router = useRouter();
-
   return (
     <>
       <LinkBox
@@ -73,8 +70,7 @@ export const CardSelection = ({
             "selectionData",
             JSON.parse(JSON.stringify(sessionState.selectionData)),
           );
-          
-          
+
           //if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
           //  sessionState.topic = "RudAlg";
           //  sessionStateBD.setItem("topic", sessionState.topic);
