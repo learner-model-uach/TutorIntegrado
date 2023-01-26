@@ -322,19 +322,19 @@
     ]
   },
   {
-    "code": "secl5s",
+    "code": "secl1",
     "title": "\\text{Resolve el siguiente sistema de ecuaciones}",
     "description": "",
     "order_steps": {
       "show": false,
       "position": "initial"
     },
-    "type": "ecc5s",
+    "type": "secl5s",
     "meta": {},
     "eqc": "3x -y +6 = 0 \\enspace (1) \\atop -2x+4y=4 \\enspace (2)",
     "steps": [
       {
-        "stepId": 0,
+        "stepId": "0",
         "left_text": "Despeja 'y' en ecuación (1) ",
         "input_labels": "y= ",
         "correct_answer": 1,
@@ -359,7 +359,7 @@
           }
         ],
         "type": "drag-fixed",
-        "kcs": [""],
+        "kcs": ["DespVarEcu"],
         "answers": [
           {
             "id": 1,
@@ -388,7 +388,7 @@
         ]
       },
       {
-        "stepId": 1,
+        "stepId": "1",
         "left_text": "Reemplaza 'y' en la ecuación (2) ",
         "input_labels": "",
         "correct_answer": [2, 4],
@@ -413,7 +413,7 @@
           }
         ],
         "type": "drag-fixed-two",
-        "kcs": "",
+        "kcs": ["ReempVarEcu"],
         "answers": [
           {
             "id": 1,
@@ -442,7 +442,7 @@
         ]
       },
       {
-        "stepId": 2,
+        "stepId": "2",
         "left_text": "Simplifica 'x' en el paso anterior",
         "input_labels": "",
         "correct_answer": [3, 4],
@@ -467,7 +467,7 @@
           }
         ],
         "type": "drag-fixed-two",
-        "kcs": "",
+        "kcs": ["ReducExp"],
         "answers": [
           {
             "id": 1,
@@ -496,7 +496,7 @@
         ]
       },
       {
-        "stepId": 3,
+        "stepId": "3",
           "left_text": "Calcula 'x' ",
           "input_labels": "x = ",
           "correct_answer": -2,
@@ -514,10 +514,11 @@
               "generic": true
             }
           ],
-          "type": "input"
+          "type": "input",
+          "kcs": ["DespVarEcu"]
         },
         {
-          "n_step": 4,
+        "stepId" : "4",
         "left_text": "Calcula 'y' sustituyendo el valor de 'x'",
         "input_labels": "y = ",
         "correct_answer": 0,
@@ -535,7 +536,8 @@
             "generic": true
           }
         ],
-        "type": "input"
+        "type": "input",
+        "kcs": ["ReempVarEcu"]
       }
     ]
   }

@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
@@ -28,13 +28,14 @@ import { useAction } from "../../../utils/action";
 import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const HintEqSystem = ({
-  hints,
+  hints, // all hints
   firstTimeHint,
   setNewHintAvaliable,
   newHintAvaliable,
-  answerId,
-  nStep,
-  code
+  answerId, // id the answer
+  nStep, // "stepId" field defined in the json file
+  code, // "code" field defined in the json file
+  setHintsShow // number of times a hint has been shown
 }) => {
   const initialFocusRef = useRef();
 
@@ -48,7 +49,6 @@ export const HintEqSystem = ({
   const [lastHint, setLastHint] = useState({});
   const [countNotification, setCountNotication] = useState(0);
   const startAction = useAction({});
-  const exerciseContext = useContext(ExerciseContext);
 
   useEffect(() => {
     setCount(-1);

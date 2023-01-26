@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Stack, VStack, Button, Text, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
@@ -14,7 +14,6 @@ import {
   BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const StepPanel = ({
   step,
@@ -27,7 +26,7 @@ export const StepPanel = ({
   setNextExercise,
   content,
   code, // "code" field of json file
-  id // "id" field in the system
+  topicId // "id" field in the system
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -40,12 +39,10 @@ export const StepPanel = ({
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
   const [dataCompleteContent, setDataCompleteContent] = useState({}); // object used in the "steps" field for the completeContent action
-  
-  const exerciseContext = useContext(ExerciseContext);
 
   const startAction = useAction({});
   useEffect(() => {
-    setItems(step.answers.map((id) => ({ ...id, column: COLUMN1 })));
+    setItems(step.answers.map((answer) => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -89,7 +86,7 @@ export const StepPanel = ({
 
   const updateData = () => { // update the data in the "steps" field of the completeContent action
     let idObject = {};
-    idObject[id] = { // create an object with key "id"
+    idObject[step.stepId] = { // create an object with key "id" of the step
       att: attempts, // number of user attempts to response
       hints: hintsShow, // number of times the user saw a hint
       lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
@@ -103,7 +100,7 @@ export const StepPanel = ({
       startAction({
         verbName: "completeContent",
         contentID: code, // it is "code" field of the json file
-        topicID: id, // it is "id" field in the system
+        topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
           steps: dataCompleteContent // object defined in updateData
@@ -126,13 +123,13 @@ export const StepPanel = ({
       });
     } else {
       updateData();
-      if (step.n_step === nStep) {
+      if (step.stepId === nStep.toString()) {
         if (answer[0].id === step.correct_answer) {
           startAction({
             verbName: "tryStep",
             contentID: code,
-            topicID: id,
-            stepID: step.n_step,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 1,
             kcsIDs: step.kcs,
             extra: {
@@ -160,8 +157,8 @@ export const StepPanel = ({
           startAction({
             verbName: "tryStep",
             contentID: code,
-            topicID: id,
-            stepID: step.n_step,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 0,
             kcsIDs: step.kcs,
             extra: {

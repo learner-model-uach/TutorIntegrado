@@ -3,7 +3,6 @@ import { Button, Stack, Link } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
-//import problems from "./practiceproblem.json";
 import { AccordionSteps } from "./Accordion/AccordionSteps";
 import { Feedback } from "./Feedbacks/Feedback";
 import { SortSteps } from "./SortSteps/SortSteps";
@@ -11,12 +10,10 @@ import { NEXT_STEP_BUTTOM_NAME, NEXT_EXERCISE_BUTTOM_NAME } from "./types";
 import { useAction } from "../../utils/action";
 import { useAuth } from "../Auth";
 import ExerciseContext from "./context/exercise/exerciseContext";
-import { useRouter } from "next/router";
 
 export function Tutor({ exercise, topicId }) {
-  const code = exercise.code;
 
-  const [idExercise, setIdExercise] = useState(code); // For now, two exercises are being used with the fields of the correct json files.
+  const [idExercise, setIdExercise] = useState("");
   const [exerciseSelected, setExerciseSelected] = useState(null);
   const [totalSteps, setTotalSteps] = useState(0);
   const [disableState, setDisableState] = useState([true]);
@@ -25,45 +22,27 @@ export function Tutor({ exercise, topicId }) {
   const [showOrder, setShowOrder] = useState(null);
   const [nextPhase, setNextPhase] = useState(true);
 
-  const exerciseContext = useContext(ExerciseContext);
-  const { settingContent } = exerciseContext;
-  const { push } = useRouter();
-
   const startAction = useAction({});
 
   useEffect(() => {
-    // json file has no id field
-    /*setIdExercise(id % 14); 
-    const selet = problems.filter(
-      (exercise) => exercise.id === parseInt(idExercise)
-    );*/
-
-	// For now, two exercises are being used with the fields of the correct json files.
-   
-	
-    settingContent(exercise?.code); // useContext is not reused
+    setIdExercise(exercise?.code);
     startAction({
       verbName: "loadContent",
       contentID: exercise?.code, // "code" field of the json file
     });
-    setOrderFirst(exercise.order_steps.position === "initial");
-    setShowOrder(exercise.order_steps.show);
+    setOrderFirst(exercise?.order_steps.position === "initial");
+    setShowOrder(exercise?.order_steps.show);
     setNextPhase(true);
     setExerciseSelected(exercise);
-    setTotalSteps(exercise.steps.length);
+    setTotalSteps(exercise?.steps.length);
     setDisableState([true]);
     setNextExercise(false);
-  }, []);
+  }, [topicId]);
 
   const handlerNextExercise = (e) => {
-    //e.preventDefault();
     startAction({
       verbName: "nextContent",
     });
-    // For now, two exercises are being used with the fields of the correct json files.
-    //setIdExercise((prev) => (idExercise % 2) + 1);
-    //push(`/exercise/${(idExercise % 2) + 1}`);
-    
   };
   return (
     <>

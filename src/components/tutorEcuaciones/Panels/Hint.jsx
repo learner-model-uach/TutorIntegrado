@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
@@ -33,7 +33,7 @@ export const Hint = ({
   setNewHintAvaliable,
   newHintAvaliable,
   answerId, // id the answer
-  nStep, // "n_step" field defined in the json file
+  nStep, // "stepId" field defined in the json file
   code, // "code" field defined in the json file
   setHintsShow // number of times a hint has been shown
 }) => {
@@ -47,8 +47,6 @@ export const Hint = ({
   const [disabledHint, setDisabledHint] = useState(firstTimeHint); // configure if the button is disabled or not
   const [hintsAvaliableList, setHintsAvaliableList] = useState([]); // accumulated hints displayed to the user
   const [shake, setShake] = useState(false);
-  
-  const exerciseContext = useContext(ExerciseContext);
   
   useEffect(() => {
     setCount(-1);

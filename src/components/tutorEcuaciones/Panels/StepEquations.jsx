@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Flex, Stack, Button, Text, VStack, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
@@ -27,7 +27,7 @@ export const StepEquations = ({
   setColor,
   setNextExercise,
   code, // "code" field of json file
-  id // "id" field in the system
+  topicId // "id" field in the system
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -40,7 +40,6 @@ export const StepEquations = ({
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState({});
-  const exerciseContext = useContext(ExerciseContext);
   const startAction = useAction({});
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
@@ -48,7 +47,7 @@ export const StepEquations = ({
   
 
   useEffect(() => {
-    setItems(step.answers.map((id) => ({ ...id, column: COLUMN1 })));
+    setItems(step.answers.map((answer) => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -85,7 +84,6 @@ export const StepEquations = ({
           key={item.id}
           value={item.value}
           setItems={setItems}
-          content={content}
           column={item.column}
           items={items}
           answer={answer}
@@ -97,7 +95,7 @@ export const StepEquations = ({
 
   const updateData = () => { // update the data in the "steps" field of the completeContent action
     let idObject = {};
-    idObject[id] = { // create an object with key "id"
+    idObject[step.stepId] = { // create an object with key "id" of the step
       att: attempts, // number of user attempts to response
       hints: hintsShow, // number of times the user saw a hint
       lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
@@ -112,7 +110,7 @@ export const StepEquations = ({
       startAction({
         verbName: "completeContent",
         contentID: code, // it is "code" field of the json file
-        topicID: id, // it is "id" field in the system
+        topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
           steps: dataCompleteContent // object defined in updateData
@@ -134,7 +132,7 @@ export const StepEquations = ({
         text: "Escoge una respuesta",
       });
     } else {
-      if (step.n_step === nStep) {
+      if (step.stepId === nStep.toString()) {
         if (
           (answerLeft[0].id === step.correct_answer[0] &&
             answerRigth[0].id === step.correct_answer[1]) ||
@@ -144,8 +142,8 @@ export const StepEquations = ({
           startAction({
             verbName: "tryStep",
             contentID: code,
-            topicID: id,
-            stepID: step.n_step,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 1,
             kcsIDs: step.kcs,
             extra: {
@@ -176,8 +174,8 @@ export const StepEquations = ({
           startAction({
             verbName: "tryStep",
             contentID: code,
-            topicID: id,
-            stepID: step.n_step,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 0,
             kcsIDs: step.kcs,
             extra: {

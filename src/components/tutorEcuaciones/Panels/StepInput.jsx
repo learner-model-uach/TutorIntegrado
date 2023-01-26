@@ -16,7 +16,6 @@ import {
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
 } from "../types";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { useAction } from "../../../utils/action";
 
 export const StepInput = ({
@@ -31,8 +30,7 @@ export const StepInput = ({
   code, // "code" field of json file
   topicId // "id" field in the system
 }) => {
-  const exerciseContext = useContext(ExerciseContext);
-  
+
   const [alert, setAlert] = useState({});
   const [answer, setAnswer] = useState("");
   const [answerInput, setAnswerInput] = useState("");
@@ -69,7 +67,7 @@ export const StepInput = ({
 
   const updateData = () => { // update the data in the "steps" field of the completeContent action
     let idObject = {};
-    idObject[step.stepId] = { // create an object with key "id"
+    idObject[step.stepId] = { // create an object with key "id" of the step
       att: attempts, // number of user attempts to response
       hints: hintsShow, // number of times the user saw a hint
       lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
@@ -103,7 +101,7 @@ export const StepInput = ({
       });
     } else {
       updateData();
-      if (step.stepId === nStep) {
+      if (step.stepId === nStep.toString()) {
         if (answer === step.correct_answer.toString()) {
           startAction({
             verbName: "tryStep",

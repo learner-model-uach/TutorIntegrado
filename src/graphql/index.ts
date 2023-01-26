@@ -27,6 +27,10 @@ const documents = {
     graphql.ProjectData9Document,
   '\n      query ProjectData10 {\n        contentByCode(code: "pot4"){\n          json\n        }\n      }\n    ':
     graphql.ProjectData10Document,
+  '\n      query ProjectData11 {\n        contentByCode(code: "ecc1"){\n          json\n        }\n      }\n    ':
+    graphql.ProjectData11Document,
+  '\n      query ProjectData12 {\n        contentByCode(code: "secl1"){\n          json\n        }\n      }\n    ':
+    graphql.ProjectData12Document,
   "\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    ":
     graphql.ActionDocument,
 };
@@ -67,6 +71,12 @@ export function gql(
 export function gql(
   source: '\n      query ProjectData10 {\n        contentByCode(code: "pot4"){\n          json\n        }\n      }\n    '
 ): typeof documents['\n      query ProjectData10 {\n        contentByCode(code: "pot4"){\n          json\n        }\n      }\n    '];
+export function gql(
+  source: '\n      query ProjectData11 {\n        contentByCode(code: "ecc1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData11 {\n        contentByCode(code: "ecc1"){\n          json\n        }\n      }\n    '];
+export function gql(
+  source: '\n      query ProjectData12 {\n        contentByCode(code: "secl1"){\n          json\n        }\n      }\n    '
+): typeof documents['\n      query ProjectData12 {\n        contentByCode(code: "secl1"){\n          json\n        }\n      }\n    '];
 export function gql(
   source: "\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    "
 ): typeof documents["\n      mutation Action($data: ActionInput!) {\n        action(data: $data)\n      }\n    "];

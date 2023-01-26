@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./AccordionSteps.module.css";
 
 import {
@@ -35,8 +35,6 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
   const [color, setColor] = useState([]);
   const [isOpenIndexes, setIsOpenIndexes] = useState([0]);
   const startAction = useAction({});
-  const exerciseContext = useContext(ExerciseContext);
-  const { content } = exerciseContext; // the useContext is not use
 
   useEffect(() => {
     setTotalSteps(exercise.steps.length);
