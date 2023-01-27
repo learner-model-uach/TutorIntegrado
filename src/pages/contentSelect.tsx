@@ -12,7 +12,9 @@ export default withAuth(function ContentSelect() {
   const router = useRouter();
   const topics = "[" + router.query.topic + "]"; //topics in array
   const registerTopic = router.query.registerTopic + ""; //topics in array
+  const nextContentPath = router.asPath + ""; //topics in array
   const domainId = 1;
+
   const model = useUpdateModel();
 
   useEffect(() => {
@@ -92,10 +94,14 @@ export default withAuth(function ContentSelect() {
 
   // *** data manual ***
   const control = false; //false = 3 exersices, true = 1 exercise
-
+  const experimentGroup =
+    user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
+  //console.log(user);
   return (
     <>
+      <p>{router.asPath}</p>
       <p>Selección del contenido del tópico: {topics}</p>
+
       <SimpleGrid
         columns={control ? 1 : (contentResult ?? []).length}
         spacing="8"
@@ -104,7 +110,7 @@ export default withAuth(function ContentSelect() {
         rounded="lg"
       >
         {!isLoading ? (
-          control ? (
+          experimentGroup == "tutor-control" ? (
             <Center>
               <CardSelection
                 id={contentResult[bestExercise]?.P.id}
@@ -117,26 +123,30 @@ export default withAuth(function ContentSelect() {
                 selectionText={contentResult[bestExercise]?.Msg.text}
                 selectionBest={false}
                 registerTopic={registerTopic}
+                nextContentPath={nextContentPath}
                 key={0}
               ></CardSelection>
             </Center>
           ) : (
             <>
-              {contentResult.map((content, index) => (
-                <CardSelection
-                  id={content.P.id}
-                  code={content.P.code}
-                  json={content.P.json}
-                  description={content.P.description}
-                  label={content.P.label}
-                  kcs={content.P.kcs}
-                  selectionTitle={content.Msg.label}
-                  selectionText={content.Msg.text}
-                  selectionBest={index == bestExercise}
-                  registerTopic={registerTopic}
-                  key={index}
-                ></CardSelection>
-              ))}
+              <Center>
+                {contentResult.map((content, index) => (
+                  <CardSelection
+                    id={content.P.id}
+                    code={content.P.code}
+                    json={content.P.json}
+                    description={content.P.description}
+                    label={content.P.label}
+                    kcs={content.P.kcs}
+                    selectionTitle={content.Msg.label}
+                    selectionText={content.Msg.text}
+                    selectionBest={index == bestExercise}
+                    registerTopic={registerTopic}
+                    nextContentPath={nextContentPath}
+                    key={index}
+                  ></CardSelection>
+                ))}
+              </Center>
             </>
           )
         ) : (

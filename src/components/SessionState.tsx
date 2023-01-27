@@ -34,6 +34,7 @@ export const sessionState = proxy<{
     selectionText: string | undefined;
     selectionBest: boolean;
   };
+  nextContentPath: string | undefined;
   learnerTraces: Object[];
 }>({
   currentUser: null,
@@ -58,6 +59,7 @@ export const sessionState = proxy<{
     selectionText: "",
     selectionBest: false,
   },
+  nextContentPath: "",
   learnerTraces: [],
 });
 

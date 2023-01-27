@@ -6,6 +6,7 @@ import {
   useColorModeValue,
   HStack,
   Center,
+  Divider,
 } from "@chakra-ui/react";
 
 //import Link from "next/link";
@@ -25,6 +26,7 @@ export const CardSelection = ({
   selectionText,
   selectionBest,
   registerTopic,
+  nextContentPath,
 }: {
   id: string;
   code: string | undefined;
@@ -36,6 +38,7 @@ export const CardSelection = ({
   selectionText: string | undefined;
   selectionBest: boolean;
   registerTopic: string;
+  nextContentPath: string | undefined;
 }) => {
   return (
     <>
@@ -48,7 +51,7 @@ export const CardSelection = ({
         }}
         as="article"
         maxW="sm"
-        p="5"
+        p="3"
         borderWidth="1px"
         rounded="md"
         textAlign="center"
@@ -77,8 +80,15 @@ export const CardSelection = ({
           //}
           sessionState.topic = registerTopic;
           sessionStateBD.setItem("topic", sessionState.topic);
+
+          sessionState.nextContentPath = nextContentPath;
+          sessionStateBD.setItem("nextContentPath", sessionState.nextContentPath);
         }}
       >
+        <LinkOverlay fontSize=".8em">
+          Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
+        </LinkOverlay>
+        <Divider />
         <Center>
           <HStack>
             <Heading size="md" my="2" textAlign="center">
