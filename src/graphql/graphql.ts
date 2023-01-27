@@ -681,6 +681,76 @@ export type ContentConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Return selected content and properties for further analysis (model, codes of content, probabilities and tables) */
+export type ContentSelectedPropsReturn = {
+  __typename?: "ContentSelectedPropsReturn";
+  /** All code of contents of last N contents done */
+  PU: Array<Scalars["String"]>;
+  /** Content selected for learner */
+  contentResult: Array<ContentsSelectedReturn>;
+  /** Model structure of learner composed for KC level and KC threshold */
+  model: Scalars["JSON"];
+  /** All codes of contents without last N contents and content dominated */
+  newP: Array<Scalars["String"]>;
+  /** All codes of contents of topic chapters */
+  oldP: Array<Scalars["String"]>;
+  /** Probability of success by average PK of exercise most difficult */
+  pAVGdif: Scalars["Float"];
+  /** Probability of success by average PK of exercise most similar */
+  pAVGsim: Scalars["Float"];
+  /** table of newP with TableReturn attributes */
+  table: Array<TableReturn>;
+  /** table filter with similarity less than 1 and difficulty less than difficulty of last content done (PU[0]) */
+  tableDifEasy: Array<TableReturn>;
+  /** table filter with similarity less than 1 and difficulty greater than difficulty of last content done (PU[0]) */
+  tableDifHarder: Array<TableReturn>;
+  /** table filter with similarity equals to 1 */
+  tableSim: Array<TableReturn>;
+  /** Return message of service */
+  topicCompletedMsg: Message;
+};
+
+/** ContentSelection input data */
+export type ContentSelectionInput = {
+  /** Discard last N contents done (optional in query), default N= 10 */
+  discardLast?: Scalars["Int"];
+  /** Domain identifier */
+  domainId: Scalars["IntID"];
+  /** Project identifier */
+  projectId: Scalars["IntID"];
+  /** Topic identifier */
+  topicId: Array<Scalars["IntID"]>;
+  /** User identifier */
+  userId: Scalars["IntID"];
+  /** Range Zone proximal development(ZPD) (optional in query), default [0.4,0.6] */
+  zpdRange?: InputMaybe<Array<Scalars["Float"]>>;
+};
+
+/** ContentSelection Queries */
+export type ContentSelectionQueries = {
+  __typename?: "ContentSelectionQueries";
+  /** Get all contentSelected properties associated with the specified ContentSelectionInput */
+  contentSelected: ContentSelectedPropsReturn;
+};
+
+/** ContentSelection Queries */
+export type ContentSelectionQueriesContentSelectedArgs = {
+  input: ContentSelectionInput;
+};
+
+/** Main structure of content selected return */
+export type ContentsSelectedReturn = {
+  __typename?: "ContentsSelectedReturn";
+  /** Message associated to Content */
+  Msg: Message;
+  /** Order is 1 when Content is selected for easy criterion, 2 when Content is selected for similar criterion and 3 when Content is selected for hard criterion */
+  Order: Scalars["IntID"];
+  /** Content P */
+  P: Content;
+  /** Preferred is true when Content is the best option for learner, else false */
+  Preferred: Scalars["Boolean"];
+};
+
 /** Content creation input data */
 export type CreateContent = {
   /**
@@ -1007,6 +1077,15 @@ export type KCsConnection = Connection & {
   pageInfo: PageInfo;
 };
 
+/** Structure of message return in content selected */
+export type Message = {
+  __typename?: "Message";
+  /** Label of message of content selected */
+  label: Scalars["String"];
+  /** Text of message of content selected */
+  text: Scalars["String"];
+};
+
 /** Model State Entity */
 export type ModelState = {
   __typename?: "ModelState";
@@ -1016,7 +1095,6 @@ export type ModelState = {
   creator: Scalars["String"];
   /** Domain associated with Model State */
   domain: Domain;
-  /** Unique numeric identifier */
   id: Scalars["IntID"];
   /** Arbitrary JSON Data */
   json: Scalars["JSON"];
@@ -1028,6 +1106,13 @@ export type ModelState = {
   user: User;
 };
 
+/** Different types of Model State */
+export const ModelStateAlgorithm = {
+  Bkt: "BKT",
+} as const;
+
+export type ModelStateAlgorithm =
+  typeof ModelStateAlgorithm[keyof typeof ModelStateAlgorithm];
 /** Paginated Model States */
 export type ModelStateConnection = Connection & {
   __typename?: "ModelStateConnection";
@@ -1137,10 +1222,16 @@ export type Mutation = {
   adminUsers: AdminUserMutations;
   /** Returns 'Hello World!' */
   hello: Scalars["String"];
+  /** Update model state with new state */
+  updateModelState?: Maybe<Scalars["Void"]>;
 };
 
 export type MutationActionArgs = {
   data: ActionInput;
+};
+
+export type MutationUpdateModelStateArgs = {
+  input: UpdateModelStateInput;
 };
 
 /** Minimum Entity Information */
@@ -1338,6 +1429,8 @@ export type Query = {
    * - If authenticated user has no permissions on the corresponding project it returns NULL.
    */
   contentByCode?: Maybe<Content>;
+  /** ContentSelection Query */
+  contentSelection: ContentSelectionQueries;
   /** Authenticated user information */
   currentUser?: Maybe<User>;
   /**
@@ -1451,6 +1544,21 @@ export type Subscription = {
   __typename?: "Subscription";
   /** Emits 'Hello World1', 'Hello World2', 'Hello World3', 'Hello World4' and 'Hello World5' */
   hello: Scalars["String"];
+};
+
+/** Structure of TableReturn for check result of criterion and further analysis */
+export type TableReturn = {
+  __typename?: "TableReturn";
+  /** Code of content */
+  contentCode?: Maybe<Scalars["String"]>;
+  /** Value of difficulty of content */
+  diff?: Maybe<Scalars["Float"]>;
+  /** Probability of success by average of KCs levels of the Content */
+  probSuccessAvg?: Maybe<Scalars["Float"]>;
+  /** Probability of success by multiplication of KCs levels of the Content */
+  probSuccessMult?: Maybe<Scalars["Float"]>;
+  /** Value of similarity of content */
+  sim?: Maybe<Scalars["Float"]>;
 };
 
 /** Topic entity */
@@ -1582,6 +1690,13 @@ export type UpdateKcInput = {
   id: Scalars["IntID"];
   /** Human readable identifier */
   label: Scalars["String"];
+};
+
+/** Input to update model state */
+export type UpdateModelStateInput = {
+  domainID: Scalars["IntID"];
+  typeModel: ModelStateAlgorithm;
+  userID: Scalars["IntID"];
 };
 
 /** Project update input data */

@@ -6,12 +6,12 @@ import { MathComponent } from "../../MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { THstep1 } from "./steps/THstep1";
 import { THstep2 } from "./steps/THstep2";
-import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
+import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png";
 import { Summary3 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import dynamic from "next/dynamic";
 import { Loading } from "../tools/Spinner";
-import ejercicioTH2 from "./ejercicioTH2.json"
+import ejercicioTH2 from "./ejercicioTH2.json";
 import Link from "next/link";
 import {
   Accordion,
@@ -26,7 +26,7 @@ import {
   Spacer,
   Stack,
   Button,
-  Image 
+  Image,
 } from "@chakra-ui/react";
 //import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
@@ -34,13 +34,13 @@ import { SelectStep } from "../tools/SelectStep";
 //import { LoadContentAction } from "../tools/LoadContentAction";
 
 const TH2 = ({ exercise }) => {
-    exercise = ejercicioTH2[0];
-    const Mq2 = dynamic(
-      () => {
-          return import("../../Mq2");
-      },
-      { ssr: false }
-    );
+  exercise = ejercicioTH2[0];
+  const Mq2 = dynamic(
+    () => {
+      return import("../../Mq2");
+    },
+    { ssr: false },
+  );
   //LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -49,9 +49,9 @@ const TH2 = ({ exercise }) => {
   const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const steps = exercise.steps.map((i) => i.stepTitle); //list of all stepTitle for selectStep
+  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
- // const action = useAction(); //send action to central system
+  // const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -77,22 +77,16 @@ const TH2 = ({ exercise }) => {
 
   return (
     <>
-      <BreadcrumbTutor
-        root="Teorema de Thales"
-        item={exercise.title}
-      ></BreadcrumbTutor>
+      <BreadcrumbTutor root="Teorema de Thales" item={exercise.title}></BreadcrumbTutor>
 
       <Wrap>
         {exercise.text}
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
       </Wrap>
-      <Wrap>
-        <Image src={thales_1} style={{marginLeft: 'auto', marginRight: 'auto'}}>
-
-        </Image>
+      <Wrap style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'}}>
+        <Image src={exercise.image} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -100,9 +94,9 @@ const TH2 = ({ exercise }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0)) {
-                  setIndex(index.filter((e) => e !== 0));
-                 /* action({
+                if (index.some(element => element === 0)) {
+                  setIndex(index.filter(e => e !== 0));
+                  /* action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
@@ -158,9 +152,9 @@ const TH2 = ({ exercise }) => {
           <Alert colorScheme={step2Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 1)) {
-                  setIndex(index.filter((e) => e !== 1));
-                 /* action({
+                if (index.some(element => element === 1)) {
+                  setIndex(index.filter(e => e !== 1));
+                  /* action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
@@ -216,9 +210,9 @@ const TH2 = ({ exercise }) => {
           <Alert colorScheme={step2Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 2)) {
-                  setIndex(index.filter((e) => e !== 2));
-                 /* action({
+                if (index.some(element => element === 2)) {
+                  setIndex(index.filter(e => e !== 2));
+                  /* action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
@@ -272,11 +266,8 @@ const TH2 = ({ exercise }) => {
         </AccordionItem>
       </Accordion>
       {step3Valid != null && (
-        
         <>
-          <Conclusion
-            expression={exercise.conclusion}
-          />
+          <Conclusion expression={exercise.conclusion} />
           <Summary3
             expression={exercise.text}
             step1={exercise.steps[0]}

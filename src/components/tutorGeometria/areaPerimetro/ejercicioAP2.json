@@ -1,151 +1,189 @@
 [
-    {
-      "code": "ap2",
-      "title": "Área y perímetro II.",
-      "type": "areaperimetro1",
-      "meta": {},
-      "text": "Sabiendo que el área de un terreno es 120 mts². Determine la medida de sus lados si el largo excede al ancho en 7 mts.",
-      "selectSteps": false,
-      "image" : "",
-      "conclusion" : "El Lado 'y' es 15 metros y el lado 'x' es 8 metros.",
-      "steps": [
-        {
-          "stepId": "0",
-          "expression": "y = ",
-          "stepTitle": "Definir el largo 'y' en razóm del ancho 'x'.",
-          "displayResult": "y = x + 7",
-          "KCs": ["ExpA"],
-          "hints": [
-            { "hintId": 0, "hint": "El lado mayor es 7 mts más largo que el lado menor." },
-            { "hintId": 1, "hint": "Uno de los lados es y - 7." },
-            { "hintId": 2, "hint": "Escribe x + 7 en la casilla." }
-          ],
-          "matchingError": [
-            { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-          ],
-          "answers": [{ "answer": ["x+7"], "nextStep": "1" }, { "answer": ["7+x"], "nextStep": "1" }],
-          "incorrectMsg": "La expresión ingresada no corresponde al lado 'y'.",
-          "correctMsg": "La expresión ingresada corresponde al lado 'y'.",
-          "summary": "1) El lado x excede en 7 metros al lado y."
-        },
-        {
-          "stepId": "1",
-          "expression": "A = ",
-          "stepTitle": "Definidos el largo y el ancho, expresar la fórmula del área para el terreno.",
-          "displayResult": "A = x(x+7)",
-          "KCs": ["AreaR"],
-          "hints": [
-            { "hintId": 0, "hint": "El área es la multiplicación de ambos lados." },
-            { "hintId": 1, "hint": "Un lado es 'x' y el otro es 'x + 7'." },
-            { "hintId": 2, "hint": "Escribe x(x+7)." }
-          ],
-          "matchingError": [
-            { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-          ],
-          "answers": [{ "answer": ["x(x+7)"], "nextStep": "2" }, { "answer": ["(x+7)x"], "nextStep": "2" }, { "answer": ["(7+x)x"], "nextStep": "2" }, { "answer": ["x(7+x)"], "nextStep": "2" }],
-          "incorrectMsg": "La expresión ingresada no corresponde al área del rectángulo.",
-          "correctMsg": "La expresión ingresada corresponde al área del rectángulo.",
-          "summary": "2) El área del rectángulo es la multiplicacion de su largo y ancho. "
-        },
-        {
-          "stepId": "2",
-          "expression": "120 = ",
-          "stepTitle": "Desarrollar fórmula e igualar al área real",
-          "displayResult": "x² + 7x = 120",
-          "KCs": ["AD","AA"],
-          "showPanel" : true,
-          "hints": [
-            { "hintId": 0, "hint": "El área es de 120 mts²." },
-            { "hintId": 1, "hint": "Multiplica término a término la fórmula e iguala a 120." },
-            { "hintId": 2, "hint": "La base es 3h." },
-            { "hintId": 3, "hint": "Escribe x² + 7x = 120." }
-          ],
-          "matchingError": [
-            {
-              "error": [""],
-              "hintId": 4,
-              "hint": "Debe ingresar una respuesta"
-            }
-          ],
-          "answers": [{ "answer": ["x2^x7+"], "nextStep": "3" },{ "answer": ["7xx2^+"], "nextStep": "3" }],
-          "incorrectMsg": "Hay un error en el desarrollo de la fórmula.",
-          "correctMsg": "Haz desarrollado la fórmula con éxito.",
-          "summary": "3) Para desarrollar la fórmula debemos multiplicar término a término."
-        },
-        {
-            "stepId": "3",
-            "expression": "0 = ",
-            "stepTitle": "Resuelve la ecuación cuadrática generada.",
-            "displayResult": "0 = (x-8)(x+15)",
-            "KCs": [],
-            "hints": [
-              { "hintId": 0, "hint": "Recuerda que las ecuaciones cuadráticas son de la forma a²+bx+c." },
-              { "hintId": 1, "hint": "Debes encontrar dos números que sumados te den 7." },
-              { "hintId": 2, "hint": "Debes encontrar dos números que multiplicados te den -120." },
-              { "hintId": 3, "hint": "Una de las soluciones de la ecuación es 8." },
-              { "hintId": 4, "hint": "Escribe (x+15)(x-8)." }
-            ],
-            "matchingError": [
-              {
-                "error": [""],
-                "hintId": 5,
-                "hint": "Debe ingresar una respuesta"
-              }
-            ],
-            "answers": [{ "answer": ["x+15","x-8"], "nextStep": "4" },{ "answer": ["15+x","x-8"], "nextStep": "4" },{ "answer": ["x-8","x+15"], "nextStep": "4" },{ "answer": ["x-8","15+x"], "nextStep": "4" }],
-            "incorrectMsg": "La solución ingresada no es la correcta.",
-            "correctMsg": "Haz factorizado la ecuación de manera correcta.",
-            "summary": "4) Para factorizar ecuaciones de la forma a²+bx+c debemos buscar dos números que sumados nos den 'b' y multiplicados nos den 'c'."
-        },
-        {
-          "stepId": "4",
-          "expression": "x = ",
-          "stepTitle": "Calcular el valor del ancho 'x'.",
-          "displayResult": "x = 8",
-          "KCs": ["ES", "DescSol"],
-          "hints": [
-            { "hintId": 0, "hint": "Las raíces cuadráticas nos entregan dos valores para x." },
-            { "hintId": 1, "hint": "El valor de un lado siempre debe ser positivo." },
-            { "hintId": 2, "hint": "Uno de los valores para x es -15." },
-            { "hintId": 3, "hint": "Escribe 8." }
-          ],
-          "matchingError": [
-            {
-              "error": [""],
-              "hintId": 4,
-              "hint": "Debe ingresar una respuesta"
-            }
-          ],
-          "answers": [{ "answer": ["8"], "nextStep": "5" }],
-          "incorrectMsg": "El valor ingresado no corresponde al ancho de la figura.",
-          "correctMsg": "El valor del ancho es de 8 mts.",
-          "summary": "5) Cuando hablamos de distancia siempre debemos tomar una solución positiva."
-        },
-        {
-          "stepId": "5",
-          "expression": "y = ",
-          "stepTitle": "Calcular el valor del largo 'y'.",
-          "displayResult": "y = 8",
-          "KCs": ["AD", "AN"],
-          "hints": [
-            { "hintId": 0, "hint": "Reemplaza el valor de 'x' en la fórmula de 'y'." },
-            { "hintId": 1, "hint": "La fórmula de y es 'x + 7'." },
-            { "hintId": 2, "hint": "El valor de x es 8." },
-            { "hintId": 3, "hint": "Escribe 15." }
-          ],
-          "matchingError": [
-            {
-              "error": [""],
-              "hintId": 4,
-              "hint": "Debe ingresar una respuesta"
-            }
-          ],
-          "answers": [{ "answer": ["15"], "nextStep": "Terminado" }],
-          "incorrectMsg": "El valor ingresado no corresponde al largo de la figura.",
-          "correctMsg": "El valor del largo es de 15 mts.",
-          "summary": "6) Debemos reemplazar el valor ya conocido en la nueva ecuación para despejar y."
-        }
-      ]
-    }
-  ]
-  
+  {
+    "code": "ap2",
+    "title": "Área y perímetro II.",
+    "type": "areaperimetro1",
+    "meta": {},
+    "text": "Sabiendo que el área de un terreno es 120 mts². Determine la medida de sus lados si el largo excede al ancho en 7 mts.",
+    "selectSteps": false,
+    "image": "https://i.postimg.cc/Fz9858bK/AP2.png",
+    "conclusion": "El Lado 'y' es 15 metros y el lado 'x' es 8 metros.",
+    "steps": [
+      {
+        "stepId": "0",
+        "expression": "y = ",
+        "stepTitle": "Definir el largo 'y' en razóm del ancho 'x'.",
+        "displayResult": "y = x + 7",
+        "KCs": ["ExpA"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "El lado mayor es 7 mts más largo que el lado menor."
+          },
+          { "hintId": 1, "hint": "Uno de los lados es y - 7." },
+          { "hintId": 2, "hint": "Escribe x + 7 en la casilla." }
+        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
+        "answers": [
+          { "answer": ["x+7"], "nextStep": "1" },
+          { "answer": ["7+x"], "nextStep": "1" }
+        ],
+        "incorrectMsg": "La expresión ingresada no corresponde al lado 'y'.",
+        "correctMsg": "La expresión ingresada corresponde al lado 'y'.",
+        "summary": "1) El lado x excede en 7 metros al lado y."
+      },
+      {
+        "stepId": "1",
+        "expression": "A = ",
+        "stepTitle": "Definidos el largo y el ancho, expresar la fórmula del área para el terreno.",
+        "displayResult": "A = x(x+7)",
+        "KCs": ["AreaR"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "El área es la multiplicación de ambos lados."
+          },
+          { "hintId": 1, "hint": "Un lado es 'x' y el otro es 'x + 7'." },
+          { "hintId": 2, "hint": "Escribe x(x+7)." }
+        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
+        "answers": [
+          { "answer": ["x(x+7)"], "nextStep": "2" },
+          { "answer": ["(x+7)x"], "nextStep": "2" },
+          { "answer": ["(7+x)x"], "nextStep": "2" },
+          { "answer": ["x(7+x)"], "nextStep": "2" }
+        ],
+        "incorrectMsg": "La expresión ingresada no corresponde al área del rectángulo.",
+        "correctMsg": "La expresión ingresada corresponde al área del rectángulo.",
+        "summary": "2) El área del rectángulo es la multiplicacion de su largo y ancho. "
+      },
+      {
+        "stepId": "2",
+        "expression": "120 = ",
+        "stepTitle": "Desarrollar fórmula e igualar al área real",
+        "displayResult": "x² + 7x = 120",
+        "KCs": ["AD", "AA"],
+        "showPanel": true,
+        "hints": [
+          { "hintId": 0, "hint": "El área es de 120 mts²." },
+          {
+            "hintId": 1,
+            "hint": "Multiplica término a término la fórmula e iguala a 120."
+          },
+          { "hintId": 2, "hint": "La base es 3h." },
+          { "hintId": 3, "hint": "Escribe x² + 7x = 120." }
+        ],
+        "matchingError": [
+          {
+            "error": [""],
+            "hintId": 4,
+            "hint": "Debe ingresar una respuesta"
+          }
+        ],
+        "answers": [
+          { "answer": ["x2^x7+"], "nextStep": "3" },
+          { "answer": ["7xx2^+"], "nextStep": "3" }
+        ],
+        "incorrectMsg": "Hay un error en el desarrollo de la fórmula.",
+        "correctMsg": "Haz desarrollado la fórmula con éxito.",
+        "summary": "3) Para desarrollar la fórmula debemos multiplicar término a término."
+      },
+      {
+        "stepId": "3",
+        "expression": "0 = ",
+        "stepTitle": "Resuelve la ecuación cuadrática generada.",
+        "displayResult": "0 = (x-8)(x+15)",
+        "KCs": [],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Recuerda que las ecuaciones cuadráticas son de la forma a²+bx+c."
+          },
+          {
+            "hintId": 1,
+            "hint": "Debes encontrar dos números que sumados te den 7."
+          },
+          {
+            "hintId": 2,
+            "hint": "Debes encontrar dos números que multiplicados te den -120."
+          },
+          { "hintId": 3, "hint": "Una de las soluciones de la ecuación es 8." },
+          { "hintId": 4, "hint": "Escribe (x+15)(x-8)." }
+        ],
+        "matchingError": [
+          {
+            "error": [""],
+            "hintId": 5,
+            "hint": "Debe ingresar una respuesta"
+          }
+        ],
+        "answers": [
+          { "answer": ["x+15", "x-8"], "nextStep": "4" },
+          { "answer": ["15+x", "x-8"], "nextStep": "4" },
+          { "answer": ["x-8", "x+15"], "nextStep": "4" },
+          { "answer": ["x-8", "15+x"], "nextStep": "4" }
+        ],
+        "incorrectMsg": "La solución ingresada no es la correcta.",
+        "correctMsg": "Haz factorizado la ecuación de manera correcta.",
+        "summary": "4) Para factorizar ecuaciones de la forma a²+bx+c debemos buscar dos números que sumados nos den 'b' y multiplicados nos den 'c'."
+      },
+      {
+        "stepId": "4",
+        "expression": "x = ",
+        "stepTitle": "Calcular el valor del ancho 'x'.",
+        "displayResult": "x = 8",
+        "KCs": ["ES", "DescSol"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Las raíces cuadráticas nos entregan dos valores para x."
+          },
+          {
+            "hintId": 1,
+            "hint": "El valor de un lado siempre debe ser positivo."
+          },
+          { "hintId": 2, "hint": "Uno de los valores para x es -15." },
+          { "hintId": 3, "hint": "Escribe 8." }
+        ],
+        "matchingError": [
+          {
+            "error": [""],
+            "hintId": 4,
+            "hint": "Debe ingresar una respuesta"
+          }
+        ],
+        "answers": [{ "answer": ["8"], "nextStep": "5" }],
+        "incorrectMsg": "El valor ingresado no corresponde al ancho de la figura.",
+        "correctMsg": "El valor del ancho es de 8 mts.",
+        "summary": "5) Cuando hablamos de distancia siempre debemos tomar una solución positiva."
+      },
+      {
+        "stepId": "5",
+        "expression": "y = ",
+        "stepTitle": "Calcular el valor del largo 'y'.",
+        "displayResult": "y = 8",
+        "KCs": ["AD", "AN"],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Reemplaza el valor de 'x' en la fórmula de 'y'."
+          },
+          { "hintId": 1, "hint": "La fórmula de y es 'x + 7'." },
+          { "hintId": 2, "hint": "El valor de x es 8." },
+          { "hintId": 3, "hint": "Escribe 15." }
+        ],
+        "matchingError": [
+          {
+            "error": [""],
+            "hintId": 4,
+            "hint": "Debe ingresar una respuesta"
+          }
+        ],
+        "answers": [{ "answer": ["15"], "nextStep": "Terminado" }],
+        "incorrectMsg": "El valor ingresado no corresponde al largo de la figura.",
+        "correctMsg": "El valor del largo es de 15 mts.",
+        "summary": "6) Debemos reemplazar el valor ya conocido en la nueva ecuación para despejar y."
+      }
+    ]
+  }
+]

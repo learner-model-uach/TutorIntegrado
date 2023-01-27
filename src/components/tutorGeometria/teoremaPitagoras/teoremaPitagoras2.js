@@ -7,11 +7,11 @@ import { TPstep1 } from "./steps/TPstep1";
 import { TPstep2 } from "./steps/TPstep2";
 import { TPstepF } from "./steps/TPstepF";
 
-import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
+import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png";
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
-import ejercicioTP2 from "./ejercicioTP2.json"
+import ejercicioTP2 from "./ejercicioTP2.json";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -27,21 +27,21 @@ import {
   Spacer,
   Stack,
   Button,
-  Image 
-} from "@chakra-ui/react"; 
+  Image,
+} from "@chakra-ui/react";
 //import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
 //import { useAction } from "../../../utils/action";
 //import { LoadContentAction } from "../tools/LoadContentAction";
 
 const TP2 = ({ exercise }) => {
-    exercise = ejercicioTP2[0];
+  exercise = ejercicioTP2[0];
   //LoadContentAction(exercise); // report action loadContent
   const Mq2 = dynamic(
     () => {
-        return import("../../Mq2");
+      return import("../../Mq2");
     },
-    { ssr: false }
+    { ssr: false },
   );
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -52,15 +52,22 @@ const TP2 = ({ exercise }) => {
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const steps = exercise.steps.map((i) => i.stepTitle); //list of all stepTitle for selectStep
+  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
 
-  const [submit,setSubmit]=useState(false);
-  const [defaultIndex,setDefaultIndex]=useState([0]);
-  const [submitValues,setSubmitValues]=useState({ans:"",att:0,hints:0,lasthint:false,fail:false,duration:0})
-  const [cdateE,setCdateE]=useState(Date.now());
+  const [submit, setSubmit] = useState(false);
+  const [defaultIndex, setDefaultIndex] = useState([0]);
+  const [submitValues, setSubmitValues] = useState({
+    ans: "",
+    att: 0,
+    hints: 0,
+    lasthint: false,
+    fail: false,
+    duration: 0,
+  });
+  const [cdateE, setCdateE] = useState(Date.now());
 
- // const action = useAction(); //send action to central system
+  // const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -93,22 +100,16 @@ const TP2 = ({ exercise }) => {
 
   return (
     <>
-      <BreadcrumbTutor
-        root="Teorema de Thales"
-        item={exercise.title}
-      ></BreadcrumbTutor>
+      <BreadcrumbTutor root="Teorema de Thales" item={exercise.title}></BreadcrumbTutor>
 
       <Wrap>
         {exercise.text}
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
       </Wrap>
-      <Wrap>
-        <Image src={thales_1} style={{marginLeft: 'auto', marginRight: 'auto'}}>
-
-        </Image>
+      <Wrap style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'}}>
+        <Image src={exercise.image} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -116,9 +117,9 @@ const TP2 = ({ exercise }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0)) {
-                  setIndex(index.filter((e) => e !== 0));
-                 /* action({
+                if (index.some(element => element === 0)) {
+                  setIndex(index.filter(e => e !== 0));
+                  /* action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
@@ -172,18 +173,14 @@ const TP2 = ({ exercise }) => {
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem isFocusable={true} isDisabled={select2}>
-          <Alert colorScheme={
-              step2Valid == null
-                ? step1Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }>
+          <Alert
+            colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}
+          >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 1)) {
-                  setIndex(index.filter((e) => e !== 1));
-                 /* action({
+                if (index.some(element => element === 1)) {
+                  setIndex(index.filter(e => e !== 1));
+                  /* action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
@@ -235,20 +232,14 @@ const TP2 = ({ exercise }) => {
             )}
           </AccordionPanel>
         </AccordionItem>
-        <AccordionItem  isFocusable={true} isDisabled={select3}>
+        <AccordionItem isFocusable={true} isDisabled={select3}>
           <Alert
-            colorScheme={
-              step3Valid == null
-                ? step2Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step3Valid == null ? (step2Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 2)) {
-                  setIndex(index.filter((e) => e !== 2));
+                if (index.some(element => element === 2)) {
+                  setIndex(index.filter(e => e !== 2));
                   /*action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
@@ -298,24 +289,17 @@ const TP2 = ({ exercise }) => {
                 contentID={exercise.code}
                 topicID={exercise.type}
               ></TPstep2>
-              
             )}
           </AccordionPanel>
         </AccordionItem>
-        <AccordionItem  isFocusable={true} isDisabled={select4}>
+        <AccordionItem isFocusable={true} isDisabled={select4}>
           <Alert
-            colorScheme={
-              step4Valid == null
-                ? step3Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step4Valid == null ? (step3Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 3)) {
-                  setIndex(index.filter((e) => e !== 3));
+                if (index.some(element => element === 3)) {
+                  setIndex(index.filter(e => e !== 3));
                   /*action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
@@ -358,24 +342,21 @@ const TP2 = ({ exercise }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step3Valid != null && !select4 && (
-              <Mq2 
-                    key={"Mq2_pit1"}
-                    step={exercise.steps[3]}
-                    setStepValid={setStep4Valid}
-                    stepValid={step4Valid}
-                    contentID={exercise.code}
-                    topicID={exercise.type}
-                >
-            </Mq2>
+              <Mq2
+                key={"Mq2_pit1"}
+                step={exercise.steps[3]}
+                setStepValid={setStep4Valid}
+                stepValid={step4Valid}
+                contentID={exercise.code}
+                topicID={exercise.type}
+              ></Mq2>
             )}
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-      {step4Valid != null && (  
+      {step4Valid != null && (
         <>
-          <Conclusion
-            expression={exercise.conclusion}
-          />
+          <Conclusion expression={exercise.conclusion} />
           <Summary4
             expression={exercise.text}
             step1={exercise.steps[0]}

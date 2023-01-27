@@ -33,12 +33,10 @@ const Hint = ({
   const ayuda = () => {
     const responseStudent =
       typeof response[0] == "object"
-        ? response.map((e) =>
-            e.current.value.replace(/[*]| /g, "").toLowerCase()
-          )
+        ? response.map(e => e.current.value.replace(/[*]| /g, "").toLowerCase())
         : response; //array clean
-    const correct = responseStudent.map((e) => true); //array of true
-    const listMatchingError = matchingError.map((e) => {
+    const correct = responseStudent.map(e => true); //array of true
+    const listMatchingError = matchingError.map(e => {
       //return array of boolean (true if matchingError)
       let listBool = [];
       for (let k = 0; k < e.error.length; k++) {
@@ -51,9 +49,8 @@ const Hint = ({
       return listBool;
     });
 
-    const validate = (element) =>
-      JSON.stringify(element) === JSON.stringify(correct);
-    const repite = list.map((e) => {
+    const validate = element => JSON.stringify(element) === JSON.stringify(correct);
+    const repite = list.map(e => {
       //return array of boolean (true if matchingError)
       let listBool = [];
       if (e.error) {
@@ -76,9 +73,9 @@ const Hint = ({
         list.push(
           matchingError[
             listMatchingError.findIndex(
-              (element) => JSON.stringify(element) === JSON.stringify(correct)
+              element => JSON.stringify(element) === JSON.stringify(correct),
             )
-          ]
+          ],
         );
         setCount(count + 1);
       } else if (!repite.some(validate) && hints.length + count > list.length) {
@@ -86,9 +83,9 @@ const Hint = ({
         list.push(
           matchingError[
             listMatchingError.findIndex(
-              (element) => JSON.stringify(element) === JSON.stringify(correct)
+              element => JSON.stringify(element) === JSON.stringify(correct),
             )
-          ]
+          ],
         );
         setI(i + 1);
         setJ(i + 1);
@@ -145,9 +142,7 @@ const Hint = ({
     <div>
       <Popover
         onOpen={() => {
-          setHints(
-            ++hintCount
-          ); /*cuenta hint cada vez que se despliege la ayuda */
+          setHints(++hintCount); /*cuenta hint cada vez que se despliege la ayuda */
         }}
       >
         <PopoverTrigger>
@@ -170,12 +165,7 @@ const Hint = ({
           >
             Ayuda &nbsp;
             {error && i < hints.length + count - 1 ? ( //en esta parte va la notificación de un nuevo hint
-              <Badge
-                boxSize="1.25em"
-                color="white"
-                bg="tomato"
-                borderRadius="lg"
-              >
+              <Badge boxSize="1.25em" color="white" bg="tomato" borderRadius="lg">
                 1
               </Badge>
             ) : (
@@ -194,23 +184,13 @@ const Hint = ({
             <br />
             <Center>
               {list[j - 1] && (
-                <Button
-                  onClick={atras}
-                  colorScheme="cyan"
-                  variant="outline"
-                  size="sm"
-                >
+                <Button onClick={atras} colorScheme="cyan" variant="outline" size="sm">
                   atrás
                 </Button>
               )}
               &nbsp;&nbsp;&nbsp;
               {list[j + 1] && (
-                <Button
-                  onClick={siguiente}
-                  colorScheme="cyan"
-                  variant="outline"
-                  size="sm"
-                >
+                <Button onClick={siguiente} colorScheme="cyan" variant="outline" size="sm">
                   siguiente
                 </Button>
               )}
