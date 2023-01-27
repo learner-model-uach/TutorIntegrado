@@ -35,17 +35,17 @@ export function Navigation() {
             >
               Rudimentos Algebraicos
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24" /*17,18*/}>
+            <SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>
               Ecuaciones
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=19,20,21,22,23,8&registerTopic=19"}>
+              Potencias y raíces
             </SidebarLink>
             <SidebarLink
               href={
-                "contentSelect?topic=19,20,21,22,23,8&registerTopic=19" /*hay 2 topicos padres*/
+                "contentSelect?topic=16,4,3,5,6,7,8&registerTopic=16" /*topicos no creados en admin*/
               }
             >
-              Potencias y raíces
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=16" /*17,18*/}>
               Geometría
             </SidebarLink>
           </>
