@@ -26,7 +26,7 @@ function Dq({ params, b, c }: { params: ExType; b: Array<string>; c: Array<Objec
 const ParsedQuery = ({ obj }: { obj: PotatoqueryQuery }) => {
   const [potatoQ, setPotatoQ] = useState<ExType | null>();
   const [pb, setPB] = useState<Array<string>>(null);
-  const [pc,setPC]=useState<Array<Object>>(null);
+  const [pc, setPC] = useState<Array<Object>>(null);
   useEffect(() => {
     let value: Object | unknown = obj?.contentByCode?.json;
     let valueB: Array<string> = [
@@ -35,7 +35,7 @@ const ParsedQuery = ({ obj }: { obj: PotatoqueryQuery }) => {
       obj?.contentByCode?.description,
       obj?.contentByCode?.label,
     ];
-    let valueC:Array<Object> = [obj?.contentByCode?.kcs];
+    let valueC: Array<Object> = [obj?.contentByCode?.kcs];
     if (value) {
       let a = value as ExType;
       setPotatoQ(a);
