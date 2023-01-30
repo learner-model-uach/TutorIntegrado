@@ -49,8 +49,8 @@ export const Hint = ({
   const [shake, setShake] = useState(false);
   
   useEffect(() => {
-    setCount(-1);
-    setCountHint(-1);
+    setCount(-1); // number of hints shown to the user
+    setCountHint(-1); // number of hints available to display to the user
     setAllHints(hints);
     setHintsAvaliableList([]);
   }, [answerId]);

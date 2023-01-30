@@ -34,6 +34,7 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
   const [stepCorrect, setStepCorrect] = useState([]);
   const [color, setColor] = useState([]);
   const [isOpenIndexes, setIsOpenIndexes] = useState([0]);
+  const [completeContentSteps, setCompleteContentSteps] = useState({}); // object used in the "steps" field for the completeContent action
   const startAction = useAction({});
 
   useEffect(() => {
@@ -50,13 +51,24 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
   }, [exercise]);
 
   useEffect(() => {
+    // It is in charge of opening and closing the accordions of each step.
     if (numStep > 0) {
       setTimeout(() => {
-        inputRef.current[numStep - 1].click();
-        if (numStep != totalSteps) inputRef.current[numStep].click();
+        inputRef.current[numStep - 1].click(); // close the accordion of the completed step
+        if (numStep != totalSteps) inputRef.current[numStep].click(); // open the accordion of the following exercise
       }, 1000);
     }
-  }, [numStep]);
+  }, [numStep]); // the numStep changes to numStep + 1 when a step is completed
+  
+  const updateObjectSteps = (stepId, attempts, hintsShow, duration) => { // update the data in the "steps" field of the completeContent action
+    setCompleteContentSteps((prev) => ({...prev, [stepId]: { // create an object with key "id" of the step
+      att: attempts, // number of user attempts to response
+      hints: hintsShow, // number of times the user saw a hint
+      lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
+      duration: duration
+    }}));
+  }
+  
   const onClickAccordionStep = (index) => {
     if (index.length > isOpenIndexes.length) {
       let stepID = index.at(-1);
@@ -141,6 +153,8 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
                     code={exercise.code}
                     setNextExercise={setNextExercise}
                     topicId={topicId}
+                    updateObjectSteps={updateObjectSteps}
+                    completeContentSteps={completeContentSteps}
                   />
                 ) : step.type === INPUT ? (
                   <StepInput
@@ -155,6 +169,8 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
                     code={exercise.code}
                     setNextExercise={setNextExercise}
                     topicId={topicId}
+                    updateObjectSteps={updateObjectSteps}
+                    completeContentSteps={completeContentSteps}
                   />
                 ) : (
                   <StepPanel
@@ -169,6 +185,8 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
                     code={exercise.code}
                     setNextExercise={setNextExercise}
                     topicId={topicId}
+                    updateObjectSteps={updateObjectSteps}
+                    completeContentSteps={completeContentSteps}
                   />
                 )}
               </AccordionPanel>

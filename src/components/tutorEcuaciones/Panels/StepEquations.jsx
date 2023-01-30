@@ -27,7 +27,9 @@ export const StepEquations = ({
   setColor,
   setNextExercise,
   code, // "code" field of json file
-  topicId // "id" field in the system
+  topicId, // "id" field in the system
+  updateObjectSteps, // update the data in the "steps" field of the completeContent action
+  completeContentSteps // object used in the "steps" field of completeContent
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -43,8 +45,6 @@ export const StepEquations = ({
   const startAction = useAction({});
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
-  const [dataCompleteContent, setDataCompleteContent] = useState({}); // object used in the "steps" field for the completeContent action
-  
 
   useEffect(() => {
     setItems(step.answers.map((answer) => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
@@ -93,19 +93,8 @@ export const StepEquations = ({
       ));
   };
 
-  const updateData = () => { // update the data in the "steps" field of the completeContent action
-    let idObject = {};
-    idObject[step.stepId] = { // create an object with key "id" of the step
-      att: attempts, // number of user attempts to response
-      hints: hintsShow, // number of times the user saw a hint
-      lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
-      duration: 0
-	}
-    setDataCompleteContent((prev) => ({...prev, idObject}));
-  }
-
   const checkLastStep = () => {
-    if (nStep == totalSteps - 1) {
+    if (nStep == totalSteps - 1) { // it is executed when all the steps are completed
       setNextExercise(true);
       startAction({
         verbName: "completeContent",
@@ -113,7 +102,7 @@ export const StepEquations = ({
         topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
-          steps: dataCompleteContent // object defined in updateData
+          steps: completeContentSteps // object defined in updateObjectSteps
         }
       });
     }
@@ -132,6 +121,7 @@ export const StepEquations = ({
         text: "Escoge una respuesta",
       });
     } else {
+      updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
         if (
           (answerLeft[0].id === step.correct_answer[0] &&
