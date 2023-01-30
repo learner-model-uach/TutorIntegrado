@@ -7,7 +7,7 @@ import { Alert, AlertIcon, Button, Center, Spacer, Input, WrapItem, Wrap } from 
 export const DSCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
-  const correctAlternatives = step2.answers[0].answer; //list of answers valid
+  const correctAlternatives = step2.answers.map(elemento => elemento.answer); //list of answers valid
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const action = useAction(); //send action to central system
@@ -21,11 +21,10 @@ export const DSCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID 
       response1.current.value.replace(/[*]| /g, "").toLowerCase(),
       response2.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
+    const validate = element =>
+      element[0] === responseStudent[0] && element[1] === responseStudent[1];
 
-    if (
-      responseStudent[0] === correctAlternatives[0] &&
-      responseStudent[1] === correctAlternatives[1]
-    ) {
+    if (correctAlternatives.some(validate)) {
       setStep2Valid((step2Valid = "Terminado"));
       action({
         verbName: "completeContent",
@@ -38,7 +37,6 @@ export const DSCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID 
           <AlertIcon />
           {step2.correctMsg}
         </Alert>,
-        // <MathComponent tex={ejercicio.result} display={false} />
       );
     } else {
       setError(true);
@@ -119,7 +117,6 @@ export const DSCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID 
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
                   });
                 }}
                 size="sm"
