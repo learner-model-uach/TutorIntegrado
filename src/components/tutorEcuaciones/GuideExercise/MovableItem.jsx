@@ -26,7 +26,7 @@ export const MovableItem = ({
   type,
   value, // value is the value that is in the column (either COLUMN1 or COLUMN2)
 }) => {
-  const [isCorrect, setIsCorrect] = useState(true);
+  const [isCorrecto, setIsCorrect] = useState(true);
   const startAction = useAction({});
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const MovableItem = ({
   };
 
   const [{ isDragging }, drag] = useDrag({
-    canDrag: () => isCorrect,
+    canDrag: () => isCorrecto,
     item: { value },
     type: BOX,
     end: (item, monitor) => {
