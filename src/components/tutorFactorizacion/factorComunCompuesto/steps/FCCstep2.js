@@ -7,7 +7,7 @@ import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from 
 const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
-  const correctAlternatives = step2.answers.answer; //list of answers valid
+  const correctAlternatives = step2.answers.map(elemento => elemento.answer); //list of answers valid
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const action = useAction(); //send action to central system
@@ -21,8 +21,26 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
       response1.current.value.replace(/[*]| /g, "").toLowerCase(),
       response2.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
+    //valida que la entrada es correctas
+    const validate = element =>
+      (element[0] === responseStudent[0] && element[1] === responseStudent[1]) ||
+      (element[0] === responseStudent[1] && element[1] === responseStudent[0]);
+    //El método some() comprueba si al menos un elemento del array
+    //cumple con la condición implementada por la función proporcionada.
+    if (correctAlternatives.some(validate)) {
+      setStep2Valid((step2Valid = step2.answers[correctAlternatives.findIndex(validate)].nextStep));
+    } else {
+      setError(true);
 
-    if (
+      setFeedbackMsg(
+        //error cuando la entrada es incorrecta
+        <Alert status="error">
+          <AlertIcon />
+          {step2.incorrectMsg}
+        </Alert>,
+      );
+    }
+    /*if (
       responseStudent[0] === correctAlternatives[0] &&
       responseStudent[1] === correctAlternatives[1]
     ) {
@@ -37,7 +55,7 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
           {step2.incorrectMsg}
         </Alert>,
       );
-    }
+    }*/
   };
   return (
     <>

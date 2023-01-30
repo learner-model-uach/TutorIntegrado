@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StaticMathField } from "react-mathquill";
 import {
   Button,
@@ -10,6 +10,8 @@ import {
   PopoverCloseButton,
   Center,
   Badge,
+  useToast,
+  Box,
 } from "@chakra-ui/react";
 import { useAction } from "../utils/action";
 import { MathComponent } from "mathjax-react";
@@ -32,7 +34,7 @@ const Hint = ({
   const [firstError, setFirstError] = useState(false);
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
-
+  const toast = useToast();
   const ayuda = () => {
     const responseStudent =
       typeof response[0] == "object"
@@ -144,7 +146,15 @@ const Hint = ({
       });
     }
   };
-
+  /*error &&
+    i == hints.length + count - 1 &&
+    toast({
+      title: "Debe ingresar respuesta entregada en la última ayuda",
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    });
+*/
   return (
     <div>
       <Popover

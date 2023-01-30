@@ -214,7 +214,7 @@ export const FCC = ({ exercise, topic }) => {
               }}
             >
               <Box flex="1" textAlign="left">
-                {!select3 && exercise.steps[exercise.steps[1].answers.nextStep].stepTitle}
+                {!select3 && exercise.steps[exercise.steps[1].answers[0].nextStep].stepTitle}
                 {step3Valid != null && !select3 && "    ✔ "}
                 {select3 && step2Valid != null && (
                   <Wrap>
