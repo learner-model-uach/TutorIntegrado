@@ -23,7 +23,6 @@ import {
   DRAG_FIXED_TWO,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
   const inputRef = useRef([]);

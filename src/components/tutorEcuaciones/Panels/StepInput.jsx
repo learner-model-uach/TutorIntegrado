@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import TeX from "@matejmazur/react-katex";
 import {
   Flex,

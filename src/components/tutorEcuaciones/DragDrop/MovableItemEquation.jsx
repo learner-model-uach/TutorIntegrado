@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
 import TeX from "@matejmazur/react-katex";
-import { useEffect } from "react";
 import { BOX, COLUMN1, COLUMN2, COLUMN3 } from "../types";
 
 const style = {

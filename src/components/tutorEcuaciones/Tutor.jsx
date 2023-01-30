@@ -9,7 +9,6 @@ import { SortSteps } from "./SortSteps/SortSteps";
 import { NEXT_STEP_BUTTOM_NAME, NEXT_EXERCISE_BUTTOM_NAME } from "./types";
 import { useAction } from "../../utils/action";
 import { useAuth } from "../Auth";
-import ExerciseContext from "./context/exercise/exerciseContext";
 
 export function Tutor({ exercise, topicId }) {
 
@@ -68,6 +67,7 @@ export function Tutor({ exercise, topicId }) {
                     steps={exerciseSelected.steps}
                     setNextPhase={setNextPhase}
                     linkNext={false}
+                    code={exerciseSelected.code}
                   />
                 ) : (
                   <>
@@ -134,6 +134,7 @@ export function Tutor({ exercise, topicId }) {
                   setIdExercise={setIdExercise}
                   linkNext={true}
                   idExercise={idExercise}
+                  code={exerciseSelected.code}
                 />
               )
             ) : (

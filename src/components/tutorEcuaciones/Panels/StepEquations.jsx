@@ -14,7 +14,6 @@ import {
   BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { HintEqSystem } from "./HintEqSystem";
 
 export const StepEquations = ({

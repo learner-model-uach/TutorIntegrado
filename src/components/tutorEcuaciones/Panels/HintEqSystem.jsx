@@ -25,7 +25,6 @@ import {
   POPOVER_NEXT_BUTTOM_COLOR,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const HintEqSystem = ({
   hints, // all hints
