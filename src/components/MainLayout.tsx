@@ -68,14 +68,17 @@ export function MainLayout({ children }: { children: ReactNode }) {
               {false && <SearchInput />}
             </Flex>
             <Flex
-              overflowY="auto"
               direction="column"
               flex="1"
               overflow="auto"
               px={{
+                base: "10",
+                sm: "5",
                 md: "10",
               }}
               pt={{
+                base: "8",
+                sm: "4",
                 md: "8",
               }}
               maxW={{
