@@ -131,7 +131,6 @@ export const DSCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID 
                 stepId={step2.stepId}
                 matchingError={step2.matchingError}
                 response={[response1, response2]}
-                itemTitle="Diferencia/suma de cubos" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}

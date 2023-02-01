@@ -110,7 +110,6 @@ const FCCstep1 = ({ step1, setStep1Valid, step1Valid, loading, contentID, topicI
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
                   });
                 }}
                 size="sm"

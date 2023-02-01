@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosDSC";
 import { MathComponent } from "../../../components/MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { DSCstep1 } from "./steps/DSCstep1";
@@ -17,11 +16,9 @@ import {
   Alert,
   Wrap,
   Center,
-  Spacer,
   Button,
   Stack,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
@@ -52,13 +49,7 @@ export const DSC = ({ exercise, topic }) => {
     <>
       <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
-      <Wrap>
-        {exercise.text}
-        <Spacer />
-        {
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
+      <Wrap>{exercise.text}</Wrap>
 
       <Wrap justify="center">
         {loading && <Loading />}
@@ -195,5 +186,3 @@ export const DSC = ({ exercise, topic }) => {
     </>
   );
 };
-
-//export default DSC;

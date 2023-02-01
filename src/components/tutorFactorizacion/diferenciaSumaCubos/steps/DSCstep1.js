@@ -107,7 +107,6 @@ export const DSCstep1 = ({ step1, setStep1Valid, step1Valid, sign, contentID, to
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
                   });
                 }}
                 size="sm"
@@ -122,7 +121,6 @@ export const DSCstep1 = ({ step1, setStep1Valid, step1Valid, sign, contentID, to
                 stepId={step1.stepId}
                 matchingError={step1.matchingError}
                 response={[response1, response2]}
-                itemTitle="Diferencia/suma de cubos" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}

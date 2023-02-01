@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { Ejercicio2 } from "./EjerciciosTC";
 import { MathComponent } from "../../../components/MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { TCstep1 } from "./steps/TCstep1";
@@ -24,13 +23,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-//import { VideoScreen } from "../tools/VideoScreen";
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
 import { sessionState } from "../../SessionState";
 
-//react functional component
 export const TC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
@@ -85,9 +82,6 @@ export const TC = ({ exercise, topic }) => {
       <Wrap>
         {exercise.text}
         <Spacer />
-        {
-          //<VideoScreen></VideoScreen>
-        }
       </Wrap>
 
       <Wrap justify="center">
@@ -394,5 +388,3 @@ export const TC = ({ exercise, topic }) => {
     </>
   );
 };
-
-//export default TC;

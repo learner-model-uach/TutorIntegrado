@@ -40,22 +40,6 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
         </Alert>,
       );
     }
-    /*if (
-      responseStudent[0] === correctAlternatives[0] &&
-      responseStudent[1] === correctAlternatives[1]
-    ) {
-      setStep2Valid((step2Valid = step2.answers.nextStep));
-    } else {
-      setError(true);
-
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step2.incorrectMsg}
-        </Alert>,
-      );
-    }*/
   };
   return (
     <>
@@ -133,7 +117,6 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
                   });
                 }}
                 size="sm"
@@ -148,7 +131,6 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
                 stepId={step2.stepId}
                 matchingError={step2.matchingError}
                 response={[response1, response2]}
-                itemTitle="Factor Común compuesto " //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}

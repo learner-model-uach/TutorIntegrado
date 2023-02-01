@@ -118,7 +118,6 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
                   });
                 }}
                 size="sm"
@@ -133,7 +132,6 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
                 stepId={step2.stepId}
                 matchingError={step2.matchingError}
                 response={[response1, response2]}
-                itemTitle="Diferencia de cuadrados" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}

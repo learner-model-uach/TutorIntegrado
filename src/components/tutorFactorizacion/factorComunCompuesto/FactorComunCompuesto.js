@@ -17,23 +17,17 @@ import {
   Box,
   Alert,
   Wrap,
-  Spacer,
-  Stack,
-  Button,
 } from "@chakra-ui/react";
-import { VideoScreen } from "../tools/VideoScreen";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
 import { sessionState } from "../../SessionState";
 
 export const FCC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
-  //info usuario, ---
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 3 is completed
   const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
-  //selectStep
   const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 3 correct
@@ -61,13 +55,7 @@ export const FCC = ({ exercise, topic }) => {
     <>
       <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
-      <Wrap>
-        {exercise.text}
-        <Spacer />
-        {
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
+      <Wrap>{exercise.text}</Wrap>
 
       <Wrap justify="center">
         {loading && <Loading />}
@@ -254,5 +242,3 @@ export const FCC = ({ exercise, topic }) => {
     </>
   );
 };
-
-//export default FCC;

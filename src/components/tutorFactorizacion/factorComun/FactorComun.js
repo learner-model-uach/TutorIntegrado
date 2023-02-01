@@ -20,7 +20,6 @@ import {
 } from "@chakra-ui/react";
 import { FCsummary } from "../tools/Summary";
 import { SelectStep } from "../tools/SelectStep";
-//import { VideoScreen } from "../tools/VideoScreen";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
 import { sessionState } from "../../SessionState";
@@ -43,9 +42,6 @@ export const FC = ({ exercise, topic }) => {
       <Wrap>
         {exercise.text}
         <Spacer />
-        {
-          //<VideoScreen></VideoScreen>
-        }
       </Wrap>
 
       <Wrap justify="center">
@@ -122,5 +118,3 @@ export const FC = ({ exercise, topic }) => {
     </div>
   );
 };
-
-//export default FC;
