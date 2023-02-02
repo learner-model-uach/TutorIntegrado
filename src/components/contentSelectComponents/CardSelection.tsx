@@ -74,10 +74,6 @@ export const CardSelection = ({
             JSON.parse(JSON.stringify(sessionState.selectionData)),
           );
 
-          //if ((router.query.type = "16,4,3,5,6,7,8,17,18")) {
-          //  sessionState.topic = "RudAlg";
-          //  sessionStateBD.setItem("topic", sessionState.topic);
-          //}
           sessionState.topic = registerTopic;
           sessionStateBD.setItem("topic", sessionState.topic);
 

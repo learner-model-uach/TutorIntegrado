@@ -141,7 +141,6 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
                   });
                 }}
                 size="sm"

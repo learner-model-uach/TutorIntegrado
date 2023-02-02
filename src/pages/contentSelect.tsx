@@ -85,25 +85,23 @@ export default withAuth(function ContentSelect() {
     `),
   );
   const contentResult = data?.contentSelection?.contentSelected?.contentResult;
-  // *** Lógica por implementar para obtener 3 ejercicios grupo experimental o 1 ejercicio grupo control ***
   console.log(data?.contentSelection.contentSelected);
+
   const bestExercise =
     (contentResult ?? [])
       .map(x => x.Preferred)
       .reduce((out, bool, index) => (bool ? out.concat(index) : out), [])[0] ?? 0;
 
-  // *** data manual ***
-  const control = false; //false = 3 exersices, true = 1 exercise
   const experimentGroup =
     user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
-  //console.log(user);
+
   return (
     <>
       <p>{router.asPath}</p>
       <p>Selección del contenido del tópico: {topics}</p>
 
       <SimpleGrid
-        columns={control ? 1 : (contentResult ?? []).length}
+        columns={experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length}
         spacing="8"
         p="10"
         textAlign="center"
@@ -129,24 +127,22 @@ export default withAuth(function ContentSelect() {
             </Center>
           ) : (
             <>
-              <Center>
-                {contentResult.map((content, index) => (
-                  <CardSelection
-                    id={content.P.id}
-                    code={content.P.code}
-                    json={content.P.json}
-                    description={content.P.description}
-                    label={content.P.label}
-                    kcs={content.P.kcs}
-                    selectionTitle={content.Msg.label}
-                    selectionText={content.Msg.text}
-                    selectionBest={index == bestExercise}
-                    registerTopic={registerTopic}
-                    nextContentPath={nextContentPath}
-                    key={index}
-                  ></CardSelection>
-                ))}
-              </Center>
+              {contentResult.map((content, index) => (
+                <CardSelection
+                  id={content.P.id}
+                  code={content.P.code}
+                  json={content.P.json}
+                  description={content.P.description}
+                  label={content.P.label}
+                  kcs={content.P.kcs}
+                  selectionTitle={content.Msg.label}
+                  selectionText={content.Msg.text}
+                  selectionBest={index == bestExercise}
+                  registerTopic={registerTopic}
+                  nextContentPath={nextContentPath}
+                  key={index}
+                ></CardSelection>
+              ))}
             </>
           )
         ) : (
