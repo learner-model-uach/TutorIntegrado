@@ -20,7 +20,7 @@ function SatisfactionQuestion() {
 
   return (
     <div>
-      <p>¿Te sientes conforme con tú elección del ejercicio?</p>
+      <p>¿Cómo fue tu experiencia con este ejercicio escogido?</p>
       <div>
         <input
           type="radio"

@@ -433,6 +433,9 @@ type AdminUserMutations {
   """Create a new group entity"""
   createGroup(data: CreateGroupInput!): Group!
 
+  """Set email aliases"""
+  setEmailAliases(list: [EmailAliasInput!]!): [User!]!
+
   """Set the projects of the specified users"""
   setProjectsToUsers(projectIds: [IntID!]!, userIds: [IntID!]!): [User!]!
 
@@ -875,6 +878,15 @@ type DomainsConnection implements Connection {
 A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
 """
 scalar EmailAddress
+
+"""Input for email aliases of a specific user email"""
+input EmailAliasInput {
+  """List of email aliases"""
+  aliases: [EmailAddress!]!
+
+  """Email of user to have extra aliases"""
+  userEmail: EmailAddress!
+}
 
 """
 Group Entity
@@ -1836,6 +1848,9 @@ type User {
 
   """Email Address"""
   email: String!
+
+  """List of email aliases"""
+  emailAliases: [String!]
 
   """Groups associated with the user"""
   groups: [Group!]!

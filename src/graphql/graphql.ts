@@ -525,6 +525,8 @@ export type AdminUserMutations = {
   __typename?: "AdminUserMutations";
   /** Create a new group entity */
   createGroup: Group;
+  /** Set email aliases */
+  setEmailAliases: Array<User>;
   /** Set the projects of the specified users */
   setProjectsToUsers: Array<User>;
   /** Set the users (by email) associated with the groups */
@@ -540,6 +542,11 @@ export type AdminUserMutations = {
 /** Admin User-Related Queries */
 export type AdminUserMutationsCreateGroupArgs = {
   data: CreateGroupInput;
+};
+
+/** Admin User-Related Queries */
+export type AdminUserMutationsSetEmailAliasesArgs = {
+  list: Array<EmailAliasInput>;
 };
 
 /** Admin User-Related Queries */
@@ -926,6 +933,14 @@ export type DomainsConnection = Connection & {
   nodes: Array<Domain>;
   /** Pagination related information */
   pageInfo: PageInfo;
+};
+
+/** Input for email aliases of a specific user email */
+export type EmailAliasInput = {
+  /** List of email aliases */
+  aliases: Array<Scalars["EmailAddress"]>;
+  /** Email of user to have extra aliases */
+  userEmail: Scalars["EmailAddress"];
 };
 
 /**
@@ -1763,6 +1778,8 @@ export type User = {
   createdAt: Scalars["DateTime"];
   /** Email Address */
   email: Scalars["String"];
+  /** List of email aliases */
+  emailAliases?: Maybe<Array<Scalars["String"]>>;
   /** Groups associated with the user */
   groups: Array<Group>;
   /** Unique numeric identifier */

@@ -1,4 +1,5 @@
 import { useState, memo, useEffect, useRef } from "react";
+import { FaHandPointRight } from "react-icons/fa";
 
 import {
   Flex,
@@ -210,7 +211,6 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
     <Flex alignItems="center" justifyContent="center" margin={"auto"}>
       <Flex
         direction="column"
-        background="gray.100"
         p={12}
         rounded={6}
         w="100%"
@@ -243,7 +243,6 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                   key={"AIAlert" + i}
                   status={test[parseInt(step.stepId)]!.getStates().answer ? "success" : "info"}
                 >
-                  <AlertIcon key={"AIAlertIcon" + i} />
                   <AccordionButton
                     key={"AIAccordionButton" + i}
                     onClick={() => {
@@ -272,8 +271,11 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                       }
                     }}
                   >
+                    <Box paddingRight={3}>
+                      <FaHandPointRight />
+                    </Box>
                     <Box key={"AIBox" + i} flex="1" textAlign="left">
-                      Paso {step.stepId}: {step.stepTitle}
+                      {step.stepTitle}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>

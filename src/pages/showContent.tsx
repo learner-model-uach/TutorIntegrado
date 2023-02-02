@@ -1,7 +1,6 @@
 import { withAuth } from "../components/Auth";
 import { sessionState } from "../components/SessionState";
 import dynamic from "next/dynamic";
-import SatisfactionQuestion from "../components/satisfactionQuestion";
 
 const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
@@ -27,9 +26,6 @@ export default withAuth(function ShowContent() {
         ) : (
           <p>No existe el contenido que desea cargar</p>
         )}
-      </div>
-      <div>
-        <SatisfactionQuestion />
       </div>
     </>
   );

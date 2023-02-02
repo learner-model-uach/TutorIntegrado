@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, Wrap, Heading, Spacer, Text, Box } from "@chakra-ui/react";
 import { MathComponent } from "../../MathJax";
+import SatisfactionQuestion from "../../../components/satisfactionQuestion";
 
 export const FCsummary = ({ exercise }) => {
   return (
@@ -21,6 +22,7 @@ export const FCsummary = ({ exercise }) => {
           />
         </Wrap>
       </Alert>
+      <SatisfactionQuestion />
     </Box>
   );
 };
@@ -111,6 +113,7 @@ export const FCCsummary = ({ exercise }) => {
           )}
         </Wrap>
       </Alert>
+      <SatisfactionQuestion />
     </Box>
   );
 };
@@ -191,6 +194,7 @@ export const DCsummary = ({ exercise }) => {
           <Spacer />
         </Wrap>
       </Alert>
+      <SatisfactionQuestion />
     </Box>
   );
 };
@@ -214,6 +218,7 @@ export const DSCsummary = ({ step1, step2 }) => {
           <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
         </Wrap>
       </Alert>
+      <SatisfactionQuestion />
     </Box>
   );
 };
@@ -245,6 +250,7 @@ export const TCsummary = ({ step1, step2, step3, step4, step5 }) => {
           <MathComponent tex={String.raw`${step5.displayResult}`} display={false} />
         </Wrap>
       </Alert>
+      <SatisfactionQuestion />
     </Box>
   );
 };
