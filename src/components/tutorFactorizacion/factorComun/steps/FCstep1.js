@@ -42,13 +42,22 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
       });
     } else {
       /*if response is incorrect*/
-      setError(true);
-      setFeedbackMsg(
-        <Alert status="error">
-          <AlertIcon />
-          {step1.incorrectMsg}
-        </Alert>,
-      );
+      if (response.current.value == "") {
+        setFeedbackMsg(
+          <Alert status="warning">
+            <AlertIcon />
+            Ingrese respuesta
+          </Alert>,
+        );
+      } else {
+        setError(true);
+        setFeedbackMsg(
+          <Alert status="error">
+            <AlertIcon />
+            {step1.incorrectMsg}
+          </Alert>,
+        );
+      }
     }
   };
 
@@ -100,19 +109,20 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step1.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step1Valid === null ? 0 : 1,
-                    kcsIDs: step1.KCs,
-                    extra: {
-                      response: [response.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                  });
+                  response.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step1.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step1Valid === null ? 0 : 1,
+                      kcsIDs: step1.KCs,
+                      extra: {
+                        response: [response.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
               >
                 Aceptar

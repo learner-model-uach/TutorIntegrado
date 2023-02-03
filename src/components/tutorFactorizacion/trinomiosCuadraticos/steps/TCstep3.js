@@ -28,14 +28,23 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
     if (step3.answers[0].answer === value) {
       setStep3Valid((step3Valid = step3.answers[0].nextStep));
     } else {
-      setError(true);
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step3.incorrectMsg}
-        </Alert>,
-      );
+      if (value == undefined) {
+        setFeedbackMsg(
+          <Alert status="warning">
+            <AlertIcon />
+            Seleccione una alternativa
+          </Alert>,
+        );
+      } else {
+        setError(true);
+        setFeedbackMsg(
+          //error cuando la entrada es incorrecta
+          <Alert status="error">
+            <AlertIcon />
+            {step3.incorrectMsg}
+          </Alert>,
+        );
+      }
     }
   };
   return (
@@ -67,20 +76,21 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step3.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step3Valid === null ? 0 : 1,
-                    kcsIDs: step3.KCs,
-                    extra: {
-                      response: [value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                    // topicID: ""+ejercicio.code,
-                  });
+                  value != undefined &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step3.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step3Valid === null ? 0 : 1,
+                      kcsIDs: step3.KCs,
+                      extra: {
+                        response: [value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                      // topicID: ""+ejercicio.code,
+                    });
                 }}
                 size="sm"
               >

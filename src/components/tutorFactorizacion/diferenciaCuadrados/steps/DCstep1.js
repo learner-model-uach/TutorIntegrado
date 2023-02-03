@@ -27,15 +27,24 @@ export const DCstep1 = ({ step1, setStep1Valid, step1Valid, loading, contentID, 
     if (correctAlternatives.some(validate)) {
       setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
     } else {
-      setError(true);
-      //error cuando la entrada es incorrecta
-      setFeedbackMsg(
+      if (response1.current.value == "" || response2.current.value == "") {
+        setFeedbackMsg(
+          <Alert status="warning">
+            <AlertIcon />
+            Ingrese respuesta(s)
+          </Alert>,
+        );
+      } else {
+        setError(true);
         //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step1.incorrectMsg}
-        </Alert>,
-      );
+        setFeedbackMsg(
+          //error cuando la entrada es incorrecta
+          <Alert status="error">
+            <AlertIcon />
+            {step1.incorrectMsg}
+          </Alert>,
+        );
+      }
     }
   };
   return (
@@ -94,19 +103,21 @@ export const DCstep1 = ({ step1, setStep1Valid, step1Valid, loading, contentID, 
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step1.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step1Valid === null ? 0 : 1,
-                    kcsIDs: step1.KCs,
-                    extra: {
-                      response: [response1.current.value, response2.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                  });
+                  response1.current.value != "" &&
+                    response2.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step1.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step1Valid === null ? 0 : 1,
+                      kcsIDs: step1.KCs,
+                      extra: {
+                        response: [response1.current.value, response2.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
                 size="sm"
               >

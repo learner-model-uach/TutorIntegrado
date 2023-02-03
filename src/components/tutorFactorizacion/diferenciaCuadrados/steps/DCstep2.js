@@ -41,14 +41,23 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
         </Alert>,
       );
     } else {
-      setError(true);
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step2.incorrectMsg}
-        </Alert>,
-      );
+      if (response1.current.value == "" || response2.current.value == "") {
+        setFeedbackMsg(
+          <Alert status="warning">
+            <AlertIcon />
+            Ingrese respuesta(s)
+          </Alert>,
+        );
+      } else {
+        setError(true);
+        setFeedbackMsg(
+          //error cuando la entrada es incorrecta
+          <Alert status="error">
+            <AlertIcon />
+            {step2.incorrectMsg}
+          </Alert>,
+        );
+      }
     }
   };
   return (
@@ -106,19 +115,21 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step2.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step2Valid === null ? 0 : 1,
-                    kcsIDs: step2.KCs,
-                    extra: {
-                      response: [response1.current.value, response2.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                  });
+                  response1.current.value != "" &&
+                    response2.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step2.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step2Valid === null ? 0 : 1,
+                      kcsIDs: step2.KCs,
+                      extra: {
+                        response: [response1.current.value, response2.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
                 size="sm"
               >

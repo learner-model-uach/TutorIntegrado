@@ -27,14 +27,23 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
     if (correctAlternatives.some(validate)) {
       setStep4Valid((step4Valid = step4.answers[correctAlternatives.findIndex(validate)].nextStep));
     } else {
-      setError(true);
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step4.incorrectMsg}
-        </Alert>,
-      );
+      if (response1.current.value == "" || response2.current.value == "") {
+        setFeedbackMsg(
+          <Alert status="warning">
+            <AlertIcon />
+            Ingrese respuesta(s)
+          </Alert>,
+        );
+      } else {
+        setError(true);
+        setFeedbackMsg(
+          //error cuando la entrada es incorrecta
+          <Alert status="error">
+            <AlertIcon />
+            {step4.incorrectMsg}
+          </Alert>,
+        );
+      }
     }
   };
   return (
@@ -92,20 +101,22 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step4.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step4Valid === null ? 0 : 1,
-                    kcsIDs: step4.KCs,
-                    extra: {
-                      response: [response1.current.value, response2.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                    // topicID: ""+ejercicio.code,
-                  });
+                  response1.current.value != "" &&
+                    response2.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step4.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step4Valid === null ? 0 : 1,
+                      kcsIDs: step4.KCs,
+                      extra: {
+                        response: [response1.current.value, response2.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                      // topicID: ""+ejercicio.code,
+                    });
                 }}
                 size="sm"
               >
