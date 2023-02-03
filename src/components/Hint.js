@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StaticMathField } from "react-mathquill";
+import { StaticMathField, addStyles } from "react-mathquill";
 import {
   Button,
   Popover,
@@ -28,6 +28,7 @@ const Hint = ({
   hintCount,
   setHints,
 }) => {
+  addStyles(); //mathquill
   const [i, setI] = useState(0); //i es el último hint desbloqueado
   const [list] = useState([hints[0]]);
   const [j, setJ] = useState(0); //j es el hint que se despliega con los botones
@@ -199,8 +200,10 @@ const Hint = ({
           <PopoverCloseButton />
           <PopoverBody>
             <br />
-            {list[j].hint} <br />
-            {list[j].expression ? <StaticMathField>{list[j].expression}</StaticMathField> : null}
+            {list[j].hint}
+            <Center>
+              {list[j].expression ? <StaticMathField>{list[j].expression}</StaticMathField> : null}
+            </Center>
             <br />
             <Center>
               {list[j - 1] && (
