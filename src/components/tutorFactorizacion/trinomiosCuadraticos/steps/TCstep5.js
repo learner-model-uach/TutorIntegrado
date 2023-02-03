@@ -16,6 +16,7 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
   const [hints, setHints] = useState(0); //hint counts
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     const responseStudent = [
@@ -52,21 +53,25 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
         response2.current.value == "" ||
         response3.current.value == ""
       ) {
-        setFeedbackMsg(
-          <Alert status="warning">
-            <AlertIcon />
-            Ingrese respuesta(s)
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta(s)
+            </Alert>,
+          );
+        }, 50);
       } else {
         setError(true);
-        setFeedbackMsg(
-          //error cuando la entrada es incorrecta
-          <Alert status="error">
-            <AlertIcon />
-            {step5.incorrectMsg}
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step5.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
       }
     }
   };

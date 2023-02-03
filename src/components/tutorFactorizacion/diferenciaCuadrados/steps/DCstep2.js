@@ -15,6 +15,7 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
   const [hints, setHints] = useState(0); //hint counts
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
 
@@ -42,21 +43,25 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
       );
     } else {
       if (response1.current.value == "" || response2.current.value == "") {
-        setFeedbackMsg(
-          <Alert status="warning">
-            <AlertIcon />
-            Ingrese respuesta(s)
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta(s)
+            </Alert>,
+          );
+        }, 50);
       } else {
         setError(true);
-        setFeedbackMsg(
-          //error cuando la entrada es incorrecta
-          <Alert status="error">
-            <AlertIcon />
-            {step2.incorrectMsg}
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step2.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
       }
     }
   };

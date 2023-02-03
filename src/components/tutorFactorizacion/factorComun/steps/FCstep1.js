@@ -16,6 +16,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
 
   //function compare when press button "Aceptar"
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     //responseStudent equals response with replace "space" and "*" (work string in lower case)
@@ -43,20 +44,24 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
     } else {
       /*if response is incorrect*/
       if (response.current.value == "") {
-        setFeedbackMsg(
-          <Alert status="warning">
-            <AlertIcon />
-            Ingrese respuesta
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta
+            </Alert>,
+          );
+        }, 50);
       } else {
         setError(true);
-        setFeedbackMsg(
-          <Alert status="error">
-            <AlertIcon />
-            {step1.incorrectMsg}
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="error">
+              <AlertIcon />
+              {step1.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
       }
     }
   };

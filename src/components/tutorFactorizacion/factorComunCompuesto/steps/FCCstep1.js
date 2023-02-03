@@ -15,6 +15,7 @@ const FCCstep1 = ({ step1, setStep1Valid, step1Valid, loading, contentID, topicI
   const [hints, setHints] = useState(0); //hint counts
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
@@ -32,22 +33,25 @@ const FCCstep1 = ({ step1, setStep1Valid, step1Valid, loading, contentID, topicI
       setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
     } else {
       if (response1.current.value == "" || response2.current.value == "") {
-        setFeedbackMsg(
-          <Alert status="warning">
-            <AlertIcon />
-            Ingrese respuesta(s)
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta(s)
+            </Alert>,
+          );
+        }, 50);
       } else {
         setError(true);
-
-        setFeedbackMsg(
-          //error cuando la entrada es incorrecta
-          <Alert status="error">
-            <AlertIcon />
-            {step1.incorrectMsg}
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step1.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
       }
     }
   };

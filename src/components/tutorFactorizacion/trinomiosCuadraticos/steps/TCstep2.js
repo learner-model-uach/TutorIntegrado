@@ -14,6 +14,7 @@ export const TCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
   const [hints, setHints] = useState(0); //hint counts
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
@@ -24,21 +25,25 @@ export const TCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
       setStep2Valid((step2Valid = step2.answers[0].nextStep));
     } else {
       if (response.current.value == "") {
-        setFeedbackMsg(
-          <Alert status="warning">
-            <AlertIcon />
-            Ingrese respuesta
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta
+            </Alert>,
+          );
+        }, 50);
       } else {
         setError(true);
-        setFeedbackMsg(
-          //error cuando la entrada es incorrecta
-          <Alert status="error">
-            <AlertIcon />
-            {step2.incorrectMsg}
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step2.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
       }
     }
   };

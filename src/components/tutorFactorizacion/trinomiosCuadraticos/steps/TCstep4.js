@@ -15,6 +15,7 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
   const [hints, setHints] = useState(0); //hint counts
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     const responseStudent = [
@@ -28,21 +29,25 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
       setStep4Valid((step4Valid = step4.answers[correctAlternatives.findIndex(validate)].nextStep));
     } else {
       if (response1.current.value == "" || response2.current.value == "") {
-        setFeedbackMsg(
-          <Alert status="warning">
-            <AlertIcon />
-            Ingrese respuesta(s)
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta(s)
+            </Alert>,
+          );
+        }, 50);
       } else {
         setError(true);
-        setFeedbackMsg(
-          //error cuando la entrada es incorrecta
-          <Alert status="error">
-            <AlertIcon />
-            {step4.incorrectMsg}
-          </Alert>,
-        );
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step4.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
       }
     }
   };
