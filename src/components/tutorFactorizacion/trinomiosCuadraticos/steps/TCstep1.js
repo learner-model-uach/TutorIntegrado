@@ -161,7 +161,6 @@ export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }
                 stepId={step1.stepId}
                 matchingError={step1.matchingError}
                 response={[response1, response2, response3]}
-                itemTitle="Trinomios cuadráticos" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}

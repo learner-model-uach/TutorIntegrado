@@ -112,6 +112,17 @@ const Hint = ({
       setFirstError(true);
     }
     setError(false);
+    action({
+      verbName: "requestHint",
+      stepID: "" + stepId,
+      contentID: contentId,
+      topicID: topicId,
+      hintID: "" + list[[list.length - 1]].hintId, //last element hintId of list of hints avalibles
+      extra: {
+        source: "Open",
+        lastHint: hints.length == i + 1 ? true : false,
+      },
+    });
   };
 
   const siguiente = () => {
@@ -167,17 +178,6 @@ const Hint = ({
           <Button
             onClick={() => {
               ayuda();
-              action({
-                verbName: "requestHint",
-                stepID: "" + stepId,
-                contentID: contentId,
-                topicID: topicId,
-                hintID: "" + list[j].hintId,
-                extra: {
-                  source: "Open",
-                  lastHint: hints.length == i + 1 ? true : false,
-                },
-              });
             }}
             colorScheme="cyan"
             variant="outline"

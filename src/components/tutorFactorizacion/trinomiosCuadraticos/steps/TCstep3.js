@@ -94,7 +94,6 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
                         attempts: attempts,
                         hints: hints,
                       },
-                      // topicID: ""+ejercicio.code,
                     });
                 }}
                 size="sm"
@@ -110,7 +109,6 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
                 stepId={step3.stepId}
                 matchingError={step3.matchingError}
                 response={hintUnique}
-                itemTitle="Trinomios cuadráticos" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}
