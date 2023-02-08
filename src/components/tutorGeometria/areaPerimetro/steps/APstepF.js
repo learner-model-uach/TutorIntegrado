@@ -71,7 +71,7 @@ export const APstepF = ({ step, setStepValid, stepValid, loading, contentID, top
                 variant="outline"
                 onClick={() => {
                   compare();
-                  /*action({
+                  action({
                     verbName: "tryStep",
                     stepID: "" + step.stepId,
                     contentID: contentID,
@@ -80,14 +80,12 @@ export const APstepF = ({ step, setStepValid, stepValid, loading, contentID, top
                     kcsIDs: step.KCs,
                     extra: {
                       response: [
-                        response1.current.value,
-                        response2.current.value,
+                        response1.current.value
                       ],
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
-                  });*/
+                  });
                 }}
                 size="sm"
               >

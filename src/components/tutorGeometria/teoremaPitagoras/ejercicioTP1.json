@@ -90,7 +90,7 @@
         "expression": "c = ",
         "stepTitle": "Escribe la expresión de la altura del cohete (c) en base a las variables 'a' y 'b'.",
         "displayResult": "c = √b² - a²",
-        "KCs": ["DespEcu", "PropsRaiz"],
+        "KCs": ["DespVarEcu", "PropsRaiz"],
         "showPanel": true,
         "hints": [
           {

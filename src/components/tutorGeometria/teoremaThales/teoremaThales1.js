@@ -1,12 +1,9 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
-//import { Accordion,Card } from 'react-bootstrap';
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { THstep1 } from "./steps/THstep1";
 import { THstep2 } from "./steps/THstep2";
-//import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import dynamic from "next/dynamic";
@@ -29,12 +26,10 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
-//import { useAction } from "../../../utils/action";
-//import { LoadContentAction } from "../tools/LoadContentAction";
+import { useAction } from "../../../utils/action";
 
-const TH1 = ({ exercise }) => {
+const TH1 = ({ exercise, topicId }) => {
   exercise = ejercicioTH[0];
   const Mq2 = dynamic(
     () => {
@@ -42,7 +37,6 @@ const TH1 = ({ exercise }) => {
     },
     { ssr: false },
   );
-  //LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -54,7 +48,7 @@ const TH1 = ({ exercise }) => {
   const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
-  // const action = useAction(); //send action to central system
+  const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -106,20 +100,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 0)) {
                   setIndex(index.filter(e => e !== 0));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(0));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -136,7 +130,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -153,7 +147,7 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></THstep1>
             )}
           </AccordionPanel>
@@ -167,20 +161,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(1));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -197,7 +191,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -214,7 +208,7 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
                 loading={undefined}
               ></THstep2>
             )}
@@ -229,20 +223,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  /*action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(2));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -259,7 +253,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect3}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -277,7 +271,7 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>
@@ -291,20 +285,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 3)) {
                   setIndex(index.filter(e => e !== 3));
-                  /*action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(3));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -321,7 +315,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect4}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -339,7 +333,7 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>
@@ -347,6 +341,12 @@ const TH1 = ({ exercise }) => {
       </Accordion>
       {step4Valid != null && (
         <>
+          {/*action({
+                    verbName: "openStep",
+                    stepID: "" + exercise.steps[1].stepId,
+                    contentID: exercise.code, //leer del json
+                    topicID: topicId,
+                  })*/}
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
             <Summary4

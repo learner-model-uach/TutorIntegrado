@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
 import { MathComponent } from "../../../MathJax";
-//import { useAction } from "../../../../utils/action";
+import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
 export const APstep1 = ({ step, setStepValid, stepValid, loading, contentID, topicID }) => {
@@ -10,7 +10,7 @@ export const APstep1 = ({ step, setStepValid, stepValid, loading, contentID, top
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const correctAlternatives = step.answers.map(elemento => elemento.answer); //list of answers valid
-  // const action = useAction(); //send action to central system
+  const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0); //attemps counts
   const [hints, setHints] = useState(0); //hint counts
   const compare = () => {
@@ -65,7 +65,7 @@ export const APstep1 = ({ step, setStepValid, stepValid, loading, contentID, top
                 variant="outline"
                 onClick={() => {
                   compare();
-                  /*action({
+                  action({
                     verbName: "tryStep",
                     stepID: "" + step.stepId,
                     contentID: contentID,
@@ -74,14 +74,12 @@ export const APstep1 = ({ step, setStepValid, stepValid, loading, contentID, top
                     kcsIDs: step.KCs,
                     extra: {
                       response: [
-                        response1.current.value,
-                        response2.current.value,
+                        response1.current.value
                       ],
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
-                  });*/
+                  });
                 }}
                 size="sm"
               >

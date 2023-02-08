@@ -67,7 +67,7 @@
         "expression": "H = ",
         "stepTitle": "Calcula la altura del árbol.",
         "displayResult": "H = \\frac{B+C}{AC}",
-        "KCs": ["DespEcu", "R3"],
+        "KCs": ["DespVarEcu", "R3"],
         "hints": [
           { "hintId": 0, "hint": "Debes aplicar la regla de 3 simple." },
           { "hintId": 1, "hint": "Debes dividir por AC." },

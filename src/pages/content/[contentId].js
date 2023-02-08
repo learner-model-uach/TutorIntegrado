@@ -222,15 +222,15 @@ export default withAuth(function Content() {
           ></DynamicPlain>
         ) : router.query.type == 17  ? (
           <AP1
-          exercise = {ejercicioAP1}
+          exercise = {ejercicioAP1} topicId = '28'
           ></AP1>
         ) : router.query.type == 18  ? (
           <TH1
-          exercise = {ejercicioTH}
+          exercise = {ejercicioTH} topicId = '29'
           ></TH1>
         ) : router.query.type == 19 ? (
           <TP1
-          exercise = {ejercicioTP1}
+          exercise = {ejercicioTP1} topicId = '30'
           ></TP1>
         ):null
         }

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
-//import { Accordion,Card } from 'react-bootstrap';
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { TPstep1 } from "./steps/TPstep1";
 import { TPstep2 } from "./steps/TPstep2";
@@ -29,14 +27,11 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
-//import { useAction } from "../../../utils/action";
-//import { LoadContentAction } from "../tools/LoadContentAction";
+import { useAction } from "../../../utils/action";
 
-const TP2 = ({ exercise }) => {
+const TP2 = ({ exercise, topicId }) => {
   exercise = ejercicioTP2[0];
-  //LoadContentAction(exercise); // report action loadContent
   const Mq2 = dynamic(
     () => {
       return import("../../Mq2");
@@ -67,7 +62,7 @@ const TP2 = ({ exercise }) => {
   });
   const [cdateE, setCdateE] = useState(Date.now());
 
-  // const action = useAction(); //send action to central system
+  const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -119,20 +114,20 @@ const TP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 0)) {
                   setIndex(index.filter(e => e !== 0));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(0));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -180,20 +175,20 @@ const TP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(1));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -240,20 +235,20 @@ const TP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  /*action({
+                  action({
                     verbName: "closeStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.type,
-                  });*/
+                    stepID: "" + exercise.steps[0].stepId,
+                    contentID: exercise.code,
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(2));
-                  /*action({
+                  action({
                     verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: exercise.type,
-                  });*/
+                    stepID: "" + exercise.steps[0].stepId,
+                    contentID: exercise.code,
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -300,20 +295,20 @@ const TP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 3)) {
                   setIndex(index.filter(e => e !== 3));
-                  /*action({
+                  action({
                     verbName: "closeStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.type,
-                  });*/
+                    stepID: "" + exercise.steps[0].stepId,
+                    contentID: exercise.code,
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(3));
-                  /*action({
+                  action({
                     verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: exercise.type,
-                  });*/
+                    stepID: "" + exercise.steps[0].stepId,
+                    contentID: exercise.code,
+                    topicID: topicId,
+                  })
                 }
               }}
             >
