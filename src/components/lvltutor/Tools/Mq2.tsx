@@ -62,7 +62,7 @@ const Mq2 = ({
   const [fc, setFC] = useState(true);
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0);
-  //const [lastHint,setLastHint]=useState(false);
+  const [lastHint, setLastHint] = useState(false);
 
   const result = useRef(false);
 
@@ -97,7 +97,7 @@ const Mq2 = ({
         ans: latex,
         att: attempts,
         hints: hints,
-        lasthint: false,
+        lasthint: lastHint,
         fail: false,
         duration: 0,
       });
@@ -112,7 +112,7 @@ const Mq2 = ({
         ans: latex,
         att: attempts,
         hints: hints,
-        lasthint: false,
+        lasthint: lastHint,
         fail: true,
         duration: 0,
       });
@@ -164,6 +164,7 @@ const Mq2 = ({
           setError={setError}
           hintCount={hints}
           setHints={setHints}
+          setLastHint={setLastHint}
         ></Hint>
       );
     }
