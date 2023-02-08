@@ -4,7 +4,15 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
+export const DCstep2 = ({
+  step2,
+  setStep2Valid,
+  step2Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
   const correctAlternatives = step2.answers[0].answer; //list of answers valid
@@ -13,6 +21,8 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
     setFeedbackMsg(null);
@@ -29,12 +39,12 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
       responseStudent[1] === correctAlternatives[1]
     ) {
       setStep2Valid((step2Valid = "Terminado"));
-      action({
-        verbName: "completeContent",
-        contentID: contentID,
-        topicID: topicID,
-        result: 1,
-      });
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
+
       setFeedbackMsg(
         <Alert status="success">
           <AlertIcon />
@@ -152,6 +162,7 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

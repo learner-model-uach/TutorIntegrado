@@ -33,6 +33,11 @@ export const FC = ({ exercise, topic }) => {
   const [select, setSelect] = useState(exercise.selectSteps); //select is true when step is chosen, false when not selectStep
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
+  const [extras, setExtras] = useState({ steps: {} });
+  for (let i = 0; i < exercise.steps.length; i++) {
+    extras.steps[i] = { att: 0, hints: 0, lastHint: false, duration: 0 };
+  }
+  console.log(extras);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 

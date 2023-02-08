@@ -27,6 +27,7 @@ const Hint = ({
   setError,
   hintCount,
   setHints,
+  setLastHint,
 }) => {
   addStyles(); //mathquill
   const [i, setI] = useState(0); //i es el último hint desbloqueado
@@ -36,6 +37,11 @@ const Hint = ({
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
   const toast = useToast();
+
+  if (hints.length == i + 1) {
+    setLastHint(true);
+  }
+
   const ayuda = () => {
     const responseStudent =
       typeof response[0] == "object"
@@ -133,7 +139,7 @@ const Hint = ({
         stepID: "" + stepId,
         contentID: contentId,
         topicID: topicId,
-        hintID: "" + list[j].hintId,
+        hintID: "" + list[j + 1].hintId,
         extra: {
           source: "next",
           lastHint: hints.length == i + 1 ? true : false,
@@ -150,7 +156,7 @@ const Hint = ({
         stepID: "" + stepId,
         contentID: contentId,
         topicID: topicId,
-        hintID: "" + list[j].hintId,
+        hintID: "" + list[j - 1].hintId,
         extra: {
           source: "prev",
           lastHint: hints.length == i + 1 ? true : false,
@@ -158,15 +164,6 @@ const Hint = ({
       });
     }
   };
-  /*error &&
-    i == hints.length + count - 1 &&
-    toast({
-      title: "Debe ingresar respuesta entregada en la última ayuda",
-      status: "info",
-      duration: 5000,
-      isClosable: true,
-    });
-*/
   return (
     <div>
       <Popover

@@ -14,6 +14,7 @@ import NextLink from "next/link";
 import { FaStar } from "react-icons/fa";
 import { sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
+import { MathComponent } from "mathjax-react";
 
 export const CardSelection = ({
   id,
@@ -84,6 +85,10 @@ export const CardSelection = ({
         <LinkOverlay fontSize=".8em">
           Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
         </LinkOverlay>
+        <br />
+        <Center fontSize={"1xl"}>
+          <MathComponent tex={String.raw`${json.steps[0].expression}`} display={true} />
+        </Center>
         <Divider />
         <Center>
           <HStack>
@@ -95,7 +100,7 @@ export const CardSelection = ({
             {selectionBest && <FaStar size={20} color="yellow" />}
           </HStack>
         </Center>
-        <Text>{selectionText}</Text>
+        <Text fontSize={"sm"}>{selectionText}</Text>
       </LinkBox>
     </>
   );

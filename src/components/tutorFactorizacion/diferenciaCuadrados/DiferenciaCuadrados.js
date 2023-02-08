@@ -34,6 +34,20 @@ export const DC = ({ exercise, topic }) => {
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
   const action = useAction(); //send action to central system
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  useEffect(() => {
+    action({
+      verbName: "completeContent",
+      contentID: exercise.code,
+      topicID: topic,
+      result: 1,
+      extra: extras,
+    });
+  }, [step2Valid]);
 
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
@@ -110,6 +124,8 @@ export const DC = ({ exercise, topic }) => {
                 step1Valid={step1Valid}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra1}
+                setExtra={setExtra1}
               ></DCstep1>
             )}
           </AccordionPanel>
@@ -171,6 +187,8 @@ export const DC = ({ exercise, topic }) => {
                 step2Valid={step2Valid}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra2}
+                setExtra={setExtra2}
               ></DCstep2>
             )}
           </AccordionPanel>
@@ -178,7 +196,9 @@ export const DC = ({ exercise, topic }) => {
       </Accordion>
       {step2Valid != null && (
         <>
+          {/*complete content acá */}
           <DCsummary exercise={exercise} />
+          {console.log(extras)}
           <Stack padding="1em" alignItems="center">
             <Link href="/DSC1">
               <Button colorScheme="cyan" variant="outline" size="sm">
