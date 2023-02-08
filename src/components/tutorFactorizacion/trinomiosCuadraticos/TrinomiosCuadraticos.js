@@ -44,7 +44,26 @@ export const TC = ({ exercise, topic }) => {
   const steps = exercise.steps.map(i => i.stepTitle); //select is false when the student select the step 5 correct
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
   const action = useAction(); //send action to central system
-
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra3, setExtra3] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra4, setExtra4] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra5, setExtra5] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  extras.steps[2] = extra3;
+  extras.steps[3] = extra4;
+  extras.steps[4] = extra5;
+  useEffect(() => {
+    action({
+      verbName: "completeContent",
+      contentID: exercise.code,
+      topicID: topic,
+      result: 1,
+      extra: extras,
+    });
+  }, [step5Valid]);
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -140,6 +159,8 @@ export const TC = ({ exercise, topic }) => {
                 step1Valid={step1Valid}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra1}
+                setExtra={setExtra1}
               ></TCstep1>
             )}
           </AccordionPanel>
@@ -197,6 +218,8 @@ export const TC = ({ exercise, topic }) => {
                 step2Valid={step2Valid}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra2}
+                setExtra={setExtra2}
               ></TCstep2>
             )}
           </AccordionPanel>
@@ -254,6 +277,8 @@ export const TC = ({ exercise, topic }) => {
                 step3Valid={step3Valid}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra3}
+                setExtra={setExtra3}
               ></TCstep3>
             )}
           </AccordionPanel>
@@ -311,6 +336,8 @@ export const TC = ({ exercise, topic }) => {
                 step4Valid={step4Valid}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra4}
+                setExtra={setExtra4}
               ></TCstep4>
             )}
           </AccordionPanel>
@@ -369,6 +396,8 @@ export const TC = ({ exercise, topic }) => {
                 //a={exercise.steps[0].answers[0].answer[0]}
                 contentID={exercise.code}
                 topicID={topic}
+                extra={extra5}
+                setExtra={setExtra5}
               ></TCstep5>
             )}
           </AccordionPanel>

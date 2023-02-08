@@ -87,7 +87,11 @@ export const CardSelection = ({
         </LinkOverlay>
         <br />
         <Center fontSize={"1xl"}>
-          <MathComponent tex={String.raw`${json.steps[0].expression}`} display={true} />
+          {json.type == "ecc5s" || json.type == "secl5s" ? (
+            <MathComponent tex={String.raw`${json.eqc}`} display={true} />
+          ) : (
+            <MathComponent tex={String.raw`${json.steps[0].expression}`} display={true} />
+          )}
         </Center>
         <Divider />
         <Center>

@@ -5,7 +5,7 @@ import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from 
 
 import Hint from "../../../Hint";
 
-const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
+const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, setExtra }) => {
   const action = useAction(); //send action to central system
   const response = useRef(null); // answer entered by the student
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
@@ -13,6 +13,8 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
   const correctAlternatives = step1.answers.map(element => element.answer); //list of answers valid
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   //function compare when press button "Aceptar"
   const compare = () => {
@@ -35,12 +37,11 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
         </>,
       );
       setStep1Valid((step1Valid = "Terminado"));
-      action({
-        verbName: "completeContent",
-        contentID: contentID,
-        topicID: topicID,
-        result: 1,
-      });
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
       /*if response is incorrect*/
       if (response.current.value == "") {
@@ -144,6 +145,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

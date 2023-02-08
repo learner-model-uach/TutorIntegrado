@@ -13,7 +13,15 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 
-export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }) => {
+export const TCstep3 = ({
+  step3,
+  setStep3Valid,
+  step3Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const [feedbackMsg, setFeedbackMsg] = useState(null); // feedback message
   const [value, setValue] = React.useState(); //checked radio
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
@@ -21,6 +29,8 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
   const hintUnique = ["*"];
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
     setFeedbackMsg(null);
@@ -28,6 +38,11 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
     setAttempts(attempts + 1);
     if (step3.answers[0].answer === value) {
       setStep3Valid((step3Valid = step3.answers[0].nextStep));
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
       if (value == undefined) {
         setTimeout(() => {
@@ -103,7 +118,6 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
               &nbsp;&nbsp;
               <Hint
                 hints={step3.hints}
-                //stepId={ejercicio.stepId}
                 contentId={contentID}
                 topicId={topicID}
                 stepId={step3.stepId}
@@ -113,6 +127,7 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

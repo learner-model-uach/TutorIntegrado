@@ -4,7 +4,15 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
+export const TCstep1 = ({
+  step1,
+  setStep1Valid,
+  step1Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //1st input response
   const response2 = useRef(null); //2nd input response
   const response3 = useRef(null); //3nd input response
@@ -14,6 +22,8 @@ export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
     setFeedbackMsg(null);
@@ -30,6 +40,11 @@ export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }
       element[2] === responseStudent[2];
     if (correctAlternatives.some(validate)) {
       setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
       if (
         response1.current.value == "" ||
@@ -155,7 +170,6 @@ export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }
               &nbsp;&nbsp;
               <Hint
                 hints={step1.hints}
-                //stepId={ejercicio.stepId}
                 contentId={contentID}
                 topicId={topicID}
                 stepId={step1.stepId}
@@ -165,6 +179,7 @@ export const TCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

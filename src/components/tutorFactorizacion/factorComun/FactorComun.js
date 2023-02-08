@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FCstep1 from "./steps/FCstep1";
 import { MathComponent } from "../../../components/MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
@@ -33,11 +33,19 @@ export const FC = ({ exercise, topic }) => {
   const [select, setSelect] = useState(exercise.selectSteps); //select is true when step is chosen, false when not selectStep
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
-  const [extras, setExtras] = useState({ steps: {} });
-  for (let i = 0; i < exercise.steps.length; i++) {
-    extras.steps[i] = { att: 0, hints: 0, lastHint: false, duration: 0 };
-  }
-  console.log(extras);
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+
+  useEffect(() => {
+    action({
+      verbName: "completeContent",
+      contentID: exercise.code,
+      topicID: topic,
+      result: 1,
+      extra: extras,
+    });
+  }, [step1Valid]);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
@@ -109,6 +117,8 @@ export const FC = ({ exercise, topic }) => {
                   step1Valid={step1Valid}
                   contentID={exercise.code}
                   topicID={sessionState.topic}
+                  extra={extra1}
+                  setExtra={setExtra1}
                 ></FCstep1>
               )}
             </>

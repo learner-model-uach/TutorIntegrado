@@ -4,7 +4,15 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }) => {
+export const TCstep5 = ({
+  step5,
+  setStep5Valid,
+  step5Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //1st input response
   const response2 = useRef(null); //2nd input response
   const response3 = useRef(null); //3nd input response
@@ -14,6 +22,8 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
     setFeedbackMsg(null);
@@ -41,12 +51,11 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
         </Alert>,
       );
       setStep5Valid((step5Valid = "Terminado"));
-      action({
-        verbName: "completeContent",
-        contentID: contentID,
-        topicID: topicID,
-        result: 1,
-      });
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
       if (
         response1.current.value == "" ||
@@ -180,6 +189,7 @@ export const TCstep5 = ({ step5, setStep5Valid, step5Valid, contentID, topicID }
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}
