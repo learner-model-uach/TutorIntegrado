@@ -1,5 +1,6 @@
 import { useState, memo, useEffect, useRef } from "react";
 import { FaHandPointRight } from "react-icons/fa";
+import RatingQuestion from "../../RatingQuestion";
 
 import {
   Flex,
@@ -310,6 +311,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
             </VStack>
           </Alert>
         </Box>
+        <RatingQuestion />
       </Flex>
     </Flex>
   );
