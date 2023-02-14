@@ -22,7 +22,7 @@ export default withAuth(function ShowContent() {
         {content && ["ftc5s", "fc1s", "fdc2s", "fdsc2", "fcc3s"].includes(content?.json?.type) ? (
           <DynamicTutorFac key="1" exercise={content.json} topicId={topic}></DynamicTutorFac>
         ) : content && content?.json?.type == "lvltutor" ? (
-          <DynamicPlain key="2" steps={content?.json} topicId=""></DynamicPlain>
+          <DynamicPlain key="2" steps={content?.json} topicId={topic}></DynamicPlain>
         ) : (
           <p>No existe el contenido que desea cargar</p>
         )}

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { Button, Textarea } from "@chakra-ui/react";
 import { sessionState } from "./SessionState";
 import Link from "next/link";
+import { useAction } from "../utils/action";
 
 const colors = {
   orange: "#FFBA5A",
@@ -14,6 +15,9 @@ function RatingQuestion() {
   const [hoverValue, setHoverValue] = useState(undefined);
   const stars = Array(5).fill(0);
   const ruta = sessionState.nextContentPath;
+  const action = useAction();
+  const content = sessionState.currentContent.id;
+  const topic = sessionState.topic;
 
   const handleClick = value => {
     setCurrentValue(value);
@@ -48,7 +52,22 @@ function RatingQuestion() {
           );
         })}
       </div>
-      <Button style={styles.button}>Siguiente Ejercicio</Button>
+      <Link href={ruta}>
+        <Button
+          style={styles.button}
+          disabled={currentValue != 0 ? false : true}
+          onClick={() => {
+            action({
+              verbName: "Rating",
+              result: currentValue,
+              contentID: content,
+              topicID: topic,
+            });
+          }}
+        >
+          Siguiente Ejercicio
+        </Button>
+      </Link>
     </div>
   );
 }
@@ -62,14 +81,6 @@ const styles = {
   stars: {
     display: "flex",
     flexDirection: "row",
-  },
-  textarea: {
-    border: "1px solid #a9a9a9",
-    borderRadius: 5,
-    padding: 10,
-    margin: "20px 0",
-    minHeight: 100,
-    width: 300,
   },
   button: {
     border: "1px solid #a9a9a9",

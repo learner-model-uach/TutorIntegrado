@@ -311,7 +311,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
             </VStack>
           </Alert>
         </Box>
-        <RatingQuestion />
+        {!resumen && <RatingQuestion />}
       </Flex>
     </Flex>
   );
