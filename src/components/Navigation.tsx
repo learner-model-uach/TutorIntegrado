@@ -43,7 +43,7 @@ export function Navigation() {
             </SidebarLink>
             <SidebarLink
               href={
-                "contentSelect?topic=16,4,3,5,6,7,8&registerTopic=16" /*topicos no creados en admin*/
+                "contentSelect?topic=16,4,3,5,6,7&registerTopic=16" /*topicos no creados en admin*/
               }
             >
               Geometría

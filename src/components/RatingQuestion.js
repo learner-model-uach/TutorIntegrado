@@ -18,6 +18,7 @@ function RatingQuestion() {
   const action = useAction();
   const content = sessionState.currentContent.id;
   const topic = sessionState.topic;
+  const selectionData = sessionState.selectionData;
 
   const handleClick = value => {
     setCurrentValue(value);
@@ -58,10 +59,11 @@ function RatingQuestion() {
           disabled={currentValue != 0 ? false : true}
           onClick={() => {
             action({
-              verbName: "Rating",
+              verbName: "selectionRating",
               result: currentValue,
               contentID: content,
               topicID: topic,
+              extra: { selectionData },
             });
           }}
         >

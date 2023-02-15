@@ -29,11 +29,7 @@ export const sessionState = proxy<{
     json: ContentJson;
     state?: Object;
   };
-  selectionData: {
-    selectionTitle: string | undefined;
-    selectionText: string | undefined;
-    selectionBest: boolean;
-  };
+  selectionData: Object[];
   nextContentPath: string | undefined;
   learnerTraces: Object[];
 }>({
@@ -54,11 +50,7 @@ export const sessionState = proxy<{
     json: null,
     state: {},
   },
-  selectionData: {
-    selectionTitle: "",
-    selectionText: "",
-    selectionBest: false,
-  },
+  selectionData: [],
   nextContentPath: "",
   learnerTraces: [],
 });

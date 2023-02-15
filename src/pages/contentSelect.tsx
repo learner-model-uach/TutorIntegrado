@@ -85,7 +85,6 @@ export default withAuth(function ContentSelect() {
     `),
   );
   const contentResult = data?.contentSelection?.contentSelected?.contentResult;
-  console.log(data?.contentSelection.contentSelected);
 
   const bestExercise =
     (contentResult ?? [])
@@ -94,6 +93,19 @@ export default withAuth(function ContentSelect() {
 
   const experimentGroup =
     user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
+
+  const selectionData = (contentResult ?? []).map((content, index) => {
+    return {
+      [index]: {
+        optionCode: content.P.code,
+        optionTitle: content.Msg.label,
+        optionBest: false,
+        optionSelected: false,
+      },
+    };
+  });
+
+  console.log(selectionData);
 
   return (
     <>
@@ -122,6 +134,7 @@ export default withAuth(function ContentSelect() {
                 selectionBest={false}
                 registerTopic={registerTopic}
                 nextContentPath={nextContentPath}
+                selectionData={selectionData}
                 key={0}
               ></CardSelection>
             </Center>
@@ -140,6 +153,7 @@ export default withAuth(function ContentSelect() {
                   selectionBest={index == bestExercise}
                   registerTopic={registerTopic}
                   nextContentPath={nextContentPath}
+                  selectionData={selectionData}
                   key={index}
                 ></CardSelection>
               ))}

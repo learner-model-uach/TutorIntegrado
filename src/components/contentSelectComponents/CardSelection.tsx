@@ -28,6 +28,7 @@ export const CardSelection = ({
   selectionBest,
   registerTopic,
   nextContentPath,
+  selectionData,
 }: {
   id: string;
   code: string | undefined;
@@ -40,6 +41,7 @@ export const CardSelection = ({
   selectionBest: boolean;
   registerTopic: string;
   nextContentPath: string | undefined;
+  selectionData: Object[];
 }) => {
   return (
     <>
@@ -63,9 +65,7 @@ export const CardSelection = ({
           sessionState.currentContent.label = label; //enunciado o tipo de ejercicio
           sessionState.currentContent.json = json; //json del ejercicio
           sessionState.currentContent.kcs = kcs; //kcs del ejercicio
-          sessionState.selectionData.selectionTitle = selectionTitle;
-          sessionState.selectionData.selectionText = selectionText;
-          sessionState.selectionData.selectionBest = selectionBest;
+          sessionState.selectionData = selectionData;
           sessionStateBD.setItem(
             "currentContent",
             JSON.parse(JSON.stringify(sessionState.currentContent)),
