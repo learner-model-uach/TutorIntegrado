@@ -34,7 +34,12 @@ function RatingQuestion() {
 
   return (
     <div style={styles.container}>
-      <h2> ¿Cómo fue tu experiencia con este ejercicio escogido? </h2>
+      {selectionData.length > 1 ? (
+        <h2>¿Cómo fue tu experiencia con este ejercicio escogido?</h2>
+      ) : (
+        <h2>¿Cómo fue tu experiencia con este ejercicio que el sistema eligio para ti?</h2>
+      )}
+
       <div style={styles.stars}>
         {stars.map((_, index) => {
           return (

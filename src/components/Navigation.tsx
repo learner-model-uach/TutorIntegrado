@@ -38,7 +38,7 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>
               Ecuaciones
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=19,20,21,22,23,8&registerTopic=19"}>
+            <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
             <SidebarLink
