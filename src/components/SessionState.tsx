@@ -11,6 +11,12 @@ interface ContentJson {
   meta: Object;
   steps: Array<Object>;
 }
+export interface selectionDataType {
+  optionCode: string;
+  optionTitle: string;
+  optionBest: boolean;
+  optionSelected: boolean;
+}
 
 export const sessionState = proxy<{
   [x: string]: any;
@@ -29,7 +35,7 @@ export const sessionState = proxy<{
     json: ContentJson;
     state?: Object;
   };
-  selectionData: Object[];
+  selectionData: selectionDataType[];
   nextContentPath: string | undefined;
   learnerTraces: Object[];
 }>({

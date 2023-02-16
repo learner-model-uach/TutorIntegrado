@@ -12,7 +12,7 @@ import {
 //import Link from "next/link";
 import NextLink from "next/link";
 import { FaStar } from "react-icons/fa";
-import { sessionState, sessionStateBD } from "../SessionState";
+import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
 import { MathComponent } from "mathjax-react";
 
@@ -29,6 +29,7 @@ export const CardSelection = ({
   registerTopic,
   nextContentPath,
   selectionData,
+  indexSelectionData,
 }: {
   id: string;
   code: string | undefined;
@@ -41,7 +42,8 @@ export const CardSelection = ({
   selectionBest: boolean;
   registerTopic: string;
   nextContentPath: string | undefined;
-  selectionData: Object[];
+  selectionData: selectionDataType[];
+  indexSelectionData: number;
 }) => {
   return (
     <>
@@ -66,6 +68,7 @@ export const CardSelection = ({
           sessionState.currentContent.json = json; //json del ejercicio
           sessionState.currentContent.kcs = kcs; //kcs del ejercicio
           sessionState.selectionData = selectionData;
+          sessionState.selectionData[indexSelectionData].optionSelected = true;
           sessionStateBD.setItem(
             "currentContent",
             JSON.parse(JSON.stringify(sessionState.currentContent)),
