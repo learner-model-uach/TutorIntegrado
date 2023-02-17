@@ -58,8 +58,8 @@ const Steporans = ({step,topicId,content,i,answer}:{step:Step,topicId:string,con
             setCC(<Mq2 
             key={"Mq2"+i}
             step={step}
-            content={topicId}
-            topicId={content}
+            content={content}
+            topicId={topicId}
             disablehint={false}
             />)
         }

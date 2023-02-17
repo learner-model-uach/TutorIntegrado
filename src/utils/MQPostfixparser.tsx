@@ -50,6 +50,7 @@ const MQPostfixparser = (MQinfixInput:string) => {
         let alphabet = new RegExp(/^[a-zA-Z]$/);
         let number = new RegExp(/^[0-9.]$/);
         let replacePositions=[];
+        let flag=true;
         for (let i=0; i<l; i++){
             let value=a[i];
             let lvalue;
@@ -62,17 +63,19 @@ const MQPostfixparser = (MQinfixInput:string) => {
             }
             if(!value)continue;
             if (alphabet.test(value)) {
+                flag=true;
                 literal=literal+value;
                 if(i==(l-1)) replacePositions.push({i:i+1,lit:literal})
                 if((i-1)>-1) {if(lvalue!=undefined && number.test(lvalue)) replacePositions.push({i:i,lit:" "});};
                 if((i+1)<l) {if(rvalue!=undefined && number.test(rvalue)) replacePositions.push({i:i+1,lit:" "});};
             } else if (typeof reservedWords[literal as keyof typeof reservedWords]!="undefined") {
+                flag=false;
                 literal="";
             } else {
                 if(literal.length>1) replacePositions.push({i:i,lit:literal})
                 literal="";
             }
-            if (value.localeCompare("(")==0) {
+            if (value.localeCompare("(")==0 && flag) {
                 if((i-1)>-1) {if(lvalue!=undefined && (number.test(lvalue)||alphabet.test(lvalue))) replacePositions.push({i:i,lit:" "});};
                 
             }
