@@ -9,8 +9,24 @@ const Lvltutor = dynamic(
   { ssr: false },
 );
 
-export const Plain = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
-  return <>{steps?.type == "lvltutor" ? <Lvltutor topicId={topicId} steps={steps} /> : "potato"}</>;
+export const Plain = ({
+  topicId,
+  steps,
+  lastHint,
+}: {
+  topicId: string;
+  steps: ExType;
+  lastHint: boolean;
+}) => {
+  return (
+    <>
+      {steps?.type == "lvltutor" ? (
+        <Lvltutor key={topicId} topicId={topicId} steps={steps} lastHint={lastHint} />
+      ) : (
+        "potato"
+      )}
+    </>
+  );
 };
 
 export default Plain;
