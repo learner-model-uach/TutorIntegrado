@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "concurrently -m 1 -r \"graphql-codegen --config codegen.yaml\" \"next build\" pnpm:pretty:check",
+    "build": "concurrently -m 1 -r pnpm:generate \"next build\" pnpm:pretty:check",
     "dev": "concurrently -r next pnpm:gql:watch pnpm:open:browser",
+    "generate": "graphql-codegen --config codegen.yaml",
     "gql": "graphql-codegen --config codegen.yaml",
     "gql:watch": "graphql-codegen --config codegen.yaml --watch",
     "open:browser": "wait-on -s 1 http://localhost:3000 && open-cli http://localhost:3000",
