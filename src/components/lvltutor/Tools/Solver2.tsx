@@ -1,4 +1,5 @@
-import { useState, memo, useEffect, useRef } from "react";
+import React, { useState, memo, useEffect, useRef } from "react";
+import RatingQuestion from "../../RatingQuestion";
 
 import {
   Flex,
@@ -15,7 +16,7 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { MathComponent } from "../../MathJax";
+import { StaticMathField } from "react-mathquill";
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
 import dynamic from "next/dynamic";
@@ -25,12 +26,24 @@ import { useAction } from "../../../utils/action";
 
 import type { ExType, Step } from "./ExcerciseType";
 
+import { useSnapshot } from "valtio";
+import MQProxy, { reset } from "./MQProxy";
+
 const Mq2 = dynamic(
   () => {
     return import("./Mq2");
   },
   { ssr: false },
 );
+
+const MQStatic = ({ tex, resumen }: { tex: string; resumen?: boolean }) => {
+  const [texExp, setTexExp] = useState("");
+  useEffect(() => {
+    if (!resumen) setTexExp(tex);
+  }, [, resumen]);
+
+  return <StaticMathField>{texExp}</StaticMathField>;
+};
 
 interface value {
   ans: string;
@@ -47,40 +60,100 @@ interface potato {
   value: value;
   open: boolean;
 }
-class passingPotato {
-  private states = {
-    disabled: true,
-    hidden: false,
-    answer: false,
-    value: {
-      ans: "",
-      att: 0,
-      hints: 0,
-      lasthint: false,
-      fail: false,
-      duration: 0,
-    },
-    open: false,
-  };
 
-  public counter = 0;
+const Steporans = ({
+  step,
+  topicId,
+  content,
+  i,
+  answer,
+}: {
+  step: Step;
+  topicId: string;
+  content: string;
+  i: number;
+  answer?: string;
+}) => {
+  const [currentComponent, setCC] = useState(<></>);
+  useEffect(() => {
+    if (answer && answer != "") {
+      setCC(
+        <>
+          <MQStatic key={"respuesta" + i} tex={answer} />
+          <Alert key={"Alert" + topicId + "i"} status={"success"} mt={2}>
+            <AlertIcon key={"AlertIcon" + topicId + "i"} />
+            {step.correctMsg}
+          </Alert>
+        </>,
+      );
+    } else {
+      setCC(
+        <Mq2 key={"Mq2" + i} step={step} content={content} topicId={topicId} disablehint={false} />,
+      );
+    }
+  }, [, answer]);
 
-  public getStates() {
-    return this.states;
-  }
+  return currentComponent;
+};
 
-  public setStates(a: potato) {
-    this.states = a;
-  }
-}
-
-const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
-  const [cdateS, setCdateS] = useState(Date.now());
-  const [cdateE, setCdateE] = useState(Date.now());
+const Solver2 = ({
+  topicId,
+  steps,
+  lastHint,
+}: {
+  topicId: string;
+  steps: ExType;
+  lastHint: boolean;
+}) => {
+  const mqSnap = useSnapshot(MQProxy);
 
   const action = useAction();
+  const currentStep = useRef(0);
+
+  const cantidadDePasos = steps.steps.length;
+
+  let potatoStates: Array<potato> = [
+    {
+      disabled: false,
+      hidden: false,
+      answer: false,
+      value: {
+        ans: "",
+        att: 0,
+        hints: 0,
+        lasthint: lastHint,
+        fail: false,
+        duration: 0,
+      },
+      open: true,
+    },
+  ];
+
+  for (let i = 1; i < cantidadDePasos; i++) {
+    potatoStates.push({
+      disabled: true,
+      hidden: false,
+      answer: false,
+      value: {
+        ans: "",
+        att: 0,
+        hints: 0,
+        lasthint: false,
+        fail: false,
+        duration: 0,
+      },
+      open: true,
+    });
+  }
+
+  const [test, setTest] = useState<Array<potato>>(potatoStates);
+  const [resumen, setResumen] = useState(true);
+
   useEffect(() => {
-    setCdateS(Date.now());
+    reset();
+    MQProxy.startDate = Date.now();
+    MQProxy.content = steps.code;
+    MQProxy.topicId = topicId;
     action({
       verbName: "loadContent",
       contentID: steps?.code,
@@ -88,75 +161,24 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
     });
   }, []);
 
-  const [submit, setSubmit] = useState(false);
-
-  const cantidadDePasos = steps.steps.length;
-
-  let potatoStates = [new passingPotato()];
-  potatoStates[0]!.setStates({
-    disabled: false,
-    hidden: false,
-    answer: false,
-    value: {
-      ans: "",
-      att: 0,
-      hints: 0,
-      lasthint: false,
-      fail: false,
-      duration: 0,
-    },
-    open: true,
-  });
-
-  const [defaultIndex, setDefaultIndex] = useState([0]);
-
-  for (let i = 0; i < cantidadDePasos; i++) {
-    potatoStates.push(new passingPotato());
-  }
-
-  const [test, setTest] = useState(potatoStates);
-  const [resumen, setResumen] = useState(true);
-
-  const [submitValues, setSubmitValues] = useState({
-    ans: "",
-    att: 0,
-    hints: 0,
-    lasthint: false,
-    fail: false,
-    duration: 0,
-  });
-
-  const listaDePasos = steps.steps.map((step, i) => (
-    <Mq2
-      key={"Mq2" + i}
-      step={step}
-      content={steps.code}
-      topicId={topicId}
-      disablehint={false}
-      setDefaultIndex={setDefaultIndex}
-      setSubmit={setSubmit}
-      setSubmitValues={setSubmitValues}
-      setCdateE={setCdateE}
-    ></Mq2>
-  ));
-
   useEffect(() => {
-    if (submit) {
-      if (!submitValues.fail) {
+    if (mqSnap.submit) {
+      if (!mqSnap.submitValues.fail) {
+        currentStep.current = mqSnap.deefaultIndex[0]!;
         let a = test;
-        let duration = (cdateE - cdateS) / 1000;
-        let sv = submitValues;
+        let duration = (MQProxy.endDate - MQProxy.startDate) / 1000;
+        let sv = MQProxy.submitValues;
         sv.duration = duration;
-        setCdateS(Date.now());
-        a[defaultIndex[0]! - 1]!.setStates({
+        MQProxy.startDate = Date.now();
+        a[mqSnap.deefaultIndex[0]! - 1] = {
           disabled: false,
           hidden: false,
           answer: true,
           value: sv,
           open: false,
-        });
-        if (defaultIndex[0]! < cantidadDePasos) {
-          a[defaultIndex[0]!]!.setStates({
+        };
+        if (mqSnap.deefaultIndex[0]! < cantidadDePasos) {
+          a[mqSnap.deefaultIndex[0]!] = {
             disabled: false,
             hidden: false,
             answer: false,
@@ -164,15 +186,19 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
               ans: "",
               att: 0,
               hints: 0,
-              lasthint: false,
+              lasthint: lastHint,
               fail: false,
               duration: 0,
             },
             open: true,
-          });
+          };
         } else {
-          let completecontent = [];
-          for (let i = 0; i < test.length; i++) completecontent.push(test[i]?.getStates().value);
+          let completecontent: Array<value> = [];
+          for (let i = 0; i < test.length; i++) {
+            const value = a[i];
+            if (!value) continue;
+            completecontent.push(value.value);
+          }
           let extra = {
             steps: Object.assign({}, completecontent),
           };
@@ -187,24 +213,9 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         }
         setTest(a);
       }
-      setSubmit(false);
+      MQProxy.submit = false;
     }
-  }, [submit]);
-
-  const pasos = useRef(listaDePasos);
-
-  const steporans = (step: Step, i: number) => {
-    let a = test[parseInt(step.stepId)!]!.getStates();
-    if (a.answer) {
-      return (
-        <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-          <MathComponent key={"respuesta" + i} tex={a.value.ans} display={true} />
-        </VStack>
-      );
-    } else {
-      return pasos.current[i];
-    }
-  };
+  }, [mqSnap.submit]);
 
   return (
     <Flex alignItems="center" justifyContent="center" margin={"auto"}>
@@ -225,50 +236,52 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         <Heading as="h5" size="sm" mt={2}>
           {steps.text}
         </Heading>
-        <MathComponent tex={steps.steps[0]!.expression} display={true} />
+        <MQStatic tex={steps.steps[0]!.expression} />
         <Accordion
-          onChange={algo => setDefaultIndex(algo as Array<number>)}
-          index={defaultIndex}
+          onChange={algo => (MQProxy.deefaultIndex = algo as Array<number>)}
+          index={MQProxy.deefaultIndex}
           allowToggle={true}
           allowMultiple={true}
         >
           {steps.steps.map((step, i) => (
             <AccordionItem
               key={"AccordionItem" + i}
-              isDisabled={test[parseInt(step.stepId)]!.getStates().disabled}
-              hidden={test[parseInt(step.stepId)]!.getStates().hidden}
+              isDisabled={test[parseInt(step.stepId)]?.disabled}
+              hidden={test[parseInt(step.stepId)]?.hidden}
             >
               <h2 key={"AIh2" + i}>
                 <Alert
                   key={"AIAlert" + i}
-                  status={test[parseInt(step.stepId)]!.getStates().answer ? "success" : "info"}
+                  status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}
                 >
                   <AlertIcon key={"AIAlertIcon" + i} />
                   <AccordionButton
                     key={"AIAccordionButton" + i}
                     onClick={() => {
                       let potstates = test;
-                      let potstate = potstates[parseInt(step.stepId)]?.getStates();
-                      if (!potstate?.open) {
-                        action({
-                          verbName: "openStep",
-                          stepID: "" + i,
-                          contentID: steps?.code,
-                          topicID: topicId,
-                        });
-                        potstate!.open = true;
-                        potstates[parseInt(step.stepId)]?.setStates(potstate!);
-                        setTest(potstates);
-                      } else {
-                        action({
-                          verbName: "closeStep",
-                          stepID: "" + i,
-                          contentID: steps?.code,
-                          topicID: topicId,
-                        });
-                        potstate!.open = false;
-                        potstates[parseInt(step.stepId)]?.setStates(potstate!);
-                        setTest(potstates);
+                      let potstate = potstates[parseInt(step.stepId)];
+                      if (potstate) {
+                        if (!potstate.open) {
+                          action({
+                            verbName: "openStep",
+                            stepID: "" + i,
+                            contentID: steps?.code,
+                            topicID: topicId,
+                          });
+                          potstate.open = true;
+                          potstates[parseInt(step.stepId)] = potstate;
+                          setTest(potstates);
+                        } else {
+                          action({
+                            verbName: "closeStep",
+                            stepID: "" + i,
+                            contentID: steps?.code,
+                            topicID: topicId,
+                          });
+                          potstate.open = false;
+                          potstates[parseInt(step.stepId)] = potstate;
+                          setTest(potstates);
+                        }
                       }
                     }}
                   >
@@ -280,8 +293,13 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                 </Alert>
               </h2>
               <AccordionPanel key={"AIAccordionPanel" + i} pb={4}>
-                {/*En el siguiente elemento es un estado que almacena el componente que maneja el paso del ejercicio correspondiente*/}
-                {steporans(step, i)}
+                <Steporans
+                  step={step}
+                  topicId={topicId}
+                  content={steps.code}
+                  i={i}
+                  answer={test[parseInt(step.stepId)]?.value?.ans}
+                />
               </AccordionPanel>
             </AccordionItem>
           ))}
@@ -295,14 +313,14 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
               </Heading>
               <HStack>
                 <Text>Expresión:</Text>
-                <MathComponent tex={steps.steps[0]!.expression} display={true} />
+                <MQStatic tex={steps.steps[0]!.expression} resumen={resumen} />
               </HStack>
               {steps.steps.map((step, i) => (
                 <Box key={"ResumenBox" + i}>
                   <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
                     {step.summary}
                   </Text>
-                  <MathComponent key={"ResumenMC" + i} tex={step.displayResult[0]} display={true} />
+                  <MQStatic key={"ResumenMC" + i} tex={step.displayResult[0]!} resumen={resumen} />
                 </Box>
               ))}
             </VStack>

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { CardSelection } from "../components/contentSelectComponents/CardSelection";
 import { SimpleGrid, Center, Text } from "@chakra-ui/react";
 import { useUpdateModel } from "../utils/updateModel";
 import { useEffect } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
+import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -132,7 +132,7 @@ export default withAuth(function ContentSelect() {
         {!isLoading ? (
           experimentGroup == "tutor-control" ? (
             <Center>
-              <CardSelection
+              <CardSelectionDynamic
                 id={contentResult[bestExercise]?.P.id}
                 code={contentResult[bestExercise]?.P.code}
                 json={contentResult[bestExercise]?.P.json}
@@ -147,12 +147,12 @@ export default withAuth(function ContentSelect() {
                 selectionData={selectionData}
                 indexSelectionData={0}
                 key={0}
-              ></CardSelection>
+              ></CardSelectionDynamic>
             </Center>
           ) : (
             <>
               {contentResult.map((content, index) => (
-                <CardSelection
+                <CardSelectionDynamic
                   id={content.P.id}
                   code={content.P.code}
                   json={content.P.json}
@@ -167,7 +167,7 @@ export default withAuth(function ContentSelect() {
                   selectionData={selectionData}
                   indexSelectionData={index}
                   key={index}
-                ></CardSelection>
+                ></CardSelectionDynamic>
               ))}
             </>
           )
