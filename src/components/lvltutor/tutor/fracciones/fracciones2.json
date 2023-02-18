@@ -1,59 +1,81 @@
 [
-    {
-        "code": "fracc2",
-        "meta": {},
-        "title":"Suma de fracciones",
-        "text": "Realizar las operaciones encontradas en la siguiente expresion:",
-        "type": "lvltutor",
-        "steps": [
+  {
+    "code": "fracc2",
+    "meta": {},
+    "title": "Suma de fracciones",
+    "text": "Realizar las operaciones encontradas en la siguiente expresion:",
+    "type": "lvltutor",
+    "steps": [
+      {
+        "stepId": "0",
+        "KCs": ["MCM"],
+        "expression": "b^{2}, a^{2}\\cdot b",
+        "stepTitle": "Encuentra el mínimo común múltiplo entre los siguietnes elementos",
+        "displayResult": ["a^{2}\\cdot b^{2}"],
+        "values": [
+          { "name": "a", "value": 1 },
+          { "name": "b", "value": 2 }
+        ],
+        "hints": [
           {
-            "stepId": "0",
-            "KCs":["MCM"],
-            "expression": "b^{2}, a^{2}\\cdot b",
-            "stepTitle": "Encuentra el mínimo común múltiplo entre los siguietnes elementos",
-            "displayResult": ["a^{2}\\cdot b^{2}"],
-            "values":[{"name":"a","value":1},{"name":"b","value":2}],
-            "hints": [
-              { "hintId": 0, "hint": "Para obtener el mínimo común múltiplo puedes comenzar encontrando los factores unicos." },
-              { "hintId": 1, "hint": "El mínimo común múltiplo se obtiene multiplicando todos los factores (comunes y no comunes), elevados a la máxima potencia." },
-              { "hintId": 2, "hint": "En este caso el mínimo común múltiplo es: a^{2}b^{2}" }
-            ],
-            "matchingError":[
-              {"error":["",""],"hintId":3,"hint": "algo"},
-              {"error":["","*"],"hintId":4,"hint": "algo"},
-              {"error":["*",""],"hintId":5,"hint": "algo"}
-            ],
-            "answers": [
-              { "answer": ["a^2\\cdot b^2","b^2a^2"], "nextStep": "1" }
-            ],
-            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
-            "correctMsg": "Has encontrado el mínimo común múltiplo.",
-            "summary": "1)Se obtiene el mínimo común múltiplo entre dos elementos."
+            "hintId": 0,
+            "hint": "Para obtener el mínimo común múltiplo puedes comenzar encontrando los factores unicos."
           },
           {
-            "stepId": "1",
-            "KCs":["SRFrac"],
-            "expression": "\\frac{1}{b^{2}}+\\frac{1}{a^{2}\\cdot b}",
-            "stepTitle": "Suma las siguientes fracciones aplicando el mínimo común múltiplo encontrado.",
-            "displayResult": ["\\frac{a^{2}+b}{a^{2}\\cdot b^{2}}"],
-            "values":[{"name":"a","value":1},{"name":"b","value":2}],
-            "hints": [
-              { "hintId": 0, "hint": "Al sumar aplicando mínimo común múltiplo, este se deja como denominador comun." },
-              { "hintId": 1, "hint": "Cada elemento del numerador en la fraccion resultante estara compuesto del mínimo común múltiplo multiplicado por el numerador y dividido por el denominador de la fraccion original correspondiente." },
-              { "hintId": 2, "hint": "El resultado es: \\frac{a^{2}+b}{a^{2}b^{2}}" }
-            ],
-            "matchingError":[
-              {"error":["",""],"hintId":3,"hint": "algo"},
-              {"error":["","*"],"hintId":4,"hint": "algo"},
-              {"error":["*",""],"hintId":5,"hint": "algo"}
-            ],
-            "answers": [
-              { "answer": ["\\frac{a^2+b}{a^2\\cdot b^2}"], "nextStep": "-1" }
-            ],
-            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
-            "correctMsg": "Has realizado la suma de fracciones aplicando mínimo común múltiplo correctamente.",
-            "summary": "2)Finalmente se realiza la suma de fracciones haciendo uso del mínimo común múltiplo encontrado."
+            "hintId": 1,
+            "hint": "El mínimo común múltiplo se obtiene multiplicando todos los factores (comunes y no comunes), elevados a la máxima potencia."
+          },
+          {
+            "hintId": 2,
+            "hint": "En este caso el mínimo común múltiplo es: a^{2}b^{2}"
           }
-        ]
+        ],
+        "matchingError": [
+          { "error": ["", ""], "hintId": 3, "hint": "algo" },
+          { "error": ["", "*"], "hintId": 4, "hint": "algo" },
+          { "error": ["*", ""], "hintId": 5, "hint": "algo" }
+        ],
+        "answers": [{ "answer": ["a^2\\cdot b^2", "b^2a^2"], "nextStep": "1" }],
+        "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+        "correctMsg": "Has encontrado el mínimo común múltiplo.",
+        "summary": "1)Se obtiene el mínimo común múltiplo entre dos elementos."
+      },
+      {
+        "stepId": "1",
+        "KCs": ["SRFrac"],
+        "expression": "\\frac{1}{b^{2}}+\\frac{1}{a^{2}\\cdot b}",
+        "stepTitle": "Suma las siguientes fracciones aplicando el mínimo común múltiplo encontrado.",
+        "displayResult": ["\\frac{a^{2}+b}{a^{2}\\cdot b^{2}}"],
+        "values": [
+          { "name": "a", "value": 1 },
+          { "name": "b", "value": 2 }
+        ],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Al sumar aplicando mínimo común múltiplo, este se deja como denominador comun."
+          },
+          {
+            "hintId": 1,
+            "hint": "Cada elemento del numerador en la fraccion resultante estara compuesto del mínimo común múltiplo multiplicado por el numerador y dividido por el denominador de la fraccion original correspondiente."
+          },
+          {
+            "hintId": 2,
+            "hint": "El resultado es: \\frac{a^{2}+b}{a^{2}b^{2}}"
+          }
+        ],
+        "matchingError": [
+          { "error": ["", ""], "hintId": 3, "hint": "algo" },
+          { "error": ["", "*"], "hintId": 4, "hint": "algo" },
+          { "error": ["*", ""], "hintId": 5, "hint": "algo" }
+        ],
+        "answers": [
+          { "answer": ["\\frac{a^2+b}{a^2\\cdot b^2}"], "nextStep": "-1" }
+        ],
+        "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+        "correctMsg": "Has realizado la suma de fracciones aplicando mínimo común múltiplo correctamente.",
+        "summary": "2)Finalmente se realiza la suma de fracciones haciendo uso del mínimo común múltiplo encontrado."
       }
+    ]
+  }
 ]

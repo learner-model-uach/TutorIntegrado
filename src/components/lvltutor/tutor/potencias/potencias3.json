@@ -1,83 +1,136 @@
 [
-    {
-        "code": "pot3",
-        "meta": {},
-        "title":"Reducción de expresión",
-        "text": "Reduce la siguiente expresion:",
-        "type":"lvltutor",
-        "steps": [
+  {
+    "code": "pot3",
+    "meta": {},
+    "title": "Reducción de expresión",
+    "text": "Reduce la siguiente expresion:",
+    "type": "lvltutor",
+    "steps": [
+      {
+        "stepId": "0",
+        "KCs": ["MultExp"],
+        "expression": "\\frac{\\left(a^{b+3}\\cdot{d}^{b+2}\\right)^{3}}{a^{3\\cdot b}\\cdot{d}^{6}}",
+        "stepTitle": "En el numerador realiza la multiplicación de potencias.",
+        "displayResult": [
+          "\\frac{a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}}{a^{3\\cdot b}\\cdot{d}^{6}}"
+        ],
+        "values": [
+          { "name": "a", "value": 1 },
+          { "name": "b", "value": 2 },
+          { "name": "d", "value": 3 }
+        ],
+        "hints": [
           {
-            "stepId": "0",
-            "KCs":["MultExp"],
-            "expression": "\\frac{\\left(a^{b+3}\\cdot{d}^{b+2}\\right)^{3}}{a^{3\\cdot b}\\cdot{d}^{6}}",
-            "stepTitle": "En el numerador realiza la multiplicación de potencias.",
-            "displayResult": ["\\frac{a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}}{a^{3\\cdot b}\\cdot{d}^{6}}"],
-            "values":[{"name":"a","value":1},{"name":"b","value":2},{"name":"d","value":3}],
-            "hints": [
-              { "hintId": 0, "hint": "La multiplicación de potencias tiene forma: (a^{n})^{m}=a^{n\\cdot{m}}" },
-              { "hintId": 1, "hint": "Cuando la operación de los términos dentro de un paréntesis es la multiplicación se puede aplicar la siguiente propiedad: (a\\cdot{b})^{n}=a^{n}b^{n}" },
-              { "hintId": 2, "hint": "Expresa los términos del numerador dentro del paréntesis como la multiplicación de potencias, cada término del numerador dentro del paréntesis queda como la multiplicación de su exponente con el exponente del paréntesis. " }
-            ],
-            "matchingError":[
-              {"error":["",""],"hintId":3,"hint": "algo"},
-              {"error":["","*"],"hintId":4,"hint": "algo"},
-              {"error":["*",""],"hintId":5,"hint": "algo"}
-            ],
-            "answers": [
-              { "answer": ["\\frac{a^{3\\cdot b+9}\\cdot d^{3\\cdot b+6}}{a^{3\\cdot b}\\cdot d^6}"], "nextStep": "1" }
-            ],
-            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
-            "correctMsg": "Has logrado multiplicar los exponentes correctamente.",
-            "summary": "1)Se multiplica el exponente del paréntesis con los exponentes de cada factor encontrados en el numerador."
+            "hintId": 0,
+            "hint": "La multiplicación de potencias tiene forma: (a^{n})^{m}=a^{n\\cdot{m}}"
           },
           {
-            "stepId": "1",
-            "KCs":["SumResExp"],
-            "expression": "\\frac{a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}}{a^{3\\cdot b}\\cdot{d}^{6}}",
-            "stepTitle": "Invierte los factores en el denominador.",
-            "displayResult": ["a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}\\cdot{a}^{-3\\cdot b}\\cdot{d}^{-6}"],
-            "values":[{"name":"a","value":1},{"name":"b","value":2},{"name":"d","value":3}],
-            "hints": [
-              { "hintId": 0, "hint": "Puedes obtener el inverso de una expresión elevando por la potencia -1." },
-              { "hintId": 1, "hint": "Recuerda que después de obtener el inverso realiza la multiplicación de potencias correspondiente." },
-              { "hintId": 2, "hint": "El resultado en este escenario es: a^{3b+9}\\cdot{d}^{3b+6}\\cdot{a}^{-3b}\\cdot{d}^{-6}" }
-            ],
-            "matchingError":[
-              {"error":["",""],"hintId":3,"hint": "algo"},
-              {"error":["","*"],"hintId":4,"hint": "algo"},
-              {"error":["*",""],"hintId":5,"hint": "algo"}
-            ],
-            "answers": [
-              { "answer": ["a^{3\\cdot b+9}\\cdot d^{3\\cdot b+6}\\cdot a^{-3\\cdot b}\\cdot d^{-6}"], "nextStep": "2" }
-            ],
-            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
-            "correctMsg": "Has logrado invertir el denominador correctamente.",
-            "summary": "2)Se invierte cada factor encontrado en el denominador."
+            "hintId": 1,
+            "hint": "Cuando la operación de los términos dentro de un paréntesis es la multiplicación se puede aplicar la siguiente propiedad: (a\\cdot{b})^{n}=a^{n}b^{n}"
           },
           {
-            "stepId": "2",
-            "KCs":["SumResExp"],
-            "expression": "a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}\\cdot{a}^{-3\\cdot b}\\cdot{d}^{-6}",
-            "stepTitle": "Realiza la suma/resta de potencias en cada factor de igual base.",
-            "displayResult": ["a^{9}\\cdot{d}^{3\\cdot b}"],
-            "values":[{"name":"a","value":1},{"name":"b","value":2},{"name":"d","value":3}],
-            "hints": [
-              { "hintId": 0, "hint": "Identifican si hay operaciones por realizar en cada exponente." },
-              { "hintId": 1, "hint": "Las operaciones de multiplicación/división/suma/resta dentro de un exponente se pueden realizar como si fuese una expresión normal." },
-              { "hintId": 2, "hint": "Realiza la reducción aplicando las restas correspondientes en cada exponente." }
-            ],
-            "matchingError":[
-              {"error":["",""],"hintId":3,"hint": "algo"},
-              {"error":["","*"],"hintId":4,"hint": "algo"},
-              {"error":["*",""],"hintId":5,"hint": "algo"}
-            ],
-            "answers": [
-              { "answer": ["a^9\\cdot d^{3\\cdot b}"], "nextStep": "-1" }
-            ],
-            "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
-            "correctMsg": "Has logrado reducir la expresion correctamente.",
-            "summary": "3)Finalmente se aplica la suma/resta de potencias en misma base."
+            "hintId": 2,
+            "hint": "Expresa los términos del numerador dentro del paréntesis como la multiplicación de potencias, cada término del numerador dentro del paréntesis queda como la multiplicación de su exponente con el exponente del paréntesis. "
           }
-        ]
+        ],
+        "matchingError": [
+          { "error": ["", ""], "hintId": 3, "hint": "algo" },
+          { "error": ["", "*"], "hintId": 4, "hint": "algo" },
+          { "error": ["*", ""], "hintId": 5, "hint": "algo" }
+        ],
+        "answers": [
+          {
+            "answer": [
+              "\\frac{a^{3\\cdot b+9}\\cdot d^{3\\cdot b+6}}{a^{3\\cdot b}\\cdot d^6}"
+            ],
+            "nextStep": "1"
+          }
+        ],
+        "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+        "correctMsg": "Has logrado multiplicar los exponentes correctamente.",
+        "summary": "1)Se multiplica el exponente del paréntesis con los exponentes de cada factor encontrados en el numerador."
+      },
+      {
+        "stepId": "1",
+        "KCs": ["SumResExp"],
+        "expression": "\\frac{a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}}{a^{3\\cdot b}\\cdot{d}^{6}}",
+        "stepTitle": "Invierte los factores en el denominador.",
+        "displayResult": [
+          "a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}\\cdot{a}^{-3\\cdot b}\\cdot{d}^{-6}"
+        ],
+        "values": [
+          { "name": "a", "value": 1 },
+          { "name": "b", "value": 2 },
+          { "name": "d", "value": 3 }
+        ],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Puedes obtener el inverso de una expresión elevando por la potencia -1."
+          },
+          {
+            "hintId": 1,
+            "hint": "Recuerda que después de obtener el inverso realiza la multiplicación de potencias correspondiente."
+          },
+          {
+            "hintId": 2,
+            "hint": "El resultado en este escenario es: a^{3b+9}\\cdot{d}^{3b+6}\\cdot{a}^{-3b}\\cdot{d}^{-6}"
+          }
+        ],
+        "matchingError": [
+          { "error": ["", ""], "hintId": 3, "hint": "algo" },
+          { "error": ["", "*"], "hintId": 4, "hint": "algo" },
+          { "error": ["*", ""], "hintId": 5, "hint": "algo" }
+        ],
+        "answers": [
+          {
+            "answer": [
+              "a^{3\\cdot b+9}\\cdot d^{3\\cdot b+6}\\cdot a^{-3\\cdot b}\\cdot d^{-6}"
+            ],
+            "nextStep": "2"
+          }
+        ],
+        "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+        "correctMsg": "Has logrado invertir el denominador correctamente.",
+        "summary": "2)Se invierte cada factor encontrado en el denominador."
+      },
+      {
+        "stepId": "2",
+        "KCs": ["SumResExp"],
+        "expression": "a^{3\\cdot b+9}\\cdot{d}^{3\\cdot b+6}\\cdot{a}^{-3\\cdot b}\\cdot{d}^{-6}",
+        "stepTitle": "Realiza la suma/resta de potencias en cada factor de igual base.",
+        "displayResult": ["a^{9}\\cdot{d}^{3\\cdot b}"],
+        "values": [
+          { "name": "a", "value": 1 },
+          { "name": "b", "value": 2 },
+          { "name": "d", "value": 3 }
+        ],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Identifican si hay operaciones por realizar en cada exponente."
+          },
+          {
+            "hintId": 1,
+            "hint": "Las operaciones de multiplicación/división/suma/resta dentro de un exponente se pueden realizar como si fuese una expresión normal."
+          },
+          {
+            "hintId": 2,
+            "hint": "Realiza la reducción aplicando las restas correspondientes en cada exponente."
+          }
+        ],
+        "matchingError": [
+          { "error": ["", ""], "hintId": 3, "hint": "algo" },
+          { "error": ["", "*"], "hintId": 4, "hint": "algo" },
+          { "error": ["*", ""], "hintId": 5, "hint": "algo" }
+        ],
+        "answers": [
+          { "answer": ["a^9\\cdot d^{3\\cdot b}"], "nextStep": "-1" }
+        ],
+        "incorrectMsg": "Revisa que la expresion ingresada este correcta.",
+        "correctMsg": "Has logrado reducir la expresion correctamente.",
+        "summary": "3)Finalmente se aplica la suma/resta de potencias en misma base."
       }
+    ]
+  }
 ]
