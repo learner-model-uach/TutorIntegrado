@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Flex, Stack, Button, Text, VStack, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
@@ -14,7 +14,6 @@ import {
   BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { HintEqSystem } from "./HintEqSystem";
 
 export const StepEquations = ({
@@ -26,7 +25,10 @@ export const StepEquations = ({
   setStepCorrect,
   setColor,
   setNextExercise,
-  content,
+  code, // "code" field of json file
+  topicId, // "id" field in the system
+  updateObjectSteps, // update the data in the "steps" field of the completeContent action
+  completeContentSteps, // object used in the "steps" field of completeContent
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -39,11 +41,12 @@ export const StepEquations = ({
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState({});
-  const exerciseContext = useContext(ExerciseContext);
   const startAction = useAction({});
+  const [attempts, setAttempts] = useState(0); // number of user attempts
+  const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
 
   useEffect(() => {
-    setItems(step.answers.map(id => ({ ...id, column: COLUMN1 })));
+    setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -80,7 +83,6 @@ export const StepEquations = ({
           key={item.id}
           value={item.value}
           setItems={setItems}
-          content={content}
           column={item.column}
           items={items}
           answer={answer}
@@ -92,11 +94,16 @@ export const StepEquations = ({
 
   const checkLastStep = () => {
     if (nStep == totalSteps - 1) {
+      // it is executed when all the steps are completed
       setNextExercise(true);
       startAction({
         verbName: "completeContent",
-        contentID: content,
-        result: 1,
+        contentID: code, // it is "code" field of the json file
+        topicID: topicId, // it is "id" field in the system
+        result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
+        extra: {
+          steps: completeContentSteps, // object defined in updateObjectSteps
+        },
       });
     }
   };
@@ -114,7 +121,8 @@ export const StepEquations = ({
         text: "Escoge una respuesta",
       });
     } else {
-      if (step.n_step === nStep) {
+      updateObjectSteps(step.stepId, attempts, hintsShow, 0);
+      if (step.stepId === nStep.toString()) {
         if (
           (answerLeft[0].id === step.correct_answer[0] &&
             answerRigth[0].id === step.correct_answer[1]) ||
@@ -123,10 +131,16 @@ export const StepEquations = ({
         ) {
           startAction({
             verbName: "tryStep",
-            contentID: content,
+            contentID: code,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 1,
-            stepID: step.n_step,
-            extra: { response: { answerLeft, answerRigth } },
+            kcsIDs: step.kcs,
+            extra: {
+              response: { answerLeft, answerRigth },
+              attemps: attempts,
+              hints: hintsShow,
+            },
           });
           setStepCorrect(state => [...state, [answerLeft[0].value, answerRigth[0].value]]);
           setColor(prev => [
@@ -143,12 +157,19 @@ export const StepEquations = ({
           setIsCorrect(true);
           checkLastStep();
         } else {
+          setAttempts(prev => prev + 1);
           startAction({
             verbName: "tryStep",
-            contentID: content,
+            contentID: code,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 0,
-            stepID: step.n_step,
-            extra: { response: { answerLeft, answerRigth } },
+            kcsIDs: step.kcs,
+            extra: {
+              response: { answerLeft, answerRigth },
+              attemps: attempts,
+              hints: hintsShow,
+            },
           });
           setIdAnswer([answerLeft[0].id, answerRigth[0].id]);
           setFirstTimeHint(false);
@@ -247,7 +268,8 @@ export const StepEquations = ({
                   setNewHintAvaliable={setNewHintAvaliable}
                   answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
-                  content={content}
+                  code={code}
+                  setHintsShow={setHintsShow}
                 />
               </Grid>
 
@@ -266,7 +288,8 @@ export const StepEquations = ({
                       setNewHintAvaliable={setNewHintAvaliable}
                       answerId={idAnswer}
                       newHintAvaliable={newHintAvaliable}
-                      content={content}
+                      code={code}
+                      setHintsShow={setHintsShow}
                     />
                   </div>
                 </Flex>

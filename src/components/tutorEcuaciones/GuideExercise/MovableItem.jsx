@@ -5,7 +5,6 @@ import TeX from "@matejmazur/react-katex";
 import { useEffect } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { BOX, COLUMN1, COLUMN2, DRAG_TEXT } from "../../../types";
-import ExerciseContext from "../../../context/exercise/exerciseContext";
 import { useAction } from "../../../utils/action";
 
 const style = {
@@ -16,10 +15,18 @@ const style = {
   cursor: "move",
 };
 
-export const MovableItem = ({ value, column, setItems, items, answer, type, isCorrect, nStep }) => {
+export const MovableItem = ({
+  answer,
+  column, // can be COLUMN1 or COLUMN2 (panel below or panel above)
+  content,
+  isCorrect,
+  items, // object with the values of the "answers" field from the json file and a "column" field with the column type (COLUMN1 or COLUMN2)
+  nStep,
+  setItems,
+  type,
+  value, // value is the value that is in the column (either COLUMN1 or COLUMN2)
+}) => {
   const [isCorrecto, setIsCorrect] = useState(true);
-  const exerciseContext = useContext(ExerciseContext);
-  const { content } = exerciseContext;
   const startAction = useAction({});
 
   useEffect(() => {
@@ -32,6 +39,8 @@ export const MovableItem = ({ value, column, setItems, items, answer, type, isCo
     newValue = newValue.replace(/^(.)|(.)$/g, "");
   }
 
+  // change the value of the column key with columnName
+  // if the items element matches the passed value parameter
   const changeItemColumn = (value, columnName) => {
     setItems(prevState => {
       return prevState.map(e => {
@@ -43,6 +52,8 @@ export const MovableItem = ({ value, column, setItems, items, answer, type, isCo
     });
   };
 
+  // returns the answers that are in the panel above (by design it should
+  // only have one answer)
   const findItem = () => {
     const itemAnswer = items.find(item => item.column === COLUMN2);
     return itemAnswer;
@@ -53,11 +64,13 @@ export const MovableItem = ({ value, column, setItems, items, answer, type, isCo
     item: { value },
     type: BOX,
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      let existsAnswer = findItem();
+      const dropResult = monitor.getDropResult(); // gets the last card dropped
+      let existsAnswer = findItem(); // response given by the user
 
       if (existsAnswer) {
+        // The user took a card (either from the top panel or the bottom panel) and placed it in the bottom panel
         if (dropResult && dropResult.name.title === COLUMN1) {
+          // the card was dropped in the panel below
           changeItemColumn(item.value, COLUMN1);
           if (!answer) {
             startAction({
@@ -68,7 +81,9 @@ export const MovableItem = ({ value, column, setItems, items, answer, type, isCo
             });
           }
         }
+        // The user took a card (either from the top panel or the bottom panel) and placed it on the top panel
         if (dropResult && dropResult.name.title === COLUMN2) {
+          // the card was dropped in the panel above
           changeItemColumn(existsAnswer.value, COLUMN1);
           changeItemColumn(item.value, COLUMN2);
 
@@ -111,6 +126,11 @@ export const MovableItem = ({ value, column, setItems, items, answer, type, isCo
       if (existsAnswer) {
         if (column === COLUMN1) {
           changeItemColumn(existsAnswer.value, COLUMN1);
+
+          // if the key column is COLUMN1 and if value is not in
+          // COLUMN1 it must be in COLUMN2 and that state
+          // is configured, otherwise its original state,
+          // which is COLUMN1, is maintained
           changeItemColumn(value, COLUMN2);
 
           startAction({
