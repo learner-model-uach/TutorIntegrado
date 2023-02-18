@@ -35,12 +35,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
     "+": "+",
     "-": "-",
   };
-  const replaceAt = (
-    word: String,
-    min: number,
-    max: number,
-    replacement: String
-  ) => {
+  const replaceAt = (word: String, min: number, max: number, replacement: String) => {
     let fv = word.substring(0, min) + replacement + word.substring(max);
     return fv;
   };
@@ -62,13 +57,9 @@ const MQPostfixparser = (MQinfixInput: string) => {
           if (number.test(a[i - 1]!)) replacePositions.push({ i: i, lit: " " });
         }
         if (i + 1 < l) {
-          if (number.test(a[i + 1]!))
-            replacePositions.push({ i: i + 1, lit: " " });
+          if (number.test(a[i + 1]!)) replacePositions.push({ i: i + 1, lit: " " });
         }
-      } else if (
-        typeof reservedWords[literal as keyof typeof reservedWords] !=
-        "undefined"
-      ) {
+      } else if (typeof reservedWords[literal as keyof typeof reservedWords] != "undefined") {
         literal = "";
       } else {
         if (literal.length > 1) replacePositions.push({ i: i, lit: literal });
@@ -95,20 +86,10 @@ const MQPostfixparser = (MQinfixInput: string) => {
         let litAr = lit!.split("");
         lit = litAr[0]!;
         for (let j = 1; j < litAr.length; j++) lit = lit + "*" + litAr[j];
-        a = replaceAt(
-          a,
-          replacePositions[i]!.i - llit + acc,
-          replacePositions[i]!.i + acc,
-          lit
-        );
+        a = replaceAt(a, replacePositions[i]!.i - llit + acc, replacePositions[i]!.i + acc, lit);
         acc = acc + litAr.length - 1;
       } else {
-        a = replaceAt(
-          a,
-          replacePositions[i]!.i + acc,
-          replacePositions[i]!.i + acc,
-          "*"
-        );
+        a = replaceAt(a, replacePositions[i]!.i + acc, replacePositions[i]!.i + acc, "*");
         acc = acc + 1;
       }
     }
@@ -132,10 +113,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
       } else if (literal.localeCompare("\\frac") == 0) {
         stack.push(1);
         literal = "";
-      } else if (
-        typeof reservedWords[literal as keyof typeof reservedWords] !=
-        "undefined"
-      ) {
+      } else if (typeof reservedWords[literal as keyof typeof reservedWords] != "undefined") {
         literal = "";
       } else {
         literal = "";
@@ -157,12 +135,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
       }
     }
     for (let i = 0; i < replacePositions.length; i++)
-      word = replaceAt(
-        word,
-        replacePositions[i]! + i,
-        replacePositions[i]! + i + 1,
-        "/("
-      );
+      word = replaceAt(word, replacePositions[i]! + i, replacePositions[i]! + i + 1, "/(");
     word = word.replace(/\\frac/g, "");
     return word;
   };
@@ -191,10 +164,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
       if (alphabet.test(a[i]!)) {
         literal = literal + a[i];
         if (i == l - 1) output = output + " " + literal;
-      } else if (
-        typeof reservedWords[literal as keyof typeof reservedWords] !=
-        "undefined"
-      ) {
+      } else if (typeof reservedWords[literal as keyof typeof reservedWords] != "undefined") {
         //if the literal word formed is a function push into operator stack
         stack.push(literal);
         literal = "";
@@ -232,8 +202,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
           if (
             i == 0 ||
             (i > 0 &&
-              (typeof operator[a[i - 1] as keyof typeof operator] !=
-                "undefined" ||
+              (typeof operator[a[i - 1] as keyof typeof operator] != "undefined" ||
                 "(".localeCompare(a[i - 1]!) == 0))
           ) {
             cOp = "\\um";
@@ -246,8 +215,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
             precedense[cOp as keyof typeof precedense] || //if the top operator has greater precedense
             (precedense[stack[stack.length - 1] as keyof typeof precedense] ==
               precedense[cOp as keyof typeof precedense] && //if they have same precedense
-              (typeof associativity[a[i] as keyof typeof associativity] !=
-              "undefined"
+              (typeof associativity[a[i] as keyof typeof associativity] != "undefined"
                 ? associativity[a[i] as keyof typeof associativity] == "left"
                 : false))) //if current operator is left associative
         )
@@ -260,23 +228,16 @@ const MQPostfixparser = (MQinfixInput: string) => {
           //if the top operator is not "("
           if (stack.length > 0) output = output + " " + stack.pop();
         }
+        if (stack.length > 0 && "(".localeCompare(stack[stack.length - 1]!) == 0) stack.pop();
         if (
           stack.length > 0 &&
-          "(".localeCompare(stack[stack.length - 1]!) == 0
-        )
-          stack.pop();
-        if (
-          stack.length > 0 &&
-          typeof reservedWords[
-            stack[stack.length - 1] as keyof typeof reservedWords
-          ] != "undefined"
+          typeof reservedWords[stack[stack.length - 1] as keyof typeof reservedWords] != "undefined"
         )
           output = output + " " + stack.pop();
       }
     }
     while (stack.length > 0) {
-      if ("(".localeCompare(stack[stack.length - 1]!) != 0)
-        output = output + " " + stack.pop();
+      if ("(".localeCompare(stack[stack.length - 1]!) != 0) output = output + " " + stack.pop();
     }
     return output;
   };

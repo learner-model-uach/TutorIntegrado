@@ -34,7 +34,7 @@ export const Hint = ({
   answerId, // id the answer
   nStep, // "stepId" field defined in the exercise
   code, // "code" field defined in the exercise
-  setHintsShow // number of times a hint has been shown
+  setHintsShow, // number of times a hint has been shown
 }) => {
   const startAction = useAction({});
   const initialFocusRef = useRef();
@@ -48,34 +48,34 @@ export const Hint = ({
   const hintIndex = useRef(-1); // this is used to keep the index of the possible answers that the user is seeing
   const hintsAssociatedAnswer = useRef([]); // all hints associated with this idAnswer (both non-generic and generic)
   const [updateAssociatedAnswer, setUpdateAssociatedAnswer] = useState(false);
-  
+
   useEffect(() => {
     setCountHint(-1);
     setAllHints(hints);
     setHintsAvaliableList([]);
     hintIndex.current = -1;
-	
-	// function setAllHints() must be executed every time the user changes
-	// answer (the id of the answer defined in the exercise is used, if
-	// there is no answer defined in the exercise then it defaults to 0,
-	// this is to guarantee that it shows the generic answers, and this is
-	// defined in the three panel components that are parents of this
-	// component) or advances one step in the exercise and
-	// hintsAssociatedAnswer needs to update the data every time the user
-	// changes answer or advances one step in the exercise, but
-	// hintsAssociatedAnswer must be updated after setAllHints()
-	// has been updated (since getAllHints uses allHints), to
-	// avoid this race condition this updateAssociatedAnswer is used.
-	setUpdateAssociatedAnswer(true);
+
+    // function setAllHints() must be executed every time the user changes
+    // answer (the id of the answer defined in the exercise is used, if
+    // there is no answer defined in the exercise then it defaults to 0,
+    // this is to guarantee that it shows the generic answers, and this is
+    // defined in the three panel components that are parents of this
+    // component) or advances one step in the exercise and
+    // hintsAssociatedAnswer needs to update the data every time the user
+    // changes answer or advances one step in the exercise, but
+    // hintsAssociatedAnswer must be updated after setAllHints()
+    // has been updated (since getAllHints uses allHints), to
+    // avoid this race condition this updateAssociatedAnswer is used.
+    setUpdateAssociatedAnswer(true);
   }, [answerId, nStep]);
-  
+
   // ensures that allHints is defined before executing getAllHints
   // (avoid race condition)
   useEffect(() => {
     hintsAssociatedAnswer.current = getAllHints(answerId);
-	setUpdateAssociatedAnswer(false);
+    setUpdateAssociatedAnswer(false);
   }, [updateAssociatedAnswer]);
-  
+
   useEffect(() => {
     if (getHint(answerId)) {
       setDisabledHint(firstTimeHint);
@@ -83,11 +83,11 @@ export const Hint = ({
       setTimeout(() => setShake(false), 2000);
       if (newHintAvaliable) {
         setCountNotication(1);
-      };
-	}
+      }
+    }
   }, [newHintAvaliable]);
 
-  const getHint = (idAnswer) => {
+  const getHint = idAnswer => {
     if (allHints != undefined) {
       let filterHint = allHints.find(hint => {
         return hint.answers.includes(idAnswer);
@@ -97,41 +97,42 @@ export const Hint = ({
     }
     return null;
   };
-  
+
   // returns all hints that can be associated with the user's
   // response (both non-generic and generic).
-  const getAllHints = (idAnswer) => {
+  const getAllHints = idAnswer => {
     if (allHints != undefined) {
       let filterHint = allHints.filter(hint => {
         return hint.answers.includes(idAnswer);
       });
       if (filterHint != undefined) {
-        filterHint = filterHint.concat(allHints.filter(hint => hint.generic && !filterHint.includes(hint)));
-	  }
-	  else {
+        filterHint = filterHint.concat(
+          allHints.filter(hint => hint.generic && !filterHint.includes(hint)),
+        );
+      } else {
         filterHint = filterHint.concat(allHints.filter(hint => hint.generic));
-	  }
+      }
       return filterHint;
     }
     return null;
-  }
-  
+  };
+
   // The following three functions modify the index with which,
   // together with the getAllHints function, they are used to
   // choose the id of the answer that the user is seeing.
   const nextHintIndex = () => {
     hintIndex.current += 1;
-  }
+  };
 
   const backHintIndex = () => {
     hintIndex.current -= 1;
-  }
-  
+  };
+
   const openHintIndex = () => {
     hintIndex.current += 1;
-  }
+  };
 
-  const handOnClickNext = (e) => {
+  const handOnClickNext = e => {
     nextHintIndex();
     startAction({
       verbName: "requestHint",
@@ -140,10 +141,10 @@ export const Hint = ({
       hintID: hintsAssociatedAnswer.current[hintIndex.current].id,
       extra: { open: "next" },
     });
-	setCountHint((prev) => prev + 1);
+    setCountHint(prev => prev + 1);
   };
 
-  const handOnClickBack = (e) => {
+  const handOnClickBack = e => {
     backHintIndex();
     startAction({
       verbName: "requestHint",
@@ -152,25 +153,25 @@ export const Hint = ({
       hintID: hintsAssociatedAnswer.current[hintIndex.current].id,
       extra: { open: "prev" },
     });
-	setCountHint((prev) => prev - 1);
+    setCountHint(prev => prev - 1);
   };
 
-  const handOnClickHint = (e) => {
+  const handOnClickHint = e => {
     setCountNotication(0);
 
-	let newHint = getHint(answerId);
-    if(newHint) {
-	  if (newHintAvaliable) {
+    let newHint = getHint(answerId);
+    if (newHint) {
+      if (newHintAvaliable) {
         setHintsAvaliableList(prev => [...prev, newHint]);
         setAllHints(prev => prev.filter(hint => hint.id !== newHint.id));
-		openHintIndex();
-        setCountHint((prev) => prev + 1)
-	  }
-      setHintsShow((prev) => prev + 1);
-      setNewHintAvaliable(false);  
+        openHintIndex();
+        setCountHint(prev => prev + 1);
+      }
+      setHintsShow(prev => prev + 1);
+      setNewHintAvaliable(false);
     }
-	
-	startAction({
+
+    startAction({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,

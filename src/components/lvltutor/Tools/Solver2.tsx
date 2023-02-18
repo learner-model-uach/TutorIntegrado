@@ -29,7 +29,7 @@ const Mq2 = dynamic(
   () => {
     return import("./Mq2");
   },
-  { ssr: false }
+  { ssr: false },
 );
 
 interface value {
@@ -172,8 +172,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
           });
         } else {
           let completecontent = [];
-          for (let i = 0; i < test.length; i++)
-            completecontent.push(test[i]?.getStates().value);
+          for (let i = 0; i < test.length; i++) completecontent.push(test[i]?.getStates().value);
           let extra = {
             steps: Object.assign({}, completecontent),
           };
@@ -199,11 +198,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
     if (a.answer) {
       return (
         <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-          <MathComponent
-            key={"respuesta" + i}
-            tex={a.value.ans}
-            display={true}
-          />
+          <MathComponent key={"respuesta" + i} tex={a.value.ans} display={true} />
         </VStack>
       );
     } else {
@@ -232,7 +227,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         </Heading>
         <MathComponent tex={steps.steps[0]!.expression} display={true} />
         <Accordion
-          onChange={(algo) => setDefaultIndex(algo as Array<number>)}
+          onChange={algo => setDefaultIndex(algo as Array<number>)}
           index={defaultIndex}
           allowToggle={true}
           allowMultiple={true}
@@ -246,19 +241,14 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
               <h2 key={"AIh2" + i}>
                 <Alert
                   key={"AIAlert" + i}
-                  status={
-                    test[parseInt(step.stepId)]!.getStates().answer
-                      ? "success"
-                      : "info"
-                  }
+                  status={test[parseInt(step.stepId)]!.getStates().answer ? "success" : "info"}
                 >
                   <AlertIcon key={"AIAlertIcon" + i} />
                   <AccordionButton
                     key={"AIAccordionButton" + i}
                     onClick={() => {
                       let potstates = test;
-                      let potstate =
-                        potstates[parseInt(step.stepId)]?.getStates();
+                      let potstate = potstates[parseInt(step.stepId)]?.getStates();
                       if (!potstate?.open) {
                         action({
                           verbName: "openStep",
@@ -305,25 +295,14 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
               </Heading>
               <HStack>
                 <Text>Expresión:</Text>
-                <MathComponent
-                  tex={steps.steps[0]!.expression}
-                  display={true}
-                />
+                <MathComponent tex={steps.steps[0]!.expression} display={true} />
               </HStack>
               {steps.steps.map((step, i) => (
                 <Box key={"ResumenBox" + i}>
-                  <Text
-                    key={"ResumenText" + i}
-                    w="100%"
-                    justifyContent={"space-between"}
-                  >
+                  <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
                     {step.summary}
                   </Text>
-                  <MathComponent
-                    key={"ResumenMC" + i}
-                    tex={step.displayResult[0]}
-                    display={true}
-                  />
+                  <MathComponent key={"ResumenMC" + i} tex={step.displayResult[0]} display={true} />
                 </Box>
               ))}
             </VStack>

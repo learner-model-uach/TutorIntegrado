@@ -21,9 +21,7 @@
           { "hintId": 1, "hint": "La variable b (base) es 3 veces la altura." },
           { "hintId": 2, "hint": "EScribe 3h." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": ["3h"], "nextStep": "1" },
           { "answer": ["h3"], "nextStep": "1" }
@@ -47,9 +45,7 @@
           { "hintId": 1, "hint": "La altura es h y la base es b." },
           { "hintId": 2, "hint": "Escribe \\frac{b*h}{2}." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": ["bh", "2"], "nextStep": "2" },
           { "answer": ["hb", "2"], "nextStep": "2" }

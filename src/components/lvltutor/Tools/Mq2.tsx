@@ -1,12 +1,4 @@
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Stack,
-  Box,
-  HStack,
-  VStack,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
 import { MathComponent } from "../../../components/MathJax";
@@ -59,9 +51,9 @@ const Mq2 = ({
   const [ta, setTa] = useState<MathField | null>(null);
 
   //Inputsimple
-  const [alerta, setAlerta] = useState<
-    "info" | "warning" | "success" | "error" | undefined
-  >("success");
+  const [alerta, setAlerta] = useState<"info" | "warning" | "success" | "error" | undefined>(
+    "success",
+  );
   const [alertaMSG, setAlertaMSG] = useState("");
   const [alertaVisibility, setAlertaVisibility] = useState(true);
 
@@ -193,7 +185,7 @@ const Mq2 = ({
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("(");
               }}
@@ -202,7 +194,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools(")");
               }}
@@ -211,7 +203,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("^");
               }}
@@ -220,7 +212,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\sqrt");
               }}
@@ -233,7 +225,7 @@ const Mq2 = ({
                            Ademas con mousedown se puede usar preventDefault*/}
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("+");
               }}
@@ -242,7 +234,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("-");
               }}
@@ -251,7 +243,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("*");
               }}
@@ -260,7 +252,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\frac");
               }}
@@ -269,7 +261,7 @@ const Mq2 = ({
             </Button>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 clear();
               }}
@@ -277,15 +269,10 @@ const Mq2 = ({
               C
             </Button>
           </Stack>
-          <HStack
-            spacing="4px"
-            alignItems="center"
-            justifyContent="center"
-            margin={"auto"}
-          >
+          <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 if (ta != undefined) ta.keystroke("Left");
               }}
@@ -303,7 +290,7 @@ const Mq2 = ({
                   setLatex("");
                 }
               }}
-              onChange={(mathField) => {
+              onChange={mathField => {
                 //if(placeholder){setLatex("\\text{Ingresa la expresion aqui}")}
                 setLatex(() => mathField.latex());
                 refMQElement(mathField);
@@ -311,7 +298,7 @@ const Mq2 = ({
             ></EditableMathField>
             <Button
               colorScheme="teal"
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 e.preventDefault();
                 if (ta != undefined) ta.keystroke("Right");
               }}
@@ -322,12 +309,7 @@ const Mq2 = ({
           </HStack>
         </Box>
       </VStack>
-      <HStack
-        spacing="4px"
-        alignItems="center"
-        justifyContent="center"
-        margin={"auto"}
-      >
+      <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
         <Box>
           <Button
             colorScheme="teal"

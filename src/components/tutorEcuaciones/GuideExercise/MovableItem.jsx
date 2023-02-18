@@ -42,8 +42,8 @@ export const MovableItem = ({
   // change the value of the column key with columnName
   // if the items element matches the passed value parameter
   const changeItemColumn = (value, columnName) => {
-    setItems((prevState) => {
-      return prevState.map((e) => {
+    setItems(prevState => {
+      return prevState.map(e => {
         return {
           ...e,
           column: e.value === value ? columnName : e.column,
@@ -55,7 +55,7 @@ export const MovableItem = ({
   // returns the answers that are in the panel above (by design it should
   // only have one answer)
   const findItem = () => {
-    const itemAnswer = items.find((item) => item.column === COLUMN2);
+    const itemAnswer = items.find(item => item.column === COLUMN2);
     return itemAnswer;
   };
 
@@ -69,7 +69,8 @@ export const MovableItem = ({
 
       if (existsAnswer) {
         // The user took a card (either from the top panel or the bottom panel) and placed it in the bottom panel
-        if (dropResult && dropResult.name.title === COLUMN1) { // the card was dropped in the panel below
+        if (dropResult && dropResult.name.title === COLUMN1) {
+          // the card was dropped in the panel below
           changeItemColumn(item.value, COLUMN1);
           if (!answer) {
             startAction({
@@ -81,7 +82,8 @@ export const MovableItem = ({
           }
         }
         // The user took a card (either from the top panel or the bottom panel) and placed it on the top panel
-        if (dropResult && dropResult.name.title === COLUMN2) { // the card was dropped in the panel above
+        if (dropResult && dropResult.name.title === COLUMN2) {
+          // the card was dropped in the panel above
           changeItemColumn(existsAnswer.value, COLUMN1);
           changeItemColumn(item.value, COLUMN2);
 
@@ -111,7 +113,7 @@ export const MovableItem = ({
         }
       }
     },
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -124,7 +126,7 @@ export const MovableItem = ({
       if (existsAnswer) {
         if (column === COLUMN1) {
           changeItemColumn(existsAnswer.value, COLUMN1);
-		  
+
           // if the key column is COLUMN1 and if value is not in
           // COLUMN1 it must be in COLUMN2 and that state
           // is configured, otherwise its original state,
@@ -177,11 +179,7 @@ export const MovableItem = ({
       fontSize={{ base: "10px" }}
       style={{ textAlign: "center", opacity: opacity }}
     >
-      {type == "drag-text" ? (
-        <Text>{newValue}</Text>
-      ) : (
-        <TeX math={value} as="figcaption" />
-      )}
+      {type == "drag-text" ? <Text>{newValue}</Text> : <TeX math={value} as="figcaption" />}
     </Flex>
   );
 };

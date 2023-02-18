@@ -1,7 +1,4 @@
-const MQPostfixSolver = (
-  MQPostfixExpression: string,
-  ValuesObject: object[]
-) => {
+const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) => {
   const value = { name: String, value: Number };
 
   const valueReplace = (input: string, values: typeof value[]) => {

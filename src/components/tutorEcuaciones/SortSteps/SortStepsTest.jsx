@@ -38,7 +38,7 @@ export const SortStepsTest = ({
   
   useEffect(() => {
     if (steps) {
-      const getTextCards = steps.map((step) => {
+      const getTextCards = steps.map(step => {
         return { id: step.n_step, text: step.left_text };
       });
       shuffleCard(getTextCards);
@@ -47,14 +47,14 @@ export const SortStepsTest = ({
   }, [steps]);
 
   const findCard = useCallback(
-    (id) => {
-      const card = cards.filter((c) => `${c.id}` === id)[0];
+    id => {
+      const card = cards.filter(c => `${c.id}` === id)[0];
       return {
         card,
         index: cards.indexOf(card),
       };
     },
-    [cards]
+    [cards],
   );
 
   const moveCard = useCallback(
@@ -66,10 +66,10 @@ export const SortStepsTest = ({
             [index, 1],
             [atIndex, 0, card],
           ],
-        })
+        }),
       );
     },
-    [findCard, cards, setCards]
+    [findCard, cards, setCards],
   );
 
   const [, drop] = useDrop(() => ({ accept: BOX }));
@@ -88,7 +88,7 @@ export const SortStepsTest = ({
     );
   };
 
-  const correctOrderHandler = (e) => {
+  const correctOrderHandler = e => {
     const isCorrect = cards.map((card, id) => {
       if (card.id === id) {
         return CORRECT_ANSWER_COLOR;
@@ -98,7 +98,7 @@ export const SortStepsTest = ({
     });
     setCardColor(isCorrect);
 
-    if (isCorrect.some((color) => color === INCORRECT_ANSWER_COLOR)) {
+    if (isCorrect.some(color => color === INCORRECT_ANSWER_COLOR)) {
       startAction({
         verbName: "checkOrder",
         result: 0,
@@ -116,21 +116,17 @@ export const SortStepsTest = ({
     }
   };
 
-  const handlerNextExercise = (e) => {
+  const handlerNextExercise = e => {
     e.preventDefault();
     startAction({
       verbName: "nextContent",
     });
     if (idExercise < 7) {
-      setTabIndex((prev) => prev + 1);
+      setTabIndex(prev => prev + 1);
     } else {
       setShowFeedback(true);
     }
-    setColorTab((prev) => [
-      ...prev.slice(0, idExercise),
-      "#91e87b",
-      ...prev.slice(idExercise + 1),
-    ]);
+    setColorTab(prev => [...prev.slice(0, idExercise), "#91e87b", ...prev.slice(idExercise + 1)]);
   };
 
   return (
@@ -195,10 +191,7 @@ export const SortStepsTest = ({
                     {NEXT_EXERCISE_BUTTOM_NAME}
                   </Button>
                 ) : (
-                  <Button
-                    onClick={() => setNextPhase(false)}
-                    colorScheme="twitter"
-                  >
+                  <Button onClick={() => setNextPhase(false)} colorScheme="twitter">
                     {NEXT_STEP_BUTTOM_NAME}
                   </Button>
                 )}

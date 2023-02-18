@@ -41,7 +41,7 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
     setColor(
       Array(exercise.steps.length)
         .fill(0)
-        .map((e) => ACCORDION_COLOR)
+        .map(e => ACCORDION_COLOR),
     );
     setDisableState([true]);
     setIndexStep([0]);
@@ -58,32 +58,37 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
       }, 1000);
     }
   }, [numStep]); // the numStep changes to numStep + 1 when a step is completed
-  
-  const updateObjectSteps = (stepId, attempts, hintsShow, duration) => { // update the data in the "steps" field of the completeContent action
-    setCompleteContentSteps((prev) => ({...prev, [stepId]: { // create an object with key "id" of the step
-      att: attempts, // number of user attempts to response
-      hints: hintsShow, // number of times the user saw a hint
-      lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
-      duration: duration
-    }}));
-  }
-  
-  const onClickAccordionStep = (index) => {
+
+  const updateObjectSteps = (stepId, attempts, hintsShow, duration) => {
+    // update the data in the "steps" field of the completeContent action
+    setCompleteContentSteps(prev => ({
+      ...prev,
+      [stepId]: {
+        // create an object with key "id" of the step
+        att: attempts, // number of user attempts to response
+        hints: hintsShow, // number of times the user saw a hint
+        lastHint: false, // in this tutorial there is no last hint, since the hints change according to the error
+        duration: duration,
+      },
+    }));
+  };
+
+  const onClickAccordionStep = index => {
     if (index.length > isOpenIndexes.length) {
       let stepID = index.at(-1);
       startAction({
         verbName: "openStep",
         stepID: stepID + "",
         contentID: exercise.code,
-        topicID: topicId
+        topicID: topicId,
       });
     } else {
-      let stepID = isOpenIndexes.filter((id) => !index.includes(id));
+      let stepID = isOpenIndexes.filter(id => !index.includes(id));
       startAction({
         verbName: "closeStep",
         stepID: stepID.at(0) + "",
         contentID: exercise.code,
-        topicID: topicId
+        topicID: topicId,
       });
     }
     setIsOpenIndexes(index);
@@ -96,7 +101,7 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
         defaultIndex={indexStep}
         key={exercise.code}
         style={{ width: "100%" }}
-        onChange={(index) => onClickAccordionStep(index)}
+        onChange={index => onClickAccordionStep(index)}
       >
         {exercise &&
           exercise.steps.map((step, index) => (
@@ -109,7 +114,7 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
               className={styles["accordionPadding"]}
             >
               <AccordionButton
-                ref={(element) => (inputRef.current[index] = element)}
+                ref={element => (inputRef.current[index] = element)}
                 bg={
                   color[index] === ACCORDION_COLOR
                     ? ACCORDION_COLOR

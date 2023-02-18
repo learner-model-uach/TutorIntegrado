@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { StaticMathField, addStyles } from "react-mathquill";
 import {
   Button,
   Popover,
@@ -9,8 +10,11 @@ import {
   PopoverCloseButton,
   Center,
   Badge,
+  useToast,
+  Box,
 } from "@chakra-ui/react";
-import { useAction } from "../../../utils/action";
+import { useAction } from "../utils/action";
+import { MathComponent } from "mathjax-react";
 
 const Hint = ({
   hints, //all hints
@@ -23,23 +27,28 @@ const Hint = ({
   setError,
   hintCount,
   setHints,
+  setLastHint,
 }) => {
+  addStyles(); //mathquill
   const [i, setI] = useState(0); //i es el último hint desbloqueado
   const [list] = useState([hints[0]]);
   const [j, setJ] = useState(0); //j es el hint que se despliega con los botones
   const [firstError, setFirstError] = useState(false);
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
+  const toast = useToast();
+
+  if (hints.length == i + 1) {
+    setLastHint(true);
+  }
 
   const ayuda = () => {
     const responseStudent =
       typeof response[0] == "object"
-        ? response.map((e) =>
-            e.current.value.replace(/[*]| /g, "").toLowerCase()
-          )
+        ? response.map(e => e.current.value.replace(/[*]| /g, "").toLowerCase())
         : response; //array clean
-    const correct = responseStudent.map((e) => true); //array of true
-    const listMatchingError = matchingError.map((e) => {
+    const correct = responseStudent.map(e => true); //array of true
+    const listMatchingError = matchingError.map(e => {
       //return array of boolean (true if matchingError)
       let listBool = [];
       for (let k = 0; k < e.error.length; k++) {
@@ -52,9 +61,8 @@ const Hint = ({
       return listBool;
     });
 
-    const validate = (element) =>
-      JSON.stringify(element) === JSON.stringify(correct);
-    const repite = list.map((e) => {
+    const validate = element => JSON.stringify(element) === JSON.stringify(correct);
+    const repite = list.map(e => {
       //return array of boolean (true if matchingError)
       let listBool = [];
       if (e.error) {
@@ -77,9 +85,9 @@ const Hint = ({
         list.push(
           matchingError[
             listMatchingError.findIndex(
-              (element) => JSON.stringify(element) === JSON.stringify(correct)
+              element => JSON.stringify(element) === JSON.stringify(correct),
             )
-          ]
+          ],
         );
         setCount(count + 1);
       } else if (!repite.some(validate) && hints.length + count > list.length) {
@@ -87,9 +95,9 @@ const Hint = ({
         list.push(
           matchingError[
             listMatchingError.findIndex(
-              (element) => JSON.stringify(element) === JSON.stringify(correct)
+              element => JSON.stringify(element) === JSON.stringify(correct),
             )
-          ]
+          ],
         );
         setI(i + 1);
         setJ(i + 1);
@@ -110,6 +118,17 @@ const Hint = ({
       setFirstError(true);
     }
     setError(false);
+    action({
+      verbName: "requestHint",
+      stepID: "" + stepId,
+      contentID: contentId,
+      topicID: topicId,
+      hintID: "" + list[[list.length - 1]].hintId, //last element hintId of list of hints avalibles
+      extra: {
+        source: "Open",
+        lastHint: hints.length == i + 1 ? true : false,
+      },
+    });
   };
 
   const siguiente = () => {
@@ -120,9 +139,10 @@ const Hint = ({
         stepID: "" + stepId,
         contentID: contentId,
         topicID: topicId,
-        hintID: "" + list[j].hintId,
+        hintID: "" + list[j + 1].hintId,
         extra: {
           source: "next",
+          lastHint: hints.length == i + 1 ? true : false,
         },
       });
     }
@@ -136,37 +156,25 @@ const Hint = ({
         stepID: "" + stepId,
         contentID: contentId,
         topicID: topicId,
-        hintID: "" + list[j].hintId,
+        hintID: "" + list[j - 1].hintId,
         extra: {
           source: "prev",
+          lastHint: hints.length == i + 1 ? true : false,
         },
       });
     }
   };
-
   return (
     <div>
       <Popover
         onOpen={() => {
-          setHints(
-            ++hintCount
-          ); /*cuenta hint cada vez que se despliege la ayuda */
+          setHints(++hintCount); /*cuenta hint cada vez que se despliege la ayuda */
         }}
       >
         <PopoverTrigger>
           <Button
             onClick={() => {
               ayuda();
-              action({
-                verbName: "requestHint",
-                stepID: "" + stepId,
-                contentID: contentId,
-                topicID: topicId,
-                hintID: "" + list[j].hintId,
-                extra: {
-                  source: "Open",
-                },
-              });
             }}
             colorScheme="cyan"
             variant="outline"
@@ -174,12 +182,7 @@ const Hint = ({
           >
             Ayuda &nbsp;
             {error && i < hints.length + count - 1 ? ( //en esta parte va la notificación de un nuevo hint
-              <Badge
-                boxSize="1.25em"
-                color="white"
-                bg="tomato"
-                borderRadius="lg"
-              >
+              <Badge boxSize="1.25em" color="white" bg="tomato" borderRadius="lg">
                 1
               </Badge>
             ) : (
@@ -194,27 +197,20 @@ const Hint = ({
           <PopoverCloseButton />
           <PopoverBody>
             <br />
-            {list[j].hint} <br />
+            {list[j].hint}
+            <Center>
+              {list[j].expression ? <StaticMathField>{list[j].expression}</StaticMathField> : null}
+            </Center>
             <br />
             <Center>
               {list[j - 1] && (
-                <Button
-                  onClick={atras}
-                  colorScheme="cyan"
-                  variant="outline"
-                  size="sm"
-                >
+                <Button onClick={atras} colorScheme="cyan" variant="outline" size="sm">
                   atrás
                 </Button>
               )}
               &nbsp;&nbsp;&nbsp;
               {list[j + 1] && (
-                <Button
-                  onClick={siguiente}
-                  colorScheme="cyan"
-                  variant="outline"
-                  size="sm"
-                >
+                <Button onClick={siguiente} colorScheme="cyan" variant="outline" size="sm">
                   siguiente
                 </Button>
               )}

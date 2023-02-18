@@ -27,9 +27,7 @@
           { "hintId": 2, "hint": "La sombra que nos da el árbol es C." },
           { "hintId": 3, "hint": "Escribe B+C en la casilla." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 4, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 4, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": ["b+c"], "nextStep": "1" },
           { "answer": ["c+b"], "nextStep": "1" }
@@ -55,9 +53,7 @@
           },
           { "hintId": 2, "hint": "Esribe \\frac{B+C}{A}." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": ["b+c", "a"], "nextStep": "2" },
           { "answer": ["c+b", "a"], "nextStep": "2" }

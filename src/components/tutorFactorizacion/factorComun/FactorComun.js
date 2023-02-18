@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FCstep1 from "./steps/FCstep1";
 import { MathComponent } from "../../../components/MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
@@ -11,6 +11,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Heading,
   Alert,
   Box,
   Wrap,
@@ -20,43 +21,46 @@ import {
 } from "@chakra-ui/react";
 import { FCsummary } from "../tools/Summary";
 import { SelectStep } from "../tools/SelectStep";
-//import { VideoScreen } from "../tools/VideoScreen";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
-export const FC = ({ exercise, nextRouter }) => {
+export const FC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const action = useAction(); //send action to central system
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
   const [select, setSelect] = useState(exercise.selectSteps); //select is true when step is chosen, false when not selectStep
-  const steps = exercise.steps.map((i) => i.stepTitle); //list of all stepTitle for selectStep
+  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+
+  useEffect(() => {
+    action({
+      verbName: "completeContent",
+      contentID: exercise.code,
+      topicID: topic,
+      result: 1,
+      extra: extras,
+    });
+  }, [step1Valid]);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
   return (
     <div>
-      <BreadcrumbTutor
-        root="Factorización"
-        item={exercise.title}
-      ></BreadcrumbTutor>
-
-      <Wrap>
+      <Heading as="h1" size="lg" noOfLines={3}>
+        {exercise.title}
+      </Heading>
+      <Heading as="h5" size="sm" mt={2}>
         {exercise.text}
-        <Spacer />
-        {
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
+      </Heading>
 
       <Wrap justify="center">
         {loading && <Loading />}
-        <MathComponent
-          tex={exercise.steps[0].expression}
-          display={true}
-          onSuccess={change}
-        />
+        <MathComponent tex={exercise.steps[0].expression} display={true} onSuccess={change} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -64,14 +68,14 @@ export const FC = ({ exercise, nextRouter }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0) && !select) {
+                if (index.some(element => element === 0) && !select) {
                   //closeTab
-                  setIndex(index.filter((e) => e !== 0));
+                  setIndex(index.filter(e => e !== 0));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise?.steps[0]?.stepId,
                     contentID: exercise?.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   //no select= false (openTab)
@@ -80,7 +84,7 @@ export const FC = ({ exercise, nextRouter }) => {
                     verbName: "openStep",
                     stepID: "" + exercise?.steps[0]?.stepId,
                     contentID: exercise?.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -96,7 +100,7 @@ export const FC = ({ exercise, nextRouter }) => {
                       steps={steps}
                       setSelect={setSelect}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -112,7 +116,9 @@ export const FC = ({ exercise, nextRouter }) => {
                   setStep1Valid={setStep1Valid}
                   step1Valid={step1Valid}
                   contentID={exercise.code}
-                  topicID={exercise.contentType}
+                  topicID={sessionState.topic}
+                  extra={extra1}
+                  setExtra={setExtra1}
                 ></FCstep1>
               )}
             </>
@@ -123,17 +129,8 @@ export const FC = ({ exercise, nextRouter }) => {
       {step1Valid != null && (
         <>
           <FCsummary exercise={exercise.steps[0]} />
-          <Stack padding="1em" alignItems="center">
-            <Link href={nextRouter}>
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
         </>
       )}
     </div>
   );
 };
-
-//export default FC;

@@ -4,7 +4,22 @@ import type { AuthState } from "./Auth";
 import type { User } from "@auth0/auth0-react";
 import type { UserRole } from "../graphql";
 
+interface ContentJson {
+  code: string;
+  title: string;
+  type: string;
+  meta: Object;
+  steps: Array<Object>;
+}
+export interface selectionDataType {
+  optionCode: string;
+  optionTitle: string;
+  optionBest: boolean;
+  optionSelected: boolean;
+}
+
 export const sessionState = proxy<{
+  [x: string]: any;
   currentUser: typeof AuthState.user | null;
   tag: string[];
   domain: string;
@@ -12,14 +27,16 @@ export const sessionState = proxy<{
   sessionId: string;
   learnerModel: Object;
   currentContent: {
-    id: number | null;
+    id: string | null;
     code: string;
     label: string;
     description: string;
     kcs: Object[];
-    json: Object;
-    state: Object;
+    json: ContentJson;
+    state?: Object;
   };
+  selectionData: selectionDataType[];
+  nextContentPath: string | undefined;
   learnerTraces: Object[];
 }>({
   currentUser: null,
@@ -36,9 +53,11 @@ export const sessionState = proxy<{
     label: "",
     description: "",
     kcs: [],
-    json: {},
+    json: null,
     state: {},
   },
+  selectionData: [],
+  nextContentPath: "",
   learnerTraces: [],
 });
 
@@ -72,7 +91,7 @@ export const sessionStateInitial = (
       }
     | null
     | undefined,
-  auth0User: User | null
+  auth0User: User | null,
 ) => {
   sessionState.currentUser = JSON.parse(JSON.stringify(user));
   sessionState.sessionId = `${auth0User?.updated_at}`;
@@ -82,12 +101,7 @@ export const sessionStateInitial = (
       if (value == null) {
         //create valuekey in sessionState in indexedBD
         sessionStateBD
-          .setItem(
-            key,
-            JSON.parse(
-              JSON.stringify(sessionState[key as keyof typeof sessionState])
-            )
-          )
+          .setItem(key, JSON.parse(JSON.stringify(sessionState[key as keyof typeof sessionState])))
           .then(function () {
             // Do other things once the value has been saved.
             console.log("create 'key' in sessionState");

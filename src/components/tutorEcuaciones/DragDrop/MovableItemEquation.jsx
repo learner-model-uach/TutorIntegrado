@@ -28,8 +28,8 @@ export const MovableItemEquation = ({
   }, [isCorrect]);
   
   const changeItemColumn = (value, columnName) => {
-    setItems((prevState) => {
-      return prevState.map((e) => {
+    setItems(prevState => {
+      return prevState.map(e => {
         return {
           ...e,
           column: e.value === value ? columnName : e.column,
@@ -38,12 +38,12 @@ export const MovableItemEquation = ({
     });
   };
 
-  const findItem = (column) => {
-    const itemAnswer = items.find((item) => item.column === column);
+  const findItem = column => {
+    const itemAnswer = items.find(item => item.column === column);
     return itemAnswer;
   };
 
-  const findItemValue = (value) => items.find((item) => item.value === value);
+  const findItemValue = value => items.find(item => item.value === value);
 
   const [{ isDragging }, drag] = useDrag({
     canDrag: () => isCorrecto,
@@ -92,7 +92,7 @@ export const MovableItemEquation = ({
         changeItemColumn(item.value, COLUMN3);
       }
     },
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -144,11 +144,7 @@ export const MovableItemEquation = ({
       className={styles["movable-item"]}
       style={{ style }}
     >
-      <TeX
-        math={value}
-        as="figcaption"
-        style={{ alignItems: "center", fontSize: "12px" }}
-      />
+      <TeX math={value} as="figcaption" style={{ alignItems: "center", fontSize: "12px" }} />
     </div>
   );
 };

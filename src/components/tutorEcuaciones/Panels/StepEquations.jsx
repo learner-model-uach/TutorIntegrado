@@ -28,7 +28,7 @@ export const StepEquations = ({
   code, // "code" field of json file
   topicId, // "id" field in the system
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
-  completeContentSteps // object used in the "steps" field of completeContent
+  completeContentSteps, // object used in the "steps" field of completeContent
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -46,7 +46,7 @@ export const StepEquations = ({
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
 
   useEffect(() => {
-    setItems(step.answers.map((answer) => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
+    setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -76,8 +76,8 @@ export const StepEquations = ({
 
   const returnItemsForColumn = (columnName, valores, isCorrect) => {
     return valores
-      .filter((item) => item.column === columnName)
-      .map((item) => (
+      .filter(item => item.column === columnName)
+      .map(item => (
         <MovableItemEquation
           type={step.type}
           key={item.id}
@@ -93,7 +93,8 @@ export const StepEquations = ({
   };
 
   const checkLastStep = () => {
-    if (nStep == totalSteps - 1) { // it is executed when all the steps are completed
+    if (nStep == totalSteps - 1) {
+      // it is executed when all the steps are completed
       setNextExercise(true);
       startAction({
         verbName: "completeContent",
@@ -101,13 +102,13 @@ export const StepEquations = ({
         topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
-          steps: completeContentSteps // object defined in updateObjectSteps
-        }
+          steps: completeContentSteps, // object defined in updateObjectSteps
+        },
       });
     }
   };
 
-  const checkAnswers = (e) => {
+  const checkAnswers = e => {
     e.preventDefault();
 
     const answerLeft = checkCorrectAnswer(COLUMN2);
@@ -138,20 +139,17 @@ export const StepEquations = ({
             extra: {
               response: { answerLeft, answerRigth },
               attemps: attempts,
-              hints: hintsShow
+              hints: hintsShow,
             },
           });
-          setStepCorrect((state) => [
-            ...state,
-            [answerLeft[0].value, answerRigth[0].value],
-          ]);
-          setColor((prev) => [
+          setStepCorrect(state => [...state, [answerLeft[0].value, answerRigth[0].value]]);
+          setColor(prev => [
             ...prev.slice(0, nStep),
             CORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
           ]);
-          setNumStep((prevState) => prevState + 1);
-          setDisableState((prevState) => [...prevState, true]);
+          setNumStep(prevState => prevState + 1);
+          setDisableState(prevState => [...prevState, true]);
           setAlert({
             status: "success",
             text: "Respuesta Correcta",
@@ -159,7 +157,7 @@ export const StepEquations = ({
           setIsCorrect(true);
           checkLastStep();
         } else {
-          setAttempts((prev) => prev + 1);
+          setAttempts(prev => prev + 1);
           startAction({
             verbName: "tryStep",
             contentID: code,
@@ -170,14 +168,14 @@ export const StepEquations = ({
             extra: {
               response: { answerLeft, answerRigth },
               attemps: attempts,
-              hints: hintsShow
+              hints: hintsShow,
             },
           });
           setIdAnswer([answerLeft[0].id, answerRigth[0].id]);
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
 
-          setColor((prev) => [
+          setColor(prev => [
             ...prev.slice(0, nStep),
             INCORRECT_ANSWER_COLOR,
             ...prev.slice(nStep + 1),
@@ -192,8 +190,8 @@ export const StepEquations = ({
     }
   };
 
-  const checkCorrectAnswer = (column) => {
-    return items.filter((item) => item.column === column);
+  const checkCorrectAnswer = column => {
+    return items.filter(item => item.column === column);
   };
 
   return (
@@ -209,10 +207,7 @@ export const StepEquations = ({
         >
           <Stack direction={{ base: ["row", "column"], xl: ["column", "row"] }}>
             <Flex marginRight={{ xl: "250px" }} margin={{ base: "auto" }}>
-              <Text
-                display={{ base: "none", xl: "block" }}
-                margin={{ base: "auto" }}
-              >
+              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
                 {step.left_text}
               </Text>
 
@@ -235,9 +230,7 @@ export const StepEquations = ({
                     className={`${styles["column"]} ${styles["second-column"]}`}
                     style={{ padding: 10 }}
                   >
-                    <div>
-                      {items && returnItemsForColumn(COLUMN2, items, isCorrect)}
-                    </div>
+                    <div>{items && returnItemsForColumn(COLUMN2, items, isCorrect)}</div>
                   </ColumnDragPanel>
                   <Text
                     style={{
@@ -252,9 +245,7 @@ export const StepEquations = ({
                     title={COLUMN3}
                     className={`${styles["column"]} ${styles["second-column"]}`}
                   >
-                    <div>
-                      {items && returnItemsForColumn(COLUMN3, items, isCorrect)}
-                    </div>
+                    <div>{items && returnItemsForColumn(COLUMN3, items, isCorrect)}</div>
                   </ColumnDragPanel>
                 </Flex>
               </Flex>

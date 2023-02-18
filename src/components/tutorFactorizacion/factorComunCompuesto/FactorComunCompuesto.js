@@ -17,28 +17,39 @@ import {
   Box,
   Alert,
   Wrap,
-  Spacer,
-  Stack,
-  Button,
 } from "@chakra-ui/react";
-import { VideoScreen } from "../tools/VideoScreen";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
-export const FCC = ({ exercise }) => {
+export const FCC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
-  //info usuario, ---
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 3 is completed
   const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
-  //selectStep
   const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 3 correct
-  const steps = exercise.steps.map((i) => i.stepTitle); //list of all stepTitle for selectStep
+  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
   const action = useAction(); //send action to central system
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra3, setExtra3] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  extras.steps[2] = extra3;
+  useEffect(() => {
+    action({
+      verbName: "completeContent",
+      contentID: exercise.code,
+      topicID: topic,
+      result: 1,
+      extra: extras,
+    });
+  }, [step3Valid]);
 
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
@@ -58,26 +69,13 @@ export const FCC = ({ exercise }) => {
 
   return (
     <>
-      <BreadcrumbTutor
-        root="Factorización"
-        item={exercise.title}
-      ></BreadcrumbTutor>
+      <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
-      <Wrap>
-        {exercise.text}
-        <Spacer />
-        {
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
+      <Wrap>{exercise.text}</Wrap>
 
       <Wrap justify="center">
         {loading && <Loading />}
-        <MathComponent
-          tex={exercise.steps[0].expression}
-          display={true}
-          onSuccess={change}
-        />
+        <MathComponent tex={exercise.steps[0].expression} display={true} onSuccess={change} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -85,13 +83,13 @@ export const FCC = ({ exercise }) => {
           <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 0)) {
-                  setIndex(index.filter((e) => e !== 0));
+                if (index.some(element => element === 0)) {
+                  setIndex(index.filter(e => e !== 0));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -99,7 +97,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -115,7 +113,7 @@ export const FCC = ({ exercise }) => {
                       steps={steps}
                       setSelect={setSelect}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -131,7 +129,9 @@ export const FCC = ({ exercise }) => {
                 step1Valid={step1Valid}
                 stepId={"" + exercise.steps[0].stepId}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
+                extra={extra1}
+                setExtra={setExtra1}
               ></FCCstep1>
             )}
           </AccordionPanel>
@@ -139,23 +139,17 @@ export const FCC = ({ exercise }) => {
 
         <AccordionItem isDisabled={select2}>
           <Alert
-            colorScheme={
-              step2Valid == null
-                ? step1Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 1)) {
-                  setIndex(index.filter((e) => e !== 1));
+                if (index.some(element => element === 1)) {
+                  setIndex(index.filter(e => e !== 1));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(1));
@@ -163,7 +157,7 @@ export const FCC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -179,7 +173,7 @@ export const FCC = ({ exercise }) => {
                       steps={steps}
                       setSelect={setSelect2}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -194,7 +188,9 @@ export const FCC = ({ exercise }) => {
                 setStep2Valid={setStep2Valid}
                 step2Valid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
+                extra={extra2}
+                setExtra={setExtra2}
               ></FCCstep2>
             )}
           </AccordionPanel>
@@ -202,23 +198,17 @@ export const FCC = ({ exercise }) => {
 
         <AccordionItem isDisabled={select3}>
           <Alert
-            colorScheme={
-              step3Valid == null
-                ? step2Valid == null
-                  ? "gray"
-                  : "blue"
-                : "green"
-            }
+            colorScheme={step3Valid == null ? (step2Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
-                if (index.some((element) => element === 2)) {
-                  setIndex(index.filter((e) => e !== 2));
+                if (index.some(element => element === 2)) {
+                  setIndex(index.filter(e => e !== 2));
                   action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[2].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(2));
@@ -226,14 +216,13 @@ export const FCC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[2].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
             >
               <Box flex="1" textAlign="left">
-                {!select3 &&
-                  exercise.steps[exercise.steps[1].answers.nextStep].stepTitle}
+                {!select3 && exercise.steps[exercise.steps[1].answers[0].nextStep].stepTitle}
                 {step3Valid != null && !select3 && "    ✔ "}
                 {select3 && step2Valid != null && (
                   <Wrap>
@@ -243,7 +232,7 @@ export const FCC = ({ exercise }) => {
                       steps={steps}
                       setSelect={setSelect3}
                       contentID={exercise.code}
-                      topic={exercise.contentType}
+                      topic={topic}
                     ></SelectStep>
                   </Wrap>
                 )}
@@ -258,6 +247,9 @@ export const FCC = ({ exercise }) => {
                 setStep1Valid={setStep3Valid}
                 step1Valid={step3Valid}
                 contentID={exercise.code}
+                topicID={topic}
+                extra={extra3}
+                setExtra={setExtra3}
               ></FCstep1>
             )}
           </AccordionPanel>
@@ -266,20 +258,9 @@ export const FCC = ({ exercise }) => {
 
       {step3Valid != null && (
         <>
-          {/*<FCCsummary 
-            exercise={exercise}
-      />*/}
-          <Stack padding="1em" alignItems="center">
-            <Link href="/DC1">
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
+          <FCCsummary exercise={exercise} />
         </>
       )}
     </>
   );
 };
-
-//export default FCC;

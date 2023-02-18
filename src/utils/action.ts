@@ -30,7 +30,7 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
         }
       },
       retry: 3,
-    }
+    },
   );
 
   const latestMutation = useLatestRef(mutation.mutate);
@@ -57,6 +57,6 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
         },
       });
     },
-    [projectId, latestMutation, latestBaseAction]
+    [projectId, latestMutation, latestBaseAction],
   );
 };

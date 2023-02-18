@@ -11,7 +11,6 @@ import { useAction } from "../../utils/action";
 import { useAuth } from "../Auth";
 
 export function Tutor({ exercise, topicId }) {
-
   const [idExercise, setIdExercise] = useState("");
   const [exerciseSelected, setExerciseSelected] = useState(null);
   const [totalSteps, setTotalSteps] = useState(0);
@@ -38,7 +37,7 @@ export function Tutor({ exercise, topicId }) {
     setNextExercise(false);
   }, [topicId]);
 
-  const handlerNextExercise = (e) => {
+  const handlerNextExercise = e => {
     startAction({
       verbName: "nextContent",
     });
@@ -47,17 +46,9 @@ export function Tutor({ exercise, topicId }) {
     <>
       {exerciseSelected && (
         <>
-          <Stack
-            textAlign="center"
-            fontSize={{ base: "15px", sm: "20px", lg: "25px" }}
-          >
-            <TeX as="figcaption">
-              {exerciseSelected && exerciseSelected.title}
-            </TeX>
-            <TeX
-              math={exerciseSelected ? exerciseSelected.eqc : ""}
-              as="figcaption"
-            />
+          <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
+            <TeX as="figcaption">{exerciseSelected && exerciseSelected.title}</TeX>
+            <TeX math={exerciseSelected ? exerciseSelected.eqc : ""} as="figcaption" />
           </Stack>
           <Stack marginTop="20px">
             {showOrder ? (
@@ -120,7 +111,7 @@ export function Tutor({ exercise, topicId }) {
                           lg: "16px",
                         }}
                         colorScheme="blue"
-                        onClick={() => setNextPhase((prev) => !prev)}
+                        onClick={() => setNextPhase(prev => !prev)}
                         style={{ float: "right" }}
                       >
                         {NEXT_STEP_BUTTOM_NAME}

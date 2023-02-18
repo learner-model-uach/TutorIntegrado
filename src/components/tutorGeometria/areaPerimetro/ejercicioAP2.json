@@ -23,9 +23,7 @@
           { "hintId": 1, "hint": "Uno de los lados es y - 7." },
           { "hintId": 2, "hint": "Escribe x + 7 en la casilla." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": ["x+7"], "nextStep": "1" },
           { "answer": ["7+x"], "nextStep": "1" }
@@ -48,9 +46,7 @@
           { "hintId": 1, "hint": "Un lado es 'x' y el otro es 'x + 7'." },
           { "hintId": 2, "hint": "Escribe x(x+7)." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 3, "hint": "No ha ingresado respuesta" }],
         "answers": [
           { "answer": ["x(x+7)"], "nextStep": "2" },
           { "answer": ["(x+7)x"], "nextStep": "2" },

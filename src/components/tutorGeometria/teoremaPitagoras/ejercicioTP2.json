@@ -106,9 +106,7 @@
           },
           { "hintId": 3, "hint": "Escribe x² = a² + b² en la casilla." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 4, "hint": "Debe ingresar una respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 4, "hint": "Debe ingresar una respuesta" }],
         "answers": [
           { "answer": ["x", "a", "b"], "nextStep": "3" },
           { "answer": ["x", "b", "a"], "nextStep": "3" }

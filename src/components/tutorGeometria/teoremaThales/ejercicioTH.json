@@ -28,9 +28,7 @@
           { "hintId": 3, "hint": "El radio del filtro es 8." },
           { "hintId": 4, "hint": "Escribe 10/8." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 5, "hint": "No ha ingresado respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 5, "hint": "No ha ingresado respuesta" }],
         "answers": [{ "answer": ["10", "8"], "nextStep": "1" }],
         "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del Teorema de Thales.",
         "correctMsg": "Haz planteado correctamente el Teorema de Thales",

@@ -1,110 +1,180 @@
 import { useRouter } from "next/router";
 import { CardSelection } from "../components/contentSelectComponents/CardSelection";
-import { SimpleGrid, Center } from "@chakra-ui/react";
-//import { useGQLQuery } from "rq-gql";
-//import { gql } from "../graphql";
+import { SimpleGrid, Center, Text } from "@chakra-ui/react";
+import { useUpdateModel } from "../utils/updateModel";
+import { useEffect } from "react";
+import { useAuth, withAuth } from "../components/Auth";
+import { useGQLQuery } from "rq-gql";
+import { gql } from "../graphql";
 
-function ContentSelect() {
+export default withAuth(function ContentSelect() {
+  const { user, project } = useAuth();
   const router = useRouter();
-  const topic = router.query; //topico
-  // *** Lógica por implementar para obtener 3 ejercicios grupo experimental o 1 ejercicio grupo control ***
+  const topics = "[" + router.query.topic + "]"; //topics in array
+  const registerTopic = router.query.registerTopic + ""; //topics in array
+  const nextContentPath = router.asPath + ""; //topics in array
+  const domainId = 1;
 
-  //lógica para obtener los ejercicios
-  /*const { data, isLoading } =
-    topic.type == "4"
-      ? useGQLQuery(
-          gql(`
-            query ProjectData {
-              project(code: "NivPreAlg") {
-                content(
-                  pagination: { first: 25 }
-                  filters: { topics: [3, 5, 6, 7, 8] }
-                ) {
-                  nodes {
-                    json
-                  }
-                }
-              }
-            }
-          `)
-        )
-      : useGQLQuery(
-          gql(`
-            query ProjectData {
-              project(code: "NivPreAlg") {
-                content(pagination: { first: 25 }, filters: { topics: [4] }) {
-                  nodes {
-                    json
-                  }
-                }
-              }
-            }
-          `)
-        );
+  const model = useUpdateModel();
 
-  const listEjercicio = data?.project?.content?.nodes.map(
-    (data: { json: any }) => {
-      return data.json;
-    }
+  useEffect(() => {
+    model({
+      typeModel: "BKT",
+      domainID: "1",
+    });
+  }, []);
+
+  const { data, isLoading } = useGQLQuery(
+    gql(`
+      query ProjectData {
+        contentSelection{
+          contentSelected(input:{
+            domainId:${domainId},projectId:${project.id},userId:${user.id}, topicId:${topics}, discardLast:2
+          }){
+            contentResult{
+              P{
+                id
+                code
+                json
+                kcs {
+                  code
+                }
+                description
+                label
+              }
+              Msg{
+                label
+                text
+              }
+              Order
+              Preferred
+            }
+            model
+            newP
+            PU
+            pAVGsim
+            pAVGdif
+            tableSim{
+              contentCode
+              sim
+              diff
+              probSuccessAvg
+              probSuccessMult
+            }
+            tableDifEasy{
+              contentCode
+              sim
+              diff
+              probSuccessAvg
+              probSuccessMult
+            }
+            tableDifHarder{
+              contentCode
+              sim
+              diff
+              probSuccessAvg
+              probSuccessMult
+            }
+            topicCompletedMsg{
+              label
+              text
+            }
+          }
+        }
+      }
+    `),
   );
+  const contentResult = data?.contentSelection?.contentSelected?.contentResult;
+  console.log(contentResult);
 
-  console.log(listEjercicio);*/
+  const bestExercise =
+    (contentResult ?? [])
+      .map(x => x.Preferred)
+      .reduce((out, bool, index) => (bool ? out.concat(index) : out), [])[0] ?? 0;
 
-  // *** data manual ***
-  const control = false; //false = 3 exersices, true = 1 exercise
+  const experimentGroup =
+    user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
 
-  const exercises2 = [
-    ///////////// json, sub-topic, msg ///////////////////////////
-    {
-      exercise: "ej 1", //listEjercicio[0].itemTitle,
-      msg: "explicación (prerequisitos - más fácil)",
-    },
-    {
-      exercise: "ej 2", //listEjercicio[4].itemTitle,
-      msg: "explicación (similar - seguir practicando)",
-    },
-    {
-      exercise: "ej 3", //listEjercicio[6].itemTitle,
-      msg: "explicación (más difícil - aprender más)",
-    },
-  ]; //id ejercicio
-  const bestExercise = 1;
+  const selectionData =
+    !isLoading &&
+    (experimentGroup == "tutor-control"
+      ? [
+          {
+            optionCode: contentResult[bestExercise].P.code,
+            optionTitle: contentResult[bestExercise].Msg.label,
+            optionBest: true,
+            optionSelected: false,
+          },
+        ]
+      : (contentResult ?? []).map((content, index) => {
+          return {
+            optionCode: content.P.code,
+            optionTitle: content.Msg.label,
+            optionBest: index == bestExercise,
+            optionSelected: false,
+          };
+        }));
 
-  //console.log(query.type);
+  console.log(selectionData);
+
   return (
     <>
-      <p>Selección del contenido del tópico: {topic.type}</p>
+      <p>{router.asPath}</p>
+      <p>Selección del contenido del tópico: {topics}</p>
+
       <SimpleGrid
-        columns={control ? 1 : 3}
+        columns={experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length}
         spacing="8"
         p="10"
         textAlign="center"
         rounded="lg"
       >
-        {control /*&& !isLoading*/ ? (
-          <Center>
-            <CardSelection
-              exercise={exercises2[bestExercise]?.exercise}
-              msg={exercises2[bestExercise]?.msg}
-              best={false}
-              key={0}
-            ></CardSelection>
-          </Center>
-        ) : (
-          <>
-            {exercises2.map(({ exercise, msg }, index) => (
+        {!isLoading ? (
+          experimentGroup == "tutor-control" ? (
+            <Center>
               <CardSelection
-                exercise={exercise}
-                msg={msg}
-                best={index == bestExercise}
-                key={index}
+                id={contentResult[bestExercise]?.P.id}
+                code={contentResult[bestExercise]?.P.code}
+                json={contentResult[bestExercise]?.P.json}
+                description={contentResult[bestExercise]?.P.description}
+                label={contentResult[bestExercise]?.P.label}
+                kcs={contentResult[bestExercise]?.P.kcs}
+                selectionTitle={contentResult[bestExercise]?.Msg.label}
+                selectionText={contentResult[bestExercise]?.Msg.text}
+                selectionBest={false}
+                registerTopic={registerTopic}
+                nextContentPath={nextContentPath}
+                selectionData={selectionData}
+                indexSelectionData={0}
+                key={0}
               ></CardSelection>
-            ))}
-          </>
+            </Center>
+          ) : (
+            <>
+              {contentResult.map((content, index) => (
+                <CardSelection
+                  id={content.P.id}
+                  code={content.P.code}
+                  json={content.P.json}
+                  description={content.P.description}
+                  label={content.P.label}
+                  kcs={content.P.kcs}
+                  selectionTitle={content.Msg.label}
+                  selectionText={content.Msg.text}
+                  selectionBest={index == bestExercise}
+                  registerTopic={registerTopic}
+                  nextContentPath={nextContentPath}
+                  selectionData={selectionData}
+                  indexSelectionData={index}
+                  key={index}
+                ></CardSelection>
+              ))}
+            </>
+          )
+        ) : (
+          <Text>Cargando ejercicios</Text>
         )}
       </SimpleGrid>
     </>
   );
-}
-
-export default ContentSelect;
+});

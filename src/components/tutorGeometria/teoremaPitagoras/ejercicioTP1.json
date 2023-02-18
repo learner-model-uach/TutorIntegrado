@@ -76,9 +76,7 @@
           { "hintId": 2, "hint": "La hipotenusa del triángulo es 'b'." },
           { "hintId": 3, "hint": "Escribe a² + c² en la casilla." }
         ],
-        "matchingError": [
-          { "error": [""], "hintId": 4, "hint": "Debe ingresar una respuesta" }
-        ],
+        "matchingError": [{ "error": [""], "hintId": 4, "hint": "Debe ingresar una respuesta" }],
         "answers": [
           { "answer": ["b", "c", "a"], "nextStep": "3" },
           { "answer": ["b", "a", "c"], "nextStep": "3" }
