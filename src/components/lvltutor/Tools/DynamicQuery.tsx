@@ -13,9 +13,7 @@ const ParsedQuery = ({ obj }: { obj: PotatoqueryQuery }) => {
       setPotatoQ(a);
     }
   }, [obj]);
-  return potatoQ ? (
-    <Text>{JSON.stringify(potatoQ.steps[0].answers[0])}</Text>
-  ) : null;
+  return potatoQ ? <Text>{JSON.stringify(potatoQ.steps[0].answers[0])}</Text> : null;
 };
 
 const DynamicQuery = () => {
@@ -31,7 +29,7 @@ const DynamicQuery = () => {
         }
       }
     `),
-    { code: sText.current }
+    { code: sText.current },
   );
 
   useEffect(() => {
@@ -44,7 +42,7 @@ const DynamicQuery = () => {
   return (
     <>
       <Input
-        onChange={(e) => {
+        onChange={e => {
           setText(e.target.value);
         }}
       />
