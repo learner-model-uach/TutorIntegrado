@@ -27,9 +27,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
               <SyncAuth />
               <ErrorToast />
-                <MainLayout>
-                  <Component {...pageProps} />
-                </MainLayout>
+              <MainLayout>
+                <Component {...pageProps} />
+              </MainLayout>
             </DndProvider>
           </ChakraProvider>
         </CombinedRQGQLProvider>

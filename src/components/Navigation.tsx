@@ -43,9 +43,7 @@ export function Navigation() {
               Suma de Fracciones MCM
             </SidebarLink>
             <Text fontWeight="black">Ecuaciones</Text>
-            <SidebarLink href={"contentSelect?type=11"}>
-              Ecuaciones
-            </SidebarLink>
+            <SidebarLink href={"contentSelect?type=11"}>Ecuaciones</SidebarLink>
             <SidebarLink href={"contentSelect?type=12"}>
               Sistema de ecuaciones
             </SidebarLink>
@@ -63,7 +61,9 @@ export function Navigation() {
               Racionalización
             </SidebarLink>
             <Text fontWeight="black">Geometría</Text>
-            <SidebarLink href={"contentSelect?type=17"}>Área y Perímetro</SidebarLink>
+            <SidebarLink href={"contentSelect?type=17"}>
+              Área y Perímetro
+            </SidebarLink>
             <SidebarLink href={"contentSelect?type=18"}>
               Teorema de Thales
             </SidebarLink>
