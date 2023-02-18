@@ -56,13 +56,14 @@ export const TC = ({ exercise, topic }) => {
   extras.steps[3] = extra4;
   extras.steps[4] = extra5;
   useEffect(() => {
-    action({
-      verbName: "completeContent",
-      contentID: exercise.code,
-      topicID: topic,
-      result: 1,
-      extra: extras,
-    });
+    step5Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topic,
+        result: 1,
+        extra: extras,
+      });
   }, [step5Valid]);
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2

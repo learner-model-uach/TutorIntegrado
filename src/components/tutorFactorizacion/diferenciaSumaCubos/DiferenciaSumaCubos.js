@@ -41,13 +41,14 @@ export const DSC = ({ exercise, topic }) => {
   extras.steps[0] = extra1;
   extras.steps[1] = extra2;
   useEffect(() => {
-    action({
-      verbName: "completeContent",
-      contentID: exercise.code,
-      topicID: topic,
-      result: 1,
-      extra: extras,
-    });
+    step2Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topic,
+        result: 1,
+        extra: extras,
+      });
   }, [step2Valid]);
 
   useEffect(() => {

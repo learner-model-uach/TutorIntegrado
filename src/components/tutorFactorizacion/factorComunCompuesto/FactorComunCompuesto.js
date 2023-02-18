@@ -42,13 +42,14 @@ export const FCC = ({ exercise, topic }) => {
   extras.steps[1] = extra2;
   extras.steps[2] = extra3;
   useEffect(() => {
-    action({
-      verbName: "completeContent",
-      contentID: exercise.code,
-      topicID: topic,
-      result: 1,
-      extra: extras,
-    });
+    step3Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topic,
+        result: 1,
+        extra: extras,
+      });
   }, [step3Valid]);
 
   useEffect(() => {
