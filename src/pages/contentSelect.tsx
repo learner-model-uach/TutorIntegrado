@@ -6,14 +6,15 @@ import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
+import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
   const router = useRouter();
-  const topics = "[" + router.query.topic + "]"; //topics in array
+  const topics = router.query.topic?.toString() || ""; //topics in array
   const registerTopic = router.query.registerTopic + ""; //topics in array
   const nextContentPath = router.asPath + ""; //topics in array
-  const domainId = 1;
+  const domainId = "1";
 
   const model = useUpdateModel();
 
@@ -24,15 +25,16 @@ export default withAuth(function ContentSelect() {
     });
   }, []);
 
+  console.log(topics);
+  // {
+
   const { data, isLoading } = useGQLQuery(
-    gql(`
-      query ProjectData {
-        contentSelection{
-          contentSelected(input:{
-            domainId:${domainId},projectId:${project.id},userId:${user.id}, topicId:${topics}, discardLast:2
-          }){
-            contentResult{
-              P{
+    gql(/* GraphQL */ `
+      query ProjectData($input: ContentSelectionInput!) {
+        contentSelection {
+          contentSelected(input: $input) {
+            contentResult {
+              P {
                 id
                 code
                 json
@@ -42,7 +44,7 @@ export default withAuth(function ContentSelect() {
                 description
                 label
               }
-              Msg{
+              Msg {
                 label
                 text
               }
@@ -54,28 +56,28 @@ export default withAuth(function ContentSelect() {
             PU
             pAVGsim
             pAVGdif
-            tableSim{
+            tableSim {
               contentCode
               sim
               diff
               probSuccessAvg
               probSuccessMult
             }
-            tableDifEasy{
+            tableDifEasy {
               contentCode
               sim
               diff
               probSuccessAvg
               probSuccessMult
             }
-            tableDifHarder{
+            tableDifHarder {
               contentCode
               sim
               diff
               probSuccessAvg
               probSuccessMult
             }
-            topicCompletedMsg{
+            topicCompletedMsg {
               label
               text
             }
@@ -83,6 +85,20 @@ export default withAuth(function ContentSelect() {
         }
       }
     `),
+    {
+      input: {
+        domainId,
+        projectId: project.id,
+        userId: user.id,
+        topicId: topics.split(","),
+        discardLast: 2,
+      },
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    },
   );
   const contentResult = data?.contentSelection?.contentSelected?.contentResult;
   console.log(contentResult);
@@ -135,7 +151,7 @@ export default withAuth(function ContentSelect() {
               <CardSelectionDynamic
                 id={contentResult[bestExercise]?.P.id}
                 code={contentResult[bestExercise]?.P.code}
-                json={contentResult[bestExercise]?.P.json}
+                json={contentResult[bestExercise]?.P.json as unknown as ExType}
                 description={contentResult[bestExercise]?.P.description}
                 label={contentResult[bestExercise]?.P.label}
                 kcs={contentResult[bestExercise]?.P.kcs}
@@ -151,11 +167,11 @@ export default withAuth(function ContentSelect() {
             </Center>
           ) : (
             <>
-              {contentResult.map((content, index) => (
+              {contentResult?.map((content, index) => (
                 <CardSelectionDynamic
                   id={content.P.id}
                   code={content.P.code}
-                  json={content.P.json}
+                  json={content.P.json as unknown as ExType}
                   description={content.P.description}
                   label={content.P.label}
                   kcs={content.P.kcs}
