@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "concurrently -m 1 -r pnpm:generate \"next build\" pnpm:pretty:check",
+    "predev": "pnpm generate",
     "dev": "concurrently -r next pnpm:gql:watch pnpm:open:browser",
     "generate": "graphql-codegen --config codegen.yaml",
     "gql": "graphql-codegen --config codegen.yaml",

@@ -3,5 +3,4 @@ node_modules
 *.log
 tsconfig.tsbuildinfo
 schema.graphql
-src/graphql/graphql.ts
-src/graphql/index.ts
+src/graphql
