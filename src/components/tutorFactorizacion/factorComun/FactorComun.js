@@ -38,13 +38,14 @@ export const FC = ({ exercise, topic }) => {
   extras.steps[0] = extra1;
 
   useEffect(() => {
-    action({
-      verbName: "completeContent",
-      contentID: exercise.code,
-      topicID: topic,
-      result: 1,
-      extra: extras,
-    });
+    step1Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topic,
+        result: 1,
+        extra: extras,
+      });
   }, [step1Valid]);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula

@@ -41,13 +41,14 @@ export const DSC = ({ exercise, topic }) => {
   extras.steps[0] = extra1;
   extras.steps[1] = extra2;
   useEffect(() => {
-    action({
-      verbName: "completeContent",
-      contentID: exercise.code,
-      topicID: topic,
-      result: 1,
-      extra: extras,
-    });
+    step2Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topic,
+        result: 1,
+        extra: extras,
+      });
   }, [step2Valid]);
 
   useEffect(() => {
@@ -141,20 +142,22 @@ export const DSC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(1));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >

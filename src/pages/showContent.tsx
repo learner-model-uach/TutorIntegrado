@@ -10,6 +10,10 @@ const DynamicPlain = dynamic<{ topicId: string; steps: Object }>(() =>
   import("../components/lvltutor/Plain").then(mod => mod.Plain),
 );
 
+const DynamicTutorEcu = dynamic<{ id: string }>(() =>
+  import("../components/tutorEcuaciones/Tutor").then(mod => mod.Tutor),
+);
+
 export default withAuth(function ShowContent() {
   const content = sessionState.currentContent;
   const topic = sessionState.topic;
@@ -23,6 +27,8 @@ export default withAuth(function ShowContent() {
           <DynamicTutorFac key="1" exercise={content.json} topicId={topic}></DynamicTutorFac>
         ) : content && content?.json?.type == "lvltutor" ? (
           <DynamicPlain key="2" steps={content?.json} topicId={topic}></DynamicPlain>
+        ) : content && ["ecc5s", "secl5s"].includes(content?.json?.type) ? (
+          <DynamicTutorEcu key="3" id={content.id}></DynamicTutorEcu>
         ) : (
           <p>No existe el contenido que desea cargar</p>
         )}

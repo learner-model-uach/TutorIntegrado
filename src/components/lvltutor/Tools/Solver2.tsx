@@ -1,5 +1,6 @@
 import React, { useState, memo, useEffect, useRef } from "react";
 import RatingQuestion from "../../RatingQuestion";
+import { FaHandPointRight } from "react-icons/fa";
 
 import {
   Flex,
@@ -253,7 +254,6 @@ const Solver2 = ({
                   key={"AIAlert" + i}
                   status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}
                 >
-                  <AlertIcon key={"AIAlertIcon" + i} />
                   <AccordionButton
                     key={"AIAccordionButton" + i}
                     onClick={() => {
@@ -284,8 +284,11 @@ const Solver2 = ({
                       }
                     }}
                   >
+                    <Box paddingRight={3}>
+                      <FaHandPointRight />
+                    </Box>
                     <Box key={"AIBox" + i} flex="1" textAlign="left">
-                      Paso {step.stepId}: {step.stepTitle}
+                      {step.stepTitle}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
