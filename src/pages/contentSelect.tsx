@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { CardSelection } from "../components/contentSelectComponents/CardSelection";
 import { SimpleGrid, Center, Text } from "@chakra-ui/react";
 import { useUpdateModel } from "../utils/updateModel";
 import { useEffect } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
+import { CardSelection } from "../components/contentSelectComponents/CardSelectionDynamic";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
