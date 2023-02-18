@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
 import TeX from "@matejmazur/react-katex";
-import { useEffect } from "react";
 import { BOX, COLUMN1, COLUMN2, COLUMN3 } from "../types";
 
 const style = {
@@ -19,7 +18,6 @@ export const MovableItemEquation = ({
   column,
   answer,
   items,
-  content,
   answerTwo,
   isCorrect,
 }) => {
@@ -28,6 +26,7 @@ export const MovableItemEquation = ({
   useEffect(() => {
     setIsCorrect(!isCorrect);
   }, [isCorrect]);
+
   const changeItemColumn = (value, columnName) => {
     setItems(prevState => {
       return prevState.map(e => {

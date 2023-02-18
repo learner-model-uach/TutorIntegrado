@@ -136,7 +136,7 @@ const Mq2 = ({
     if (relativeError < 0.005 && MQPostfixstrict(parse1, parse2)) {
       result.current = true;
       MQProxy.endDate = Date.now();
-      MQProxy.deefaultIndex = [parseInt(step.stepId) + 1];
+      MQProxy.defaultIndex = [parseInt(step.stepId) + 1];
       MQProxy.submitValues = {
         ans: latex,
         att: attempts,
@@ -197,7 +197,7 @@ const Mq2 = ({
       <VStack alignItems="center" justifyContent="center" margin={"auto"}>
         <MQStatic
           exp={step.expression}
-          currentStep={parseInt(step.stepId) == mqSnap.deefaultIndex[0] ? true : false}
+          currentStep={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
         />
         <Box>
           <Stack spacing={4} direction="row" align="center" pb={4}>

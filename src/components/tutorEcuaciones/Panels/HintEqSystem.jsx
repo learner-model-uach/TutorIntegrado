@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
@@ -25,42 +25,46 @@ import {
   POPOVER_NEXT_BUTTOM_COLOR,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const HintEqSystem = ({
-  hints,
+  hints, // all hints
   firstTimeHint,
   setNewHintAvaliable,
   newHintAvaliable,
-  answerId,
-  nStep,
-  content,
+  answerId, // id the answer
+  nStep, // "stepId" field defined in the json file
+  code, // "code" field defined in the json file
+  setHintsShow, // number of times a hint has been shown
 }) => {
   const initialFocusRef = useRef();
 
   const [disabledHint, setDisabledHint] = useState(firstTimeHint);
 
-  const [count, setCount] = useState(-1);
+  const [count, setCount] = useState(-1); // count of matchingError
+  const [countHint, setCountHint] = useState(-1); // counts the number of accumulated hints displayed to the user
   const [hintsAvaliableList, setHintsAvaliableList] = useState([]);
   const [allHints, setAllHints] = useState(hints);
   const [shake, setShake] = useState(false);
   const [lastHint, setLastHint] = useState({});
   const [countNotification, setCountNotication] = useState(0);
   const startAction = useAction({});
-  const exerciseContext = useContext(ExerciseContext);
+
   useEffect(() => {
-    setCount(hintsAvaliableList.length - 1);
-    setLastHint(getHint(answerId));
+    setCount(-1);
+    setCountHint(-1);
+    setAllHints(hints);
+  }, [answerId]);
+
+  useEffect(() => {
     if (getHint(answerId)) {
       setDisabledHint(firstTimeHint);
       setShake(newHintAvaliable);
       setTimeout(() => setShake(false), 2000);
-
       if (newHintAvaliable) {
         setCountNotication(1);
       }
     }
-  }, [answerId]);
+  }, [newHintAvaliable]);
 
   const getHint = idAnswer => {
     if (allHints != undefined && idAnswer) {
@@ -87,22 +91,24 @@ export const HintEqSystem = ({
     startAction({
       verbName: "requestHint",
       stepID: nStep,
-      contentID: content,
+      contentID: code,
       hintID: count + 1,
       extra: { open: "next" },
     });
     setCount(count + 1);
+    setCountHint(countHint + 1);
   };
 
   const handOnClickBack = e => {
     startAction({
       verbName: "requestHint",
       stepID: nStep,
-      contentID: content,
+      contentID: code,
       hintID: count - 1,
       extra: { open: "prev" },
     });
     setCount(count - 1);
+    setCountHint(countHint - 1);
   };
 
   const handOnClickHint = e => {
@@ -111,14 +117,19 @@ export const HintEqSystem = ({
       startAction({
         verbName: "requestHint",
         stepID: nStep,
-        contentID: content,
+        contentID: code,
         hintID: count + 1,
         extra: { open: "new" },
       });
-      setHintsAvaliableList(prev => [...prev, lastHint]);
-      setAllHints(prev => prev.filter(hint => hint.id !== lastHint.id));
+      let newHint = getHint(answerId);
+      if (newHint) {
+        setHintsAvaliableList(prev => [...prev, newHint]);
+        setAllHints(prev => prev.filter(hint => hint.id !== newHint.id));
+        setCountHint(prev => prev + 1);
+      }
       setCount(prev => prev + 1);
       setNewHintAvaliable(false);
+      setHintsShow(prev => prev + 1);
     }
   };
 
@@ -145,7 +156,7 @@ export const HintEqSystem = ({
         <PopoverCloseButton />
         <PopoverBody>
           <Flex>
-            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[count].text}</TeX>
+            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>
           </Flex>
         </PopoverBody>
         <PopoverFooter
@@ -156,12 +167,12 @@ export const HintEqSystem = ({
           pb={4}
         >
           <ButtonGroup size="sm">
-            {count != 0 && (
+            {countHint != 0 && (
               <Button colorScheme={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
                 {HINT_BACK_BUTTOM}
               </Button>
             )}
-            {count + 1 != hintsAvaliableList.length && (
+            {countHint + 1 != hintsAvaliableList.length && (
               <Button
                 colorScheme={POPOVER_NEXT_BUTTOM_COLOR}
                 ref={initialFocusRef}

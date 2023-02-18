@@ -14,7 +14,7 @@ interface sharedValues {
   content: string;
   step: Step | null;
   topicId: string;
-  deefaultIndex: Array<number>;
+  defaultIndex: Array<number>;
   submit: boolean;
   submitValues: value;
   startDate: number;
@@ -27,7 +27,7 @@ const initialObj: sharedValues = {
   content: "",
   step: null,
   topicId: "",
-  deefaultIndex: [0],
+  defaultIndex: [0],
   submit: false,
   submitValues: {
     ans: "",
