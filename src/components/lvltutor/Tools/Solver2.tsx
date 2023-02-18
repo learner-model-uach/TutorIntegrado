@@ -97,15 +97,7 @@ const Steporans = ({
   return currentComponent;
 };
 
-const Solver2 = ({
-  topicId,
-  steps,
-  lastHint,
-}: {
-  topicId: string;
-  steps: ExType;
-  lastHint: boolean;
-}) => {
+const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
   const mqSnap = useSnapshot(MQProxy);
 
   const action = useAction();
@@ -122,7 +114,7 @@ const Solver2 = ({
         ans: "",
         att: 0,
         hints: 0,
-        lasthint: lastHint,
+        lasthint: false,
         fail: false,
         duration: 0,
       },
@@ -165,21 +157,21 @@ const Solver2 = ({
   useEffect(() => {
     if (mqSnap.submit) {
       if (!mqSnap.submitValues.fail) {
-        currentStep.current = mqSnap.deefaultIndex[0]!;
-        let a = test;
+        currentStep.current = mqSnap.defaultIndex[0]!;
+        let currentStepValue = test;
         let duration = (MQProxy.endDate - MQProxy.startDate) / 1000;
         let sv = MQProxy.submitValues;
         sv.duration = duration;
         MQProxy.startDate = Date.now();
-        a[mqSnap.deefaultIndex[0]! - 1] = {
+        currentStepValue[mqSnap.defaultIndex[0]! - 1] = {
           disabled: false,
           hidden: false,
           answer: true,
           value: sv,
           open: false,
         };
-        if (mqSnap.deefaultIndex[0]! < cantidadDePasos) {
-          a[mqSnap.deefaultIndex[0]!] = {
+        if (mqSnap.defaultIndex[0]! < cantidadDePasos) {
+          currentStepValue[mqSnap.defaultIndex[0]!] = {
             disabled: false,
             hidden: false,
             answer: false,
@@ -187,7 +179,7 @@ const Solver2 = ({
               ans: "",
               att: 0,
               hints: 0,
-              lasthint: lastHint,
+              lasthint: false,
               fail: false,
               duration: 0,
             },
@@ -196,7 +188,7 @@ const Solver2 = ({
         } else {
           let completecontent: Array<value> = [];
           for (let i = 0; i < test.length; i++) {
-            const value = a[i];
+            const value = currentStepValue[i];
             if (!value) continue;
             completecontent.push(value.value);
           }
@@ -212,7 +204,7 @@ const Solver2 = ({
           });
           setResumen(false);
         }
-        setTest(a);
+        setTest(currentStepValue);
       }
       MQProxy.submit = false;
     }
@@ -236,10 +228,10 @@ const Solver2 = ({
         <Heading as="h5" size="sm" mt={2}>
           {steps.text}
         </Heading>
-        <MQStatic tex={steps.steps[0]!.expression} />
+        <MQStatic tex={steps.steps[0]?.expression || ""} />
         <Accordion
-          onChange={algo => (MQProxy.deefaultIndex = algo as Array<number>)}
-          index={MQProxy.deefaultIndex}
+          onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
+          index={MQProxy.defaultIndex}
           allowToggle={true}
           allowMultiple={true}
         >
