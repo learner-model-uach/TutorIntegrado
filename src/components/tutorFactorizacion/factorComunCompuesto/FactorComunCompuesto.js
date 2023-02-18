@@ -146,20 +146,22 @@ export const FCC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(1));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >
@@ -205,20 +207,22 @@ export const FCC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[2].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step2Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[2].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(2));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[2].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step2Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[2].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >

@@ -175,20 +175,22 @@ export const TC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(1));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >
@@ -234,20 +236,22 @@ export const TC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[2].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step2Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[2].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(2));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[2].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step2Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[2].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >
@@ -293,20 +297,22 @@ export const TC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 3)) {
                   setIndex(index.filter(e => e !== 3));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[3].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step3Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[3].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(3));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[3].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step3Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[3].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >
@@ -352,20 +358,22 @@ export const TC = ({ exercise, topic }) => {
               onClick={() => {
                 if (index.some(element => element === 4)) {
                   setIndex(index.filter(e => e !== 4));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[4].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
+                  step4Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[4].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(4));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[4].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
+                  step4Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[4].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >
