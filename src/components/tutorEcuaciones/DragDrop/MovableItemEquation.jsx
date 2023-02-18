@@ -26,7 +26,7 @@ export const MovableItemEquation = ({
   useEffect(() => {
     setIsCorrect(!isCorrect);
   }, [isCorrect]);
-  
+
   const changeItemColumn = (value, columnName) => {
     setItems(prevState => {
       return prevState.map(e => {

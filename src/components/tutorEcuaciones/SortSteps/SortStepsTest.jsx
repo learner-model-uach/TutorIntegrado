@@ -35,7 +35,7 @@ export const SortStepsTest = ({
   const [cardColor, setCardColor] = useState([]);
   const startAction = useAction({});
   const { push } = useRouter();
-  
+
   useEffect(() => {
     if (steps) {
       const getTextCards = steps.map(step => {
