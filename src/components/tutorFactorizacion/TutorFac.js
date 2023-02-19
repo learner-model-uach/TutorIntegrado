@@ -16,24 +16,22 @@ const DynamicTutorTC = dynamic(() =>
   import("./trinomiosCuadraticos/TrinomiosCuadraticos").then(mod => mod.TC),
 );
 
-export const TutorFac = ({ exercise }) => {
+export const TutorFac = ({ exercise, topicId }) => {
   return (
     <>
       {exercise?.type == "fc1s" ? (
-        <DynamicTutorFC exercise={exercise} nextRouter="/" />
+        <DynamicTutorFC exercise={exercise} topic={topicId} />
       ) : exercise?.type == "fcc3s" ? (
-        <DynamicTutorFCC exercise={exercise} nextRouter="/" />
+        <DynamicTutorFCC exercise={exercise} topic={topicId} />
       ) : exercise?.type == "fdc2s" ? (
-        <DynamicTutorDC exercise={exercise} nextRouter="/" />
+        <DynamicTutorDC exercise={exercise} topic={topicId} />
       ) : exercise?.type == "fdsc2" ? (
-        <DynamicTutorDSC exercise={exercise} nextRouter="/" />
+        <DynamicTutorDSC exercise={exercise} topic={topicId} />
       ) : exercise?.type == "ftc5s" ? (
-        <DynamicTutorTC exercise={exercise} nextRouter="/" />
+        <DynamicTutorTC exercise={exercise} topic={topicId} />
       ) : (
-        <p>error en exercise.contentType, exercise.contentType != FC,FCC,DC,DSC,TC </p>
+        <p>error en exercise.type, exercise.type != FC,FCC,DC,DSC,TC </p>
       )}
     </>
   );
-
-  //if TC => <DynamicTutorFacTC exercise={data[0]} nextRouter="/" />
 };

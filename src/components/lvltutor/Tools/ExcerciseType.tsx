@@ -37,5 +37,6 @@ export interface ExType {
   title: string;
   text: string;
   type: string;
+  eqc: string | undefined;
   steps: Array<Step>;
 }

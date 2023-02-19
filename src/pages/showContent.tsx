@@ -1,48 +1,38 @@
 import { withAuth } from "../components/Auth";
 import { sessionState } from "../components/SessionState";
-import { useGQLQuery } from "rq-gql";
-import { gql } from "../graphql";
 import dynamic from "next/dynamic";
+import type { ComponentProps } from "react";
+import type { Tutor } from "../components/tutorEcuaciones/Tutor";
+import type Plain from "../components/lvltutor/Plain";
+import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 
-const DynamicTutorFac = dynamic<{ exercise?: Object }>(() =>
+const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
 );
 
-/*const DynamicTutorFac = dynamic(
-  () => {
-    return import("../components/tutorFactorizacion/TutorFac")
-  },
-  { ssr: false}
-);*/
+const DynamicPlain = dynamic<ComponentProps<typeof Plain>>(() =>
+  import("../components/lvltutor/Plain").then(mod => mod.Plain),
+);
 
-const DynamicPlain = dynamic<{
-  topicId: string;
-  steps: Object;
-}>(() => import("../components/lvltutor/Plain").then(mod => mod.Plain));
+const DynamicTutorEcu = dynamic<ComponentProps<typeof Tutor>>(() =>
+  import("../components/tutorEcuaciones/Tutor").then(mod => mod.Tutor),
+);
 
 export default withAuth(function ShowContent() {
-  const codigo = sessionState.currentContent.code;
+  const content = sessionState.currentContent;
+  const topic = sessionState.topic;
 
-  const { data } = useGQLQuery(
-    gql(`
-    query {
-      contentByCode(code: "${codigo}" ){
-        json
-      }
-    }
-  `),
-  );
-
-  console.log(data);
+  console.log(content);
 
   return (
     <>
       <div>
-        {data?.contentByCode?.json?.type == ("fc1s" || "fcc3s" || "fdc2s" || "fdsc2" || "ftc5s") &&
-        data ? (
-          <DynamicTutorFac key="1" exercise={data?.contentByCode?.json}></DynamicTutorFac>
-        ) : data?.contentByCode?.json?.type == "lvltutor" && data ? (
-          <DynamicPlain key="2" steps={data?.contentByCode?.json} topicId=""></DynamicPlain>
+        {content && ["ftc5s", "fc1s", "fdc2s", "fdsc2", "fcc3s"].includes(content?.json?.type) ? (
+          <DynamicTutorFac key="1" exercise={content.json} topicId={topic}></DynamicTutorFac>
+        ) : content && content?.json?.type == "lvltutor" && !!content.json ? (
+          <DynamicPlain key="2" steps={content.json as ExType} topicId={topic}></DynamicPlain>
+        ) : content && ["ecc5s", "secl5s"].includes(content?.json?.type) ? (
+          <DynamicTutorEcu key="3" exercise={content.json} topicId={topic}></DynamicTutorEcu>
         ) : (
           <p>No existe el contenido que desea cargar</p>
         )}

@@ -7,7 +7,6 @@ import { MainLayout } from "../components/MainLayout";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import ExerciseState from "../components/tutorEcuaciones/context/exercise/ExerciseState";
 import { ErrorToast, queryClient, rqGQLClient } from "../rqClient";
 
 const theme = extendTheme({});
@@ -26,11 +25,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
               <SyncAuth />
               <ErrorToast />
-              <ExerciseState>
-                <MainLayout>
-                  <Component {...pageProps} />
-                </MainLayout>
-              </ExerciseState>
+              <MainLayout>
+                <Component {...pageProps} />
+              </MainLayout>
             </DndProvider>
           </ChakraProvider>
         </CombinedRQGQLProvider>

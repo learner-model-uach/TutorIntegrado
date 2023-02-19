@@ -1,11 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
 import TeX from "@matejmazur/react-katex";
-import { useEffect } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { BOX, COLUMN1, COLUMN2, DRAG_TEXT } from "../types";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { useAction } from "../../../utils/action";
 
 const style = {
@@ -28,7 +26,6 @@ export const MovableItem = ({
   nStep,
 }) => {
   const [isCorrecto, setIsCorrect] = useState(true);
-  const exerciseContext = useContext(ExerciseContext);
   const startAction = useAction({});
 
   useEffect(() => {

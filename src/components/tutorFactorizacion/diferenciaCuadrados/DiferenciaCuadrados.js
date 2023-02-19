@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosDC";
 import { MathComponent } from "../../../components/MathJax";
-//import { Accordion,Card } from 'react-bootstrap';
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { DCstep1 } from "./steps/DCstep1";
 import { DCstep2 } from "./steps/DCstep2";
@@ -18,16 +16,15 @@ import {
   Alert,
   Wrap,
   Center,
-  Spacer,
   Stack,
   Button,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
+import { sessionState } from "../../SessionState";
 
-export const DC = ({ exercise }) => {
+export const DC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -37,6 +34,21 @@ export const DC = ({ exercise }) => {
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
   const action = useAction(); //send action to central system
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  useEffect(() => {
+    step2Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topic,
+        result: 1,
+        extra: extras,
+      });
+  }, [step2Valid]);
 
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
@@ -51,13 +63,7 @@ export const DC = ({ exercise }) => {
     <>
       <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
 
-      <Wrap>
-        {exercise.text}
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
+      <Wrap>{exercise.text}</Wrap>
 
       <Wrap justify="center">
         {loading && <Loading />}
@@ -75,7 +81,7 @@ export const DC = ({ exercise }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -83,7 +89,7 @@ export const DC = ({ exercise }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.contentType,
+                    topicID: topic,
                   });
                 }
               }}
@@ -101,7 +107,7 @@ export const DC = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.contentType}
+                          topic={topic}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -118,7 +124,9 @@ export const DC = ({ exercise }) => {
                 setStep1Valid={setStep1Valid}
                 step1Valid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
+                extra={extra1}
+                setExtra={setExtra1}
               ></DCstep1>
             )}
           </AccordionPanel>
@@ -132,20 +140,22 @@ export const DC = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.contentType,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "closeStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //cambiar para leer del json
+                      topicID: topic,
+                    });
                 } else {
                   setIndex(index.concat(1));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: exercise.contentType,
-                  });
+                  step1Valid &&
+                    action({
+                      verbName: "openStep",
+                      stepID: "" + exercise.steps[1].stepId,
+                      contentID: exercise.code, //leer del json
+                      topicID: topic,
+                    });
                 }
               }}
             >
@@ -162,7 +172,7 @@ export const DC = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect2}
                           contentID={exercise.code}
-                          topic={exercise.contentType}
+                          topic={topic}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -179,7 +189,9 @@ export const DC = ({ exercise }) => {
                 setStep2Valid={setStep2Valid}
                 step2Valid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.contentType}
+                topicID={topic}
+                extra={extra2}
+                setExtra={setExtra2}
               ></DCstep2>
             )}
           </AccordionPanel>
@@ -187,7 +199,9 @@ export const DC = ({ exercise }) => {
       </Accordion>
       {step2Valid != null && (
         <>
+          {/*complete content acá */}
           <DCsummary exercise={exercise} />
+          {console.log(extras)}
           <Stack padding="1em" alignItems="center">
             <Link href="/DSC1">
               <Button colorScheme="cyan" variant="outline" size="sm">
@@ -200,5 +214,3 @@ export const DC = ({ exercise }) => {
     </>
   );
 };
-
-//export default DC;

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useCallback, useEffect } from "react";
 import update from "immutability-helper";
 import { Heading, Text, Button, Stack, Link } from "@chakra-ui/react";
 import { shuffleCard } from "../utilities";
@@ -17,17 +17,15 @@ import {
   BACKGROUND_COLOR_ORDER_STEPS,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { useRouter } from "next/router";
 
-export const SortSteps = ({ steps, setNextPhase, linkNext, idExercise, setIdExercise }) => {
+export const SortSteps = ({ code, idExercise, linkNext, setIdExercise, setNextPhase, steps }) => {
   const [cards, setCards] = useState([]);
   const [correctOrder, setCorrectOrder] = useState(false);
   const [cardColor, setCardColor] = useState([]);
   const startAction = useAction({});
-  const exerciseContext = useContext(ExerciseContext);
-  const { content } = exerciseContext;
   const { push } = useRouter();
+
   useEffect(() => {
     if (steps) {
       const getTextCards = steps.map(step => {
@@ -95,7 +93,7 @@ export const SortSteps = ({ steps, setNextPhase, linkNext, idExercise, setIdExer
         verbName: "checkOrder",
         result: 0,
         extra: { order: cards },
-        contentID: content,
+        contentID: code,
       });
     } else {
       setCorrectOrder(true);
@@ -103,7 +101,7 @@ export const SortSteps = ({ steps, setNextPhase, linkNext, idExercise, setIdExer
         verbName: "checkOrder",
         result: 1,
         extra: { order: cards },
-        contentID: content,
+        contentID: code,
       });
     }
   };

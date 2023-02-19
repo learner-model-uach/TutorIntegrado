@@ -3,9 +3,9 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 
-const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
+const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, setExtra }) => {
   const action = useAction(); //send action to central system
   const response = useRef(null); // answer entered by the student
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
@@ -13,9 +13,12 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
   const correctAlternatives = step1.answers.map(element => element.answer); //list of answers valid
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   //function compare when press button "Aceptar"
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     //responseStudent equals response with replace "space" and "*" (work string in lower case)
@@ -34,20 +37,33 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
         </>,
       );
       setStep1Valid((step1Valid = "Terminado"));
-      action({
-        verbName: "completeContent",
-        contentID: contentID,
-        topicID: topicID,
-      });
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
       /*if response is incorrect*/
-      setError(true);
-      setFeedbackMsg(
-        <Alert status="error">
-          <AlertIcon />
-          {step1.incorrectMsg}
-        </Alert>,
-      );
+      if (response.current.value == "") {
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta
+            </Alert>,
+          );
+        }, 50);
+      } else {
+        setError(true);
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="error">
+              <AlertIcon />
+              {step1.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
+      }
     }
   };
 
@@ -99,19 +115,20 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step1.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step1Valid === null ? 0 : 1,
-                    kcsIDs: step1.KCs,
-                    extra: {
-                      response: [response.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                  });
+                  response.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step1.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step1Valid === null ? 0 : 1,
+                      kcsIDs: step1.KCs,
+                      extra: {
+                        response: [response.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
               >
                 Aceptar
@@ -128,6 +145,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID }) => {
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

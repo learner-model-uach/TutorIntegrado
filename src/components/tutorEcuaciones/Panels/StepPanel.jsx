@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Stack, VStack, Button, Text, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
@@ -6,15 +6,14 @@ import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
 import { Hint } from "./Hint";
 import { MovableItem } from "../DragDrop/MovableItem";
 import {
-  COLUMN1,
-  COLUMN2,
+  COLUMN1, // bottom panel
+  COLUMN2, // top panel
   CORRECT_BUTTOM_NAME,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
   BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const StepPanel = ({
   step,
@@ -26,20 +25,25 @@ export const StepPanel = ({
   setColor,
   setNextExercise,
   content,
+  code, // "code" field of json file
+  topicId, // "id" field in the system
+  updateObjectSteps, // update the data in the "steps" field of the completeContent action
+  completeContentSteps, // object used in the "steps" field of completeContent
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
-  const [alert, setAlert] = useState({});
+  const [alert, setAlert] = useState({}); // it is not being used
   const [openAlert, setOpenAlert] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState(-1);
-  const exerciseContext = useContext(ExerciseContext);
+  const [attempts, setAttempts] = useState(0); // number of user attempts
+  const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
 
   const startAction = useAction({});
   useEffect(() => {
-    setItems(step.answers.map(id => ({ ...id, column: COLUMN1 })));
+    setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
     setAlert({});
     setOpenAlert(false);
     setAnswer(true);
@@ -67,28 +71,32 @@ export const StepPanel = ({
       .filter(item => item.column === columnName)
       .map(item => (
         <MovableItem
-          type={step.type}
+          answer={answer}
+          column={item.column}
+          content={content}
+          isCorrect={isCorrect}
+          items={items}
           key={item.id}
           nStep={nStep}
-          column={item.column}
-          value={item.value}
-          items={items}
-          content={content}
           setItems={setItems}
-          answer={answer}
-          isCorrect={isCorrect}
+          type={step.type}
+          value={item.value}
         />
       ));
   };
 
   const checkLastStep = () => {
     if (nStep == totalSteps - 1) {
+      // it is executed when all the steps are completed
       startAction({
         verbName: "completeContent",
-        contentID: content,
-        result: 1,
+        contentID: code, // it is "code" field of the json file
+        topicID: topicId, // it is "id" field in the system
+        result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
+        extra: {
+          steps: completeContentSteps, // object defined in updateObjectSteps
+        },
       });
-
       setNextExercise(true);
     }
   };
@@ -105,14 +113,21 @@ export const StepPanel = ({
         text: "Escoge una respuesta",
       });
     } else {
-      if (step.n_step === nStep) {
+      updateObjectSteps(step.stepId, attempts, hintsShow, 0);
+      if (step.stepId === nStep.toString()) {
         if (answer[0].id === step.correct_answer) {
           startAction({
             verbName: "tryStep",
-            contentID: content,
+            contentID: code,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 1,
-            stepID: step.n_step,
-            extra: { response: answer },
+            kcsIDs: step.kcs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow,
+            },
           });
           setStepCorrect(state => [...state, answer[0].value]);
           setColor(prev => [
@@ -129,12 +144,19 @@ export const StepPanel = ({
           setIsCorrect(true);
           checkLastStep();
         } else {
+          setAttempts(prev => prev + 1);
           startAction({
             verbName: "tryStep",
-            contentID: content,
+            contentID: code,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 0,
-            stepID: step.n_step,
-            extra: { response: answer },
+            kcsIDs: step.kcs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow,
+            },
           });
           setIdAnswer(answer[0].id);
           setFirstTimeHint(false);
@@ -216,7 +238,8 @@ export const StepPanel = ({
                   answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
                   nStep={nStep}
-                  content={content}
+                  code={code}
+                  setHintsShow={setHintsShow}
                 />
               </Grid>
 
@@ -235,7 +258,8 @@ export const StepPanel = ({
                       setNewHintAvaliable={setNewHintAvaliable}
                       answerId={idAnswer}
                       newHintAvaliable={newHintAvaliable}
-                      content={content}
+                      code={code}
+                      setHintsShow={setHintsShow}
                     />
                   </div>
                 </Flex>

@@ -10,7 +10,15 @@ const Lvltutor = dynamic(
 );
 
 export const Plain = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
-  return <>{steps?.type == "lvltutor" ? <Lvltutor topicId={topicId} steps={steps} /> : "potato"}</>;
+  return (
+    <>
+      {steps?.type == "lvltutor" ? (
+        <Lvltutor key={topicId} topicId={topicId} steps={steps} />
+      ) : (
+        "potato"
+      )}
+    </>
+  );
 };
 
 export default Plain;

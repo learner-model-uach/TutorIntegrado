@@ -25,4 +25,3 @@ export const ORDER_STEPS_CARD_COLOR = "#ddffff";
 export const DRAG_FIXED_TWO = "drag-fixed-two";
 export const INPUT = "input";
 export const DRAG_FIXED = "drag-fixed";
-export const SET_CONTENT = "SET_CONTENT";

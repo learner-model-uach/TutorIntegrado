@@ -17,7 +17,6 @@ import {
   BACKGROUND_COLOR_ORDER_STEPS,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { useRouter } from "next/router";
 
 export const SortStepsTest = ({
@@ -35,8 +34,8 @@ export const SortStepsTest = ({
   const [correctOrder, setCorrectOrder] = useState(false);
   const [cardColor, setCardColor] = useState([]);
   const startAction = useAction({});
-  const exerciseContext = useContext(ExerciseContext);
   const { push } = useRouter();
+
   useEffect(() => {
     if (steps) {
       const getTextCards = steps.map(step => {

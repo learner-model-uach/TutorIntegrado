@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "concurrently -m 1 -r \"graphql-codegen --config codegen.yaml\" \"next build\" pnpm:pretty:check",
+    "build": "concurrently -m 1 -r pnpm:generate \"next build\" pnpm:pretty:check",
+    "predev": "pnpm generate",
     "dev": "concurrently -r next pnpm:gql:watch pnpm:open:browser",
+    "generate": "graphql-codegen --config codegen.yaml",
     "gql": "graphql-codegen --config codegen.yaml",
     "gql:watch": "graphql-codegen --config codegen.yaml --watch",
     "open:browser": "wait-on -s 1 http://localhost:3000 && open-cli http://localhost:3000",
@@ -40,6 +42,7 @@
     "react-mathquill": "1.0.2",
     "react-notification-badge": "1.5.0",
     "react-query": "^3.34.12",
+    "react-star-rating-component": "^1.4.1",
     "rq-gql": "^0.4.3",
     "serialize-error": "^9.0.0",
     "valtio": "1.2.9"
