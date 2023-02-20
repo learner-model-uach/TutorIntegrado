@@ -25,9 +25,6 @@ export default withAuth(function ContentSelect() {
     });
   }, []);
 
-  console.log(topics);
-  // {
-
   const { data, isLoading } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData($input: ContentSelectionInput!) {
@@ -101,12 +98,14 @@ export default withAuth(function ContentSelect() {
     },
   );
   const contentResult = data?.contentSelection?.contentSelected?.contentResult;
-  console.log(contentResult);
+  console.log(data?.contentSelection?.contentSelected);
 
   const bestExercise =
-    (contentResult ?? [])
+    !isLoading &&
+    ((contentResult ?? [])
       .map(x => x.Preferred)
-      .reduce((out, bool, index) => (bool ? out.concat(index) : out), [])[0] ?? 0;
+      .reduce((out, bool, index) => (bool ? out.concat(index) : out), [])[0] ??
+      0);
 
   const experimentGroup =
     user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
@@ -130,8 +129,6 @@ export default withAuth(function ContentSelect() {
             optionSelected: false,
           };
         }));
-
-  console.log(selectionData);
 
   return (
     <>
@@ -167,24 +164,45 @@ export default withAuth(function ContentSelect() {
             </Center>
           ) : (
             <>
-              {contentResult?.map((content, index) => (
-                <CardSelectionDynamic
-                  id={content.P.id}
-                  code={content.P.code}
-                  json={content.P.json as unknown as ExType}
-                  description={content.P.description}
-                  label={content.P.label}
-                  kcs={content.P.kcs}
-                  selectionTitle={content.Msg.label}
-                  selectionText={content.Msg.text}
-                  selectionBest={index == bestExercise}
-                  registerTopic={registerTopic}
-                  nextContentPath={nextContentPath}
-                  selectionData={selectionData}
-                  indexSelectionData={index}
-                  key={index}
-                ></CardSelectionDynamic>
-              ))}
+              {contentResult.length > 1
+                ? contentResult?.map((content, index) => (
+                    <CardSelectionDynamic
+                      id={content.P.id}
+                      code={content.P.code}
+                      json={content.P.json as unknown as ExType}
+                      description={content.P.description}
+                      label={content.P.label}
+                      kcs={content.P.kcs}
+                      selectionTitle={content.Msg.label}
+                      selectionText={content.Msg.text}
+                      selectionBest={index == bestExercise}
+                      registerTopic={registerTopic}
+                      nextContentPath={nextContentPath}
+                      selectionData={selectionData}
+                      indexSelectionData={index}
+                      key={index}
+                    ></CardSelectionDynamic>
+                  ))
+                : contentResult?.map((content, index) => (
+                    <Center>
+                      <CardSelectionDynamic
+                        id={content.P.id}
+                        code={content.P.code}
+                        json={content.P.json as unknown as ExType}
+                        description={content.P.description}
+                        label={content.P.label}
+                        kcs={content.P.kcs}
+                        selectionTitle={content.Msg.label}
+                        selectionText={content.Msg.text}
+                        selectionBest={index == bestExercise}
+                        registerTopic={registerTopic}
+                        nextContentPath={nextContentPath}
+                        selectionData={selectionData}
+                        indexSelectionData={index}
+                        key={index}
+                      ></CardSelectionDynamic>
+                    </Center>
+                  ))}
             </>
           )
         ) : (
