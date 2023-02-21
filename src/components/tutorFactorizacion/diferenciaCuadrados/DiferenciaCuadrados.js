@@ -201,14 +201,6 @@ export const DC = ({ exercise, topic }) => {
         <>
           {/*complete content acá */}
           <DCsummary exercise={exercise} />
-          {console.log(extras)}
-          <Stack padding="1em" alignItems="center">
-            <Link href="/DSC1">
-              <Button colorScheme="cyan" variant="outline" size="sm">
-                Siguiente
-              </Button>
-            </Link>
-          </Stack>
         </>
       )}
     </>
