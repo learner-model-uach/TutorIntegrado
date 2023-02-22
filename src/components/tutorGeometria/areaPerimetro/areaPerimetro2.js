@@ -1,8 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
-//import { Accordion,Card } from 'react-bootstrap';
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { APstep1 } from "./steps/APstep1";
 import { APstep4 } from "./steps/APstep4";
@@ -30,14 +28,11 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
-//import { useAction } from "../../../utils/action";
-//import { LoadContentAction } from "../tools/LoadContentAction";
+import { useAction } from "../../../utils/action";
 
-const AP2 = ({ exercise }) => {
+const AP2 = ({ exercise, topicId }) => {
   exercise = ejercicioAP2[0];
-  //LoadContentAction(exercise); // report action loadContent
   const Mq2 = dynamic(
     () => {
       return import("../../Mq2");
@@ -72,7 +67,7 @@ const AP2 = ({ exercise }) => {
   });
   const [cdateE, setCdateE] = useState(Date.now());
 
-  // const action = useAction(); //send action to central system
+  const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -123,13 +118,12 @@ const AP2 = ({ exercise }) => {
 
       <Wrap>
         {exercise.text}
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
       </Wrap>
-      <Wrap>
-        <Image src={thales_1} style={{ marginLeft: "auto", marginRight: "auto" }}></Image>
+      <Wrap style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'}}>
+        <Image src={exercise.image} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -139,20 +133,20 @@ const AP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 0)) {
                   setIndex(index.filter(e => e !== 0));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(0));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -169,7 +163,7 @@ const AP2 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -186,7 +180,7 @@ const AP2 = ({ exercise }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
                 last={true}
               ></APstep1>
             )}
@@ -200,20 +194,20 @@ const AP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(1));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -230,7 +224,7 @@ const AP2 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -247,7 +241,7 @@ const AP2 = ({ exercise }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstep1>
             )}
           </AccordionPanel>
@@ -260,20 +254,20 @@ const AP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(2));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -290,7 +284,7 @@ const AP2 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -307,7 +301,7 @@ const AP2 = ({ exercise }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>
@@ -320,20 +314,20 @@ const AP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 3)) {
                   setIndex(index.filter(e => e !== 3));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(3));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -350,7 +344,7 @@ const AP2 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -367,7 +361,7 @@ const AP2 = ({ exercise }) => {
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstep4>
             )}
           </AccordionPanel>
@@ -380,20 +374,20 @@ const AP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 4)) {
                   setIndex(index.filter(e => e !== 4));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(4));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -410,7 +404,7 @@ const AP2 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -427,7 +421,7 @@ const AP2 = ({ exercise }) => {
                 setStepValid={setStep5Valid}
                 stepValid={step5Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstep1>
             )}
           </AccordionPanel>
@@ -440,20 +434,20 @@ const AP2 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 5)) {
                   setIndex(index.filter(e => e !== 5));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 } else {
                   setIndex(index.concat(5));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  })
                 }
               }}
             >
@@ -470,7 +464,7 @@ const AP2 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -487,7 +481,7 @@ const AP2 = ({ exercise }) => {
                 setStepValid={setStep6Valid}
                 stepValid={step6Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstepF>
             )}
           </AccordionPanel>

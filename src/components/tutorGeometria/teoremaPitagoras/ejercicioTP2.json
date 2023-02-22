@@ -6,7 +6,7 @@
     "meta": {},
     "text": "Dos trenes se separan entre sí de manera perpendicular. El tren rojo lleva una velocidad constante de V1 km/h, mientras que el tren azul viaja a una velocidad de V2 km/h. Luego de transcurrido un tiempo T ¿A qué disntacia se encuentra el tren rojo del tren azul?",
     "selectSteps": false,
-    "image": "",
+    "image": "https://i.postimg.cc/dQprfrJb/TP2.png",
     "conclusion": "Ambos trenes se encuentran a una distancia de √a² + b²",
     "steps": [
       {

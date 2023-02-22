@@ -6,7 +6,7 @@
     "meta": {},
     "text": "Una persona presencia el despegue de un cohete, por seguridad la persona está a 300 metros del punto de despegue. Si la distancia entre la persona y la punta del cohete es de 500 metros. ¿Cuál es la altura del cohete?",
     "selectSteps": false,
-    "image": "",
+    "image": "https://i.postimg.cc/c4z9XrzC/TP1.png",
     "conclusion": "La altura del cohete es de 400 metros",
     "steps": [
       {
@@ -90,7 +90,7 @@
         "expression": "c = ",
         "stepTitle": "Escribe la expresión de la altura del cohete (c) en base a las variables 'a' y 'b'.",
         "displayResult": "c = √b² - a²",
-        "KCs": ["DespEcu", "PropsRaiz"],
+        "KCs": ["DespVarEcu", "PropsRaiz"],
         "showPanel": true,
         "hints": [
           {

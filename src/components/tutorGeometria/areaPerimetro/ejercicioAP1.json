@@ -6,7 +6,7 @@
     "meta": {},
     "text": "El área de un triángulo es de 24 mts². Si su base es 3 veces su altura, ¿Cuál sería el valor de la altura del triángulo? ",
     "selectSteps": false,
-    "image": "",
+    "image": "https://i.postimg.cc/xdzPs5zF/AP1.png",
     "conclusion": "La altura del triángulo es de 4 metros.",
     "steps": [
       {
@@ -14,7 +14,7 @@
         "expression": "b = ",
         "stepTitle": "Definir la base b en razón de la altura h.",
         "displayResult": "b = 3h",
-        "KCs": ["nVeces", "ExpA"],
+        "KCs": ["NVeces", "ExpA"],
         "component": "APstep1",
         "hints": [
           { "hintId": 0, "hint": "La variable de altura es h ." },
@@ -93,7 +93,7 @@
         "expression": "h = ",
         "stepTitle": "Calcular la altura del triángulo.",
         "displayResult": "h = 4",
-        "KCs": ["DespEcu", "PropsRaiz", "AN"],
+        "KCs": ["DespVarEcu", "PropsRaiz", "AN"],
         "component": "Mq2",
         "hints": [
           { "hintId": 0, "hint": "3h² = 48." },
