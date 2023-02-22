@@ -97,7 +97,9 @@ export default withAuth(function ContentSelect() {
       refetchOnReconnect: false,
     },
   );
-  const contentResult = data?.contentSelection?.contentSelected?.contentResult;
+  const contentResult = data?.contentSelection?.contentSelected?.contentResult.sort((a, b) => {
+    return parseInt(a.Order) - parseInt(b.Order);
+  });
   console.log(data?.contentSelection?.contentSelected);
 
   const bestExercise =
