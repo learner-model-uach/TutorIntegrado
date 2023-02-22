@@ -13,7 +13,7 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { useAction } from "../utils/action";
+import { useAction } from "../../../utils/action";
 import { MathComponent } from "mathjax-react";
 
 const Hint = ({

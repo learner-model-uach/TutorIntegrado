@@ -5,7 +5,16 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
-export const APstep1 = ({ step, setStepValid, stepValid, contentID, topicID, extra, setExtra }) => {
+export const APstep1 = ({
+  step,
+  setStepValid,
+  stepValid,
+  loading,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
@@ -44,9 +53,16 @@ export const APstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   return (
     <>
       <Wrap padding="15px 10px 10px 10px">
-        <WrapItem padding="5px 0px 10px 650px">
+        <WrapItem padding="5px 0px 10px 0px">
           <Center>
             <MathComponent tex={String.raw`${step.expression}`} display={false} />
+          </Center>
+        </WrapItem>
+
+        <Spacer />
+
+        <WrapItem>
+          <Center>
             <Input
               style={{
                 textAlign: "center",
@@ -80,9 +96,7 @@ export const APstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                     result: stepValid === null ? 0 : 1,
                     kcsIDs: step.KCs,
                     extra: {
-                      response: [
-                        response1.current.value
-                      ],
+                      response: [response1.current.value],
                       attempts: attempts,
                       hints: hints,
                     },
@@ -97,7 +111,7 @@ export const APstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 hints={step.hints}
                 stepId={step.stepId}
                 contentId={contentID}
-                topicId={topicId}
+                topicId={topicID}
                 matchingError={step.matchingError}
                 response={[response1]}
                 error={error}

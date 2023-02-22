@@ -5,7 +5,16 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
-export const APstep2 = ({ step, setStepValid, stepValid, contentID, topicID, extra, setExtra }) => {
+export const APstep2 = ({
+  step,
+  setStepValid,
+  stepValid,
+  loading,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
@@ -103,10 +112,7 @@ export const APstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                     result: stepValid === null ? 0 : 1,
                     kcsIDs: step.KCs,
                     extra: {
-                      response: [
-                        response1.current.value,
-                        response2.current.value,
-                      ],
+                      response: [response1.current.value, response2.current.value],
                       attempts: attempts,
                       hints: hints,
                     },
@@ -121,7 +127,7 @@ export const APstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 hints={step.hints}
                 stepId={step.stepId}
                 contentId={contentID}
-                topicId={topicId}
+                topicId={topicID}
                 matchingError={step.matchingError}
                 response={([response1], [response2])}
                 error={error}
@@ -129,7 +135,7 @@ export const APstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 hintCount={hints}
                 setHints={setHints}
                 setLastHint={setLastHint}
-              ></Hint> 
+              ></Hint>
             </>
           )}
         </WrapItem>

@@ -18,6 +18,10 @@ const DynamicTutorEcu = dynamic<ComponentProps<typeof Tutor>>(() =>
   import("../components/tutorEcuaciones/Tutor").then(mod => mod.Tutor),
 );
 
+const DynamicAP1 = dynamic<{ exercise?: Object; topicId?: string }>(() =>
+  import("../components/tutorGeometria/areaPerimetro/areaPerimetro1").then(mod => mod.AP1),
+);
+
 export default withAuth(function ShowContent() {
   const content = sessionState.currentContent;
   const topic = sessionState.topic;
@@ -33,6 +37,8 @@ export default withAuth(function ShowContent() {
           <DynamicPlain key="2" steps={content.json as ExType} topicId={topic}></DynamicPlain>
         ) : content && ["ecc5s", "secl5s"].includes(content?.json?.type) ? (
           <DynamicTutorEcu key="3" exercise={content.json} topicId={topic}></DynamicTutorEcu>
+        ) : content && content?.json?.type == "areaperimetro1" ? (
+          <DynamicAP1 key="4" exercise={content.json} topicId={topic}></DynamicAP1>
         ) : (
           <p>No existe el contenido que desea cargar</p>
         )}

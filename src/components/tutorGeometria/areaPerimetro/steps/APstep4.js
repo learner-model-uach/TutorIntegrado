@@ -4,7 +4,16 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
-export const APstep4 = ({ step, setStepValid, stepValid, contentID, topicID, extra, setExtra }) => {
+export const APstep4 = ({
+  step,
+  setStepValid,
+  stepValid,
+  loading,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //first input response
   const response3 = useRef(null); //first input response
@@ -105,10 +114,7 @@ export const APstep4 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                     result: stepValid === null ? 0 : 1,
                     kcsIDs: step.KCs,
                     extra: {
-                      response: [
-                        response1.current.value,
-                        response2.current.value
-                      ],
+                      response: [response1.current.value, response2.current.value],
                       attempts: attempts,
                       hints: hints,
                     },
@@ -123,7 +129,7 @@ export const APstep4 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 hints={step.hints}
                 stepId={step.stepId}
                 contentId={contentID}
-                topicId={topicId}
+                topicId={topicID}
                 matchingError={step.matchingError}
                 response={[response1]}
                 error={error}

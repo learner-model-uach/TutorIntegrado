@@ -35,7 +35,7 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 
-const AP1 = ({ exercise, topicId }) => {
+export const AP1 = ({ exercise, topicId }) => {
   exercise = ejercicioAP1[0];
   const Mq2 = dynamic(
     () => {
@@ -129,10 +129,13 @@ const AP1 = ({ exercise, topicId }) => {
           //<VideoScreen></VideoScreen>
         }
       </Wrap>
-      <Wrap style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'}}>
+      <Wrap
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Image src={exercise.image} />
       </Wrap>
 
@@ -148,7 +151,7 @@ const AP1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(0));
                   action({
@@ -191,6 +194,7 @@ const AP1 = ({ exercise, topicId }) => {
                 stepValid={step1Valid}
                 contentID={exercise.code}
                 topicID={topicId}
+                last={true}
                 extra={extra1}
                 setExtra={setExtra1}
               ></APstep1>
@@ -210,7 +214,7 @@ const AP1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(1));
                   action({
@@ -272,7 +276,7 @@ const AP1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(2));
                   action({
@@ -334,7 +338,7 @@ const AP1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(3));
                   action({
@@ -388,6 +392,7 @@ const AP1 = ({ exercise, topicId }) => {
         <>
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
+            {console.log(extras)}
             <Summary4
               expression={exercise.text}
               step1={exercise.steps[0]}
