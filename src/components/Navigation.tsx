@@ -41,11 +41,7 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
-            <SidebarLink
-              href={
-                "contentSelect?topic=16,4,3,5,6,7&registerTopic=16" /*topicos no creados en admin*/
-              }
-            >
+            <SidebarLink href={"contentSelect?topic=27,28,29,30&registerTopic=27"}>
               Geometría
             </SidebarLink>
           </>

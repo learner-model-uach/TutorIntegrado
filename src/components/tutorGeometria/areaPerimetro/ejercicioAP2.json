@@ -2,7 +2,7 @@
   {
     "code": "ap2",
     "title": "Área y perímetro II.",
-    "type": "areaperimetro1",
+    "type": "areaperimetro2",
     "meta": {},
     "text": "Sabiendo que el área de un terreno es 120 mts². Determine la medida de sus lados si el largo excede al ancho en 7 mts.",
     "selectSteps": false,

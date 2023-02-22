@@ -4,8 +4,6 @@ import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { TPstep1 } from "./steps/TPstep1";
 import { TPstep2 } from "./steps/TPstep2";
 import { TPstepF } from "./steps/TPstepF";
-
-import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png";
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
@@ -30,14 +28,16 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 
-const TP2 = ({ exercise, topicId }) => {
+const Mq2 = dynamic(
+  () => {
+    return import("../../Mq2");
+  },
+  { ssr: false },
+);
+
+export const TP2 = ({ exercise, topicId }) => {
   exercise = ejercicioTP2[0];
-  const Mq2 = dynamic(
-    () => {
-      return import("../../Mq2");
-    },
-    { ssr: false },
-  );
+
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -109,13 +109,14 @@ const TP2 = ({ exercise, topicId }) => {
     <>
       <BreadcrumbTutor root="Teorema de Thales" item={exercise.title}></BreadcrumbTutor>
 
-      <Wrap>
-        {exercise.text}
-      </Wrap>
-      <Wrap style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'}}>
+      <Wrap>{exercise.text}</Wrap>
+      <Wrap
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Image src={exercise.image} />
       </Wrap>
 
@@ -131,7 +132,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(0));
                   action({
@@ -139,7 +140,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 }
               }}
             >
@@ -193,7 +194,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(1));
                   action({
@@ -201,7 +202,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 }
               }}
             >
@@ -255,7 +256,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(2));
                   action({
@@ -263,7 +264,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 }
               }}
             >
@@ -317,7 +318,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(3));
                   action({
@@ -325,7 +326,7 @@ const TP2 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 }
               }}
             >

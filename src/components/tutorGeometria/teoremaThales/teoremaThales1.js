@@ -29,14 +29,16 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 
-const TH1 = ({ exercise, topicId }) => {
+const Mq2 = dynamic(
+  () => {
+    return import("../../Mq2");
+  },
+  { ssr: false },
+);
+
+export const TH1 = ({ exercise, topicId }) => {
   exercise = ejercicioTH[0];
-  const Mq2 = dynamic(
-    () => {
-      return import("../../Mq2");
-    },
-    { ssr: false },
-  );
+
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -96,13 +98,14 @@ const TH1 = ({ exercise, topicId }) => {
     <>
       <BreadcrumbTutor root="Teorema de Thales" item={exercise.title}></BreadcrumbTutor>
 
-      <Wrap>
-        {exercise.text}
-      </Wrap>
-      <Wrap style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'}}>
+      <Wrap>{exercise.text}</Wrap>
+      <Wrap
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Image src={exercise.image} />
       </Wrap>
 
@@ -118,7 +121,7 @@ const TH1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(0));
                   action({
@@ -181,7 +184,7 @@ const TH1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 } else {
                   setIndex(index.concat(1));
                   action({
@@ -189,7 +192,7 @@ const TH1 = ({ exercise, topicId }) => {
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
                     topicID: topicId,
-                  })
+                  });
                 }
               }}
             >

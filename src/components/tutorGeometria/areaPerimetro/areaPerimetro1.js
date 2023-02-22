@@ -37,12 +37,7 @@ import { useAction } from "../../../utils/action";
 
 export const AP1 = ({ exercise, topicId }) => {
   exercise = ejercicioAP1[0];
-  const Mq2 = dynamic(
-    () => {
-      return import("../../Mq2");
-    },
-    { ssr: false },
-  );
+
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
