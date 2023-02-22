@@ -1,11 +1,11 @@
 // @ts-nocheck
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
-export const APstep2 = ({ step, setStepValid, stepValid, loading, contentID, topicID, extra, setExtra }) => {
+export const APstep2 = ({ step, setStepValid, stepValid, contentID, topicID, extra, setExtra }) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message

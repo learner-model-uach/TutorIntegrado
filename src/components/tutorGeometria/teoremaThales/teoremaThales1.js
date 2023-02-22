@@ -48,6 +48,15 @@ const TH1 = ({ exercise, topicId }) => {
   const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra3, setExtra3] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra4, setExtra4] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  extras.steps[2] = extra3;
+  extras.steps[3] = extra4;
   const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
@@ -71,10 +80,14 @@ const TH1 = ({ exercise, topicId }) => {
   }, [step3Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
-    if (step4Valid != null) {
-      setIndex([4]);
-    }
+    step4Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topicId,
+        result: 1,
+        extra: extras,
+      });
   }, [step4Valid]);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
@@ -148,6 +161,8 @@ const TH1 = ({ exercise, topicId }) => {
                 stepValid={step1Valid}
                 contentID={exercise.code}
                 topicID={topicId}
+                extra={extra1}
+                setExtra={setExtra1}
               ></THstep1>
             )}
           </AccordionPanel>
@@ -209,7 +224,8 @@ const TH1 = ({ exercise, topicId }) => {
                 stepValid={step2Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-                loading={undefined}
+                extra={extra2}
+                setExtra={setExtra2}
               ></THstep2>
             )}
           </AccordionPanel>

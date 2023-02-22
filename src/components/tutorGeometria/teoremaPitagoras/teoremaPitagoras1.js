@@ -65,7 +65,19 @@ const TP1 = ({ exercise, topicId }) => {
     duration: 0,
   });
   const [cdateE, setCdateE] = useState(Date.now());
-
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra3, setExtra3] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra4, setExtra4] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra5, setExtra5] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra6, setExtra6] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  extras.steps[2] = extra3;
+  extras.steps[3] = extra4;
+  extras.steps[4] = extra5;
+  extras.steps[5] = extra6;
   const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
@@ -103,11 +115,16 @@ const TP1 = ({ exercise, topicId }) => {
   }, [step5Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
-    if (step5Valid != null) {
-      setIndex([6]);
-    }
+    step6Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topicId,
+        result: 1,
+        extra: extras,
+      });
   }, [step6Valid]);
+
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
@@ -180,7 +197,8 @@ const TP1 = ({ exercise, topicId }) => {
                 stepValid={step1Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-                last={true}
+                extra={extra1}
+                setExtra={setExtra1}
               ></TPstep1>
             )}
           </AccordionPanel>
@@ -241,6 +259,8 @@ const TP1 = ({ exercise, topicId }) => {
                 stepValid={step2Valid}
                 contentID={exercise.code}
                 topicID={topicId}
+                extra={extra2}
+                setExtra={setExtra2}
               ></TPstep1>
             )}
           </AccordionPanel>
@@ -301,6 +321,8 @@ const TP1 = ({ exercise, topicId }) => {
                 stepValid={step3Valid}
                 contentID={exercise.code}
                 topicID={topicId}
+                extra={extra3}
+                setExtra={setExtra3}
               ></TPstep2>
             )}
           </AccordionPanel>
@@ -483,6 +505,8 @@ const TP1 = ({ exercise, topicId }) => {
                 stepValid={step6Valid}
                 contentID={exercise.code}
                 topicID={topicId}
+                extra={extra6}
+                setExtra={setExtra6}
               ></TPstepF>
             )}
           </AccordionPanel>

@@ -191,7 +191,6 @@ const AP1 = ({ exercise, topicId }) => {
                 stepValid={step1Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-                last={true}
                 extra={extra1}
                 setExtra={setExtra1}
               ></APstep1>
@@ -389,7 +388,6 @@ const AP1 = ({ exercise, topicId }) => {
         <>
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
-            {console.log(extras)}
             <Summary4
               expression={exercise.text}
               step1={exercise.steps[0]}
