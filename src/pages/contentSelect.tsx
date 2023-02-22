@@ -138,7 +138,10 @@ export default withAuth(function ContentSelect() {
       <p>Selección del contenido del tópico: {topics}</p>
 
       <SimpleGrid
-        columns={experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length}
+        columns={{
+          lg: 1,
+          xl: experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length,
+        }}
         spacing="8"
         p="10"
         textAlign="center"
