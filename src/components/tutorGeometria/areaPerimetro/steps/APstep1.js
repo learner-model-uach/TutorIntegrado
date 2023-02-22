@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useRef, useState } from "react";
 import Hint from "../../tools/Hint";
+//import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
@@ -95,11 +96,11 @@ export const APstep1 = ({ step, setStepValid, stepValid, loading, contentID, top
               &nbsp;&nbsp;
               <Hint
                 hints={step.hints}
-                contentId={contentID}
                 stepId={step.stepId}
+                contentId={contentID}
+                topicId={topicId}
                 matchingError={step.matchingError}
                 response={[response1]}
-                itemTitle="Diferencia de cuadrados" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}

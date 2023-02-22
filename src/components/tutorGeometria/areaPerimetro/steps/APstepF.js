@@ -101,11 +101,11 @@ export const APstepF = ({ step, setStepValid, stepValid, loading, contentID, top
               &nbsp;&nbsp;
               <Hint
                 hints={step.hints}
-                contentId={contentID}
                 stepId={step.stepId}
+                contentId={contentID}
+                topicId={topicId}
                 matchingError={step.matchingError}
                 response={[response1]}
-                itemTitle="Diferencia de cuadrados" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}
