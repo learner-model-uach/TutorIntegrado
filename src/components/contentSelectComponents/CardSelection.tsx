@@ -15,6 +15,7 @@ import { FaStar } from "react-icons/fa";
 import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
 import { MathComponent } from "mathjax-react";
+import { useAction } from "../../utils/action";
 
 export const CardSelection = ({
   id,
@@ -45,6 +46,7 @@ export const CardSelection = ({
   selectionData: selectionDataType[];
   indexSelectionData: number;
 }) => {
+  const action = useAction();
   return (
     <>
       <LinkBox
@@ -83,6 +85,14 @@ export const CardSelection = ({
 
           sessionState.nextContentPath = nextContentPath;
           sessionStateBD.setItem("nextContentPath", sessionState.nextContentPath);
+
+          action({
+            verbName: "selectContent",
+            contentID: code,
+            topicID: registerTopic,
+            //result: 1,
+            //extra: extras,
+          });
         }}
       >
         <LinkOverlay fontSize=".8em">

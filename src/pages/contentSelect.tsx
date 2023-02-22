@@ -7,6 +7,7 @@ import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
+import { useAction } from "../utils/action";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -93,7 +94,7 @@ export default withAuth(function ContentSelect() {
     },
     {
       refetchOnWindowFocus: false,
-      refetchOnMount: false,
+      //refetchOnMount: false,
       refetchOnReconnect: false,
     },
   );
@@ -132,6 +133,18 @@ export default withAuth(function ContentSelect() {
           };
         }));
 
+  /*const action = useAction();
+  useEffect(() => {
+    data &&
+      action({
+        verbName: "displaySelection",
+        //contentID: exercise.code,
+        topicID: registerTopic,
+        //result: 1,
+        extra: { contentResult },
+      });
+  }, [data]);*/ // quizas hacer esto dentro de la tarjeta !!!
+
   return (
     <>
       <p>{router.asPath}</p>
@@ -147,49 +160,32 @@ export default withAuth(function ContentSelect() {
         textAlign="center"
         rounded="lg"
       >
-        {!isLoading ? (
-          experimentGroup == "tutor-control" ? (
-            <Center>
-              <CardSelectionDynamic
-                id={contentResult[bestExercise]?.P.id}
-                code={contentResult[bestExercise]?.P.code}
-                json={contentResult[bestExercise]?.P.json as unknown as ExType}
-                description={contentResult[bestExercise]?.P.description}
-                label={contentResult[bestExercise]?.P.label}
-                kcs={contentResult[bestExercise]?.P.kcs}
-                selectionTitle={contentResult[bestExercise]?.Msg.label}
-                selectionText={contentResult[bestExercise]?.Msg.text}
-                selectionBest={false}
-                registerTopic={registerTopic}
-                nextContentPath={nextContentPath}
-                selectionData={selectionData}
-                indexSelectionData={0}
-                key={0}
-              ></CardSelectionDynamic>
-            </Center>
-          ) : (
-            <>
-              {contentResult.length > 1
-                ? contentResult?.map((content, index) => (
-                    <CardSelectionDynamic
-                      id={content.P.id}
-                      code={content.P.code}
-                      json={content.P.json as unknown as ExType}
-                      description={content.P.description}
-                      label={content.P.label}
-                      kcs={content.P.kcs}
-                      selectionTitle={content.Msg.label}
-                      selectionText={content.Msg.text}
-                      selectionBest={index == bestExercise}
-                      registerTopic={registerTopic}
-                      nextContentPath={nextContentPath}
-                      selectionData={selectionData}
-                      indexSelectionData={index}
-                      key={index}
-                    ></CardSelectionDynamic>
-                  ))
-                : contentResult?.map((content, index) => (
-                    <Center key={index + "center"}>
+        {
+          //agregar componente de tópico completado
+          !isLoading ? (
+            experimentGroup == "tutor-control" ? (
+              <Center>
+                <CardSelectionDynamic
+                  id={contentResult[bestExercise]?.P.id}
+                  code={contentResult[bestExercise]?.P.code}
+                  json={contentResult[bestExercise]?.P.json as unknown as ExType}
+                  description={contentResult[bestExercise]?.P.description}
+                  label={contentResult[bestExercise]?.P.label}
+                  kcs={contentResult[bestExercise]?.P.kcs}
+                  selectionTitle={contentResult[bestExercise]?.Msg.label}
+                  selectionText={contentResult[bestExercise]?.Msg.text}
+                  selectionBest={false}
+                  registerTopic={registerTopic}
+                  nextContentPath={nextContentPath}
+                  selectionData={selectionData}
+                  indexSelectionData={0}
+                  key={0}
+                ></CardSelectionDynamic>
+              </Center>
+            ) : (
+              <>
+                {contentResult.length > 1
+                  ? contentResult?.map((content, index) => (
                       <CardSelectionDynamic
                         id={content.P.id}
                         code={content.P.code}
@@ -206,13 +202,33 @@ export default withAuth(function ContentSelect() {
                         indexSelectionData={index}
                         key={index}
                       ></CardSelectionDynamic>
-                    </Center>
-                  ))}
-            </>
+                    ))
+                  : contentResult?.map((content, index) => (
+                      <Center key={index + "center"}>
+                        <CardSelectionDynamic
+                          id={content.P.id}
+                          code={content.P.code}
+                          json={content.P.json as unknown as ExType}
+                          description={content.P.description}
+                          label={content.P.label}
+                          kcs={content.P.kcs}
+                          selectionTitle={content.Msg.label}
+                          selectionText={content.Msg.text}
+                          selectionBest={index == bestExercise}
+                          registerTopic={registerTopic}
+                          nextContentPath={nextContentPath}
+                          selectionData={selectionData}
+                          indexSelectionData={index}
+                          key={index}
+                        ></CardSelectionDynamic>
+                      </Center>
+                    ))}
+              </>
+            )
+          ) : (
+            <Text>Cargando ejercicios</Text>
           )
-        ) : (
-          <Text>Cargando ejercicios</Text>
-        )}
+        }
       </SimpleGrid>
     </>
   );
