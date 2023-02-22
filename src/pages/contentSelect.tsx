@@ -184,7 +184,7 @@ export default withAuth(function ContentSelect() {
                     ></CardSelectionDynamic>
                   ))
                 : contentResult?.map((content, index) => (
-                    <Center>
+                    <Center key={index + "center"}>
                       <CardSelectionDynamic
                         id={content.P.id}
                         code={content.P.code}
