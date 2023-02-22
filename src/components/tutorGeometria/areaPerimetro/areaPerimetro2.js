@@ -163,7 +163,7 @@ const AP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -180,7 +180,7 @@ const AP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
                 last={true}
               ></APstep1>
             )}
@@ -224,7 +224,7 @@ const AP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -241,7 +241,7 @@ const AP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstep1>
             )}
           </AccordionPanel>
@@ -284,7 +284,7 @@ const AP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -301,7 +301,7 @@ const AP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>
@@ -344,7 +344,7 @@ const AP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -361,7 +361,7 @@ const AP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstep4>
             )}
           </AccordionPanel>
@@ -404,7 +404,7 @@ const AP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -421,7 +421,7 @@ const AP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep5Valid}
                 stepValid={step5Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstep1>
             )}
           </AccordionPanel>
@@ -464,7 +464,7 @@ const AP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -481,7 +481,7 @@ const AP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep6Valid}
                 stepValid={step6Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></APstepF>
             )}
           </AccordionPanel>

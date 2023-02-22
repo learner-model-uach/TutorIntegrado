@@ -323,7 +323,7 @@ input AdminContentFilter {
   tags: [String!]
 
   """
-  Filter by text search inside "code", "label" or "tags"
+  Filter by text search inside "code", "label", "tags" or "kcs"
   """
   textSearch: String
 }
@@ -646,7 +646,7 @@ input AdminUsersFilter {
   tags: [String!]
 
   """
-  Filter by text search inside "email", "name" or "tags"
+  Filter by text search inside "email", "name", "tags" or "projects"
   """
   textSearch: String
 }

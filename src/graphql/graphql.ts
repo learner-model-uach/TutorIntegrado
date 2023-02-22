@@ -265,7 +265,7 @@ export type AdminContentFilter = {
    * If any of the content's tags matches any of the specified tags, the content is included
    */
   tags?: InputMaybe<Array<Scalars["String"]>>;
-  /** Filter by text search inside "code", "label" or "tags" */
+  /** Filter by text search inside "code", "label", "tags" or "kcs" */
   textSearch?: InputMaybe<Scalars["String"]>;
 };
 
@@ -620,7 +620,7 @@ export type AdminUsersFilter = {
    * If any of the user's tags matches any of the specified tags, the user is included
    */
   tags?: InputMaybe<Array<Scalars["String"]>>;
-  /** Filter by text search inside "email", "name" or "tags" */
+  /** Filter by text search inside "email", "name", "tags" or "projects" */
   textSearch?: InputMaybe<Scalars["String"]>;
 };
 

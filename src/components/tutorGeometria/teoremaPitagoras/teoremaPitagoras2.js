@@ -144,7 +144,7 @@ const TP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -161,7 +161,7 @@ const TP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
                 last={true}
               ></TPstep1>
             )}
@@ -205,7 +205,7 @@ const TP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -222,7 +222,7 @@ const TP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></TPstep1>
             )}
           </AccordionPanel>
@@ -265,7 +265,7 @@ const TP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect3}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -282,7 +282,7 @@ const TP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></TPstep2>
             )}
           </AccordionPanel>
@@ -325,7 +325,7 @@ const TP2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect3}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -343,7 +343,7 @@ const TP2 = ({ exercise, topicId }) => {
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>

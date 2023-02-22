@@ -95,7 +95,7 @@ const TH2 = ({ exercise, topicId }) => {
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
+                    topicID: topicId,
                   });
                 } else {
                   setIndex(index.concat(0));
@@ -103,7 +103,7 @@ const TH2 = ({ exercise, topicId }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
+                    topicID: topicId,
                   });
                 }
               }}
@@ -121,7 +121,7 @@ const TH2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -138,7 +138,7 @@ const TH2 = ({ exercise, topicId }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></THstep2>
             )}
           </AccordionPanel>
@@ -161,7 +161,7 @@ const TH2 = ({ exercise, topicId }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
+                    topicID: topicId,
                   });
                 }
               }}
@@ -179,7 +179,7 @@ const TH2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -196,7 +196,7 @@ const TH2 = ({ exercise, topicId }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></THstep1>
             )}
           </AccordionPanel>
@@ -219,7 +219,7 @@ const TH2 = ({ exercise, topicId }) => {
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
+                    topicID: topicId,
                   });
                 }
               }}
@@ -237,7 +237,7 @@ const TH2 = ({ exercise, topicId }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -254,7 +254,7 @@ const TH2 = ({ exercise, topicId }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></THstep1>
             )}
           </AccordionPanel>
