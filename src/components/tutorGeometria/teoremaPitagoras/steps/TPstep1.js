@@ -12,7 +12,7 @@ export const TPstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   const correctAlternatives = step.answers.map(elemento => elemento.answer); //list of answers valid
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0); //attemps counts
-  const [hints, setHints] = useState(0); //hint counts
+  const [hints, setHints] = useState(0); //hint counts .
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
   const compare = () => {
@@ -87,9 +87,7 @@ export const TPstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                     result: stepValid === null ? 0 : 1,
                     kcsIDs: step.KCs,
                     extra: {
-                      response: [
-                        response1.current.value
-                      ],
+                      response: [response1.current.value],
                       attempts: attempts,
                       hints: hints,
                     },

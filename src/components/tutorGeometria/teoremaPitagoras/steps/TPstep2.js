@@ -122,7 +122,7 @@ export const TPstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                       response: [
                         response1.current.value,
                         response2.current.value,
-                        response3.current.value
+                        response3.current.value,
                       ],
                       attempts: attempts,
                       hints: hints,
@@ -140,7 +140,7 @@ export const TPstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 contentId={contentID}
                 topicID={topicID}
                 matchingError={step.matchingError}
-                response={[response1], [response2], [response3]}
+                response={([response1], [response2], [response3])}
                 error={error}
                 setError={setError}
                 hintCount={hints}

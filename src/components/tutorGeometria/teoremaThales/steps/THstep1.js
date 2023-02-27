@@ -102,10 +102,7 @@ export const THstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                     result: stepValid === null ? 0 : 1,
                     kcsIDs: step.KCs,
                     extra: {
-                      response: [
-                        response1.current.value,
-                        response2.current.value,
-                      ],
+                      response: [response1.current.value, response2.current.value],
                       attempts: attempts,
                       hints: hints,
                     },
