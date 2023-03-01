@@ -11,15 +11,15 @@ import {
 import { useAction } from "../../../utils/action";
 
 export const StepInput = ({
-  step, //content of "steps" field of json file
+  step, //content of "steps" field of the exercise
   setNumStep,
-  nStep, //"nStep" field of json file
+  nStep, //"nStep" field of the exercise
   setDisableState,
   totalSteps,
   setStepCorrect,
   setColor,
   setNextExercise,
-  code, // "code" field of json file
+  code, // "code" field of the exercise
   topicId, // "id" field in the system
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
   completeContentSteps, // object used in the "steps" field of completeContent
@@ -34,6 +34,7 @@ export const StepInput = ({
   const [openAlert, setOpenAlert] = useState(false);
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
+  const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   const startAction = useAction({});
 
@@ -41,20 +42,40 @@ export const StepInput = ({
     setAnswer(e.target.value);
   };
 
+  // returns all hints that can be associated with the user's
+  // response (both non-generic and generic).
+  const getHints = answerId => {
+    let hintsStep = step.hints;
+
+    if (hintsStep != undefined) {
+      let filterHint = hintsStep.filter(hint => {
+        return hint.answers.includes(answerId);
+      });
+      if (filterHint != undefined) {
+        filterHint = filterHint.concat(
+          hintsStep.filter(hint => hint.generic && !filterHint.includes(hint)),
+        );
+      } else {
+        filterHint = filterHint.concat(hintsStep.filter(hint => hint.generic));
+      }
+      return filterHint;
+    }
+    return null;
+  };
+
   // gets the id of the user's response, if there is not then the id is set to 0,
   // this is so that if the user's response does not have a hint associated with it,
   // then a generic hint can be displayed.
   const getId = userAnswer => {
-    setIdAnswer(-1);
     userAnswer = userAnswer.replaceAll(" ", "");
-    if (userAnswer.length == !0) {
-      setIdAnswer(0);
+    let answer = step.answers.filter(answer => answer.value === userAnswer.toString());
+    if (answer !== undefined && answer.length > 0) {
+      return answer[0].id;
     }
-    step.answers.map(answer => {
-      if (answer.value === userAnswer) {
-        setIdAnswer(answer.id);
-      }
-    });
+    if (userAnswer.length == !0) {
+      return 0;
+    }
+    return -1;
   };
 
   const checkLastStep = () => {
@@ -62,7 +83,7 @@ export const StepInput = ({
       // it is executed when all the steps are completed
       startAction({
         verbName: "completeContent",
-        contentID: code, // it is "code" field of the json file
+        contentID: code, // it is "code" field of the exericse
         topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
@@ -75,7 +96,10 @@ export const StepInput = ({
 
   const checkAnswers = e => {
     e.preventDefault();
+
+    let idUserAnswer = getId(answer);
     setOpenAlert(true);
+
     if (answer.length === 0) {
       setAlert({
         status: "info",
@@ -84,7 +108,7 @@ export const StepInput = ({
     } else {
       updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
-        if (answer === step.correct_answer.toString()) {
+        if (idUserAnswer === step.correct_answer) {
           startAction({
             verbName: "tryStep",
             contentID: code,
@@ -113,9 +137,12 @@ export const StepInput = ({
           });
           setIsCorrect(true);
           checkLastStep();
+          setFirstTimeHint(true);
         } else {
           setAttempts(prev => prev + 1);
           setAnswerInput(answer);
+          setIdAnswer(idUserAnswer);
+          setHints(getHints(idUserAnswer));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
           startAction({
@@ -200,7 +227,7 @@ export const StepInput = ({
 
                 <Hint
                   firstTimeHint={firstTimeHint}
-                  hints={step.hints}
+                  hints={hints}
                   setNewHintAvaliable={setNewHintAvaliable}
                   answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
@@ -220,7 +247,7 @@ export const StepInput = ({
                   <div style={{ paddingRight: "5px" }}>
                     <Hint
                       firstTimeHint={firstTimeHint}
-                      hints={step.hints}
+                      hints={hints}
                       setNewHintAvaliable={setNewHintAvaliable}
                       answerId={idAnswer}
                       newHintAvaliable={newHintAvaliable}
