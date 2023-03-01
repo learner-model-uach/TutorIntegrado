@@ -27,7 +27,7 @@ export default withAuth(function ContentSelect() {
     });
   }, []);
 
-  const { data, isLoading, isError } = useGQLQuery(
+  const { data, isLoading, isError, isFetched } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData($input: ContentSelectionInput!) {
         contentSelection {
@@ -140,11 +140,10 @@ export default withAuth(function ContentSelect() {
   const action = useAction();
   useEffect(() => {
     data &&
-      !isLoading &&
       action({
         verbName: "displaySelection",
         topicID: registerTopic,
-        extra: { contentResult },
+        extra: { selectionData },
       });
   }, [data]); //duplicate Action :c
 
