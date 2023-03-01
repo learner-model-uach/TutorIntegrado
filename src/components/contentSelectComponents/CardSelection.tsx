@@ -92,7 +92,6 @@ export const CardSelection = ({
             verbName: "selectContent",
             contentID: code,
             topicID: registerTopic,
-            //result: 1,
             extra: { selectionData: sessionState.selectionData },
           });
         }}

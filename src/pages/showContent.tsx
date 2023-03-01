@@ -26,7 +26,7 @@ export default withAuth(function ShowContent() {
   const content = sessionState.currentContent;
   const topic = sessionState.topic;
 
-  console.log(content);
+  //console.log(content);
 
   return (
     <>

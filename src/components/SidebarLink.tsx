@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { useAction } from "../utils/action";
 
 interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
@@ -26,8 +27,19 @@ export const SidebarLink = (props: SidebarLinkProps) => {
 
   const activeBg = useColorModeValue("blue.900", "gray.700");
   const hoverBg = useColorModeValue("blue.700", "gray.600");
-  //const query2 = href;
-  //console.log(href.indexOf("="));
+  const action = useAction();
+  const registerTopic = href
+    .substring(href.indexOf("?") + 1)
+    .split("&")
+    .map(x => {
+      if (x.split("=")[0] == "registerTopic") {
+        return x.split("=")[1];
+      } else {
+        return undefined;
+      }
+    })
+    .filter(x => x !== undefined);
+
   return (
     <LinkBox
       marginEnd="2"
@@ -57,9 +69,14 @@ export const SidebarLink = (props: SidebarLinkProps) => {
           ) : (
             <LinkOverlay
               onClick={ev => {
+                console.log(query);
                 ev.preventDefault();
-
                 pathname !== href && push(href);
+                registerTopic[0] &&
+                  action({
+                    verbName: "selectTopic",
+                    topicID: registerTopic[0],
+                  });
               }}
               onMouseOver={() => {
                 pathname !== href && prefetch(href);
