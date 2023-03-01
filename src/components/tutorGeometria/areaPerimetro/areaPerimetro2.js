@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { MathComponent } from "../../MathJax";
-import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { APstep1 } from "./steps/APstep1";
 import { APstep4 } from "./steps/APstep4";
 import { APstepF } from "./steps/APstepF";
@@ -9,7 +8,6 @@ import { APstepF } from "./steps/APstepF";
 import { Summary6 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
-import ejercicioAP2 from "./ejercicioAP2.json";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -22,6 +20,7 @@ import {
   Alert,
   Wrap,
   Center,
+  Heading,
   Spacer,
   Stack,
   Button,
@@ -29,6 +28,7 @@ import {
 } from "@chakra-ui/react";
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
+import RatingQuestion from "../../RatingQuestion";
 
 const Mq2 = dynamic(
   () => {
@@ -38,8 +38,6 @@ const Mq2 = dynamic(
 );
 
 export const AP2 = ({ exercise, topicId }) => {
-  exercise = ejercicioAP2[0];
-
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -131,14 +129,19 @@ export const AP2 = ({ exercise, topicId }) => {
 
   return (
     <>
-      <BreadcrumbTutor root="Área y Perímetro" item={exercise.title}></BreadcrumbTutor>
+      <Heading as="h1" size="lg" noOfLines={3}>
+        {exercise.title}
+      </Heading>
+      <Heading as="h5" size="sm" mt={2}>
+        {exercise.text}
+      </Heading>
 
-      <Wrap>{exercise.text}</Wrap>
       <Wrap
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          marginTop: 20,
         }}
       >
         <Image src={exercise.image} />
@@ -526,6 +529,7 @@ export const AP2 = ({ exercise, topicId }) => {
             step5={exercise.steps[4]}
             step6={exercise.steps[5]}
           />
+          <RatingQuestion />
         </>
       )}
     </>

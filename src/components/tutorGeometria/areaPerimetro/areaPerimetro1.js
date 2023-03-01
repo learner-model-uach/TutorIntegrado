@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 //import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
 //import { Accordion,Card } from 'react-bootstrap';
-import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { APstep1 } from "./steps/APstep1";
 import { APstep2 } from "./steps/APstep2";
 import { APstep3 } from "./steps/APstep3";
@@ -13,7 +12,6 @@ import { APstepF } from "./steps/APstepF";
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
-import ejercicioAP1 from "./ejercicioAP1.json";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -25,6 +23,7 @@ import {
   Box,
   Alert,
   Wrap,
+  Heading,
   Center,
   Spacer,
   Stack,
@@ -34,10 +33,9 @@ import {
 } from "@chakra-ui/react";
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
+import RatingQuestion from "../../RatingQuestion";
 
 export const AP1 = ({ exercise, topicId }) => {
-  exercise = ejercicioAP1[0];
-
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -114,21 +112,19 @@ export const AP1 = ({ exercise, topicId }) => {
 
   return (
     <>
-      <BreadcrumbTutor root="Área y Perímetro" item={exercise.title}></BreadcrumbTutor>
-
-      <Wrap>
+      <Heading as="h1" size="lg" noOfLines={3}>
+        {exercise.title}
+      </Heading>
+      <Heading as="h5" size="sm" mt={2}>
         {exercise.text}
+      </Heading>
 
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
       <Wrap
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          marginTop: 20,
         }}
       >
         <Image src={exercise.image} />
@@ -396,6 +392,7 @@ export const AP1 = ({ exercise, topicId }) => {
               step4={exercise.steps[3]}
             />
           </VStack>
+          <RatingQuestion />
         </>
       )}
     </>
