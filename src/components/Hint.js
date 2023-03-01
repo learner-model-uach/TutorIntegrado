@@ -180,7 +180,7 @@ const Hint = ({
             variant="outline"
             size="sm"
           >
-            Ayuda &nbsp;
+            Pista &nbsp;
             {error && i < hints.length + count - 1 ? ( //en esta parte va la notificación de un nuevo hint
               <Badge boxSize="1.25em" color="white" bg="tomato" borderRadius="lg">
                 1
