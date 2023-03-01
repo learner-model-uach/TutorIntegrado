@@ -229,6 +229,7 @@ export const StepPanel = ({
                     style={{
                       fontSize: "12px",
                       margin: "auto",
+                      paddingLeft: "5px",
                     }}
                     math={step.input_labels}
                     as="figcaption"

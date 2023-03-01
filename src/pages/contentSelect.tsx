@@ -149,7 +149,6 @@ export default withAuth(function ContentSelect() {
 
   return (
     <>
-      <p>{router.asPath}</p>
       <p>Selección del contenido del tópico: {topics}</p>
       {isError ? (
         <p>Error al cargar datos</p>
