@@ -15,6 +15,8 @@ import { FaStar } from "react-icons/fa";
 import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
 import { MathComponent } from "mathjax-react";
+import TeX from "@matejmazur/react-katex";
+import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
 
 export const CardSelection = ({
@@ -91,13 +93,17 @@ export const CardSelection = ({
             contentID: code,
             topicID: registerTopic,
             //result: 1,
-            //extra: extras,
+            extra: { selectionData: sessionState.selectionData },
           });
         }}
       >
-        <LinkOverlay fontSize=".8em">
-          Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
-        </LinkOverlay>
+        {json.type == "ecc5s" || json.type == "secl5s" ? (
+          <TeX>{json.title}</TeX>
+        ) : (
+          <LinkOverlay fontSize=".8em">
+            Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
+          </LinkOverlay>
+        )}
         <br />
         <Center fontSize={"1xl"}>
           {json.type == "ecc5s" || json.type == "secl5s" ? (
