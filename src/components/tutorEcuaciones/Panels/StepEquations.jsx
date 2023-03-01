@@ -159,7 +159,7 @@ export const StepEquations = ({
             topicID: topicId,
             stepID: step.stepId,
             result: 1,
-            kcsIDs: step.kcs,
+            kcsIDs: step.KCs,
             extra: {
               response: { answerLeft, answerRigth },
               attemps: attempts,
@@ -189,7 +189,7 @@ export const StepEquations = ({
             topicID: topicId,
             stepID: step.stepId,
             result: 0,
-            kcsIDs: step.kcs,
+            kcsIDs: step.KCs,
             extra: {
               response: { answerLeft, answerRigth },
               attemps: attempts,
