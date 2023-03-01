@@ -109,7 +109,7 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
               isDisabled={!disableState[index]}
               margin={{ sm: "auto" }}
               key={index}
-              paddingRight={{ sm: "12px", base: 0 }}
+              paddingRight={{ base: 0 }}
               style={{ display: "block", width: "100%" }}
               className={styles["accordionPadding"]}
             >

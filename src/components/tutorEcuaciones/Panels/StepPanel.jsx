@@ -25,7 +25,7 @@ export const StepPanel = ({
   setColor,
   setNextExercise,
   content,
-  code, // "code" field of json file
+  code, // "code" field of the exercise
   topicId, // "id" field in the system
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
   completeContentSteps, // object used in the "steps" field of completeContent
@@ -40,6 +40,7 @@ export const StepPanel = ({
   const [idAnswer, setIdAnswer] = useState(-1);
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
+  const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   const startAction = useAction({});
   useEffect(() => {
@@ -90,7 +91,7 @@ export const StepPanel = ({
       // it is executed when all the steps are completed
       startAction({
         verbName: "completeContent",
-        contentID: code, // it is "code" field of the json file
+        contentID: code, // it is "code" field of the exercise
         topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
@@ -99,6 +100,27 @@ export const StepPanel = ({
       });
       setNextExercise(true);
     }
+  };
+
+  // returns all hints that can be associated with the user's
+  // response (both non-generic and generic).
+  const getHints = answerId => {
+    let hintsStep = step.hints;
+
+    if (hintsStep != undefined) {
+      let filterHint = hintsStep.filter(hint => {
+        return hint.answers.includes(answerId);
+      });
+      if (filterHint != undefined) {
+        filterHint = filterHint.concat(
+          hintsStep.filter(hint => hint.generic && !filterHint.includes(hint)),
+        );
+      } else {
+        filterHint = filterHint.concat(hintsStep.filter(hint => hint.generic));
+      }
+      return filterHint;
+    }
+    return null;
   };
 
   const checkAnswers = e => {
@@ -143,6 +165,7 @@ export const StepPanel = ({
           });
           setIsCorrect(true);
           checkLastStep();
+          setFirstTimeHint(true);
         } else {
           setAttempts(prev => prev + 1);
           startAction({
@@ -159,6 +182,7 @@ export const StepPanel = ({
             },
           });
           setIdAnswer(answer[0].id);
+          setHints(getHints(answer[0].id));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
 
@@ -233,7 +257,7 @@ export const StepPanel = ({
 
                 <Hint
                   firstTimeHint={firstTimeHint}
-                  hints={step.hints}
+                  hints={hints}
                   setNewHintAvaliable={setNewHintAvaliable}
                   answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
@@ -253,7 +277,7 @@ export const StepPanel = ({
                   <div style={{ paddingRight: "5px" }}>
                     <Hint
                       firstTimeHint={firstTimeHint}
-                      hints={step.hints}
+                      hints={hints}
                       nStep={nStep}
                       setNewHintAvaliable={setNewHintAvaliable}
                       answerId={idAnswer}
