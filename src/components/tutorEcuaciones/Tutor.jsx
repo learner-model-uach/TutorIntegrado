@@ -9,6 +9,7 @@ import { SortSteps } from "./SortSteps/SortSteps";
 import { NEXT_STEP_BUTTOM_NAME, NEXT_EXERCISE_BUTTOM_NAME } from "./types";
 import { useAction } from "../../utils/action";
 import { useAuth } from "../Auth";
+import RatingQuestion from "../RatingQuestion";
 
 export function Tutor({ exercise, topicId }) {
   const [idExercise, setIdExercise] = useState("");
@@ -138,21 +139,7 @@ export function Tutor({ exercise, topicId }) {
                 {nextExercise && (
                   <>
                     <Feedback type={exerciseSelected.type} />
-                    <Link href={`/exercise/${(idExercise % 14) + 1}`}>
-                      <Button
-                        marginRight="12px"
-                        fontSize={{
-                          base: "11px",
-                          sm: "13px",
-                          lg: "16px",
-                        }}
-                        colorScheme="blue"
-                        onClick={handlerNextExercise}
-                        style={{ float: "right" }}
-                      >
-                        {NEXT_EXERCISE_BUTTOM_NAME}
-                      </Button>
-                    </Link>
+                    <RatingQuestion />
                   </>
                 )}
               </>
