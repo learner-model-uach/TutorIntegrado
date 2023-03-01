@@ -27,6 +27,7 @@ export function Tutor({ exercise, topicId }) {
     startAction({
       verbName: "loadContent",
       contentID: exercise?.code, // "code" field of the exercise
+	  topicID: topicId // "id" field of the system
     });
     setOrderFirst(exercise?.order_steps.position === "initial");
     setShowOrder(exercise?.order_steps.show);

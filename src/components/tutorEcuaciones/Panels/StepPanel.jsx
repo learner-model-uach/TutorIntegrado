@@ -144,7 +144,7 @@ export const StepPanel = ({
             topicID: topicId,
             stepID: step.stepId,
             result: 1,
-            kcsIDs: step.kcs,
+            kcsIDs: step.KCs,
             extra: {
               response: answer,
               attemps: attempts,
@@ -174,7 +174,7 @@ export const StepPanel = ({
             topicID: topicId,
             stepID: step.stepId,
             result: 0,
-            kcsIDs: step.kcs,
+            kcsIDs: step.KCs,
             extra: {
               response: answer,
               attemps: attempts,
