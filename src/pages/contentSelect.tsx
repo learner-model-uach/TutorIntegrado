@@ -27,7 +27,7 @@ export default withAuth(function ContentSelect() {
     });
   }, []);
 
-  const { data, isLoading, isError, isFetched } = useGQLQuery(
+  const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData($input: ContentSelectionInput!) {
         contentSelection {
