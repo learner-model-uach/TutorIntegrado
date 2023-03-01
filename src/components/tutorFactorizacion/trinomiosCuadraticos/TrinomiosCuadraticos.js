@@ -15,6 +15,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Heading,
   Box,
   Alert,
   Wrap,
@@ -97,12 +98,12 @@ export const TC = ({ exercise, topic }) => {
 
   return (
     <>
-      <BreadcrumbTutor root="Factorización" item={exercise.title}></BreadcrumbTutor>
-
-      <Wrap>
+      <Heading as="h1" size="lg" noOfLines={3}>
+        {exercise.title}
+      </Heading>
+      <Heading as="h5" size="sm" mt={2}>
         {exercise.text}
-        <Spacer />
-      </Wrap>
+      </Heading>
 
       <Wrap justify="center">
         {loading && <Loading />}
