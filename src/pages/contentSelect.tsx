@@ -7,7 +7,7 @@ import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
-import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
+//import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
 
 export default withAuth(function ContentSelect() {
