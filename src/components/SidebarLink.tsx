@@ -69,7 +69,6 @@ export const SidebarLink = (props: SidebarLinkProps) => {
           ) : (
             <LinkOverlay
               onClick={ev => {
-                console.log(query);
                 ev.preventDefault();
                 pathname !== href && push(href);
                 registerTopic[0] &&

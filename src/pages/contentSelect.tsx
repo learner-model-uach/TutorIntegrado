@@ -8,7 +8,7 @@ import { gql } from "../graphql";
 import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
-//import { useAction } from "../utils/action";
+import { useAction } from "../utils/action";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -27,7 +27,7 @@ export default withAuth(function ContentSelect() {
     });
   }, []);
 
-  const { data, isLoading } = useGQLQuery(
+  const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData($input: ContentSelectionInput!) {
         contentSelection {
@@ -102,20 +102,23 @@ export default withAuth(function ContentSelect() {
   const contentResult = data?.contentSelection?.contentSelected?.contentResult.sort((a, b) => {
     return parseInt(a.Order) - parseInt(b.Order);
   });
+  console.log(isError);
   console.log(data?.contentSelection?.contentSelected);
 
   const bestExercise =
     !isLoading &&
+    !isError &&
     ((contentResult ?? [])
       .map(x => x.Preferred)
       .reduce((out, bool, index) => (bool ? out.concat(index) : out), [])[0] ??
       0);
 
   const experimentGroup =
-    user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
+    !isError && user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
 
   const selectionData =
     !isLoading &&
+    !isError &&
     (experimentGroup == "tutor-control"
       ? [
           {
@@ -134,24 +137,24 @@ export default withAuth(function ContentSelect() {
           };
         }));
 
-  /*const action = useAction();
+  const action = useAction();
   useEffect(() => {
     data &&
+      !isLoading &&
       action({
         verbName: "displaySelection",
-        //contentID: exercise.code,
         topicID: registerTopic,
-        //result: 1,
         extra: { contentResult },
       });
-  }, [data]);*/ // quizas hacer esto dentro de la tarjeta !!!
+  }, [data]); //duplicate Action :c
 
   return (
     <>
       <p>{router.asPath}</p>
       <p>Selección del contenido del tópico: {topics}</p>
-
-      {!isLoading && data.contentSelection.contentSelected.topicCompletedMsg.label == "" ? (
+      {isError ? (
+        <p>Error al cargar datos</p>
+      ) : (
         <SimpleGrid
           columns={{
             lg: 1,
@@ -232,8 +235,6 @@ export default withAuth(function ContentSelect() {
             )
           }
         </SimpleGrid>
-      ) : (
-        <CompleteTopic></CompleteTopic>
       )}
     </>
   );
