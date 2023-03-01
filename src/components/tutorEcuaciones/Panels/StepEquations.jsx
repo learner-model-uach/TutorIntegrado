@@ -44,6 +44,7 @@ export const StepEquations = ({
   const startAction = useAction({});
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
+  const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   useEffect(() => {
     setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
@@ -98,7 +99,7 @@ export const StepEquations = ({
       setNextExercise(true);
       startAction({
         verbName: "completeContent",
-        contentID: code, // it is "code" field of the json file
+        contentID: code, // it is "code" field of the exercise
         topicID: topicId, // it is "id" field in the system
         result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
         extra: {
@@ -106,6 +107,29 @@ export const StepEquations = ({
         },
       });
     }
+  };
+
+  // returns all hints that can be associated with the user's
+  // response (both non-generic and generic).
+  const getHints = (answerLeft, answerRigth) => {
+    let hintsStep = step.hints;
+
+    if (hintsStep != undefined) {
+      let filterHint = hintsStep.filter(hint => hint.answers.includes(answerLeft));
+
+      filterHint = filterHint.concat(
+        hintsStep.filter(hint => hint.answers.includes(answerRigth) && !filterHint.includes(hint)),
+      );
+      if (filterHint != undefined) {
+        filterHint = filterHint.concat(
+          hintsStep.filter(hint => hint.generic && !filterHint.includes(hint)),
+        );
+      } else {
+        filterHint = filterHint.concat(hintsStep.filter(hint => hint.generic));
+      }
+      return filterHint;
+    }
+    return null;
   };
 
   const checkAnswers = e => {
@@ -156,6 +180,7 @@ export const StepEquations = ({
           });
           setIsCorrect(true);
           checkLastStep();
+          setFirstTimeHint(true);
         } else {
           setAttempts(prev => prev + 1);
           startAction({
@@ -172,6 +197,7 @@ export const StepEquations = ({
             },
           });
           setIdAnswer([answerLeft[0].id, answerRigth[0].id]);
+          setHints(getHints(answerLeft[0].id, answerRigth[0].id));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
 
@@ -263,7 +289,7 @@ export const StepEquations = ({
 
                 <HintEqSystem
                   firstTimeHint={firstTimeHint}
-                  hints={step.hints}
+                  hints={hints}
                   nStep={nStep}
                   setNewHintAvaliable={setNewHintAvaliable}
                   answerId={idAnswer}
@@ -283,7 +309,7 @@ export const StepEquations = ({
                   <div style={{ paddingRight: "5px" }}>
                     <HintEqSystem
                       firstTimeHint={firstTimeHint}
-                      hints={step.hints}
+                      hints={hints}
                       nStep={nStep}
                       setNewHintAvaliable={setNewHintAvaliable}
                       answerId={idAnswer}

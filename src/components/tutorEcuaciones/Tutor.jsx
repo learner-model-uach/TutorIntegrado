@@ -26,7 +26,7 @@ export function Tutor({ exercise, topicId }) {
     setIdExercise(exercise?.code);
     startAction({
       verbName: "loadContent",
-      contentID: exercise?.code, // "code" field of the json file
+      contentID: exercise?.code, // "code" field of the exercise
     });
     setOrderFirst(exercise?.order_steps.position === "initial");
     setShowOrder(exercise?.order_steps.show);
@@ -69,7 +69,7 @@ export function Tutor({ exercise, topicId }) {
                     />
                     {nextExercise && (
                       <>
-                        <Feedback />
+                        <Feedback type={exerciseSelected.type} />
                         {
                           //<Link href={`/exercise/${(idExercise % 14) + 1}`}>
                         }
@@ -101,7 +101,7 @@ export function Tutor({ exercise, topicId }) {
                   />
                   {nextExercise && (
                     <>
-                      <Feedback />
+                      <Feedback type={exerciseSelected.type} />
 
                       <Button
                         marginRight="12px"
@@ -137,7 +137,7 @@ export function Tutor({ exercise, topicId }) {
                 />
                 {nextExercise && (
                   <>
-                    <Feedback />
+                    <Feedback type={exerciseSelected.type} />
                     <Link href={`/exercise/${(idExercise % 14) + 1}`}>
                       <Button
                         marginRight="12px"

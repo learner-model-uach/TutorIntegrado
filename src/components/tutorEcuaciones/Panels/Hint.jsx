@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
@@ -28,9 +28,9 @@ import { useAction } from "../../../utils/action";
 
 export const Hint = ({
   hints, // all hints
-  firstTimeHint,
-  setNewHintAvaliable,
-  newHintAvaliable,
+  firstTimeHint, // unlock or lock hint button
+  setNewHintAvaliable, // remove
+  newHintAvaliable, // it is true if the user clicked the correct button
   answerId, // id the answer
   nStep, // "stepId" field defined in the exercise
   code, // "code" field defined in the exercise
@@ -46,111 +46,90 @@ export const Hint = ({
   const [hintsAvaliableList, setHintsAvaliableList] = useState([]); // accumulated hints displayed to the user
   const [shake, setShake] = useState(false);
   const hintIndex = useRef(-1); // this is used to keep the index of the possible answers that the user is seeing
-  const hintsAssociatedAnswer = useRef([]); // all hints associated with this idAnswer (both non-generic and generic)
-  const [updateAssociatedAnswer, setUpdateAssociatedAnswer] = useState(false);
+  const newHintIndex = useRef(-1); // index of the new hint to add to the list of available hints
+  const hintsAvaliable = useRef(false); // true if there is a new hint to show the user, otherwise false
+  const lastHint = useRef(false); // true if the user saw the last hint associated with the user's response, otherwise false
+  const firtsHint = useRef(false); // is true if it is the first hint of the user's response, otherwise false
+  const pressBoton = useRef(false); // true if the hint button is pressed, otherwise false
 
   useEffect(() => {
-    setCountHint(-1);
     setAllHints(hints);
+    setCountHint(-1);
     setHintsAvaliableList([]);
     hintIndex.current = -1;
-
-    // function setAllHints() must be executed every time the user changes
-    // answer (the id of the answer defined in the exercise is used, if
-    // there is no answer defined in the exercise then it defaults to 0,
-    // this is to guarantee that it shows the generic answers, and this is
-    // defined in the three panel components that are parents of this
-    // component) or advances one step in the exercise and
-    // hintsAssociatedAnswer needs to update the data every time the user
-    // changes answer or advances one step in the exercise, but
-    // hintsAssociatedAnswer must be updated after setAllHints()
-    // has been updated (since getAllHints uses allHints), to
-    // avoid this race condition this updateAssociatedAnswer is used.
-    setUpdateAssociatedAnswer(true);
+    newHintIndex.current = 0;
+    lastHint.current = false;
+    hintsAvaliable.current = false;
+    firtsHint.current = false;
+    pressBoton.current = false;
   }, [answerId, nStep]);
 
-  // ensures that allHints is defined before executing getAllHints
-  // (avoid race condition)
+  // handles shaking the hint button
   useEffect(() => {
-    hintsAssociatedAnswer.current = getAllHints(answerId);
-    setUpdateAssociatedAnswer(false);
-  }, [updateAssociatedAnswer]);
+    // a hint was requested for the first time
+    if (!firtsHint.current && newHintAvaliable) {
+      firtsHint.current = true;
+    }
 
-  useEffect(() => {
-    if (getHint(answerId)) {
-      setDisabledHint(firstTimeHint);
-      setShake(newHintAvaliable);
+    // if a hint was already requested for the first
+    // time and the last hint is still not displayed
+    if (firtsHint.current) {
+      if (!lastHint.current) {
+        hintsAvaliable.current = true;
+      }
+    }
+
+    // when hints are requested and there are hints to be displayed
+    if (hintsAvaliable.current && newHintAvaliable) {
+      setShake(hintsAvaliable.current);
       setTimeout(() => setShake(false), 2000);
-      if (newHintAvaliable) {
+
+      // if the hint button was pressed then the
+      // notification is not activated
+      if (!pressBoton.current) {
         setCountNotication(1);
       }
     }
+
+    // all hints are or were shown
+    if (newHintIndex.current === allHints.length - 1) {
+      if (lastHint.current) {
+        hintsAvaliable.current = false; // there are no more hints to show
+      }
+      lastHint.current = true; // the last hint was shown
+    }
+
+    // allows you to activate the notification the
+    // next time the user presses the correct button
+    pressBoton.current = false;
   }, [newHintAvaliable]);
 
-  const getHint = idAnswer => {
-    if (allHints != undefined) {
-      let filterHint = allHints.find(hint => {
-        return hint.answers.includes(idAnswer);
-      });
-      filterHint = filterHint ? filterHint : allHints.find(hint => hint.generic);
-      return filterHint;
-    }
-    return null;
-  };
-
-  // returns all hints that can be associated with the user's
-  // response (both non-generic and generic).
-  const getAllHints = idAnswer => {
-    if (allHints != undefined) {
-      let filterHint = allHints.filter(hint => {
-        return hint.answers.includes(idAnswer);
-      });
-      if (filterHint != undefined) {
-        filterHint = filterHint.concat(
-          allHints.filter(hint => hint.generic && !filterHint.includes(hint)),
-        );
-      } else {
-        filterHint = filterHint.concat(allHints.filter(hint => hint.generic));
-      }
-      return filterHint;
-    }
-    return null;
-  };
-
-  // The following three functions modify the index with which,
-  // together with the getAllHints function, they are used to
-  // choose the id of the answer that the user is seeing.
-  const nextHintIndex = () => {
-    hintIndex.current += 1;
-  };
-
-  const backHintIndex = () => {
-    hintIndex.current -= 1;
-  };
-
-  const openHintIndex = () => {
-    hintIndex.current += 1;
-  };
+  // the hint button unlocks when the user has entered an
+  // answer and presses the correct button and locks the hint
+  // button when the user has completed the step
+  useEffect(() => {
+    setDisabledHint(firstTimeHint);
+  }, [firstTimeHint]);
 
   const handOnClickNext = e => {
-    nextHintIndex();
+    hintIndex.current += 1;
     startAction({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,
-      hintID: hintsAssociatedAnswer.current[hintIndex.current].id,
+      hintID: allHints[hintIndex.current].id,
       extra: { open: "next" },
     });
     setCountHint(prev => prev + 1);
   };
 
   const handOnClickBack = e => {
-    backHintIndex();
+    hintIndex.current -= 1;
     startAction({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,
-      hintID: hintsAssociatedAnswer.current[hintIndex.current].id,
+      hintID: allHints[hintIndex.current].id,
       extra: { open: "prev" },
     });
     setCountHint(prev => prev - 1);
@@ -159,23 +138,33 @@ export const Hint = ({
   const handOnClickHint = e => {
     setCountNotication(0);
 
-    let newHint = getHint(answerId);
-    if (newHint) {
+    let newHint = allHints[newHintIndex.current];
+
+    if (!hintsAvaliableList.includes(newHint)) {
       if (newHintAvaliable) {
         setHintsAvaliableList(prev => [...prev, newHint]);
-        setAllHints(prev => prev.filter(hint => hint.id !== newHint.id));
-        openHintIndex();
-        setCountHint(prev => prev + 1);
+
+        // when the user presses the hint button and there is
+        // a new hint available, then the new available hint
+        // is displayed which is also the last hint up to that moment
+        hintIndex.current = newHintIndex.current;
+        if (newHintIndex.current < allHints.length - 1) {
+          newHintIndex.current += 1;
+        }
+
+        // what is displayed to the user and what is sent
+        // in the action is the same hint (the bottom is the index)
+        setCountHint(hintIndex.current);
       }
       setHintsShow(prev => prev + 1);
-      setNewHintAvaliable(false);
     }
-
+    pressBoton.current = true; // turn off the notification
+    setNewHintAvaliable(false);
     startAction({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,
-      hintID: hintsAssociatedAnswer.current[hintIndex.current].id,
+      hintID: allHints[hintIndex.current].id,
       extra: { open: "new" },
     });
   };
