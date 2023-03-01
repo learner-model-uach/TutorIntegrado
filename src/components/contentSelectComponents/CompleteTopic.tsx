@@ -1,6 +1,6 @@
 import { Heading, Spacer, Text } from "@chakra-ui/react";
 
-export const CardSelection = () => {
+export const CompleteTopic = () => {
   return (
     <>
       <Heading>Felicidades</Heading>
