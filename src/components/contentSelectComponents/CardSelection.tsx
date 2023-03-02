@@ -33,6 +33,7 @@ export const CardSelection = ({
   nextContentPath,
   selectionData,
   indexSelectionData,
+  displayStar,
 }: {
   id: string;
   code: string | undefined;
@@ -47,6 +48,7 @@ export const CardSelection = ({
   nextContentPath: string | undefined;
   selectionData: selectionDataType[];
   indexSelectionData: number;
+  displayStar: boolean;
 }) => {
   const action = useAction();
   return (
@@ -119,7 +121,7 @@ export const CardSelection = ({
                 <LinkOverlay>{selectionTitle}</LinkOverlay>
               </NextLink>
             </Heading>
-            {selectionBest && <FaStar size={20} color="yellow" />}
+            {selectionBest && displayStar && <FaStar size={20} color="yellow" />}
           </HStack>
         </Center>
         <Text fontSize={"sm"}>{selectionText}</Text>

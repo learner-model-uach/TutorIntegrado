@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { SimpleGrid, Center, Text } from "@chakra-ui/react";
+import { SimpleGrid, Center, Text, useColorModeValue, Checkbox } from "@chakra-ui/react";
 import { useUpdateModel } from "../utils/updateModel";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
@@ -9,6 +9,7 @@ import { CardSelectionDynamic } from "../components/contentSelectComponents/Card
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 //import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
+import { Card } from "../components/Card";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -147,6 +148,10 @@ export default withAuth(function ContentSelect() {
       });
   }, [data]); //duplicate Action :c
 
+  //test with teachers
+  const [displayStar, setDisplayStar] = useState(false);
+  const [displayProb, setDisplayProb] = useState(false);
+
   return (
     <>
       <p>{router.asPath}</p>
@@ -183,6 +188,7 @@ export default withAuth(function ContentSelect() {
                     nextContentPath={nextContentPath}
                     selectionData={selectionData}
                     indexSelectionData={0}
+                    displayStar={displayStar}
                     key={0}
                   ></CardSelectionDynamic>
                 </Center>
@@ -204,6 +210,7 @@ export default withAuth(function ContentSelect() {
                           nextContentPath={nextContentPath}
                           selectionData={selectionData}
                           indexSelectionData={index}
+                          displayStar={displayStar}
                           key={index}
                         ></CardSelectionDynamic>
                       ))
@@ -223,6 +230,7 @@ export default withAuth(function ContentSelect() {
                             nextContentPath={nextContentPath}
                             selectionData={selectionData}
                             indexSelectionData={index}
+                            displayStar={displayStar}
                             key={index}
                           ></CardSelectionDynamic>
                         </Center>
@@ -234,6 +242,37 @@ export default withAuth(function ContentSelect() {
             )
           }
         </SimpleGrid>
+      )}
+      <Checkbox isChecked={displayStar} onChange={e => setDisplayStar(e.target.checked)}>
+        {" "}
+        Mostrar opción recomendada del sistema
+      </Checkbox>
+
+      <Checkbox isChecked={displayProb} onChange={e => setDisplayProb(e.target.checked)}>
+        {" "}
+        Mostrar probabilidad de saber el ejercicio
+      </Checkbox>
+
+      {displayProb && (
+        <Card
+          bg={useColorModeValue("blue.700", "gray.800")}
+          _hover={{
+            color: "white",
+            bg: useColorModeValue("blue.900", "gray.600"),
+          }}
+          color="white"
+        >
+          <Text>
+            Mas Fácil: {data?.contentSelection?.contentSelected?.tableDifEasy[0]?.probSuccessAvg}
+          </Text>
+          <Text>
+            Similar: {data?.contentSelection?.contentSelected?.tableSim[0]?.probSuccessAvg}
+          </Text>
+          <Text>
+            Más Dificil:{" "}
+            {data?.contentSelection?.contentSelected?.tableDifHarder[0]?.probSuccessAvg}
+          </Text>
+        </Card>
       )}
     </>
   );

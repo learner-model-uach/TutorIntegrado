@@ -35,15 +35,15 @@ export function Navigation() {
             >
               Rudimentos Algebraicos
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>
+            {/*<SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>
               Ecuaciones
-            </SidebarLink>
+        </SidebarLink>*/}
             <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=27,28,29,30&registerTopic=27"}>
+            {/*<SidebarLink href={"contentSelect?topic=27,28,29,30&registerTopic=27"}>
               Geometría
-            </SidebarLink>
+      </SidebarLink>*/}
           </>
         )}
       </Stack>
