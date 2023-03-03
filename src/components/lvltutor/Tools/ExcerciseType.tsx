@@ -25,6 +25,7 @@ export interface Step {
   values: Array<value>;
   hints: Array<hint>;
   matchingError?: Array<matchingError>;
+  validation?: "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount";
   answers: Array<answer>;
   incorrectMsg: string;
   correctMsg: string;
