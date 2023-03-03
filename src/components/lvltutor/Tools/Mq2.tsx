@@ -125,11 +125,11 @@ const Mq2 = ({
     let parseInput = MQPostfixparser(latex);
     let answer1 = "";
     let answer2 = "";
-    if (validationType) {
+    if (!validationType) {
       if (validationType.localeCompare("evaluate") == 0) {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
-          if (e) continue;
+          if (!e) continue;
           let parseAns = e.answer[0];
           if (step.values != undefined) {
             answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
@@ -144,14 +144,14 @@ const Mq2 = ({
       } else if (validationType.localeCompare("countElements") == 0) {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
-          if (e) continue;
+          if (!e) continue;
           let parseAns = e.answer[0];
           if (MQPostfixstrict(parseInput, parseAns)) correctAns = true;
         }
       } else if (validationType.localeCompare("evaluateAndCount") == 0) {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
-          if (e) continue;
+          if (!e) continue;
           let parseAns = e.answer[0];
           if (step.values != undefined) {
             answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
@@ -166,7 +166,7 @@ const Mq2 = ({
       } else {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
-          if (e) continue;
+          if (!e) continue;
           let parseAns = e.answer[0];
           if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
         }
@@ -174,7 +174,7 @@ const Mq2 = ({
     } else {
       for (let i = 0; i < answers.length; i++) {
         let e = answers[i];
-        if (e) continue;
+        if (!e) continue;
         let parseAns = e.answer[0];
         if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
       }
