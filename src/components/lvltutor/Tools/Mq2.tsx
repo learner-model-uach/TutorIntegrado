@@ -119,18 +119,18 @@ const Mq2 = ({
   //finalmente, se maneja la activacion del siguiente paso o resumen en caso de que la respuesta ingresada es correcta
   //"validation": "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount"
   const handleAnswer = () => {
-    let validationType=step.validation;
-    let answers=step.answers;
-    let correctAns=false;
+    let validationType = step.validation;
+    let answers = step.answers;
+    let correctAns = false;
     let parseInput = MQPostfixparser(latex);
     let answer1 = "";
     let answer2 = "";
-    if(validationType){
-      if(validationType.localeCompare("evaluate")==0){
-        for(let i=0; i<answers.length;i++){
-          let e=answers[i];
-          if(e)continue;
-          let parseAns=e.answer[0];
+    if (validationType) {
+      if (validationType.localeCompare("evaluate") == 0) {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (e) continue;
+          let parseAns = e.answer[0];
           if (step.values != undefined) {
             answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
             answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
@@ -139,22 +139,20 @@ const Mq2 = ({
             answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
           }
           let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-          if(relativeError < 0.005) correctAns=true;
+          if (relativeError < 0.005) correctAns = true;
         }
-      }
-      else if(validationType.localeCompare("countElements")==0){
-        for(let i=0; i<answers.length;i++){
-          let e=answers[i];
-          if(e)continue;
-          let parseAns=e.answer[0];
-          if(MQPostfixstrict(parseInput, parseAns)) correctAns=true;
+      } else if (validationType.localeCompare("countElements") == 0) {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (e) continue;
+          let parseAns = e.answer[0];
+          if (MQPostfixstrict(parseInput, parseAns)) correctAns = true;
         }
-      }
-      else if(validationType.localeCompare("evaluateAndCount")==0){
-        for(let i=0; i<answers.length;i++){
-          let e=answers[i];
-          if(e)continue;
-          let parseAns=e.answer[0];
+      } else if (validationType.localeCompare("evaluateAndCount") == 0) {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (e) continue;
+          let parseAns = e.answer[0];
           if (step.values != undefined) {
             answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
             answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
@@ -163,26 +161,25 @@ const Mq2 = ({
             answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
           }
           let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-          if(relativeError < 0.005 && MQPostfixstrict(parseInput, parseAns)) correctAns=true;
+          if (relativeError < 0.005 && MQPostfixstrict(parseInput, parseAns)) correctAns = true;
         }
-      }
-      else {
-        for(let i=0; i<answers.length;i++){
-          let e=answers[i];
-          if(e)continue;
-          let parseAns=e.answer[0];
-          if(parseInput.localeCompare(parseAns)==0) correctAns=true;
+      } else {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (e) continue;
+          let parseAns = e.answer[0];
+          if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
         }
       }
     } else {
-      for(let i=0; i<answers.length;i++){
-        let e=answers[i];
-        if(e)continue;
-        let parseAns=e.answer[0];
-        if(parseInput.localeCompare(parseAns)==0) correctAns=true;
+      for (let i = 0; i < answers.length; i++) {
+        let e = answers[i];
+        if (e) continue;
+        let parseAns = e.answer[0];
+        if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
       }
     }
-    
+
     if (correctAns) {
       result.current = true;
       MQProxy.endDate = Date.now();
