@@ -117,23 +117,73 @@ const Mq2 = ({
   //la siguiente funcion maneja la respuesta ingresada, la respuesta se compara con el valor correspondiente almacenado en el ejercicio.json
   //Ademas, se manejan los componentes de alerta utilizado en el componente padre(solver2) y el componente hijo(Mq2)
   //finalmente, se maneja la activacion del siguiente paso o resumen en caso de que la respuesta ingresada es correcta
+  //"validation": "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount"
   const handleAnswer = () => {
-    let exp = step.answers[0]!.answer[0];
-    let parse1 = MQPostfixparser(exp!);
-    let parse2 = MQPostfixparser(latex);
+    let validationType = step.validation;
+    let answers = step.answers;
+    let correctAns = false;
+    let parseInput = MQPostfixparser(latex);
     let answer1 = "";
     let answer2 = "";
-    if (step.values != undefined) {
-      answer1 = "" + MQPostfixSolver(parse1.substring(0), step.values);
-      answer2 = "" + MQPostfixSolver(parse2.substring(0), step.values);
+    if (validationType) {
+      console.log(1);
+      if (validationType.localeCompare("evaluate") == 0) {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (!e) continue;
+          let parseAns = MQPostfixparser(e.answer[0]);
+          if (step.values != undefined) {
+            answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
+            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
+          } else {
+            answer1 = "" + MQPostfixSolver(parseInput.substring(0), [{}]);
+            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
+          }
+          let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
+          if (relativeError < 0.005) correctAns = true;
+        }
+      } else if (validationType.localeCompare("countElements") == 0) {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (!e) continue;
+          let parseAns = MQPostfixparser(e.answer[0]);
+          if (MQPostfixstrict(parseInput, parseAns)) correctAns = true;
+        }
+      } else if (validationType.localeCompare("evaluateAndCount") == 0) {
+        console.log(2);
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (!e) continue;
+          let parseAns = MQPostfixparser(e.answer[0]);
+          console.log(3, parseInput, parseAns);
+          if (step.values != undefined) {
+            answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
+            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
+          } else {
+            answer1 = "" + MQPostfixSolver(parseInput.substring(0), [{}]);
+            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
+          }
+          let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
+          if (relativeError < 0.005 && MQPostfixstrict(parseInput, parseAns)) correctAns = true;
+        }
+      } else {
+        for (let i = 0; i < answers.length; i++) {
+          let e = answers[i];
+          if (!e) continue;
+          let parseAns = MQPostfixparser(e.answer[0]);
+          if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
+        }
+      }
     } else {
-      answer1 = "" + MQPostfixSolver(parse1.substring(0), [{}]);
-      answer2 = "" + MQPostfixSolver(parse2.substring(0), step.values);
+      for (let i = 0; i < answers.length; i++) {
+        let e = answers[i];
+        if (!e) continue;
+        let parseAns = MQPostfixparser(e.answer[0]);
+        if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
+      }
     }
-    let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-    console.log(relativeError, parseInt(answer1), parseInt(answer2));
-    //la validacion considera una precision con un 0.5% de error relativo
-    if (relativeError < 0.005 && MQPostfixstrict(parse1, parse2)) {
+    console.log(validationType, correctAns);
+    if (correctAns) {
       result.current = true;
       MQProxy.endDate = Date.now();
       MQProxy.defaultIndex = [parseInt(step.stepId) + 1];
