@@ -38,12 +38,10 @@ function RatingQuestion() {
   const model = useUpdateModel();
 
   useEffect(() => {
-    user &&
-      model({
-        typeModel: "BKT",
-        domainID: "1",
-      });
-    console.log("Update Model");
+    model({
+      typeModel: "BKT",
+      domainID: "1",
+    });
   }, []);
 
   return (
