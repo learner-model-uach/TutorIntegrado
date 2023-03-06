@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { SimpleGrid, Center, Text } from "@chakra-ui/react";
-import { useUpdateModel } from "../utils/updateModel";
 import { useEffect } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
@@ -17,15 +16,6 @@ export default withAuth(function ContentSelect() {
   const registerTopic = router.query.registerTopic + ""; //topics in array
   const nextContentPath = router.asPath + ""; //topics in array
   const domainId = "1";
-
-  const model = useUpdateModel();
-
-  useEffect(() => {
-    model({
-      typeModel: "BKT",
-      domainID: "1",
-    });
-  }, []);
 
   const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `

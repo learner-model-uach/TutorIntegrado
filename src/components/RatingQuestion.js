@@ -4,6 +4,8 @@ import { Button, Textarea } from "@chakra-ui/react";
 import { sessionState } from "./SessionState";
 import Link from "next/link";
 import { useAction } from "../utils/action";
+import { useUpdateModel } from "../utils/updateModel";
+import { useAuth } from "./Auth";
 
 const colors = {
   orange: "#FFBA5A",
@@ -31,6 +33,18 @@ function RatingQuestion() {
   const handleMouseLeave = () => {
     setHoverValue(undefined);
   };
+
+  const { user } = useAuth();
+  const model = useUpdateModel();
+
+  useEffect(() => {
+    user &&
+      model({
+        typeModel: "BKT",
+        domainID: "1",
+      });
+    console.log("Update Model");
+  }, []);
 
   return (
     <div style={styles.container}>
