@@ -19,14 +19,7 @@ export default withAuth(function ContentSelect() {
   const nextContentPath = router.asPath + ""; //topics in array
   const domainId = "1";
 
-  const model = useUpdateModel();
-
-  useEffect(() => {
-    model({
-      typeModel: "BKT",
-      domainID: "1",
-    });
-  }, []);
+  //problema!!! ver en detalle.
 
   const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `
@@ -147,7 +140,90 @@ export default withAuth(function ContentSelect() {
         extra: { selectionData },
       });
   }, [data]); //duplicate Action :c
-
+  const json = {
+    code: "tc4",
+    meta: {},
+    text: "Factorice la expresión de la forma: 𝑎(x - x₁)(x - x₂)",
+    type: "ftc5s",
+    steps: [
+      {
+        KCs: ["IdeCoef"],
+        hints: [
+          {
+            hint: "El valor de a es el coeficiente de x² y el valor de b es el coeficiente de x",
+            hintId: 0,
+          },
+          { hint: "El valor de a es 1 y el valor de b es -2", hintId: 1 },
+          { hint: "a=1, b=-2, c=5", hintId: 2 },
+        ],
+        stepId: "0",
+        answers: [{ answer: ["1", "-2", "5"], nextStep: "1" }],
+        summary:
+          "1) Para factorizar la expresión de la forma a(x - x₁)(x - x₂), es necesario determinar los valores de a, x₁ y x₂. Donde x₁, x₂ son las soluciones de la ecuación ax² + bx + c = 0. Por lo tanto, para llevar a cabo esta factorización, se debe identificar los valores de a, b y c.",
+        stepTitle: "Identificar coeficientes 𝑎, 𝑏 y 𝑐",
+        correctMsg: "Has identificado los valores de a, b y c",
+        expression: "x^2-2x+5",
+        incorrectMsg: "No son los valores correspondientes a los valores a, b y c",
+        displayResult: "a=1, b=-2, c=5",
+        matchingError: [
+          { hint: "No ha ingresado respuesta", error: ["", "", ""], hintId: 3 },
+          { hint: "No ha ingresado el valor de 𝑎", error: ["", "*", "*"], hintId: 4 },
+          { hint: "No ha ingresado el valor de 𝑏", error: ["*", "", "*"], hintId: 5 },
+          { hint: "No ha ingresado el valor de 𝑐", error: ["*", "*", ""], hintId: 6 },
+        ],
+      },
+      {
+        KCs: ["CalDis"],
+        hints: [
+          {
+            hint: "Utilice la fórmula para calcular Δ usando los coeficientes de la expresión cuadrática",
+            hintId: 0,
+          },
+          { hint: "Reemplace en la fórmula Δ los valores de: a=1, b=-2, c=5", hintId: 1 },
+          { hint: "El valor del discriminante (Δ) es -16", hintId: 2 },
+        ],
+        stepId: "1",
+        answers: [{ answer: "-16", nextStep: "2" }],
+        summary:
+          "2) Ya con los valores de a, b y c se puede calcular x₁ y x₂ con la fórmula x₁ = (-b + √Δ)/(2a), x₂ = (-b - √Δ)/(2a). Entonces es necesario calcular el discriminante Δ=b²-4ac",
+        stepTitle: "Calcular discriminante  Δ = b² - 4ac",
+        correctMsg: "Has calculado correctamente el discriminante",
+        expression: "a=1, b=-2, c=5",
+        incorrectMsg: "No se ha ingresado correctamente el discriminante de la expresión",
+        displayResult: "Δ=-16",
+        matchingError: [{ hint: "No ha ingresado respuesta", error: [""], hintId: 3 }],
+      },
+      {
+        KCs: ["IdeTipSol"],
+        hints: [
+          {
+            hint: "Recuerda que el discriminante determina si el trinomio tiene soluciones reales o complejas conjugadas",
+            hintId: 0,
+          },
+          { hint: "Como el discriminante es menor a cero, ver a qué caso corresponde", hintId: 1 },
+          {
+            hint: "Δ<0, por lo tanto este ejercicio posee dos raíces complejas conjugadas",
+            hintId: 2,
+          },
+        ],
+        stepId: "2",
+        answers: [{ answer: "3", nextStep: null }],
+        summary:
+          "3) Si Δ>0 posee dos raices reales diferentes, si Δ=0 posee dos raices reales iguales y Δ<0 posee raices complejas conjugadas, aquí:",
+        stepTitle: "¿A qué caso corresponde el discriminante?",
+        correctMsg:
+          "Has descubierto a que caso corresponde el discriminante.  Sin embargo, este ejercicio se resuelve con valores complejos",
+        expression: "Δ=-16",
+        incorrectMsg: "Caso mal ingresado",
+        displayResult: "Δ<0, por lo tanto este ejercicio posee dos raíces complejas conjugadas",
+        matchingError: [
+          { hint: "Debe seleccionar la alternativa correcta", error: ["*"], hintId: 3 },
+        ],
+      },
+    ],
+    title: "Trinomios cuadráticos.",
+    selectSteps: false,
+  };
   //test with teachers
   const [displayStar, setDisplayStar] = useState(false);
   const [displayProb, setDisplayProb] = useState(false);
