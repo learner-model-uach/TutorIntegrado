@@ -5,7 +5,7 @@ import { sessionState } from "./SessionState";
 import Link from "next/link";
 import { useAction } from "../utils/action";
 import { useUpdateModel } from "../utils/updateModel";
-import { useAuth } from "./Auth";
+//import { useAuth } from "./Auth";
 
 const colors = {
   orange: "#FFBA5A",
@@ -34,14 +34,12 @@ function RatingQuestion() {
     setHoverValue(undefined);
   };
 
-  const { user } = useAuth();
   const model = useUpdateModel();
   useEffect(() => {
-    user &&
-      model({
-        typeModel: "BKT",
-        domainID: "1",
-      });
+    model({
+      typeModel: "BKT",
+      domainID: "1",
+    });
   }, []);
 
   return (
