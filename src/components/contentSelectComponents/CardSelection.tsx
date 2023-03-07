@@ -104,13 +104,17 @@ export const CardSelection = ({
           </LinkOverlay>
         )}
         <br />
-        <Center fontSize={"1xl"}>
-          {json.type == "ecc5s" || json.type == "secl5s" ? (
-            <MathComponent tex={String.raw`${json.eqc}`} display={true} />
-          ) : (
-            <MathComponent tex={String.raw`${json.steps[0].expression}`} display={true} />
-          )}
-        </Center>
+        <Text padding={"3"} fontSize={"sm"}>
+          {" "}
+          {json.text}
+          <Center fontSize={"1xl"} padding={"1"}>
+            {json.type == "ecc5s" || json.type == "secl5s" ? (
+              <MathComponent tex={String.raw`${json.eqc}`} display={false} />
+            ) : (
+              <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
+            )}
+          </Center>
+        </Text>
         <Divider />
         <Center>
           <HStack>
