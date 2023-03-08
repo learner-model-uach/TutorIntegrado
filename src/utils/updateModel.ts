@@ -59,8 +59,8 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
       latestMutation.current({
         input: {
           userID,
-          ...latestBaseState.current,
-          ...input,
+          //...latestBaseState.current,
+          //...input,
           typeModel,
           domainID,
         },

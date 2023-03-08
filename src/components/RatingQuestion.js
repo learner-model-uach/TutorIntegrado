@@ -37,13 +37,6 @@ function RatingQuestion() {
   const { user } = useAuth();
   const model = useUpdateModel();
 
-  useEffect(() => {
-    model({
-      typeModel: "BKT",
-      domainID: "1",
-    });
-  }, []);
-
   return (
     <div style={styles.container}>
       {selectionData.length > 1 ? (
@@ -75,6 +68,10 @@ function RatingQuestion() {
           style={styles.button}
           disabled={currentValue != 0 ? false : true}
           onClick={() => {
+            model({
+              typeModel: "BKT",
+              domainID: "1",
+            });
             action({
               verbName: "selectionRating",
               result: currentValue,
