@@ -8,6 +8,7 @@ import { CardSelectionDynamic } from "../components/contentSelectComponents/Card
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 //import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
+import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -142,6 +143,8 @@ export default withAuth(function ContentSelect() {
       <p>Selección del contenido del tópico: {topics}</p>
       {isError ? (
         <p>Error al cargar datos</p>
+      ) : data?.contentSelection?.contentSelected.topicCompletedMsg.label.length > 9 ? (
+        <CompleteTopic />
       ) : (
         <SimpleGrid
           columns={{
