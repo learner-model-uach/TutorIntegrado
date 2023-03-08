@@ -1,4 +1,4 @@
-import { Center, Heading, Spacer, Text } from "@chakra-ui/react";
+import { Center, Heading, Text } from "@chakra-ui/react";
 
 export const CompleteTopic = () => {
   return (
