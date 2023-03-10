@@ -19,8 +19,6 @@ export default withAuth(function ContentSelect() {
   const nextContentPath = router.asPath + ""; //topics in array
   const domainId = "1";
 
-  //problema!!! ver en detalle.
-
   const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData($input: ContentSelectionInput!) {
