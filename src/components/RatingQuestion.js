@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Button, Textarea } from "@chakra-ui/react";
 import { sessionState } from "./SessionState";
@@ -35,12 +35,6 @@ function RatingQuestion() {
   };
 
   const model = useUpdateModel();
-  useEffect(() => {
-    model({
-      typeModel: "BKT",
-      domainID: "1",
-    });
-  }, []);
 
   return (
     <div style={styles.container}>
@@ -79,6 +73,10 @@ function RatingQuestion() {
               contentID: content,
               topicID: topic,
               extra: { selectionData },
+            });
+            model({
+              typeModel: "BKT",
+              domainID: "1",
             });
           }}
         >

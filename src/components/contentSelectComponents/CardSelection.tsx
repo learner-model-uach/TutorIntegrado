@@ -105,8 +105,10 @@ export const CardSelection = ({
             Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
           </LinkOverlay>
         )}
-        <br />
-        <Center fontSize={"1xl"}>
+        <Text paddingTop={"2"} fontSize={"sm"}>
+          {json.text}
+        </Text>
+        <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
           {json.type == "ecc5s" || json.type == "secl5s" ? (
             <MathComponent tex={String.raw`${json.eqc}`} display={true} />
           ) : (
