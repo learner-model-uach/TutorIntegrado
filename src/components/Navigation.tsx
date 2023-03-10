@@ -30,10 +30,11 @@ export function Navigation() {
         {user && (
           <>
             <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink
-              href={"contentSelect?topic=16,4,3,5,6,7,8,17,18&registerTopic=16" /*17,18*/}
-            >
-              Rudimentos Algebraicos
+            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=16"}>
+              Factorización
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=16,17,18&registerTopic=16"}>
+              Fracción Algebraica
             </SidebarLink>
             {/*<SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>
               Ecuaciones
