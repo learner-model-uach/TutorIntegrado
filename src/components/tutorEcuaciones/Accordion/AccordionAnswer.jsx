@@ -17,7 +17,7 @@ export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) 
         <Box paddingRight={3} paddingTop={1}>
           <FaHandPointRight />
         </Box>
-        <Box fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }} style={{}} >
+        <Box fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }} style={{}}>
           {text}
         </Box>
 
