@@ -28,9 +28,9 @@ specifiers:
   open-cli: ^7.0.1
   prettier: ^2.5.1
   react: ^17.0.2
-  react-dnd: 14.0.3
-  react-dnd-html5-backend: 14.0.1
-  react-dnd-touch-backend: 14.1.0
+  react-dnd: 14.0.5
+  react-dnd-html5-backend: 14.1.0
+  react-dnd-touch-backend: 14.1.1
   react-dom: ^17.0.2
   react-icons: ^4.3.1
   react-joyride: 2.3.1
@@ -62,9 +62,9 @@ dependencies:
   mathjax-react: 1.0.6_sfoxds7t5ydpegc3knd667wn6m
   next: 12.0.8_sfoxds7t5ydpegc3knd667wn6m
   react: 17.0.2
-  react-dnd: 14.0.3_spnvqkvjbhemprzno3rrchnf24
-  react-dnd-html5-backend: 14.0.1
-  react-dnd-touch-backend: 14.1.0
+  react-dnd: 14.0.5_spnvqkvjbhemprzno3rrchnf24
+  react-dnd-html5-backend: 14.1.0
+  react-dnd-touch-backend: 14.1.1
   react-dom: 17.0.2_react@17.0.2
   react-icons: 4.3.1_react@17.0.2
   react-joyride: 2.3.1_sfoxds7t5ydpegc3knd667wn6m
@@ -3579,8 +3579,8 @@ packages:
     dependencies:
       path-type: 4.0.0
 
-  /dnd-core/14.0.0:
-    resolution: {integrity: sha512-wTDYKyjSqWuYw3ZG0GJ7k+UIfzxTNoZLjDrut37PbcPGNfwhlKYlPUqjAKUjOOv80izshUiqusaKgJPItXSevA==}
+  /dnd-core/14.0.1:
+    resolution: {integrity: sha512-+PVS2VPTgKFPYWo3vAFEA8WPbTf7/xo43TifH9G8S1KqnrQu0o77A3unrF5yOugy4mIz7K5wAVFHUcha7wsz6A==}
     dependencies:
       '@react-dnd/asap': 4.0.1
       '@react-dnd/invariant': 2.0.0
@@ -5947,21 +5947,21 @@ packages:
       react: 17.0.2
     dev: false
 
-  /react-dnd-html5-backend/14.0.1:
-    resolution: {integrity: sha512-ZDmpvFpd1NR4riw/CMbr8C3mgP6ZhsTf0c48a36kw4ZW8emgiugNlAz/qhhZ4/Pz9TO6DZ63sQohUTTl+AWGiA==}
+  /react-dnd-html5-backend/14.1.0:
+    resolution: {integrity: sha512-6ONeqEC3XKVf4eVmMTe0oPds+c5B9Foyj8p/ZKLb7kL2qh9COYxiBHv3szd6gztqi/efkmriywLUVlPotqoJyw==}
     dependencies:
-      dnd-core: 14.0.0
+      dnd-core: 14.0.1
     dev: false
 
-  /react-dnd-touch-backend/14.1.0:
-    resolution: {integrity: sha512-pOLXe9Hj2tYEzT8Vr8w/VpGZh5d0qaPxSz6nP2gvK+KBoka/KW2hYWsI6tFj+ewhhNjs07cjMjJIlvRg+4zq2Q==}
+  /react-dnd-touch-backend/14.1.1:
+    resolution: {integrity: sha512-ITmfzn3fJrkUBiVLO6aJZcnu7T8C+GfwZitFryGsXKn5wYcUv+oQBeh9FYcMychmVbDdeUCfvEtTk9O+DKmAaw==}
     dependencies:
       '@react-dnd/invariant': 2.0.0
-      dnd-core: 14.0.0
+      dnd-core: 14.0.1
     dev: false
 
-  /react-dnd/14.0.3_spnvqkvjbhemprzno3rrchnf24:
-    resolution: {integrity: sha512-i73Hx5SKfDRdwXe30+CjF/DidiRdt/gwpPN14ajkPR20t/0osnNKFNHg3DLV6RZym+DJ0pO9H5APeMsBWGU3+Q==}
+  /react-dnd/14.0.5_spnvqkvjbhemprzno3rrchnf24:
+    resolution: {integrity: sha512-9i1jSgbyVw0ELlEVt/NkCUkxy1hmhJOkePoCH713u75vzHGyXhPDm28oLfc2NMSBjZRM1Y+wRjHXJT3sPrTy+A==}
     peerDependencies:
       '@types/hoist-non-react-statics': '>= 3.3.1'
       '@types/node': '>= 12'
@@ -5979,7 +5979,7 @@ packages:
       '@react-dnd/shallowequal': 2.0.0
       '@types/node': 16.11.21
       '@types/react': 17.0.38
-      dnd-core: 14.0.0
+      dnd-core: 14.0.1
       fast-deep-equal: 3.1.3
       hoist-non-react-statics: 3.3.2
       react: 17.0.2
