@@ -34,7 +34,7 @@ specifiers:
   react-dom: ^17.0.2
   react-icons: ^4.3.1
   react-joyride: 2.3.1
-  react-mathquill: 1.0.2
+  react-mathquill: 1.0.3
   react-notification-badge: 1.5.1
   react-query: ^3.34.12
   rq-gql: ^0.4.3
@@ -68,7 +68,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-icons: 4.3.1_react@17.0.2
   react-joyride: 2.3.1_sfoxds7t5ydpegc3knd667wn6m
-  react-mathquill: 1.0.2_react@17.0.2
+  react-mathquill: 1.0.3_react@17.0.2
   react-notification-badge: 1.5.1_sfoxds7t5ydpegc3knd667wn6m
   react-query: 3.34.12_sfoxds7t5ydpegc3knd667wn6m
   rq-gql: 0.4.3_flbeaaewzqfbe7hfapm3ochicy
@@ -6067,10 +6067,10 @@ packages:
       tree-changes: 0.7.1
     dev: false
 
-  /react-mathquill/1.0.2_react@17.0.2:
-    resolution: {integrity: sha512-1r7obwMmkIYp/RDdmm8kWUvifs65E3J3iSoqFRff4r4GpdRzMeY+VvYeirVkuZEPTFrqR5JPLT824lILasau6w==}
+  /react-mathquill/1.0.3_react@17.0.2:
+    resolution: {integrity: sha512-H0z0FJsrjgKzXA1kR3rxcQyO28bXyeyMUM13VJ9jAn5cA9SJ35eScE5AK46R0O/H5zRyycGlSo2u+Pdxakbpkg==}
     peerDependencies:
-      react: ^17.0.2
+      react: ^18.2.0
     dependencies:
       react: 17.0.2
     dev: false
