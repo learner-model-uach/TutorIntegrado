@@ -72,7 +72,7 @@ export const StepInput = ({
     if (answer !== undefined && answer.length > 0) {
       return answer[0].id;
     }
-    if (userAnswer.length == !0) {
+    if (userAnswer.length !== 0) {
       return 0;
     }
     return -1;
