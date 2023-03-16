@@ -35,7 +35,7 @@ specifiers:
   react-icons: ^4.3.1
   react-joyride: 2.3.1
   react-mathquill: 1.0.2
-  react-notification-badge: 1.5.0
+  react-notification-badge: 1.5.1
   react-query: ^3.34.12
   react-star-rating-component: ^1.4.1
   rq-gql: ^0.4.3
@@ -70,7 +70,7 @@ dependencies:
   react-icons: 4.3.1_react@17.0.2
   react-joyride: 2.3.1_sfoxds7t5ydpegc3knd667wn6m
   react-mathquill: 1.0.2_react@17.0.2
-  react-notification-badge: 1.5.0_sfoxds7t5ydpegc3knd667wn6m
+  react-notification-badge: 1.5.1_sfoxds7t5ydpegc3knd667wn6m
   react-query: 3.34.12_sfoxds7t5ydpegc3knd667wn6m
   react-star-rating-component: 1.4.1_react@17.0.2
   rq-gql: 0.4.3_2mp2wo6aldjtpsvljscdi5ehju
@@ -6081,8 +6081,8 @@ packages:
       react: 17.0.2
     dev: false
 
-  /react-notification-badge/1.5.0_sfoxds7t5ydpegc3knd667wn6m:
-    resolution: {integrity: sha512-B6CV7lDSxxPP/iGe2naIlkG7Kd2Imej/p0ZeoVF3XGhbdXTsc30n9hl5mNRP9R5sYlfHBC2VEPikKLguN5Cybg==}
+  /react-notification-badge/1.5.1_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-4/kFrQcJ7eMfYh9SdXXgBaaEDCIV7UsLX5bgSS1aj+OnX2OpIFTatY3Dclo8qLpkX+Ue6x0Aiib+U9dkDKrSwQ==}
     peerDependencies:
       prop-types: ^15.7.2
       react: ^16.8.6
