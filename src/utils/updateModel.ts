@@ -4,10 +4,7 @@ import { useGQLMutation } from "rq-gql";
 import { useAuth } from "../components/Auth";
 import { gql, UpdateModelStateInput } from "../graphql";
 
-export type StateArguments = Omit<
-  UpdateModelStateInput,
-  /*"projectId" |*/ "userID" //| "typeModel" | "domainID"
->;
+export type StateArguments = Omit<UpdateModelStateInput, "userID">;
 
 export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
   const toast = useToast();
@@ -38,18 +35,12 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
 
   const latestMutation = useLatestRef(mutation.mutate);
 
-  const { /*project,*/ user } = useAuth();
+  const { user } = useAuth();
 
-  // const projectId = project?.id;
   const userID = user?.id;
-  //const typeModel = "BKT";
-  //const domainID = "1";
 
   return useCallback(
     (input?: Partial<StateArguments>) => {
-      // if (!projectId) throw Error("Invalid projectId");
-
-      //const verbName = latestBaseAction.current?.verbName || data?.verbName;
       if (!userID) throw Error("Invalid projectId");
       const typeModel = latestBaseState.current?.typeModel || input?.typeModel;
       if (!typeModel) throw Error("Invalid Action");
@@ -59,8 +50,8 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
       latestMutation.current({
         input: {
           userID,
-          //...latestBaseState.current,
-          //...input,
+          ...latestBaseState.current,
+          ...input,
           typeModel,
           domainID,
         },
