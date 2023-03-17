@@ -32,7 +32,7 @@ specifiers:
   react-dnd-html5-backend: 14.1.0
   react-dnd-touch-backend: 14.1.1
   react-dom: ^17.0.2
-  react-icons: ^4.3.1
+  react-icons: ^4.8.0
   react-joyride: 2.3.1
   react-mathquill: 1.0.3
   react-notification-badge: 1.5.1
@@ -66,7 +66,7 @@ dependencies:
   react-dnd-html5-backend: 14.1.0
   react-dnd-touch-backend: 14.1.1
   react-dom: 17.0.2_react@17.0.2
-  react-icons: 4.3.1_react@17.0.2
+  react-icons: 4.8.0_react@17.0.2
   react-joyride: 2.3.1_sfoxds7t5ydpegc3knd667wn6m
   react-mathquill: 1.0.3_react@17.0.2
   react-notification-badge: 1.5.1_sfoxds7t5ydpegc3knd667wn6m
@@ -6055,8 +6055,8 @@ packages:
       - '@types/react'
     dev: false
 
-  /react-icons/4.3.1_react@17.0.2:
-    resolution: {integrity: sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==}
+  /react-icons/4.8.0_react@17.0.2:
+    resolution: {integrity: sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==}
     peerDependencies:
       react: '*'
     dependencies:
