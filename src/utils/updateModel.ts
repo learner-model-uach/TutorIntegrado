@@ -40,7 +40,6 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
 
   const userID = user?.id;
 
-  const isLoading = mutation.isLoading;
   const updateModel = useCallback(
     (input?: Partial<StateArguments>) => {
       if (!userID) throw Error("Invalid projectId");
@@ -63,7 +62,7 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
   );
 
   return {
-    isLoading,
+    mutation: mutation,
     updateModel,
   };
 };

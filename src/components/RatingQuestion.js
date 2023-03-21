@@ -22,6 +22,13 @@ function RatingQuestion() {
   const topic = sessionState.topic;
   const selectionData = sessionState.selectionData;
 
+  useEffect(() => {
+    updateModel({
+      typeModel: "BKT",
+      domainID: "1",
+    });
+  }, []);
+
   const handleClick = value => {
     setCurrentValue(value);
   };
@@ -35,19 +42,16 @@ function RatingQuestion() {
   };
 
   const { user } = useAuth();
-  const { updateModel, isLoading } = useUpdateModel();
+  const { updateModel, mutation } = useUpdateModel();
+  console.log(mutation.status);
 
-  const handleClick2 = async () => {
+  const handleClick2 = () => {
     action({
       verbName: "selectionRating",
       result: currentValue,
       contentID: content,
       topicID: topic,
       extra: { selectionData },
-    });
-    updateModel({
-      typeModel: "BKT",
-      domainID: "1",
     });
   };
   return (
