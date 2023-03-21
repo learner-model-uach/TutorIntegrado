@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import { Button, Textarea } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { sessionState } from "./SessionState";
 import Link from "next/link";
 import { useAction } from "../utils/action";
