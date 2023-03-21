@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { SimpleGrid, Center, Text, useColorModeValue, Checkbox } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { SimpleGrid, Center, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
@@ -8,7 +8,6 @@ import { CardSelectionDynamic } from "../components/contentSelectComponents/Card
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 //import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
-import { Card } from "../components/Card";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 
 export default withAuth(function ContentSelect() {
@@ -145,7 +144,6 @@ export default withAuth(function ContentSelect() {
 
   return (
     <>
-      <p>{router.asPath}</p>
       <p>Selección del contenido del tópico: {topics}</p>
       {isError ? (
         <p>Error al cargar datos</p>

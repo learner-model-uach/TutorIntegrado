@@ -1,11 +1,17 @@
-import { Heading, Spacer, Text } from "@chakra-ui/react";
+import { Center, Heading, Text } from "@chakra-ui/react";
 
 export const CompleteTopic = () => {
   return (
     <>
-      <Heading>Felicidades</Heading>
-      <Spacer />
-      <Text>Has completado este capítulo</Text>
+      <br />
+      <br />
+      <Center>
+        <Heading>Felicidades</Heading>
+      </Center>
+      <br />
+      <Center>
+        <Text>Has completado este capítulo</Text>
+      </Center>
     </>
   );
 };

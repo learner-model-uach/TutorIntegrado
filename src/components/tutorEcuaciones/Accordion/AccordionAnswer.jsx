@@ -2,6 +2,7 @@ import React from "react";
 import TeX from "@matejmazur/react-katex";
 import { Flex, Text, Box } from "@chakra-ui/react";
 import { DRAG_TEXT, DRAG_FIXED, DRAG_FIXED_TWO, INPUT } from "../types";
+import { FaHandPointRight } from "react-icons/fa";
 
 export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) => {
   let newValue = "";
@@ -13,9 +14,12 @@ export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) 
   return (
     <div>
       <Flex>
-        <Text fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }} style={{}}>
-          Paso {nStep}. {text}{" "}
-        </Text>
+        <Box paddingRight={3} paddingTop={1}>
+          <FaHandPointRight />
+        </Box>
+        <Box fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }} style={{}}>
+          {text}
+        </Box>
 
         <Text
           style={{

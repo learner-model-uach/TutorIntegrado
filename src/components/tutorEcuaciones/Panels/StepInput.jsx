@@ -72,7 +72,7 @@ export const StepInput = ({
     if (answer !== undefined && answer.length > 0) {
       return answer[0].id;
     }
-    if (userAnswer.length == !0) {
+    if (userAnswer.length !== 0) {
       return 0;
     }
     return -1;
@@ -115,7 +115,7 @@ export const StepInput = ({
             topicID: topicId,
             stepID: step.stepId,
             result: 1,
-            kcsIDs: step.kcs,
+            kcsIDs: step.KCs,
             extra: {
               response: answer,
               attemps: attempts,
@@ -151,7 +151,7 @@ export const StepInput = ({
             topicID: topicId,
             stepID: step.stepId,
             result: 0,
-            kcsIDs: step.kcs,
+            kcsIDs: step.KCs,
             extra: {
               response: answer,
               attemps: attempts,

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FCstep1 from "./steps/FCstep1";
 import { MathComponent } from "../../../components/MathJax";
-import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { Loading } from "../tools/Spinner";
 import Link from "next/link";
 

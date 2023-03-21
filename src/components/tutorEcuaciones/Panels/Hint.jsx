@@ -184,7 +184,7 @@ export const Hint = ({
           {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent color="white" bg="blue.800" borderColor="blue.800">
+      <PopoverContent color="white" bg="blue.800" borderColor="blue.800" width={230}>
         <PopoverHeader pt={4} fontWeight="bold" border="0">
           {HEADER_POPOVER_HINT}
         </PopoverHeader>

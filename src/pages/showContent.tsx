@@ -5,6 +5,7 @@ import type { ComponentProps } from "react";
 import type { Tutor } from "../components/tutorEcuaciones/Tutor";
 import type Plain from "../components/lvltutor/Plain";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
+import { Text } from "@chakra-ui/react";
 
 const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
@@ -48,7 +49,7 @@ export default withAuth(function ShowContent() {
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
         ) : (
-          <p>No existe el contenido que desea cargar</p>
+          <Text>No existe el contenido que desea cargar</Text>
         )}
       </div>
     </>

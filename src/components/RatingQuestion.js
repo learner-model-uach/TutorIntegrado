@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { Button, Textarea } from "@chakra-ui/react";
 import { sessionState } from "./SessionState";
 import Link from "next/link";
 import { useAction } from "../utils/action";
 import { useUpdateModel } from "../utils/updateModel";
-//import { useAuth } from "./Auth";
 
 const colors = {
   orange: "#FFBA5A",
@@ -34,8 +33,26 @@ function RatingQuestion() {
     setHoverValue(undefined);
   };
 
-  const model = useUpdateModel();
+  const { user } = useAuth();
+  const { updateModel, mutation } = useUpdateModel();
+  console.log(mutation.status);
 
+  useEffect(() => {
+    updateModel({
+      typeModel: "BKT",
+      domainID: "1",
+    });
+  }, []);
+
+  const handleClick2 = () => {
+    action({
+      verbName: "selectionRating",
+      result: currentValue,
+      contentID: content,
+      topicID: topic,
+      extra: { selectionData },
+    });
+  };
   return (
     <div style={styles.container}>
       {selectionData.length > 1 ? (
@@ -66,19 +83,7 @@ function RatingQuestion() {
         <Button
           style={styles.button}
           disabled={currentValue != 0 ? false : true}
-          onClick={() => {
-            action({
-              verbName: "selectionRating",
-              result: currentValue,
-              contentID: content,
-              topicID: topic,
-              extra: { selectionData },
-            });
-            model({
-              typeModel: "BKT",
-              domainID: "1",
-            });
-          }}
+          onClick={handleClick2}
         >
           Siguiente Ejercicio
         </Button>
