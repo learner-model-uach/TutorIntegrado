@@ -105,13 +105,13 @@ const OnStart = memo(function OnStart() {
   });
 
   const projectId = project?.id;
-  const model = useUpdateModel();
+  const { updateModel } = useUpdateModel();
   useEffect(() => {
     if (projectId) {
       //lógica al iniciar sesión, lógica de sessionState
       sessionStateInitial(AuthState.user, AuthState.auth0User);
       startAction();
-      model({
+      updateModel({
         typeModel: "BKT",
         domainID: "1",
       });

@@ -16,6 +16,7 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
       mutation updateModelState($input: UpdateModelStateInput!) {
         updateModelState(input: $input)
       }
+      # fetchPolicy: "no-cache" # Agregamos la política de caché utilizando un comentario GraphQL
     `),
     {
       onError(err) {
@@ -39,7 +40,8 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
 
   const userID = user?.id;
 
-  return useCallback(
+  const isLoading = mutation.isLoading;
+  const updateModel = useCallback(
     (input?: Partial<StateArguments>) => {
       if (!userID) throw Error("Invalid projectId");
       const typeModel = latestBaseState.current?.typeModel || input?.typeModel;
@@ -59,4 +61,9 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
     },
     [userID, latestMutation, latestBaseState],
   );
+
+  return {
+    isLoading,
+    updateModel,
+  };
 };

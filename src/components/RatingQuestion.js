@@ -35,8 +35,21 @@ function RatingQuestion() {
   };
 
   const { user } = useAuth();
-  const model = useUpdateModel();
+  const { updateModel, isLoading } = useUpdateModel();
 
+  const handleClick2 = async () => {
+    action({
+      verbName: "selectionRating",
+      result: currentValue,
+      contentID: content,
+      topicID: topic,
+      extra: { selectionData },
+    });
+    updateModel({
+      typeModel: "BKT",
+      domainID: "1",
+    });
+  };
   return (
     <div style={styles.container}>
       {selectionData.length > 1 ? (
@@ -67,19 +80,7 @@ function RatingQuestion() {
         <Button
           style={styles.button}
           disabled={currentValue != 0 ? false : true}
-          onClick={() => {
-            model({
-              typeModel: "BKT",
-              domainID: "1",
-            });
-            action({
-              verbName: "selectionRating",
-              result: currentValue,
-              contentID: content,
-              topicID: topic,
-              extra: { selectionData },
-            });
-          }}
+          onClick={handleClick2}
         >
           Siguiente Ejercicio
         </Button>
