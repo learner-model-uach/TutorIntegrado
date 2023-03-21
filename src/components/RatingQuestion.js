@@ -33,7 +33,6 @@ function RatingQuestion() {
     setHoverValue(undefined);
   };
 
-  const { user } = useAuth();
   const { updateModel, mutation } = useUpdateModel();
   console.log(mutation.status);
 

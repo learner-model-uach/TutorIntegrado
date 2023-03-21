@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { SimpleGrid, Center, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { SimpleGrid, Center, Text, useColorModeValue, Checkbox } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
@@ -9,6 +9,7 @@ import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 //import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
+import { Card } from "../components/Card";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
