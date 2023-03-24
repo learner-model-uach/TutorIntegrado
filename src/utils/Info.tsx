@@ -102,7 +102,7 @@ const AyudaMQ = ({ exType }: { exType?: string }) => {
   );
 };
 
-const Info = () => {
+const Info = ({ exType }: { exType?: string }) => {
   return (
     <Box spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
       <Popover
@@ -121,9 +121,7 @@ const Info = () => {
         <PopoverContent>
           <PopoverArrow />
           <PopoverCloseButton />
-          <PopoverBody>
-            <AyudaMQ exType="ascii" />
-          </PopoverBody>
+          <PopoverBody>{exType ? <AyudaMQ exType={exType} /> : <AyudaMQ />}</PopoverBody>
         </PopoverContent>
       </Popover>
     </Box>
