@@ -71,7 +71,7 @@ const AyudaMQ = ({ exType }: { exType?: string }) => {
   return (
     <Box>
       <VStack>
-        <Heading size="m">Ayudas para ingreso de operaciones</Heading>
+        <Heading size="m">Ayuda para ingreso de operaciones</Heading>
         <Box>
           {iVal.map((item, i) => (
             <HStack key={"AHSB" + i} spacing="75px">
