@@ -23,10 +23,13 @@ function RatingQuestion() {
   const selectionData = sessionState.selectionData;
 
   useEffect(() => {
-    updateModel({
-      typeModel: "BKT",
-      domainID: "1",
-    });
+    setTimeout(() => {
+      console.log("Actualiza modelo");
+      updateModel({
+        typeModel: "BKT",
+        domainID: "1",
+      });
+    }, 1500);
   }, []);
 
   const handleClick = value => {
