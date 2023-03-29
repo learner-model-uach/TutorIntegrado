@@ -37,10 +37,12 @@ function RatingQuestion() {
   console.log(mutation.status);
 
   useEffect(() => {
-    updateModel({
-      typeModel: "BKT",
-      domainID: "1",
-    });
+    setTimeout(() => {
+      updateModel({
+        typeModel: "BKT",
+        domainID: "1",
+      });
+    }, 1500);
   }, []);
 
   const handleClick2 = () => {
