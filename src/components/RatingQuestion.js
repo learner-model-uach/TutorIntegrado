@@ -34,7 +34,6 @@ function RatingQuestion() {
   };
 
   const { updateModel, mutation } = useUpdateModel();
-  console.log(mutation.status);
 
   useEffect(() => {
     setTimeout(() => {
@@ -83,7 +82,7 @@ function RatingQuestion() {
       <Link href={ruta}>
         <Button
           style={styles.button}
-          disabled={currentValue != 0 ? false : true}
+          disabled={currentValue != 0 && !mutation.isLoading ? false : true}
           onClick={handleClick2}
         >
           Siguiente Ejercicio
