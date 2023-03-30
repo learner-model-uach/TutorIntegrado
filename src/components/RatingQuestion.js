@@ -46,7 +46,6 @@ function RatingQuestion() {
 
   const { user } = useAuth();
   const { updateModel, mutation } = useUpdateModel();
-  console.log(mutation.status);
 
   const handleClick2 = () => {
     action({
@@ -86,7 +85,7 @@ function RatingQuestion() {
       <Link href={ruta}>
         <Button
           style={styles.button}
-          disabled={currentValue != 0 ? false : true}
+          disabled={currentValue != 0 && !mutation.isLoading ? false : true}
           onClick={handleClick2}
         >
           Siguiente Ejercicio
