@@ -47,8 +47,8 @@ dependencies:
     specifier: ^1.10.0
     version: 1.10.0
   mathjax-react:
-    specifier: 1.0.6
-    version: 1.0.6(mathjax-full@3.2.2)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
+    specifier: 2.0.1
+    version: 2.0.1(mathjax-full@3.2.2)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
   next:
     specifier: ^12.0.8
     version: 12.0.8(react-dom@17.0.2)(react@17.0.2)
@@ -5468,14 +5468,15 @@ packages:
       speech-rule-engine: 4.0.7
     dev: false
 
-  /mathjax-react@1.0.6(mathjax-full@3.2.2)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-GlkPAhaY0FKc95TMdo33mxNZHb+3xRgfgc3YcnQ0cZxvnM1UaF0o8mRI5y5xIwi3JnioeYuukZJWCbIZkACIVw==}
+  /mathjax-react@2.0.1(mathjax-full@3.2.2)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-bEDPfGTm8Bi4VylmFbg5SGCN/BzDCiTJMTXDalAFDnsTwAhDdJgBRWlO5nHRtj+3/bOSfYF7wak7qmRN6XbPOw==}
     engines: {node: '>=8', npm: '>=5'}
+    deprecated: This package is no longer actively maintained
     peerDependencies:
       mathjax-full: ^3.0.4
       prop-types: ^15.5.4
-      react: ^15.0.0 || ^16.0.0
-      react-dom: ^15.0.0 || ^16.0.0
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
     dependencies:
       mathjax-full: 3.2.2
       prop-types: 15.8.1
