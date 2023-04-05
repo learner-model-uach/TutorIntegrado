@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAction } from "../utils/action";
+import { sessionState } from "./SessionState";
 
 interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
@@ -40,6 +41,9 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     })
     .filter(x => x !== undefined);
 
+  console.log(query.registerTopic); //undefined
+  console.log(query); // {}
+  console.log(pathname); // /
   return (
     <LinkBox
       marginEnd="2"
@@ -49,7 +53,15 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       py="1"
       rounded="md"
       cursor="pointer"
-      bg={query.type === href.substring(href.indexOf("=") + 1) ? activeBg : undefined}
+      bg={
+        query.registerTopic == registerTopic
+          ? activeBg
+          : href == (query.registerTopic ?? "/") && pathname != "/showContent"
+          ? activeBg
+          : pathname == "/showContent" && sessionState.topic == registerTopic[0]
+          ? activeBg
+          : undefined
+      }
       _hover={{ color: "white", bg: hoverBg }}
       className="group"
       fontWeight="medium"

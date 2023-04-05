@@ -30,7 +30,7 @@ export function Navigation() {
         {user && (
           <>
             <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=16"}>
+            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
             <SidebarLink href={"contentSelect?topic=16,17,18&registerTopic=16"}>
