@@ -10,6 +10,7 @@ import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { useAction } from "../utils/action";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { Card } from "../components/Card";
+import { CardLastExercise } from "../components/contentSelectComponents/CardLastExercise";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -94,8 +95,9 @@ export default withAuth(function ContentSelect() {
   const contentResult = data?.contentSelection?.contentSelected?.contentResult.sort((a, b) => {
     return parseInt(a.Order) - parseInt(b.Order);
   });
-  console.log(isError);
   console.log(data?.contentSelection?.contentSelected);
+
+  const lastExercise = data?.contentSelection?.contentSelected?.PU[0];
 
   const bestExercise =
     !isLoading &&
@@ -146,6 +148,8 @@ export default withAuth(function ContentSelect() {
   return (
     <>
       <p>Selección del contenido del tópico: {topics}</p>
+
+      <CardLastExercise lastExercise={lastExercise} />
       {isError ? (
         <p>Error al cargar datos</p>
       ) : data?.contentSelection?.contentSelected.topicCompletedMsg.label.length > 9 ? (
