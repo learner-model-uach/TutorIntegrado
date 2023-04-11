@@ -14,9 +14,9 @@ import { gql } from "../../graphql";
 
 export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => {
   //hacer query de lastExercise
-  const { data, isLoading, isError } = useGQLQuery(
+  const { data, isLoading } = useGQLQuery(
     gql(/* GraphQL */ `
-      query ProjectData($code: String!) {
+      query LastExercise($code: String!) {
         contentByCode(code: $code) {
           json
         }
@@ -32,7 +32,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
     },
   );
 
-  console.log(data);
+  //console.log(data);
   return (
     <>
       <Center>
