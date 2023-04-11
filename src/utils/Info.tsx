@@ -13,6 +13,8 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { useAction } from "../utils/action";
+import { sessionState } from "../components/SessionState";
 
 //interface para poder definir la estuctura de datos en el usestate
 interface helpitems {
@@ -103,11 +105,19 @@ const AyudaMQ = ({ exType }: { exType?: string }) => {
 };
 
 const Info = ({ exType }: { exType?: string }) => {
+  const action = useAction();
+  const content = sessionState.currentContent.id;
+  const topic = sessionState.topic;
+  const handleClick = () => {
+    action({
+      verbName: "DisplayHelp",
+      contentID: content,
+      topicID: topic,
+    });
+  };
   return (
     <Box spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
-      <Popover
-      //onOpen={insert here action reports}
-      >
+      <Popover onOpen={handleClick}>
         <PopoverTrigger>
           <IconButton
             //onClick={or here}
