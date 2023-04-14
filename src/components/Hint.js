@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { StaticMathField, addStyles } from "react-mathquill";
 import {
   Button,
   Popover,
@@ -16,6 +15,8 @@ import {
 import { useAction } from "../utils/action";
 import { MathComponent } from "mathjax-react";
 
+import MQStaticMathField from "../utils/MQStaticMathField";
+
 const Hint = ({
   hints, //all hints
   stepId, //id for send data
@@ -29,7 +30,6 @@ const Hint = ({
   setHints,
   setLastHint,
 }) => {
-  addStyles(); //mathquill
   const [i, setI] = useState(0); //i es el último hint desbloqueado
   const [list] = useState([hints[0]]);
   const [j, setJ] = useState(0); //j es el hint que se despliega con los botones
@@ -199,7 +199,9 @@ const Hint = ({
             <br />
             {list[j].hint}
             <Center>
-              {list[j].expression ? <StaticMathField>{list[j].expression}</StaticMathField> : null}
+              {list[j].expression ? (
+                <MQStaticMathField exp={list[j].expression} currentExpIndex={true} />
+              ) : null}
             </Center>
             <br />
             <Center>

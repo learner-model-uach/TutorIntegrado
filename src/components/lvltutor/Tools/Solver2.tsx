@@ -17,7 +17,6 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { StaticMathField } from "react-mathquill";
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
 import dynamic from "next/dynamic";
@@ -29,6 +28,7 @@ import type { ExType, Step } from "./ExcerciseType";
 
 import { useSnapshot } from "valtio";
 import MQProxy, { reset } from "./MQProxy";
+import MQStaticMathField from "../../../utils/MQStaticMathField";
 
 const Mq2 = dynamic(
   () => {
@@ -36,15 +36,6 @@ const Mq2 = dynamic(
   },
   { ssr: false },
 );
-
-const MQStatic = ({ tex, resumen }: { tex: string; resumen?: boolean }) => {
-  const [texExp, setTexExp] = useState("");
-  useEffect(() => {
-    if (!resumen) setTexExp(tex);
-  }, [, resumen]);
-
-  return <StaticMathField>{texExp}</StaticMathField>;
-};
 
 interface value {
   ans: string;
@@ -80,7 +71,7 @@ const Steporans = ({
     if (answer && answer != "") {
       setCC(
         <>
-          <MQStatic key={"respuesta" + i} tex={answer} />
+          <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
           <Alert key={"Alert" + topicId + "i"} status={"success"} mt={2}>
             <AlertIcon key={"AlertIcon" + topicId + "i"} />
             {step.correctMsg}
@@ -228,7 +219,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         <Heading as="h5" size="sm" mt={2}>
           {steps.text}
         </Heading>
-        <MQStatic tex={steps.steps[0]?.expression || ""} />
+        <MQStaticMathField exp={steps.steps[0]?.expression || ""} currentExpIndex={true} />
         <Accordion
           onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
           index={MQProxy.defaultIndex}
@@ -307,14 +298,18 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
               </Heading>
               <HStack>
                 <Text>Expresión:</Text>
-                <MQStatic tex={steps.steps[0]!.expression} resumen={resumen} />
+                <MQStaticMathField exp={steps.steps[0]!.expression} currentExpIndex={resumen} />
               </HStack>
               {steps.steps.map((step, i) => (
                 <Box key={"ResumenBox" + i}>
                   <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
                     {step.summary}
                   </Text>
-                  <MQStatic key={"ResumenMC" + i} tex={step.displayResult[0]!} resumen={resumen} />
+                  <MQStaticMathField
+                    key={"ResumenMC" + i}
+                    exp={step.displayResult[0]!}
+                    currentExpIndex={resumen}
+                  />
                 </Box>
               ))}
             </VStack>

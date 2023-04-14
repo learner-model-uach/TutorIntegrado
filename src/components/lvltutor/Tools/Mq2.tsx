@@ -1,6 +1,6 @@
 import { Alert, AlertIcon, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
-import { addStyles, EditableMathField, MathField, StaticMathField } from "react-mathquill";
+import { addStyles, EditableMathField, MathField } from "react-mathquill";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -12,20 +12,9 @@ import type { Step } from "./ExcerciseType";
 import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
+import MQStaticMathField from "../../../utils/MQStaticMathField";
 
 addStyles();
-
-const MQStatic = ({ exp, currentStep }: { exp: string; currentStep: boolean }) => {
-  const [texExp, setTexExp] = useState("");
-  useEffect(() => {
-    if (currentStep)
-      setTimeout(() => {
-        setTexExp(exp);
-      }, 10);
-  }, [exp, currentStep]);
-
-  return <StaticMathField>{texExp}</StaticMathField>;
-};
 
 const Enabledhint = ({
   disablehint,
@@ -245,9 +234,9 @@ const Mq2 = ({
   return (
     <>
       <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-        <MQStatic
+        <MQStaticMathField
           exp={step.expression}
-          currentStep={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+          currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
         />
         <Box>
           <Stack spacing={4} direction="row" align="center" pb={4}>
