@@ -308,7 +308,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                   <MQStaticMathField
                     key={"ResumenMC" + i}
                     exp={step.displayResult[0]!}
-                    currentExpIndex={resumen}
+                    currentExpIndex={!resumen}
                   />
                 </Box>
               ))}
