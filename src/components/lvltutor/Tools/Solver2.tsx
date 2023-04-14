@@ -298,7 +298,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
               </Heading>
               <HStack>
                 <Text>Expresión:</Text>
-                <MQStaticMathField exp={steps.steps[0]!.expression} currentExpIndex={resumen} />
+                <MQStaticMathField exp={steps.steps[0]!.expression} currentExpIndex={!resumen} />
               </HStack>
               {steps.steps.map((step, i) => (
                 <Box key={"ResumenBox" + i}>
