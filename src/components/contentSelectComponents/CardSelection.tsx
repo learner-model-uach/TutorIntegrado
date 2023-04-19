@@ -98,17 +98,34 @@ export const CardSelection = ({
           });
         }}
       >
+        <Center>
+          <HStack>
+            <Heading size="md" my="2" textAlign="center">
+              {selectionTitle}
+            </Heading>
+            {selectionBest && displayStar && <FaStar size={20} color="yellow" />}
+          </HStack>
+        </Center>
+
+        <Text fontSize={"sm"}>{selectionText}</Text>
+
+        <Divider my="3" />
+
         {json.type == "ecc5s" || json.type == "secl5s" ? (
           <TeX>{json.title}</TeX>
         ) : (
-          <LinkOverlay fontSize=".8em">
+          <Text fontSize=".8em">
             Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
-          </LinkOverlay>
+          </Text>
         )}
-        <br />
-        <Text paddingTop={"2"} fontSize={"sm"}>
-          {json.text}
-        </Text>
+
+        <NextLink href={"showContent"} passHref>
+          <LinkOverlay>
+            <Text paddingTop={"2"} fontSize={"sm"}>
+              {json.text}
+            </Text>
+          </LinkOverlay>
+        </NextLink>
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
           {json.type == "ecc5s" || json.type == "secl5s" ? (
             <MathComponent tex={String.raw`${json.eqc}`} display={false} />
@@ -116,19 +133,6 @@ export const CardSelection = ({
             <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
           )}
         </Center>
-
-        <Divider />
-        <Center>
-          <HStack>
-            <Heading size="md" my="2" textAlign="center">
-              <NextLink href={"showContent"} passHref>
-                <LinkOverlay>{selectionTitle}</LinkOverlay>
-              </NextLink>
-            </Heading>
-            {selectionBest && displayStar && <FaStar size={20} color="yellow" />}
-          </HStack>
-        </Center>
-        <Text fontSize={"sm"}>{selectionText}</Text>
       </LinkBox>
     </>
   );
