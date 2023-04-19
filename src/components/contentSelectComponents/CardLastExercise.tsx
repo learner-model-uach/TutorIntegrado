@@ -14,7 +14,7 @@ import { gql } from "../../graphql";
 
 export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => {
   //hacer query de lastExercise
-  const { data, isLoading } = useGQLQuery(
+  const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `
       query LastExercise($code: String!) {
         contentByCode(code: $code) {
@@ -32,7 +32,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
     },
   );
 
-  //console.log(data);
+  console.log(isError);
   return (
     <>
       <Center>
@@ -51,7 +51,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
               rounded="md"
               textAlign="center"
             >
-              {!isLoading ? (
+              {!isLoading && !isError ? (
                 <>
                   <LinkOverlay fontSize=".8em">
                     <span>Ejercicio de </span>{" "}
@@ -80,8 +80,10 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                     )}
                   </Center>
                 </>
-              ) : (
+              ) : !isError ? (
                 <Spinner />
+              ) : (
+                <Text>No encontrado</Text>
               )}
             </LinkBox>
           </WrapItem>

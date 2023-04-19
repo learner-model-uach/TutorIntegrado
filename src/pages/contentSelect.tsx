@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { SimpleGrid, Center, Text, useColorModeValue, Checkbox } from "@chakra-ui/react";
+import { SimpleGrid, Center, Text, useColorModeValue, Checkbox, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
@@ -147,9 +147,26 @@ export default withAuth(function ContentSelect() {
 
   return (
     <>
-      <p>Selección del contenido del tópico: {topics}</p>
-
+      <Center>
+        <Heading>
+          Estamos en{" "}
+          {registerTopic == "4"
+            ? "factorización"
+            : registerTopic == "31"
+            ? "fracción algebraica"
+            : registerTopic == "19"
+            ? "potencias y raíces"
+            : "otro tópico"}
+        </Heading>
+        &nbsp;&nbsp;&nbsp;
+      </Center>
+      <br></br>
       <CardLastExercise lastExercise={lastExercise} />
+      <br></br>
+      <Center>
+        <Text> El sistema ha pre-seleccionado estos ejercicios para tí. Escoge uno: </Text>
+      </Center>
+
       {isError ? (
         <p>Error al cargar datos</p>
       ) : data?.contentSelection?.contentSelected.topicCompletedMsg.label.length > 9 ? (
