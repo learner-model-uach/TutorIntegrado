@@ -23,7 +23,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
       }
     `),
     {
-      code: lastExercise,
+      code: lastExercise ?? "",
     },
     {
       refetchOnWindowFocus: false,
@@ -51,7 +51,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
               rounded="md"
               textAlign="center"
             >
-              {!isLoading && !isError ? (
+              {!isLoading && !isError && lastExercise ? (
                 <>
                   <LinkOverlay fontSize=".8em">
                     <span>Ejercicio de </span>{" "}
@@ -80,7 +80,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                     )}
                   </Center>
                 </>
-              ) : !isError ? (
+              ) : isLoading ? (
                 <Spinner />
               ) : (
                 <Text>No encontrado</Text>
