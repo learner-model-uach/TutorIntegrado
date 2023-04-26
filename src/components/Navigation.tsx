@@ -33,7 +33,7 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=16,17,18&registerTopic=31"}>
+            <SidebarLink href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
               Fracción Algebraica
             </SidebarLink>
             <SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>

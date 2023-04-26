@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { SimpleGrid, Center, Text } from "@chakra-ui/react";
+import { SimpleGrid, Center, Text, Heading, Spinner } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { useGQLQuery } from "rq-gql";
@@ -9,6 +9,7 @@ import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 //import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
+import { CardLastExercise } from "../components/contentSelectComponents/CardLastExercise";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -95,6 +96,8 @@ export default withAuth(function ContentSelect() {
   });
   console.log(data?.contentSelection?.contentSelected);
 
+  const lastExercise = data?.contentSelection?.contentSelected?.PU[0];
+
   const bestExercise =
     !isLoading &&
     !isError &&
@@ -139,67 +142,68 @@ export default withAuth(function ContentSelect() {
 
   return (
     <>
-      <p>Selección del contenido del tópico: {topics}</p>
       {isError ? (
         <p>Error al cargar datos</p>
       ) : data?.contentSelection?.contentSelected.topicCompletedMsg.label.length > 9 ? (
         <CompleteTopic />
-      ) : (
-        <SimpleGrid
-          columns={{
-            lg: 1,
-            xl: experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length,
-          }}
-          spacing="8"
-          p="10"
-          textAlign="center"
-          rounded="lg"
-        >
-          {
-            //agregar componente de tópico completado
-            !isLoading ? (
-              experimentGroup == "tutor-control" ? (
-                <Center>
-                  <CardSelectionDynamic
-                    id={contentResult[bestExercise]?.P.id}
-                    code={contentResult[bestExercise]?.P.code}
-                    json={contentResult[bestExercise]?.P.json as unknown as ExType}
-                    description={contentResult[bestExercise]?.P.description}
-                    label={contentResult[bestExercise]?.P.label}
-                    kcs={contentResult[bestExercise]?.P.kcs}
-                    selectionTitle={contentResult[bestExercise]?.Msg.label}
-                    selectionText={contentResult[bestExercise]?.Msg.text}
-                    selectionBest={false}
-                    registerTopic={registerTopic}
-                    nextContentPath={nextContentPath}
-                    selectionData={selectionData}
-                    indexSelectionData={0}
-                    key={0}
-                  ></CardSelectionDynamic>
-                </Center>
-              ) : (
-                <>
-                  {contentResult.length > 1
-                    ? contentResult?.map((content, index) => (
-                        <CardSelectionDynamic
-                          id={content.P.id}
-                          code={content.P.code}
-                          json={content.P.json as unknown as ExType}
-                          description={content.P.description}
-                          label={content.P.label}
-                          kcs={content.P.kcs}
-                          selectionTitle={content.Msg.label}
-                          selectionText={content.Msg.text}
-                          selectionBest={index == bestExercise}
-                          registerTopic={registerTopic}
-                          nextContentPath={nextContentPath}
-                          selectionData={selectionData}
-                          indexSelectionData={index}
-                          key={index}
-                        ></CardSelectionDynamic>
-                      ))
-                    : contentResult?.map((content, index) => (
-                        <Center key={index + "center"}>
+      ) : !isLoading ? (
+        <>
+          <Center>
+            <Heading>
+              Estamos en{" "}
+              {registerTopic == "4"
+                ? "factorización"
+                : registerTopic == "31"
+                ? "fracción algebraica"
+                : registerTopic == "19"
+                ? "potencias y raíces"
+                : "otro tópico"}
+            </Heading>
+            &nbsp;&nbsp;&nbsp;
+          </Center>
+          <br></br>
+          <CardLastExercise lastExercise={lastExercise} />
+          <br></br>
+          <Center>
+            <Text> El sistema ha pre-seleccionado estos ejercicios para tí. Escoge uno: </Text>
+          </Center>
+
+          <SimpleGrid
+            columns={{
+              lg: 1,
+              xl: experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length,
+            }}
+            spacing="8"
+            p="10"
+            textAlign="center"
+            rounded="lg"
+          >
+            {
+              //agregar componente de tópico completado
+              !isLoading ? (
+                experimentGroup == "tutor-control" ? (
+                  <Center>
+                    <CardSelectionDynamic
+                      id={contentResult[bestExercise]?.P.id}
+                      code={contentResult[bestExercise]?.P.code}
+                      json={contentResult[bestExercise]?.P.json as unknown as ExType}
+                      description={contentResult[bestExercise]?.P.description}
+                      label={contentResult[bestExercise]?.P.label}
+                      kcs={contentResult[bestExercise]?.P.kcs}
+                      selectionTitle={contentResult[bestExercise]?.Msg.label}
+                      selectionText={contentResult[bestExercise]?.Msg.text}
+                      selectionBest={false}
+                      registerTopic={registerTopic}
+                      nextContentPath={nextContentPath}
+                      selectionData={selectionData}
+                      indexSelectionData={0}
+                      key={0}
+                    ></CardSelectionDynamic>
+                  </Center>
+                ) : (
+                  <>
+                    {contentResult.length > 1
+                      ? contentResult?.map((content, index) => (
                           <CardSelectionDynamic
                             id={content.P.id}
                             code={content.P.code}
@@ -216,15 +220,37 @@ export default withAuth(function ContentSelect() {
                             indexSelectionData={index}
                             key={index}
                           ></CardSelectionDynamic>
-                        </Center>
-                      ))}
-                </>
+                        ))
+                      : contentResult?.map((content, index) => (
+                          <Center key={index + "center"}>
+                            <CardSelectionDynamic
+                              id={content.P.id}
+                              code={content.P.code}
+                              json={content.P.json as unknown as ExType}
+                              description={content.P.description}
+                              label={content.P.label}
+                              kcs={content.P.kcs}
+                              selectionTitle={content.Msg.label}
+                              selectionText={content.Msg.text}
+                              selectionBest={index == bestExercise}
+                              registerTopic={registerTopic}
+                              nextContentPath={nextContentPath}
+                              selectionData={selectionData}
+                              indexSelectionData={index}
+                              key={index}
+                            ></CardSelectionDynamic>
+                          </Center>
+                        ))}
+                  </>
+                )
+              ) : (
+                <Text>Cargando ejercicios</Text>
               )
-            ) : (
-              <Text>Cargando ejercicios</Text>
-            )
-          }
-        </SimpleGrid>
+            }
+          </SimpleGrid>
+        </>
+      ) : (
+        <Spinner />
       )}
     </>
   );
