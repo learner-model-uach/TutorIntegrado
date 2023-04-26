@@ -37,7 +37,7 @@ export const TCstep3 = ({
     //contador de intentos
     setAttempts(attempts + 1);
     if (step3.answers[0].answer === value) {
-      setStep3Valid((step3Valid = 0));
+      setStep3Valid((step3Valid = step3.answers[0].nextStep ?? 0));
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;
