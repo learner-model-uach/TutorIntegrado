@@ -38,9 +38,11 @@ const Hint = ({
   const action = useAction();
   const toast = useToast();
 
-  if (hints.length == i + 1) {
-    setLastHint(true);
-  }
+  useEffect(() => {
+    if (hints.length + count == list.length) {
+      setLastHint(true);
+    }
+  }, [hints.length + count == list.length, setLastHint]);
 
   const ayuda = () => {
     const responseStudent =
@@ -126,7 +128,7 @@ const Hint = ({
       hintID: "" + list[[list.length - 1]].hintId, //last element hintId of list of hints avalibles
       extra: {
         source: "Open",
-        lastHint: hints.length == i + 1 ? true : false,
+        lastHint: hints.length + count == list.length ? true : false,
       },
     });
   };
@@ -142,7 +144,7 @@ const Hint = ({
         hintID: "" + list[j + 1].hintId,
         extra: {
           source: "next",
-          lastHint: hints.length == i + 1 ? true : false,
+          lastHint: hints.length + count == list.length ? true : false,
         },
       });
     }
@@ -159,7 +161,7 @@ const Hint = ({
         hintID: "" + list[j - 1].hintId,
         extra: {
           source: "prev",
-          lastHint: hints.length == i + 1 ? true : false,
+          lastHint: hints.length + count == list.length ? true : false,
         },
       });
     }
