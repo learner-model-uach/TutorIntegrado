@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./AccordionSteps.module.css";
+//import styles from "./AccordionSteps.module.css";
 
 import {
   Accordion,
@@ -7,6 +7,8 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Alert,
+  useColorModeValue,
   Box,
   Flex,
 } from "@chakra-ui/react";
@@ -41,7 +43,7 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
     setColor(
       Array(exercise.steps.length)
         .fill(0)
-        .map(e => ACCORDION_COLOR),
+        .map(e => "blue"),
     );
     setDisableState([true]);
     setIndexStep([0]);
@@ -111,17 +113,21 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
               key={index}
               paddingRight={{ base: 0 }}
               style={{ display: "block", width: "100%" }}
-              className={styles["accordionPadding"]}
+              //className={styles["accordionPadding"]}
             >
+              <Alert colorScheme={color[index]}>
               <AccordionButton
                 ref={element => (inputRef.current[index] = element)}
-                bg={
+                
+                //colorScheme={color[index] === CORRECT_ANSWER_COLOR ? "green" : "blue"}
+                //bg={useColorModeValue("blue.700", "blue.800")}
+                /*bg={
                   color[index] === ACCORDION_COLOR
-                    ? ACCORDION_COLOR
+                    ? ""
                     : color[index] === CORRECT_ANSWER_COLOR
                     ? CORRECT_ANSWER_COLOR
                     : INCORRECT_ANSWER_COLOR
-                }
+                }*/
               >
                 <Box flex="1" p={4} textAlign="left">
                   <AccordionAnswer
@@ -134,11 +140,12 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
+              </Alert>
               <AccordionPanel
                 pb={4}
                 id="panel"
                 style={{
-                  backgroundColor: BACKGROUND_COLOR_ACCORDION,
+                  //backgroundColor: BACKGROUND_COLOR_ACCORDION,
                   display: "flex",
                   alignContent: "center",
                   justifyContent: "center",

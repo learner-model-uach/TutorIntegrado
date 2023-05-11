@@ -36,8 +36,11 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
               Fracción Algebraica
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=24,25,26&registerTopic=24"}>
-              Ecuaciones
+            <SidebarLink href={"contentSelect?topic=24,25&registerTopic=24"}>
+              Ecuaciones Cuadráticas
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=33,26&registerTopic=33"}>
+              Ecuaciones Lineales
             </SidebarLink>
             <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces

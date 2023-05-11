@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TeX from "@matejmazur/react-katex";
-import { Flex, Button, Grid, Stack, Input, VStack, Text } from "@chakra-ui/react";
+import { Flex, Button, Grid, Stack, Input, VStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
   CORRECT_BUTTOM_NAME,
@@ -37,7 +37,14 @@ export const StepInput = ({
   const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   const startAction = useAction({});
-
+  useEffect(() => {
+    setColor(prev => [
+      ...prev.slice(0, nStep),
+      INCORRECT_ANSWER_COLOR,
+      ...prev.slice(nStep + 1),
+    ]);
+  }, [step]);
+  
   const onChange = e => {
     setAnswer(e.target.value);
   };
@@ -158,11 +165,6 @@ export const StepInput = ({
               hints: hintsShow,
             },
           });
-          setColor(prev => [
-            ...prev.slice(0, nStep),
-            INCORRECT_ANSWER_COLOR,
-            ...prev.slice(nStep + 1),
-          ]);
           setAlert({
             status: "error",
             text: "Respuesta Incorrecta",
@@ -180,7 +182,6 @@ export const StepInput = ({
           direction={["row", "column"]}
           style={{
             borderRadius: 10,
-            backgroundColor: BACKGROUND_COLOR_PANEL,
             padding: 10,
             width: "100%",
           }}

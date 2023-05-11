@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
 import TeX from "@matejmazur/react-katex";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { BOX, COLUMN1, COLUMN2, DRAG_TEXT } from "../types";
 import { useAction } from "../../../utils/action";
 
@@ -159,6 +159,7 @@ export const MovableItem = ({
 
   return (
     <Flex
+      
       ref={drag}
       onDoubleClick={onDoubleClick}
       className={styles["movable-item"]}

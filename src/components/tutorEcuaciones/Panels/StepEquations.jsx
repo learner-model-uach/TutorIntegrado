@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Flex, Stack, Button, Text, VStack, Grid } from "@chakra-ui/react";
+import { Flex, Stack, Button, Text, VStack, Grid, useColorModeValue } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
@@ -54,6 +54,11 @@ export const StepEquations = ({
     setAnswerTwo(true);
     setTestAlert(false);
     setIsCorrect(false);
+    setColor(prev => [
+      ...prev.slice(0, nStep),
+      INCORRECT_ANSWER_COLOR,
+      ...prev.slice(nStep + 1),
+    ]);
   }, [step]);
 
   const checkValues = () => {
@@ -200,12 +205,6 @@ export const StepEquations = ({
           setHints(getHints(answerLeft[0].id, answerRigth[0].id));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
-
-          setColor(prev => [
-            ...prev.slice(0, nStep),
-            INCORRECT_ANSWER_COLOR,
-            ...prev.slice(nStep + 1),
-          ]);
           setAlert({
             status: "error",
             text: "Respuesta Incorrecta",
@@ -226,7 +225,6 @@ export const StepEquations = ({
         <VStack
           style={{
             borderRadius: 10,
-            backgroundColor: BACKGROUND_COLOR_PANEL,
             padding: 10,
             width: "100%",
           }}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Stack, VStack, Button, Text, Grid } from "@chakra-ui/react";
+import { Flex, Stack, VStack, Button, Text, Grid, useColorModeValue } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
@@ -49,6 +49,11 @@ export const StepPanel = ({
     setOpenAlert(false);
     setAnswer(true);
     setIsCorrect(false);
+    setColor(prev => [
+      ...prev.slice(0, nStep),
+      INCORRECT_ANSWER_COLOR,
+      ...prev.slice(nStep + 1),
+    ]);
   }, [step]);
 
   const checkValues = () => {
@@ -186,11 +191,6 @@ export const StepPanel = ({
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
 
-          setColor(prev => [
-            ...prev.slice(0, nStep),
-            INCORRECT_ANSWER_COLOR,
-            ...prev.slice(nStep + 1),
-          ]);
           setAlert({
             status: "error",
             text: "Respuesta Incorrecta",
@@ -208,11 +208,10 @@ export const StepPanel = ({
   return (
     <Stack style={{ width: "100%" }}>
       <Stack style={{ width: "100%" }}>
-        <VStack
+        <VStack 
           direction={["row", "column"]}
           style={{
             borderRadius: 10,
-            backgroundColor: BACKGROUND_COLOR_PANEL,
             padding: 10,
             width: "100%",
           }}

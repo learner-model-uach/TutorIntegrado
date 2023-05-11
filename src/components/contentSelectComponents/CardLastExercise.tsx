@@ -56,14 +56,26 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                   <LinkOverlay fontSize=".8em">
                     <span>Ejercicio de </span>{" "}
                     <span style={{ fontWeight: "bold" }}>
-                      {data?.contentByCode?.json?.title} {lastExercise}
+                      {data?.contentByCode?.json?.type == "ecc5s"
+                        ? "Ecuaciones Cuadráticas"
+                        : data?.contentByCode?.json?.type == "secl5s"
+                        ? "Sistema de Ecuaciones Lineales"
+                        : data?.contentByCode?.json?.title}
                     </span>
                   </LinkOverlay>
 
                   <br />
 
                   <Text paddingTop={"2"} fontSize={"sm"}>
-                    {data?.contentByCode?.json?.text}
+                    {data?.contentByCode?.json?.type == "ecc5s" ||
+                    data?.contentByCode?.json?.type == "secl5s" ? (
+                      <MathComponent
+                        tex={String.raw`${data?.contentByCode?.json?.title}`}
+                        display={false}
+                      />
+                    ) : (
+                      data?.contentByCode?.json?.text
+                    )}
                   </Text>
                   <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
                     {data?.contentByCode?.json?.type == "ecc5s" ||

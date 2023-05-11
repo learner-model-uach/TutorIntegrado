@@ -1,6 +1,10 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 import { BOX } from "../types";
+import {
+  Box,
+  useColorModeValue
+} from "@chakra-ui/react";
 
 export const ColumnDragPanel = ({ children, className, title }) => {
   const [, drop] = useDrop({
@@ -9,8 +13,8 @@ export const ColumnDragPanel = ({ children, className, title }) => {
   });
 
   return (
-    <div ref={drop} className={className} style={{ alignItems: "center" }}>
+    <Box ref={drop} className={className} style={{ alignItems: "center" }} >
       {children}
-    </div>
+    </Box>
   );
 };
