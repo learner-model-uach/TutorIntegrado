@@ -11,6 +11,7 @@ import {
 import { MathComponent } from "mathjax-react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
+import TeX from "@matejmazur/react-katex";
 
 export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => {
   //hacer query de lastExercise
@@ -60,26 +61,29 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                         ? "Ecuaciones Cuadráticas"
                         : data?.contentByCode?.json?.type == "secl5s"
                         ? "Sistema de Ecuaciones Lineales"
+                        : data?.contentByCode.json?.type == "ecl2s"
+                        ? "Ecuaciones Lineales"
                         : data?.contentByCode?.json?.title}
                     </span>
                   </LinkOverlay>
 
                   <br />
-
+                  {console.log(lastExercise)}
+                  {console.log(data?.contentByCode?.json?.type)}
+                  {console.log(data?.contentByCode?.json?.title)}
                   <Text paddingTop={"2"} fontSize={"sm"}>
                     {data?.contentByCode?.json?.type == "ecc5s" ||
-                    data?.contentByCode?.json?.type == "secl5s" ? (
-                      <MathComponent
-                        tex={String.raw`${data?.contentByCode?.json?.title}`}
-                        display={false}
-                      />
+                    data?.contentByCode?.json?.type == "secl5s" ||
+                    data?.contentByCode?.json?.type == "ecl2s" ? (
+                      <TeX>{data?.contentByCode?.json?.title}</TeX>
                     ) : (
                       data?.contentByCode?.json?.text
                     )}
                   </Text>
                   <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
                     {data?.contentByCode?.json?.type == "ecc5s" ||
-                    data?.contentByCode?.json?.type == "secl5s" ? (
+                    data?.contentByCode?.json?.type == "secl5s" ||
+                    data?.contentByCode?.json?.type == "ecl2s" ? (
                       <MathComponent
                         tex={String.raw`${data?.contentByCode?.json?.eqc}`}
                         display={false}

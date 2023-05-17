@@ -109,7 +109,7 @@ export const CardSelection = ({
 
         <Divider my="3" />
 
-        {json.type == "ecc5s" || json.type == "secl5s" ? (
+        {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
           <TeX>{json.title}</TeX>
         ) : (
           <Text fontSize=".8em">
@@ -125,7 +125,7 @@ export const CardSelection = ({
           </LinkOverlay>
         </NextLink>
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
-          {json.type == "ecc5s" || json.type == "secl5s" ? (
+          {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
             <MathComponent tex={String.raw`${json.eqc}`} display={false} />
           ) : (
             <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
