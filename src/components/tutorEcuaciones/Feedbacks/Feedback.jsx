@@ -126,6 +126,41 @@ export const Feedback = ({ type }) => {
       </Stack>
     </>
   );
+  
+  const FeedbackLinearEquation  = () => (
+   <>
+    <Stack maxWidth="100%">
+      <Text fontSize={{ base: "8.4px", sm: "12px", lg: "15px" }}>
+        <Box>
+          <TeX
+            math={
+              "\\text{Recuerda que para resolver una ecuación lineal en } \\R , \\text{ cuya forma es:} "
+            }
+            as="figcaption"
+          />
+        </Box>
+      </Text>
+
+      <Stack fontSize={{ base: "8.4px", sm: "12px", lg: "15px" }}>
+        <TeX
+          math={
+            "ax+b=0 \\enspace , \\enspace a,b \\in \\R \\enspace \\wedge \\enspace a \\neq 0"
+          }
+          as="figcaption"
+          style={{ textAlign: "center" }}
+        />
+        <TeX math={"\\text{Se resuelve utilizando la siguiente fórmula:}"} />
+
+        <TeX
+          math={"x = \\frac{-b}{a}"}
+          as="figcaption"
+          style={{ textAlign: "center" }}
+        />
+      </Stack>
+    </Stack>
+	</>
+  );
+
 
   return (
     <Container
@@ -149,7 +184,9 @@ export const Feedback = ({ type }) => {
           <FeedbackQuadraticSystem />
         ) : type === "secl5s" ? (
           <FeedbackSystemOfLinearEquations />
-        ) : (
+        ) : type === "ecl2s" ? (
+          <FeedbackLinearEquation />
+        ): (
           <FeedbackNotFound />
         )}
       </Stack>
