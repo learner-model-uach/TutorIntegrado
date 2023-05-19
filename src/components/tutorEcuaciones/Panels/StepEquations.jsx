@@ -54,11 +54,7 @@ export const StepEquations = ({
     setAnswerTwo(true);
     setTestAlert(false);
     setIsCorrect(false);
-    setColor(prev => [
-      ...prev.slice(0, nStep),
-      INCORRECT_ANSWER_COLOR,
-      ...prev.slice(nStep + 1),
-    ]);
+    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const checkValues = () => {

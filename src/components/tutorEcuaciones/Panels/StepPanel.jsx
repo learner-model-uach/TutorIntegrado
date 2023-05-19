@@ -49,11 +49,7 @@ export const StepPanel = ({
     setOpenAlert(false);
     setAnswer(true);
     setIsCorrect(false);
-    setColor(prev => [
-      ...prev.slice(0, nStep),
-      INCORRECT_ANSWER_COLOR,
-      ...prev.slice(nStep + 1),
-    ]);
+    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const checkValues = () => {
@@ -208,7 +204,7 @@ export const StepPanel = ({
   return (
     <Stack style={{ width: "100%" }}>
       <Stack style={{ width: "100%" }}>
-        <VStack 
+        <VStack
           direction={["row", "column"]}
           style={{
             borderRadius: 10,

@@ -116,30 +116,30 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
               //className={styles["accordionPadding"]}
             >
               <Alert colorScheme={color[index]}>
-              <AccordionButton
-                ref={element => (inputRef.current[index] = element)}
-                
-                //colorScheme={color[index] === CORRECT_ANSWER_COLOR ? "green" : "blue"}
-                //bg={useColorModeValue("blue.700", "blue.800")}
-                /*bg={
+                <AccordionButton
+                  ref={element => (inputRef.current[index] = element)}
+
+                  //colorScheme={color[index] === CORRECT_ANSWER_COLOR ? "green" : "blue"}
+                  //bg={useColorModeValue("blue.700", "blue.800")}
+                  /*bg={
                   color[index] === ACCORDION_COLOR
                     ? ""
                     : color[index] === CORRECT_ANSWER_COLOR
                     ? CORRECT_ANSWER_COLOR
                     : INCORRECT_ANSWER_COLOR
                 }*/
-              >
-                <Box flex="1" p={4} textAlign="left">
-                  <AccordionAnswer
-                    nStep={step.stepId}
-                    text={step.left_text}
-                    stepType={step.type}
-                    inputLabels={step.input_labels}
-                    answer={stepCorrect[index]}
-                  />
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+                >
+                  <Box flex="1" p={4} textAlign="left">
+                    <AccordionAnswer
+                      nStep={step.stepId}
+                      text={step.left_text}
+                      stepType={step.type}
+                      inputLabels={step.input_labels}
+                      answer={stepCorrect[index]}
+                    />
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
               </Alert>
               <AccordionPanel
                 pb={4}

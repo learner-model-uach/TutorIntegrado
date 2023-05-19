@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import TeX from "@matejmazur/react-katex";
-import { Flex, Button, Grid, Stack, Input, VStack, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Grid,
+  Stack,
+  Input,
+  VStack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
   CORRECT_BUTTOM_NAME,
@@ -38,13 +47,9 @@ export const StepInput = ({
 
   const startAction = useAction({});
   useEffect(() => {
-    setColor(prev => [
-      ...prev.slice(0, nStep),
-      INCORRECT_ANSWER_COLOR,
-      ...prev.slice(nStep + 1),
-    ]);
+    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
-  
+
   const onChange = e => {
     setAnswer(e.target.value);
   };

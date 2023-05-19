@@ -159,7 +159,6 @@ export const MovableItem = ({
 
   return (
     <Flex
-      
       ref={drag}
       onDoubleClick={onDoubleClick}
       className={styles["movable-item"]}
