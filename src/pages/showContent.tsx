@@ -7,7 +7,7 @@ import type Plain from "../components/lvltutor/Plain";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { Text, Box } from "@chakra-ui/react";
 import Info from "../utils/Info";
-
+import wpExercise from '../components/tutorWordProblems/exerciseExample.json'
 const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
 );
@@ -24,11 +24,17 @@ const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
 );
 
+const DynamicTutorWP = dynamic<{exercise?: Object}>(()=>
+  import("../components/tutorWordProblems/TutorWordProblem").then(mod=> mod.TutorWordProblem),
+)
+
 export default withAuth(function ShowContent() {
   const content = sessionState.currentContent;
   const topic = sessionState.topic;
 
-  //console.log(content);
+  console.log('Content --------->',content);
+  console.log('wpExercise ------>',wpExercise)
+  console.log('topic --------->',topic);
 
   return (
     <>
@@ -53,7 +59,10 @@ export default withAuth(function ShowContent() {
             "thales2",
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
-        ) : (
+        ) : wpExercise && wpExercise?.type == "wordProblem" ? (
+          
+          <DynamicTutorWP exercise={content.json}></DynamicTutorWP>
+        ) :(
           <Text>No existe el contenido que desea cargar</Text>
         )}
       </div>

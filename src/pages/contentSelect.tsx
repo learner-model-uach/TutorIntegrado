@@ -157,6 +157,8 @@ export default withAuth(function ContentSelect() {
                 ? "fracción algebraica"
                 : registerTopic == "19"
                 ? "potencias y raíces"
+                : registerTopic == "34"
+                ? "Ejercicios en contexto"
                 : "otro tópico"}
             </Heading>
             &nbsp;&nbsp;&nbsp;

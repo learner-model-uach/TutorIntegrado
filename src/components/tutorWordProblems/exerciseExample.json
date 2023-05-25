@@ -1,0 +1,38 @@
+{
+  "code": "wp1",
+  "type": "wordProblem",
+  "title": "Sectores productivos que emiten y absorven gases de efecto invernadero en Chile",
+  "presentationImg": "https://i.postimg.cc/SxTdyHkp/carbon-offset-carbon-climate-cycle-scheme-of-emission-and-absorption-of-carbon-and-greenhouse-gases.jpg",
+  "learningObjetives": "Objetivos de aprendizaje",
+  "meta": {},
+  "statement":"String",
+  "mathExpression": "latex | undefined",
+  "img": "url(string)| undefined",
+  "table": { 
+    "header": ["Sector", "Co2 neto"],
+    "rows": [{
+      "row1": ["Energia", ""]
+    }]
+  },
+  "questions":[
+    {
+      "tip": "Recordatorio teorico",
+      "question": "",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepTitle": "",
+          "componentToAnswer": "mathlive",
+          "kcs": ["kc1","kc2"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "este es el primer hint"
+            }
+          ]
+        }
+      ]
+    }
+  ] 
+  
+}
