@@ -1,30 +1,42 @@
+import type { type } from "os";
+
 export interface Exercise {
   code:              string;
   type:              string;
-  title:             string;
-  presentationImg:   string;
-  learningObjetives: string;
+  presentation:      Presentation;
+  learningObjetives: LearningObjetives;
   meta:              Meta;
   statement:         string;
-  mathExpression:    string | undefined
-  img:               string | undefined
-  table:             Table | undefined
+  mathExpression:    string;
+  img:               string;
+  table:             Table;
   questions:         Question[];
+}
+
+export interface LearningObjetives {
+  title:   string;
+  text:    string;
+  listObj: string[];
 }
 
 export interface Meta {
 }
 
+export interface Presentation {
+  title:  string;
+  urlImg: string;
+}
+
 export interface Question {
-  tip:      string;
   question: string;
+  tip:      string;
   steps:    Step[];
 }
 
 export interface Step {
   stepId:            number;
   stepTitle:         string;
-  componentToAnswer: string;
+  componentToAnswer: componentToAnswer;
   kcs:               string[];
   hints:             Hint[];
 }
@@ -35,10 +47,24 @@ export interface Hint {
 }
 
 export interface Table {
-  header: string[];
+  header: Header[];
   rows:   Row[];
+  tableCaption: string;
+}
+
+export interface Header {
+  align: string;
+  value: string;
 }
 
 export interface Row {
-  row1: string[];
+  data: string[];
+}
+
+export type align = "right" | "left" | "center" | "justify" | "char"
+
+enum componentToAnswer{
+  ML = "mathlive",
+  SL = 'selection',
+  cp2 = "componente2"
 }

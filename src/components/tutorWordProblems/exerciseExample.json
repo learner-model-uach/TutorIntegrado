@@ -1,38 +1,78 @@
 {
   "code": "wp1",
   "type": "wordProblem",
-  "title": "Sectores productivos que emiten y absorven gases de efecto invernadero en Chile",
-  "presentationImg": "https://i.postimg.cc/SxTdyHkp/carbon-offset-carbon-climate-cycle-scheme-of-emission-and-absorption-of-carbon-and-greenhouse-gases.jpg",
-  "learningObjetives": "Objetivos de aprendizaje",
+  "presentation": {
+    "title": "Sectores productivos que emiten y absorven gases de efecto invernadero en Chile",
+    "urlImg": "https://i.postimg.cc/SxTdyHkp/carbon-offset-carbon-climate-cycle-scheme-of-emission-and-absorption-of-carbon-and-greenhouse-gases.jpg"
+  },
+  "learningObjetives": {
+    "title": "¿Qué aprendizajes son pretendidos al desarrollar este ejercicio?",
+    "text": "Aca se explica un poco lo que se va a aprender al resolver este ejercicio",
+    "listObj": ["Identificar números descritos en notación científica de potencias y su orden (mayor o menor).", "Sumar y restar números descritos en notación científica (operatoria básica).", "Calcular razón y porcentaje entre números descritos en notación científica (fracciones)."]
+
+  },
   "meta": {},
-  "statement":"String",
+  "statement":"El gobierno de Chile realiza un seguimiento de la cantidad de emisiones de gases de efecto invernadero (GEI) en gramos de C02 de los principales sectores contribuyentes en la emisión y absorción de GEI. La siguiente tabla muestra los valores reales en Chile de las emisiones y absorción de los cuatro principales sectores en 2013:",
   "mathExpression": "latex | undefined",
   "img": "url(string)| undefined",
   "table": { 
-    "header": ["Sector", "Co2 neto"],
-    "rows": [{
-      "row1": ["Energia", ""]
-    }]
+    "header": [
+      {
+        "align": "center",
+        "value":"Sector"
+      },
+      {
+        "align":"right",
+        "value":"Co2 Neto"
+      }],
+    "rows": [
+      {
+        "data": ["Energia", "\\8,18231 x 10^{13}"]
+      },
+      {
+        "data": ["Sectores Industriales", "2234 x 10"]
+      }
+    ],
+    "tableCaption": "Titulo de la tabla"
   },
   "questions":[
     {
+      "question": "¿Qué sector emite más CO2, contribuyendo mayormente a la contaminación? Marca la alternativa correcta:",
       "tip": "Recordatorio teorico",
-      "question": "",
       "steps": [
         {
           "stepId": 0,
-          "stepTitle": "",
-          "componentToAnswer": "mathlive",
+          "stepTitle": "Selecciona la alternativa correcta",
+          "componentToAnswer": "selection",
           "kcs": ["kc1","kc2"],
           "hints": [
             {
               "hintId": 0,
-              "hint": "este es el primer hint"
+              "hint": "Para identificar si un valor, descrito en notación científica, aumente una cantidad, debes observar que su parte decimal (𝑚) sea positiva. "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "¿Qué sector absorbe CO2, disminuyendo la contaminación? Marca la alternativa correcta:",
+      "tip": "Recordatorio teorico",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepTitle": "Selecciona la alternativa correcta",
+          "componentToAnswer": "selection",
+          "kcs": ["kc1","kc2"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Para identificar si un valor, descrito en notación científica, aumente una cantidad, debes observar que su parte decimal (𝑚) sea positiva. "
             }
           ]
         }
       ]
     }
+
   ] 
   
 }
