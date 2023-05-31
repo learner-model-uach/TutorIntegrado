@@ -91,7 +91,7 @@ export default withAuth(function ContentSelect() {
       refetchOnReconnect: false,
     },
   );
-  const contentResult = data?.contentSelection?.contentSelected?.contentResult.sort((a, b) => {
+  const contentResult = data?.contentSelection?.contentSelected?.contentResult?.sort((a, b) => {
     return parseInt(a.Order) - parseInt(b.Order);
   });
   console.log(data?.contentSelection?.contentSelected);
@@ -115,16 +115,16 @@ export default withAuth(function ContentSelect() {
     (experimentGroup == "tutor-control"
       ? [
           {
-            optionCode: contentResult[bestExercise].P.code,
-            optionTitle: contentResult[bestExercise].Msg.label,
+            optionCode: contentResult[bestExercise]?.P?.code,
+            optionTitle: contentResult[bestExercise]?.Msg?.label,
             optionBest: true,
             optionSelected: false,
           },
         ]
       : (contentResult ?? []).map((content, index) => {
           return {
-            optionCode: content.P.code,
-            optionTitle: content.Msg.label,
+            optionCode: content?.P?.code,
+            optionTitle: content?.Msg?.label,
             optionBest: index == bestExercise,
             optionSelected: false,
           };
@@ -144,7 +144,7 @@ export default withAuth(function ContentSelect() {
     <>
       {isError ? (
         <p>Error al cargar datos</p>
-      ) : data?.contentSelection?.contentSelected.topicCompletedMsg.label.length > 9 ? (
+      ) : data?.contentSelection?.contentSelected?.topicCompletedMsg?.label == "Felicidades" ? (
         <CompleteTopic />
       ) : !isLoading ? (
         <>
@@ -184,14 +184,14 @@ export default withAuth(function ContentSelect() {
                 experimentGroup == "tutor-control" ? (
                   <Center>
                     <CardSelectionDynamic
-                      id={contentResult[bestExercise]?.P.id}
-                      code={contentResult[bestExercise]?.P.code}
-                      json={contentResult[bestExercise]?.P.json as unknown as ExType}
-                      description={contentResult[bestExercise]?.P.description}
-                      label={contentResult[bestExercise]?.P.label}
-                      kcs={contentResult[bestExercise]?.P.kcs}
-                      selectionTitle={contentResult[bestExercise]?.Msg.label}
-                      selectionText={contentResult[bestExercise]?.Msg.text}
+                      id={contentResult[bestExercise]?.P?.id}
+                      code={contentResult[bestExercise]?.P?.code}
+                      json={contentResult[bestExercise]?.P?.json as unknown as ExType}
+                      description={contentResult[bestExercise]?.P?.description}
+                      label={contentResult[bestExercise]?.P?.label}
+                      kcs={contentResult[bestExercise]?.P?.kcs}
+                      selectionTitle={contentResult[bestExercise]?.Msg?.label}
+                      selectionText={contentResult[bestExercise]?.Msg?.text}
                       selectionBest={false}
                       registerTopic={registerTopic}
                       nextContentPath={nextContentPath}
@@ -205,14 +205,14 @@ export default withAuth(function ContentSelect() {
                     {contentResult.length > 1
                       ? contentResult?.map((content, index) => (
                           <CardSelectionDynamic
-                            id={content.P.id}
-                            code={content.P.code}
-                            json={content.P.json as unknown as ExType}
-                            description={content.P.description}
-                            label={content.P.label}
-                            kcs={content.P.kcs}
-                            selectionTitle={content.Msg.label}
-                            selectionText={content.Msg.text}
+                            id={content?.P?.id}
+                            code={content?.P?.code}
+                            json={content?.P?.json as unknown as ExType}
+                            description={content?.P?.description}
+                            label={content?.P?.label}
+                            kcs={content?.P?.kcs}
+                            selectionTitle={content?.Msg?.label}
+                            selectionText={content?.Msg?.text}
                             selectionBest={index == bestExercise}
                             registerTopic={registerTopic}
                             nextContentPath={nextContentPath}
@@ -224,14 +224,14 @@ export default withAuth(function ContentSelect() {
                       : contentResult?.map((content, index) => (
                           <Center key={index + "center"}>
                             <CardSelectionDynamic
-                              id={content.P.id}
-                              code={content.P.code}
-                              json={content.P.json as unknown as ExType}
-                              description={content.P.description}
-                              label={content.P.label}
-                              kcs={content.P.kcs}
-                              selectionTitle={content.Msg.label}
-                              selectionText={content.Msg.text}
+                              id={content?.P?.id}
+                              code={content?.P?.code}
+                              json={content?.P?.json as unknown as ExType}
+                              description={content?.P?.description}
+                              label={content?.P?.label}
+                              kcs={content?.P?.kcs}
+                              selectionTitle={content?.Msg?.label}
+                              selectionText={content?.Msg?.text}
                               selectionBest={index == bestExercise}
                               registerTopic={registerTopic}
                               nextContentPath={nextContentPath}

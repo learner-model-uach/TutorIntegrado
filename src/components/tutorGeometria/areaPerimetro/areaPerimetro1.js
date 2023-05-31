@@ -383,7 +383,7 @@ export const AP1 = ({ exercise, topicId }) => {
         <>
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
-            {console.log(extras)}
+            {/*console.log(extras)*/}
             <Summary4
               expression={exercise.text}
               step1={exercise.steps[0]}

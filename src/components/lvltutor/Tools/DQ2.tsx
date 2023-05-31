@@ -7,7 +7,7 @@ import { sessionState, sessionStateBD } from "../../SessionState";
 
 function Dq({ params, b, c }: { params: ExType; b: Array<string>; c: Array<Object> }) {
   useEffect(() => {
-    console.log(params.code);
+    //console.log(params.code);
     sessionState.currentContent.json = params;
     sessionState.currentContent.id = b[0];
     sessionState.currentContent.code = b[1];

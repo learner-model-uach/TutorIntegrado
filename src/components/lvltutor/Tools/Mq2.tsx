@@ -115,7 +115,7 @@ const Mq2 = ({
     let answer1 = "";
     let answer2 = "";
     if (validationType) {
-      console.log(1);
+      //console.log(1);
       if (validationType.localeCompare("evaluate") == 0) {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
@@ -139,12 +139,12 @@ const Mq2 = ({
           if (MQPostfixstrict(parseInput, parseAns)) correctAns = true;
         }
       } else if (validationType.localeCompare("evaluateAndCount") == 0) {
-        console.log(2);
+        //console.log(2);
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
           let parseAns = MQPostfixparser(e.answer[0]);
-          console.log(3, parseInput, parseAns);
+          //console.log(3, parseInput, parseAns);
           if (step.values != undefined) {
             answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
             answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
@@ -171,7 +171,7 @@ const Mq2 = ({
         if (parseInput.localeCompare(parseAns) == 0) correctAns = true;
       }
     }
-    console.log(validationType, correctAns);
+    //console.log(validationType, correctAns);
     if (correctAns) {
       result.current = true;
       MQProxy.endDate = Date.now();

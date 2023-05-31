@@ -104,7 +104,7 @@ export const sessionStateInitial = (
           .setItem(key, JSON.parse(JSON.stringify(sessionState[key as keyof typeof sessionState])))
           .then(function () {
             // Do other things once the value has been saved.
-            console.log("create 'key' in sessionState");
+            //console.log("create 'key' in sessionState");
           });
       } else {
         //update valuekey??

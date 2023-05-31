@@ -19,7 +19,7 @@ export default function Start() {
     <Stack width="100%" padding="1em" alignItems="center">
       <>
         <Stack alignItems="center">
-          <Heading color={bgColor}>Bienvenido@ al Tutor Cognitivo de Nivelación</Heading>
+          <Heading color={bgColor}>Bienvenid@ al Tutor Cognitivo de Nivelación</Heading>
         </Stack>
         <Stack padding="2em">
           <Text marginBottom={10}>

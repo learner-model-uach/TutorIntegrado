@@ -24,7 +24,7 @@ function RatingQuestion() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("Actualiza modelo");
+      //console.log("Actualiza modelo");
       updateModel({
         typeModel: "BKT",
         domainID: "1",

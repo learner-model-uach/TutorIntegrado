@@ -33,7 +33,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
     },
   );
 
-  console.log(isError);
+  //console.log(isError);
   return (
     <>
       <Center>
@@ -68,9 +68,9 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                   </LinkOverlay>
 
                   <br />
-                  {console.log(lastExercise)}
-                  {console.log(data?.contentByCode?.json?.type)}
-                  {console.log(data?.contentByCode?.json?.title)}
+                  {/*console.log(lastExercise)*/}
+                  {/*console.log(data?.contentByCode?.json?.type)*/}
+                  {/*console.log(data?.contentByCode?.json?.title)*/}
                   <Text paddingTop={"2"} fontSize={"sm"}>
                     {data?.contentByCode?.json?.type == "ecc5s" ||
                     data?.contentByCode?.json?.type == "secl5s" ||
