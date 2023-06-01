@@ -128,7 +128,7 @@ const Info = ({ exType }: { exType?: string }) => {
             icon={<BsFillInfoCircleFill />}
           />
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent position="fixed" top={0} right={0} zIndex={9999}>
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverBody>{exType ? <AyudaMQ exType={exType} /> : <AyudaMQ />}</PopoverBody>
