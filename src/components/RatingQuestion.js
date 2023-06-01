@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAction } from "../utils/action";
 import { useUpdateModel } from "../utils/updateModel";
 import { useAuth } from "./Auth";
+import { Loading } from "./tutorFactorizacion/tools/Spinner";
 
 const colors = {
   orange: "#FFBA5A",
@@ -22,14 +23,17 @@ function RatingQuestion() {
   const topic = sessionState.topic;
   const selectionData = sessionState.selectionData;
 
+  const [timeToUpdateModel, SetTimeToUpdateModel] = useState(true);
+  const { updateModel, mutation } = useUpdateModel();
   useEffect(() => {
     setTimeout(() => {
       //console.log("Actualiza modelo");
+      SetTimeToUpdateModel(false);
       updateModel({
         typeModel: "BKT",
         domainID: "1",
       });
-    }, 1500);
+    }, 1800);
   }, []);
 
   const handleClick = value => {
@@ -45,7 +49,6 @@ function RatingQuestion() {
   };
 
   const { user } = useAuth();
-  const { updateModel, mutation } = useUpdateModel();
 
   const handleClick2 = () => {
     action({
@@ -88,7 +91,12 @@ function RatingQuestion() {
           disabled={currentValue != 0 && !mutation.isLoading ? false : true}
           onClick={handleClick2}
         >
-          Siguiente Ejercicio
+          {!mutation.isLoading && !timeToUpdateModel && "Siguiente Ejercicio"}
+          {(mutation.isLoading || timeToUpdateModel) && (
+            <>
+              Actualizando opciones <Loading />
+            </>
+          )}
         </Button>
       </Link>
     </div>
@@ -100,10 +108,12 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    padding: 10,
   },
   stars: {
     display: "flex",
     flexDirection: "row",
+    paddingBottom: 5,
   },
   button: {
     border: "1px solid #a9a9a9",
