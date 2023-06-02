@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import { Button, Textarea } from "@chakra-ui/react";
+import { Button, Spacer, Spinner, Textarea } from "@chakra-ui/react";
 import { sessionState } from "./SessionState";
 import Link from "next/link";
 import { useAction } from "../utils/action";
 import { useUpdateModel } from "../utils/updateModel";
 import { useAuth } from "./Auth";
-import { Loading } from "./tutorFactorizacion/tools/Spinner";
+import parameters from "./../components/contentSelectComponents/parameters.json";
 
 const colors = {
   orange: "#FFBA5A",
@@ -62,9 +62,9 @@ function RatingQuestion() {
   return (
     <div style={styles.container}>
       {selectionData.length > 1 ? (
-        <h2>¿Cómo fue tu experiencia con este ejercicio escogido?</h2>
+        <h2>{parameters.ratingQuestion.experimentalQuestion}</h2>
       ) : (
-        <h2>¿Cómo fue tu experiencia con este ejercicio que el sistema eligio para ti?</h2>
+        <h2>{parameters.ratingQuestion.controlQuestion}</h2>
       )}
 
       <div style={styles.stars}>
@@ -91,10 +91,11 @@ function RatingQuestion() {
           disabled={currentValue != 0 && !mutation.isLoading ? false : true}
           onClick={handleClick2}
         >
-          {!mutation.isLoading && !timeToUpdateModel && "Siguiente Ejercicio"}
+          {!mutation.isLoading && !timeToUpdateModel && parameters.ratingQuestion.buttonMsg}
           {(mutation.isLoading || timeToUpdateModel) && (
             <>
-              Actualizando opciones <Loading />
+              {parameters.ratingQuestion.buttonWaitMsg} <Spacer />
+              <Spinner emptyColor="gray.200" color="blue.500" />
             </>
           )}
         </Button>

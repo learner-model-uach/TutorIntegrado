@@ -1,4 +1,5 @@
 import { Center, Heading, Text } from "@chakra-ui/react";
+import parameters from "./parameters.json";
 
 export const CompleteTopic = () => {
   return (
@@ -6,11 +7,11 @@ export const CompleteTopic = () => {
       <br />
       <br />
       <Center>
-        <Heading>Felicidades</Heading>
+        <Heading>{parameters.completeTopic.title}</Heading>
       </Center>
       <br />
       <Center>
-        <Text>Has completado este capítulo</Text>
+        <Text>{parameters.completeTopic.text}</Text>
       </Center>
     </>
   );

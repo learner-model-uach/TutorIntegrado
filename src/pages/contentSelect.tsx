@@ -6,10 +6,10 @@ import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
-//import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { useAction } from "../utils/action";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { CardLastExercise } from "../components/contentSelectComponents/CardLastExercise";
+import parameters from "../components/contentSelectComponents/parameters.json";
 
 export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
@@ -17,9 +17,9 @@ export default withAuth(function ContentSelect() {
   const topics = router.query.topic?.toString() || ""; //topics in array
   const registerTopic = router.query.registerTopic + ""; //topics in array
   const nextContentPath = router.asPath + ""; //topics in array
-  const domainId = "1";
+  const domainId = parameters.CSMain.domain;
 
-  const { data, isLoading, isError } = useGQLQuery(
+  const { data, isLoading, isError, isFetching } = useGQLQuery(
     gql(/* GraphQL */ `
       query ProjectData($input: ContentSelectionInput!) {
         contentSelection {
@@ -94,9 +94,10 @@ export default withAuth(function ContentSelect() {
   const contentResult = data?.contentSelection?.contentSelected?.contentResult?.sort((a, b) => {
     return parseInt(a.Order) - parseInt(b.Order);
   });
-  console.log(data?.contentSelection?.contentSelected);
+  //console.log(data?.contentSelection?.contentSelected);
 
   const lastExercise = data?.contentSelection?.contentSelected?.PU[0];
+  //const [queryLastExercise, setQueryLastExercise] = useState(false);
 
   const bestExercise =
     !isLoading &&
@@ -107,24 +108,26 @@ export default withAuth(function ContentSelect() {
       0);
 
   const experimentGroup =
-    !isError && user.tags.indexOf("joint-control") >= 0 ? "joint-control" : "tutor-control";
+    !isError && user.tags.indexOf(parameters.CSMain.experimentalTag) >= 0
+      ? parameters.CSMain.experimentalTag
+      : parameters.CSMain.controlTag;
 
   const selectionData =
     !isLoading &&
     !isError &&
-    (experimentGroup == "tutor-control"
+    (experimentGroup == parameters.CSMain.controlTag
       ? [
           {
-            optionCode: contentResult[bestExercise]?.P?.code,
-            optionTitle: contentResult[bestExercise]?.Msg?.label,
+            optionCode: contentResult[bestExercise]?.P?.code ?? "",
+            optionTitle: contentResult[bestExercise]?.Msg?.label ?? parameters.CSMain.completeTopic,
             optionBest: true,
             optionSelected: false,
           },
         ]
       : (contentResult ?? []).map((content, index) => {
           return {
-            optionCode: content?.P?.code,
-            optionTitle: content?.Msg?.label,
+            optionCode: content?.P?.code ?? "",
+            optionTitle: content?.Msg?.label ?? parameters.CSMain.completeTopic,
             optionBest: index == bestExercise,
             optionSelected: false,
           };
@@ -133,45 +136,56 @@ export default withAuth(function ContentSelect() {
   const action = useAction();
   useEffect(() => {
     data &&
+      !isFetching &&
       action({
         verbName: "displaySelection",
         topicID: registerTopic,
         extra: { selectionData },
       });
   }, [data]); //duplicate Action :c
-
   return (
     <>
       {isError ? (
-        <p>Error al cargar datos</p>
-      ) : data?.contentSelection?.contentSelected?.topicCompletedMsg?.label == "Felicidades" ? (
+        <p>{parameters.CSMain.noData}</p>
+      ) : data?.contentSelection?.contentSelected?.topicCompletedMsg?.label ==
+        parameters.CSMain.completeMsgService ? (
         <CompleteTopic />
-      ) : !isLoading ? (
+      ) : !isLoading && !isFetching /*&& !queryLastExercise*/ ? (
         <>
           <Center>
             <Heading>
-              Estamos en{" "}
-              {registerTopic == "4"
-                ? "factorización"
-                : registerTopic == "31"
-                ? "fracción algebraica"
-                : registerTopic == "19"
-                ? "potencias y raíces"
-                : "otro tópico"}
+              {parameters.CSMain.title}
+              {registerTopic == parameters.CSMain.topic1.registerTopic
+                ? parameters.CSMain.topic1.topic
+                : registerTopic == parameters.CSMain.topic2.registerTopic
+                ? parameters.CSMain.topic2.topic
+                : registerTopic == parameters.CSMain.topic3.registerTopic
+                ? parameters.CSMain.topic3.topic
+                : registerTopic == parameters.CSMain.topic4.registerTopic
+                ? parameters.CSMain.topic4.topic
+                : registerTopic == parameters.CSMain.topic5.registerTopic
+                ? parameters.CSMain.topic5.topic
+                : parameters.CSMain.topic6.topic}
             </Heading>
             &nbsp;&nbsp;&nbsp;
           </Center>
           <br></br>
-          <CardLastExercise lastExercise={lastExercise} />
+          <CardLastExercise
+            lastExercise={lastExercise}
+            //setQueryLastExercise={setQueryLastExercise}
+          />
           <br></br>
           <Center>
-            <Text> El sistema ha pre-seleccionado estos ejercicios para tí. Escoge uno: </Text>
+            <Text> {parameters.CSMain.text} </Text>
           </Center>
 
           <SimpleGrid
             columns={{
               lg: 1,
-              xl: experimentGroup != "joint-control" ? 1 : (contentResult ?? []).length,
+              xl:
+                experimentGroup != parameters.CSMain.experimentalTag
+                  ? 1
+                  : (contentResult ?? []).length,
             }}
             spacing="8"
             p="10"
@@ -181,7 +195,7 @@ export default withAuth(function ContentSelect() {
             {
               //agregar componente de tópico completado
               !isLoading ? (
-                experimentGroup == "tutor-control" ? (
+                experimentGroup == parameters.CSMain.controlTag ? (
                   <Center>
                     <CardSelectionDynamic
                       id={contentResult[bestExercise]?.P?.id}
@@ -244,13 +258,20 @@ export default withAuth(function ContentSelect() {
                   </>
                 )
               ) : (
-                <Text>Cargando ejercicios</Text>
+                <Text>{parameters.CSMain.waitMsg}</Text>
               )
             }
           </SimpleGrid>
         </>
       ) : (
-        <Spinner />
+        <>
+          <Center padding="5px 0px 10px 0px">
+            <Heading>{parameters.CSMain.waitMsg}</Heading>
+          </Center>
+          <Center padding="5px 0px 10px 0px">
+            <Spinner size="xl" emptyColor="gray.200" color="blue.500" />
+          </Center>
+        </>
       )}
     </>
   );

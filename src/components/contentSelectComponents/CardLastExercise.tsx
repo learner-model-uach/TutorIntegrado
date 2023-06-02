@@ -12,6 +12,7 @@ import { MathComponent } from "mathjax-react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import TeX from "@matejmazur/react-katex";
+import parameters from "./parameters.json";
 
 export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => {
   //hacer query de lastExercise
@@ -32,14 +33,12 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
       refetchOnReconnect: false,
     },
   );
-
-  //console.log(isError);
   return (
     <>
       <Center>
         <Wrap padding="15px 10px 10px 10px">
           <Center>
-            <WrapItem>Último ejercicio realizado: &nbsp;&nbsp;&nbsp;</WrapItem>
+            <WrapItem>{parameters.lastExercise.lastExerciseDone}</WrapItem>
           </Center>
           <WrapItem>
             <LinkBox
@@ -57,33 +56,30 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                   <LinkOverlay fontSize=".8em">
                     <span>Ejercicio de </span>{" "}
                     <span style={{ fontWeight: "bold" }}>
-                      {data?.contentByCode?.json?.type == "ecc5s"
-                        ? "Ecuaciones Cuadráticas"
-                        : data?.contentByCode?.json?.type == "secl5s"
-                        ? "Sistema de Ecuaciones Lineales"
-                        : data?.contentByCode.json?.type == "ecl2s"
-                        ? "Ecuaciones Lineales"
+                      {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type
+                        ? parameters.lastExercise.topic1.name
+                        : data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type
+                        ? parameters.lastExercise.topic2.name
+                        : data?.contentByCode.json?.type == parameters.lastExercise.topic3.type
+                        ? parameters.lastExercise.topic3.name
                         : data?.contentByCode?.json?.title}
                     </span>
                   </LinkOverlay>
 
                   <br />
-                  {/*console.log(lastExercise)*/}
-                  {/*console.log(data?.contentByCode?.json?.type)*/}
-                  {/*console.log(data?.contentByCode?.json?.title)*/}
                   <Text paddingTop={"2"} fontSize={"sm"}>
-                    {data?.contentByCode?.json?.type == "ecc5s" ||
-                    data?.contentByCode?.json?.type == "secl5s" ||
-                    data?.contentByCode?.json?.type == "ecl2s" ? (
+                    {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type ||
+                    data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type ||
+                    data?.contentByCode?.json?.type == parameters.lastExercise.topic3.type ? (
                       <TeX>{data?.contentByCode?.json?.title}</TeX>
                     ) : (
                       data?.contentByCode?.json?.text
                     )}
                   </Text>
                   <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
-                    {data?.contentByCode?.json?.type == "ecc5s" ||
-                    data?.contentByCode?.json?.type == "secl5s" ||
-                    data?.contentByCode?.json?.type == "ecl2s" ? (
+                    {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type ||
+                    data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type ||
+                    data?.contentByCode?.json?.type == parameters.lastExercise.topic3.type ? (
                       <MathComponent
                         tex={String.raw`${data?.contentByCode?.json?.eqc}`}
                         display={false}
@@ -99,7 +95,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
               ) : isLoading ? (
                 <Spinner />
               ) : (
-                <Text>No encontrado</Text>
+                <Text>{parameters.lastExercise.noDataTarget}</Text>
               )}
             </LinkBox>
           </WrapItem>

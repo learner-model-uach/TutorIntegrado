@@ -18,6 +18,7 @@ import { MathComponent } from "mathjax-react";
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
+import parameters from "./parameters.json";
 
 export const CardSelection = ({
   id,
@@ -113,7 +114,7 @@ export const CardSelection = ({
           <TeX>{json.title}</TeX>
         ) : (
           <Text fontSize=".8em">
-            Ejercicio de <span style={{ fontWeight: "bold" }}>{json.title}</span>
+            {parameters.card.text} <span style={{ fontWeight: "bold" }}>{json.title}</span>
           </Text>
         )}
 
