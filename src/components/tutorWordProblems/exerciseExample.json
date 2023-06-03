@@ -27,23 +27,38 @@
       }],
     "rows": [
       {
-        "data": ["Energia", "\\8,18231 x 10^{13}"]
+        "data": ["\\text{Energia}", "8,18231*10^{13}"]
       },
       {
-        "data": ["Sectores Industriales", "2234 x 10"]
+        "data": ["\\text{Procesos Industriales}", "2234*10"]
+      },
+      {
+        "data": ["\\text{Agricultura, Silvicultura y otros usos de la tierra}","-3.9915*10^{13}"]
+      },
+      {
+        "data": ["\\text{Residuos}", "3*10^8"]
       }
     ],
     "tableCaption": "Titulo de la tabla"
   },
+  "text": "Los numeros positivos representan emisiones de GEI, mientras que los negativos representan absorciones de GEI",
   "questions":[
     {
-      "question": "¿Qué sector emite más CO2, contribuyendo mayormente a la contaminación? Marca la alternativa correcta:",
+      "questionId": 0,
+      "question": "¿Qué sector emite más CO2, contribuyendo mayormente a la contaminación?",
       "tip": "Recordatorio teorico",
       "steps": [
         {
           "stepId": 0,
           "stepTitle": "Selecciona la alternativa correcta",
-          "componentToAnswer": "selection",
+          "componentToAnswer": {
+            "nameComponent":"selection",
+            "meta":{
+              "id": 1,
+              "answers": ["Residuos", "Energia","Procesos industriales", "Usos de la tierra"],
+              "correctAnswer": 1
+            }
+          },
           "kcs": ["kc1","kc2"],
           "hints": [
             {
@@ -55,8 +70,9 @@
       ]
     },
     {
+      "questionId": 1,
       "question": "¿Qué sector absorbe CO2, disminuyendo la contaminación? Marca la alternativa correcta:",
-      "tip": "Recordatorio teorico",
+      "tip": "Recordatorio: La notación cientifica describe numeros basados en potencias de 10. Su forma es $\\newline$ $m*10^n$  $\\newline$ donde m es un número decimal cuya parte entera tiene una sola cifra distinta de 0  y $10^n$ es una potencia de exponente entero ",
       "steps": [
         {
           "stepId": 0,

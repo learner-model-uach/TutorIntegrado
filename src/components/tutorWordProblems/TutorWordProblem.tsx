@@ -22,14 +22,21 @@ import {
   Tbody,
   Tr,
   Td} from "@chakra-ui/react";
+  
 import type { align, Exercise } from "./types";
+import dynamic from "next/dynamic";
+import 'katex/dist/katex.min.css';
+import Latex from 'react-latex-next';
 
+const MathField = dynamic(() => import("./Components/mathLiveV2"),{
+  ssr:false
+})
 export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
   
   console.log('exercise ---->',exercise);
   return(
     <>
-      <Tabs isFitted variant='enclosed' align="center" >
+      <Tabs isFitted variant='enclosed' align="center" width='auto' >
         <TabList>
           <Tab>Presentación</Tab>
           <Tab>Aprendizajes</Tab>
@@ -49,21 +56,24 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
 
             </Flex>
           </TabPanel>
-          <TabPanel>
-            <Box>
+          <TabPanel >
+            <Flex>
 
-              <Container>
+              <Container maxW='100%' >
                 {exercise.learningObjetives.title}
+                <br/>
+                <MathField value={"f(x)= \\frac{\\placeholder[numerator][x]{}}{\\placeholder[denominator]{y}}"} onChange={()=>{console.log("MathfieldCambio")}}/>
               </Container>
-            </Box>
+            </Flex>
           </TabPanel>
-          <TabPanel>
+
+          <TabPanel width='auto'>
             <Flex  direction="column">
               {exercise.statement 
               && <Container maxW="100%" paddingY="5" textAlign="left" >{exercise.statement}</Container> 
               }
               {exercise.table 
-              && <TableContainer >
+              && <TableContainer width='auto' >
                 <Table variant="simple" size="md" width="auto" borderWidth="2px">
                   <TableCaption>{exercise.table.tableCaption}</TableCaption>
                   <Thead bgColor="gray.100">
@@ -83,7 +93,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                           {row.data?.map((value,i) => {
                             return(
                               <Td key={i}>
-                                {value}
+                                <MathField readOnly value={value} onChange={()=>{}}/>
                               </Td>
                             )
                           })}
@@ -98,6 +108,10 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               <Accordion allowMultiple pt="12px">
                 {exercise.questions && exercise.questions.map((ques, index) =>{
                   return (
+                    <>
+                    <Box maxW='100%' textAlign='left'>
+                      <Latex >{ques.tip}</Latex>
+                    </Box>
                     <AccordionItem bg="gray.100" key={index}>
                       
                       <h2>
@@ -119,6 +133,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                         En esta seccion irian los pasos
                       </AccordionPanel>
                     </AccordionItem>
+                    </>
                   )
                 })
 

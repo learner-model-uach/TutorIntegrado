@@ -10,6 +10,7 @@ export interface Exercise {
   mathExpression:    string;
   img:               string;
   table:             Table;
+  text:              string;
   questions:         Question[];
 }
 
@@ -28,9 +29,10 @@ export interface Presentation {
 }
 
 export interface Question {
-  question: string;
-  tip:      string;
-  steps:    Step[];
+  questionId: number;
+  question:   string;
+  tip:        string;
+  steps:      Step[];
 }
 
 export interface Step {
@@ -67,4 +69,12 @@ enum componentToAnswer{
   ML = "mathlive",
   SL = 'selection',
   cp2 = "componente2"
+}
+
+export interface selectAnswersType{
+  id: Number,
+  answers: string[],
+  correctAnswer: number,
+  userSelectedAnswer?: number,
+  isCorrectUserAnswer?: boolean
 }
