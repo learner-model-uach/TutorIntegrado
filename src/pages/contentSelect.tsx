@@ -258,7 +258,11 @@ export default withAuth(function ContentSelect() {
                   </>
                 )
               ) : (
-                <Text>{parameters.CSMain.waitMsg}</Text>
+                <Text>
+                  {experimentGroup == parameters.CSMain.controlTag
+                    ? parameters.CSMain.waitMsgControl
+                    : parameters.CSMain.waitMsgExperimental}
+                </Text>
               )
             }
           </SimpleGrid>
@@ -266,7 +270,11 @@ export default withAuth(function ContentSelect() {
       ) : (
         <>
           <Center padding="5px 0px 10px 0px">
-            <Heading>{parameters.CSMain.waitMsg}</Heading>
+            <Heading>
+              {experimentGroup == parameters.CSMain.controlTag
+                ? parameters.CSMain.waitMsgControl
+                : parameters.CSMain.waitMsgExperimental}
+            </Heading>
           </Center>
           <Center padding="5px 0px 10px 0px">
             <Spinner size="xl" emptyColor="gray.200" color="blue.500" />
