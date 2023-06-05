@@ -25,6 +25,7 @@ export interface Step {
   values: Array<value>;
   hints: Array<hint>;
   matchingError?: Array<matchingError>;
+  validation?: "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount";
   answers: Array<answer>;
   incorrectMsg: string;
   correctMsg: string;
@@ -37,5 +38,6 @@ export interface ExType {
   title: string;
   text: string;
   type: string;
+  eqc: string | undefined;
   steps: Array<Step>;
 }

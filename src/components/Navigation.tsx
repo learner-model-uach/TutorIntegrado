@@ -8,43 +8,43 @@ import { SidebarLink } from "./SidebarLink";
 
 export function Navigation() {
   const { user } = useAuth();
+
+  const admin = (user?.role ?? "") == "ADMIN" ? true : false;
   return (
     <ScrollArea pt="5" pb="6">
       <Stack pb="6">
         <SidebarLink icon={<FaHome />} href="/">
           Inicio
         </SidebarLink>
-        <Text fontWeight="black">Selección por Código</Text>
-        <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
-          Search by Code
-        </SidebarLink>
+        {user && admin && (
+          <>
+            <Text fontWeight="black">Selección por Código</Text>
+            <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
+              Search by Code
+            </SidebarLink>
+          </>
+        )}
       </Stack>
 
       <Stack pb="6">
         {user && (
           <>
-            <Text fontWeight="black">Rudimentos Algebraicos</Text>
-            <Text fontWeight="medium">-Factorización</Text>
-            <SidebarLink href={"contentSelect?type=4"}>Factor Común</SidebarLink>
-            <SidebarLink href={"contentSelect?type=5"}>Factor Común Compuesto</SidebarLink>
-            <SidebarLink href={"contentSelect?type=6"}>Diferencia de Cuadrados</SidebarLink>
-            <SidebarLink href={"contentSelect?type=7"}>Diferencia y Suma de Cubos</SidebarLink>
-            <SidebarLink href={"contentSelect?type=8"}>Trinomios Cuadraticos</SidebarLink>
-            <Text fontWeight="medium">-Fracción Algebraica</Text>
-            <SidebarLink href={"contentSelect?type=9"}>Operatoria de Fracciones</SidebarLink>
-            <SidebarLink href={"contentSelect?type=10"}>Suma de Fracciones MCM</SidebarLink>
-            <Text fontWeight="black">Ecuaciones</Text>
-            <SidebarLink href={"contentSelect?type=11"}>Ecuaciones</SidebarLink>
-            <SidebarLink href={"contentSelect?type=12"}>Sistema de ecuaciones</SidebarLink>
-            <Text fontWeight="black">Potencias y Raices</Text>
-            <SidebarLink href={"contentSelect?type=13"}>Notación Cientifica</SidebarLink>
-            <SidebarLink href={"contentSelect?type=14"}>Evaluar Expresión</SidebarLink>
-            <SidebarLink href={"contentSelect?type=15"}>Reducción de Expresión</SidebarLink>
-            <SidebarLink href={"contentSelect?type=16"}>Racionalización</SidebarLink>
-            <Text fontWeight="black">Geometría</Text>
-            <SidebarLink href={"contentSelect?type=17"}>Área y Perímetro</SidebarLink>
-            <SidebarLink href={"contentSelect?type=18"}>Teorema de Thales</SidebarLink>
-            <SidebarLink href={"contentSelect?type=19"}>Teorema de Pitágoras</SidebarLink>
+            <Text fontWeight="black">Tópicos</Text>
+            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
+              Factorización
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
+              Fracción Algebraica
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=24,25&registerTopic=24"}>
+              Ecuaciones Cuadráticas
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=33,26&registerTopic=33"}>
+              Ecuaciones Lineales
+            </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
+              Potencias y raíces
+            </SidebarLink>
           </>
         )}
       </Stack>

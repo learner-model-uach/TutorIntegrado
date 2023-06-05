@@ -1,6 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import TeX from "@matejmazur/react-katex";
-import { Flex, Button, Grid, Stack, Input, VStack, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Grid,
+  Stack,
+  Input,
+  VStack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
   CORRECT_BUTTOM_NAME,
@@ -8,40 +17,90 @@ import {
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
 } from "../types";
-import ExerciseContext from "../context/exercise/exerciseContext";
 import { useAction } from "../../../utils/action";
 
 export const StepInput = ({
-  step,
+  step, //content of "steps" field of the exercise
   setNumStep,
-  nStep,
+  nStep, //"nStep" field of the exercise
   setDisableState,
   totalSteps,
   setStepCorrect,
   setColor,
   setNextExercise,
-  content,
+  code, // "code" field of the exercise
+  topicId, // "id" field in the system
+  updateObjectSteps, // update the data in the "steps" field of the completeContent action
+  completeContentSteps, // object used in the "steps" field of completeContent
 }) => {
-  const [isCorrect, setIsCorrect] = useState(0);
-  const [answer, setAnswer] = useState("");
   const [alert, setAlert] = useState({});
-  const [openAlert, setOpenAlert] = useState(false);
-  const exerciseContext = useContext(ExerciseContext);
-  const [newHintAvaliable, setNewHintAvaliable] = useState(false);
-  const [firstTimeHint, setFirstTimeHint] = useState(true);
+  const [answer, setAnswer] = useState("");
   const [answerInput, setAnswerInput] = useState("");
+  const [firstTimeHint, setFirstTimeHint] = useState(true);
+  const [idAnswer, setIdAnswer] = useState(-1); // id corresponding to the answer
+  const [isCorrect, setIsCorrect] = useState(0);
+  const [newHintAvaliable, setNewHintAvaliable] = useState(false); // hints that are displayed to the user
+  const [openAlert, setOpenAlert] = useState(false);
+  const [attempts, setAttempts] = useState(0); // number of user attempts
+  const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
+  const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   const startAction = useAction({});
+  useEffect(() => {
+    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
+  }, [step]);
+
   const onChange = e => {
     setAnswer(e.target.value);
   };
 
+  // returns all hints that can be associated with the user's
+  // response (both non-generic and generic).
+  const getHints = answerId => {
+    let hintsStep = step.hints;
+
+    if (hintsStep != undefined) {
+      let filterHint = hintsStep.filter(hint => {
+        return hint.answers.includes(answerId);
+      });
+      if (filterHint != undefined) {
+        filterHint = filterHint.concat(
+          hintsStep.filter(hint => hint.generic && !filterHint.includes(hint)),
+        );
+      } else {
+        filterHint = filterHint.concat(hintsStep.filter(hint => hint.generic));
+      }
+      return filterHint;
+    }
+    return null;
+  };
+
+  // gets the id of the user's response, if there is not then the id is set to 0,
+  // this is so that if the user's response does not have a hint associated with it,
+  // then a generic hint can be displayed.
+  const getId = userAnswer => {
+    userAnswer = userAnswer.replaceAll(" ", "");
+    let answer = step.answers.filter(answer => answer.value === userAnswer.toString());
+    if (answer !== undefined && answer.length > 0) {
+      return answer[0].id;
+    }
+    if (userAnswer.length !== 0) {
+      return 0;
+    }
+    return -1;
+  };
+
   const checkLastStep = () => {
     if (nStep == totalSteps - 1) {
+      // it is executed when all the steps are completed
       startAction({
         verbName: "completeContent",
-        contentID: content,
-        result: 1,
+        contentID: code, // it is "code" field of the exericse
+        topicID: topicId, // it is "id" field in the system
+        result: Number(isCorrect), // it is 1 if the response of the user's is correct and 0 if not
+        extra: {
+          steps: completeContentSteps, // object defined in updateObjectSteps
+        },
       });
       setNextExercise(true);
     }
@@ -49,21 +108,31 @@ export const StepInput = ({
 
   const checkAnswers = e => {
     e.preventDefault();
+
+    let idUserAnswer = getId(answer);
     setOpenAlert(true);
+
     if (answer.length === 0) {
       setAlert({
         status: "info",
         text: "Escribe alguna respuesta",
       });
     } else {
-      if (step.n_step === nStep) {
-        if (answer === step.correct_answer.toString()) {
+      updateObjectSteps(step.stepId, attempts, hintsShow, 0);
+      if (step.stepId === nStep.toString()) {
+        if (idUserAnswer === step.correct_answer) {
           startAction({
             verbName: "tryStep",
-            contentID: content,
+            contentID: code,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 1,
-            stepID: step.n_step,
-            extra: { response: answer },
+            kcsIDs: step.KCs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow,
+            },
           });
           setStepCorrect(state => [...state, answer]);
           setColor(prev => [
@@ -80,23 +149,27 @@ export const StepInput = ({
           });
           setIsCorrect(true);
           checkLastStep();
+          setFirstTimeHint(true);
         } else {
+          setAttempts(prev => prev + 1);
           setAnswerInput(answer);
-
+          setIdAnswer(idUserAnswer);
+          setHints(getHints(idUserAnswer));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
           startAction({
             verbName: "tryStep",
-            contentID: content,
+            contentID: code,
+            topicID: topicId,
+            stepID: step.stepId,
             result: 0,
-            stepID: step.n_step,
-            extra: { response: answer },
+            kcsIDs: step.KCs,
+            extra: {
+              response: answer,
+              attemps: attempts,
+              hints: hintsShow,
+            },
           });
-          setColor(prev => [
-            ...prev.slice(0, nStep),
-            INCORRECT_ANSWER_COLOR,
-            ...prev.slice(nStep + 1),
-          ]);
           setAlert({
             status: "error",
             text: "Respuesta Incorrecta",
@@ -114,7 +187,6 @@ export const StepInput = ({
           direction={["row", "column"]}
           style={{
             borderRadius: 10,
-            backgroundColor: BACKGROUND_COLOR_PANEL,
             padding: 10,
             width: "100%",
           }}
@@ -161,12 +233,13 @@ export const StepInput = ({
 
                 <Hint
                   firstTimeHint={firstTimeHint}
-                  hints={step.hints}
+                  hints={hints}
                   setNewHintAvaliable={setNewHintAvaliable}
-                  answerId={parseInt(answerInput)}
+                  answerId={idAnswer}
                   newHintAvaliable={newHintAvaliable}
-                  content={content}
+                  code={code}
                   nStep={nStep}
+                  setHintsShow={setHintsShow}
                 />
               </Grid>
 
@@ -180,12 +253,13 @@ export const StepInput = ({
                   <div style={{ paddingRight: "5px" }}>
                     <Hint
                       firstTimeHint={firstTimeHint}
-                      hints={step.hints}
+                      hints={hints}
                       setNewHintAvaliable={setNewHintAvaliable}
-                      answerId={parseInt(answerInput)}
+                      answerId={idAnswer}
                       newHintAvaliable={newHintAvaliable}
-                      content={content}
+                      code={code}
                       nStep={nStep}
+                      setHintsShow={setHintsShow}
                     />
                   </div>
                 </Flex>

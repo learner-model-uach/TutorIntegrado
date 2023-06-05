@@ -1,19 +1,32 @@
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
-//import { useAction } from "../../../../utils/action";
+import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
-export const APstep4 = ({ step, setStepValid, stepValid, loading, contentID, topicID }) => {
+export const APstep4 = ({
+  step,
+  setStepValid,
+  stepValid,
+  loading,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //first input response
   const response3 = useRef(null); //first input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const correctAlternatives = step.answers.map(elemento => elemento.answer); //list of answers valid
-  // const action = useAction(); //send action to central system
+  const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0); //attemps counts
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
+  var correct = false;
+
   const compare = () => {
     //contador de intentos
     setAttempts(attempts + 1);
@@ -23,8 +36,19 @@ export const APstep4 = ({ step, setStepValid, stepValid, loading, contentID, top
       response2.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
     const validate = element => element[0] === responseStudent[0];
-    if (correctAlternatives.some(validate)) {
+    for (let i = 0; i < correctAlternatives.length; i++) {
+      let c = correctAlternatives[i];
+      if (c[0] == responseStudent[0] && c[1] == responseStudent[1] && c[2] == responseStudent[2]) {
+        correct = true;
+      }
+    }
+    if (correct) {
       setStepValid((stepValid = step.answers[correctAlternatives.findIndex(validate)].nextStep));
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
       setError(true);
       //error cuando la entrada es incorrecta
@@ -90,7 +114,7 @@ export const APstep4 = ({ step, setStepValid, stepValid, loading, contentID, top
                 variant="outline"
                 onClick={() => {
                   compare();
-                  /*action({
+                  action({
                     verbName: "tryStep",
                     stepID: "" + step.stepId,
                     contentID: contentID,
@@ -98,15 +122,11 @@ export const APstep4 = ({ step, setStepValid, stepValid, loading, contentID, top
                     result: stepValid === null ? 0 : 1,
                     kcsIDs: step.KCs,
                     extra: {
-                      response: [
-                        response1.current.value,
-                        response2.current.value,
-                      ],
+                      response: [response1.current.value, response2.current.value],
                       attempts: attempts,
                       hints: hints,
                     },
-                    // topicID: ""+ejercicio.code,
-                  });*/
+                  });
                 }}
                 size="sm"
               >
@@ -115,15 +135,16 @@ export const APstep4 = ({ step, setStepValid, stepValid, loading, contentID, top
               &nbsp;&nbsp;
               <Hint
                 hints={step.hints}
-                contentId={contentID}
                 stepId={step.stepId}
+                contentId={contentID}
+                topicId={topicID}
                 matchingError={step.matchingError}
                 response={[response1]}
-                itemTitle="Diferencia de cuadrados" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

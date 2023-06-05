@@ -67,6 +67,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
               direction="column"
               flex="1"
               overflow="auto"
+              padding="12px"
               px={{
                 md: "10",
               }}

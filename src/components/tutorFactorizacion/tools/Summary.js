@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, Wrap, Heading, Spacer, Text, Box } from "@chakra-ui/react";
 import { MathComponent } from "../../MathJax";
+import RatingQuestion from "../../RatingQuestion";
 
 export const FCsummary = ({ exercise }) => {
   return (
@@ -21,6 +22,7 @@ export const FCsummary = ({ exercise }) => {
           />
         </Wrap>
       </Alert>
+      <RatingQuestion />
     </Box>
   );
 };
@@ -111,6 +113,7 @@ export const FCCsummary = ({ exercise }) => {
           )}
         </Wrap>
       </Alert>
+      <RatingQuestion />
     </Box>
   );
 };
@@ -191,6 +194,7 @@ export const DCsummary = ({ exercise }) => {
           <Spacer />
         </Wrap>
       </Alert>
+      <RatingQuestion />
     </Box>
   );
 };
@@ -214,6 +218,7 @@ export const DSCsummary = ({ step1, step2 }) => {
           <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
         </Wrap>
       </Alert>
+      <RatingQuestion />
     </Box>
   );
 };
@@ -238,13 +243,18 @@ export const TCsummary = ({ step1, step2, step3, step4, step5 }) => {
           <Text w="100%" />
           <Text w="100%">{step3.summary}</Text>
           <Text w="100%">{step3.displayResult}</Text>
-          <Text w="100%" />
-          <Text w="100%">{step4.summary}</Text>
-          <MathComponent tex={String.raw`${step4.displayResult}`} display={false} />
-          <Text w="100%">{step5.summary}</Text>
-          <MathComponent tex={String.raw`${step5.displayResult}`} display={false} />
+          {step4 && (
+            <>
+              <Text w="100%" />
+              <Text w="100%">{step4.summary}</Text>
+              <MathComponent tex={String.raw`${step4.displayResult}`} display={false} />
+              <Text w="100%">{step5.summary}</Text>
+              <MathComponent tex={String.raw`${step5.displayResult}`} display={false} />
+            </>
+          )}
         </Wrap>
       </Alert>
+      <RatingQuestion />
     </Box>
   );
 };

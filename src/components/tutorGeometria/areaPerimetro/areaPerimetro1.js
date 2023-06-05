@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 //import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
 //import { Accordion,Card } from 'react-bootstrap';
-import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { APstep1 } from "./steps/APstep1";
 import { APstep2 } from "./steps/APstep2";
 import { APstep3 } from "./steps/APstep3";
@@ -13,7 +12,6 @@ import { APstepF } from "./steps/APstepF";
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
-import ejercicioAP1 from "./ejercicioAP1.json";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {
@@ -25,6 +23,7 @@ import {
   Box,
   Alert,
   Wrap,
+  Heading,
   Center,
   Spacer,
   Stack,
@@ -32,20 +31,11 @@ import {
   Image,
   VStack,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
-//import { useAction } from "../../../utils/action";
-//import { LoadContentAction } from "../tools/LoadContentAction";
+import { useAction } from "../../../utils/action";
+import RatingQuestion from "../../RatingQuestion";
 
-const AP1 = ({ exercise }) => {
-  exercise = ejercicioAP1[0];
-  //LoadContentAction(exercise); // report action loadContent
-  const Mq2 = dynamic(
-    () => {
-      return import("../../Mq2");
-    },
-    { ssr: false },
-  );
+export const AP1 = ({ exercise, topicId }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -57,7 +47,15 @@ const AP1 = ({ exercise }) => {
   const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
-
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra3, setExtra3] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra4, setExtra4] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  extras.steps[2] = extra3;
+  extras.steps[3] = extra4;
   const [submit, setSubmit] = useState(false);
   const [defaultIndex, setDefaultIndex] = useState([0]);
   const [submitValues, setSubmitValues] = useState({
@@ -70,7 +68,7 @@ const AP1 = ({ exercise }) => {
   });
   const [cdateE, setCdateE] = useState(Date.now());
 
-  // const action = useAction(); //send action to central system
+  const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -92,26 +90,44 @@ const AP1 = ({ exercise }) => {
     }
   }, [step3Valid]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step4Valid != null) {
       setIndex([4]);
     }
+  }, [step4Valid]);*/
+
+  useEffect(() => {
+    step4Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topicId,
+        result: 1,
+        extra: extras,
+      });
   }, [step4Valid]);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
   return (
     <>
-      <BreadcrumbTutor root="Área y Perímetro" item={exercise.title}></BreadcrumbTutor>
-
-      <Wrap>
+      <Heading as="h1" size="lg" noOfLines={3}>
+        {exercise.title}
+      </Heading>
+      <Heading as="h5" size="sm" mt={2}>
         {exercise.text}
+      </Heading>
 
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
+      <Wrap
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 20,
+        }}
+      >
+        <Image src={exercise.image} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -121,20 +137,20 @@ const AP1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 0)) {
                   setIndex(index.filter(e => e !== 0));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(0));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -151,7 +167,7 @@ const AP1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -168,8 +184,10 @@ const AP1 = ({ exercise }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
                 last={true}
+                extra={extra1}
+                setExtra={setExtra1}
               ></APstep1>
             )}
           </AccordionPanel>
@@ -182,20 +200,20 @@ const AP1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(1));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -212,7 +230,7 @@ const AP1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -229,7 +247,9 @@ const AP1 = ({ exercise }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
+                extra={extra2}
+                setExtra={setExtra2}
               ></APstep2>
             )}
           </AccordionPanel>
@@ -242,20 +262,20 @@ const AP1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(2));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -272,7 +292,7 @@ const AP1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -289,7 +309,9 @@ const AP1 = ({ exercise }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
+                extra={extra3}
+                setExtra={setExtra3}
               ></APstep3>
             )}
           </AccordionPanel>
@@ -302,20 +324,20 @@ const AP1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 3)) {
                   setIndex(index.filter(e => e !== 3));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(3));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -332,7 +354,7 @@ const AP1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -349,7 +371,9 @@ const AP1 = ({ exercise }) => {
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
+                extra={extra4}
+                setExtra={setExtra4}
               ></APstepF>
             )}
           </AccordionPanel>
@@ -359,6 +383,7 @@ const AP1 = ({ exercise }) => {
         <>
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
+            {/*console.log(extras)*/}
             <Summary4
               expression={exercise.text}
               step1={exercise.steps[0]}
@@ -367,6 +392,7 @@ const AP1 = ({ exercise }) => {
               step4={exercise.steps[3]}
             />
           </VStack>
+          <RatingQuestion />
         </>
       )}
     </>

@@ -1,10 +1,18 @@
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }) => {
+export const TCstep4 = ({
+  step4,
+  setStep4Valid,
+  step4Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //2nd input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
@@ -13,8 +21,11 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     const responseStudent = [
@@ -26,15 +37,33 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
       (element[0] === responseStudent[1] && element[1] === responseStudent[0]);
     if (correctAlternatives.some(validate)) {
       setStep4Valid((step4Valid = step4.answers[correctAlternatives.findIndex(validate)].nextStep));
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
-      setError(true);
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step4.incorrectMsg}
-        </Alert>,
-      );
+      if (response1.current.value == "" || response2.current.value == "") {
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta(s)
+            </Alert>,
+          );
+        }, 50);
+      } else {
+        setError(true);
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step4.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
+      }
     }
   };
   return (
@@ -92,20 +121,21 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step4.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step4Valid === null ? 0 : 1,
-                    kcsIDs: step4.KCs,
-                    extra: {
-                      response: [response1.current.value, response2.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                    // topicID: ""+ejercicio.code,
-                  });
+                  response1.current.value != "" &&
+                    response2.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step4.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step4Valid === null ? 0 : 1,
+                      kcsIDs: step4.KCs,
+                      extra: {
+                        response: [response1.current.value, response2.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
                 size="sm"
               >
@@ -119,11 +149,11 @@ export const TCstep4 = ({ step4, setStep4Valid, step4Valid, contentID, topicID }
                 stepId={step4.stepId}
                 matchingError={step4.matchingError}
                 response={[response1, response2]}
-                itemTitle="Trinomios cuadráticos" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

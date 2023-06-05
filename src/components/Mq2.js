@@ -64,7 +64,7 @@ const Mq2 = ({ step, setStepValid, stepValid, content, topicId }) => {
     let correctAnswer = false;
     let parse2 = MQPostfixparser(latex);
     parse2 = parse2.replace(" \\cdot", "");
-    console.log(parse2);
+    //console.log(parse2);
     for (let i in correctAlternatives) {
       if (correctAlternatives[i].replaceAll(" ", "").trim() == parse2.replaceAll(" ", "").trim())
         correctAnswer = true;

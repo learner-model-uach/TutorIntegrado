@@ -1,10 +1,18 @@
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
-export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }) => {
+export const DCstep2 = ({
+  step2,
+  setStep2Valid,
+  step2Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
   const correctAlternatives = step2.answers[0].answer; //list of answers valid
@@ -13,8 +21,11 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
   const action = useAction(); //send action to central system
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
 
@@ -28,13 +39,12 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
       responseStudent[1] === correctAlternatives[1]
     ) {
       setStep2Valid((step2Valid = "Terminado"));
-      action({
-        verbName: "completeContent",
-        contentID: contentID,
-        topicID: topicID,
-        result: 1,
-        // topicID: ""+ejercicio.code,
-      });
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
+
       setFeedbackMsg(
         <Alert status="success">
           <AlertIcon />
@@ -42,14 +52,27 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
         </Alert>,
       );
     } else {
-      setError(true);
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step2.incorrectMsg}
-        </Alert>,
-      );
+      if (response1.current.value == "" || response2.current.value == "") {
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Ingrese respuesta(s)
+            </Alert>,
+          );
+        }, 50);
+      } else {
+        setError(true);
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step2.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
+      }
     }
   };
   return (
@@ -107,20 +130,21 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step2.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step2Valid === null ? 0 : 1,
-                    kcsIDs: step2.KCs,
-                    extra: {
-                      response: [response1.current.value, response2.current.value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                    // topicID: ""+ejercicio.code,
-                  });
+                  response1.current.value != "" &&
+                    response2.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step2.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step2Valid === null ? 0 : 1,
+                      kcsIDs: step2.KCs,
+                      extra: {
+                        response: [response1.current.value, response2.current.value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
                 size="sm"
               >
@@ -134,11 +158,11 @@ export const DCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID }
                 stepId={step2.stepId}
                 matchingError={step2.matchingError}
                 response={[response1, response2]}
-                itemTitle="Diferencia de cuadrados" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

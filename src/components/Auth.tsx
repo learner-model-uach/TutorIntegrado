@@ -7,6 +7,7 @@ import { proxy, useSnapshot } from "valtio";
 import { CurrentUserQuery, gql } from "../graphql";
 import { rqGQLClient } from "../rqClient";
 import { useAction } from "../utils/action";
+import { useUpdateModel } from "../utils/updateModel";
 import { sessionStateInitial } from "./SessionState";
 
 export const AuthState = proxy<{
@@ -104,12 +105,16 @@ const OnStart = memo(function OnStart() {
   });
 
   const projectId = project?.id;
-
+  const { updateModel } = useUpdateModel();
   useEffect(() => {
     if (projectId) {
       //lógica al iniciar sesión, lógica de sessionState
       sessionStateInitial(AuthState.user, AuthState.auth0User);
       startAction();
+      updateModel({
+        typeModel: "BKT",
+        domainID: "1",
+      });
     }
   }, [projectId, startAction]);
 

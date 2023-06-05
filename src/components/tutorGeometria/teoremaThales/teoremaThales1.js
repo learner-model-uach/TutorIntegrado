@@ -1,17 +1,12 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
-//import { Accordion,Card } from 'react-bootstrap';
-import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { THstep1 } from "./steps/THstep1";
 import { THstep2 } from "./steps/THstep2";
-//import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import dynamic from "next/dynamic";
 import { Loading } from "../tools/Spinner";
-import ejercicioTH from "./ejercicioTH.json";
 import Link from "next/link";
 import {
   Accordion,
@@ -22,6 +17,7 @@ import {
   VStack,
   Box,
   Alert,
+  Heading,
   Wrap,
   Center,
   Spacer,
@@ -29,20 +25,18 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-//import { VideoScreen } from "../tools/VideoScreen";  //aun no usado
 import { SelectStep } from "../tools/SelectStep";
-//import { useAction } from "../../../utils/action";
-//import { LoadContentAction } from "../tools/LoadContentAction";
+import { useAction } from "../../../utils/action";
+import RatingQuestion from "../../RatingQuestion";
 
-const TH1 = ({ exercise }) => {
-  exercise = ejercicioTH[0];
-  const Mq2 = dynamic(
-    () => {
-      return import("../../Mq2");
-    },
-    { ssr: false },
-  );
-  //LoadContentAction(exercise); // report action loadContent
+const Mq2 = dynamic(
+  () => {
+    return import("../../Mq2");
+  },
+  { ssr: false },
+);
+
+export const TH1 = ({ exercise, topicId }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -54,7 +48,16 @@ const TH1 = ({ exercise }) => {
   const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
   const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
-  // const action = useAction(); //send action to central system
+  const extras = { steps: {} };
+  const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra3, setExtra3] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  const [extra4, setExtra4] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
+  extras.steps[0] = extra1;
+  extras.steps[1] = extra2;
+  extras.steps[2] = extra3;
+  extras.steps[3] = extra4;
+  const action = useAction(); //send action to central system
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
@@ -77,27 +80,35 @@ const TH1 = ({ exercise }) => {
   }, [step3Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
-    if (step4Valid != null) {
-      setIndex([4]);
-    }
+    step4Valid &&
+      action({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topicId,
+        result: 1,
+        extra: extras,
+      });
   }, [step4Valid]);
 
   const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
   return (
     <>
-      <BreadcrumbTutor root="Teorema de Thales" item={exercise.title}></BreadcrumbTutor>
-
-      <Wrap>
+      <Heading as="h1" size="lg" noOfLines={3}>
+        {exercise.title}
+      </Heading>
+      <Heading as="h5" size="sm" mt={2}>
         {exercise.text}
-        {
-          //<Spacer/>
-          //<VideoScreen></VideoScreen>
-        }
-      </Wrap>
-      <Wrap>
-        <Spacer />
+      </Heading>
+
+      <Wrap
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image src={exercise.image} />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -107,20 +118,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 0)) {
                   setIndex(index.filter(e => e !== 0));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(0));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -137,7 +148,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -154,7 +165,9 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep1Valid}
                 stepValid={step1Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
+                extra={extra1}
+                setExtra={setExtra1}
               ></THstep1>
             )}
           </AccordionPanel>
@@ -168,20 +181,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 1)) {
                   setIndex(index.filter(e => e !== 1));
-                  /* action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(1));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[0].stepId,
                     contentID: exercise.code,
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -198,7 +211,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -215,8 +228,9 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep2Valid}
                 stepValid={step2Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
-                loading={undefined}
+                topicID={topicId}
+                extra={extra2}
+                setExtra={setExtra2}
               ></THstep2>
             )}
           </AccordionPanel>
@@ -230,20 +244,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 2)) {
                   setIndex(index.filter(e => e !== 2));
-                  /*action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(2));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -260,7 +274,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect3}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -278,7 +292,7 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>
@@ -292,20 +306,20 @@ const TH1 = ({ exercise }) => {
               onClick={() => {
                 if (index.some(element => element === 3)) {
                   setIndex(index.filter(e => e !== 3));
-                  /*action({
+                  action({
                     verbName: "closeStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //cambiar para leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 } else {
                   setIndex(index.concat(3));
-                  /*action({
+                  action({
                     verbName: "openStep",
                     stepID: "" + exercise.steps[1].stepId,
                     contentID: exercise.code, //leer del json
-                    topicID: exercise.type,
-                  });*/
+                    topicID: topicId,
+                  });
                 }
               }}
             >
@@ -322,7 +336,7 @@ const TH1 = ({ exercise }) => {
                           steps={steps}
                           setSelect={setSelect4}
                           contentID={exercise.code}
-                          topic={exercise.type}
+                          topic={topicId}
                         ></SelectStep>
                       </Wrap>
                     )}
@@ -340,7 +354,7 @@ const TH1 = ({ exercise }) => {
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
-                topicID={exercise.type}
+                topicID={topicId}
               ></Mq2>
             )}
           </AccordionPanel>
@@ -348,6 +362,12 @@ const TH1 = ({ exercise }) => {
       </Accordion>
       {step4Valid != null && (
         <>
+          {/*action({
+                    verbName: "openStep",
+                    stepID: "" + exercise.steps[1].stepId,
+                    contentID: exercise.code, //leer del json
+                    topicID: topicId,
+                  })*/}
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
             <Summary4
@@ -358,6 +378,7 @@ const TH1 = ({ exercise }) => {
               step4={exercise.steps[3]}
             />
           </VStack>
+          <RatingQuestion />
         </>
       )}
     </>

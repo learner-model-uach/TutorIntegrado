@@ -1,0 +1,49 @@
+{
+  "CSMain": {
+    "domain": "1",
+    "title": "Estamos en ",
+    "text": "El sistema ha pre-seleccionado estos ejercicios para tí. Escoge uno:",
+    "noData": "El tutor estima que ya has adquirido los aprendizajes básicos de este tópico en los ejercicios que has realizado, y no tenemos más ejercicios en esta plataforma para mejorar estos aprendizajes -al menos por ahora. ¡Puedes seguir resolviendo ejercicios en otros tópicos!",
+    "completeMsgService": "Felicidades",
+    "waitMsgExperimental": "Seleccionando ejercicio(s)...",
+    "waitMsgControl": "Seleccionando ejercicio...",
+    "controlTag": "tutor-control",
+    "experimentalTag": "joint-control",
+    "completeTopic": "Complete topic",
+    "topic1": { "topic": "factorización", "registerTopic": "4" },
+    "topic2": { "topic": "fracción algebraica", "registerTopic": "31" },
+    "topic3": { "topic": "potencias y raíces", "registerTopic": "19" },
+    "topic4": { "topic": "ecuaciones cuadráticas", "registerTopic": "24" },
+    "topic5": { "topic": "ecuaciones lineales", "registerTopic": "33" },
+    "topic6": { "topic": "otro tópico", "registerTopic": "" }
+  },
+  "card": {
+    "text": "Ejercicio de "
+  },
+  "lastExercise": {
+    "lastExerciseDone": "Último ejercicio realizado:  ",
+    "topic1": {
+      "type": "ecc5s",
+      "name": "Ecuaciones Cuadráticas"
+    },
+    "topic2": {
+      "type": "secl5s",
+      "name": "Sistema de Ecuaciones Lineales"
+    },
+    "topic3": {
+      "type": "ecl2s",
+      "name": "Ecuaciones Lineales"
+    },
+    "noDataTarget": "No encontrado"
+  },
+  "completeTopic": {
+    "title": "Felicidades",
+    "text": "Has completado este capítulo"
+  },
+  "ratingQuestion": {
+    "controlQuestion": "¿Cómo fue tu experiencia con este ejercicio que el sistema eligio para ti?",
+    "experimentalQuestion": "¿Cómo fue tu experiencia con este ejercicio escogido?",
+    "buttonMsg": "Siguiente Ejercicio",
+    "buttonWaitMsg": "Actualizando  "
+  }
+}

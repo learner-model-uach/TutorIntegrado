@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import Hint from "../../../Hint";
 import { useAction } from "../../../../utils/action";
 import {
   Alert,
@@ -13,7 +13,15 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 
-export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }) => {
+export const TCstep3 = ({
+  step3,
+  setStep3Valid,
+  step3Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+}) => {
   const [feedbackMsg, setFeedbackMsg] = useState(null); // feedback message
   const [value, setValue] = React.useState(); //checked radio
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
@@ -21,21 +29,42 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
   const hintUnique = ["*"];
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
+  const dateInitial = Date.now();
+  const [lastHint, setLastHint] = useState(false);
 
   const compare = () => {
+    setFeedbackMsg(null);
     //contador de intentos
     setAttempts(attempts + 1);
     if (step3.answers[0].answer === value) {
-      setStep3Valid((step3Valid = step3.answers[0].nextStep));
+      setStep3Valid((step3Valid = step3.answers[0].nextStep ?? 0));
+      extra.att = attempts;
+      extra.hints = hints;
+      extra.duration = (Date.now() - dateInitial) / 1000;
+      extra.lastHint = lastHint;
+      setExtra(extra);
     } else {
-      setError(true);
-      setFeedbackMsg(
-        //error cuando la entrada es incorrecta
-        <Alert status="error">
-          <AlertIcon />
-          {step3.incorrectMsg}
-        </Alert>,
-      );
+      if (value == undefined) {
+        setTimeout(() => {
+          setFeedbackMsg(
+            <Alert status="warning">
+              <AlertIcon />
+              Seleccione una alternativa
+            </Alert>,
+          );
+        }, 50);
+      } else {
+        setError(true);
+        setTimeout(() => {
+          setFeedbackMsg(
+            //error cuando la entrada es incorrecta
+            <Alert status="error">
+              <AlertIcon />
+              {step3.incorrectMsg}
+            </Alert>,
+          );
+        }, 50);
+      }
     }
   };
   return (
@@ -67,20 +96,20 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
                 variant="outline"
                 onClick={() => {
                   compare();
-                  action({
-                    verbName: "tryStep",
-                    stepID: "" + step3.stepId,
-                    contentID: contentID,
-                    topicID: topicID,
-                    result: step3Valid === null ? 0 : 1,
-                    kcsIDs: step3.KCs,
-                    extra: {
-                      response: [value],
-                      attempts: attempts,
-                      hints: hints,
-                    },
-                    // topicID: ""+ejercicio.code,
-                  });
+                  value != undefined &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step3.stepId,
+                      contentID: contentID,
+                      topicID: topicID,
+                      result: step3Valid === null ? 0 : 1,
+                      kcsIDs: step3.KCs,
+                      extra: {
+                        response: [value],
+                        attempts: attempts,
+                        hints: hints,
+                      },
+                    });
                 }}
                 size="sm"
               >
@@ -89,17 +118,16 @@ export const TCstep3 = ({ step3, setStep3Valid, step3Valid, contentID, topicID }
               &nbsp;&nbsp;
               <Hint
                 hints={step3.hints}
-                //stepId={ejercicio.stepId}
                 contentId={contentID}
                 topicId={topicID}
                 stepId={step3.stepId}
                 matchingError={step3.matchingError}
                 response={hintUnique}
-                itemTitle="Trinomios cuadráticos" //no se utiliza
                 error={error}
                 setError={setError}
                 hintCount={hints}
                 setHints={setHints}
+                setLastHint={setLastHint}
               ></Hint>
             </>
           )}

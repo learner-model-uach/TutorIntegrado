@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Popover,
@@ -9,8 +9,13 @@ import {
   PopoverCloseButton,
   Center,
   Badge,
+  useToast,
+  Box,
 } from "@chakra-ui/react";
-import { useAction } from "../../../utils/action";
+import { useAction } from "../utils/action";
+import { MathComponent } from "mathjax-react";
+
+import MQStaticMathField from "../utils/MQStaticMathField";
 
 const Hint = ({
   hints, //all hints
@@ -23,6 +28,7 @@ const Hint = ({
   setError,
   hintCount,
   setHints,
+  setLastHint,
 }) => {
   const [i, setI] = useState(0); //i es el último hint desbloqueado
   const [list] = useState([hints[0]]);
@@ -30,6 +36,13 @@ const Hint = ({
   const [firstError, setFirstError] = useState(false);
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
+  const toast = useToast();
+
+  useEffect(() => {
+    if (hints.length + count == list.length) {
+      setLastHint(true);
+    }
+  }, [hints.length + count == list.length, setLastHint]);
 
   const ayuda = () => {
     const responseStudent =
@@ -107,6 +120,17 @@ const Hint = ({
       setFirstError(true);
     }
     setError(false);
+    action({
+      verbName: "requestHint",
+      stepID: "" + stepId,
+      contentID: contentId,
+      topicID: topicId,
+      hintID: "" + list[[list.length - 1]].hintId, //last element hintId of list of hints avalibles
+      extra: {
+        source: "Open",
+        lastHint: hints.length + count == list.length ? true : false,
+      },
+    });
   };
 
   const siguiente = () => {
@@ -117,9 +141,10 @@ const Hint = ({
         stepID: "" + stepId,
         contentID: contentId,
         topicID: topicId,
-        hintID: "" + list[j].hintId,
+        hintID: "" + list[j + 1].hintId,
         extra: {
           source: "next",
+          lastHint: hints.length + count == list.length ? true : false,
         },
       });
     }
@@ -133,14 +158,14 @@ const Hint = ({
         stepID: "" + stepId,
         contentID: contentId,
         topicID: topicId,
-        hintID: "" + list[j].hintId,
+        hintID: "" + list[j - 1].hintId,
         extra: {
           source: "prev",
+          lastHint: hints.length + count == list.length ? true : false,
         },
       });
     }
   };
-
   return (
     <div>
       <Popover
@@ -152,22 +177,12 @@ const Hint = ({
           <Button
             onClick={() => {
               ayuda();
-              action({
-                verbName: "requestHint",
-                stepID: "" + stepId,
-                contentID: contentId,
-                topicID: topicId,
-                hintID: "" + list[j].hintId,
-                extra: {
-                  source: "Open",
-                },
-              });
             }}
             colorScheme="cyan"
             variant="outline"
             size="sm"
           >
-            Ayuda &nbsp;
+            Pista &nbsp;
             {error && i < hints.length + count - 1 ? ( //en esta parte va la notificación de un nuevo hint
               <Badge boxSize="1.25em" color="white" bg="tomato" borderRadius="lg">
                 1
@@ -184,7 +199,12 @@ const Hint = ({
           <PopoverCloseButton />
           <PopoverBody>
             <br />
-            {list[j].hint} <br />
+            {list[j].hint}
+            <Center>
+              {list[j].expression ? (
+                <MQStaticMathField exp={list[j].expression} currentExpIndex={true} />
+              ) : null}
+            </Center>
             <br />
             <Center>
               {list[j - 1] && (

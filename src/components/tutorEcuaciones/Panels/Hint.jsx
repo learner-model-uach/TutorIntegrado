@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
@@ -25,93 +25,148 @@ import {
   POPOVER_NEXT_BUTTOM_COLOR,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import ExerciseContext from "../context/exercise/exerciseContext";
 
 export const Hint = ({
-  hints,
-  firstTimeHint,
-  setNewHintAvaliable,
-  newHintAvaliable,
-  answerId,
-  nStep,
-  content,
+  hints, // all hints
+  firstTimeHint, // unlock or lock hint button
+  setNewHintAvaliable, // remove
+  newHintAvaliable, // it is true if the user clicked the correct button
+  answerId, // id the answer
+  nStep, // "stepId" field defined in the exercise
+  code, // "code" field defined in the exercise
+  setHintsShow, // number of times a hint has been shown
 }) => {
+  const startAction = useAction({});
   const initialFocusRef = useRef();
 
-  const [disabledHint, setDisabledHint] = useState(firstTimeHint);
-
-  const [count, setCount] = useState(-1);
-  const [hintsAvaliableList, setHintsAvaliableList] = useState([]);
-  const [allHints, setAllHints] = useState(hints);
-  const [shake, setShake] = useState(false);
-  const [lastHint, setLastHint] = useState({});
+  const [allHints, setAllHints] = useState([]); // all the hints of the step
+  const [countHint, setCountHint] = useState(-1); // index of the element of hintsAvaliableList that the user can currently see
   const [countNotification, setCountNotication] = useState(0);
-  const startAction = useAction({});
-  const exerciseContext = useContext(ExerciseContext);
+  const [disabledHint, setDisabledHint] = useState(firstTimeHint); // configure if the button is disabled or not
+  const [hintsAvaliableList, setHintsAvaliableList] = useState([]); // accumulated hints displayed to the user
+  const [shake, setShake] = useState(false);
+  const hintIndex = useRef(-1); // this is used to keep the index of the possible answers that the user is seeing
+  const newHintIndex = useRef(-1); // index of the new hint to add to the list of available hints
+  const hintsAvaliable = useRef(false); // true if there is a new hint to show the user, otherwise false
+  const lastHint = useRef(false); // true if the user saw the last hint associated with the user's response, otherwise false
+  const firtsHint = useRef(false); // is true if it is the first hint of the user's response, otherwise false
+  const pressBoton = useRef(false); // true if the hint button is pressed, otherwise false
+
   useEffect(() => {
-    setCount(hintsAvaliableList.length - 1);
-    setLastHint(getHint(answerId));
-    if (getHint(answerId)) {
-      setDisabledHint(firstTimeHint);
-      setShake(newHintAvaliable);
+    setAllHints(hints);
+    setCountHint(-1);
+    setHintsAvaliableList([]);
+    hintIndex.current = -1;
+    newHintIndex.current = 0;
+    lastHint.current = false;
+    hintsAvaliable.current = false;
+    firtsHint.current = false;
+    pressBoton.current = false;
+  }, [answerId, nStep]);
+
+  // handles shaking the hint button
+  useEffect(() => {
+    // a hint was requested for the first time
+    if (!firtsHint.current && newHintAvaliable) {
+      firtsHint.current = true;
+    }
+
+    // if a hint was already requested for the first
+    // time and the last hint is still not displayed
+    if (firtsHint.current) {
+      if (!lastHint.current) {
+        hintsAvaliable.current = true;
+      }
+    }
+
+    // when hints are requested and there are hints to be displayed
+    if (hintsAvaliable.current && newHintAvaliable) {
+      setShake(hintsAvaliable.current);
       setTimeout(() => setShake(false), 2000);
 
-      if (newHintAvaliable) {
+      // if the hint button was pressed then the
+      // notification is not activated
+      if (!pressBoton.current) {
         setCountNotication(1);
       }
     }
-  }, [answerId]);
 
-  const getHint = idAnswer => {
-    if (allHints != undefined) {
-      let filterHint = allHints.find(hint => {
-        return hint.answers.includes(idAnswer);
-      });
-
-      filterHint = filterHint ? filterHint : allHints.find(hint => hint.generic);
-
-      return filterHint;
+    // all hints are or were shown
+    if (newHintIndex.current === allHints.length - 1) {
+      if (lastHint.current) {
+        hintsAvaliable.current = false; // there are no more hints to show
+      }
+      lastHint.current = true; // the last hint was shown
     }
-    return null;
-  };
+
+    // allows you to activate the notification the
+    // next time the user presses the correct button
+    pressBoton.current = false;
+  }, [newHintAvaliable]);
+
+  // the hint button unlocks when the user has entered an
+  // answer and presses the correct button and locks the hint
+  // button when the user has completed the step
+  useEffect(() => {
+    setDisabledHint(firstTimeHint);
+  }, [firstTimeHint]);
 
   const handOnClickNext = e => {
+    hintIndex.current += 1;
     startAction({
       verbName: "requestHint",
       stepID: nStep,
-      contentID: content,
-      hintID: count + 1,
+      contentID: code,
+      hintID: allHints[hintIndex.current].id,
       extra: { open: "next" },
     });
-    setCount(count + 1);
+    setCountHint(prev => prev + 1);
   };
 
   const handOnClickBack = e => {
+    hintIndex.current -= 1;
     startAction({
       verbName: "requestHint",
       stepID: nStep,
-      contentID: content,
-      hintID: count - 1,
+      contentID: code,
+      hintID: allHints[hintIndex.current].id,
       extra: { open: "prev" },
     });
-    setCount(count - 1);
+    setCountHint(prev => prev - 1);
   };
 
   const handOnClickHint = e => {
     setCountNotication(0);
-    if (lastHint && newHintAvaliable) {
-      startAction({
-        verbName: "requestHint",
-        stepID: nStep,
-        contentID: content,
-        hintID: count + 1,
-        extra: { open: "new" },
-      });
-      setHintsAvaliableList(prev => [...prev, lastHint]);
-      setAllHints(prev => prev.filter(hint => hint.id !== lastHint.id));
-      setCount(prev => prev + 1);
-      setNewHintAvaliable(false);
+
+    let newHint = allHints[newHintIndex.current];
+
+    if (!hintsAvaliableList.includes(newHint)) {
+      if (newHintAvaliable) {
+        setHintsAvaliableList(prev => [...prev, newHint]);
+
+        // when the user presses the hint button and there is
+        // a new hint available, then the new available hint
+        // is displayed which is also the last hint up to that moment
+        hintIndex.current = newHintIndex.current;
+        if (newHintIndex.current < allHints.length - 1) {
+          newHintIndex.current += 1;
+        }
+
+        // what is displayed to the user and what is sent
+        // in the action is the same hint (the bottom is the index)
+        setCountHint(hintIndex.current);
+      }
+      setHintsShow(prev => prev + 1);
     }
+    pressBoton.current = true; // turn off the notification
+    setNewHintAvaliable(false);
+    startAction({
+      verbName: "requestHint",
+      stepID: nStep,
+      contentID: code,
+      hintID: allHints[hintIndex.current].id,
+      extra: { open: "new" },
+    });
   };
 
   return (
@@ -129,7 +184,7 @@ export const Hint = ({
           {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent color="white" bg="blue.800" borderColor="blue.800">
+      <PopoverContent color="white" bg="blue.800" borderColor="blue.800" width={230}>
         <PopoverHeader pt={4} fontWeight="bold" border="0">
           {HEADER_POPOVER_HINT}
         </PopoverHeader>
@@ -137,7 +192,7 @@ export const Hint = ({
         <PopoverCloseButton />
         <PopoverBody>
           <Flex>
-            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[count].text}</TeX>
+            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>
           </Flex>
         </PopoverBody>
         <PopoverFooter
@@ -148,12 +203,12 @@ export const Hint = ({
           pb={4}
         >
           <ButtonGroup size="sm">
-            {count != 0 && (
+            {countHint != 0 && (
               <Button colorScheme={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
                 {HINT_BACK_BUTTOM}
               </Button>
             )}
-            {count + 1 != hintsAvaliableList.length && (
+            {countHint + 1 != hintsAvaliableList.length && (
               <Button
                 colorScheme={POPOVER_NEXT_BUTTOM_COLOR}
                 ref={initialFocusRef}
