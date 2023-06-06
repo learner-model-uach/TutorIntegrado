@@ -35,7 +35,7 @@ export const FC = ({ exercise, topic }) => {
   const extras = { steps: {} };
   const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
   extras.steps[0] = extra1;
-
+  
   useEffect(() => {
     step1Valid &&
       action({
