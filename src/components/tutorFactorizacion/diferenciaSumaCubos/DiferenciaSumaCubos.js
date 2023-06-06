@@ -59,8 +59,6 @@ export const DSC = ({ exercise, topic }) => {
     }
   }, [step1Valid]);
 
-  const change = () => setLoading(false); //function that disable loading icon when charge the math formula
-
   return (
     <>
       <Heading as="h1" size="lg" noOfLines={3}>
@@ -72,7 +70,11 @@ export const DSC = ({ exercise, topic }) => {
 
       <Wrap justify="center">
         {loading && <Loading />}
-        <MathComponent tex={exercise.steps[0].expression} display={true} onSuccess={change} />
+        <MathComponent
+          tex={exercise.steps[0].expression}
+          display={true}
+          onSuccess={loading && setLoading(false)}
+        />
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>

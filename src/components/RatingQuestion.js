@@ -94,7 +94,7 @@ function RatingQuestion() {
           {!mutation.isLoading && !timeToUpdateModel && parameters.ratingQuestion.buttonMsg}
           {(mutation.isLoading || timeToUpdateModel) && (
             <>
-              {parameters.ratingQuestion.buttonWaitMsg} <Spacer />
+              {parameters.ratingQuestion.buttonWaitMsg} &nbsp;&nbsp;
               <Spinner emptyColor="gray.200" color="blue.500" />
             </>
           )}
