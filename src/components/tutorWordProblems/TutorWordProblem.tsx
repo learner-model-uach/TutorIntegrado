@@ -23,17 +23,21 @@ import {
   Tr,
   Td} from "@chakra-ui/react";
   
-import type { align, Exercise } from "./types";
+import type { align, Exercise, SelectionMeta } from "./types";
+import  { components } from "./types.d";
 import dynamic from "next/dynamic";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
+import ResAlert, { AlertStatus } from "./Alert/responseAlert";
 
 const MathField = dynamic(() => import("./Components/mathLiveV2"),{
   ssr:false
 })
+const AnswerSelection = dynamic(()=> import("./Components/answerSelection"),{
+  ssr:false
+})
 export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
   
-  console.log('exercise ---->',exercise);
   return(
     <>
       <Tabs isFitted variant='enclosed' align="center" width='auto' >
@@ -62,6 +66,9 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               <Container maxW='100%' >
                 {exercise.learningObjetives.title}
                 <br/>
+                <ResAlert title="Titulo" status={AlertStatus.warning} >
+                  esto es texto
+                </ResAlert>
                 <MathField value={"f(x)= \\frac{\\placeholder[numerator][x]{}}{\\placeholder[denominator]{y}}"} onChange={()=>{console.log("MathfieldCambio")}}/>
               </Container>
             </Flex>
@@ -103,34 +110,60 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                   </Tbody>
                 </Table>
               </TableContainer> 
-
               }
+              {exercise.text 
+                && 
+                <Box width="100%" textAlign="left">
+                  <Latex>{exercise.text}</Latex>
+                  
+                </Box>
+              }
+
               <Accordion allowMultiple pt="12px">
                 {exercise.questions && exercise.questions.map((ques, index) =>{
                   return (
                     <>
-                    <Box maxW='100%' textAlign='left'>
-                      <Latex >{ques.tip}</Latex>
-                    </Box>
-                    <AccordionItem bg="gray.100" key={index}>
+
+                    <AccordionItem  key={index}>
                       
                       <h2>
                         <AccordionButton>
                           <Box as="span" flex="1" textAlign="left">
-                            {ques.question}
+                            {(ques.questionId+1)+". "+ ques.question}
                           </Box>
                           <AccordionIcon/>
+                    
                         </AccordionButton>
                       </h2>
                       <AccordionPanel bg="white">
-                        {ques.steps.map(step => {
+                        {ques.steps.map((step,index) => {
                           return(
-                            <>
-                              {step.componentToAnswer}
-                            </>
+                            <Accordion allowMultiple key={index}>
+                              <AccordionItem bgColor='gray.100'>
+                                <h2>
+                                  <AccordionButton>
+                                    <Box as="span" flex="1" textAlign="left">
+                                      {step.stepTitle}
+                                    </Box>
+                                    <AccordionIcon/>
+                                  </AccordionButton>
+                                </h2>
+                                <AccordionPanel bg='white'>
+                                  <Box padding={2}>
+                                    {
+                                      step.componentToAnswer.nameComponent === components.SLC 
+                                        ? <AnswerSelection meta={step.componentToAnswer.meta as SelectionMeta }></AnswerSelection>
+                                        : (step.componentToAnswer.nameComponent === components.MLC)
+                                        ? <p>otro componente 1</p>
+                                        : <p>otro componente 2</p>
+                                    }
+                                  </Box>
+                                </AccordionPanel>
+                              </AccordionItem>
+                            </Accordion>
+                        
                           )
                         })}
-                        En esta seccion irian los pasos
                       </AccordionPanel>
                     </AccordionItem>
                     </>

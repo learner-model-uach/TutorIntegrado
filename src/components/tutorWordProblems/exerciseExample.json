@@ -39,14 +39,14 @@
         "data": ["\\text{Residuos}", "3*10^8"]
       }
     ],
-    "tableCaption": "Titulo de la tabla"
+    "tableCaption": "Tabla: Niveles de CO2 por sector en Chile durante el año 2013 "
   },
-  "text": "Los numeros positivos representan emisiones de GEI, mientras que los negativos representan absorciones de GEI",
+  "text": "Los numeros positivos representan emisiones de GEI, mientras que los negativos representan absorciones de GEI $\\newline$ Realiza los cálculos en gigagramos (unidad de masa equivalente a mil millones de gramos ó $10^9$ gramos) $\\newline$ A partir de la tabla anterior nos gustaria identificar: ",
   "questions":[
     {
       "questionId": 0,
       "question": "¿Qué sector emite más CO2, contribuyendo mayormente a la contaminación?",
-      "tip": "Recordatorio teorico",
+      "tip": "Recordatorio: La notación cientifica describe numeros basados en potencias de 10. Su forma es $\\newline$ $$m*10^n$$  $\\newline$ donde m es un número decimal cuya parte entera tiene una sola cifra distinta de 0  y $10^n$ es una potencia de exponente entero ",
       "steps": [
         {
           "stepId": 0,
@@ -71,13 +71,19 @@
     },
     {
       "questionId": 1,
-      "question": "¿Qué sector absorbe CO2, disminuyendo la contaminación? Marca la alternativa correcta:",
-      "tip": "Recordatorio: La notación cientifica describe numeros basados en potencias de 10. Su forma es $\\newline$ $m*10^n$  $\\newline$ donde m es un número decimal cuya parte entera tiene una sola cifra distinta de 0  y $10^n$ es una potencia de exponente entero ",
+      "question": "¿Qué sector absorbe CO2, disminuyendo la contaminación? ",
       "steps": [
         {
           "stepId": 0,
           "stepTitle": "Selecciona la alternativa correcta",
-          "componentToAnswer": "selection",
+          "componentToAnswer": {
+            "nameComponent":"selection",
+            "meta":{
+              "id": 1,
+              "answers": ["Procesos industriales","Residuos", "Energia", "Usos de la tierra"],
+              "correctAnswer": 3
+            }
+          },
           "kcs": ["kc1","kc2"],
           "hints": [
             {

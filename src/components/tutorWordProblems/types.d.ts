@@ -38,7 +38,7 @@ export interface Question {
 export interface Step {
   stepId:            number;
   stepTitle:         string;
-  componentToAnswer: componentToAnswer;
+  componentToAnswer: ComponentToAnswer;
   kcs:               string[];
   hints:             Hint[];
 }
@@ -65,16 +65,29 @@ export interface Row {
 
 export type align = "right" | "left" | "center" | "justify" | "char"
 
-enum componentToAnswer{
-  ML = "mathlive",
-  SL = 'selection',
-  cp2 = "componente2"
+export interface ComponentToAnswer {
+  nameComponent: string;
+  meta:          SelectionMeta| MathLiveMeta | GraphMeta ;
+}
+export enum components{
+  MLC = "mathlive",
+  SLC = 'selection',
+  GHPC = "graph"
 }
 
-export interface selectAnswersType{
-  id: Number,
-  answers: string[],
-  correctAnswer: number,
+export interface SelectionMeta {
+  id:            number;
+  answers:       string[];
+  correctAnswer: number;
   userSelectedAnswer?: number,
   isCorrectUserAnswer?: boolean
 }
+interface MathLiveMeta{
+  id: number
+}
+interface GraphMeta{
+  name: string
+}
+
+
+
