@@ -27,7 +27,6 @@ function RatingQuestion() {
   const { updateModel, mutation } = useUpdateModel();
   useEffect(() => {
     setTimeout(() => {
-      //console.log("Actualiza modelo");
       SetTimeToUpdateModel(false);
       updateModel({
         typeModel: "BKT",
