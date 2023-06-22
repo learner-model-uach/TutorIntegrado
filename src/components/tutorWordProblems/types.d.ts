@@ -1,4 +1,3 @@
-import type { type } from "os";
 
 export interface Exercise {
   code:              string;
@@ -7,10 +6,10 @@ export interface Exercise {
   learningObjetives: LearningObjetives;
   meta:              Meta;
   statement:         string;
-  mathExpression:    string;
-  img:               string;
-  table:             Table;
-  text:              string;
+  mathExpression?:    string;
+  img?:               string;
+  table?:             Table;
+  text?:              string;
   questions:         Question[];
 }
 
@@ -31,7 +30,7 @@ export interface Presentation {
 export interface Question {
   questionId: number;
   question:   string;
-  tip:        string;
+  tip?:        string;
   steps:      Step[];
 }
 
@@ -41,11 +40,13 @@ export interface Step {
   componentToAnswer: ComponentToAnswer;
   kcs:               string[];
   hints:             Hint[];
+  explanation?:      string;
 }
 
 export interface Hint {
   hintId: number;
   hint:   string;
+  associatedAnswer?: number[];
 }
 
 export interface Table {
@@ -67,23 +68,36 @@ export type align = "right" | "left" | "center" | "justify" | "char"
 
 export interface ComponentToAnswer {
   nameComponent: string;
-  meta:          SelectionMeta| MathLiveMeta | GraphMeta ;
+  meta:          SelectionMeta| MathComponentMeta | GraphMeta ;
 }
 export enum components{
-  MLC = "mathlive",
-  SLC = 'selection',
-  GHPC = "graph"
+  MLC = "mathComponent",
+  SLC = 'selectionComponent',
+  GHPC = "graphComponent"
 }
 
 export interface SelectionMeta {
   id:            number;
-  answers:       string[];
+  answers:       SelectionAnswer[];
   correctAnswer: number;
   userSelectedAnswer?: number,
   isCorrectUserAnswer?: boolean
 }
-interface MathLiveMeta{
+interface SelectionAnswer{
   id: number
+  value: string
+}
+export interface MathComponentMeta{
+  id: number
+  type?: string
+  expression: string
+  answers: MathCompAnswer[]
+  correctAnswer: number[]
+}
+
+interface MathCompAnswer{
+  id: number
+  value: string
 }
 interface GraphMeta{
   name: string

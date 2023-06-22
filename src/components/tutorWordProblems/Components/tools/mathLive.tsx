@@ -61,7 +61,10 @@ const Mathfield = (props: MathEditorProps) => {
     <>
 
       <div onFocus={()=>{console.log("FOCUS!!!!!")}} ref={containerRef} style={{ maxWidth: '100%'}} />
-      {!mfe.readOnly && <Button onClick={()=>{console.log(console.log(mfe.getPromptValue))}}>Aceptar</Button>}
+      <Button onClick={()=>{
+        console.log(mfe.getPrompts())
+        mfe.setPromptState('a',"correct",true)
+        }}>Aceptar</Button>
     
     </>
   )

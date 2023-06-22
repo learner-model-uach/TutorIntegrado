@@ -5,6 +5,7 @@ interface AlertProps{
   title?: string
   status?:  AlertStatus
   children: React.ReactNode
+  alertHidden?: boolean
 }
 export enum AlertStatus {
   success = "success",
@@ -12,9 +13,9 @@ export enum AlertStatus {
   warning = "warning",
   info = "info"
 }
-const ResAlert = ({title, status= AlertStatus.success, children}: AlertProps)=>{
+const ResAlert = ({title, status= AlertStatus.success, alertHidden= false , children}: AlertProps)=>{
   return(
-    <Alert status={status} hidden >
+    <Alert margin={2} status={status} hidden={alertHidden} >
       <AlertIcon/>
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>
