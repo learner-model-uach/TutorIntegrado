@@ -227,7 +227,7 @@ export default withAuth(function ContentSelect() {
                             kcs={content?.P?.kcs}
                             selectionTitle={content?.Msg?.label}
                             selectionText={content?.Msg?.text}
-                            selectionBest={index == bestExercise}
+                            selectionBest={false}
                             registerTopic={registerTopic}
                             nextContentPath={nextContentPath}
                             selectionData={selectionData}
@@ -246,7 +246,7 @@ export default withAuth(function ContentSelect() {
                               kcs={content?.P?.kcs}
                               selectionTitle={content?.Msg?.label}
                               selectionText={content?.Msg?.text}
-                              selectionBest={index == bestExercise}
+                              selectionBest={false}
                               registerTopic={registerTopic}
                               nextContentPath={nextContentPath}
                               selectionData={selectionData}

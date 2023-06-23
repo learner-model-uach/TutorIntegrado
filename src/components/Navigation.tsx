@@ -29,15 +29,15 @@ export function Navigation() {
       <Stack pb="6">
         {user && (
           <>
+            <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=36"}>
+              Empieza acá
+            </SidebarLink>
             <Text fontWeight="black">Tópicos</Text>
             <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
             <SidebarLink href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
               Fracción Algebraica
-            </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=36"}>
-              Prueba
             </SidebarLink>
           </>
         )}
