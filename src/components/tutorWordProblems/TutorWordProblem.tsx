@@ -26,16 +26,16 @@ import {
   AlertIcon} from "@chakra-ui/react";
   
 import type { align, Exercise, MathComponentMeta, SelectionMeta } from "./types";
-import  { components } from "./types.d";
+import  { components, AlertStatus } from "./types.d";
 import dynamic from "next/dynamic";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
-import ResAlert, { AlertStatus } from "./Alert/responseAlert";
-
+import ResAlert from "./Alert/responseAlert";
+ 
 const MathField = dynamic(() => import("./Components/tools/mathLive"),{
   ssr:false
 })
-const AnswerSelection = dynamic(()=> import("./Components/answerSelection"),{
+const SelectionComponent = dynamic(()=> import("./Components/answerSelection"),{
   ssr:false
 })
 const MathComponent = dynamic(()=> import("./Components/mathComponent"),{
@@ -63,10 +63,8 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
             <Container maxW='100%' >
               {exercise.learningObjetives.title}
               <br/>
-              <ResAlert title="Titulo" status={AlertStatus.warning} alertHidden={false} >
-                {1+2}esto es texto
-              </ResAlert>
-              <MathField value={"f(x)= \\frac{\\placeholder[numerator][x]{}}{\\placeholder[denominator]{y}}"} onChange={()=>{console.log("MathfieldCambio")}}/>
+              <ResAlert title="Titulo" status={AlertStatus.warning} alertHidden={false} text={1+2+"esto es texto"} />
+          
             </Container>
            
           </TabPanel>
@@ -79,7 +77,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               {exercise.table 
               && 
               
-              <TableContainer mb='5' mt='10' overflowX='auto' w='auto'>
+              <TableContainer mb='5' mt='10' overflowX='auto' maxW='80%'>
                 <Table 
                 variant="simple"     
                 size='md'
@@ -88,13 +86,15 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                 >
                   <TableCaption>{exercise.table.tableCaption}</TableCaption>
                   <Thead bgColor="gray.100">
-                    {exercise.table.header.map((head, index) =>{
-                      return(
-                        <Th key={index} align={head.align as align }>
-                          {head.value}
-                        </Th>
-                      )
-                    })}
+                    <Tr>
+                      {exercise.table.header.map((head, index) =>{
+                        return(
+                          <Th key={index} align={head.align as align }>
+                            {head.value}
+                          </Th>
+                        )
+                      })}
+                    </Tr>
                   </Thead>
                   <Tbody >
                     {exercise.table.rows.map((row,index)=>{
@@ -127,9 +127,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                 {exercise.questions && exercise.questions.map((ques, index) =>{
                   return (
                     <>
-
                     <AccordionItem  key={index}>
-                      
                       <h2>
                         <AccordionButton>
                           <Box as="span" flex="1" textAlign="left">
@@ -161,16 +159,15 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                                   <Box padding={2}>
                                     {
                                       step.componentToAnswer.nameComponent === components.SLC 
-                                        ? <AnswerSelection meta={step.componentToAnswer.meta as SelectionMeta }></AnswerSelection>
+                                        ? <SelectionComponent meta={step.componentToAnswer.meta as SelectionMeta }/>
                                         : (step.componentToAnswer.nameComponent === components.MLC)
-                                        ? <MathComponent meta={step.componentToAnswer.meta as MathComponentMeta}></MathComponent>
-                                        : <p>otro componente 2</p>
+                                        ? <MathComponent meta={step.componentToAnswer.meta as MathComponentMeta}/>
+                                        : <p>otro componente</p>
                                     }
                                   </Box>
                                 </AccordionPanel>
                               </AccordionItem>
                             </Accordion>
-                        
                           )
                         })}
                       </AccordionPanel>

@@ -7,9 +7,8 @@ import { Button } from '@chakra-ui/react';
 export type MathEditorProps = {
   readOnly?: boolean;
   value: string;
-  mfe: MathfieldElement
   onChange: (latex: string, prompts: Record<string, string>) => void;
-  
+
   className?: string;
 };
 
@@ -18,7 +17,7 @@ export type MathEditorProps = {
  */
 const Mathfield = (props: MathEditorProps) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const mfe = useMemo(() => props.mfe ?? new MathfieldElement(), []);
+  const mfe = useMemo(() => new MathfieldElement(), []);
   mfe.readOnly = props.readOnly ?? false;
   mfe.disabled = false
   const currentValue = React.useRef<string>(''); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.

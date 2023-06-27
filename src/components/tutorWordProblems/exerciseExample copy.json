@@ -13,6 +13,8 @@
   },
   "meta": {},
   "statement":"El gobierno de Chile realiza un seguimiento de la cantidad de emisiones de gases de efecto invernadero (GEI) en gramos de C02 de los principales sectores contribuyentes en la emisión y absorción de GEI. La siguiente tabla muestra los valores reales en Chile de las emisiones y absorción de los cuatro principales sectores en 2013:",
+  "mathExpression": "latex | undefined",
+  "img": "url(string)| undefined",
   "table": { 
     "header": [
       {
@@ -145,7 +147,7 @@
           "componentToAnswer": {
             "nameComponent":"mathComponent",
             "meta":{
-              "readonly": true,
+              "type": true,
               "expression":"\\begin{align}4,3602*10^{12} & = 4,3602*10^{\\placeholder[a]{}}*10^9 \\\\ & = \\placeholder[b]{}*10^9  \\end{align}",
               "answers": [
                 {
@@ -177,7 +179,7 @@
           "componentToAnswer": {
             "nameComponent":"mathComponent",
             "meta":{
-              "readonly": true,
+              "type": true,
               "expression":"\\begin{align}-3,99152*10^{13} & = -3,99152*10^{\\placeholder[a]{}}*10^9 \\\\ & = \\placeholder[b]{}*10^9  \\end{align}",
               "answers": [
                 {
@@ -209,7 +211,7 @@
           "componentToAnswer": {
             "nameComponent":"mathComponent",
             "meta":{
-              "readonly": true,
+              "type": true,
               "expression":"\\begin{align}3*10^{8} & = 3*10^{\\placeholder[a]{}}*10^9 \\\\ & = \\placeholder[b]{}*10^9  \\end{align}",
               "answers": [
                 {
@@ -247,8 +249,8 @@
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
-              "readonly":true,
-              "expression": "\\text{El total de emisiones es de \\placeholder[a]{} * $10^9$ gramos de CO_2 }",
+              "type":true,
+              "expression": "\\text{El total de emisiones es de \\placeholder[a]{} * 10\\^9 gramos de CO_2 }",
               "answers":[
                 {
                   "id":1,
@@ -259,7 +261,7 @@
               "correctAnswer":[1]
             }
           },
-          "kcs": ["kc1"],
+          "kc": ["kc1"],
           "hints": [
             {
               "hintId":0,
@@ -287,8 +289,8 @@
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
-              "readonly":true,
-              "expression": "\\text{El total de absorciones es de \\placeholder[a]{} * $10^9$ gramos de CO_2 }",
+              "type":true,
+              "expression": "\\text{El total de absorciones es de \\placeholder[a]{} * 10\\^9 gramos de CO_2 }",
               "answers":[
                 {
                   "id":1,
@@ -299,7 +301,7 @@
               "correctAnswer":[1]
             }
           },
-          "kcs": ["kc1"],
+          "kc": ["kc1"],
           "hints": [
             {
               "hintId":0,
@@ -324,8 +326,8 @@
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
-              "readonly":true,
-              "expression": "\\text{El balance total es de \\placeholder[a]{} * $10^{9}$ gramos de CO_2 }",
+              "type":true,
+              "expression": "\\text{El balance total es de \\placeholder[a]{} * \\10^{9} gramos de CO_2 }",
               "answers":[
                 {
                   "id":1,
@@ -336,7 +338,7 @@
               "correctAnswer":[1]
             }
           },
-          "kcs": ["kc1"],
+          "kc": ["kc1"],
           "hints": [
             {
               "hintId":0,
@@ -360,7 +362,7 @@
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
-              "readonly":true,
+              "type":true,
               "expression": "\\frac{Emisiones sector de energia}{total emisiones} = \\frac{\\placeholder[a]{}}{\\placeholder[b]{}} = \\placeholder[c]{}",
               "answers":[
                 {
@@ -382,7 +384,7 @@
               "correctAnswer":[1,2,3]
             }
           },
-          "kcs": ["kc1"],
+          "kc": ["kc1"],
           "hints": [
             {
               "hintId":0,
@@ -408,7 +410,7 @@
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
-              "readonly":true,
+              "type":true,
               "expression": "\\text{Por lo tanto el sector de energia aporta en un \\placeholder[a]{}% aproximadamente de las emisiones totales}",
               "answers":[
                 {
@@ -425,7 +427,7 @@
               "correctAnswer":[1]
             }
           },
-          "kcs": ["kc1"],
+          "kc": ["kc1"],
           "hints": [
             {
               "hintId":0,

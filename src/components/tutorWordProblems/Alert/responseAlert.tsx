@@ -1,25 +1,21 @@
 import { Alert,AlertIcon,AlertTitle, AlertDescription } from "@chakra-ui/react"
-import type { ReactChildren } from "react"
+import {AlertStatus} from '../types.d'
 
 interface AlertProps{
   title?: string
   status?:  AlertStatus
-  children: React.ReactNode
+  //children: React.ReactNode
+  text: String
   alertHidden?: boolean
 }
-export enum AlertStatus {
-  success = "success",
-  error = "error",
-  warning = "warning",
-  info = "info"
-}
-const ResAlert = ({title, status= AlertStatus.success, alertHidden= false , children}: AlertProps)=>{
+
+const ResAlert = ({title, status= AlertStatus.success, alertHidden= false , text}: AlertProps)=>{
   return(
     <Alert margin={2} status={status} hidden={alertHidden} >
       <AlertIcon/>
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>
-        {children}
+        {text}
       </AlertDescription>
     </Alert>
   )

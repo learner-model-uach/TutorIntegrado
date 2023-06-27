@@ -89,7 +89,7 @@ interface SelectionAnswer{
 }
 export interface MathComponentMeta{
   id: number
-  type?: string
+  readonly?: boolean
   expression: string
   answers: MathCompAnswer[]
   correctAnswer: number[]
@@ -97,6 +97,7 @@ export interface MathComponentMeta{
 
 interface MathCompAnswer{
   id: number
+  placeholderId: string
   value: string
 }
 interface GraphMeta{
@@ -104,4 +105,10 @@ interface GraphMeta{
 }
 
 
+export enum AlertStatus {
+  success = "success",
+  error = "error",
+  warning = "warning",
+  info = "info",
+}
 
