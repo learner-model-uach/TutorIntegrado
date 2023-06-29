@@ -36,7 +36,6 @@ export default function Start() {
         </Stack>
         <Stack padding="2em">
           <Text marginBottom={10}>
-            {" "}
             Un tutor cognitivo es un sistema que te ayuda a aprender y ejercitar tus habilidades de
             resolución de problemas, paso a paso. El Tutor Cognitivo de Nivelación te permitirá
             practicar resolviendo ejercicios de diversos tópicos que hemos identificado como
@@ -155,9 +154,9 @@ export default function Start() {
             <p>Más información sobre el proyecto:</p>
             <p>
               Esta plataforma de Tutores para nivelación de matemáticas está siendo desarrollada y
-              mantenida gracias el proyecto Fondecyt Iniciación 11220709, titulado "Diseño
+              mantenida gracias el proyecto Fondecyt Iniciación 11220709, titulado &quot;Diseño
               motivacional de tutores cognitivos para apoyar el aprendizaje de matemáticas en los
-              estudiantes de primer año de ingeniería". Para consultas o más información,
+              estudiantes de primer año de ingeniería&quot;. Para consultas o más información,
               contactarse con el Investigador Principal: Julio Daniel Guerra Hollstein
               jguerra@inf.uach.cl
             </p>{" "}
