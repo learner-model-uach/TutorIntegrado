@@ -27,7 +27,6 @@ function RatingQuestion() {
   const { updateModel, mutation } = useUpdateModel();
   useEffect(() => {
     setTimeout(() => {
-      //console.log("Actualiza modelo");
       SetTimeToUpdateModel(false);
       updateModel({
         typeModel: "BKT",
@@ -94,7 +93,7 @@ function RatingQuestion() {
           {!mutation.isLoading && !timeToUpdateModel && parameters.ratingQuestion.buttonMsg}
           {(mutation.isLoading || timeToUpdateModel) && (
             <>
-              {parameters.ratingQuestion.buttonWaitMsg} <Spacer />
+              {parameters.ratingQuestion.buttonWaitMsg} &nbsp;&nbsp;
               <Spinner emptyColor="gray.200" color="blue.500" />
             </>
           )}
