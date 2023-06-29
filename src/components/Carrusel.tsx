@@ -13,14 +13,15 @@ export const Carousel = ({ images }: { images: string[] }) => {
   };
 
   return (
-    <Box>
+    <Box height="auto">
       <Image
         src={`/img/${images[currentImageIndex]}`}
         alt={`Image ${currentImageIndex}`}
         loading="lazy"
-        width="100%"
-        height="auto"
-        objectFit="cover"
+        width="1440px"
+        height="500px"
+        objectFit="contain"
+        objectPosition="center"
       />
       <Flex justifyContent="center" mt={10}>
         <Button onClick={handlePrevious} marginRight={2} disabled={currentImageIndex === 0}>
