@@ -159,7 +159,7 @@ export default function Start() {
               estudiantes de primer año de ingeniería&quot;. Para consultas o más información,
               contactarse con el Investigador Principal: Julio Daniel Guerra Hollstein
               jguerra@inf.uach.cl
-            </p>{" "}
+            </p>
           </Box>
         </Stack>
       </>
