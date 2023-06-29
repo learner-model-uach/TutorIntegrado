@@ -37,7 +37,7 @@
     "react-dnd-html5-backend": "14.0.1",
     "react-dnd-touch-backend": "14.1.0",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
+    "react-icons": "^4.10.1",
     "react-joyride": "2.3.1",
     "react-mathquill": "1.0.2",
     "react-notification-badge": "1.5.0",
@@ -48,8 +48,8 @@
     "valtio": "1.2.9"
   },
   "devDependencies": {
-    "@graphql-codegen/schema-ast": "^2.4.1",
-    "@types/node": "^16.11.21",
+    "@graphql-codegen/schema-ast": "^2.6.1",
+    "@types/node": "^16.18.36",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "concurrently": "^7.0.0",
