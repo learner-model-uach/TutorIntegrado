@@ -13,7 +13,7 @@ export const Carousel = ({ images }: { images: string[] }) => {
   };
 
   return (
-    <Box height="auto">
+    <Box>
       <Image
         src={`/img/${images[currentImageIndex]}`}
         alt={`Image ${currentImageIndex}`}
