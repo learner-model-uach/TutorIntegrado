@@ -1,16 +1,19 @@
 
-import { Button, Divider, List, ListItem} from "@chakra-ui/react"
+import { Button, ButtonGroup, Divider, List, ListItem} from "@chakra-ui/react"
 import React, { useState } from "react"
 import ResAlert from "../Alert/responseAlert"
+import HintButton from "../Hint/Hint"
 import { useAlert } from "../hooks/useAlert"
-import type { SelectionMeta } from "../types"
+import { useHint } from "../hooks/useHint"
+import type { Hint, SelectionMeta } from "../types"
 import {AlertStatus} from '../types.d'
 interface Props{
   meta: SelectionMeta
+  hints: Hint[]
 }
 // Alternative selection component
-const SelectionComponent = (props : Props)=>{
-  const [question, setQuestion] = useState(props.meta) // State containing the question
+const SelectionComponent = ({meta,hints} : Props)=>{
+  const [question, setQuestion] = useState(meta) // State containing the question
   /*
   const [alertMsg,setAlertMsg] = useState("") // State containing the alert message
   const [alertHidden, setAlertHidden] = useState(true) // State containing the state (show or hide) of the alert
@@ -18,6 +21,15 @@ const SelectionComponent = (props : Props)=>{
   */
 
   const {alertTitle,alertStatus,alertMsg,alertHidden,showAlert} = useAlert("",AlertStatus.info,"",true,3000)
+  const {
+    displayHints,
+    currentHint,
+    totalHints, 
+    disabledPrevButton, 
+    disabledNextButton, 
+    prevHint,
+    nextHint} = useHint(hints)
+
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number, event: React.MouseEvent<HTMLElement>) =>{
     // We compare if the selected alternative is correct
@@ -48,7 +60,7 @@ const SelectionComponent = (props : Props)=>{
   return(
     <>
       <List padding="0">
-        {props.meta.answers.map((answer,index) =>{
+        {meta.answers.map((answer,index) =>{
           return(
           <ListItem margin={1} key={index}  >
             <Button 
@@ -65,6 +77,17 @@ const SelectionComponent = (props : Props)=>{
           )
         })}
       </List>
+      <ButtonGroup size='lg' display='flex' justifyContent='flex-end' paddingTop={2}>
+        <HintButton 
+          hints={displayHints} 
+          currentHint={currentHint} 
+          totalHints={totalHints} 
+          prevHint={prevHint} 
+          nextHint={nextHint} 
+          disabledPrevButton={disabledPrevButton} 
+          disabledNextButton={disabledNextButton}
+        ></HintButton>
+      </ButtonGroup>
       <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden = {alertHidden}  />
 
     </>

@@ -1,12 +1,14 @@
-import { Box, Button } from "@chakra-ui/react"
+import { Box, Button, ButtonGroup, Center, Flex } from "@chakra-ui/react"
 import {BsQuestionCircle} from 'react-icons/bs'
-import type { MathComponentMeta } from "../types"
+import type { Hint, MathComponentMeta } from "../types"
 import dynamic from "next/dynamic"
 import { useMemo, useRef, useState } from "react"
 import { MathfieldElement } from "mathlive"
 import ResAlert from "../Alert/responseAlert"
 import { useAlert } from "../hooks/useAlert"
 import { AlertStatus } from "../types.d"
+import HintButton from "../Hint/Hint"
+import { useHint } from "../hooks/useHint"
 
 const MathField = dynamic(() => import("./tools/mathLive"),{
   ssr:false
@@ -14,13 +16,14 @@ const MathField = dynamic(() => import("./tools/mathLive"),{
 
 interface Props {
   meta: MathComponentMeta
+  hints: Hint[]
 }
 interface Answer {
   placeholderId: string;
   value: string;
 }
 
-const MathComponent = ({meta}: Props) => {
+const MathComponent = ({meta, hints}: Props) => {
   const {expression, readonly, answers, correctAnswer} = meta
   const [answerState,setAnswer] = useState<Answer[]>([])
   const [disabledButton, setDisabledButton] = useState(false)
@@ -34,8 +37,12 @@ const MathComponent = ({meta}: Props) => {
     showAlert
   } = useAlert("Titulo", AlertStatus.info,"mensaje de la alerta",false,3000)
 
+  const {displayHints,currentHint,totalHints, nextHint,prevHint, disabledPrevButton, disabledNextButton} = useHint(hints)
+  console.log("HINTS--->", hints)
+  console.log(displayHints)
+
   const checkAnswer = () => {
-    const correctAnswers = answers.filter(answ =>{ // Respuestas correctas
+    const correctAnswers = answers.filter(answ =>{ // Se filtran las respuestas correctas
       return correctAnswer.find(correctId => correctId === answ.id)
     })
     answerState.forEach(userAnswer  => { // Respuesta ingresada por el estudiante
@@ -54,10 +61,13 @@ const MathComponent = ({meta}: Props) => {
             mfe.setPromptState(userAnswer.placeholderId,"undefined", false)
             showAlert("", AlertStatus.warning, "No ingresaste respuesta en placeholder: "+userAnswer.placeholderId)
           } else {
-            console.log("INCORRECTO!!")
+            
+            console.log("CorrAnswer--->",corrAnswer)
+            console.log("UserAnswer--->",userAnswer)
             mfe.setPromptState(userAnswer.placeholderId,"incorrect",false)
             showAlert("😕", AlertStatus.error,"Respuesta Incorrecta")  
-
+            
+            // Activar hint
           }
         }
       })
@@ -82,6 +92,7 @@ const MathComponent = ({meta}: Props) => {
     }
     */
   };
+
   const handleClickHint = () =>{
 
     showAlert("hint",AlertStatus.warning,"msg hint",3000)
@@ -95,20 +106,40 @@ const MathComponent = ({meta}: Props) => {
     setAnswer(entries.map(([placeholderId,value])=>({placeholderId,value})))
   };
   return(
-    <>    
-      <MathField 
-        readOnly={readonly}
-        mfe = {mfe} 
-        value={expression} 
-        onChange={handleMathEditorChange}>
-      </MathField>
+    <Flex flexDirection='column' >
+      <Box width='100%' textAlign='center' mb={4} >
+        <MathField 
+          readOnly={readonly}
+          mfe = {mfe} 
+          value={expression} 
+          onChange={handleMathEditorChange}>
+          
+        </MathField>
+        
+      </Box>    
+      <Flex justifyContent="flex-end">
 
-      <Box display='flex' flexDirection='row' justifyContent='end' gap="2" paddingTop='5' alignItems="center" >
-        <Button colorScheme="teal" size="sm" onClick={checkAnswer} disabled={disabledButton}>Aceptar</Button>
-        <Button rightIcon={<BsQuestionCircle/>} colorScheme="teal" size="sm" variant="outline" onClick={handleClickHint}>Hint</Button>
+        <ButtonGroup size="lg" display="flex" justifyContent="flex-end">
+          <Button colorScheme="teal" size="sm" onClick={checkAnswer} disabled={disabledButton}>Aceptar</Button>
+          <HintButton 
+            hints={displayHints} 
+            currentHint={currentHint} 
+            totalHints={totalHints} 
+            prevHint={prevHint}
+            nextHint={nextHint}
+            disabledPrevButton={disabledPrevButton}
+            disabledNextButton={disabledNextButton}
+            ></HintButton>
+        </ButtonGroup>
+
+      </Flex>
+      <Box width='100%'>
+
+        <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden={alertHidden}  />
       </Box>
-      <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden={alertHidden}  />
-    </>
+    </Flex>
+
+
   )
 }
 

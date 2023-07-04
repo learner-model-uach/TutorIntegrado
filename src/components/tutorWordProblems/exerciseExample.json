@@ -72,7 +72,7 @@
               "correctAnswer": 1
             }
           },
-          "kcs": ["kc1","kc2"],
+          "kcs": ["OrdNC"],
           "hints": [
             {
               "hintId": 0,
@@ -120,7 +120,7 @@
               "correctAnswer": 3
             }
           },
-          "kcs": ["kc1","kc2"],
+          "kcs": ["OrdNC"],
           "hints": [
             {
               "hintId": 0,
@@ -162,12 +162,17 @@
               "correctAnswer": [1,2]
             }
           },
-          "kcs": ["kc1","kc2"],
+          "kcs": ["SumResExp","Mult", "MultDecBase10"],
           "hints": [
             {
               "hintId": 0,
               "hint": "Se suman los exponentes en números de igual base (en este caso base 10). ",
               "associatedAnswer":[1]
+            },
+            {
+              "hintId":1,
+              "hint":"La coma del número decimal se desplaza hacia la derecha del exponente de base 10",
+              "associatedAnswer":[2]
             }
           ]
         },
@@ -188,18 +193,23 @@
                 {
                   "id":2,
                   "placeholderId":"b",
-                  "value":"-39915,0"
+                  "value":"-39915,2"
                 }
               ],
               "correctAnswer": [1,2]
             }
           },
-          "kcs": ["kc1","kc2"],
+          "kcs": ["SumResExp","Mult", "MultDecBase10"],
           "hints": [
             {
               "hintId": 0,
               "hint": "Se suman los exponentes en números de igual base (en este caso base 10). ",
               "associatedAnswer":[1]
+            },
+            {
+              "hintId":1,
+              "hint":"La coma del número decimal se desplaza hacia la derecha del exponente de base 10",
+              "associatedAnswer":[2]
             }
           ]
         },
@@ -226,12 +236,17 @@
               "correctAnswer": [1,2]
             }
           },
-          "kcs": ["kc1","kc2"],
+          "kcs": ["SumResExp","Mult", "MultDecBase10"],
           "hints": [
             {
               "hintId": 0,
-              "hint": "Para identificar si un valor, descrito en notación científica, aumente una cantidad, debes observar que su parte decimal (𝑚) sea positiva. ",
+              "hint": "Se suman los exponentes en números de igual base (en este caso base 10). ",
               "associatedAnswer":[1]
+            },
+            {
+              "hintId":1,
+              "hint":"La coma del número decimal se desplaza hacia la derecha del exponente de base 10",
+              "associatedAnswer":[2]
             }
           ]
         }
@@ -243,12 +258,12 @@
       "steps":[
         {
           "stepId":0,
-          "stepTitle": "Responder",
+          "stepTitle": "Calcular total de emisiones ",
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
               "readonly":true,
-              "expression": "\\text{El total de emisiones es de \\placeholder[a]{} * $10^9$ gramos de CO_2 }",
+              "expression": "\\text{El total de emisiones es de $\\placeholder[a]{}$ * $10^9$ gramos de CO_2 }",
               "answers":[
                 {
                   "id":1,
@@ -259,7 +274,7 @@
               "correctAnswer":[1]
             }
           },
-          "kcs": ["kc1"],
+          "kcs": ["SumDec"],
           "hints": [
             {
               "hintId":0,

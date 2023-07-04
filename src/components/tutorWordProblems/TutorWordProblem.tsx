@@ -23,7 +23,9 @@ import {
   Tr,
   Td,
   Alert,
-  AlertIcon} from "@chakra-ui/react";
+  AlertIcon,
+  Center,
+  useColorModeValue} from "@chakra-ui/react";
   
 import type { align, Exercise, MathComponentMeta, SelectionMeta } from "./types";
 import  { components, AlertStatus } from "./types.d";
@@ -42,10 +44,14 @@ const MathComponent = dynamic(()=> import("./Components/mathComponent"),{
   ssr:false
 })
 export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
-  
+  const textColor = useColorModeValue("dark","white")
+  const itemBgColor = useColorModeValue("#bde3f8","#1A202C")
+  const bgContentColor = useColorModeValue("white","#2D3748")
+  const explanationBgColor = useColorModeValue("#feebc8","#080E1B")
+  const bg = useColorModeValue("#2B4264","#1A202C")
   return(
     <>
-      <Tabs isFitted variant='enclosed' align="center" width='auto' >
+      <Tabs isFitted variant='enclosed' width='100%' >
         <TabList >
           <Tab>Presentación</Tab>
           <Tab>Aprendizajes</Tab>
@@ -54,42 +60,50 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
 
         <TabPanels>
           <TabPanel>
-            <Container maxW='100%'>
+            <Center flexDirection="column">
+
               <Heading size="lg" pb="12"> {exercise?.presentation.title}</Heading>
               <Image w={['sm','md']} src={exercise.presentation.urlImg} alt="Imagen de presentación"/>
-            </Container>              
+            </Center>
           </TabPanel>
-          <TabPanel >
-            <Container maxW='100%' >
+          <TabPanel bg="blue">
+            <Center width='100%' bg="red" flexDirection="column" >
               {exercise.learningObjetives.title}
               <br/>
-              <ResAlert title="Titulo" status={AlertStatus.warning} alertHidden={false} text={1+2+"esto es texto"} />
-          
-            </Container>
+              <Box width='100%' bg='green' display='flex' justifyContent='center'>
+                hola
+              </Box>
+            </Center>
            
           </TabPanel>
 
           <TabPanel>
-            <Container maxW='100%' >
+            <Flex flexDirection='column' alignItems='center'>
               {exercise.statement 
               && <Box textAlign='left'>{exercise.statement}</Box> 
               }
               {exercise.table 
               && 
               
-              <TableContainer mb='5' mt='10' overflowX='auto' maxW='80%'>
+              <Box
+              marginY={5}
+              shadow="sm"
+              rounded="lg"
+              w={{ base: "92vw",md:"50%", lg: "80%" }}
+              overflowX="auto"
+              >
                 <Table 
-                variant="simple"     
-                size='md'
-                borderWidth="2px"
-               
+                variant="striped"     
+                size='sm'
+                borderColor={textColor}
+                
                 >
                   <TableCaption>{exercise.table.tableCaption}</TableCaption>
-                  <Thead bgColor="gray.100">
+                  <Thead bgColor={bg}>
                     <Tr>
                       {exercise.table.header.map((head, index) =>{
                         return(
-                          <Th key={index} align={head.align as align }>
+                          <Th key={index} align={head.align as align } color='white' fontWeight="bold">
                             {head.value}
                           </Th>
                         )
@@ -113,7 +127,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                     })}
                   </Tbody>
                 </Table>
-              </TableContainer> 
+              </Box> 
               }
               {exercise.text 
                 && 
@@ -123,7 +137,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                 </Box>
               }
 
-              <Accordion allowMultiple pt="12px">
+              <Accordion allowMultiple pt="12px" w='90%'>
                 {exercise.questions && exercise.questions.map((ques, index) =>{
                   return (
                     <>
@@ -137,16 +151,16 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                     
                         </AccordionButton>
                       </h2>
-                      <AccordionPanel bg="white">
+                      <AccordionPanel bg={bgContentColor}>
                         {ques.steps.map((step,index) => {
                           return(
                             <Accordion allowMultiple key={index} >
                               {step.explanation && 
-                              <Alert status="warning" width='100%' textAlign="left" m='1' bgColor='feebc8'>
+                              <Alert status="warning" width='100%' textAlign="left" m='1' bgColor={explanationBgColor}>
                                 <Latex>{step.explanation}</Latex>
                               </Alert>
                               }
-                              <AccordionItem bgColor='#bde3f8'>
+                              <AccordionItem bgColor={itemBgColor}>
                                 <h2>
                                   <AccordionButton>
                                     <Box as="span" flex="1" textAlign="left">
@@ -155,13 +169,13 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                                     <AccordionIcon/>
                                   </AccordionButton>
                                 </h2>
-                                <AccordionPanel bg='white'>
+                                <AccordionPanel bg={bgContentColor}>
                                   <Box padding={2}>
                                     {
                                       step.componentToAnswer.nameComponent === components.SLC 
-                                        ? <SelectionComponent meta={step.componentToAnswer.meta as SelectionMeta }/>
+                                        ? <SelectionComponent hints={step.hints} meta={step.componentToAnswer.meta as SelectionMeta }/>
                                         : (step.componentToAnswer.nameComponent === components.MLC)
-                                        ? <MathComponent meta={step.componentToAnswer.meta as MathComponentMeta}/>
+                                        ? <MathComponent hints={step.hints} meta={step.componentToAnswer.meta as MathComponentMeta}/>
                                         : <p>otro componente</p>
                                     }
                                   </Box>
@@ -180,7 +194,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               </Accordion>
 
        
-            </Container>
+            </Flex>
           </TabPanel>
         </TabPanels>
       </Tabs>
