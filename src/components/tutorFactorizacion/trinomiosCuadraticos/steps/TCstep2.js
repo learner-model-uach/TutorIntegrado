@@ -28,7 +28,9 @@ export const TCstep2 = ({
     //contador de intentos
     setAttempts(attempts + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
-    const responseStudent = response.current.value.replace(/[*]| /g, "").toLowerCase();
+    const responseStudent = response.current.value
+      .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+      .toLowerCase();
 
     if (correctAlternatives === responseStudent) {
       //valida que la entrada es correcta

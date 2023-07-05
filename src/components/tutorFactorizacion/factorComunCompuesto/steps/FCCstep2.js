@@ -21,8 +21,8 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
     //contador de intentos
     setAttempts(attempts + 1);
     const responseStudent = [
-      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
     ];
     //valida que la entrada es correctas
     const validate = element =>

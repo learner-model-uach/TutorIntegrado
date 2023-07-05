@@ -29,8 +29,8 @@ export const TCstep4 = ({
     //contador de intentos
     setAttempts(attempts + 1);
     const responseStudent = [
-      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
     ];
     const validate = element =>
       (element[0] === responseStudent[0] && element[1] === responseStudent[1]) ||
