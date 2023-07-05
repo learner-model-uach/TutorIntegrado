@@ -30,8 +30,8 @@ export const DCstep2 = ({
     setAttempts(attempts + 1);
 
     const responseStudent = [
-      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
     ];
 
     if (
