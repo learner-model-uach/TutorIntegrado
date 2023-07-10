@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { MathComponent } from "../../MathJax";
 import { TPstep1 } from "./steps/TPstep1";
 import { TPstep2 } from "./steps/TPstep2";
-import { TPstepF } from "./steps/TPstepF";
 
 import { Summary6 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
@@ -29,13 +28,6 @@ import {
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import RatingQuestion from "../../RatingQuestion";
-
-const Mq2 = dynamic(
-  () => {
-    return import("../../Mq2");
-  },
-  { ssr: false },
-);
 
 export const TP1 = ({ exercise, topicId }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
@@ -144,7 +136,7 @@ export const TP1 = ({ exercise, topicId }) => {
           marginTop: 20,
         }}
       >
-        <Image src={exercise.image} />
+        <Image src={exercise.image}  height='300px'/>
       </Wrap>
 
       <Accordion mt={2} allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -382,14 +374,15 @@ export const TP1 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step3Valid != null && !select4 && (
-              <Mq2
-                key={"Mq2_pit1"}
+              <TPstep1
                 step={exercise.steps[3]}
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-              ></Mq2>
+                extra={extra4}
+                setExtra={setExtra4}
+              ></TPstep1>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -443,14 +436,15 @@ export const TP1 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step4Valid != null && !select5 && (
-              <Mq2
-                key={"Mq2_pit1"}
-                step={exercise.steps[4]}
-                setStepValid={setStep5Valid}
-                stepValid={step5Valid}
+              <TPstep1
+                step={exercise.steps[5]}
+                setStepValid={setStep4Valid}
+                stepValid={step4Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-              ></Mq2>
+                extra={extra4}
+                setExtra={setExtra4}
+              ></TPstep1>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -504,7 +498,7 @@ export const TP1 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step5Valid != null && !select6 && (
-              <TPstepF
+              <TPstep1
                 step={exercise.steps[5]}
                 setStepValid={setStep6Valid}
                 stepValid={step6Valid}
@@ -512,7 +506,7 @@ export const TP1 = ({ exercise, topicId }) => {
                 topicID={topicId}
                 extra={extra6}
                 setExtra={setExtra6}
-              ></TPstepF>
+              ></TPstep1>
             )}
           </AccordionPanel>
         </AccordionItem>

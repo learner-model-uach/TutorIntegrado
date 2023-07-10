@@ -28,13 +28,6 @@ import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import RatingQuestion from "../../RatingQuestion";
 
-const Mq2 = dynamic(
-  () => {
-    return import("../../Mq2");
-  },
-  { ssr: false },
-);
-
 export const TP2 = ({ exercise, topicId }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -120,7 +113,7 @@ export const TP2 = ({ exercise, topicId }) => {
           marginTop: 20,
         }}
       >
-        <Image src={exercise.image} />
+        <Image src={exercise.image}  height='300px'/>
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -358,14 +351,15 @@ export const TP2 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step3Valid != null && !select4 && (
-              <Mq2
-                key={"Mq2_pit1"}
+              <TPstep1
                 step={exercise.steps[3]}
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-              ></Mq2>
+                extra={extra4}
+                setExtra={setExtra4}
+              ></TPstep1>
             )}
           </AccordionPanel>
         </AccordionItem>

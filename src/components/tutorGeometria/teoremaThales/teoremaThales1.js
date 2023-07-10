@@ -29,13 +29,6 @@ import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import RatingQuestion from "../../RatingQuestion";
 
-const Mq2 = dynamic(
-  () => {
-    return import("../../Mq2");
-  },
-  { ssr: false },
-);
-
 export const TH1 = ({ exercise, topicId }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -108,7 +101,7 @@ export const TH1 = ({ exercise, topicId }) => {
           justifyContent: "center",
         }}
       >
-        <Image src={exercise.image} />
+        <Image src={exercise.image}  boxSize='300px'/>
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -286,14 +279,15 @@ export const TH1 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step2Valid != null && !select3 && (
-              <Mq2
-                key={"Mq2_pit1"}
+              <THstep2
                 step={exercise.steps[2]}
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-              ></Mq2>
+                extra={extra3}
+                setExtra={setExtra3}
+              ></THstep2>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -348,14 +342,15 @@ export const TH1 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step3Valid != null && !select4 && (
-              <Mq2
-                key={"Mq2_pit1"}
+              <THstep2
                 step={exercise.steps[3]}
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-              ></Mq2>
+                extra={extra1}
+                setExtra={setExtra1}
+              ></THstep2>
             )}
           </AccordionPanel>
         </AccordionItem>

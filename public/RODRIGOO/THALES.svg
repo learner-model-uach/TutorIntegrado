@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="226" height="73" viewBox="0 0 226 73">
+  <g id="THALES" transform="translate(-637 -901)">
+    <g id="Grupo_3661" data-name="Grupo 3661">
+      <g id="Polígono_26" data-name="Polígono 26" transform="translate(665 904)" fill="rgba(255,255,255,0)">
+        <path d="M 168.6063537597656 69.5 L 1.393652200698853 69.5 L 85 0.6477135419845581 L 168.6063537597656 69.5 Z" stroke="none"/>
+        <path d="M 85 1.295463562011719 L 2.787353515625 69 L 167.212646484375 69 L 85 1.295463562011719 M 85 0 L 170 70 L 0 70 L 85 0 Z" stroke="none" fill="#fff"/>
+      </g>
+      <line id="Línea_101" data-name="Línea 101" x2="226" transform="translate(637 925.5)" fill="none" stroke="#fff" stroke-width="1"/>
+      <line id="Línea_102" data-name="Línea 102" x2="226" transform="translate(637 953.5)" fill="none" stroke="#fff" stroke-width="1"/>
+    </g>
+    <text id="A" transform="translate(700 919)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">A</tspan></text>
+    <text id="C" transform="translate(782 919)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">C</tspan></text>
+    <text id="B" transform="translate(684 947)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">B</tspan></text>
+    <text id="D" transform="translate(809 947)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">D</tspan></text>
+  </g>
+</svg>

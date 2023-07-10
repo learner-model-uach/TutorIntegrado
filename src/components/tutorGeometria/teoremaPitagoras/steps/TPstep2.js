@@ -17,6 +17,7 @@ export const TPstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
+  var correct = false;
   const compare = () => {
     //contador de intentos
     setAttempts(attempts + 1);
@@ -27,7 +28,13 @@ export const TPstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
       response3.current.value.replace(/[*]| /g, "").toLowerCase(),
     ];
     const validate = element => element[0] === responseStudent[0];
-    if (correctAlternatives.some(validate)) {
+    for (let i = 0; i < correctAlternatives.length; i++) {
+      let c = correctAlternatives[i];
+      if (c[0] == responseStudent[0] && c[1] == responseStudent[1] && c[2] == responseStudent[2]) {
+        correct = true;
+      }
+    }
+    if (correct) {
       setStepValid((stepValid = step.answers[correctAlternatives.findIndex(validate)].nextStep));
       extra.att = attempts;
       extra.hints = hints;

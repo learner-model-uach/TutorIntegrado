@@ -15,15 +15,22 @@ export const TPstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   const [hints, setHints] = useState(0); //hint counts .
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
+  const [correct, setCorrect] = useState(false);
   const compare = () => {
     //contador de intentos
     setAttempts(attempts + 1);
 
     const responseStudent = [response1.current.value.replace(/[*]| /g, "").toLowerCase()];
     const validate = element => element[0] === responseStudent[0];
+    for(let j=0;  j<correctAlternatives.length; j++){
+      if(correctAlternatives[j] == responseStudent[0]){
+        setCorrect(true);
+        break;
+      }
+    }
 
-    if (correctAlternatives.some(validate)) {
-      setStepValid((stepValid = step.answers[correctAlternatives.findIndex(validate)].nextStep));
+    if (correct) {
+      setStepValid((stepValid = step.answers[0].nextStep));
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;

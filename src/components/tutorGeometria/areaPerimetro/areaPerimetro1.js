@@ -6,8 +6,6 @@ import { MathComponent } from "../../MathJax";
 import { APstep1 } from "./steps/APstep1";
 import { APstep2 } from "./steps/APstep2";
 import { APstep3 } from "./steps/APstep3";
-import { APstepF } from "./steps/APstepF";
-
 //import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
@@ -127,7 +125,7 @@ export const AP1 = ({ exercise, topicId }) => {
           marginTop: 20,
         }}
       >
-        <Image src={exercise.image} />
+        <Image src={exercise.image}  height='300px'/>
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -366,7 +364,7 @@ export const AP1 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step3Valid != null && !select4 && (
-              <APstepF
+              <APstep1
                 step={exercise.steps[3]}
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
@@ -374,7 +372,7 @@ export const AP1 = ({ exercise, topicId }) => {
                 topicID={topicId}
                 extra={extra4}
                 setExtra={setExtra4}
-              ></APstepF>
+              ></APstep1>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -383,7 +381,6 @@ export const AP1 = ({ exercise, topicId }) => {
         <>
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
-            {console.log(extras)}
             <Summary4
               expression={exercise.text}
               step1={exercise.steps[0]}

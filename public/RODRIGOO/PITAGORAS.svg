@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="188" height="93.591" viewBox="0 0 188 93.591">
+  <g id="PITAGORAS" transform="translate(-168 -914.409)">
+    <g id="Grupo_3658" data-name="Grupo 3658">
+      <g id="Grupo_3660" data-name="Grupo 3660">
+        <g id="Trazado_4376" data-name="Trazado 4376" transform="translate(210.553 898.707)" fill="rgba(255,255,255,0)">
+          <path d="M 126.94775390625 85.2027587890625 L -40.02474594116211 85.2027587890625 L 126.94775390625 16.44937705993652 L 126.94775390625 85.2027587890625 Z" stroke="none"/>
+          <path d="M 126.44775390625 17.19596862792969 L -37.49729919433594 84.7027587890625 L 126.44775390625 84.7027587890625 L 126.44775390625 17.19596862792969 M 127.44775390625 15.7027587890625 L 127.44775390625 85.7027587890625 L -42.55224609375 85.7027587890625 L 127.44775390625 15.7027587890625 Z" stroke="none" fill="#fff"/>
+        </g>
+        <g id="Rectángulo_2503" data-name="Rectángulo 2503" transform="translate(326 972)" fill="none" stroke="#fff" stroke-width="1" stroke-dasharray="1">
+          <rect width="12" height="12" stroke="none"/>
+          <rect x="0.5" y="0.5" width="11" height="11" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <text id="C" transform="translate(249 942)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">C</tspan></text>
+    <text id="A" transform="translate(344 959)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">A</tspan></text>
+    <text id="B" transform="translate(261 1002)" fill="#fff" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="17" font-family="Space Grotesk"><tspan x="0" y="0">B</tspan></text>
+  </g>
+</svg>

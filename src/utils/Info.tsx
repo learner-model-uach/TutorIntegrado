@@ -45,6 +45,7 @@ const itemValues = [
   { colA: "Division", colB: "a/b" },
   { colA: "Exponente", colB: "a^b" },
   { colA: "Raiz cuadrada", colB: "raiz(b)" },
+  { colA: "π", colB: "pi" }
 ];
 const ejemplos = [
   { colA: "Ejemplos", colB: "" },

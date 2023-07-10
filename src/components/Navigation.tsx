@@ -45,6 +45,9 @@ export function Navigation() {
             <SidebarLink href={"contentSelect?topic=27,28,29,30&registerTopic=27"}>
               Geometría
             </SidebarLink>
+            <SidebarLink href={"contentSelect?topic=27,28,29,30&registerTopic=27"}>
+              Geometría2
+            </SidebarLink>
           </>
         )}
       </Stack>

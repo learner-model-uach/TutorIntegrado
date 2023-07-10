@@ -89,7 +89,7 @@ export const TH2 = ({ exercise, topicId }) => {
           justifyContent: "center",
         }}
       >
-        <Image src={exercise.image} />
+        <Image src={exercise.image}  height='300px'/>
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>

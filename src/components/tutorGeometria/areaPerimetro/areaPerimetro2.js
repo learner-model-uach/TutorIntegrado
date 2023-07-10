@@ -30,13 +30,6 @@ import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import RatingQuestion from "../../RatingQuestion";
 
-const Mq2 = dynamic(
-  () => {
-    return import("../../Mq2");
-  },
-  { ssr: false },
-);
-
 export const AP2 = ({ exercise, topicId }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
@@ -78,37 +71,32 @@ export const AP2 = ({ exercise, topicId }) => {
   });
   const [cdateE, setCdateE] = useState(Date.now());
 
-  const action = useAction(); //send action to central system
+  const action = useAction(); 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
       setIndex([1]);
     }
   }, [step1Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step2Valid != null) {
       setIndex([2]);
     }
   }, [step2Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step3Valid != null) {
       setIndex([3]);
     }
   }, [step3Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step4Valid != null) {
       setIndex([4]);
     }
   }, [step4Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step5Valid != null) {
       setIndex([5]);
     }
@@ -144,7 +132,7 @@ export const AP2 = ({ exercise, topicId }) => {
           marginTop: 20,
         }}
       >
-        <Image src={exercise.image} />
+        <Image src={exercise.image}  height='300px'/>
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
@@ -320,13 +308,15 @@ export const AP2 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step2Valid != null && !select3 && (
-              <Mq2
+              <APstep1
                 step={exercise.steps[2]}
                 setStepValid={setStep3Valid}
                 stepValid={step3Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-              ></Mq2>
+                extra={extra3}
+                setExtra={setExtra3}
+              ></APstep1>
             )}
           </AccordionPanel>
         </AccordionItem>
@@ -504,7 +494,7 @@ export const AP2 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step5Valid != null && !select6 && (
-              <APstepF
+              <APstep1
                 step={exercise.steps[5]}
                 setStepValid={setStep6Valid}
                 stepValid={step6Valid}
@@ -512,7 +502,7 @@ export const AP2 = ({ exercise, topicId }) => {
                 topicID={topicId}
                 extra={extra6}
                 setExtra={setExtra6}
-              ></APstepF>
+              ></APstep1>
             )}
           </AccordionPanel>
         </AccordionItem>

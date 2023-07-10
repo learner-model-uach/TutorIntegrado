@@ -13,7 +13,7 @@ export const APstep1 = ({
   contentID,
   topicID,
   extra,
-  setExtra,
+  setExtra
 }) => {
   const response1 = useRef(null); //first input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
