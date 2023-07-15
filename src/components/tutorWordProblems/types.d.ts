@@ -30,8 +30,9 @@ export interface Presentation {
 export interface Question {
   questionId: number;
   question:   string;
-  tip?:        string;
+  quesExplanation?: string;
   steps:      Step[];
+  
 }
 
 export interface Step {
@@ -40,7 +41,8 @@ export interface Step {
   componentToAnswer: ComponentToAnswer;
   kcs:               string[];
   hints:             Hint[];
-  explanation?:      string;
+  stepExplanation?:      string;
+  correctMsg?: string
 }
 
 export interface Hint {

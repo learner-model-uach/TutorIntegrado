@@ -7,7 +7,7 @@ import type Plain from "../components/lvltutor/Plain";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { Text, Box } from "@chakra-ui/react";
 import Info from "../utils/Info";
-import wpExercise from '../components/tutorWordProblems/exerciseExample.json'
+import wpExercise from '../components/tutorWordProblems/exercise1.json'
 const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
 );
@@ -59,7 +59,7 @@ export default withAuth(function ShowContent() {
             "thales2",
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
-        ) : wpExercise && wpExercise?.type == "wordProblem" ? (
+        ) : content && content?.json.type == "wordProblem" ? (
           
           <DynamicTutorWP exercise={content.json}></DynamicTutorWP>
         ) :(

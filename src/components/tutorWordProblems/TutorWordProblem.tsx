@@ -33,6 +33,7 @@ import dynamic from "next/dynamic";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import ResAlert from "./Alert/responseAlert";
+import { CardInfo } from "./infCard/informationCard";
  
 const MathField = dynamic(() => import("./Components/tools/mathLive"),{
   ssr:false
@@ -84,7 +85,6 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               }
               {exercise.table 
               && 
-              
               <Box
               marginY={5}
               shadow="sm"
@@ -96,7 +96,6 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                 variant="striped"     
                 size='sm'
                 borderColor={textColor}
-                
                 >
                   <TableCaption>{exercise.table.tableCaption}</TableCaption>
                   <Thead bgColor={bg}>
@@ -129,9 +128,14 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                 </Table>
               </Box> 
               }
+              {exercise.img
+                &&
+                <Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio"/>
+                
+              }
               {exercise.text 
                 && 
-                <Box width="100%" textAlign="left">
+                <Box width="100%" textAlign="left" >
                   <Latex>{exercise.text}</Latex>
                   
                 </Box>
@@ -154,15 +158,13 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                       <AccordionPanel bg={bgContentColor}>
                         {ques.steps.map((step,index) => {
                           return(
-                            <Accordion allowMultiple key={index} >
-                              {step.explanation && 
-                              <Alert status="warning" width='100%' textAlign="left" m='1' bgColor={explanationBgColor}>
-                                <Latex>{step.explanation}</Latex>
-                              </Alert>
+                            <Accordion allowMultiple key={index}  >
+                              {step.stepExplanation && 
+                              <CardInfo text={step.stepExplanation}  bgColor= {explanationBgColor} hideCard={false}></CardInfo>
                               }
-                              <AccordionItem bgColor={itemBgColor}>
+                              <AccordionItem bgColor={itemBgColor} isDisabled={false}>
                                 <h2>
-                                  <AccordionButton>
+                                  <AccordionButton _expanded={{ bg: '#2B4264', color: 'white' }}>
                                     <Box as="span" flex="1" textAlign="left">
                                       {step.stepTitle}
                                     </Box>
@@ -173,9 +175,17 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                                   <Box padding={2}>
                                     {
                                       step.componentToAnswer.nameComponent === components.SLC 
-                                        ? <SelectionComponent hints={step.hints} meta={step.componentToAnswer.meta as SelectionMeta }/>
+                                        ? <SelectionComponent 
+                                            correctMsg={step.correctMsg ?? "Muy bien!"} 
+                                            hints={step.hints} 
+                                            meta={step.componentToAnswer.meta as SelectionMeta }
+                                          />
                                         : (step.componentToAnswer.nameComponent === components.MLC)
-                                        ? <MathComponent hints={step.hints} meta={step.componentToAnswer.meta as MathComponentMeta}/>
+                                        ? <MathComponent 
+                                            correctMsg={step.correctMsg ?? "Muy bien!"} 
+                                            hints={step.hints} 
+                                            meta={step.componentToAnswer.meta as MathComponentMeta}
+                                          />
                                         : <p>otro componente</p>
                                     }
                                   </Box>

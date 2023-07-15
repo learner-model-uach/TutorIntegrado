@@ -1,6 +1,7 @@
 import {Box, Button, ButtonGroup, Circle, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, useColorModeValue } from "@chakra-ui/react"
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import type { Hint } from "../types"
+import Latex from "react-latex-next"
 
 interface Props{
   hints : Hint[]
@@ -35,7 +36,9 @@ const HintButton = ({hints,currentHint, totalHints,nextHint,prevHint, disabledPr
         <PopoverArrow bg={bg} />
         <PopoverCloseButton/>
         <PopoverBody>
-          {hints[currentHint].hint}
+          <Latex>
+            {hints[currentHint].hint}
+          </Latex>
         </PopoverBody>
         <PopoverFooter
           border='0'

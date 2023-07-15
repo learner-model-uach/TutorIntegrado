@@ -2,7 +2,7 @@
 import { Button, ButtonGroup, Divider, List, ListItem} from "@chakra-ui/react"
 import React, { useState } from "react"
 import ResAlert from "../Alert/responseAlert"
-import HintButton from "../Hint/Hint"
+import HintButton from "../Hint/hint"
 import { useAlert } from "../hooks/useAlert"
 import { useHint } from "../hooks/useHint"
 import type { Hint, SelectionMeta } from "../types"
@@ -10,17 +10,19 @@ import {AlertStatus} from '../types.d'
 interface Props{
   meta: SelectionMeta
   hints: Hint[]
+  correctMsg: string
 }
 // Alternative selection component
-const SelectionComponent = ({meta,hints} : Props)=>{
-  const [question, setQuestion] = useState(meta) // State containing the question
-  /*
-  const [alertMsg,setAlertMsg] = useState("") // State containing the alert message
-  const [alertHidden, setAlertHidden] = useState(true) // State containing the state (show or hide) of the alert
-  const [alertType,setAlertType] = useState<AlertStatus>() // State containing the type of alert (correct, error, warning)
-  */
+const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
+  const [selectionMeta, setSelectionMeta] = useState(meta) // State containing the meta info
 
-  const {alertTitle,alertStatus,alertMsg,alertHidden,showAlert} = useAlert("",AlertStatus.info,"",true,3000)
+  const {
+    alertTitle,
+    alertStatus,
+    alertMsg,
+    alertHidden,
+    showAlert} = useAlert("",AlertStatus.info,"",true,3000)
+    
   const {
     displayHints,
     currentHint,
@@ -28,44 +30,33 @@ const SelectionComponent = ({meta,hints} : Props)=>{
     disabledPrevButton, 
     disabledNextButton, 
     prevHint,
-    nextHint} = useHint(hints)
+    nextHint} = useHint(hints,1)// aca me quede
 
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number, event: React.MouseEvent<HTMLElement>) =>{
     // We compare if the selected alternative is correct
-    const isCorrectUserAnswer = answerIndex === question.correctAnswer
+    const isCorrectUserAnswer = answerIndex === selectionMeta.correctAnswer
      
-
     if (isCorrectUserAnswer){ // Update color, message and type of alert
-      //event.currentTarget.style.backgroundColor = "#C6F6D4"
-      /*
-      setAlertMsg("Respuesta correcta")
-      setAlertType(AlertStatus.success)
-      */
-      showAlert("😃", AlertStatus.success,"Respuesta correcta")
+      showAlert("😃", AlertStatus.success,correctMsg, null)
     }else{
-      //event.currentTarget.style.backgroundColor= "#FED6D7"
-      /*
-      setAlertMsg("Respuesta incorrecta!!")
-      setAlertType(AlertStatus.error)
-      */ 
       showAlert("😕 ",AlertStatus.error,"Respuesta incorrecta!!")
     }
     //setAlertHidden(false) // we make the alert visible
-    setQuestion( // Update of the question fields
-      {...question, 
+    setSelectionMeta( // Update of the question fields
+      {...selectionMeta, 
         isCorrectUserAnswer: isCorrectUserAnswer, 
         userSelectedAnswer: answerIndex})
   }
   return(
     <>
       <List padding="0">
-        {meta.answers.map((answer,index) =>{
+        {selectionMeta.answers.map((answer,index) =>{
           return(
           <ListItem margin={1} key={index}  >
             <Button 
-              bgColor={getBackgroundColor(question,index)}
-              disabled={question.isCorrectUserAnswer}  
+              bgColor={getBackgroundColor(selectionMeta,index)}
+              disabled={selectionMeta.isCorrectUserAnswer}  
               onClick={(e)=> {handleClick(index, e)}} 
               justifyContent="left" 
               variant='ghost' 
@@ -107,7 +98,6 @@ const getBackgroundColor = (meta: SelectionMeta, index: number) => {
     if (index === userSelectedAnswer) return "#C6F6D4"; // Colorear de verde
     return "transparent"; // Mantener transparente
   }
-
   // Si la respuesta es incorrecta
   if (index === userSelectedAnswer) return "#FED6D7"; // Colorear de rojo
 

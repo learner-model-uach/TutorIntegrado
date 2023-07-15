@@ -1,11 +1,11 @@
-import { Alert,AlertIcon,AlertTitle, AlertDescription, Collapse, ScaleFade } from "@chakra-ui/react"
+import { Alert,AlertIcon,AlertTitle, AlertDescription, Collapse } from "@chakra-ui/react"
+import Latex from "react-latex-next"
 import {AlertStatus} from '../types.d'
 
 interface AlertProps{
   title?: string
   status?:  AlertStatus
-  //children: React.ReactNode
-  text: String
+  text: string
   alertHidden?: boolean
 }
 
@@ -16,11 +16,12 @@ const ResAlert = ({title, status= AlertStatus.success, alertHidden= false , text
         <AlertIcon/>
         <AlertTitle>{title}</AlertTitle>
         <AlertDescription>
-          {text}
+          <Latex>
+            {text}
+          </Latex>
         </AlertDescription>
       </Alert>
     </Collapse>
   )
 }
-
 export default ResAlert
