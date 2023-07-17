@@ -1,8 +1,7 @@
-import { Box, Button, ButtonGroup, Center, Flex } from "@chakra-ui/react"
-import {BsQuestionCircle} from 'react-icons/bs'
-import type { Hint, MathComponentMeta, Step } from "../types"
+import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react"
+import type { Hint, MathComponentMeta } from "../types"
 import dynamic from "next/dynamic"
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import { MathfieldElement } from "mathlive"
 import ResAlert from "../Alert/responseAlert"
 import { useAlert } from "../hooks/useAlert"
@@ -40,67 +39,41 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
   } = useAlert("Titulo", AlertStatus.info,"mensaje de la alerta",false,3000)
 
   const {displayHints,currentHint,totalHints, nextHint,prevHint, disabledPrevButton, disabledNextButton} = useHint(hints,1)
-  console.log("HINTS--->", hints)
-  console.log(displayHints)
 
   const checkAnswer = () => {
     const correctAnswers = answers.filter(answ =>{ // Se filtran las respuestas correctas
       return correctAnswer.find(correctId => correctId === answ.id)
     })
     answerState.forEach(userAnswer  => { // Respuesta ingresada por el estudiante
-  
       correctAnswers.forEach(corrAnswer => {
         if (corrAnswer.placeholderId === userAnswer.placeholderId){
            if (corrAnswer.value === userAnswer.value ){
-            console.log("Correcto!!!")
             mfe.setPromptState(userAnswer.placeholderId,"correct",true)
             showAlert("😃", AlertStatus.success,correctMsg, null)
-            
-           
-            
           } else if (userAnswer.value === ''){
-            console.log("VACIO!!!")
             mfe.setPromptState(userAnswer.placeholderId,"undefined", false)
             showAlert("", AlertStatus.warning, "Debes completar todos los recuadros!")
           } else {
-            
-            console.log("CorrAnswer--->",corrAnswer)
-            console.log("UserAnswer--->",userAnswer)
             mfe.setPromptState(userAnswer.placeholderId,"incorrect",false)
             showAlert("😕", AlertStatus.error,"Respuesta Incorrecta")  
-            
             // TODO: Activar hint
           }
         }
       })
-
     })
-    
     answerState.forEach(answer =>{
       console.log("prompt State ----->",mfe.getPromptState(answer.placeholderId))
 
     })
-
- 
-    const allCorrect = answerState.map(answer => mfe.getPromptState(answer.placeholderId)[0] === "correct").every(Boolean); // check if all placeholder have correct status
+    // check if all placeholder have correct status
+    const allCorrect = answerState.map(answer => mfe.getPromptState(answer.placeholderId)[0] === "correct").every(Boolean); 
     setDisabledButton(allCorrect); // set disabled status
-    //console.log("prompts---->",mfe.getPrompts())
-    //mfe.setPromptState('a',"correct",true)
-    //showAlert("nuevo titulo", AlertStatus.error,"nuevo msg",3000)
-    // Utilizar mfeInstance para realizar acciones en la instancia de MathfieldElement
-    /*
-    if (mfeInstance && prompts) {
-      mfeInstance.setPromptState(prompts[0], "correct", true);
-    }
-    */
   };
 
-  const handleMathEditorChange = (latex, promptsValues) => {
-
+  const handleMathFieldChange = (latex, promptsValues) => {
     // ... hacer algo con mfeInstance
-    console.log("promptValues-->",promptsValues)
+    console.log("promptsValues--->", promptsValues)
     const entries = Object.entries(promptsValues) as [string,string][]
-    console.log("entries ------>",entries)
     setAnswer(entries.map(([placeholderId,value])=>({placeholderId,value})))
   };
   return(
@@ -110,13 +83,11 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
           readOnly={readonly}
           mfe = {mfe} 
           value={expression} 
-          onChange={handleMathEditorChange}>
-          
-        </MathField>
-        
-      </Box>    
-      <Flex justifyContent="flex-end">
+          onChange={handleMathFieldChange}>  
+        </MathField>  
+      </Box>   
 
+      <Flex justifyContent="flex-end">
         <ButtonGroup size="lg" display="flex" justifyContent="flex-end">
           <Button colorScheme="teal" size="sm" onClick={checkAnswer} disabled={disabledButton}>Aceptar</Button>
           <HintButton 
@@ -129,14 +100,13 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
             disabledNextButton={disabledNextButton}
             ></HintButton>
         </ButtonGroup>
-
       </Flex>
-      <Box width='100%'>
 
+      <Box width='100%'>
         <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden={alertHidden}  />
       </Box>
-    </Flex>
 
+    </Flex>
 
   )
 }

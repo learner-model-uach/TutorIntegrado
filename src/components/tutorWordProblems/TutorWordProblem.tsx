@@ -34,6 +34,7 @@ import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import ResAlert from "./Alert/responseAlert";
 import { CardInfo } from "./infCard/informationCard";
+import GraphComp from "./Components/graphComponent";
  
 const MathField = dynamic(() => import("./Components/tools/mathLive"),{
   ssr:false
@@ -67,10 +68,11 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               <Image w={['sm','md']} src={exercise.presentation.urlImg} alt="Imagen de presentación"/>
             </Center>
           </TabPanel>
-          <TabPanel bg="blue">
-            <Center width='100%' bg="red" flexDirection="column" >
+          <TabPanel>
+            <Center width='100%' flexDirection="column" >
               {exercise.learningObjetives.title}
               <br/>
+              <GraphComp></GraphComp>
               <Box width='100%' bg='green' display='flex' justifyContent='center'>
                 hola
               </Box>
