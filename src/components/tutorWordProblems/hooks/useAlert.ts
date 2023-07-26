@@ -17,6 +17,7 @@ export const useAlert = (
 
   useEffect(() => {
     console.log("useAlert!")
+    console.log("AlertTimer-->", alertTimer)
     if (alertTimer) {
       const timer = setTimeout(() => {
         console.log("Valor de alertTimer", alertTimer)
@@ -25,8 +26,10 @@ export const useAlert = (
       return () => {
         clearTimeout(timer);
       };
+    }else{
+      setAlertHidden(false)
     }
-  }, [alertHidden]);
+  }, [alertHidden, alertTimer]);
 
   const showAlert = ( // funcion que despliega la alerta
     newTitle: string,
