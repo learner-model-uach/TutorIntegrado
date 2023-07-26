@@ -169,7 +169,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                                   </AccordionButton>
                                 </h2>
                                 <AccordionPanel bg={bgContentColor}>
-                                  <Box padding={2}>
+                                  <Box paddingTop={2}>
                                     {
                                       step.componentToAnswer.nameComponent === components.SLC 
                                         ? <SelectionComponent 
