@@ -38,10 +38,11 @@ export interface Question {
 export interface Step {
   stepId:            number;
   stepTitle:         string;
+  stepExplanation?:      string;
   componentToAnswer: ComponentToAnswer;
   kcs:               string[];
   hints:             Hint[];
-  stepExplanation?:      string;
+  stepGuideText?: string
   correctMsg?: string
 }
 
@@ -54,6 +55,7 @@ export interface Hint {
 export interface Table {
   header: Header[];
   rows:   Row[];
+  alignRows: textAlign
   tableCaption: string;
 }
 
@@ -63,10 +65,9 @@ export interface Header {
 }
 
 export interface Row {
-  data: string[];
+  data: string[] | number[];
 }
-
-export type align = "right" | "left" | "center" | "justify" | "char"
+export type textAlign = "left" | "right" | "center" | "justify" | "end" | "start"
 
 export interface ComponentToAnswer {
   nameComponent: string;
@@ -100,12 +101,98 @@ export interface MathComponentMeta{
 interface MathCompAnswer{
   id: number
   placeholderId: string
-  value: string
+  value: string | number
 }
 interface GraphMeta{
-  name: string
+  component: graphComponents
+  metaComponent?: selectPointerMeta |  linearFitMeta 
 }
 
+interface linearFitMeta{
+  data: point[]
+  graphSettings: settings
+  linearFunction: {
+    m:{
+      value?: number 
+      slider?: slider
+    } 
+    b:{
+      value?: number
+      slider?: slider
+    }
+  }
+  correctAnswer: {
+    mCorrect?: number[]
+    bCorrect?: number[]
+  }
+}
+interface slider{
+  startPoint : number[]
+  endPoint: number[]
+  min: number,
+  max: number,
+  initialValue: number
+  snapWidth: number
+  precision: number
+  name: string
+}
+interface selectPointerMeta {
+  data: point[]
+  correctPoint: number[]
+  graphSettings:  settings
+}
+
+interface settings{
+  originAxis?: boolean
+  bounding?: bounding
+  maxBounding?: maxBounding
+  newAxis? : axisSettings
+  activeZoom: boolean
+}
+interface axisSettings {
+  xAxis: Axis
+  yAxis: Axis
+}
+interface Axis{
+  point1: number[]
+  point2: number[]
+  tiksDistance: number
+  stickOffset: number[]
+  stickFontSize: number
+  labelName: string,
+  labelOffset: number[],
+  labelFontSize: number
+}
+
+interface bounding{
+  X1: number
+  Y1: number
+  X2: number
+  Y2: number
+}
+interface maxBounding{
+  X1: number
+  Y1: number
+  X2: number
+  Y2: number
+}
+interface point{
+  coord: number[]
+  name?: string
+  color?: string
+  isStatic?: boolean
+  face?: facePoint
+}
+export enum facePoint{
+  cross= "cross",
+  circle = "circle",
+  square = "square",
+  plus = "plus"
+}
+export enum graphComponents{
+  selectPoint = "selectPoint",
+  linearFit = "linearFit"
+}
 
 export enum AlertStatus {
   success = "success",

@@ -1,0 +1,548 @@
+{
+  "code": "wp3",
+  "type": "wordProblem",
+  "presentation": {
+    "title": "Ejercicio 3"
+  },
+  "learningObjetives":{
+    "title": "¿Qué aprendizajes son pretendidos al desarrollar este ejercicio?",
+    "text": "",
+    "listObj": []
+  },
+  "statement": "En una investigación realizada en la Universidad de Chile se ha observado la superficie del glaciar Grey a lo largo del tiempo. En la siguiente tabla podemos observar las mediciones realizadas de la superficie del glaciar Grey  entre los años 1979 y 2020.",
+  "table": { 
+    "header": [
+      {
+        "align": "left",
+        "value":"Años"
+      },
+      {
+        "align":"center",
+        "value":"Superficie del glaciar (km^2)"
+      }],
+    "rows": [
+      {
+        "data": ["1979", "265,05"]
+      },
+      {
+        "data": ["1984", "260,98"]
+      },
+      {
+        "data": ["1986","260,11"]
+      },
+      {
+        "data": ["1989", "258,76"]
+      },
+      {
+        "data": ["2001", "245,26"]
+      },
+      {
+        "data": ["2005", "240,46"]
+      },
+      {
+        "data": ["2007", "240,38"]
+      },
+      {
+        "data": ["2011", "236,87"]
+      },
+      {
+        "data": ["2014", "236,15"]
+      },
+      {
+        "data": ["2016", "234,14"]
+      },
+      {
+        "data": ["2020", "231,70"]
+      }
+    ],
+    "alignRows": "center",
+    "tableCaption": "Áreas en km^2 por año del glaciar Grey "
+  },
+  "text": "",
+  "questions": [
+    {
+      "questionId":0,
+      "question": "Según los datos de la tabla, ha disminuido o ha aumentado la superficie del glaciar Grey a lo largo del tiempo?",
+      "steps":[
+        {
+          "stepId":0,
+          "stepTitle": "Selecciona la alternativa verdadera",
+          "componentToAnswer":{
+            "nameComponent": "selectionComponent",
+            "meta":{
+              "answers": [
+                {
+                  "id":0,
+                  "value": "La superficie del glaciar ha aumentado en el tiempo"
+                },
+                {
+                  "id":1,
+                  "value": "La superficie del glaciar ha disminuido en el tiempo"
+                }
+              ],
+              "correctAnswer": 1
+            }
+          },
+          "kcs": [],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Revisa como varía la superficie del glaciar a medida que transcurre el tiempo"
+            }
+          ],
+          "correctMsg": "Muy bien! La superficie del glaciar ha disminuido a lo largo del tiempo."
+        }
+      ]
+    },
+    {
+      "questionId":1,
+      "question": "Identificar variables dependiente e independiente y representa los datos en un gráfico cartesiano.",
+      "steps":[
+        {
+          "stepId":0,
+          "stepTitle": "Selecciona la alternativa verdadera.",
+          "stepExplanation": "En este ejercicio...",
+          "componentToAnswer":{
+            "nameComponent": "selectionComponent",
+            "meta":{
+              "answers":[
+                {
+                  "id": 0,
+                  "value": "La superficie del glaciar varia con respecto al tiempo."
+                },
+                {
+                  "id":1,
+                  "value": "El tiempo varía con respecto a la superficie del glaciar."
+                }
+              ],
+              "correctAnswer":0
+            }
+          },
+          "kcs": ["IdVar"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Identifica la variable que varía con respecto a la otra variable."
+            }
+          ]
+        },
+        {
+          "stepId":1,
+          "stepTitle": "Selecciona la alternativa correcta",
+          "stepExplanation": "Entonces, ¿cual es la variable dependiente y cual la independiente?",
+          "componentToAnswer":{
+            "nameComponent": "selectionComponent",
+            "meta":{
+              "answers":[
+                {
+                  "id":0,
+                  "value": "La variable dependiente es la superficie del glaciar y la       independiente el tiempo"
+                },
+                {
+                  "id":1,
+                  "value":"La variable dependiente es el tiempo y la independiente la        superficie del glaciar."
+                }
+              ],
+              "correctAnswer":0
+            }
+          },
+          "kcs": ["IdVar"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Un variable independiente es una variable que representa una cantidad que se modifica en un experimento."
+            },
+            {
+              "hintId":1,
+              "hint":"Una variable dependiente representa una cantidad cuyo valor depende de cómo se modifica la variable independiente"
+            }
+          ]
+        },
+        {
+          "stepId":2,
+          "stepTitle": "Identificar punto en el gráfico",
+          "stepExplanation": "Generalmente se utiliza la variable 'y' (eje vertical) para la variable dependiente y la variable 't' (eje horizontal para la variable independiente $$\\newline$$ Identifica el punto en la gráfica que denota que en el año 1998 el área del glaciar era de $247,23 km^2$",
+          "componentToAnswer":{
+            "nameComponent": "graphComponent",
+            "meta":{
+              "component": "selectPoint",
+              "metaComponent": {
+                "data": [
+                  {
+                    "coord": [1979,265.05],
+                    "name":"Punto1",
+                    "color": "green",
+                    "isStatic":false,
+                    "face":"cross"
+                  },
+                  {
+                    "coord": [1998,247.23]
+                  },
+                  {
+                    "coord": [2016,234.14]
+                  }
+                ],
+                "correctPoint": [1998,247.23],
+                "graphSettings":{
+                  "originAxis":false,
+                  "bounding": {
+                    "X1": 1970,
+                    "Y1": 280,
+                    "X2": 2030,
+                    "Y2": 190
+                  },
+                  "maxBounding":{
+                    "X1": 1960,
+                    "Y1": 300,
+                    "X2": 2050,
+                    "Y2": 180
+                  },
+                  "newAxis": {
+                    "xAxis":{
+                      "point1": [1979, 200],
+                      "point2": [2025,200],
+                      "tiksDistance": 5,
+                      "stickOffset": [-15,-20],
+                      "labelName": "Años"
+                    },
+                    "yAxis":{
+                      "point1": [1975, 200],
+                      "point2": [1975,270],
+                      "tiksDistance": 5,
+                      "labelName": "Superficie en km^2"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "kcs": ["IdPtGraf"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Activar linea vertical"
+            },
+            {
+              "hintId":1,
+              "hint": "Activar linea horizontal"
+            }
+          ],
+          "correctMsg": "Muy bien! seleccionaste el punto correcto!"
+        },
+        {
+          "stepId":3,
+          "stepExplanation": "Los puntos en la gráfica nos muestran una tendencia, la cual podemos modelar mediante el ajuste de una recta. Esto nos permitirá predecir, aproximadamente, la superficie del glaciar en un año determinado. $$\\newline$$ Para realizar esto necesitamos realizar un ajuste lineal lo más aproximado a los puntos en la gráfica. $$\\newline$$",
+          "stepTitle": "Realiza el ajuste lineal.",
+          "stepGuideText": "Ajuste la pendiente 'm'  de manera que la recta se ajuste lo mejor posible a los datos recolectados (puntos).",
+          "componentToAnswer":{
+            "nameComponent": "graphComponent",
+            "meta":{
+              "component":"linearFit",
+              "metaComponent":{
+                "data": [
+                  {
+                    "coord": [1979,265.05],
+                    "name":"Punto1",
+                    "color": "green",
+                    "isStatic":false,
+                    "face":"cross"
+                  },
+                  {"coord": [1984,260.98]},
+                  {"coord": [1986,260.11]},
+                  {"coord": [1989,258.76]},
+                  {"coord": [1998,247.23]},
+                  {"coord": [2001,245.26]},
+                  {"coord": [2005,240.46]},
+                  {"coord": [2007,240.38]},
+                  {"coord": [2011,236.87]},
+                  {"coord": [2014,236.15]},
+                  {"coord": [2016,234.14]},
+                  {"coord": [2020,231.70]}
+                ],
+                "graphSettings":{
+                  "originAxis":false,
+                  "bounding": {
+                    "X1": 1970,
+                    "Y1": 280,
+                    "X2": 2030,
+                    "Y2": 190
+                  },
+                  "maxBounding":{
+                    "X1": 1960,
+                    "Y1": 300,
+                    "X2": 2050,
+                    "Y2": 180
+                  },
+                  "newAxis": {
+                    "xAxis":{
+                      "point1": [1979, 200],
+                      "point2": [2025,200],
+                      "tiksDistance": 5,
+                      "stickOffset": [-15,-20],
+                      "labelName": "Años"
+                    },
+                    "yAxis":{
+                      "point1": [1975, 200],
+                      "point2": [1975,270],
+                      "tiksDistance": 5,
+                      "labelName": "Superficie en km^2"
+                    }
+                  }
+                },
+                "linearFunction":{
+                  "m":{ 
+                    "slider":{
+                      "startPoint" : [1990,210],
+                      "endPoint": [2010,210],
+                      "min": -0.9,
+                      "max":-0.83 ,
+                      "initialValue":-0.88 ,
+                      "snapWidth": 0.001,
+                      "precision": 3,
+                      "name": "m"
+                    }                
+                  },
+                  "b":{
+                    "value": 1963.8
+                  }
+                },
+                "correctAnswer":{
+                  "mCorrect": [-0.860, -0.857]
+                }
+              }
+            }
+          },
+          "kcs": ["IdPtGraf","CompPendRec","ExpA"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Mueva la pendiente m a valores negativos"
+            },
+            {
+              "hintId":1,
+              "hint":"Mueva la pendiente m entre valores -0,8 y -0,9."
+            }
+          ],
+          "correctMsg": "Muy bien! Realizaste correctamente el ajuste lineal."
+        },
+        {
+          "stepId":4,
+          "stepTitle": "Selecciona la alternativa correcta",
+          "stepExplanation": "¿Que significa que la pendiente de la recta sea negativa?",
+          "componentToAnswer":{
+            "nameComponent": "selectionComponent",
+            "meta":{
+              "answers":[
+                {
+                  "id":0,
+                  "value": "Que el área del glaciar decrece en el tiempo."
+                },
+                {
+                  "id":1,
+                  "value":"Que el área del glaciar crece en el tiempo."
+                }
+              ],
+              "correctAnswer":0
+            }
+          },
+          "kcs": [],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "La pendiente negativa representa decrecimiento"
+            },
+            {
+              "hintId":1,
+              "hint":"La respuesta correcta es: Que el área del glaciar decrece en el tiempo."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionId":2,
+      "question": "Calcular la superficie de hielo estimada para el año 2023.",
+      "steps":[
+        {
+          "stepId":0,
+          "stepTitle": "Reemplaza el valor de la variable 't'",
+          "componentToAnswer":{
+            "nameComponent": "mathComponent",
+            "meta":{
+              "readonly": true,
+              "expression": "y = -0,8583 \\placeholder[a]{} + 1963,8",
+              "answers":[
+                {
+                  "id":1,
+                  "placeholderId":"a",
+                  "value": "2023"
+                }
+              ],
+              "correctAnswer":[1]
+            }
+          },
+          "kcs": ["SusFor"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Ingresa el año donde se pide la estimación"
+            },
+            {
+              "hintId":1,
+              "hint":"La respuesta es 2023."
+            }
+          ]
+        },
+        {
+          "stepId":1,
+          "stepTitle": "Resuelve  para 'y' (aproxima a dos decimales)",
+          "componentToAnswer":{
+            "nameComponent": "mathComponent",
+            "meta":{
+              "readonly":true,
+              "expression": "\\begin{align} y & = \\placeholder[a]{} + 1963,8 \\\\ y & = \\placeholder[b]{} \\end{align}",
+              "answers":[
+                {
+                  "id":0,
+                  "placeholderId":"a",
+                  "value": "-1736,34"
+                },
+                {
+                  "id":1,
+                  "placeholderId":"b",
+                  "value":"227,46"
+                }
+              ],
+              "correctAnswer":[0,1]
+            }
+          },
+          "kcs": ["AN"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "La respuesta es 227,46."
+            }
+          ],
+          "correctMsg": "Muy bien! Por lo tanto, en el año 2023 la superficie del glaciar sería de 227,4591 $km^2$"
+        }
+      ]
+    },
+    {
+      "questionId":3,
+      "question": "Estimar en que año la superficie del glaciar llegaría al 50% del tamaño medido en 1979",
+      "steps":[
+        {
+          "stepId":0,
+          "stepTitle": "Plantear la ecuación lineal.",
+          "componentToAnswer":{
+            "nameComponent": "mathComponent",
+            "meta":{
+              "readonly":true,
+              "expression":"\\placeholder[a]{} = \\placeholder[b]{}\\cdot t + 1963,8",
+              "answers":[
+                {
+                  "id":1,
+                  "placeholderId":"a",
+                  "value": "\\frac{265,05}{2}"
+                },
+                {
+                  "id":2,
+                  "placeholderId":"b",
+                  "value":"-0,8583"
+                }
+              ],
+              "correctAnswer":[1,2]
+            }
+          },
+          "kcs": [],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Debes ingresar la mitad de la superficie medida en el año 1971"
+            },
+            {
+              "hintId":1,
+              "hint": "Debe ingresar la pendiente que obtuvo en el ajuste lineal"
+            },
+            {
+              "hintId":2,
+              "hint": "La respuesta es: $$\\frac{265,05}{2} = -0,8583 \\cdot t + 1963,8 $$"
+            }
+          ]
+        },
+        {
+          "stepId":1,
+          "stepTitle": "Restar valor constante",
+          "stepExplanation": "Para calcular el año (representado por la variable t) en que el glaciar llegaría al 50% del tamaño medido en 1979 debemos despejar la variable 't'",
+          "componentToAnswer":{
+            "nameComponent": "mathComponent",
+            "meta":{
+              "readonly":true,
+              "expression":"\\frac{265,05}{2} - \\placeholder[a]{} = 0,8583 \\cdot t ",
+              "answers":[
+                {
+                  "id":1,
+                  "placeholderId":"a",
+                  "value":"1963,8"
+                }
+              ],
+              "correctAnswer":[1]
+
+            }
+          },
+          "kcs": ["ReducExp"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Reste el intercepto en ambos lados de la ecuación, para obtener la forma $$y – b = m\\cdot t$$"
+            },
+            {
+              "hintId":1,
+              "hint":"El intercepto es $$b= 1963,8$$"
+            }
+          ]
+        },
+        {
+          "stepId":2,
+          "stepTitle": "Despejar variable del tiempo",
+          "componentToAnswer":{
+            "nameComponent": "mathComponent",
+            "meta":{
+              "readonly":true,
+              "expression":"\\begin{align} t & = \\frac{1963,8-\\frac{265,05}{2}}{\\placeholder[a]{} } \\\\ t & = \\placeholder[b]{}  \\end[align]",
+              "answers":[
+                {
+                  "id":1,
+                  "placeholderId":"a",
+                  "value":"0,8583"
+                },
+                {
+                  "id":2,
+                  "placeholderId":"b",
+                  "value":"2133,61"
+                }
+              ],
+              "correctAnswer":[1,2]
+            }
+          },
+          "kcs": ["DespVarEcu"],
+          "hints":[
+            {
+              "hintId":0,
+              "hint": "Divida por la pendiente, o sea, obtener la forma: $$\\frac{y-b}{m} = t$$"
+            },
+            {
+              "hintId":1,
+              "hint":"La pendiente es m= 0,8583"
+            },
+            {
+              "hintId":2,
+              "hint":"La respuesta correcta es $$t = 2133,61$$"
+            }
+          ],
+          "correctMsg": "Muy bien! Por lo tanto, en el año 2133 el glaciar llegaría al 50% de su tamaño medido en el año 1979."
+        }
+      ]
+    }
+  ]
+}

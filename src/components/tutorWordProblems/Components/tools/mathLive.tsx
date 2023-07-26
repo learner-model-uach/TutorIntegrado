@@ -1,12 +1,13 @@
 import * as React from 'react';
 
 import { useEffect, useMemo } from 'react';
-import { MathfieldElement} from 'mathlive';
+import { MathfieldElement, Selector, VirtualKeyboardCommands } from 'mathlive';
+import { Button, ButtonGroup } from '@chakra-ui/react';
 
 export type MathEditorProps = {
   readOnly?: boolean;
   value: string;
-  mfe: MathfieldElement
+  mfe: MathfieldElement 
   onChange: (latex: string, prompts: Record<string, string>) => void;
   className?: string;
 };
@@ -15,18 +16,29 @@ export type MathEditorProps = {
  */
 const Mathfield = (props: MathEditorProps) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const mfe = useMemo(() => props.mfe ?? new MathfieldElement(), []);
-  mfe.readOnly = props.readOnly ?? false;
-  mfe.disabled = false
-  const currentValue = React.useRef<string>(''); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
 
+  const mfe = useMemo(() => props.mfe ?? new MathfieldElement(), []);
+  mfe.readOnly = props.readOnly ?? true;
+  mfe.disabled = false
+  mfe.applyStyle({fontSize:6}, {operation:"set", range:[0,-1]})
+  const currentValue = React.useRef<string>(''); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
+  console.log("Renderizado mathLive")
+  
   useEffect(() => { // ejecuta un efecto secundario cuando el componente se monta por primera vez
+    console.log("renderizado useEffect mathlives")
     const container = containerRef.current!!;
     container.innerHTML = '';
     container.appendChild(mfe);
     mfe.className = props.className || '';
-    mfe.addEventListener('input', ({ target }) => {
-      const value = (target as HTMLInputElement).value || '';
+    //mfe.mathVirtualKeyboardPolicy= 'manual'
+
+    
+    
+    mfe.popoverPolicy = "auto" // If true a popover with suggestions may be displayed when a LaTeX command is input.
+    
+    mfe.addEventListener('input', (evt) => {
+      //evt.preventDefault()
+      const value = (evt.target as HTMLInputElement).value || '';
       const promptValues: Record<string, string> = mfe
         .getPrompts()
         .reduce((acc, id) => ({ ...acc, [id]: mfe.getPromptValue(id) }), {});
@@ -34,22 +46,45 @@ const Mathfield = (props: MathEditorProps) => {
         currentValue.current = value;
         props.onChange(value, promptValues);
       }
+      
     });
   }, []);
 
   useEffect(() => { // Este efecto se encarga de actualizar el valor del editor de matemáticas cuando props.value cambia.
     
     if (currentValue.current !== props.value) {
+      mfe.focus()
       const position = mfe.position;
-      mfe.setValue(props.value, { focus: true, feedback: false });
+      mfe.setValue(props.value, { focus: true, feedback: false, selectionMode:"placeholder" });
       mfe.position = position;
       currentValue.current = props.value;
     }
   }, [props.value]);//se ejecutará cada vez que el valor de props.value
 
+  const showVirtualKeyboard = () => {
+    mfe.executeCommand('toggleVirtualKeyboard' as Selector);
+  };
   return (
     <>
-      <div onFocus={()=>{console.log("FOCUS!!!!!")}} ref={containerRef} style={{ maxWidth: '100%'}} />
+      <div onFocus={()=>{console.log("FOCUS!!!!!")}} ref={containerRef} style={{ maxWidth: '100%'} } />
+      <ButtonGroup>
+        <Button onClick={()=> {
+          mfe.focus()
+          mfe.executeCommand("moveToPreviousChar")
+        }}>
+          {'<'}
+        </Button>
+        <Button onClick={()=>{
+          mfe.focus()
+          mfe.executeCommand("moveToNextChar")
+        }}>
+          {'>'}
+        </Button>
+        <Button onClick={showVirtualKeyboard}>
+          {'Toggle Keyboard'}
+        </Button>
+      </ButtonGroup>
+
     </>
   )
 }

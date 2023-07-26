@@ -116,7 +116,7 @@
             "nameComponent":"mathComponent",
             "meta":{
               "readonly":true,
-              "expression": "R_{eq} = \\frac{1}{\\frac{1}{\\placeholder[a]{}} + \\frac{1}{\\placeholder[b]{}} + \\frac{1}{\\placeholder[c]{}}}",
+              "expression": "R_{eq} = \\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}}",
               "answers":[
                 {
                   "id":1,

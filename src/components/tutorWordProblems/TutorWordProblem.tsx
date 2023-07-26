@@ -8,13 +8,11 @@ import {
   Heading, 
   Box, 
   Image, 
-  Container, 
   Accordion, 
   AccordionItem, 
   AccordionPanel, 
   AccordionButton,
   AccordionIcon,
-  TableContainer,
   Table,
   TableCaption,
   Thead,
@@ -22,23 +20,18 @@ import {
   Tbody,
   Tr,
   Td,
-  Alert,
-  AlertIcon,
   Center,
   useColorModeValue} from "@chakra-ui/react";
   
-import type { align, Exercise, MathComponentMeta, SelectionMeta } from "./types";
-import  { components, AlertStatus } from "./types.d";
+import type {Exercise, GraphMeta, MathComponentMeta, SelectionMeta, textAlign } from "./types";
+import  { components, graphComponents } from "./types.d";
 import dynamic from "next/dynamic";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
-import ResAlert from "./Alert/responseAlert";
 import { CardInfo } from "./infCard/informationCard";
 import GraphComp from "./Components/graphComponent";
+import JSXGraphComponent from "./Components/jsxGraphComponent";
  
-const MathField = dynamic(() => import("./Components/tools/mathLive"),{
-  ssr:false
-})
 const SelectionComponent = dynamic(()=> import("./Components/answerSelection"),{
   ssr:false
 })
@@ -73,6 +66,8 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               {exercise.learningObjetives.title}
               <br/>
               <GraphComp></GraphComp>
+              
+              
               <Box width='100%' bg='green' display='flex' justifyContent='center'>
                 hola
               </Box>
@@ -91,7 +86,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               marginY={5}
               shadow="sm"
               rounded="lg"
-              w={{ base: "92vw",md:"50%", lg: "80%" }}
+              w="auto"
               overflowX="auto"
               >
                 <Table 
@@ -104,7 +99,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                     <Tr>
                       {exercise.table.header.map((head, index) =>{
                         return(
-                          <Th key={index} align={head.align as align } color='white' fontWeight="bold">
+                          <Th key={index} textAlign={head.align as textAlign } color='white' fontWeight="bold">
                             {head.value}
                           </Th>
                         )
@@ -118,8 +113,8 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                         <Tr key={index} >
                           {row.data?.map((value,i) => {
                             return(
-                              <Td key={i} >
-                                {<Latex>{value}</Latex>}
+                              <Td key={i} textAlign={exercise.table.alignRows} >
+                                {<Latex strict>{value}</Latex>}
                               </Td>
                             )
                           })}
@@ -188,7 +183,11 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                                             hints={step.hints} 
                                             meta={step.componentToAnswer.meta as MathComponentMeta}
                                           />
-                                        : <p>otro componente</p>
+                                        :(step.componentToAnswer.nameComponent === components.GHPC)
+                                        ? <JSXGraphComponent 
+                                            hints={step.hints}
+                                            meta={step.componentToAnswer.meta as GraphMeta}></JSXGraphComponent> 
+                                        :<p>otro componente</p>
                                     }
                                   </Box>
                                 </AccordionPanel>

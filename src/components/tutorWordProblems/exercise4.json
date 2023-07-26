@@ -1,0 +1,134 @@
+{
+  "code": "wp4",
+  "type": "wordProblem",
+  "presentation": {
+    "title": "Ejercicio 4",
+    "urlImg": ""
+  },
+  "learningObjetives": {
+    "title": "",
+    "text": "",
+    "listObj": []
+
+  },
+  "meta": {},
+  "statement":"El rendimiento de combustible de un automóvil se obtiene de acuerdo a la velocidad con la que se desplaza, si ‘x’ es la velocidad media en kilómetros por hora (km/h) y el rendimiento está dado por la siguiente expresión: $$ y = -\\frac{1}{40}\\cdot x^2 + \\frac{7}{2}\\cdot x$$ , para $0<x<120$",
+  "img": "",
+  "table": { 
+    "header": [
+      {
+        "align": "center",
+        "value":"Sector"
+      }
+    ],
+    "rows": [
+      {
+        "data": ["Energía", "$8,18231*10^{13}$"]
+      }
+    ],
+    "alignRows":"center",
+    "tableCaption": ""
+  },
+  "text": "",
+  "questions":[
+    {
+      "questionId": 0, 
+      "question": "Calcula el rendimiento para las velocidades de 20, 60 y 100 en km/h.",
+      "steps": [
+        {
+          "stepId": 0, 
+          "stepTitle": "",
+          "stepExplanation":"",
+          "componentToAnswer": {
+            "nameComponent":"mathComponent",
+            "meta":{
+              "expression": "\\placeholder[a]{}",
+              "answers":{
+                "id":1,
+                "placeholderId":"a",
+                "value":"x"
+              },
+              "correctAnswer": [1]
+            }
+          },
+          "kcs": ["KC1","KC2","KCN"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Texto de la ayuda",
+              "associatedAnswer": []
+            }
+          ],
+          "stepGuideText": "",
+          "correctMsg": "Mensaje al completar el paso correctamente"
+        },
+        {
+          "stepId": 1, 
+          "stepTitle": "",
+          "stepExplanation":"",
+          "componentToAnswer": {
+            "nameComponent":"mathComponent",
+            "meta":{
+              "expression": "\\placeholder[a]{}",
+              "answers":{
+                "id":1,
+                "placeholderId":"a",
+                "value":"x"
+              },
+              "correctAnswer": [1]
+            }
+          },
+          "kcs": ["KC1","KC2","KCN"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Texto de la ayuda",
+              "associatedAnswer": []
+            }
+          ],
+          "stepGuideText": "",
+          "correctMsg": "Mensaje al completar el paso correctamente"
+        },
+        {
+          "stepId": 2, 
+          "stepTitle": "",
+          "stepExplanation":"",
+          "componentToAnswer": {
+            "nameComponent":"mathComponent",
+            "meta":{
+              "expression": "\\placeholder[a]{}",
+              "answers":{
+                "id":1,
+                "placeholderId":"a",
+                "value":"x"
+              },
+              "correctAnswer": [1]
+            }
+          },
+          "kcs": ["KC1","KC2","KCN"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Texto de la ayuda",
+              "associatedAnswer": []
+            }
+          ],
+          "stepGuideText": "",
+          "correctMsg": "Mensaje al completar el paso correctamente"
+        }
+
+
+      ]
+    },
+    {
+      "questionId": 1, 
+      "question": "¿A qué velocidad se obtiene el máximo rendimiento?",
+      "steps":[]
+    },
+    {
+      "questionId": 2, 
+      "question": "¿Cuál es el máximo rendimiento?",
+      "steps":[]
+    }
+  ] 
+}

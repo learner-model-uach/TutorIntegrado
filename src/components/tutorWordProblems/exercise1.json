@@ -20,7 +20,7 @@
         "value":"Sector"
       },
       {
-        "align":"right",
+        "align":"center",
         "value":"Co2 Neto"
       }],
     "rows": [
@@ -37,6 +37,7 @@
         "data": ["Residuos", "$3*10^8$"]
       }
     ],
+    "alignRows":"left",
     "tableCaption": "Tabla: Niveles de CO2 por sector en Chile durante el año 2013 "
   },
   "text": "Los numeros positivos representan emisiones de GEI, mientras que los negativos representan absorciones de GEI $$\\newline \\newline$$ A partir de la tabla anterior nos gustaria identificar: ",
@@ -340,7 +341,7 @@
       "steps":[
         {
           "stepId":0,
-          "stepTitle": "Calcular proporsción (aproxima a dos decimales)",
+          "stepTitle": "Calcular proporción (aproxima a dos decimales)",
           "stepExplanation": "Si queremos calcular que porcentaje aporta cierto sector debemos dividir las emisiones del sector entre las emisiones totales y multiplicar el resultado por 100 $$\\newline$$ Por ejemplo, para el sector de Procesos industriales se tiene $$\\frac{\\text{Emisiones sector Procesos industriales}}{\\text{Total emisiones}} = \\frac{4360,2*10^9}{86183,6*10^9}= 0,05$$ $$\\newline$$ Por lo tanto el sector de Procesos industriales aporta en un 5% aproximadamente, de las emisiones totales.",
           "componentToAnswer":{
             "nameComponent": "mathComponent",

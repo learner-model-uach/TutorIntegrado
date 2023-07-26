@@ -1,5 +1,5 @@
 
-import { Button, ButtonGroup, Divider, List, ListItem} from "@chakra-ui/react"
+import { Button, ButtonGroup, Checkbox, Divider, Flex, List, ListItem} from "@chakra-ui/react"
 import React, { useState } from "react"
 import ResAlert from "../Alert/responseAlert"
 import HintButton from "../Hint/hint"
@@ -24,13 +24,16 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
     showAlert} = useAlert("",AlertStatus.info,"",true,3000)
     
   const {
-    displayHints,
+    unlockedHints,
     currentHint,
     totalHints, 
     disabledPrevButton, 
     disabledNextButton, 
+    numHintsActivated,
     prevHint,
-    nextHint} = useHint(hints,1)// aca me quede
+    nextHint,
+    unlockHint,
+    resetNumHintsActivated} = useHint(hints,1)// aca me quede
 
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number, event: React.MouseEvent<HTMLElement>) =>{
@@ -41,6 +44,7 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
       showAlert("😃", AlertStatus.success,correctMsg, null)
     }else{
       showAlert("😕 ",AlertStatus.error,"Respuesta incorrecta!!")
+      unlockHint()
     }
     //setAlertHidden(false) // we make the alert visible
     setSelectionMeta( // Update of the question fields
@@ -49,7 +53,7 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
         userSelectedAnswer: answerIndex})
   }
   return(
-    <>
+    <Flex flexDirection="column" width="auto">
       <List padding="0">
         {selectionMeta.answers.map((answer,index) =>{
           return(
@@ -59,9 +63,18 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
               disabled={selectionMeta.isCorrectUserAnswer}  
               onClick={(e)=> {handleClick(index, e)}} 
               justifyContent="left" 
-              variant='ghost' 
-              width='100%'>
-              {answer.id +". "+ answer.value}
+              variant='ghost'
+              width='100%'
+              whiteSpace="normal" // Permite que el texto se ajuste en varias líneas
+              overflow="hidden"
+              textOverflow="ellipsis" // comportamiento al desbordar el componente
+              textAlign="left" // Alinea el texto a la izquierda
+              display="block" // Asegura que el botón tenga el ancho completo del contenedor
+              maxW="100%" // Evita que el botón se desborde de su contenedor
+           
+
+              >
+              {answer.value}
             </Button>
             <Divider/>
           </ListItem>
@@ -70,18 +83,20 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
       </List>
       <ButtonGroup size='lg' display='flex' justifyContent='flex-end' paddingTop={2}>
         <HintButton 
-          hints={displayHints} 
+          hints={unlockedHints} 
           currentHint={currentHint} 
           totalHints={totalHints} 
           prevHint={prevHint} 
           nextHint={nextHint} 
           disabledPrevButton={disabledPrevButton} 
           disabledNextButton={disabledNextButton}
+          numEnabledHints= {numHintsActivated}
+          resetNumHintsActivated={resetNumHintsActivated}
         ></HintButton>
       </ButtonGroup>
       <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden = {alertHidden}  />
 
-    </>
+    </Flex>
   )
 }
 export default SelectionComponent

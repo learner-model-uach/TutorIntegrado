@@ -8,7 +8,8 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
 import { ErrorToast, queryClient, rqGQLClient } from "../rqClient";
-
+import "mafs/core.css";
+import "mafs/font.css";
 const theme = extendTheme({});
 
 export default function App({ Component, pageProps }: AppProps) {

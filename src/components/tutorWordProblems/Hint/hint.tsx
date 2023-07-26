@@ -11,21 +11,38 @@ interface Props{
   prevHint: () => void
   disabledPrevButton : boolean
   disabledNextButton : boolean
+  interactiveHint?: () => void
+  numEnabledHints: number
+  resetNumHintsActivated: ()=> void
   
 }
-const HintButton = ({hints,currentHint, totalHints,nextHint,prevHint, disabledPrevButton, disabledNextButton}: Props) => {
+const HintButton = (
+  {hints,
+    currentHint, 
+    totalHints,
+    nextHint,
+    prevHint, 
+    disabledPrevButton, 
+    disabledNextButton,
+    interactiveHint,
+    numEnabledHints = 0,
+    resetNumHintsActivated
+  }: Props) => {
   const bg = useColorModeValue("white","#2B4264")
   const popoverColor = useColorModeValue("dark","white")
   const borderColor = useColorModeValue("dark","#2B4264")
 
-  const handleClick = () =>{}
+  const handleClick = () =>{
+    console.log("Se apreto el boton de HINT")
+    resetNumHintsActivated()
+  }
   return (
     <Popover placement="bottom" closeOnBlur={false}>
       <PopoverTrigger>
-        <Button  colorScheme="teal" size="sm" variant="outline" onClick={handleClick}>
+        <Button color={numEnabledHints !== 0 ? "red": undefined}  colorScheme="teal" size="sm" variant="outline" onClick={handleClick}>
           
           Ayuda &nbsp;
-          <Circle size='15px' bg='gray' color='white'>0</Circle>
+          <Circle bg={numEnabledHints !== 0 ? "red": "gray"} color="white" size='15px' > {numEnabledHints}</Circle>
           
           </Button>
       </PopoverTrigger>
@@ -36,9 +53,12 @@ const HintButton = ({hints,currentHint, totalHints,nextHint,prevHint, disabledPr
         <PopoverArrow bg={bg} />
         <PopoverCloseButton/>
         <PopoverBody>
-          <Latex>
-            {hints[currentHint].hint}
-          </Latex>
+          {
+            hints[currentHint] &&
+            <Latex>
+              {hints[currentHint]?.hint}
+            </Latex>
+          }
         </PopoverBody>
         <PopoverFooter
           border='0'
@@ -49,6 +69,7 @@ const HintButton = ({hints,currentHint, totalHints,nextHint,prevHint, disabledPr
         >
           <Box fontSize="sm" >Pista {currentHint+1} de {totalHints}</Box>
           <ButtonGroup size="sm">
+            {interactiveHint && <Button onClick={interactiveHint}>x</Button>}
             <Button variant="outline" onClick={prevHint} isDisabled={disabledPrevButton}>
               <ChevronLeftIcon color={popoverColor}/>
             </Button>

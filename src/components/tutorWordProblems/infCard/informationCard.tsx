@@ -12,7 +12,7 @@ interface cardInfoProps {
 export const CardInfo = ({text,srcImg, bgColor,hideCard}:cardInfoProps) =>{
 
   return(
-    <Alert status='warning' bgColor={bgColor} hidden={hideCard}  mb={1} rounded={5}>
+    <Alert overflowX="auto" status='warning' bgColor={bgColor} hidden={hideCard}  mb={1} rounded={5}>
       <Flex flexDirection="column">
         
         <Latex>{text}</Latex>
