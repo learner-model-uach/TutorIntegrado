@@ -25,7 +25,7 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
     alertMsg,
     alertHidden, 
     showAlert} = useAlert("",AlertStatus.info,"",false,3000)
-  const {boardId, boardRef, disableBoard} = useBoard("jxgbox",meta.graphSettings)
+  const {boardId, boardRef,bgBoardColor, disableBoard} = useBoard("jxgbox",meta.graphSettings)
   
   const {
     unlockedHints,
@@ -83,6 +83,7 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
     <Flex flexDirection="column" alignContent="center" flexWrap="wrap" width="100%" maxW="100%" >
 
       <Box  
+          bgColor={bgBoardColor}
           rounded="2xl"
           shadow="lg"
           overflow="hidden"

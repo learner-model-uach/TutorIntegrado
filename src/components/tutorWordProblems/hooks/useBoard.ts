@@ -5,9 +5,9 @@ import type { settings } from "../types.d";
 
 
 export const useBoard = (boardId: string, graphSettings: settings) =>{
-
-  const bgContentColor = useColorModeValue("white","dark")
-  const axisColor = useColorModeValue("black","white")
+  const strokeWidthAxes = 1
+  const bgBoardColor = useColorModeValue("white","whiteAlpha.900")
+  const axisColor = useColorModeValue("black","black")
   const boardRef = useRef<Board|null>(null)
   //const {data, correctPoint, graphSettings} = meta
   const boundingBox = graphSettings?.bounding ? [graphSettings.bounding.X1, graphSettings.bounding.Y1, graphSettings.bounding.X2, graphSettings.bounding.Y2] as [number,number,number,number] : [-5, 5, 5, -5] as [number,number,number,number] ;
@@ -66,7 +66,7 @@ export const useBoard = (boardId: string, graphSettings: settings) =>{
             }
           },
           strokeColor:axisColor,
-          strokeWidth: 2,
+          strokeWidth: strokeWidthAxes,
           name: xAxisSettings?.labelName ?? "",//"Año",
           withLabel: true,
           label: {
@@ -86,6 +86,8 @@ export const useBoard = (boardId: string, graphSettings: settings) =>{
               fontSize: yAxisSettings?.stickFontSize ?? 12 // Ajustar el tamaño de la fuente de las etiquetas
             }
           },
+          strokeColor:axisColor,
+          strokeWidth: strokeWidthAxes,
           name: yAxisSettings.labelName ?? "",
           withLabel: true,
           label: { // titulo
@@ -113,6 +115,7 @@ export const useBoard = (boardId: string, graphSettings: settings) =>{
   return{
     boardId,
     boardRef,
+    bgBoardColor,
     disableBoard
   }
   

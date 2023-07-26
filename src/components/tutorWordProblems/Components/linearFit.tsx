@@ -16,11 +16,15 @@ export const LinearFit = ({meta, hints}: Props) =>{
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)")
   const {data, linearFunction, correctAnswer} = meta
   const {m,b} = linearFunction
-  const {boardId, boardRef,disableBoard} = useBoard("linearFitBoard",meta.graphSettings)
   const mSliderRef = useRef(null)
   const bSliderRef = useRef(null)
   const [disabledButton, setDisabledButton] = useState(false)
-
+  
+  const {
+    boardId, 
+    boardRef,
+    bgBoardColor,
+    disableBoard} = useBoard("linearFitBoard",meta.graphSettings)
   const {
     alertTitle
     ,alertStatus,
@@ -40,6 +44,10 @@ export const LinearFit = ({meta, hints}: Props) =>{
     unlockHint,
     resetNumHintsActivated} = useHint(hints,1)
 
+  // Definir las variables mval y bval antes del useEffect
+  let mval: (() => number) 
+  let bval: (() => number) 
+  
   useEffect(()=>{
     data.forEach(point =>{
       const isStatic = point?.isStatic ?? true
@@ -50,35 +58,64 @@ export const LinearFit = ({meta, hints}: Props) =>{
         //setUserAnswer(p.coords.usrCoords)
       })
     })
- 
-   if(m.slider && b.slider){
-    console.log("m y b son slider")
+    
+  if(m.slider && b.slider){
     const mSlider = createSlider(m.slider)
     const bSlider = createSlider(b.slider)
 
     mSliderRef.current = mSlider
     bSliderRef.current = bSlider
 
-    const mval = function(){return mSlider.Value()}
-    const bval = function(){return bSlider.Value()}
-    const linF = function(x){return mval()*x + bval()}
-
-    var G = boardRef.current.create('functiongraph',[linF], {strokeWidth: 2});
-   } else if (m.slider && !b.slider){
-    console.log("m es slider")
+    mval = () => mSlider.Value()
+    bval = () => bSlider.Value()
+  } 
+  else if (m.slider && !b.slider){
     const mSlider = createSlider(m.slider)
-    mSliderRef.current = mSlider
-    const mval = function(){return mSlider.Value()}
-    const linF = function(x){return mval()*x + b?.value}
-    const G = boardRef.current.create('functiongraph',[linF], {strokeWidth: 2});
 
-   } else if (!m.slider && b.slider){
+    mSliderRef.current = mSlider
+
+    mval = () => mSlider.Value()
+    bval = () => b?.value
+
+   } 
+   else if (!m.slider && b.slider){
     const bSlider = createSlider(b.slider)
+
     bSliderRef.current = bSlider
-    const bval = function(){return bSlider.Value()}
-    const linF = function(x){return m?.value*x + bval()}
+
+    mval = () => m?.value
+    bval = () => bSlider.Value()
+
    }
+
+   //const linF = (x) => {mval()  *x + bval()}
+   const linF = function(x){return mval()*x + bval()}
+   var G = boardRef.current.create('functiongraph',[linF], {strokeWidth: 2});
+
+   
+   const fTextVal = () => {
+    var vz = "";
+    var tv = "";
+    if (bval() >= 0.0){
+      if (bval() == 0.0){
+        tv = ""; 
+        vz = "";
+      }else {
+        vz = "+" 
+        tv = JXG.toFixed(bval(),1)
+      }
+    }
+    else{
+      vz = ""
+      tv = JXG.toFixed(bval(),1)
+    };
+    return "y = "+ JXG.toFixed(mval(),3) + "x" + vz + tv ;
+  }
+  var ftext = boardRef.current.create('text', [2005,270,fTextVal], {fontSize: 18, color:'#2B4163', cssStyle: 'background-color: rgb(255,255,255)'});
+
+
   },[])
+
 
 
   const createSlider = (sliderInfo: slider ) => {
@@ -140,6 +177,7 @@ export const LinearFit = ({meta, hints}: Props) =>{
   return(
     <Flex flexDirection="column" alignContent="center" flexWrap="wrap" width="100%" maxW="100%">
       <Box  
+          bgColor={bgBoardColor}
           rounded="2xl"
           shadow="lg"
           overflow="hidden"

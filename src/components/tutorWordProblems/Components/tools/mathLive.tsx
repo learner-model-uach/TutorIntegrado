@@ -70,23 +70,28 @@ const Mathfield = (props: MathEditorProps) => {
   return (
     <>
       <div onFocus={()=>{console.log("FOCUS!!!!!")}} ref={containerRef} style={{ maxWidth: '100%'} } />
-      <ButtonGroup>
-        <Button onClick={()=> {
-          mfe.focus()
-          mfe.executeCommand("moveToPreviousChar")
-        }}>
-          {'<'}
-        </Button>
-        <Button onClick={()=>{
-          mfe.focus()
-          mfe.executeCommand("moveToNextChar")
-        }}>
-          {'>'}
-        </Button>
-        <Button onClick={showVirtualKeyboard}>
-          {'Toggle Keyboard'}
-        </Button>
-      </ButtonGroup>
+      {
+        /**
+         <ButtonGroup>
+           <Button onClick={()=> {
+             mfe.focus()
+             mfe.executeCommand("moveToPreviousChar")
+           }}>
+             {'<'}
+           </Button>
+           <Button onClick={()=>{
+             mfe.focus()
+             mfe.executeCommand("moveToNextChar")
+           }}>
+             {'>'}
+           </Button>
+           <Button onClick={showVirtualKeyboard}>
+             {'Toggle Keyboard'}
+           </Button>
+         </ButtonGroup>
+         
+         */
+      }
 
     </>
   )
