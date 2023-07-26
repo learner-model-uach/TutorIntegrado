@@ -14,7 +14,8 @@ interface Props{
 }
 export const LinearFit = ({meta, hints}: Props) =>{
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)")
-  const {data, linearFunction, correctAnswer} = meta
+  const {data, linearFunction, correctAnswer, graphSettings} = meta
+  const positionTextEq = graphSettings.newAxis.yAxis.point1 ?? [0,0]
   const {m,b} = linearFunction
   const mSliderRef = useRef(null)
   const bSliderRef = useRef(null)
@@ -111,7 +112,7 @@ export const LinearFit = ({meta, hints}: Props) =>{
     };
     return "y = "+ JXG.toFixed(mval(),3) + "x" + vz + tv ;
   }
-  var ftext = boardRef.current.create('text', [2005,270,fTextVal], {fontSize: 18, color:'#2B4163', cssStyle: 'background-color: rgb(255,255,255)'});
+  var ftext = boardRef.current.create('text', [positionTextEq[0], positionTextEq[1],fTextVal], {fontSize: 18, color:'#2B4163', cssStyle: 'background-color: rgb(255,255,255)'});
 
 
   },[])
