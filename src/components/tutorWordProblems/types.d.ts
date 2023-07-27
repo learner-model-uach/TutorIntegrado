@@ -82,7 +82,7 @@ export enum components{
 export interface SelectionMeta {
   id:            number;
   answers:       SelectionAnswer[];
-  correctAnswer: number;
+  idCorrectAnswers: number;
   userSelectedAnswer?: number,
   isCorrectUserAnswer?: boolean
 }
@@ -95,13 +95,13 @@ export interface MathComponentMeta{
   readonly?: boolean
   expression: string
   answers: MathCompAnswer[]
-  correctAnswer: number[]
+  idCorrectAnswers: number[]
 }
 
 interface MathCompAnswer{
   id: number
   placeholderId: string
-  value: string | number
+  value: string 
 }
 interface GraphMeta{
   component: graphComponents

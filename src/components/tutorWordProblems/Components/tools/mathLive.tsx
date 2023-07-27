@@ -27,15 +27,24 @@ const Mathfield = (props: MathEditorProps) => {
   const currentValue = React.useRef<string>(''); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
   console.log("Renderizado mathLive")
   
+  
+  
   useEffect(() => { // ejecuta un efecto secundario cuando el componente se monta por primera vez
     console.log("renderizado useEffect mathlives")
     const container = containerRef.current!!;
     container.innerHTML = '';
     container.appendChild(mfe);
     mfe.className = props.className || '';
-    //mfe.mathVirtualKeyboardPolicy= 'manual'
+    mfe.mathVirtualKeyboardPolicy= "manual"
 
-    
+    /** 
+    mfe.addEventListener("focusin", (evt) => {
+      window.mathVirtualKeyboard.show()
+    });
+    */
+    mfe.addEventListener("focusout", (evt) =>{
+      window.mathVirtualKeyboard.hide()
+    })
     
     mfe.popoverPolicy = "auto" // If true a popover with suggestions may be displayed when a LaTeX command is input.
     
@@ -69,7 +78,12 @@ const Mathfield = (props: MathEditorProps) => {
   };
   return (
     <>
-      <div onFocus={()=>{console.log("FOCUS!!!!!")}} ref={containerRef} style={{ maxWidth: '100%'} } />
+      <div onTouchStart={(evt)=>evt.preventDefault()} onFocus={()=>{console.log("FOCUS!!!!!")}} ref={containerRef} style={{ maxWidth: '100%',userSelect: 'none',
+          MozUserSelect: 'none',
+          WebkitUserSelect: 'none',
+          msUserSelect: 'none',
+          touchAction:"none",
+          pointerEvents:"none"} } />
       {
         /**
          <ButtonGroup>

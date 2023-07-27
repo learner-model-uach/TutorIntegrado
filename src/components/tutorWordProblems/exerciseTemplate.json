@@ -54,7 +54,7 @@
                   "value":"Alternativa 2"
                 }
               ],
-              "correctAnswer": 0
+              "idCorrectAnswers": 0
             }
           },
           "kcs": ["KC1","KC2","KCN"],
@@ -81,7 +81,7 @@
                 "placeholderId":"a",
                 "value":"x"
               },
-              "correctAnswer": [1]
+              "idCorrectAnswers": [1]
             }
           },
           "kcs": ["KC1","KC2","KCN"],

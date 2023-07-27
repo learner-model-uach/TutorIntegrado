@@ -80,7 +80,7 @@
                   "value": "La superficie del glaciar ha disminuido en el tiempo"
                 }
               ],
-              "correctAnswer": 1
+              "idCorrectAnswers": 1
             }
           },
           "kcs": [],
@@ -115,7 +115,7 @@
                   "value": "El tiempo varía con respecto a la superficie del glaciar."
                 }
               ],
-              "correctAnswer":0
+              "idCorrectAnswers":0
             }
           },
           "kcs": ["IdVar"],
@@ -143,7 +143,7 @@
                   "value":"La variable dependiente es el tiempo y la independiente la        superficie del glaciar."
                 }
               ],
-              "correctAnswer":0
+              "idCorrectAnswers":0
             }
           },
           "kcs": ["IdVar"],
@@ -342,7 +342,7 @@
                   "value":"Que el área del glaciar crece en el tiempo."
                 }
               ],
-              "correctAnswer":0
+              "idCorrectAnswers":0
             }
           },
           "kcs": [],
@@ -378,7 +378,7 @@
                   "value": "2023"
                 }
               ],
-              "correctAnswer":[1]
+              "idCorrectAnswers":[1]
             }
           },
           "kcs": ["SusFor"],
@@ -413,7 +413,7 @@
                   "value":"227,46"
                 }
               ],
-              "correctAnswer":[0,1]
+              "idCorrectAnswers":[0,1]
             }
           },
           "kcs": ["AN"],
@@ -451,7 +451,7 @@
                   "value":"-0,8583"
                 }
               ],
-              "correctAnswer":[1,2]
+              "idCorrectAnswers":[1,2]
             }
           },
           "kcs": [],
@@ -486,7 +486,7 @@
                   "value":"1963,8"
                 }
               ],
-              "correctAnswer":[1]
+              "idCorrectAnswers":[1]
 
             }
           },
@@ -522,7 +522,7 @@
                   "value":"2133,61"
                 }
               ],
-              "correctAnswer":[1,2]
+              "idCorrectAnswers":[1,2]
             }
           },
           "kcs": ["DespVarEcu"],

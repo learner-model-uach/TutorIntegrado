@@ -48,7 +48,7 @@
                 "placeholderId":"a",
                 "value":"x"
               },
-              "correctAnswer": [1]
+              "idCorrectAnswers": [1]
             }
           },
           "kcs": ["KC1","KC2","KCN"],
@@ -75,7 +75,7 @@
                 "placeholderId":"a",
                 "value":"x"
               },
-              "correctAnswer": [1]
+              "idCorrectAnswers": [1]
             }
           },
           "kcs": ["KC1","KC2","KCN"],
@@ -102,7 +102,7 @@
                 "placeholderId":"a",
                 "value":"x"
               },
-              "correctAnswer": [1]
+              "idCorrectAnswers": [1]
             }
           },
           "kcs": ["KC1","KC2","KCN"],

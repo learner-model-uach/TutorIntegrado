@@ -14,12 +14,15 @@ export const useHint = (hints: Hint[],answerId: number ) =>{
   const [disabledPrevButton, setDisabledPrevButton] = useState(true)
   const [disabledNextButton, setDisabledNextButton] = useState(false)
   const [numHintsActivated, setNumHintsActivated] = useState(0); // Nuevo estado para el número de hints activados
+  const [unlockedAnswerIds, setUnlockedAnswerIds] = useState<number[]>([]);
 
 
-
+  
   const genericHints = hints.filter((hint) => !hint.associatedAnswer);
   const specificHints = hints.filter((hint) => hint.associatedAnswer);
 
+  console.log(genericHints)
+  console.log(specificHints)
   useEffect(() => {
     setTotalHints(unlockedHints.length);
   }, [unlockedHints]);
@@ -34,36 +37,44 @@ export const useHint = (hints: Hint[],answerId: number ) =>{
   },[currentHint, totalHints])
 
   const  nextHint = ()=>{
-    console.log("Siguiente Hint")
     currentHint< (totalHints-1) && setCurrentHint(currentHint+1)
   }
 
   const prevHint = () =>{
-    console.log("Hint previo")
     currentHint>0 && setCurrentHint(currentHint-1)
     
   }
 
-  const unlockHint = (hintId?: number) => {
-    if (hintId !== undefined) {
-      const hintToUnlock = genericHints.find((hint) => hint.hintId === hintId);
+  
+  const unlockHint = (answerId?: number) => {
+    console.log(unlockedAnswerIds)
+    if (answerId !== undefined && !unlockedAnswerIds.includes(answerId)) {
+      console.log("specificHint, HintId-->", answerId)
+      const hintToUnlock = specificHints.find((hint) => hint.associatedAnswer.some(idAssAnswer => idAssAnswer === answerId));
+      console.log("Hinttounlock",hintToUnlock)
       if (hintToUnlock) {
         setUnlockedHints((prevUnlockedHints) => [...prevUnlockedHints, hintToUnlock]);
-      }
-    } else {
-      //const nextGenericHint = genericHints.find((hint) => !unlockedHints.includes(hint));
-      const nextGenericHint = indUnlockedHint < genericHints.length ? genericHints[indUnlockedHint] : null
-      
-      console.log("nextGenericHint-->", nextGenericHint)
-      if (nextGenericHint) { // si hay un hint a mostrar
-        setIndUnlockedHint(indUnlockedHint+1) // actualizamos el indice para el siguiente hint
-        setCurrentHint(indUnlockedHint) // establecemos el hint a mostrar como el ultimo desbloqueado
-        setUnlockedHints((prevUnlockedHints) => [...prevUnlockedHints, nextGenericHint]);//agregamos el hint desbloqueado
+        setUnlockedAnswerIds((prevUnlockedAnswerIds) => [...prevUnlockedAnswerIds, answerId]);
         setNumHintsActivated((prevNumHintsActivated) => prevNumHintsActivated + 1); // Incrementar el número de hints activados
-
+        setCurrentHint(totalHints)
+        return
       }
+    } 
+    //const nextGenericHint = genericHints.find((hint) => !unlockedHints.includes(hint));
+    const nextGenericHint = indUnlockedHint < genericHints.length ? genericHints[indUnlockedHint] : null
+    
+    console.log("nextGenericHint-->", nextGenericHint)
+    if (nextGenericHint) { // si hay un hint a mostrar
+      setIndUnlockedHint(indUnlockedHint+1) // actualizamos el indice para el siguiente hint
+      setUnlockedHints((prevUnlockedHints) => [...prevUnlockedHints, nextGenericHint]);//agregamos el hint desbloqueado
+      setNumHintsActivated((prevNumHintsActivated) => prevNumHintsActivated + 1); // Incrementar el número de hints activados
+      setCurrentHint(totalHints) // establecemos el hint a mostrar como el ultimo desbloqueado
+
     }
+    
   };
+  
+
 
   const resetNumHintsActivated = () => {
     setNumHintsActivated(0);

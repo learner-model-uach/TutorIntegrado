@@ -29,7 +29,6 @@ import dynamic from "next/dynamic";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import { CardInfo } from "./infCard/informationCard";
-import GraphComp from "./Components/graphComponent";
 import JSXGraphComponent from "./Components/jsxGraphComponent";
  
 const SelectionComponent = dynamic(()=> import("./Components/answerSelection"),{
@@ -65,7 +64,6 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
             <Center width='100%' flexDirection="column" >
               {exercise.learningObjetives.title}
               <br/>
-              <GraphComp></GraphComp>
               
               
               <Box width='100%' bg='green' display='flex' justifyContent='center'>

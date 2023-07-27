@@ -16,7 +16,7 @@ interface Props{
 // Alternative selection component
 const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
   const [selectionMeta, setSelectionMeta] = useState(meta) // State containing the meta info
-  const [checked, setChecked] = useState(false)
+
   const {
     alertTitle,
     alertStatus,
@@ -39,13 +39,13 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number, event: React.MouseEvent<HTMLElement>) =>{
     // We compare if the selected alternative is correct
-    const isCorrectUserAnswer = answerIndex === selectionMeta.correctAnswer
+    const isCorrectUserAnswer = answerIndex === selectionMeta.idCorrectAnswers
      
     if (isCorrectUserAnswer){ // Update color, message and type of alert
       showAlert("😃", AlertStatus.success,correctMsg, null)
     }else{
-      showAlert("😕 ",AlertStatus.error,"Respuesta incorrecta!!")
-      unlockHint()
+      showAlert("😕 ",AlertStatus.error,"Respuesta incorrecta!!")      
+      unlockHint(answerIndex)
     }
     //setAlertHidden(false) // we make the alert visible
     setSelectionMeta( // Update of the question fields
@@ -82,10 +82,10 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
 
                   <Checkbox 
                     key={index} 
-                    icon={selectionMeta.correctAnswer === index ? <CheckIcon w={3} h={3}/> : <CloseIcon w={2} h={2}/>} 
+                    icon={selectionMeta.idCorrectAnswers === index ? <CheckIcon w={3} h={3}/> : <CloseIcon w={2} h={2}/>} 
                     isReadOnly={true} 
                     isChecked={selectionMeta.userSelectedAnswer === index}
-                    colorScheme={ selectionMeta.correctAnswer === index ? "green": "red"} 
+                    colorScheme={ selectionMeta.idCorrectAnswers === index ? "green": "red"} 
                     paddingRight={4}
                   />
                   <Text marginY={2}>
@@ -119,13 +119,13 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
 export default SelectionComponent
 
 const getBackgroundColor = (meta: SelectionMeta, index: number) => {
-  const { userSelectedAnswer, correctAnswer } = meta;
+  const { userSelectedAnswer, idCorrectAnswers } = meta;
 
   // Si el usuario no ha seleccionado respuesta
   if (userSelectedAnswer == null) return "transparent";
 
   // Si la respuesta es correcta
-  if (index === correctAnswer) {
+  if (index === idCorrectAnswers) {
     // Si el usuario seleccionó la respuesta correcta
     if (index === userSelectedAnswer) return "#C6F6D4"; // Colorear de verde
     return "transparent"; // Mantener transparente

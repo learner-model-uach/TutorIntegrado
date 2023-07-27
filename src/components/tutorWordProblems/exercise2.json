@@ -51,7 +51,7 @@
                   "value":"300"
                 }
               ],
-              "correctAnswer": [1,2,3,4]
+              "idCorrectAnswers": [1,2,3,4]
             }
           },
           "kcs": [],
@@ -90,7 +90,7 @@
                   "value":"El circuito se interrumpe por completo y dejaría de funcionar."
                 }
               ],
-              "correctAnswer": 1
+              "idCorrectAnswers": 1
             }
           },
           "kcs":[],
@@ -134,7 +134,7 @@
                   "value":"\\frac{1}{100}"
                 }
               ],
-              "correctAnswer":[1,2,3]
+              "idCorrectAnswers":[1,2,3]
             }
           },
           "kcs":["SusFor"],
@@ -165,7 +165,7 @@
                 }
 
               ],
-              "correctAnswer":[1]
+              "idCorrectAnswers":[1]
             }
           },
           "kcs":["SRFrac"],
@@ -201,7 +201,7 @@
                 }
 
               ],
-              "correctAnswer":[1,2]
+              "idCorrectAnswers":[1,2]
             }
           },
           "kcs":["DivFrac"],
@@ -250,7 +250,7 @@
                 }
 
               ],
-              "correctAnswer":[1,2,3]
+              "idCorrectAnswers":[1,2,3]
             }
           },
           "kcs":["ExpA"],
@@ -284,7 +284,7 @@
                   "value": "\\frac{3}{x}"
                 }
               ],
-              "correctAnswer":[1]
+              "idCorrectAnswers":[1]
             }
           },
           "kcs":["SRFrac"],
@@ -314,7 +314,7 @@
                   "value": "\\frac{x}{3}"
                 }
               ],
-              "correctAnswer":[1]
+              "idCorrectAnswers":[1]
             }
           },
           "kcs":["DivFrac"],
@@ -344,7 +344,7 @@
                   "value": "900"
                 }
               ],
-              "correctAnswer":[1]
+              "idCorrectAnswers":[1]
             }
           },
           "kcs":["DespVarEcu"],
