@@ -26,11 +26,13 @@ interface Answer {
 
 const MathComponent = ({meta, hints, correctMsg}: Props) => {
   const {expression, readonly, answers, idCorrectAnswers} = meta
-  const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
+  
+  //const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
   const answerStateRef = useRef<Answer[]>([]); // Utilizamos useRef para mantener una referencia mutable a answerState
 
   const [disabledButton, setDisabledButton] = useState(false)
   const mfe = useMemo(() => new MathfieldElement, [])
+  
 
   const correctAnswers = answers.filter((answ) => {
     return idCorrectAnswers.find((correctId) => correctId === answ.id);
@@ -120,6 +122,7 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
       value,
     }));
     console.log("answerStateRef->", answerStateRef.current)
+    
     //const entries = Object.entries(promptsValues) as [string,string][]
     //setAnswer(entries.map(([placeholderId,value])=>({placeholderId,value})))
 

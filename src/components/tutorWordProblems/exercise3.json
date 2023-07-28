@@ -220,11 +220,13 @@
           "hints":[
             {
               "hintId":0,
-              "hint": "Activar linea vertical"
+              "hint": "Activar linea vertical",
+              "graphinteractiveHint": true
             },
             {
               "hintId":1,
-              "hint": "Activar linea horizontal"
+              "hint": "Activar linea horizontal",
+              "graphinteractiveHint": true
             }
           ],
           "correctMsg": "Muy bien! seleccionaste el punto correcto!"

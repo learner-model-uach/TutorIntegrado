@@ -50,6 +50,17 @@ export interface Hint {
   hintId: number;
   hint:   string;
   associatedAnswer?: number[];
+  selectionPointHint?: selectionPointHint
+  linearFitHint?: linearFitHint
+}
+
+export interface selectionPointHint{
+  point1: number[]
+  point2: number[]
+
+}
+export interface linearFitHint{
+
 }
 
 export interface Table {

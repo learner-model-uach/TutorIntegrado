@@ -2,6 +2,7 @@ import {Box, Button, ButtonGroup, Circle, Popover, PopoverArrow, PopoverBody, Po
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import type { Hint } from "../types"
 import Latex from "react-latex-next"
+type InteractiveLineFunction = (hint: Hint) => void;
 
 interface Props{
   hints : Hint[]
@@ -11,7 +12,6 @@ interface Props{
   prevHint: () => void
   disabledPrevButton : boolean
   disabledNextButton : boolean
-  interactiveHint?: () => void
   numEnabledHints: number
   resetNumHintsActivated: ()=> void
   
@@ -24,7 +24,6 @@ const HintButton = (
     prevHint, 
     disabledPrevButton, 
     disabledNextButton,
-    interactiveHint,
     numEnabledHints = 0,
     resetNumHintsActivated
   }: Props) => {
@@ -69,7 +68,9 @@ const HintButton = (
         >
           <Box fontSize="sm" >Pista {currentHint+1} de {totalHints}</Box>
           <ButtonGroup size="sm">
-            {interactiveHint && <Button onClick={interactiveHint}>x</Button>}
+            {
+            //generateInteractiveLine && <Button onClick={()=> generateInteractiveLine}>x</Button>
+            }
             <Button variant="outline" onClick={prevHint} isDisabled={disabledPrevButton}>
               <ChevronLeftIcon color={popoverColor}/>
             </Button>

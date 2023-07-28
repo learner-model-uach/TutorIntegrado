@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { Hint } from "../types";
+import type { Hint } from "../types.d";
 
 
-export const useHint = (hints: Hint[],answerId: number ) =>{
+export const useHint = (hints: Hint[],answerId: number) =>{
 
   //const numberOfHints = hints.length
   const [indUnlockedHint, setIndUnlockedHint] = useState(0)
@@ -15,9 +15,9 @@ export const useHint = (hints: Hint[],answerId: number ) =>{
   const [disabledNextButton, setDisabledNextButton] = useState(false)
   const [numHintsActivated, setNumHintsActivated] = useState(0); // Nuevo estado para el número de hints activados
   const [unlockedAnswerIds, setUnlockedAnswerIds] = useState<number[]>([]);
-
-
   
+  const [lineShown, setLineShown] = useState(false);
+
   const genericHints = hints.filter((hint) => !hint.associatedAnswer);
   const specificHints = hints.filter((hint) => hint.associatedAnswer);
 
@@ -74,7 +74,7 @@ export const useHint = (hints: Hint[],answerId: number ) =>{
     
   };
   
-
+  
 
   const resetNumHintsActivated = () => {
     setNumHintsActivated(0);
@@ -91,6 +91,6 @@ export const useHint = (hints: Hint[],answerId: number ) =>{
     nextHint,
     prevHint,
     unlockHint,
-    resetNumHintsActivated
+    resetNumHintsActivated,
   }
 }

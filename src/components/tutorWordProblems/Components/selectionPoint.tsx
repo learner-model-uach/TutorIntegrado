@@ -1,10 +1,9 @@
 import { AlertStatus, Hint, selectPointerMeta } from "../types.d"
 import { useEffect, useRef, useState } from "react";
-import { Box, Button, ButtonGroup, Flex, useColorModeValue, useMediaQuery } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Flex, useMediaQuery } from "@chakra-ui/react";
 import ResAlert from "../Alert/responseAlert";
 import { useAlert } from "../hooks/useAlert";
 import { useBoard } from "../hooks/useBoard";
-import { Composition } from "jsxgraph";
 import HintButton from "../Hint/hint";
 import { useHint } from "../hooks/useHint";
 
@@ -27,6 +26,8 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
     showAlert} = useAlert("",AlertStatus.info,"",false,3000)
   const {boardId, boardRef,bgBoardColor, disableBoard} = useBoard("jxgbox",meta.graphSettings)
   
+
+
   const {
     unlockedHints,
     currentHint,
@@ -37,7 +38,7 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
     nextHint,
     prevHint,
     unlockHint,
-    resetNumHintsActivated
+    resetNumHintsActivated,
   } = useHint(hints,1)
   //al utilizar useEffect S/D se ejecuta una unica vez despues del primer renderizado del componente
   useEffect(()=>{ 
@@ -53,6 +54,7 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
   },[])
 
   useEffect(()=>{
+
     if(userAnswer.length !== 0){
       const answer = userAnswer.slice(-2)
       const isCorrect = answer.every((element, index)=> element === correctPoint[index])
@@ -78,6 +80,10 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
       boardRef.current.toFullscreen()
     }
   }
+
+
+ 
+ 
 
   return(
     <Flex flexDirection="column" alignContent="center" flexWrap="wrap" width="100%" maxW="100%" >
@@ -108,6 +114,7 @@ export const SelectionPoint = ({meta, hints}: Props)=>{
           disabledPrevButton={disabledPrevButton}
           disabledNextButton={disabledNextButton}
           numEnabledHints ={numHintsActivated}
+          //interactiveHint={activeLine(metaSelectPointHint.activeLine.point1,metaSelectPointHint.activeLine.point2)}
           resetNumHintsActivated={resetNumHintsActivated}
         ></HintButton>
 
