@@ -1,12 +1,9 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-//import { Ejercicio1 } from "./EjerciciosTH";
 import { MathComponent } from "../../MathJax";
-//import { Accordion,Card } from 'react-bootstrap';
 import { APstep1 } from "./steps/APstep1";
 import { APstep2 } from "./steps/APstep2";
 import { APstep3 } from "./steps/APstep3";
-//import thales_1 from "/Users/rmira/tutor-geometria/thales_1.png"
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";

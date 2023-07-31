@@ -294,7 +294,7 @@ export const TH1 = ({ exercise, topicId }) => {
 
         <AccordionItem isDisabled={select4}>
           <Alert
-            colorScheme={step3Valid == null ? (step2Valid == null ? "gray" : "blue") : "green"}
+            colorScheme={step4Valid == null ? (step3Valid == null ? "gray" : "blue") : "green"}
           >
             <AccordionButton
               onClick={() => {
@@ -357,12 +357,6 @@ export const TH1 = ({ exercise, topicId }) => {
       </Accordion>
       {step4Valid != null && (
         <>
-          {/*action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[1].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topicId,
-                  })*/}
           <VStack mt={2}>
             <Conclusion expression={exercise.conclusion} />
             <Summary4

@@ -154,7 +154,7 @@ export const TH2 = ({ exercise, topicId }) => {
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem isFocusable={true} isDisabled={select2}>
-          <Alert colorScheme={step2Valid == null ? "blue" : "green"}>
+          <Alert colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}>
             <AccordionButton
               onClick={() => {
                 if (index.some(element => element === 1)) {
@@ -214,7 +214,7 @@ export const TH2 = ({ exercise, topicId }) => {
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem isFocusable={true} isDisabled={select3}>
-          <Alert colorScheme={step2Valid == null ? "blue" : "green"}>
+          <Alert colorScheme={step3Valid == null ? (step2Valid == null ? "gray" : "blue") : "green"}>
             <AccordionButton
               onClick={() => {
                 if (index.some(element => element === 2)) {

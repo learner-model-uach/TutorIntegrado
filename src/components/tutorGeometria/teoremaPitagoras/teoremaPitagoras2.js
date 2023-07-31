@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { MathComponent } from "../../MathJax";
 import { TPstep1 } from "./steps/TPstep1";
 import { TPstep2 } from "./steps/TPstep2";
-import { TPstepF } from "./steps/TPstepF";
 import { Summary4 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
 import { Loading } from "../tools/Spinner";
@@ -29,17 +28,17 @@ import { useAction } from "../../../utils/action";
 import RatingQuestion from "../../RatingQuestion";
 
 export const TP2 = ({ exercise, topicId }) => {
-  const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
-  const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [step4Valid, setStep4Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
-  const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
-  const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
-  const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
+  const [step1Valid, setStep1Valid] = useState(null); 
+  const [step2Valid, setStep2Valid] = useState(null); 
+  const [step3Valid, setStep3Valid] = useState(null); 
+  const [step4Valid, setStep4Valid] = useState(null); 
+  const [index, setIndex] = useState([0]); 
+  const [select, setSelect] = useState(exercise.selectSteps); 
+  const [select2, setSelect2] = useState(exercise.selectSteps); 
+  const [select3, setSelect3] = useState(exercise.selectSteps); 
+  const [select4, setSelect4] = useState(exercise.selectSteps); 
+  const steps = exercise.steps.map(i => i.stepTitle); 
+  const [loading, setLoading] = useState(true); 
   const extras = { steps: {} };
   const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
   const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });

@@ -30,21 +30,21 @@ import { useAction } from "../../../utils/action";
 import RatingQuestion from "../../RatingQuestion";
 
 export const TP1 = ({ exercise, topicId }) => {
-  const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
-  const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [step4Valid, setStep4Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [step5Valid, setStep5Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [step6Valid, setStep6Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
-  const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
-  const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const [select4, setSelect4] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const [select5, setSelect5] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const [select6, setSelect6] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
-  const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
-  const [loading, setLoading] = useState(true); //loading icon when not charge the math formula
+  const [step1Valid, setStep1Valid] = useState(null); 
+  const [step2Valid, setStep2Valid] = useState(null);
+  const [step3Valid, setStep3Valid] = useState(null); 
+  const [step4Valid, setStep4Valid] = useState(null); 
+  const [step5Valid, setStep5Valid] = useState(null); 
+  const [step6Valid, setStep6Valid] = useState(null); 
+  const [index, setIndex] = useState([0]); 
+  const [select, setSelect] = useState(exercise.selectSteps); 
+  const [select2, setSelect2] = useState(exercise.selectSteps); 
+  const [select3, setSelect3] = useState(exercise.selectSteps); 
+  const [select4, setSelect4] = useState(exercise.selectSteps); 
+  const [select5, setSelect5] = useState(exercise.selectSteps); 
+  const [select6, setSelect6] = useState(exercise.selectSteps); 
+  const steps = exercise.steps.map(i => i.stepTitle); 
+  const [loading, setLoading] = useState(true); 
 
   const [submit, setSubmit] = useState(false);
   const [defaultIndex, setDefaultIndex] = useState([0]);
@@ -56,7 +56,6 @@ export const TP1 = ({ exercise, topicId }) => {
     fail: false,
     duration: 0,
   });
-  const [cdateE, setCdateE] = useState(Date.now());
   const extras = { steps: {} };
   const [extra1, setExtra1] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
   const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
@@ -70,37 +69,32 @@ export const TP1 = ({ exercise, topicId }) => {
   extras.steps[3] = extra4;
   extras.steps[4] = extra5;
   extras.steps[5] = extra6;
-  const action = useAction(); //send action to central system
+  const action = useAction(); 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
       setIndex([1]);
     }
   }, [step1Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step2Valid != null) {
       setIndex([2]);
     }
   }, [step2Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step3Valid != null) {
       setIndex([3]);
     }
   }, [step3Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step4Valid != null) {
       setIndex([4]);
     }
   }, [step4Valid]);
 
   useEffect(() => {
-    //when step 1 is completed, open new tab of step 2
     if (step5Valid != null) {
       setIndex([5]);
     }
@@ -116,8 +110,6 @@ export const TP1 = ({ exercise, topicId }) => {
         extra: extras,
       });
   }, [step6Valid]);
-
-  const change = () => setLoading(false); //function that disable loading icon when charge the math formula
 
   return (
     <>
@@ -354,7 +346,7 @@ export const TP1 = ({ exercise, topicId }) => {
                   <Center>
                     {!select4 && exercise.steps[3].stepTitle}
                     {step4Valid != null && !select4 && "✔ "}
-                    {select4 && step3Valid != null && (
+                    {select4 && step4Valid != null && (
                       <Wrap>
                         Paso 4:
                         <SelectStep
@@ -416,7 +408,7 @@ export const TP1 = ({ exercise, topicId }) => {
                   <Center>
                     {!select5 && exercise.steps[4].stepTitle}
                     {step5Valid != null && !select5 && "✔ "}
-                    {select5 && step4Valid != null && (
+                    {select5 && step5Valid != null && (
                       <Wrap>
                         Paso 4:
                         <SelectStep
@@ -437,18 +429,18 @@ export const TP1 = ({ exercise, topicId }) => {
           <AccordionPanel style={{ padding: 0 }}>
             {step4Valid != null && !select5 && (
               <TPstep1
-                step={exercise.steps[5]}
-                setStepValid={setStep4Valid}
-                stepValid={step4Valid}
+                step={exercise.steps[4]}
+                setStepValid={setStep5Valid}
+                stepValid={step5Valid}
                 contentID={exercise.code}
                 topicID={topicId}
-                extra={extra4}
-                setExtra={setExtra4}
+                extra={extra5}
+                setExtra={setExtra5}
               ></TPstep1>
             )}
           </AccordionPanel>
         </AccordionItem>
-        <AccordionItem isFocusable={true} isDisabled={select6}>
+        <AccordionItem isFocusable={true} isDisabled={select4}>
           <Alert
             colorScheme={step6Valid == null ? (step5Valid == null ? "gray" : "blue") : "green"}
           >
@@ -513,18 +505,16 @@ export const TP1 = ({ exercise, topicId }) => {
       </Accordion>
       {step6Valid != null && (
         <>
-          <VStack mt={2}>
-            <Conclusion expression={exercise.conclusion} />
-            <Summary6
-              expression={exercise.text}
-              step1={exercise.steps[0]}
-              step2={exercise.steps[1]}
-              step3={exercise.steps[2]}
-              step4={exercise.steps[3]}
-              step5={exercise.steps[4]}
-              step6={exercise.steps[5]}
-            />
-          </VStack>
+          <Conclusion expression={exercise.conclusion} />
+          <Summary6
+            expression={exercise.text}
+            step1={exercise.steps[0]}
+            step2={exercise.steps[1]}
+            step3={exercise.steps[2]}
+            step4={exercise.steps[3]}
+            step5={exercise.steps[4]}
+            step6={exercise.steps[5]}
+          />
           <RatingQuestion />
         </>
       )}

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
@@ -26,42 +26,40 @@ export const APstep3 = ({
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
-  var correct = false;
-
-  const compare = () => {
-    //contador de intentos
-    setAttempts(attempts + 1);
-
-    const responseStudent = [
-      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response3.current.value.replace(/[*]| /g, "").toLowerCase(),
-    ];
-    const validate = element => element[0] === responseStudent[0];
-    for (let i = 0; i < correctAlternatives.length; i++) {
-      let c = correctAlternatives[i];
-      if (c[0] == responseStudent[0] && c[1] == responseStudent[1] && c[2] == responseStudent[2]) {
-        correct = true;
-      }
-    }
+  const [correct, setCorrect] = useState(false);
+  useEffect(() => {
     if (correct) {
-      setStepValid((stepValid = step.answers[correctAlternatives.findIndex(validate)].nextStep));
+      setStepValid(step.answers[0].nextStep);
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;
       extra.lastHint = lastHint;
       setExtra(extra);
-    } else {
-      setError(true);
-      //error cuando la entrada es incorrecta
+    } else if (error) {
       setFeedbackMsg(
-        //error cuando la entrada es incorrecta
         <Alert status="error">
           <AlertIcon />
           {step.incorrectMsg}
         </Alert>,
       );
     }
+  }, [correct, error]);
+
+  const compare = () => {
+    setAttempts(attempts + 1);
+    const responseStudent = [
+      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response3.current.value.replace(/[*]| /g, "").toLowerCase()
+    ];
+    for (let i = 0; i < correctAlternatives.length; i++) {
+      let c = correctAlternatives[i];
+      if (c[0] == responseStudent[0] && c[1] == responseStudent[1] && c[2] == responseStudent[2]) {
+        setCorrect(true);
+        return;
+      }
+    }
+    setError(true);
   };
   return (
     <>

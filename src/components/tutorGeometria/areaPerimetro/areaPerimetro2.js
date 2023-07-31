@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MathComponent } from "../../MathJax";
 import { APstep1 } from "./steps/APstep1";
-import { APstep4 } from "./steps/APstep4";
-import { APstepF } from "./steps/APstepF";
+import { APstep2 } from "./steps/APstep2";
 
 import { Summary6 } from "../tools/Summary";
 import { Conclusion } from "../tools/Conclusion";
@@ -370,7 +369,7 @@ export const AP2 = ({ exercise, topicId }) => {
           </Alert>
           <AccordionPanel style={{ padding: 0 }}>
             {step3Valid != null && !select4 && (
-              <APstep4
+              <APstep2
                 step={exercise.steps[3]}
                 setStepValid={setStep4Valid}
                 stepValid={step4Valid}
@@ -378,7 +377,7 @@ export const AP2 = ({ exercise, topicId }) => {
                 topicID={topicId}
                 extra={extra4}
                 setExtra={setExtra4}
-              ></APstep4>
+              ></APstep2>
             )}
           </AccordionPanel>
         </AccordionItem>

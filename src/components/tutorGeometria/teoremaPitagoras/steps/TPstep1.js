@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
@@ -16,37 +16,35 @@ export const TPstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
   const [correct, setCorrect] = useState(false);
-  const compare = () => {
-    //contador de intentos
-    setAttempts(attempts + 1);
 
-    const responseStudent = [response1.current.value.replace(/[*]| /g, "").toLowerCase()];
-    const validate = element => element[0] === responseStudent[0];
-    for(let j=0;  j<correctAlternatives.length; j++){
-      if(correctAlternatives[j] == responseStudent[0]){
-        setCorrect(true);
-        break;
-      }
-    }
-
+  useEffect(() => {
     if (correct) {
-      setStepValid((stepValid = step.answers[0].nextStep));
+      setStepValid(step.answers[0].nextStep);
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;
       extra.lastHint = lastHint;
       setExtra(extra);
-    } else {
-      setError(true);
-      //error cuando la entrada es incorrecta
+    } else if (error) {
       setFeedbackMsg(
-        //error cuando la entrada es incorrecta
         <Alert status="error">
           <AlertIcon />
           {step.incorrectMsg}
         </Alert>,
       );
     }
+  }, [correct, error]);
+
+  const compare = () => {
+    setAttempts(attempts + 1);
+    const responseStudent = [response1.current.value.replace(/[*]| /g, '').toLowerCase()];
+    for (let j = 0; j < correctAlternatives.length; j++) {
+      if (correctAlternatives[j] == responseStudent[0]) {
+        setCorrect(true);
+        return; 
+      }
+    }
+    setError(true);
   };
   return (
     <>
@@ -68,7 +66,7 @@ export const TPstep1 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 fontWeight: "6000",
               }}
               size="sm"
-              w={100}
+              w={200}
               focusBorderColor="#9DECF9"
               ref={response1}
               isReadOnly={stepValid != null}

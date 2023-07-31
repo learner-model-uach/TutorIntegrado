@@ -1,14 +1,14 @@
 // @ts-nocheck
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
 export const TPstep2 = ({ step, setStepValid, stepValid, contentID, topicID, extra, setExtra }) => {
-  const response1 = useRef(null); //first input response
-  const response2 = useRef(null); //first input response
-  const response3 = useRef(null); //first input response
+  const response1 = useRef(null); 
+  const response2 = useRef(null); 
+  const response3 = useRef(null); 
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const correctAlternatives = step.answers.map(elemento => elemento.answer); //list of answers valid
@@ -17,41 +17,41 @@ export const TPstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
-  var correct = false;
-  const compare = () => {
-    //contador de intentos
-    setAttempts(attempts + 1);
+  const [correct, setCorrect] = useState(false);
 
-    const responseStudent = [
-      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
-      response3.current.value.replace(/[*]| /g, "").toLowerCase(),
-    ];
-    const validate = element => element[0] === responseStudent[0];
-    for (let i = 0; i < correctAlternatives.length; i++) {
-      let c = correctAlternatives[i];
-      if (c[0] == responseStudent[0] && c[1] == responseStudent[1] && c[2] == responseStudent[2]) {
-        correct = true;
-      }
-    }
+  useEffect(() => {
     if (correct) {
-      setStepValid((stepValid = step.answers[correctAlternatives.findIndex(validate)].nextStep));
+      setStepValid(step.answers[0].nextStep);
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;
       extra.lastHint = lastHint;
       setExtra(extra);
-    } else {
-      setError(true);
-      //error cuando la entrada es incorrecta
+    } else if (error) {
       setFeedbackMsg(
-        //error cuando la entrada es incorrecta
         <Alert status="error">
           <AlertIcon />
           {step.incorrectMsg}
         </Alert>,
       );
     }
+  }, [correct, error]);
+
+  const compare = () => {
+    setAttempts(attempts + 1);
+    const responseStudent = [
+      response1.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response2.current.value.replace(/[*]| /g, "").toLowerCase(),
+      response3.current.value.replace(/[*]| /g, "").toLowerCase(),
+    ];
+    for (let i = 0; i < correctAlternatives.length; i++) {
+      let c = correctAlternatives[i];
+      if (c[0] == responseStudent[0] && c[1] == responseStudent[1] && c[2] == responseStudent[2]) {
+        setCorrect(true);
+        return;
+      }
+    }
+    setError(true);
   };
   return (
     <>

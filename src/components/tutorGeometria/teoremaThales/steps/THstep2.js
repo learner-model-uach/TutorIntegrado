@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import Hint from "../../tools/Hint";
+import React, { useEffect, useRef, useState } from "react";
+import Hint from "../../../../components/Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
@@ -14,37 +14,36 @@ export const THstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
-  var correct = false;
-  const compare = () => {
-    //contador de intentos
-    setAttempts(attempts + 1);
-
-    const responseStudent = [response1.current.value.replace(/[*]| /g, "").toLowerCase()];
-    const validate = element => element[0] === responseStudent[0];
-    for (let i = 0; i < correctAlternatives.length; i++) {
-      let c = correctAlternatives[i];
-      if (c[0] == responseStudent[0]) {
-        correct = true;
-      }
-    }
+  const [correct, setCorrect] = useState(false);
+  useEffect(() => {
     if (correct) {
-      setStepValid((stepValid = step.answers[correctAlternatives.findIndex(validate)].nextStep));
+      setStepValid(step.answers[0].nextStep);
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;
       extra.lastHint = lastHint;
       setExtra(extra);
-    } else {
-      setError(true);
-      //error cuando la entrada es incorrecta
+    } else if (error) {
       setFeedbackMsg(
-        //error cuando la entrada es incorrecta
         <Alert status="error">
           <AlertIcon />
           {step.incorrectMsg}
         </Alert>,
       );
     }
+  }, [correct, error]);
+
+  const compare = () => {
+    setAttempts(attempts + 1);
+    const responseStudent = [response1.current.value.replace(/[*]| /g, "").toLowerCase()];
+    for (let i = 0; i < correctAlternatives.length; i++) {
+      let c = correctAlternatives[i];
+      if (c[0] == responseStudent[0]) {
+        setCorrect(true);
+        return;
+      }
+    }
+    setError(true);
   };
   return (
     <>
@@ -66,7 +65,7 @@ export const THstep2 = ({ step, setStepValid, stepValid, contentID, topicID, ext
                 fontWeight: "6000",
               }}
               size="sm"
-              w={100}
+              w={200}
               focusBorderColor="#9DECF9"
               ref={response1}
               isReadOnly={stepValid != null}
