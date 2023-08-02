@@ -59,28 +59,26 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
     disabledNextButton,
     numHintsActivated,
     unlockHint,
-    resetNumHintsActivated} = useHint(hints,1)
+    resetNumHintsActivated} = useHint(hints)
 
   const checkAnswer = () => {
-
     try{      
       const isEmpty = answerStateRef.current.some(userAnswer => userAnswer.value === "")
-
       if(isEmpty){
         showAlert("", AlertStatus.warning, "Debes completar todos los recuadros!")
         return 
       }
-
       let allCorrect = true
       let genericHint = true
       answerStateRef.current.forEach((userAnswer) =>{
         // comprobar si userAnswer.value hace match con alguna respuesta en correctAnswers, si no, comprobar si hace match en otherAnswer
         const isCorrect = correctAnswers.some(corrAnswer => corrAnswer.value.replace(/ /g, '') === userAnswer.value)
-        //console.log("corrAns-->",correctAnswers)
         if(isCorrect){
           mfe.setPromptState(userAnswer.placeholderId,"correct",true)
         }
         else{
+          allCorrect=false
+          mfe.setPromptState(userAnswer.placeholderId, "incorrect", false);
           const isOther = otherAnswers.find((otherAnswer) => otherAnswer.value.replace(/ /g, '') === userAnswer.value)
           if(isOther){
             //TODO aplicar logica de hint para una respuesta especifica
@@ -90,13 +88,8 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
           else{
             // TODO activar hint generico
           }
-          allCorrect=false
-          mfe.setPromptState(userAnswer.placeholderId, "incorrect", false);
-
         }
-        
       })
-
       if (allCorrect) {
         showAlert("😃", AlertStatus.success, correctMsg, null);
         setDisabledButton(true); // set disabled status
@@ -104,29 +97,15 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
         showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
         genericHint && unlockHint();
       }
-
-    }
-    catch (error){
-      console.log(error)
-    }
-    
-  };
+    }catch (error){console.log(error)}
+  }
   
   const handleMathFieldChange = (latex, promptsValues) => {
-    // ... hacer algo con mfeInstance
-    console.log("promptsValues--->", promptsValues)
     const entries = Object.entries(promptsValues) as [string, string][];
-    
     answerStateRef.current = entries.map(([placeholderId, value]) => ({
       placeholderId,
       value,
     }));
-    console.log("answerStateRef->", answerStateRef.current)
-    
-    //const entries = Object.entries(promptsValues) as [string,string][]
-    //setAnswer(entries.map(([placeholderId,value])=>({placeholderId,value})))
-
-    
   }
   return(
     <Flex flexDirection='column' >

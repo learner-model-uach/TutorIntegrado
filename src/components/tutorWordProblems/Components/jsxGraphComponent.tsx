@@ -1,7 +1,5 @@
-import React from "react";
-import { Button } from "@chakra-ui/react";
 import { graphComponents, GraphMeta, Hint, linearFitMeta, selectPointerMeta } from "../types.d";
-import { SelectionPoint } from "./selectionPoint";
+import { SelectPoint } from "./selectPoint";
 import { LinearFit } from "./linearFit";
 
 interface Props{
@@ -10,19 +8,14 @@ interface Props{
 }
 
 const JSXGraphComponent = ( {meta, hints}:Props) => {
-  
-
-
   return (
     <>
       {meta.component === graphComponents.selectPoint 
-        ? <SelectionPoint meta={meta.metaComponent as selectPointerMeta} hints={hints} ></SelectionPoint>
+        ? <SelectPoint meta={meta.metaComponent as selectPointerMeta} hints={hints} ></SelectPoint>
         : meta.component === graphComponents.linearFit
         ? <LinearFit meta={meta.metaComponent as linearFitMeta} hints={hints}></LinearFit>
         : <h1>OTRO COMPONENTE GRAFICO</h1>
-        
       }
-   
     </>
   );
 };

@@ -4,7 +4,6 @@ export interface Exercise {
   type:              string;
   presentation:      Presentation;
   learningObjetives: LearningObjetives;
-  meta:              Meta;
   statement:         string;
   mathExpression?:    string;
   img?:               string;
@@ -19,8 +18,6 @@ export interface LearningObjetives {
   listObj: string[];
 }
 
-export interface Meta {
-}
 
 export interface Presentation {
   title:  string;
@@ -91,7 +88,7 @@ export enum components{
 }
 
 export interface SelectionMeta {
-  id:            number;
+  //id:            number;
   answers:       SelectionAnswer[];
   idCorrectAnswers: number;
   userSelectedAnswer?: number,
@@ -102,7 +99,7 @@ interface SelectionAnswer{
   value: string
 }
 export interface MathComponentMeta{
-  id: number
+  //id: number
   readonly?: boolean
   expression: string
   answers: MathCompAnswer[]
@@ -147,16 +144,12 @@ interface slider{
   precision: number
   name: string
 }
-interface selectPointerMeta {
-  data: point[]
-  correctPoint: number[]
-  graphSettings:  settings
-}
+
 
 interface settings{
   originAxis?: boolean
   bounding?: bounding
-  maxBounding?: maxBounding
+  maxBounding?: bounding
   newAxis? : axisSettings
   activeZoom: boolean
 }
@@ -174,18 +167,16 @@ interface Axis{
   labelOffset: number[],
   labelFontSize: number
 }
-
 interface bounding{
   X1: number
   Y1: number
   X2: number
   Y2: number
 }
-interface maxBounding{
-  X1: number
-  Y1: number
-  X2: number
-  Y2: number
+interface selectPointerMeta {
+  data: point[]
+  correctPoint: number[]
+  graphSettings:  settings
 }
 interface point{
   coord: number[]

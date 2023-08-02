@@ -43,7 +43,7 @@ export const LinearFit = ({meta, hints}: Props) =>{
     nextHint,
     prevHint,
     unlockHint,
-    resetNumHintsActivated} = useHint(hints,1)
+    resetNumHintsActivated} = useHint(hints)
 
   // Definir las variables mval y bval antes del useEffect
   let mval: (() => number) 
@@ -53,67 +53,55 @@ export const LinearFit = ({meta, hints}: Props) =>{
     data.forEach(point =>{
       const isStatic = point?.isStatic ?? true
       const facePoint = point?.face ?? "circle"
-      const p = boardRef.current.create("point",point.coord,{name: point?.name,color: point?.color, fixed: isStatic, face: facePoint  })
-      p.on("down", ()=>{
-        console.log("coordenadas---->",p.coords.usrCoords)
-        //setUserAnswer(p.coords.usrCoords)
-      })
+      boardRef.current.create("point",point.coord,{name: point?.name,color: point?.color, fixed: isStatic, face: facePoint  })
     })
     
-  if(m.slider && b.slider){
-    const mSlider = createSlider(m.slider)
-    const bSlider = createSlider(b.slider)
-
-    mSliderRef.current = mSlider
-    bSliderRef.current = bSlider
-
-    mval = () => mSlider.Value()
-    bval = () => bSlider.Value()
-  } 
-  else if (m.slider && !b.slider){
-    const mSlider = createSlider(m.slider)
-
-    mSliderRef.current = mSlider
-
-    mval = () => mSlider.Value()
-    bval = () => b?.value
-
-   } 
-   else if (!m.slider && b.slider){
-    const bSlider = createSlider(b.slider)
-
-    bSliderRef.current = bSlider
-
-    mval = () => m?.value
-    bval = () => bSlider.Value()
-
-   }
-
-   //const linF = (x) => {mval()  *x + bval()}
-   const linF = function(x){return mval()*x + bval()}
-   var G = boardRef.current.create('functiongraph',[linF], {strokeWidth: 2});
-
-   
-   const fTextVal = () => {
-    var vz = "";
-    var tv = "";
-    if (bval() >= 0.0){
-      if (bval() == 0.0){
-        tv = ""; 
-        vz = "";
-      }else {
-        vz = "+" 
-        tv = JXG.toFixed(bval(),1)
-      }
+    if(m.slider && b.slider){
+      const mSlider = createSlider(m.slider)
+      const bSlider = createSlider(b.slider)
+      mSliderRef.current = mSlider
+      bSliderRef.current = bSlider
+      mval = () => mSlider.Value()
+      bval = () => bSlider.Value()
+    } 
+    else if (m.slider && !b.slider){
+      const mSlider = createSlider(m.slider)
+      mSliderRef.current = mSlider
+      mval = () => mSlider.Value()
+      bval = () => b?.value
+    } 
+    else if (!m.slider && b.slider){
+      const bSlider = createSlider(b.slider)
+      bSliderRef.current = bSlider
+      mval = () => m?.value
+      bval = () => bSlider.Value()
     }
-    else{
-      vz = ""
-      tv = JXG.toFixed(bval(),1)
-    };
-    return "y = "+ JXG.toFixed(mval(),3) + "x" + vz + tv ;
-  }
-  var ftext = boardRef.current.create('text', [positionTextEq[0], positionTextEq[1],fTextVal], {fontSize: 18, color:'#2B4163', cssStyle: 'background-color: rgb(255,255,255)'});
 
+    
+    const linF = function(x){return mval()*x + bval()}
+    var G = boardRef.current.create('functiongraph',[linF], {strokeWidth: 2});
+    const fTextVal = () => {
+      var vz = "";
+      var tv = "";
+      if (bval() >= 0.0){
+        if (bval() == 0.0){
+          tv = ""; 
+          vz = "";
+        }else {
+          vz = "+" 
+          tv = JXG.toFixed(bval(),1)
+        }
+      }
+      else{
+        vz = ""
+        tv = JXG.toFixed(bval(),1)
+      };
+      return "y = "+ JXG.toFixed(mval(),3) + "x" + vz + tv ;
+    }
+    var ftext = boardRef.current.create(
+      'text', 
+      [positionTextEq[0], positionTextEq[1],fTextVal], 
+      {fontSize: 18, color:'#2B4163', cssStyle: 'background-color: rgb(255,255,255)'})
 
   },[])
 
@@ -144,29 +132,26 @@ export const LinearFit = ({meta, hints}: Props) =>{
       ? true // si es undefined => no es un Slider y se retorna true (no hay nada que comprobar)
       : checkSliderValue(mvalue, correctAnswer.mCorrect as [number, number]);
 
-  const bIsCorrect =
-    bvalue === undefined 
-      ? true 
-      : checkSliderValue(bvalue, correctAnswer.bCorrect as [number, number]);
+    const bIsCorrect =
+      bvalue === undefined 
+        ? true 
+        : checkSliderValue(bvalue, correctAnswer.bCorrect as [number, number]);
 
 
 
-  if (mIsCorrect && bIsCorrect) {
-    console.log("¡Respuesta correcta en ambos casos!");
-    showAlert("😃", AlertStatus.success,"Muy bien!", null)
-    setDisabledButton(true)
-    disableBoard()
-  } else {
-    console.log("Respuesta incorrecta");
-    showAlert("😕", AlertStatus.error,"Respuesta Incorrecta")
-    unlockHint()
+    if (mIsCorrect && bIsCorrect) {
+      console.log("¡Respuesta correcta en ambos casos!");
+      showAlert("😃", AlertStatus.success,"Muy bien!", null)
+      setDisabledButton(true)
+      disableBoard()
+    } else {
+      console.log("Respuesta incorrecta");
+      showAlert("😕", AlertStatus.error,"Respuesta Incorrecta")
+      unlockHint()
+    }
   }
-  }
 
-  const checkSliderValue = (
-    sliderValue: number,
-    correctRange: [number, number] 
-  ) => {
+  const checkSliderValue = (sliderValue: number,correctRange: [number, number] ) => {
     return correctRange[0] <= sliderValue && sliderValue <= correctRange[1];
   };
 
@@ -202,7 +187,7 @@ export const LinearFit = ({meta, hints}: Props) =>{
             nextHint={nextHint}
             disabledPrevButton={disabledPrevButton}
             disabledNextButton={disabledNextButton}
-            interactiveHint={handleHintClick}
+            //interactiveHint={handleHintClick}
             numEnabledHints= {numHintsActivated}
             resetNumHintsActivated={resetNumHintsActivated}
         ></HintButton>

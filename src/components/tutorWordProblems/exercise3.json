@@ -18,7 +18,7 @@
       },
       {
         "align":"center",
-        "value":"Superficie del glaciar (km^2)"
+        "value":"Superficie del glaciar (km$^2$)"
       }],
     "rows": [
       {
@@ -56,7 +56,7 @@
       }
     ],
     "alignRows": "center",
-    "tableCaption": "Áreas en km^2 por año del glaciar Grey "
+    "tableCaption": "Áreas en km$^2$ por año del glaciar Grey "
   },
   "text": "",
   "questions": [
@@ -88,6 +88,10 @@
             {
               "hintId":0,
               "hint": "Revisa como varía la superficie del glaciar a medida que transcurre el tiempo"
+            },
+            {
+              "hintId":1,
+              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar ha disminuido en el tiempo. "
             }
           ],
           "correctMsg": "Muy bien! La superficie del glaciar ha disminuido a lo largo del tiempo."
@@ -108,7 +112,7 @@
               "answers":[
                 {
                   "id": 0,
-                  "value": "La superficie del glaciar varia con respecto al tiempo."
+                  "value": "La superficie del glaciar varía con respecto al tiempo."
                 },
                 {
                   "id":1,
@@ -123,6 +127,10 @@
             {
               "hintId":0,
               "hint": "Identifica la variable que varía con respecto a la otra variable."
+            },
+            {
+              "hintId":1,
+              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar varía con respecto al tiempo. "
             }
           ]
         },
@@ -175,28 +183,14 @@
                     "isStatic":false,
                     "face":"cross"
                   },
-                  {
-                    "coord": [1998,247.23]
-                  },
-                  {
-                    "coord": [2016,234.14]
-                  }
+                  {"coord": [1998,247.23]},
+                  {"coord": [2016,234.14]}
                 ],
                 "correctPoint": [1998,247.23],
                 "graphSettings":{
                   "originAxis":false,
-                  "bounding": {
-                    "X1": 1970,
-                    "Y1": 280,
-                    "X2": 2030,
-                    "Y2": 190
-                  },
-                  "maxBounding":{
-                    "X1": 1960,
-                    "Y1": 300,
-                    "X2": 2050,
-                    "Y2": 180
-                  },
+                  "bounding": {"X1": 1970,"Y1": 280,"X2": 2030,"Y2": 190},
+                  "maxBounding":{"X1": 1960,"Y1": 300,"X2": 2050,"Y2": 180},
                   "newAxis": {
                     "xAxis":{
                       "point1": [1979, 200],
@@ -242,13 +236,7 @@
               "component":"linearFit",
               "metaComponent":{
                 "data": [
-                  {
-                    "coord": [1979,265.05],
-                    "name":"Punto1",
-                    "color": "green",
-                    "isStatic":false,
-                    "face":"cross"
-                  },
+                  {"coord": [1979,265.05]},
                   {"coord": [1984,260.98]},
                   {"coord": [1986,260.11]},
                   {"coord": [1989,258.76]},
@@ -263,18 +251,8 @@
                 ],
                 "graphSettings":{
                   "originAxis":false,
-                  "bounding": {
-                    "X1": 1970,
-                    "Y1": 280,
-                    "X2": 2030,
-                    "Y2": 190
-                  },
-                  "maxBounding":{
-                    "X1": 1960,
-                    "Y1": 300,
-                    "X2": 2050,
-                    "Y2": 180
-                  },
+                  "bounding": {"X1": 1970,"Y1": 280,"X2": 2030,"Y2": 190},
+                  "maxBounding":{"X1": 1960,"Y1": 300,"X2": 2050,"Y2": 180},
                   "newAxis": {
                     "xAxis":{
                       "point1": [1979, 200],
@@ -304,13 +282,9 @@
                       "name": "m"
                     }                
                   },
-                  "b":{
-                    "value": 1963.8
-                  }
+                  "b":{"value": 1963.8}
                 },
-                "correctAnswer":{
-                  "mCorrect": [-0.860, -0.857]
-                }
+                "correctAnswer":{"mCorrect": [-0.860, -0.857]}
               }
             }
           },
@@ -413,6 +387,11 @@
                   "id":1,
                   "placeholderId":"b",
                   "value":"227,46"
+                },
+                {
+                  "id":2,
+                  "placeholderId":"b",
+                  "value":"227,4591"
                 }
               ],
               "idCorrectAnswers":[0,1]
@@ -422,10 +401,23 @@
           "hints":[
             {
               "hintId":0,
-              "hint": "La respuesta es 227,46."
+              "hint": "Realiza la multiplicación de $-0,8583 \\cdot 2023$ , ingresa el valor en el primer recuadro y realiza la suma. "
+            },
+            {
+              "hintId":1,
+              "hint": "El valor de la multiplicación de $-0,8583 \\cdot 2023$ es de: $$-1736,34$$"
+            },
+            {
+              "hintId":2,
+              "hint": "Debes ingresar el resultado redondeado a 2 decimales.",
+              "associatedAnswer":[2]
+            },
+            {
+              "hintId":3,
+              "hint": "La respuesta es: $$\\begin{align*} y & = \\textcolor{green}{-1736,34} + 1963,8 \\\\ y & = \\textcolor{green}{227,46} \\end{align*} $$"
             }
           ],
-          "correctMsg": "Muy bien! Por lo tanto, en el año 2023 la superficie del glaciar sería de 227,4591 $km^2$"
+          "correctMsg": "Muy bien! Por lo tanto, en el año 2023 la superficie del glaciar sería de 227,46 $km^2$"
         }
       ]
     },
@@ -468,7 +460,7 @@
             },
             {
               "hintId":2,
-              "hint": "La respuesta es: $$\\frac{265,05}{2} = -0,8583 \\cdot t + 1963,8 $$"
+              "hint": "La respuesta es: $$\\textcolor{green}{\\frac{265,05}{2} } = \\textcolor{green}{-0,8583} \\cdot t + 1963,8 $$"
             }
           ]
         },

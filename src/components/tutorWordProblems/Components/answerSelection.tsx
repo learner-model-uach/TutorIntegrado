@@ -34,7 +34,7 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
     prevHint,
     nextHint,
     unlockHint,
-    resetNumHintsActivated} = useHint(hints,1)// aca me quede
+    resetNumHintsActivated} = useHint(hints)// aca me quede
 
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number, event: React.MouseEvent<HTMLElement>) =>{

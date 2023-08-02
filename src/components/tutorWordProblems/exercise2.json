@@ -62,7 +62,7 @@
             },
             {
               "hintId":1,
-              "hint":"La respuesta es 300 ohm"
+              "hint":"La respuesta es: $$\\begin{align*} R_{serie} & = \\textcolor{green}{100} + \\textcolor{green}{100} + \\textcolor{green}{100} \\\\ & R_{serie} = \\textcolor{green}{300} ohm  \\end{align*}$$"
             }
             
           ],
@@ -98,6 +98,10 @@
             {
               "hintId":0,
               "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
+            },
+            {
+              "hintId":1,
+              "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
             }
           ]
         }
@@ -132,6 +136,11 @@
                   "id":3,
                   "placeholderId":"c",
                   "value":"\\frac{1}{100}"
+                },
+                {
+                  "id":4,
+                  "placeholderId":"a",
+                  "value":"100"
                 }
               ],
               "idCorrectAnswers":[1,2,3]
@@ -145,6 +154,11 @@
             },
             {
               "hintId":1,
+              "hint": "Revisa bien la formula, recuerda que debes ingresar la inversa de las resistencias individuales, es decir: $$\\frac{1}{R}$$",
+              "associatedAnswer":[4]
+            },
+            {
+              "hintId":2,
               "hint": "La respuesta es: $$R_{eq} = \\frac{1}{\\frac{1}{100} + \\frac{1}{100} + \\frac{1}{100}}$$"
             }
           ]

@@ -65,7 +65,7 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
               {exercise.learningObjetives.title}
               <br/>
               
-              
+  
               <Box width='100%' bg='green' display='flex' justifyContent='center'>
                 hola
               </Box>
@@ -76,29 +76,25 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
           <TabPanel>
             <Flex flexDirection='column' alignItems='center'>
               {exercise.statement 
-              && <Box textAlign='left'>{exercise.statement}</Box> 
+              && <Latex strict>{exercise.statement}</Latex> 
               }
               {exercise.table 
               && 
-              <Box
-              marginY={5}
-              shadow="sm"
-              rounded="lg"
-              w="auto"
-              overflowX="auto"
-              >
-                <Table 
-                variant="striped"     
-                size='sm'
-                borderColor={textColor}
-                >
-                  <TableCaption>{exercise.table.tableCaption}</TableCaption>
+              <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
+                <Table variant="striped" size='sm' borderColor={textColor}>
+                  <TableCaption>
+                    <Latex>
+                      {exercise.table.tableCaption}
+                    </Latex>
+                  </TableCaption>
                   <Thead bgColor={bg}>
                     <Tr>
                       {exercise.table.header.map((head, index) =>{
                         return(
                           <Th key={index} textAlign={head.align as textAlign } color='white' fontWeight="bold">
-                            {head.value}
+                            <Latex>
+                              {head.value}
+                            </Latex>
                           </Th>
                         )
                       })}
@@ -144,7 +140,10 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                       <h2>
                         <AccordionButton>
                           <Box as="span" flex="1" textAlign="left">
-                            {(ques.questionId+1)+". "+ ques.question}
+                            
+                            <Latex>
+                              {(ques.questionId+1)+". "+ ques.question}
+                            </Latex>
                           </Box>
                           <AccordionIcon/>
                     
@@ -153,11 +152,11 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                       <AccordionPanel bg={bgContentColor}>
                         {ques.steps.map((step,index) => {
                           return(
-                            <Accordion allowMultiple key={index}  >
+                            <Accordion allowMultiple key={index} paddingBottom={2} >
                               {step.stepExplanation && 
                               <CardInfo text={step.stepExplanation}  bgColor= {explanationBgColor} hideCard={false}></CardInfo>
                               }
-                              <AccordionItem bgColor={itemBgColor} isDisabled={false}>
+                              <AccordionItem bgColor={itemBgColor} isDisabled={false}  >
                                 <h2>
                                   <AccordionButton _expanded={{ bg: '#2B4264', color: 'white' }}>
                                     <Box as="span" flex="1" textAlign="left">

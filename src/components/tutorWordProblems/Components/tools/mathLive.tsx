@@ -28,7 +28,8 @@ const Mathfield = (props: MathEditorProps) => {
   mfe.readOnly = props.readOnly ?? true;
   //mfe.disabled = false
   var size = isScreenLarge ? 6 : 3
-  mfe.applyStyle({fontSize: size as FontSize}, {operation:"set", range:[0,-1]})
+  
+  mfe.applyStyle({fontSize: size as FontSize }, {operation:"set", range:[0,-1]})
   const currentValue = React.useRef<string>(''); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
   
   console.log("Renderizado mathLive")

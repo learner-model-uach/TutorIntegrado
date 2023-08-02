@@ -12,7 +12,7 @@
 
   },
   "meta": {},
-  "statement":"El gobierno de Chile realiza un seguimiento de la cantidad de emisiones de gases de efecto invernadero (GEI) en gramos de C02 de los principales sectores contribuyentes en la emisión y absorción de GEI. La siguiente tabla muestra los valores reales en Chile de las emisiones y absorción de los cuatro principales sectores en 2013:",
+  "statement":"El gobierno de Chile realiza un seguimiento de la cantidad de emisiones de gases de efecto invernadero (GEI) en gramos de CO$_2$ de los principales sectores contribuyentes en la emisión y absorción de GEI. La siguiente tabla muestra los valores reales en Chile de las emisiones y absorción de los cuatro principales sectores en 2013:",
   "table": { 
     "header": [
       {
@@ -21,35 +21,35 @@
       },
       {
         "align":"center",
-        "value":"Co2 Neto"
+        "value":"CO$_2$ Neto"
       }],
     "rows": [
       {
-        "data": ["Energía", "$8,18231*10^{13}$"]
+        "data": ["Energía", "$8,18231*10^{13}$ gr"]
       },
       {
-        "data": ["Procesos Industriales", "$4,3602*10^{12}$"]
+        "data": ["Procesos Industriales", "$4,3602*10^{12}$ gr"]
       },
       {
-        "data": ["Usos de la tierra (Agricultura, Silvicultura y otros )","$-3.9915*10^{13}$"]
+        "data": ["Usos de la tierra (Agricultura, Silvicultura y otros )","$-3.9915*10^{13}$ gr"]
       },
       {
-        "data": ["Residuos", "$3*10^8$"]
+        "data": ["Residuos", "$3*10^8$ gr"]
       }
     ],
     "alignRows":"left",
-    "tableCaption": "Tabla: Niveles de CO2 por sector en Chile durante el año 2013 "
+    "tableCaption": "Tabla: Niveles de CO$_{2}$ en gramos por sector en Chile durante el año 2013 "
   },
-  "text": "Los numeros positivos representan emisiones de GEI, mientras que los negativos representan absorciones de GEI $$\\newline \\newline$$ A partir de la tabla anterior nos gustaria identificar: ",
+  "text": "Los números positivos representan emisiones de GEI, mientras que los negativos representan absorciones de GEI. $$\\newline \\newline$$ A partir de la tabla anterior nos gustaria identificar: ",
   "questions":[
     {
       "questionId": 0,
-      "question": "¿Qué sector emite más CO2, contribuyendo mayormente a la contaminación?",
+      "question": "¿Qué sector emite más CO$_2$, contribuyendo mayormente a la contaminación?",
       "steps": [
         {
           "stepId": 0,
           "stepTitle": "Selecciona la alternativa correcta",
-          "stepExplanation":"Recordatorio: La notación cientifica describe números basados en potencia de 10. Su forma es: $$m x 10^n$$ Donde $m$ es un número decimal cuya parte entera tiene una sola cifra distinta de cero y $10^n$ es una potencia de exponente entero",
+          "stepExplanation":"Recordatorio: La notación cientifica describe números basados en potencia de 10. Su forma es: $$m \\cdot 10^n$$ Donde $m$ es un número decimal cuya parte entera tiene una sola cifra distinta de cero y $10^n$ es una potencia de exponente entero",
           "componentToAnswer": {
             "nameComponent":"selectionComponent",
             "meta":{
@@ -77,19 +77,19 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Para identificar si un valor, descrito en notación científica, aumente una cantidad, debes observar que su parte decimal (𝑚) sea positiva. "
+              "hint": "Debes observar que su parte decimal (𝑚) sea positiva. "
             },
-            {
+             {
               "hintId":1,
               "hint":"Para identificar entre números en notación científica, cual valor es mayor, debes observar aquel con mayor exponente (𝑛). "
             },
             {
               "hintId":2,
-              "hint": "La respuesta es: Energía."
+              "hint": "El sector que más contribuye a la contaminación es el sector de $\\textcolor{Green}{Energía}$, ya que tiene un número decimal positivo y el mayor exponente."
             },
             {
               "hintId":3,
-              "hint":"Revisa el signo",
+              "hint":"Revisa el signo.",
               "associatedAnswer":[0]
             }
             
@@ -100,7 +100,7 @@
     },
     {
       "questionId": 1,
-      "question": "¿Qué sector absorbe CO2, disminuyendo la contaminación? ",
+      "question": "¿Qué sector absorbe CO$_2$, disminuyendo la contaminación? ",
       "steps": [
         {
           "stepId": 0,
@@ -132,11 +132,11 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": " Para identificar si un valor, descrito en notación científica, disminuya una cantidad, debes observar que su parte decimal (𝑚) sea negativa."
+              "hint": "Los valores positivos contribuyen a la contaminación, mientras que los valores negativos absorben."
             },
             {
               "hintId":1,
-              "hint": "La respuesta es: Usos de la tierra."
+              "hint": "El sector que absorve CO$_2$ es el sector de $\\textcolor{Green}{Usos de la tierra}, ya que es el único sector con valores negativos.$"
             }
           ],
           "correctMsg": "Muy bien!! El sector de Usos de la tierra es el sector que absorbe $CO_2$ "
@@ -145,12 +145,12 @@
     },
     {
       "questionId": 2,
-      "question": "Convierte los valores de CO2 de los sectores en potencias de 10^9",
+      "question": "Convierte los valores de CO$_2$ de los sectores en potencias de $10^9$",
       "steps": [
         {
           "stepId": 0,
           "stepTitle": "Convertir datos del sector Procesos industriales.",
-          "stepExplanation": "Ahora nos interesa conocer el balance de emisiones y absorciones de GEI. $$\\newline$$ Para ello lo primero que debemos hacer es convertir los datos a la misma potencia para poder operarlos y calcular el balance de emisiones y absorciones de GEI. $$\\newline$$ * Realiza los cálculos en gigagramos (unidad de masa equivalente a mil millones de gramos ó $10^9$ gramos) $$\\newline$$ Por ejemplo, con el sector de Energía se tiene:  $$8,18231*10^{13}=8,18231*10^4 * 10^9 = 81823,1*10^{9}$$",
+          "stepExplanation": "Ahora nos interesa conocer el total de emisiones y el total de absorciones de GEI. $$\\newline$$ Para esto, primero convertimos los datos a la misma potencia para poder sumarlos. $$\\newline$$ * Realiza los cálculos en gigagramos (masa equivalente a mil millones de gramos o $10^9$ gramos) $$\\newline$$ Por ejemplo, con el sector de Energía se tiene:  $$8,18231*10^{13}=8,18231*10^4 * 10^9 = 81823,1*10^{9}$$",
           "componentToAnswer": {
             "nameComponent":"mathComponent",
             "meta":{
@@ -166,6 +166,11 @@
                   "id":2,
                   "placeholderId":"b",
                   "value":"4360,2"
+                },
+                {
+                  "id":3,
+                  "placeholderId":"b",
+                  "value":"4,3602"
                 }
               ],
               "idCorrectAnswers": [1,2]
@@ -175,13 +180,22 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Se suman los exponentes en números de igual base (en este caso base 10). ",
-              "associatedAnswer":[1]
+              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 12. "
+             
             },
             {
               "hintId":1,
-              "hint":"La coma del número decimal se desplaza hacia la derecha del exponente de base 10",
-              "associatedAnswer":[2]
+              "hint":"Si el exponente disminuye, la coma del número decimal se desplaza hacia la derecha."
+        
+            },
+            {
+              "hintId":2,
+              "hint":"Recuerda que debes desplazar la coma del número decimal en 3 posiciones hacia la derecha.",
+              "associatedAnswer":[3]
+            },
+            {
+              "hintId":3,
+              "hint":"La respuesta correcta es: $$\\begin{align*}4,3602*10^{12} & = 4,3602*10^{\\textcolor{Green}{3}}*10^9 \\\\ & = \\textcolor{Green}{4360,2}*10^9  \\end{align*}$$"
             }
           ]
         },
@@ -203,6 +217,11 @@
                   "id":2,
                   "placeholderId":"b",
                   "value":"-39915,2"
+                },
+                {
+                  "id":3,
+                  "placeholderId":"b",
+                  "value":"-3,99152"
                 }
               ],
               "idCorrectAnswers": [1,2]
@@ -212,13 +231,22 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Se suman los exponentes en números de igual base (en este caso base 10). ",
-              "associatedAnswer":[1]
+              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 13. "
+             
             },
             {
               "hintId":1,
-              "hint":"La coma del número decimal se desplaza hacia la derecha del exponente de base 10",
-              "associatedAnswer":[2]
+              "hint":"Si el exponente disminuye, la coma del número decimal se desplaza hacia la derecha."
+        
+            },
+            {
+              "hintId":2,
+              "hint":"Recuerda que debes desplazar la coma del número decimal en 4 posiciones hacia la derecha.",
+              "associatedAnswer":[3]
+            },
+            {
+              "hintId":3,
+              "hint":"La respuesta correcta es: $$\\begin{align*}-3,99152*10^{13} & = -3,99152*10^{\\textcolor{Green}{4}}*10^9 \\\\ & =\\textcolor{Green}{-39915,2} *10^9  \\end{align*}$$"
             }
           ]
         },
@@ -229,7 +257,7 @@
             "nameComponent":"mathComponent",
             "meta":{
               "readonly": true,
-              "expression":"\\begin{align}3*10^{8} & = 3*10^{\\placeholder[a]{}}*10^9 \\\\ & = \\placeholder[b]{}*10^9  \\end{align}",
+              "expression":"\\begin{align}3*10^{8} & = 3*10^{\\overbrace{\\placeholder[a]{}}^\\text{prueba} }*10^9 \\\\ & = \\placeholder[b]{}*10^9  \\end{align}",
               "answers": [
                 {
                   "id":1,
@@ -240,6 +268,11 @@
                   "id":2,
                   "placeholderId":"b",
                   "value":"0,3"
+                },
+                {
+                  "id":3,
+                  "placeholderId":"b",
+                  "value":"3"
                 }
               ],
               "idCorrectAnswers": [1,2]
@@ -249,13 +282,22 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Se suman los exponentes en números de igual base (en este caso base 10). ",
-              "associatedAnswer":[1]
+              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 8. "
+             
             },
             {
               "hintId":1,
-              "hint":"La coma del número decimal se desplaza hacia la derecha del exponente de base 10",
-              "associatedAnswer":[2]
+              "hint":"Si el exponente aumenta, la coma del número decimal se desplaza hacia la izquierda."
+        
+            },
+            {
+              "hintId":2,
+              "hint":"Recuerda que debes desplazar la coma del número decimal en 1 posicion hacia la izquierda.",
+              "associatedAnswer":[3]
+            },
+            {
+              "hintId":3,
+              "hint":"La respuesta correcta es: $$\\begin{align*}3*10^{8} & = 3*10^{\\textcolor{Green}{-1}}*10^9 \\\\ & = \\textcolor{Green}{0,3}*10^9  \\end{align*}$$"
             }
           ]
         }
@@ -263,12 +305,12 @@
     },
     {
       "questionId": 3,
-      "question": "¿Cual es el total de emisiones?",
+      "question": "¿Cuál es el total de emisiones?",
       "steps":[
         {
           "stepId":0,
           "stepTitle": "Calcular total de emisiones ",
-          "stepExplanation": "Muy bien! Recuerda que los valores de los sectores son: $$\\newline$$ Sector de energía: $81823,1*10^ 9$ $$\\newline$$ Sector de Procesos industriales: $4360,2*10^9$ $$\\newline$$ Sector de Usos de la tierra: $-39915*10^9$ $$\\newline$$ Sector de Residuos: $0,3*10^9$",
+          "stepExplanation": "Recuerda que los valores en gigagramos son: $$\\\\$$  $\\begin{rcases} \\text{Sector de energía: } 81823,1*10^9 \\\\ \\text{Sector de Procesos industriales: } 4360,2*10^9 \\\\ \\text{Sector de Residuos: } 0,3*10^9 \\end{rcases}  \\text{Emisiones} \\newline \\text{Sector de Usos de la tierra:} -39915*10^9 $",
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
@@ -296,25 +338,26 @@
             },
             {
               "hintId":2,
-              "hint":"El total de emisiones es de 86183,6 * 10^9"
+              "hint":"El total de emisiones es de $$86183,6 \\cdot 10^9$$"
             }
           ],
-          "correctMsg":"Muy bien! El total de emisiones es de $86183,6 * 10^9$ gramos de $CO_2$"
+          "correctMsg":"Muy bien! El total de emisiones es de $86183,6 * 10^9$ gramos de CO$_2$"
         }
       ]
     },
     {
       "questionId":4,
-      "question": "¿Cuál es el balance entre las emisiones y absorción de CO2?",
+      "question": "¿Cuál es el balance entre las emisiones y absorción de CO$_2$?",
       "steps":[
         {
           "stepId":0,
           "stepTitle": "Responder",
+          "stepExplanation": "El balance es la suma de las emisiones y absorciones.",
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
               "readonly":true,
-              "expression": "\\text{El balance total es de $\\placeholder[a]{}$ * $10^{9}$ gramos de CO_2 }",
+              "expression": "\\text{El balance total es de $\\placeholder[a]{}$ * $10^{9}$ gramos de CO$_2$ }",
               "answers":[
                 {
                   "id":1,
@@ -329,14 +372,14 @@
           "hints": [
             {
               "hintId":0,
-              "hint": "Podemos calcular el balance restándole al total de emisiones el total de absorciones "
+              "hint": "Podemos calcular el balance sumando el valor de todos los sectores (considerando la absorción con signo negativo)."
             },
             {
               "hintId":1,
-              "hint": "El balance total es de 46268,6 Gg de CO2"
+              "hint": "El balance total es de 46268,6 Gg de CO$_2$"
             }
           ],
-          "correctMsg": "Muy bien! El balance total es de $46268,6$ Gg de $CO_2$"
+          "correctMsg": "Muy bien! El balance total es de $46268,6$ Gg de CO$_2$"
         }
       ]
     },
@@ -347,12 +390,12 @@
         {
           "stepId":0,
           "stepTitle": "Calcular proporción (aproxima a dos decimales)",
-          "stepExplanation": "Si queremos calcular que porcentaje aporta cierto sector debemos dividir las emisiones del sector entre las emisiones totales y multiplicar el resultado por 100 $$\\newline$$ Por ejemplo, para el sector de Procesos industriales se tiene $$\\frac{\\text{Emisiones sector Procesos industriales}}{\\text{Total emisiones}} = \\frac{4360,2*10^9}{86183,6*10^9}= 0,05$$ $$\\newline$$ Por lo tanto el sector de Procesos industriales aporta en un 5% aproximadamente, de las emisiones totales.",
+          "stepExplanation": "Si queremos calcular que porcentaje aporta cierto sector debemos dividir las emisiones del sector entre las emisiones totales y multiplicar el resultado por 100 $$\\newline$$ Por ejemplo, para el sector de Procesos industriales se tiene $$\\frac{\\text{Emisiones sector Procesos industriales}}{\\text{Total emisiones}} = \\frac{4360,2*10^9}{86183,6*10^9}\\approx 0,05$$ $$\\newline$$ Por lo tanto, el sector de Procesos industriales aporta en un 5%, aproximadamente, de las emisiones totales.",
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{
               "readonly":true,
-              "expression": "\\frac{\\text{Emisiones sector de energía}}{\\text{total emisiones}} = \\frac{\\placeholder[a]{}}{\\placeholder[b]{}} = \\placeholder[c]{}",
+              "expression": "\\frac{\\text{Emisiones sector de energía}}{\\text{total emisiones}} = \\frac{\\placeholder[a]{}}{\\placeholder[b]{}} \\approx \\placeholder[c]{}",
               "answers":[
                 {
                   "id":1,
@@ -392,11 +435,11 @@
           "hints": [
             {
               "hintId":0,
-              "hint":"El valor del numerador es: $$81823,1\\cdot 10^9$$"
+              "hint":"El valor de emisiones del sector de energía es: $$81823,1\\cdot 10^9$$"
             },
             {
               "hintId":1,
-              "hint": "El valor del denominador es: $$86183,6 \\cdot 10^9$$"
+              "hint": "El total de emisiones es: $$86183,6 \\cdot 10^9$$"
             },
             {
               "hintId":2,
@@ -414,7 +457,7 @@
               "associatedAnswer":[6]
             }
           ],
-          "correctMsg": "Muy bien! Por lo tanto el sector de energía aporta en un 95%, aproximadamente, de las emisiones totales"
+          "correctMsg": "Muy bien! Por lo tanto el sector de energía aporta en un 95%, aproximadamente, de las emisiones totales "
         }
       ]
     }
