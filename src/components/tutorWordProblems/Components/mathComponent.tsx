@@ -8,6 +8,9 @@ import { useAlert } from "../hooks/useAlert"
 import { AlertStatus } from "../types.d"
 import HintButton from "../Hint/hint"
 import { useHint } from "../hooks/useHint"
+import { ComputeEngine, Parser} from '@cortex-js/compute-engine';
+import { useStore } from "../store/store"
+
 
 const MathField = dynamic(() => import("./tools/mathLive"),{
   ssr:false
@@ -25,6 +28,20 @@ interface Answer {
 }
 
 const MathComponent = ({meta, hints, correctMsg}: Props) => {
+  const {currentQuestionIndex, currentStepIndex,unlockNextStep} = useStore()
+    // Función para normalizar expresiones LaTeX, incluyendo números decimales
+  const normalizeLatex = (latex: string) => {
+    // Reemplazar todas las comas con puntos para tener notación decimal consistente
+    const normalizedLatex = latex.replace(/(\d+),(\d+)/g, "$1.$2");
+    return normalizedLatex;
+  };
+
+  const newComputerEngine = new ComputeEngine()
+  //const expr1 =  newComputerEngine.parse('\\frac{-1}  {40} ');
+  //const expr2 =  newComputerEngine.parse('-\\frac{1}{-40}');
+  //const expr3 = newComputerEngine.parse(normalizeLatex("3.5"))
+  
+
   const {expression, readonly, answers, idCorrectAnswers} = meta
   
   //const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
@@ -35,10 +52,12 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
   
 
   const correctAnswers = answers.filter((answ) => {
-    return idCorrectAnswers.find((correctId) => correctId === answ.id);
+    //return idCorrectAnswers.find((correctId) => correctId === answ.id);
+    return idCorrectAnswers.includes(answ.id);
   })
   const otherAnswers = answers.filter((answ) => {
-    return !idCorrectAnswers.find((correctId) => correctId === answ.id);
+    return !idCorrectAnswers.some((correctId) => correctId === answ.id);
+    
   });
 
   const {
@@ -61,7 +80,10 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
     unlockHint,
     resetNumHintsActivated} = useHint(hints)
 
+
+  
   const checkAnswer = () => {
+
     try{      
       const isEmpty = answerStateRef.current.some(userAnswer => userAnswer.value === "")
       if(isEmpty){
@@ -70,16 +92,28 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
       }
       let allCorrect = true
       let genericHint = true
+      console.log("idsCorrects", idCorrectAnswers)
+      console.log("corrAnswer-->",correctAnswers)
+      console.log("otherAnswers-->", otherAnswers)
       answerStateRef.current.forEach((userAnswer) =>{
+        
         // comprobar si userAnswer.value hace match con alguna respuesta en correctAnswers, si no, comprobar si hace match en otherAnswer
-        const isCorrect = correctAnswers.some(corrAnswer => corrAnswer.value.replace(/ /g, '') === userAnswer.value)
+        //const isCorrect = correctAnswers.some(corrAnswer => corrAnswer.value.replace(/ /g, '') === userAnswer.value)
+        const parUserAnswer = newComputerEngine.parse(normalizeLatex(userAnswer.value))
+        console.log("parUserAnswer--->", parUserAnswer.latex);
+        
+        //const isCorrect = correctAnswers.some(corrAnswer =>   parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))))
+        const isCorrect = correctAnswers.find(corrAnswer => corrAnswer.placeholderId === userAnswer.placeholderId && parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))))
+        
         if(isCorrect){
           mfe.setPromptState(userAnswer.placeholderId,"correct",true)
+          
         }
         else{
           allCorrect=false
           mfe.setPromptState(userAnswer.placeholderId, "incorrect", false);
-          const isOther = otherAnswers.find((otherAnswer) => otherAnswer.value.replace(/ /g, '') === userAnswer.value)
+          //const isOther = otherAnswers.find((otherAnswer) => otherAnswer.value.replace(/ /g, '') === userAnswer.value)
+          const isOther = otherAnswers.find((otherAnswer) => otherAnswer.placeholderId === userAnswer.placeholderId && parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(otherAnswer.value))))
           if(isOther){
             //TODO aplicar logica de hint para una respuesta especifica
             genericHint= false
@@ -93,6 +127,7 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
       if (allCorrect) {
         showAlert("😃", AlertStatus.success, correctMsg, null);
         setDisabledButton(true); // set disabled status
+        unlockNextStep()
       } else {
         showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
         genericHint && unlockHint();
@@ -106,6 +141,7 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
       placeholderId,
       value,
     }));
+    //console.log(answerStateRef.current)
   }
   return(
     <Flex flexDirection='column' >

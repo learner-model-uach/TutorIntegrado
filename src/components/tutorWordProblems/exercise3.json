@@ -66,18 +66,18 @@
       "steps":[
         {
           "stepId":0,
-          "stepTitle": "Selecciona la alternativa verdadera",
+          "stepTitle": "La superficie del glaciar...",
           "componentToAnswer":{
             "nameComponent": "selectionComponent",
             "meta":{
               "answers": [
                 {
                   "id":0,
-                  "value": "La superficie del glaciar ha aumentado en el tiempo"
+                  "value": "ha aumentado en el tiempo"
                 },
                 {
                   "id":1,
-                  "value": "La superficie del glaciar ha disminuido en el tiempo"
+                  "value": "ha disminuido en el tiempo"
                 }
               ],
               "idCorrectAnswers": 1
@@ -91,7 +91,7 @@
             },
             {
               "hintId":1,
-              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar ha disminuido en el tiempo. "
+              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar \\textcolor{green}{ha disminuido en el tiempo} . "
             }
           ],
           "correctMsg": "Muy bien! La superficie del glaciar ha disminuido a lo largo del tiempo."
@@ -104,8 +104,7 @@
       "steps":[
         {
           "stepId":0,
-          "stepTitle": "Selecciona la alternativa verdadera.",
-          "stepExplanation": "En este ejercicio...",
+          "stepTitle": "En este ejercicio...",
           "componentToAnswer":{
             "nameComponent": "selectionComponent",
             "meta":{
@@ -136,9 +135,8 @@
         },
         {
           "stepId":1,
-          "stepTitle": "Selecciona la alternativa correcta",
-          "stepExplanation": "Entonces, ¿cual es la variable dependiente y cual la independiente?",
-          "componentToAnswer":{
+          "stepTitle": "Entonces, ¿cual es la variable dependiente y cual la independiente?",
+           "componentToAnswer":{
             "nameComponent": "selectionComponent",
             "meta":{
               "answers":[
@@ -168,8 +166,11 @@
         },
         {
           "stepId":2,
-          "stepTitle": "Identificar punto en el gráfico",
-          "stepExplanation": "Generalmente se utiliza la variable 'y' (eje vertical) para la variable dependiente y la variable 't' (eje horizontal para la variable independiente $$\\newline$$ Identifica el punto en la gráfica que denota que en el año 1998 el área del glaciar era de $247,23 km^2$",
+          "stepTitle": "Pincha el punto en la gráfica para el año 1998 con un área de $247,23 [km^2 ]$",
+          "stepExplanation": {
+            "explanation":"Generalmente se utiliza la variable 'y' (eje vertical) para la variable dependiente y la variable 't' (eje horizontal) para la variable independiente."
+
+          },
           "componentToAnswer":{
             "nameComponent": "graphComponent",
             "meta":{
@@ -227,7 +228,10 @@
         },
         {
           "stepId":3,
-          "stepExplanation": "Los puntos en la gráfica nos muestran una tendencia, la cual podemos modelar mediante el ajuste de una recta. Esto nos permitirá predecir, aproximadamente, la superficie del glaciar en un año determinado. $$\\newline$$ Para realizar esto necesitamos realizar un ajuste lineal lo más aproximado a los puntos en la gráfica. $$\\newline$$",
+          "stepExplanation":{
+            "explanation":"A continuación los puntos en la gráfica nos muestran una tendencia, la cual podemos modelar mediante el ajuste de una recta. Esto nos permitirá predecir, aproximadamente, la superficie del glaciar en un año determinado. $$\\newline$$ Para realizar esto necesitamos realizar un ajuste lineal lo más aproximado a los puntos en la gráfica. $$\\newline$$"
+
+          },
           "stepTitle": "Realiza el ajuste lineal.",
           "stepGuideText": "Ajuste la pendiente 'm'  de manera que la recta se ajuste lo mejor posible a los datos recolectados (puntos).",
           "componentToAnswer":{
@@ -304,7 +308,10 @@
         {
           "stepId":4,
           "stepTitle": "Selecciona la alternativa correcta",
-          "stepExplanation": "¿Que significa que la pendiente de la recta sea negativa?",
+          "stepExplanation": {
+            "explanation":"¿Que significa que la pendiente de la recta sea negativa?"
+
+          },
           "componentToAnswer":{
             "nameComponent": "selectionComponent",
             "meta":{
@@ -346,7 +353,7 @@
             "nameComponent": "mathComponent",
             "meta":{
               "readonly": true,
-              "expression": "y = -0,8583 \\placeholder[a]{} + 1963,8",
+              "expression": "y = -0,8583\\cdot  \\placeholder[a]{} + 1963,8",
               "answers":[
                 {
                   "id":1,
@@ -432,20 +439,15 @@
             "nameComponent": "mathComponent",
             "meta":{
               "readonly":true,
-              "expression":"\\placeholder[a]{} = \\placeholder[b]{}\\cdot t + 1963,8",
+              "expression":"\\placeholder[a]{} = -0,8583\\cdot t + 1963,8",
               "answers":[
                 {
                   "id":1,
                   "placeholderId":"a",
                   "value": "\\frac{265,05}{2}"
-                },
-                {
-                  "id":2,
-                  "placeholderId":"b",
-                  "value":"-0,8583"
                 }
               ],
-              "idCorrectAnswers":[1,2]
+              "idCorrectAnswers":[1]
             }
           },
           "kcs": [],
@@ -456,18 +458,17 @@
             },
             {
               "hintId":1,
-              "hint": "Debe ingresar la pendiente que obtuvo en el ajuste lineal"
-            },
-            {
-              "hintId":2,
-              "hint": "La respuesta es: $$\\textcolor{green}{\\frac{265,05}{2} } = \\textcolor{green}{-0,8583} \\cdot t + 1963,8 $$"
+              "hint": "La respuesta es: $$\\textcolor{green}{\\frac{265,05}{2} } = -0,8583  \\cdot t + 1963,8 $$"
             }
           ]
         },
         {
           "stepId":1,
           "stepTitle": "Restar valor constante",
-          "stepExplanation": "Para calcular el año (representado por la variable t) en que el glaciar llegaría al 50% del tamaño medido en 1979 debemos despejar la variable 't'",
+          "stepExplanation":{
+            "explanation":"Para calcular el año (representado por la variable t) en que el glaciar llegaría al 50% del tamaño medido en 1979 debemos despejar la variable 't'"
+
+          },
           "componentToAnswer":{
             "nameComponent": "mathComponent",
             "meta":{

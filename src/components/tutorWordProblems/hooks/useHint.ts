@@ -14,6 +14,16 @@ export const useHint = (hints: Hint[]) =>{
   const specificHints = hints.filter((hint) => hint.associatedAnswer);
 
   useEffect(() => {
+    console.log("hints", hints);
+    setUnlockedHints([hints[0]])
+    setCurrentHint(0)
+    setTotalHints(hints.length)
+    setNumHintsActivated(0)
+    setUnlockedAnswerIds([])
+    
+  }, [hints]);
+  
+  useEffect(() => {
     setTotalHints(unlockedHints.length);
   }, [unlockedHints]);
 

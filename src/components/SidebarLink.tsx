@@ -41,9 +41,9 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     })
     .filter(x => x !== undefined);
 
-  console.log(query.registerTopic); //undefined
-  console.log(query); // {}
-  console.log(pathname); // /
+  //console.log(query.registerTopic); //undefined
+  //console.log(query); // {}
+  //console.log(pathname); // /
   return (
     <LinkBox
       marginEnd="2"

@@ -32,7 +32,7 @@ const Mathfield = (props: MathEditorProps) => {
   mfe.applyStyle({fontSize: size as FontSize }, {operation:"set", range:[0,-1]})
   const currentValue = React.useRef<string>(''); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
   
-  console.log("Renderizado mathLive")
+  //console.log("Renderizado mathLive")
   
   
   
@@ -48,9 +48,8 @@ const Mathfield = (props: MathEditorProps) => {
     });
     */
     //mfe.addEventListener("keydown", (evt) =>  evt.preventDefault(), {capture: true});
-    
     mfe.addEventListener("mouseup", (evt)=> {
-      console.log("CAPTURA DE EVENTO")
+      //console.log("CAPTURA DE EVENTO")
       evt.stopPropagation()
       evt.cancelBubble=true
       evt.preventDefault()

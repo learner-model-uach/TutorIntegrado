@@ -5,6 +5,7 @@ import HintButton from "../Hint/hint"
 import { useAlert } from "../hooks/useAlert"
 import  { useBoard } from "../hooks/useBoard"
 import { useHint } from "../hooks/useHint"
+import { useStore } from "../store/store"
 import { AlertStatus, Hint, linearFitMeta, slider } from "../types.d"
 
 
@@ -20,7 +21,7 @@ export const LinearFit = ({meta, hints}: Props) =>{
   const mSliderRef = useRef(null)
   const bSliderRef = useRef(null)
   const [disabledButton, setDisabledButton] = useState(false)
-  
+  const {unlockNextStep} = useStore()
   const {
     boardId, 
     boardRef,
@@ -144,6 +145,7 @@ export const LinearFit = ({meta, hints}: Props) =>{
       showAlert("😃", AlertStatus.success,"Muy bien!", null)
       setDisabledButton(true)
       disableBoard()
+      unlockNextStep()
     } else {
       console.log("Respuesta incorrecta");
       showAlert("😕", AlertStatus.error,"Respuesta Incorrecta")

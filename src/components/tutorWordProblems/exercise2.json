@@ -18,12 +18,15 @@
   "questions": [
     {
       "questionId": 0,
-      "question": "¿Cuál es la resistencia total del circuito de sensores en serie?",
+      "question": "¿Cuál es la resistencia equivalente del circuito de sensores en serie?",
       "steps": [
         {
           "stepId": 0,
           "stepTitle": "Calcular resistencia en serie",
-          "stepExplanation":"En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R1 + R2 + R3$$",
+          "stepExplanation":{
+            "explanation":"En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R1 + R2 + R3$$"
+
+          },
           "componentToAnswer": {
             "nameComponent":"mathComponent",
             "meta":{
@@ -103,24 +106,29 @@
               "hintId":1,
               "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
             }
-          ]
+          ],
+          "correctMsg":"Muy bien! Efectivamente cuando los sensores están en serie y uno de llos falla el circuito se corta, ya que el sensor defectuoso no deja pasar la corriente."
         }
       ]
+      
       
     },
     {
       "questionId":2,
-      "question":"Si se cambia el circuito a un circuito en paralelo. ¿Cuál sería la resistencia equivalente?",
+      "question":"Si se cambia el circuito en serie a uno  en paralelo. ¿Cuál sería la resistencia equivalente?",
       "steps":[
         {
           "stepId":0,
           "stepTitle": "Reemplaza valores de resistencias",
-          "stepExplanation": "Para evitar problemas de medición causados por la falla de un sensor, se puede cambiar el circuito de un circuito en serie a un circuito en paralelo. En un circuito en paralelo, cada sensor está conectado en una rama independiente del circuito y la interrupción de un sensor no afecta a los demás. Sin embargo, la resistencia cambia al pasar a un circuito en paralelo, teniendo que aplicar una tensión mayor. $$\\newline$$ En un circuito en paralelo, la resistencia equivalente se calcula sumando las inversas de las resistencias individuales y luego tomando la inversa de la suma $$\\newline$$ $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$",
+          "stepExplanation":{
+            "explanation":"Para evitar problemas de medición causados por la falla de un sensor, se puede cambiar el circuito en serie por  uno en paralelo. En un circuito en paralelo, cada sensor está conectado en una rama independiente del circuito y la interrupción de un sensor no afecta a los demás. Sin embargo, la resistencia cambia al pasar a un circuito en paralelo, teniendo que aplicar una tensión mayor. $$\\newline$$ En un circuito en paralelo, la resistencia equivalente se calcula sumando las inversas de las resistencias individuales y luego tomando la inversa de la suma $$\\newline$$ $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$"
+
+          },
           "componentToAnswer":{
             "nameComponent":"mathComponent",
             "meta":{
               "readonly":true,
-              "expression": "R_{eq} = \\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}}",
+              "expression": "R_{paralelo} = \\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}}",
               "answers":[
                 {
                   "id":1,
@@ -241,11 +249,15 @@
         {
           "stepId":0,
           "stepTitle":"Modelar ecuación",
+          "stepExplanation":{
+            "explanation":"El circuito original (en serie) tenía una resistencia equivalente de 300 ohm. El nuevo circuito en paralelo tiene una resistencia equivalente, aproximadamente, de 33,3 ohm. Eso quiere decir que el circuito se quema si se conecta, entonces lo que tenemos que hacer es aumentar la resistencia equivalente en paralelo para llegar a 300 ohm. Dado que la fórmula de la resistencia equivalente en paralelo es: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$ Calcula el valor $x$ de las nuevas resistencias.  "
+
+          },
           "componentToAnswer":{
             "nameComponent":"mathComponent",
             "meta":{
               "readonly":true,
-              "expression":"\\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}}",
+              "expression":"\\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}} = 300 ",
               "answers":[
                 {
                   "id":1,

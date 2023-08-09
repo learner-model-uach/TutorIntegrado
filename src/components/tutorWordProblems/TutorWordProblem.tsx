@@ -21,15 +21,18 @@ import {
   Tr,
   Td,
   Center,
-  useColorModeValue} from "@chakra-ui/react";
+  useColorModeValue,
+  useMediaQuery} from "@chakra-ui/react";
   
 import type {Exercise, GraphMeta, MathComponentMeta, SelectionMeta, textAlign } from "./types";
-import  { components, graphComponents } from "./types.d";
+import  { components } from "./types.d";
 import dynamic from "next/dynamic";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import { CardInfo } from "./infCard/informationCard";
 import JSXGraphComponent from "./Components/jsxGraphComponent";
+import { useStore } from "./store/store";
+import { useEffect } from "react";
  
 const SelectionComponent = dynamic(()=> import("./Components/answerSelection"),{
   ssr:false
@@ -43,6 +46,35 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
   const bgContentColor = useColorModeValue("white","#2D3748")
   const explanationBgColor = useColorModeValue("#feebc8","#080E1B")
   const bg = useColorModeValue("#2B4264","#1A202C")
+  const bgQuestion = useColorModeValue("#F5F5F5","gray.600")
+  const currentButtonColor = "#2B4264"
+  const currentStepColor = "#2B4264"
+  const rounded= 5
+  const [isScreenLarge] = useMediaQuery("(min-width: 768px)")
+  
+  const { currentQuestionIndex, currentStepIndex, questions, setQuestions, setCurrentStep, setCurrentQues} = useStore()
+  useEffect(()=>{
+    setCurrentQues(0)
+    setCurrentStep(0)
+    const initialQuestions = exercise.questions.map((ques,quesIndex) => ({
+      ...ques, 
+      isBlocked: quesIndex !== 0 ,
+      steps: ques.steps.map((step, stepIndex) => ({
+        ...step, 
+        isBlocked: quesIndex !== 0 && stepIndex !== 0
+      }))
+    }))
+    setQuestions(initialQuestions)
+  },[])
+
+  /** 
+  useEffect(()=>{
+    console.log("currentQuestionIndex",currentQuestionIndex)
+    console.log("curretStepIndex",currentStepIndex)
+    console.log("questions-->", questions);
+    
+  },[currentQuestionIndex, currentStepIndex])
+  */
   return(
     <>
       <Tabs isFitted variant='enclosed' width='100%' >
@@ -74,9 +106,12 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
           </TabPanel>
 
           <TabPanel>
-            <Flex flexDirection='column' alignItems='center'>
+            <Flex flexDirection='column' alignItems='center' >
               {exercise.statement 
-              && <Latex strict>{exercise.statement}</Latex> 
+              &&<Box overflowX="auto" whiteSpace="normal" textOverflow="ellipsis" maxW="100%" > 
+              
+                  <Latex strict>{exercise.statement}</Latex> 
+                </Box>
               }
               {exercise.table 
               && 
@@ -102,7 +137,6 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                   </Thead>
                   <Tbody >
                     {exercise.table.rows.map((row,index)=>{
-                      const backgroundColor = index % 2 === 0 ? '#333' : '#555'
                       return(
                         <Tr key={index} >
                           {row.data?.map((value,i) => {
@@ -132,13 +166,14 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                 </Box>
               }
 
-              <Accordion allowMultiple pt="12px" w='90%'>
-                {exercise.questions && exercise.questions.map((ques, index) =>{
+              <Accordion allowMultiple pt="12px" w='100%' maxWidth="100%">
+                {questions && questions.map((ques, quesIndex) =>{
+                  const isCurrentQuestion = quesIndex === currentQuestionIndex
                   return (
                     <>
-                    <AccordionItem  key={index}>
+                    <AccordionItem  key={quesIndex}  isDisabled={ques.isBlocked} marginBottom={2}>
                       <h2>
-                        <AccordionButton>
+                        <AccordionButton  bgColor={isCurrentQuestion && currentButtonColor} color={isCurrentQuestion ? "white": textColor} _hover={{}}>
                           <Box as="span" flex="1" textAlign="left">
                             
                             <Latex>
@@ -149,23 +184,30 @@ export const TutorWordProblem = ({exercise}: {exercise: Exercise}) => {
                     
                         </AccordionButton>
                       </h2>
-                      <AccordionPanel bg={bgContentColor}>
+                      <AccordionPanel bgColor={bgQuestion} rounded={rounded}>
                         {ques.steps.map((step,index) => {
+                          const isCurrent = index === currentStepIndex && quesIndex === currentQuestionIndex
+                          //console.log("meta s",step.componentToAnswer.nameComponent,step.componentToAnswer.meta);
+                          
                           return(
-                            <Accordion allowMultiple key={index} paddingBottom={2} >
+                            <Accordion allowMultiple key={index}    marginLeft={isScreenLarge? 10 : 0} marginRight={5} marginY={2} >
                               {step.stepExplanation && 
-                              <CardInfo text={step.stepExplanation}  bgColor= {explanationBgColor} hideCard={false}></CardInfo>
+                              <CardInfo text={step.stepExplanation.explanation} srcImg={step.stepExplanation.srcImg}  bgColor= {explanationBgColor} hideCard={step.isBlocked}></CardInfo>
                               }
-                              <AccordionItem bgColor={itemBgColor} isDisabled={false}  >
+                              
+                              <AccordionItem rounded={rounded} bgColor={(isCurrent)? currentStepColor:itemBgColor}  isDisabled={step.isBlocked}  >
                                 <h2>
-                                  <AccordionButton _expanded={{ bg: '#2B4264', color: 'white' }}>
+                                  <AccordionButton rounded={rounded}  color={ isCurrent? "white": textColor} _expanded={(isCurrent) ? { bg: currentStepColor } : {bg: itemBgColor} }>
                                     <Box as="span" flex="1" textAlign="left">
-                                      {step.stepTitle}
+                                      <Latex>
+
+                                        {step.stepTitle}
+                                      </Latex>
                                     </Box>
                                     <AccordionIcon/>
                                   </AccordionButton>
                                 </h2>
-                                <AccordionPanel bg={bgContentColor}>
+                                <AccordionPanel  bg={bgContentColor}>
                                   <Box paddingTop={2}>
                                     {
                                       step.componentToAnswer.nameComponent === components.SLC 

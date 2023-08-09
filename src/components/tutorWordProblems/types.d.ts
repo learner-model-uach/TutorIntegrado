@@ -29,18 +29,22 @@ export interface Question {
   question:   string;
   quesExplanation?: string;
   steps:      Step[];
-  
+  isBlocked: boolean
 }
 
 export interface Step {
   stepId:            number;
   stepTitle:         string;
-  stepExplanation?:      string;
+  stepExplanation?:   {
+    explanation: string,
+    srcImg?: string
+  };
   componentToAnswer: ComponentToAnswer;
   kcs:               string[];
   hints:             Hint[];
   stepGuideText?: string
   correctMsg?: string
+  isBlocked: boolean
 }
 
 export interface Hint {

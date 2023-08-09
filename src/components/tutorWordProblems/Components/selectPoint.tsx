@@ -6,6 +6,8 @@ import { useAlert } from "../hooks/useAlert";
 import { useBoard } from "../hooks/useBoard";
 import HintButton from "../Hint/hint";
 import { useHint } from "../hooks/useHint";
+import { useStore } from "../store/store";
+
 
 interface Props{
   meta: selectPointerMeta
@@ -17,7 +19,7 @@ export const SelectPoint = ({meta, hints}: Props)=>{
   const [userAnswer, setUserAnswer] = useState([])
   const {alertTitle, alertStatus,alertMsg,alertHidden, showAlert} = useAlert("",AlertStatus.info,"",false,3000)
   const {boardId, boardRef,bgBoardColor, disableBoard} = useBoard("jxgbox",meta.graphSettings)
-
+  const {unlockNextStep} = useStore()
   const {
     unlockedHints,
     currentHint,
@@ -52,6 +54,7 @@ export const SelectPoint = ({meta, hints}: Props)=>{
           disableBoard()
           //JXG.JSXGraph.freeBoard(boardRef.current)
         }
+        unlockNextStep()
       }else {
         showAlert("😕", AlertStatus.error,"Respuesta Incorrecta")
         unlockHint() 
