@@ -8,11 +8,14 @@
   "learningObjetives": {
     "title": "¿Qué aprendizajes son pretendidos al desarrollar este ejercicio?",
     "text": "Aca se explica un poco lo que se va a aprender al resolver este ejercicio",
-    "listObj": ["Identificar números descritos en notación científica de potencias y su orden (mayor o menor).", "Sumar y restar números descritos en notación científica (operatoria básica).", "Calcular razón y porcentaje entre números descritos en notación científica (fracciones)."]
-
+    "listObj": [
+      "Identificar números descritos en notación científica de potencias y su orden (mayor o menor).",
+      "Sumar y restar números descritos en notación científica (operatoria básica).",
+      "Calcular razón y porcentaje entre números descritos en notación científica (fracciones)."
+    ]
   },
   "meta": {},
-  "statement":"Se tiene un circuito de tres sensores en serie conectados a una fuente de alimentación de 12V. El circuito se utiliza para medir la humedad en una sala de cultivos y cualquier fallo en la medición podría tener consecuencias negativas en el crecimiento de las plantas.",
+  "statement": "Se tiene un circuito de tres sensores en serie conectados a una fuente de alimentación de 12V. El circuito se utiliza para medir la humedad en una sala de cultivos y cualquier fallo en la medición podría tener consecuencias negativas en el crecimiento de las plantas.",
   "img": "https://i.postimg.cc/cHbdqT5f/Captura-de-pantalla-2023-07-15-a-la-s-01-48-32.png",
   "text": "Si la resistencia de cada sensor es de 100 ohm, es decir R1=R2=R3 = 100 ohm",
   "questions": [
@@ -23,38 +26,37 @@
         {
           "stepId": 0,
           "stepTitle": "Calcular resistencia en serie",
-          "stepExplanation":{
-            "explanation":"En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R1 + R2 + R3$$"
-
+          "stepExplanation": {
+            "explanation": "En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R1 + R2 + R3$$"
           },
           "componentToAnswer": {
-            "nameComponent":"mathComponent",
-            "meta":{
+            "nameComponent": "mathComponent",
+            "meta": {
               "readonly": true,
-              "expression":"\\begin{align} R_{serie} & = \\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{} \\\\ & R_{serie} = \\placeholder[d]{} ohm  \\end{align}",
+              "expression": "\\begin{align} R_{serie} & = \\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{} \\\\ & R_{serie} = \\placeholder[d]{} ohm  \\end{align}",
               "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
+                  "id": 1,
+                  "placeholderId": "a",
                   "value": "100"
                 },
                 {
-                  "id":2,
-                  "placeholderId":"b",
-                  "value":"100"
+                  "id": 2,
+                  "placeholderId": "b",
+                  "value": "100"
                 },
                 {
-                  "id":3,
-                  "placeholderId":"c",
-                  "value":"100"
+                  "id": 3,
+                  "placeholderId": "c",
+                  "value": "100"
                 },
                 {
-                  "id":4,
-                  "placeholderId":"d",
-                  "value":"300"
+                  "id": 4,
+                  "placeholderId": "d",
+                  "value": "300"
                 }
               ],
-              "idCorrectAnswers": [1,2,3,4]
+              "idCorrectAnswers": [1, 2, 3, 4]
             }
           },
           "kcs": [],
@@ -64,327 +66,318 @@
               "hint": "Ingresa los valores de las resistencias y realiza la suma"
             },
             {
-              "hintId":1,
-              "hint":"La respuesta es: $$\\begin{align*} R_{serie} & = \\textcolor{green}{100} + \\textcolor{green}{100} + \\textcolor{green}{100} \\\\ & R_{serie} = \\textcolor{green}{300} ohm  \\end{align*}$$"
+              "hintId": 1,
+              "hint": "La respuesta es: $$\\begin{align*} R_{serie} & = \\textcolor{green}{100} + \\textcolor{green}{100} + \\textcolor{green}{100} \\\\ & R_{serie} = \\textcolor{green}{300} ohm  \\end{align*}$$"
             }
-            
           ],
           "correctMsg": "¡Muy bien! Por lo tanto, la resistencia total en el circuito en serie es de 300 ohm"
         }
       ]
     },
     {
-      "questionId":1,
-      "question":"Si uno de los sensores falla, ¿Cómo afectaría esto al circuito?",
-      "steps":[
+      "questionId": 1,
+      "question": "Si uno de los sensores falla, ¿Cómo afectaría esto al circuito?",
+      "steps": [
         {
-          "stepId":0,
+          "stepId": 0,
           "stepTitle": "Selecciona la alternativa correcta.",
-          "componentToAnswer":{
-            "nameComponent":"selectionComponent",
-            "meta":{
+          "componentToAnswer": {
+            "nameComponent": "selectionComponent",
+            "meta": {
               "answers": [
                 {
-                  "id":0,
+                  "id": 0,
                   "value": "El circuito continúa funcionando sin la lectura del sensor estropeado."
                 },
                 {
-                  "id":1,
-                  "value":"El circuito se interrumpe por completo y dejaría de funcionar."
+                  "id": 1,
+                  "value": "El circuito se interrumpe por completo y dejaría de funcionar."
                 }
               ],
               "idCorrectAnswers": 1
             }
           },
-          "kcs":[],
-          "hints":[
+          "kcs": [],
+          "hints": [
             {
-              "hintId":0,
+              "hintId": 0,
               "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
             },
             {
-              "hintId":1,
+              "hintId": 1,
               "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
             }
           ],
-          "correctMsg":"Muy bien! Efectivamente cuando los sensores están en serie y uno de llos falla el circuito se corta, ya que el sensor defectuoso no deja pasar la corriente."
+          "correctMsg": "Muy bien! Efectivamente cuando los sensores están en serie y uno de llos falla el circuito se corta, ya que el sensor defectuoso no deja pasar la corriente."
         }
       ]
-      
-      
     },
     {
-      "questionId":2,
-      "question":"Si se cambia el circuito en serie a uno  en paralelo. ¿Cuál sería la resistencia equivalente?",
-      "steps":[
+      "questionId": 2,
+      "question": "Si se cambia el circuito en serie a uno  en paralelo. ¿Cuál sería la resistencia equivalente?",
+      "steps": [
         {
-          "stepId":0,
+          "stepId": 0,
           "stepTitle": "Reemplaza valores de resistencias",
-          "stepExplanation":{
-            "explanation":"Para evitar problemas de medición causados por la falla de un sensor, se puede cambiar el circuito en serie por  uno en paralelo. En un circuito en paralelo, cada sensor está conectado en una rama independiente del circuito y la interrupción de un sensor no afecta a los demás. Sin embargo, la resistencia cambia al pasar a un circuito en paralelo, teniendo que aplicar una tensión mayor. $$\\newline$$ En un circuito en paralelo, la resistencia equivalente se calcula sumando las inversas de las resistencias individuales y luego tomando la inversa de la suma $$\\newline$$ $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$"
-
+          "stepExplanation": {
+            "explanation": "Para evitar problemas de medición causados por la falla de un sensor, se puede cambiar el circuito en serie por  uno en paralelo. En un circuito en paralelo, cada sensor está conectado en una rama independiente del circuito y la interrupción de un sensor no afecta a los demás. Sin embargo, la resistencia cambia al pasar a un circuito en paralelo, teniendo que aplicar una tensión mayor. $$\\newline$$ En un circuito en paralelo, la resistencia equivalente se calcula sumando las inversas de las resistencias individuales y luego tomando la inversa de la suma $$\\newline$$ $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$"
           },
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
               "expression": "R_{paralelo} = \\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}}",
-              "answers":[
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
-                  "value":"\\frac{1}{100}"
+                  "id": 1,
+                  "placeholderId": "a",
+                  "value": "\\frac{1}{100}"
                 },
                 {
-                  "id":2,
-                  "placeholderId":"b",
-                  "value":"\\frac{1}{100}"
+                  "id": 2,
+                  "placeholderId": "b",
+                  "value": "\\frac{1}{100}"
                 },
                 {
-                  "id":3,
-                  "placeholderId":"c",
-                  "value":"\\frac{1}{100}"
+                  "id": 3,
+                  "placeholderId": "c",
+                  "value": "\\frac{1}{100}"
                 },
                 {
-                  "id":4,
-                  "placeholderId":"a",
-                  "value":"100"
+                  "id": 4,
+                  "placeholderId": "a",
+                  "value": "100"
                 }
               ],
-              "idCorrectAnswers":[1,2,3]
+              "idCorrectAnswers": [1, 2, 3]
             }
           },
-          "kcs":["SusFor"],
-          "hints":[
+          "kcs": ["SusFor"],
+          "hints": [
             {
-              "hintId":0,
+              "hintId": 0,
               "hint": "Ingresa las inversas de las resistencias individuales"
             },
             {
-              "hintId":1,
+              "hintId": 1,
               "hint": "Revisa bien la formula, recuerda que debes ingresar la inversa de las resistencias individuales, es decir: $$\\frac{1}{R}$$",
-              "associatedAnswer":[4]
+              "associatedAnswer": [4]
             },
             {
-              "hintId":2,
+              "hintId": 2,
               "hint": "La respuesta es: $$R_{eq} = \\frac{1}{\\frac{1}{100} + \\frac{1}{100} + \\frac{1}{100}}$$"
             }
           ]
         },
         {
-          "stepId":1,
-          "stepTitle":"Suma las fracciones del denominador.",
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
-              "expression":"R_{eq} = \\frac{1}{\\placeholder[a]{}}",
-              "answers":[
+          "stepId": 1,
+          "stepTitle": "Suma las fracciones del denominador.",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
+              "expression": "R_{eq} = \\frac{1}{\\placeholder[a]{}}",
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
+                  "id": 1,
+                  "placeholderId": "a",
                   "value": "\\frac{3}{100}"
                 }
-
               ],
-              "idCorrectAnswers":[1]
+              "idCorrectAnswers": [1]
             }
           },
-          "kcs":["SRFrac"],
-          "hints":[
+          "kcs": ["SRFrac"],
+          "hints": [
             {
-              "hintId":0,
+              "hintId": 0,
               "hint": "Realiza la suma de las fracciones del denominador"
             },
             {
-              "hintId":1,
+              "hintId": 1,
               "hint": "La respuesta es: $$\\frac{1}{\\frac{3}{100}}$$"
             }
           ]
         },
         {
-          "stepId":2,
-          "stepTitle":"Reduce la expresión a una fracción simple.",
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
-              "expression":"R_{eq} = \\frac{\\placeholder[a]{}}{\\placeholder[b]{}}",
-              "answers":[
+          "stepId": 2,
+          "stepTitle": "Reduce la expresión a una fracción simple.",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
+              "expression": "R_{eq} = \\frac{\\placeholder[a]{}}{\\placeholder[b]{}}",
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
-                  "value":"100"
+                  "id": 1,
+                  "placeholderId": "a",
+                  "value": "100"
                 },
                 {
-                  "id":2,
-                  "placeholderId":"b",
-                  "value":"3"
+                  "id": 2,
+                  "placeholderId": "b",
+                  "value": "3"
                 }
-
               ],
-              "idCorrectAnswers":[1,2]
+              "idCorrectAnswers": [1, 2]
             }
           },
-          "kcs":["DivFrac"],
-          "hints":[
+          "kcs": ["DivFrac"],
+          "hints": [
             {
-              "hintId":0,
+              "hintId": 0,
               "hint": "Invierte la fracción del numerador"
             },
             {
-              "hintId":1,
+              "hintId": 1,
               "hint": "La respuesta es: $$\\frac{100}{3}$$"
             }
-
           ],
           "correctMsg": "¡Muy bien! La resistencia equivalente es aproximadamente 33,3 ohm"
         }
       ]
     },
     {
-      "questionId":3,
-      "question":"Determinar el valor 'x' (en ohm) de tres nuevas resistencias para mantener una resistencia equivalente en paralelo igual a la resistencia en serie de 300 ohm",
-      "steps":[
+      "questionId": 3,
+      "question": "Determinar el valor 'x' (en ohm) de tres nuevas resistencias para mantener una resistencia equivalente en paralelo igual a la resistencia en serie de 300 ohm",
+      "steps": [
         {
-          "stepId":0,
-          "stepTitle":"Modelar ecuación",
-          "stepExplanation":{
-            "explanation":"El circuito original (en serie) tenía una resistencia equivalente de 300 ohm. El nuevo circuito en paralelo tiene una resistencia equivalente, aproximadamente, de 33,3 ohm. Eso quiere decir que el circuito se quema si se conecta, entonces lo que tenemos que hacer es aumentar la resistencia equivalente en paralelo para llegar a 300 ohm. Dado que la fórmula de la resistencia equivalente en paralelo es: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$ Calcula el valor $x$ de las nuevas resistencias.  "
-
+          "stepId": 0,
+          "stepTitle": "Modelar ecuación",
+          "stepExplanation": {
+            "explanation": "El circuito original (en serie) tenía una resistencia equivalente de 300 ohm. El nuevo circuito en paralelo tiene una resistencia equivalente, aproximadamente, de 33,3 ohm. Eso quiere decir que el circuito se quema si se conecta, entonces lo que tenemos que hacer es aumentar la resistencia equivalente en paralelo para llegar a 300 ohm. Dado que la fórmula de la resistencia equivalente en paralelo es: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$ Calcula el valor $x$ de las nuevas resistencias.  "
           },
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
-              "expression":"\\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}} = 300 ",
-              "answers":[
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
+              "expression": "\\frac{1}{\\placeholder[a]{} + \\placeholder[b]{} + \\placeholder[c]{}} = 300 ",
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
+                  "id": 1,
+                  "placeholderId": "a",
                   "value": "\\frac{1}{x}"
                 },
                 {
-                  "id":2,
-                  "placeholderId":"b",
+                  "id": 2,
+                  "placeholderId": "b",
                   "value": "\\frac{1}{x}"
                 },
                 {
-                  "id":3,
-                  "placeholderId":"c",
+                  "id": 3,
+                  "placeholderId": "c",
                   "value": "\\frac{1}{x}"
                 }
-
               ],
-              "idCorrectAnswers":[1,2,3]
+              "idCorrectAnswers": [1, 2, 3]
             }
           },
-          "kcs":["ExpA"],
-          "hints":[
+          "kcs": ["ExpA"],
+          "hints": [
             {
-              "hintId":0,
-              "hint":"Revisa la fórmula para calcular la resistencia equivalente en paralelo: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$"
+              "hintId": 0,
+              "hint": "Revisa la fórmula para calcular la resistencia equivalente en paralelo: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$"
             },
             {
-              "hintId":1,
-              "hint":"Los valores a ingresar corresponden a la inversa del valor x"
+              "hintId": 1,
+              "hint": "Los valores a ingresar corresponden a la inversa del valor x"
             },
             {
-              "hintId":2,
-              "hint":"La respuesta es: $$R_{paralelo} = \\frac{1}{\\frac{1}{x} + \\frac{1}{x} + \\frac{1}{x}}$$"
+              "hintId": 2,
+              "hint": "La respuesta es: $$R_{paralelo} = \\frac{1}{\\frac{1}{x} + \\frac{1}{x} + \\frac{1}{x}}$$"
             }
           ]
         },
         {
-          "stepId":1,
-          "stepTitle":"Suma las fracciones del denominador",
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
-              "expression":"\\frac{1}{\\placeholder[a]{}} = 300",
-              "answers":[
+          "stepId": 1,
+          "stepTitle": "Suma las fracciones del denominador",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
+              "expression": "\\frac{1}{\\placeholder[a]{}} = 300",
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
+                  "id": 1,
+                  "placeholderId": "a",
                   "value": "\\frac{3}{x}"
                 }
               ],
-              "idCorrectAnswers":[1]
+              "idCorrectAnswers": [1]
             }
           },
-          "kcs":["SRFrac"],
-          "hints":[
+          "kcs": ["SRFrac"],
+          "hints": [
             {
-              "hintId":0,
-              "hint":"Realiza la suma del denominador"
+              "hintId": 0,
+              "hint": "Realiza la suma del denominador"
             },
             {
-              "hintId":0,
-              "hint":"La respuesta es: $$\\frac{1}{\\frac{3}{x}} = 300$$"
+              "hintId": 0,
+              "hint": "La respuesta es: $$\\frac{1}{\\frac{3}{x}} = 300$$"
             }
           ]
         },
         {
-          "stepId":2,
-          "stepTitle":"Reduce la expresión a una fracción simple",
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
-              "expression":"\\placeholder[a]{}=300",
-              "answers":[
+          "stepId": 2,
+          "stepTitle": "Reduce la expresión a una fracción simple",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
+              "expression": "\\placeholder[a]{}=300",
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
+                  "id": 1,
+                  "placeholderId": "a",
                   "value": "\\frac{x}{3}"
                 }
               ],
-              "idCorrectAnswers":[1]
+              "idCorrectAnswers": [1]
             }
           },
-          "kcs":["DivFrac"],
-          "hints":[
+          "kcs": ["DivFrac"],
+          "hints": [
             {
-              "hintId":0,
-              "hint":"Invierte la fracción del denominador"
+              "hintId": 0,
+              "hint": "Invierte la fracción del denominador"
             },
             {
-              "hintId":0,
-              "hint":"La respuesta es: $$\\frac{x}{3}=300$$"
+              "hintId": 0,
+              "hint": "La respuesta es: $$\\frac{x}{3}=300$$"
             }
           ]
         },
         {
-          "stepId":3,
-          "stepTitle":"Despeja 'x' de la expresión anterior.",
-          "componentToAnswer":{
-            "nameComponent":"mathComponent",
-            "meta":{
-              "readonly":true,
-              "expression":"x = \\placeholder[a]{}",
-              "answers":[
+          "stepId": 3,
+          "stepTitle": "Despeja 'x' de la expresión anterior.",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "readonly": true,
+              "expression": "x = \\placeholder[a]{}",
+              "answers": [
                 {
-                  "id":1,
-                  "placeholderId":"a",
+                  "id": 1,
+                  "placeholderId": "a",
                   "value": "900"
                 }
               ],
-              "idCorrectAnswers":[1]
+              "idCorrectAnswers": [1]
             }
           },
-          "kcs":["DespVarEcu"],
-          "hints":[
+          "kcs": ["DespVarEcu"],
+          "hints": [
             {
-              "hintId":0,
-              "hint":"Despeja 'x' de la expresión anterior"
+              "hintId": 0,
+              "hint": "Despeja 'x' de la expresión anterior"
             },
             {
-              "hintId":1,
-              "hint":"La respuesta es 900"
+              "hintId": 1,
+              "hint": "La respuesta es 900"
             }
           ],
-          "correctMsg":"¡Muy bien! Por lo tanto, el valor de las tres nuevas resistencias debe ser de 900 ohm"
+          "correctMsg": "¡Muy bien! Por lo tanto, el valor de las tres nuevas resistencias debe ser de 900 ohm"
         }
       ]
     }

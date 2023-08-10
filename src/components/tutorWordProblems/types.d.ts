@@ -1,73 +1,68 @@
-
 export interface Exercise {
-  code:              string;
-  type:              string;
-  presentation:      Presentation;
+  code: string;
+  type: string;
+  presentation: Presentation;
   learningObjetives: LearningObjetives;
-  statement:         string;
-  mathExpression?:    string;
-  img?:               string;
-  table?:             Table;
-  text?:              string;
-  questions:         Question[];
+  statement: string;
+  mathExpression?: string;
+  img?: string;
+  table?: Table;
+  text?: string;
+  questions: Question[];
 }
 
 export interface LearningObjetives {
-  title:   string;
-  text:    string;
+  title: string;
+  text: string;
   listObj: string[];
 }
 
-
 export interface Presentation {
-  title:  string;
+  title: string;
   urlImg: string;
 }
 
 export interface Question {
   questionId: number;
-  question:   string;
+  question: string;
   quesExplanation?: string;
-  steps:      Step[];
-  isBlocked: boolean
+  steps: Step[];
+  isBlocked: boolean;
 }
 
 export interface Step {
-  stepId:            number;
-  stepTitle:         string;
-  stepExplanation?:   {
-    explanation: string,
-    srcImg?: string
+  stepId: number;
+  stepTitle: string;
+  stepExplanation?: {
+    explanation: string;
+    srcImg?: string;
   };
   componentToAnswer: ComponentToAnswer;
-  kcs:               string[];
-  hints:             Hint[];
-  stepGuideText?: string
-  correctMsg?: string
-  isBlocked: boolean
+  kcs: string[];
+  hints: Hint[];
+  stepGuideText?: string;
+  correctMsg?: string;
+  isBlocked: boolean;
 }
 
 export interface Hint {
   hintId: number;
-  hint:   string;
+  hint: string;
   associatedAnswer?: number[];
-  selectionPointHint?: selectionPointHint
-  linearFitHint?: linearFitHint
+  selectionPointHint?: selectionPointHint;
+  linearFitHint?: linearFitHint;
 }
 
-export interface selectionPointHint{
-  point1: number[]
-  point2: number[]
-
+export interface selectionPointHint {
+  point1: number[];
+  point2: number[];
 }
-export interface linearFitHint{
-
-}
+export interface linearFitHint {}
 
 export interface Table {
   header: Header[];
-  rows:   Row[];
-  alignRows: textAlign
+  rows: Row[];
+  alignRows: textAlign;
   tableCaption: string;
 }
 
@@ -79,125 +74,124 @@ export interface Header {
 export interface Row {
   data: string[] | number[];
 }
-export type textAlign = "left" | "right" | "center" | "justify" | "end" | "start"
+export type textAlign = "left" | "right" | "center" | "justify" | "end" | "start";
 
 export interface ComponentToAnswer {
   nameComponent: string;
-  meta:          SelectionMeta| MathComponentMeta | GraphMeta ;
+  meta: SelectionMeta | MathComponentMeta | GraphMeta;
 }
-export enum components{
+export enum components {
   MLC = "mathComponent",
-  SLC = 'selectionComponent',
-  GHPC = "graphComponent"
+  SLC = "selectionComponent",
+  GHPC = "graphComponent",
 }
 
 export interface SelectionMeta {
   //id:            number;
-  answers:       SelectionAnswer[];
+  answers: SelectionAnswer[];
   idCorrectAnswers: number;
-  userSelectedAnswer?: number,
-  isCorrectUserAnswer?: boolean
+  userSelectedAnswer?: number;
+  isCorrectUserAnswer?: boolean;
 }
-interface SelectionAnswer{
-  id: number
-  value: string
+interface SelectionAnswer {
+  id: number;
+  value: string;
 }
-export interface MathComponentMeta{
+export interface MathComponentMeta {
   //id: number
-  readonly?: boolean
-  expression: string
-  answers: MathCompAnswer[]
-  idCorrectAnswers: number[]
+  readonly?: boolean;
+  expression: string;
+  answers: MathCompAnswer[];
+  idCorrectAnswers: number[];
 }
 
-interface MathCompAnswer{
-  id: number
-  placeholderId: string
-  value: string 
+interface MathCompAnswer {
+  id: number;
+  placeholderId: string;
+  value: string;
 }
-interface GraphMeta{
-  component: graphComponents
-  metaComponent?: selectPointerMeta |  linearFitMeta 
+interface GraphMeta {
+  component: graphComponents;
+  metaComponent?: selectPointerMeta | linearFitMeta;
 }
 
-interface linearFitMeta{
-  data: point[]
-  graphSettings: settings
+interface linearFitMeta {
+  data: point[];
+  graphSettings: settings;
   linearFunction: {
-    m:{
-      value?: number 
-      slider?: slider
-    } 
-    b:{
-      value?: number
-      slider?: slider
-    }
-  }
+    m: {
+      value?: number;
+      slider?: slider;
+    };
+    b: {
+      value?: number;
+      slider?: slider;
+    };
+  };
   correctAnswer: {
-    mCorrect?: number[]
-    bCorrect?: number[]
-  }
+    mCorrect?: number[];
+    bCorrect?: number[];
+  };
 }
-interface slider{
-  startPoint : number[]
-  endPoint: number[]
-  min: number,
-  max: number,
-  initialValue: number
-  snapWidth: number
-  precision: number
-  name: string
+interface slider {
+  startPoint: number[];
+  endPoint: number[];
+  min: number;
+  max: number;
+  initialValue: number;
+  snapWidth: number;
+  precision: number;
+  name: string;
 }
 
-
-interface settings{
-  originAxis?: boolean
-  bounding?: bounding
-  maxBounding?: bounding
-  newAxis? : axisSettings
-  activeZoom: boolean
+interface settings {
+  originAxis?: boolean;
+  bounding?: bounding;
+  maxBounding?: bounding;
+  newAxis?: axisSettings;
+  activeZoom: boolean;
 }
 interface axisSettings {
-  xAxis: Axis
-  yAxis: Axis
+  xAxis: Axis;
+  yAxis: Axis;
 }
-interface Axis{
-  point1: number[]
-  point2: number[]
-  tiksDistance: number
-  stickOffset: number[]
-  stickFontSize: number
-  labelName: string,
-  labelOffset: number[],
-  labelFontSize: number
+interface Axis {
+  point1: number[];
+  point2: number[];
+  tiksDistance: number;
+  stickOffset: number[];
+  stickFontSize: number;
+  labelName: string;
+  labelOffset: number[];
+  labelFontSize: number;
 }
-interface bounding{
-  X1: number
-  Y1: number
-  X2: number
-  Y2: number
+interface bounding {
+  X1: number;
+  Y1: number;
+  X2: number;
+  Y2: number;
 }
 interface selectPointerMeta {
-  data: point[]
-  correctPoint: number[]
-  graphSettings:  settings
+  data: point[];
+  correctPoint: number[];
+  graphSettings: settings;
 }
-interface point{
-  coord: number[]
-  name?: string
-  color?: string
-  isStatic?: boolean
-  face?: facePoint
+interface point {
+  coord: number[];
+  name?: string;
+  color?: string;
+  isStatic?: boolean;
+  face?: facePoint;
 }
-export enum facePoint{
-  cross= "cross",
+export enum facePoint {
+  cross = "cross",
   circle = "circle",
   square = "square",
-  plus = "plus"
+  plus = "plus",
 }
-export enum graphComponents{
+export enum graphComponents {
   selectPoint = "selectPoint",
-  linearFit = "linearFit"
+  linearFit = "linearFit",
 }
 
 export enum AlertStatus {
@@ -206,4 +200,3 @@ export enum AlertStatus {
   warning = "warning",
   info = "info",
 }
-

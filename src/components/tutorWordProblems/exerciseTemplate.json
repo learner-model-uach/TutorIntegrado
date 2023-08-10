@@ -9,17 +9,16 @@
     "title": "",
     "text": "",
     "listObj": []
-
   },
   "meta": {},
-  "statement":"",
+  "statement": "",
   "mathExpression": "",
   "img": "",
-  "table": { 
+  "table": {
     "header": [
       {
         "align": "center",
-        "value":"Sector"
+        "value": "Sector"
       }
     ],
     "rows": [
@@ -27,37 +26,37 @@
         "data": ["Energía", "$8,18231*10^{13}$"]
       }
     ],
-    "alignRows":"center",
+    "alignRows": "center",
     "tableCaption": ""
   },
   "text": "",
-  "questions":[
+  "questions": [
     {
-      "questionId": 0, 
+      "questionId": 0,
       "quesExplanation": "Explicación previa a la preguta",
       "question": "Pregunta 1",
       "steps": [
         {
-          "stepId": 0, 
+          "stepId": 0,
           "stepTitle": "Título del paso",
-          "stepExplanation":"Explicación previa al paso",
+          "stepExplanation": "Explicación previa al paso",
           "componentToAnswer": {
-            "nameComponent":"selectionComponent",
-            "meta":{
+            "nameComponent": "selectionComponent",
+            "meta": {
               "answers": [
                 {
-                  "id":0,
+                  "id": 0,
                   "value": "Alternativa 1"
                 },
                 {
-                  "id":1,
-                  "value":"Alternativa 2"
+                  "id": 1,
+                  "value": "Alternativa 2"
                 }
               ],
               "idCorrectAnswers": 0
             }
           },
-          "kcs": ["KC1","KC2","KCN"],
+          "kcs": ["KC1", "KC2", "KCN"],
           "hints": [
             {
               "hintId": 0,
@@ -69,22 +68,22 @@
           "correctMsg": "Mensaje al completar el paso correctamente"
         },
         {
-          "stepId": 1, 
+          "stepId": 1,
           "stepTitle": "",
-          "stepExplanation":"",
+          "stepExplanation": "",
           "componentToAnswer": {
-            "nameComponent":"mathComponent",
-            "meta":{
+            "nameComponent": "mathComponent",
+            "meta": {
               "expression": "\\placeholder[a]{}",
-              "answers":{
-                "id":1,
-                "placeholderId":"a",
-                "value":"x"
+              "answers": {
+                "id": 1,
+                "placeholderId": "a",
+                "value": "x"
               },
               "idCorrectAnswers": [1]
             }
           },
-          "kcs": ["KC1","KC2","KCN"],
+          "kcs": ["KC1", "KC2", "KCN"],
           "hints": [
             {
               "hintId": 0,
@@ -95,51 +94,50 @@
           "stepGuideText": "",
           "correctMsg": "Mensaje al completar el paso correctamente"
         },
-        
-
-
 
         {
-          "stepId": 2, 
+          "stepId": 2,
           "stepTitle": "",
-          "stepExplanation":"",
+          "stepExplanation": "",
           "componentToAnswer": {
-            "nameComponent":"graphComponent",
-            "meta":{
+            "nameComponent": "graphComponent",
+            "meta": {
               "component": "selectPoint",
-              "metaComponent":{
-                "data": [{
-                  "coord": ["x","y"],
-                  "name": "",
-                  "color": "",
-                  "isStatic": true,
-                  "face": "cross | circle | square | plus"
-                }],
-                "correctPoint": [1,2],
-                "graphSettings":  {
+              "metaComponent": {
+                "data": [
+                  {
+                    "coord": ["x", "y"],
+                    "name": "",
+                    "color": "",
+                    "isStatic": true,
+                    "face": "cross | circle | square | plus"
+                  }
+                ],
+                "correctPoint": [1, 2],
+                "graphSettings": {
                   "originAxis": true,
                   "bounding": {
-                    "X1":1,
-                    "Y1":2,
-                    "X2":3,
-                    "Y2":4
+                    "X1": 1,
+                    "Y1": 2,
+                    "X2": 3,
+                    "Y2": 4
                   },
                   "maxBounding": {
-                    "X1":1,
-                    "Y1":2,
-                    "X2":3,
-                    "Y2":4
+                    "X1": 1,
+                    "Y1": 2,
+                    "X2": 3,
+                    "Y2": 4
                   },
                   "newAxis": {
-                    "xAxis":{},
-                    "yAxis":{}
+                    "xAxis": {},
+                    "yAxis": {}
                   },
                   "activeZoom": false
                 }
               }
             }
           },
-          "kcs": ["KC1","KC2","KCN"],
+          "kcs": ["KC1", "KC2", "KCN"],
           "hints": [
             {
               "hintId": 0,
@@ -151,71 +149,70 @@
           "correctMsg": "Mensaje al completar el paso correctamente"
         },
 
-
-
-
-
         {
-          "stepId": 3, 
+          "stepId": 3,
           "stepTitle": "",
-          "stepExplanation":"",
+          "stepExplanation": "",
           "componentToAnswer": {
-            "nameComponent":"graphComponent",
-            "meta":{
+            "nameComponent": "graphComponent",
+            "meta": {
               "component": "linearFit",
-              "metaComponent":{
-                "data": [{
-                  "coord": ["x","y"],
-                  "name": "",
-                  "color": "",
-                  "isStatic": true,
-                  "face": "cross | circle | square | plus"
-                }],
-                "graphSettings":  {
+              "metaComponent": {
+                "data": [
+                  {
+                    "coord": ["x", "y"],
+                    "name": "",
+                    "color": "",
+                    "isStatic": true,
+                    "face": "cross | circle | square | plus"
+                  }
+                ],
+                "graphSettings": {
                   "originAxis": true,
                   "bounding": {
-                    "X1":1,
-                    "Y1":2,
-                    "X2":3,
-                    "Y2":4
+                    "X1": 1,
+                    "Y1": 2,
+                    "X2": 3,
+                    "Y2": 4
                   },
                   "maxBounding": {
-                    "X1":1,
-                    "Y1":2,
-                    "X2":3,
-                    "Y2":4
+                    "X1": 1,
+                    "Y1": 2,
+                    "X2": 3,
+                    "Y2": 4
                   },
                   "newAxis": {
-                    "xAxis":{},
-                    "yAxis":{}
+                    "xAxis": {},
+                    "yAxis": {}
                   },
                   "activeZoom": false
                 },
-                "linearFunction":{
-                  "m":{
+                "linearFunction": {
+                  "m": {
                     "value": 2,
                     "slider": {
-                      "startPoint" : [1,2]},
-                      "endPoint": [1,4],
-                      "min": 10,
-                      "max": 20,
-                      "initialValue": 15,
-                      "snapWidth": 1,
-                      "precision": 0,
-                      "name": "name slider"
-                    }
-                  },
-                  "b":{
-                    "value": 1998,
-                    "slider":{}
+                      "startPoint": [1, 2]
+                    },
+                    "endPoint": [1, 4],
+                    "min": 10,
+                    "max": 20,
+                    "initialValue": 15,
+                    "snapWidth": 1,
+                    "precision": 0,
+                    "name": "name slider"
                   }
                 },
-                "correctAnswer":{
-                  "mCorrect": 2,
-                  "bCorrect": 24.7
+                "b": {
+                  "value": 1998,
+                  "slider": {}
                 }
+              },
+              "correctAnswer": {
+                "mCorrect": 2,
+                "bCorrect": 24.7
               }
-            },
+            }
+          },
           "kcs": [],
           "hints": [
             {
@@ -229,5 +226,5 @@
         }
       ]
     }
-  ] 
+  ]
 }

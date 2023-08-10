@@ -1,22 +1,20 @@
-
 import { useState, useEffect } from "react";
 import { AlertStatus } from "../types.d";
 
 export const useAlert = (
-    initialTitle: string, 
-    initialStatus: AlertStatus = AlertStatus.success, 
-    msg: string,
-    initialAlertHidden: boolean = false,
-    timerDuration:number  // Establece el temporizador para todas las alertas que no se definan individualmente
-  ) => {
+  initialTitle: string,
+  initialStatus: AlertStatus = AlertStatus.success,
+  msg: string,
+  initialAlertHidden: boolean = false,
+  timerDuration: number, // Establece el temporizador para todas las alertas que no se definan individualmente
+) => {
   const [alertTitle, setTitle] = useState(initialTitle);
   const [alertStatus, setStatus] = useState(initialStatus);
-  const [alertMsg, setMsg] = useState(msg)
+  const [alertMsg, setMsg] = useState(msg);
   const [alertHidden, setAlertHidden] = useState(initialAlertHidden);
-  const [alertTimer, setAlertTimer] = useState(timerDuration)
+  const [alertTimer, setAlertTimer] = useState(timerDuration);
 
   useEffect(() => {
-
     if (alertTimer) {
       const timer = setTimeout(() => {
         alertTimer !== null && setAlertHidden(true);
@@ -24,22 +22,23 @@ export const useAlert = (
       return () => {
         clearTimeout(timer);
       };
-    }else{
-      setAlertHidden(false)
+    } else {
+      setAlertHidden(false);
     }
   }, [alertHidden, alertTimer]);
 
-  const showAlert = ( // funcion que despliega la alerta
+  const showAlert = (
+    // funcion que despliega la alerta
     newTitle: string,
     newStatus: AlertStatus,
     newMsg: string,
-    newTimer?: number | null // permite establecer temporizador especifico para una alerta, si es null la alerta no tiene temporizador
+    newTimer?: number | null, // permite establecer temporizador especifico para una alerta, si es null la alerta no tiene temporizador
   ) => {
     setTitle(newTitle);
     setStatus(newStatus);
-    setMsg(newMsg)
+    setMsg(newMsg);
     setAlertHidden(false);
-    newTimer !== undefined && setAlertTimer(newTimer)
+    newTimer !== undefined && setAlertTimer(newTimer);
   };
 
   return {

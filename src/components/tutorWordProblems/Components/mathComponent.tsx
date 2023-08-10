@@ -1,140 +1,139 @@
-import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react"
-import type { Hint, MathComponentMeta } from "../types"
-import dynamic from "next/dynamic"
-import { useMemo, useRef, useState } from "react"
-import { MathfieldElement } from "mathlive"
-import ResAlert from "../Alert/responseAlert"
-import { useAlert } from "../hooks/useAlert"
-import { AlertStatus } from "../types.d"
-import HintButton from "../Hint/hint"
-import { useHint } from "../hooks/useHint"
-import { ComputeEngine} from '@cortex-js/compute-engine';
-import { useStore } from "../store/store"
+import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react";
+import type { Hint, MathComponentMeta } from "../types";
+import dynamic from "next/dynamic";
+import { useMemo, useRef, useState } from "react";
+import { MathfieldElement } from "mathlive";
+import ResAlert from "../Alert/responseAlert";
+import { useAlert } from "../hooks/useAlert";
+import { AlertStatus } from "../types.d";
+import HintButton from "../Hint/hint";
+import { useHint } from "../hooks/useHint";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { useStore } from "../store/store";
 
-
-const MathField = dynamic(() => import("./tools/mathLive"),{
-  ssr:false
-})
+const MathField = dynamic(() => import("./tools/mathLive"), {
+  ssr: false,
+});
 
 interface Props {
-  
-  meta: MathComponentMeta
-  hints: Hint[]
-  correctMsg?: string
+  meta: MathComponentMeta;
+  hints: Hint[];
+  correctMsg?: string;
 }
 interface Answer {
   placeholderId: string;
   value: string;
 }
 
-const MathComponent = ({meta, hints, correctMsg}: Props) => {
-  const {currentQuestionIndex, currentStepIndex,unlockNextStep} = useStore()
-    // Función para normalizar expresiones LaTeX, incluyendo números decimales
+const MathComponent = ({ meta, hints, correctMsg }: Props) => {
+  const { currentQuestionIndex, currentStepIndex, unlockNextStep } = useStore();
+  // Función para normalizar expresiones LaTeX, incluyendo números decimales
   const normalizeLatex = (latex: string) => {
     // Reemplazar todas las comas con puntos para tener notación decimal consistente
     const normalizedLatex = latex.replace(/(\d+),(\d+)/g, "$1.$2");
     return normalizedLatex;
   };
 
-  const newComputerEngine = new ComputeEngine()
+  const newComputerEngine = new ComputeEngine();
   //const expr1 =  newComputerEngine.parse('\\frac{-1}  {40} ');
   //const expr2 =  newComputerEngine.parse('-\\frac{1}{-40}');
   //const expr3 = newComputerEngine.parse(normalizeLatex("3.5"))
-  
 
-  const {expression, readonly, answers, idCorrectAnswers} = meta
-  
+  const { expression, readonly, answers, idCorrectAnswers } = meta;
+
   //const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
   const answerStateRef = useRef<Answer[]>([]); // Utilizamos useRef para mantener una referencia mutable a answerState
 
-  const [disabledButton, setDisabledButton] = useState(false)
-  const mfe = useMemo(() => new MathfieldElement, [])
-  
+  const [disabledButton, setDisabledButton] = useState(false);
+  const mfe = useMemo(() => new MathfieldElement(), []);
 
-  const correctAnswers = answers.filter((answ) => {
+  const correctAnswers = answers.filter(answ => {
     //return idCorrectAnswers.find((correctId) => correctId === answ.id);
     return idCorrectAnswers.includes(answ.id);
-  })
-  const otherAnswers = answers.filter((answ) => {
-    return !idCorrectAnswers.some((correctId) => correctId === answ.id);
-    
+  });
+  const otherAnswers = answers.filter(answ => {
+    return !idCorrectAnswers.some(correctId => correctId === answ.id);
   });
 
-  const {
-    alertTitle, 
-    alertStatus, 
-    alertMsg, 
-    alertHidden, 
-    showAlert
-  } = useAlert("Titulo", AlertStatus.info,"mensaje de la alerta",false,3000)
+  const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert } = useAlert(
+    "Titulo",
+    AlertStatus.info,
+    "mensaje de la alerta",
+    false,
+    3000,
+  );
 
   const {
     unlockedHints,
     currentHint,
-    totalHints, 
+    totalHints,
     nextHint,
-    prevHint, 
-    disabledPrevButton, 
+    prevHint,
+    disabledPrevButton,
     disabledNextButton,
     numHintsActivated,
     unlockHint,
-    resetNumHintsActivated} = useHint(hints)
+    resetNumHintsActivated,
+  } = useHint(hints);
 
-
-  
   const checkAnswer = () => {
-
-    try{      
-      const isEmpty = answerStateRef.current.some(userAnswer => userAnswer.value === "")
-      if(isEmpty){
-        showAlert("", AlertStatus.warning, "Debes completar todos los recuadros!")
-        return 
+    try {
+      const isEmpty = answerStateRef.current.some(userAnswer => userAnswer.value === "");
+      if (isEmpty) {
+        showAlert("", AlertStatus.warning, "Debes completar todos los recuadros!");
+        return;
       }
-      let allCorrect = true
-      let genericHint = true
-      console.log("idsCorrects", idCorrectAnswers)
-      console.log("corrAnswer-->",correctAnswers)
-      console.log("otherAnswers-->", otherAnswers)
-      answerStateRef.current.forEach((userAnswer) =>{
-        
+      let allCorrect = true;
+      let genericHint = true;
+      console.log("idsCorrects", idCorrectAnswers);
+      console.log("corrAnswer-->", correctAnswers);
+      console.log("otherAnswers-->", otherAnswers);
+      answerStateRef.current.forEach(userAnswer => {
         // comprobar si userAnswer.value hace match con alguna respuesta en correctAnswers, si no, comprobar si hace match en otherAnswer
         //const isCorrect = correctAnswers.some(corrAnswer => corrAnswer.value.replace(/ /g, '') === userAnswer.value)
-        const parUserAnswer = newComputerEngine.parse(normalizeLatex(userAnswer.value))
+        const parUserAnswer = newComputerEngine.parse(normalizeLatex(userAnswer.value));
         console.log("parUserAnswer--->", parUserAnswer.latex);
-        
+
         //const isCorrect = correctAnswers.some(corrAnswer =>   parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))))
-        const isCorrect = correctAnswers.find(corrAnswer => corrAnswer.placeholderId === userAnswer.placeholderId && parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))))
-        
-        if(isCorrect){
-          mfe.setPromptState(userAnswer.placeholderId,"correct",true)
-          
-        }
-        else{
-          allCorrect=false
+        const isCorrect = correctAnswers.find(
+          corrAnswer =>
+            corrAnswer.placeholderId === userAnswer.placeholderId &&
+            parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))),
+        );
+
+        if (isCorrect) {
+          mfe.setPromptState(userAnswer.placeholderId, "correct", true);
+        } else {
+          allCorrect = false;
           mfe.setPromptState(userAnswer.placeholderId, "incorrect", false);
           //const isOther = otherAnswers.find((otherAnswer) => otherAnswer.value.replace(/ /g, '') === userAnswer.value)
-          const isOther = otherAnswers.find((otherAnswer) => otherAnswer.placeholderId === userAnswer.placeholderId && parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(otherAnswer.value))))
-          if(isOther){
+          const isOther = otherAnswers.find(
+            otherAnswer =>
+              otherAnswer.placeholderId === userAnswer.placeholderId &&
+              parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(otherAnswer.value))),
+          );
+          if (isOther) {
             //TODO aplicar logica de hint para una respuesta especifica
-            genericHint= false
-            unlockHint(isOther.id)
-          }
-          else{
+            genericHint = false;
+            unlockHint(isOther.id);
+          } else {
             // TODO activar hint generico
           }
         }
-      })
+      });
       if (allCorrect) {
         showAlert("😃", AlertStatus.success, correctMsg, null);
         setDisabledButton(true); // set disabled status
-        unlockNextStep()
+        unlockNextStep();
       } else {
         showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
         genericHint && unlockHint();
       }
-    }catch (error){console.log(error)}
-  }
-  
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleMathFieldChange = (latex, promptsValues) => {
     const entries = Object.entries(promptsValues) as [string, string][];
     answerStateRef.current = entries.map(([placeholderId, value]) => ({
@@ -142,42 +141,47 @@ const MathComponent = ({meta, hints, correctMsg}: Props) => {
       value,
     }));
     //console.log(answerStateRef.current)
-  }
-  return(
-    <Flex flexDirection='column' >
-      <Box width='100%' textAlign='center' mb={4} >
-        <MathField 
+  };
+  return (
+    <Flex flexDirection="column">
+      <Box width="100%" textAlign="center" mb={4}>
+        <MathField
           readOnly={readonly}
-          mfe = {mfe} 
-          value={expression} 
-          onChange={handleMathFieldChange}>  
-        </MathField>  
-      </Box>   
+          mfe={mfe}
+          value={expression}
+          onChange={handleMathFieldChange}
+        ></MathField>
+      </Box>
 
       <Flex justifyContent="flex-end">
         <ButtonGroup size="lg" display="flex" justifyContent="flex-end">
-          <Button colorScheme="teal" size="sm" onClick={checkAnswer} disabled={disabledButton}>Aceptar</Button>
-          <HintButton 
-            hints={unlockedHints} 
-            currentHint={currentHint} 
-            totalHints={totalHints} 
+          <Button colorScheme="teal" size="sm" onClick={checkAnswer} disabled={disabledButton}>
+            Aceptar
+          </Button>
+          <HintButton
+            hints={unlockedHints}
+            currentHint={currentHint}
+            totalHints={totalHints}
             prevHint={prevHint}
             nextHint={nextHint}
             disabledPrevButton={disabledPrevButton}
             disabledNextButton={disabledNextButton}
-            numEnabledHints = {numHintsActivated}
+            numEnabledHints={numHintsActivated}
             resetNumHintsActivated={resetNumHintsActivated}
-            ></HintButton>
+          ></HintButton>
         </ButtonGroup>
       </Flex>
 
-      <Box width='100%'>
-        <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden={alertHidden}  />
+      <Box width="100%">
+        <ResAlert
+          title={alertTitle}
+          status={alertStatus}
+          text={alertMsg}
+          alertHidden={alertHidden}
+        />
       </Box>
-
     </Flex>
+  );
+};
 
-  )
-}
-
-export default MathComponent
+export default MathComponent;
