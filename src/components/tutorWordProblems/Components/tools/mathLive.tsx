@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { useEffect, useMemo } from 'react';
 import { FontSize, MathfieldElement, Selector } from 'mathlive';
-import { Button, ButtonGroup, useMediaQuery } from '@chakra-ui/react';
+import { useMediaQuery } from '@chakra-ui/react';
 
 export type MathEditorProps = {
   readOnly?: boolean;

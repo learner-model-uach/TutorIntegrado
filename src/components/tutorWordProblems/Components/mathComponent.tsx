@@ -1,14 +1,14 @@
 import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react"
 import type { Hint, MathComponentMeta } from "../types"
 import dynamic from "next/dynamic"
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { MathfieldElement } from "mathlive"
 import ResAlert from "../Alert/responseAlert"
 import { useAlert } from "../hooks/useAlert"
 import { AlertStatus } from "../types.d"
 import HintButton from "../Hint/hint"
 import { useHint } from "../hooks/useHint"
-import { ComputeEngine, Parser} from '@cortex-js/compute-engine';
+import { ComputeEngine} from '@cortex-js/compute-engine';
 import { useStore } from "../store/store"
 
 

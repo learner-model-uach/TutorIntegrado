@@ -1,4 +1,4 @@
-import { Alert, Box, Container, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react'
+import { Alert, Box, Flex, Image, useMediaQuery } from '@chakra-ui/react'
 import Latex from 'react-latex-next';
 
 

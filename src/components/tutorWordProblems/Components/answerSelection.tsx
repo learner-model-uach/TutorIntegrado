@@ -1,7 +1,7 @@
 
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons"
-import { Box, Button, ButtonGroup, Checkbox, Divider, Flex, List, ListItem, Text} from "@chakra-ui/react"
-import React, { useEffect, useState } from "react"
+import {  Button, ButtonGroup, Checkbox, Flex, List, ListItem, Text} from "@chakra-ui/react"
+import React, {  useState } from "react"
 import ResAlert from "../Alert/responseAlert"
 import HintButton from "../Hint/hint"
 import { useAlert } from "../hooks/useAlert"
@@ -43,7 +43,7 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
     resetNumHintsActivated} = useHint(hints)// aca me quede
 
   // Function that controls the selection of an alternative
-  const handleClick = (answerIndex: number, event: React.MouseEvent<HTMLElement>) =>{
+  const handleClick = (answerIndex: number) =>{
     // We compare if the selected alternative is correct
     const isCorrectUserAnswer = answerIndex === meta.idCorrectAnswers
      setUserSelectedAnswer(answerIndex)
@@ -88,7 +88,7 @@ const SelectionComponent = ({meta,hints, correctMsg} : Props)=>{
               borderColor="gray.100"
               bgColor={getBackgroundColor(index)}
               disabled={isCorrectUserAnswer}  
-              onClick={(e)=> {handleClick(index, e)}} 
+              onClick={()=> {handleClick(index)}} 
               justifyContent="left" 
               variant='ghost'
               width='100%'

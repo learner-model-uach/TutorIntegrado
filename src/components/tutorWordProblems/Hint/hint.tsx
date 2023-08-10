@@ -2,7 +2,6 @@ import {Box, Button, ButtonGroup, Circle, Popover, PopoverArrow, PopoverBody, Po
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons'
 import type { Hint } from "../types"
 import Latex from "react-latex-next"
-type InteractiveLineFunction = (hint: Hint) => void;
 
 interface Props{
   hints : Hint[]
