@@ -65,6 +65,7 @@ export const useBoard = (boardId: string, graphSettings: settings) => {
 
     if (!showOriginAxis && xAxisSettings && yAxisSettings) {
       // Crear líneas de ejes en una posición específica
+      // @ts-ignore
       const xAxis = board.create("axis", [xAxisSettings?.point1, xAxisSettings?.point2], {
         // punto 1 (x,y) , punto 2 (x,y)
         ticks: {
@@ -88,7 +89,7 @@ export const useBoard = (boardId: string, graphSettings: settings) => {
           fontSize: xAxisSettings?.labelFontSize ?? 16,
         },
       });
-
+      // @ts-ignore
       const yAxis = board.create("axis", [yAxisSettings?.point1, yAxisSettings?.point2], {
         ticks: {
           drawLabels: true,

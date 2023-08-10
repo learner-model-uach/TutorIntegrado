@@ -26,7 +26,7 @@ interface Answer {
 }
 
 const MathComponent = ({ meta, hints, correctMsg }: Props) => {
-  const { currentQuestionIndex, currentStepIndex, unlockNextStep } = useStore();
+  const { unlockNextStep } = useStore();
   // Función para normalizar expresiones LaTeX, incluyendo números decimales
   const normalizeLatex = (latex: string) => {
     // Reemplazar todas las comas con puntos para tener notación decimal consistente
@@ -134,6 +134,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     }
   };
 
+  // @ts-ignore
   const handleMathFieldChange = (latex, promptsValues) => {
     const entries = Object.entries(promptsValues) as [string, string][];
     answerStateRef.current = entries.map(([placeholderId, value]) => ({

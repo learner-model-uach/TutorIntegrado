@@ -88,6 +88,7 @@ const Mathfield = (props: MathEditorProps) => {
     }
   }, [props.value]); //se ejecutará cada vez que el valor de props.value
 
+  // @ts-ignore
   const showVirtualKeyboard = () => {
     mfe.executeCommand("toggleVirtualKeyboard" as Selector);
   };

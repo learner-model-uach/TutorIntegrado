@@ -71,12 +71,6 @@ export const SelectPoint = ({ meta, hints }: Props) => {
     }
   }, [userAnswer]);
 
-  const handleFullScreen = () => {
-    if (boardRef.current) {
-      boardRef.current.toFullscreen();
-    }
-  };
-
   return (
     <Flex flexDirection="column" alignContent="center" flexWrap="wrap" width="100%" maxW="100%">
       <Box

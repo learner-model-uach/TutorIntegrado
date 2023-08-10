@@ -67,23 +67,28 @@ export const LinearFit = ({ meta, hints }: Props) => {
       const bSlider = createSlider(b.slider);
       mSliderRef.current = mSlider;
       bSliderRef.current = bSlider;
+      // @ts-ignore
       mval = () => mSlider.Value();
+      // @ts-ignore
       bval = () => bSlider.Value();
     } else if (m.slider && !b.slider) {
       const mSlider = createSlider(m.slider);
       mSliderRef.current = mSlider;
+      // @ts-ignore
       mval = () => mSlider.Value();
       bval = () => b?.value;
     } else if (!m.slider && b.slider) {
       const bSlider = createSlider(b.slider);
       bSliderRef.current = bSlider;
       mval = () => m?.value;
+      // @ts-ignore
       bval = () => bSlider.Value();
     }
 
     const linF = function (x) {
       return mval() * x + bval();
     };
+    // @ts-ignore
     var G = boardRef.current.create("functiongraph", [linF], { strokeWidth: 2 });
     const fTextVal = () => {
       var vz = "";
@@ -102,6 +107,7 @@ export const LinearFit = ({ meta, hints }: Props) => {
       }
       return "y = " + JXG.toFixed(mval(), 3) + "x" + vz + tv;
     };
+    // @ts-ignore
     var ftext = boardRef.current.create("text", [positionTextEq[0], positionTextEq[1], fTextVal], {
       fontSize: 18,
       color: "#2B4163",
@@ -158,6 +164,7 @@ export const LinearFit = ({ meta, hints }: Props) => {
     return correctRange[0] <= sliderValue && sliderValue <= correctRange[1];
   };
 
+  // @ts-ignore
   const handleHintClick = () => {
     boardRef.current.create(
       "functiongraph",

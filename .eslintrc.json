@@ -1,7 +1,6 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "react/display-name": "off",
-    "ignoreDuringBuilds": "true"
+    "react/display-name": "off"
   }
 }
