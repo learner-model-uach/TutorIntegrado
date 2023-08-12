@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useColorModeValue } from "@chakra-ui/react";
-import JXG, { Board, BoardAttributes } from "jsxgraph";
+import type { Board, BoardAttributes } from "jsxgraph";
+import JXG from "jsxgraph";
 import type { settings } from "../types.d";
 
 export const useBoard = (boardId: string, graphSettings: settings) => {

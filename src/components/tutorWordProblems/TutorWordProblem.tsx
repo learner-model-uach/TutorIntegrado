@@ -31,7 +31,7 @@ import dynamic from "next/dynamic";
 import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import { CardInfo } from "./infCard/informationCard";
-import JSXGraphComponent from "./Components/jsxGraphComponent";
+//import JSXGraphComponent from "./Components/jsxGraphComponent";
 import { useStore } from "./store/store";
 import { useEffect } from "react";
 //import { useAction} from "../../utils/action"
@@ -40,6 +40,10 @@ const SelectionComponent = dynamic(() => import("./Components/answerSelection"),
   ssr: false,
 });
 const MathComponent = dynamic(() => import("./Components/mathComponent"), {
+  ssr: false,
+});
+
+const JSXGraphComponent = dynamic(() => import("./Components/jsxGraphComponent"), {
   ssr: false,
 });
 export const TutorWordProblem = ({ exercise }: { exercise: Exercise }) => {
