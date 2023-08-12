@@ -1,4 +1,5 @@
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+//import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import {BsCheckLg, BsXLg} from "react-icons/bs"
 import { Button, ButtonGroup, Checkbox, Flex, List, ListItem, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ResAlert from "../Alert/responseAlert";
@@ -40,7 +41,7 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
     nextHint,
     unlockHint,
     resetNumHintsActivated,
-  } = useHint(hints); // aca me quede
+  } = useHint(hints); 
 
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number) => {
@@ -106,11 +107,11 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
                   <Checkbox
                     key={index}
                     icon={
-                      meta.idCorrectAnswers === index ? (
-                        <CheckIcon w={3} h={3} />
-                      ) : (
-                        <CloseIcon w={2} h={2} />
-                      )
+                      userSelectedAnswer === index // Mostrar íconos solo cuando se selecciona una alternativa
+                        ? meta.idCorrectAnswers === index
+                          ? <BsCheckLg />
+                          : <BsXLg style={{color:"white"}} />
+                        : undefined // Dejar vacío cuando no está seleccionado
                     }
                     isReadOnly={true}
                     isChecked={userSelectedAnswer === index}

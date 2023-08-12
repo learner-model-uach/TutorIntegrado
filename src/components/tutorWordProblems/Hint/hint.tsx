@@ -13,7 +13,8 @@ import {
   PopoverTrigger,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+//import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {BsCaretLeftFill,BsCaretRightFill} from "react-icons/bs"
 import type { Hint } from "../types";
 import Latex from "react-latex-next";
 
@@ -89,10 +90,10 @@ const HintButton = ({
           </Box>
           <ButtonGroup size="sm">
             <Button variant="outline" onClick={prevHint} isDisabled={disabledPrevButton}>
-              <ChevronLeftIcon color={popoverColor} />
+              <BsCaretLeftFill color={popoverColor} />
             </Button>
             <Button variant="outline" onClick={nextHint} isDisabled={disabledNextButton}>
-              <ChevronRightIcon color={popoverColor} />
+              <BsCaretRightFill color={popoverColor} />
             </Button>
           </ButtonGroup>
         </PopoverFooter>

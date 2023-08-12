@@ -34,6 +34,7 @@ import { CardInfo } from "./infCard/informationCard";
 import JSXGraphComponent from "./Components/jsxGraphComponent";
 import { useStore } from "./store/store";
 import { useEffect } from "react";
+import { useAction} from "../../utils/action"
 
 const SelectionComponent = dynamic(() => import("./Components/answerSelection"), {
   ssr: false,

@@ -87,11 +87,8 @@ export enum components {
 }
 
 export interface SelectionMeta {
-  //id:            number;
   answers: SelectionAnswer[];
   idCorrectAnswers: number;
-  userSelectedAnswer?: number;
-  isCorrectUserAnswer?: boolean;
 }
 interface SelectionAnswer {
   id: number;
