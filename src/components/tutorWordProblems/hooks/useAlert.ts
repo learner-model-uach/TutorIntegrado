@@ -6,7 +6,8 @@ export const useAlert = (
   initialStatus: AlertStatus = AlertStatus.success,
   msg: string,
   initialAlertHidden: boolean = false,
-  timerDuration: number, ) => {
+  timerDuration: number,
+) => {
   const [alertTitle, setTitle] = useState(initialTitle);
   const [alertStatus, setStatus] = useState(initialStatus);
   const [alertMsg, setMsg] = useState(msg);
@@ -17,8 +18,12 @@ export const useAlert = (
       const timer = setTimeout(() => {
         alertTimer !== null && setAlertHidden(true);
       }, alertTimer);
-      return () => { clearTimeout(timer) }
-    } else { setAlertHidden(false);}
+      return () => {
+        clearTimeout(timer);
+      };
+    } else {
+      setAlertHidden(false);
+    }
   }, [alertHidden, alertTimer]);
   // funcion que despliega la alerta
   const showAlert = (
@@ -33,6 +38,6 @@ export const useAlert = (
     setMsg(newMsg);
     setAlertHidden(false);
     newTimer !== undefined && setAlertTimer(newTimer);
-  }
-  return {alertTitle,alertStatus,alertMsg,alertHidden,showAlert,};
+  };
+  return { alertTitle, alertStatus, alertMsg, alertHidden, showAlert };
 };

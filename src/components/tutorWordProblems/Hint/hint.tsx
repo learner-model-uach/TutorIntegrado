@@ -14,7 +14,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 //import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import {BsCaretLeftFill,BsCaretRightFill} from "react-icons/bs"
+import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import type { Hint } from "../types";
 import Latex from "react-latex-next";
 

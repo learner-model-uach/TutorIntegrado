@@ -14,11 +14,20 @@ import NextLink from "next/link";
 import { FaStar } from "react-icons/fa";
 import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
-import { MathComponent } from "mathjax-react";
+//import { MathComponent } from "mathjax-react";
+import dynamic from "next/dynamic";
+import type { ComponentProps } from "react";
+
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
 
+const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
+  () => import("mathjax-react").then(v => v.MathComponent),
+  {
+    ssr: false,
+  },
+);
 export const CardSelection = ({
   id,
   code,
