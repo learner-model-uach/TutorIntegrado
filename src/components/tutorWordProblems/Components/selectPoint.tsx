@@ -1,5 +1,5 @@
 import { AlertStatus, facePoint, Hint, selectPointerMeta } from "../types.d";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Box, ButtonGroup, Flex, useMediaQuery } from "@chakra-ui/react";
 import ResAlert from "../Alert/responseAlert";
 import { useAlert } from "../hooks/useAlert";
@@ -13,6 +13,9 @@ interface Props {
   hints: Hint[];
 }
 export const SelectPoint = ({ meta, hints }: Props) => {
+  const selectedPointRef = useRef(null); // Ref para el punto seleccionado
+
+  const [answerCorrect, setAnswerCorrect] = useState(false);
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
   const { correctPoint, data } = meta;
   const [userAnswer, setUserAnswer] = useState([]);
@@ -49,20 +52,29 @@ export const SelectPoint = ({ meta, hints }: Props) => {
         face: face,
         fixed: isStatic,
       });
-      p.on("down", () => setUserAnswer(p.coords.usrCoords));
+      p.on("down", () => {
+        setUserAnswer(p.coords.usrCoords);
+
+        selectedPointRef.current = p; // Guarda el punto seleccionado en el estado
+      });
     });
   }, []);
 
   useEffect(() => {
-    if (userAnswer.length !== 0) {
+    if (userAnswer.length !== 0 && !answerCorrect) {
       const answer = userAnswer.slice(-2);
       const isCorrect = answer.every((element, index) => element === correctPoint[index]);
       if (isCorrect) {
+        setAnswerCorrect(true);
         showAlert("😃", AlertStatus.success, "Muy bien!", null);
+
         if (boardRef.current) {
           disableBoard();
+
+          //boardRef.current.create("point",[correctPoint[0], correctPoint[1]], {face: facePoint.cross})
           //JXG.JSXGraph.freeBoard(boardRef.current)
         }
+
         unlockNextStep();
       } else {
         showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
