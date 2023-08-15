@@ -4,8 +4,7 @@ import { Button, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";
 import type { ExType } from "./ExcerciseType";
 import { sessionState, sessionStateBD } from "../../SessionState";
-import { useAuth } from "../../Auth";
-
+//import { useAuth } from "../../Auth";
 function Dq({ params, b, c }: { params: ExType; b: Array<string>; c: Array<Object> }) {
   useEffect(() => {
     console.log(params.code);
@@ -51,7 +50,7 @@ const DQ2 = () => {
   const [text, setText] = useState<string>("");
   const [submit, setSubmit] = useState(false);
   const sText = useRef<string>("");
-  const { user } = useAuth();
+  //const { user } = useAuth();
 
   const { data: potato } = useGQLQuery(
     gql(/* GraphQL */ `
@@ -80,8 +79,6 @@ const DQ2 = () => {
 
   return (
     <>
-      <h1>Hola {user.email} </h1>
-      <Text whiteSpace="pre-wrap">{JSON.stringify(user, null, 2)}</Text>
       <Input
         onChange={e => {
           setText(e.target.value);
