@@ -1,4 +1,4 @@
-export interface Exercise {
+export interface wpExercise {
   code: string;
   type: string;
   presentation: Presentation;
@@ -130,6 +130,7 @@ interface linearFitMeta {
     bCorrect?: number[];
   };
 }
+
 interface slider {
   startPoint: number[];
   endPoint: number[];

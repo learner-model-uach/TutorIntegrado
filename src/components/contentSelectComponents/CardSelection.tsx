@@ -136,6 +136,8 @@ export const CardSelection = ({
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
           {json.type == "ecc5s" || json.type == "secl5s" ? (
             <MathComponent tex={String.raw`${json.eqc}`} display={false} />
+          ) : json.type === "wordProblem" ? (
+            <MathComponent tex={String.raw`${"wpExercise"}`} display={false} />
           ) : (
             <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
           )}

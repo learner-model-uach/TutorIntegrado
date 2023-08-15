@@ -94,7 +94,6 @@ export default withAuth(function ContentSelect() {
   const contentResult = data?.contentSelection?.contentSelected?.contentResult.sort((a, b) => {
     return parseInt(a.Order) - parseInt(b.Order);
   });
-  console.log(data?.contentSelection?.contentSelected);
 
   const lastExercise = data?.contentSelection?.contentSelected?.PU[0];
 

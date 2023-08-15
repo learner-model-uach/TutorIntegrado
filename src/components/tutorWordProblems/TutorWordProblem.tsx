@@ -25,7 +25,7 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-import type { Exercise, GraphMeta, MathComponentMeta, SelectionMeta, textAlign } from "./types";
+import type { wpExercise, GraphMeta, MathComponentMeta, SelectionMeta, textAlign } from "./types";
 import { components } from "./types.d";
 import dynamic from "next/dynamic";
 import "katex/dist/katex.min.css";
@@ -34,7 +34,7 @@ import { CardInfo } from "./infCard/informationCard";
 //import JSXGraphComponent from "./Components/jsxGraphComponent";
 import { useStore } from "./store/store";
 import { useEffect } from "react";
-//import { useAction} from "../../utils/action"
+import { useAction } from "../../utils/action";
 
 const SelectionComponent = dynamic(() => import("./Components/answerSelection"), {
   ssr: false,
@@ -46,7 +46,13 @@ const MathComponent = dynamic(() => import("./Components/mathComponent"), {
 const JSXGraphComponent = dynamic(() => import("./Components/jsxGraphComponent"), {
   ssr: false,
 });
-export const TutorWordProblem = ({ exercise }: { exercise: Exercise }) => {
+export const TutorWordProblem = ({
+  exercise,
+  topicId,
+}: {
+  exercise: wpExercise;
+  topicId: string;
+}) => {
   const textColor = useColorModeValue("dark", "white");
   const itemBgColor = useColorModeValue("#bde3f8", "#1A202C");
   const bgContentColor = useColorModeValue("white", "#2D3748");
@@ -57,7 +63,7 @@ export const TutorWordProblem = ({ exercise }: { exercise: Exercise }) => {
   const currentStepColor = "#2B4264";
   const rounded = 5;
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
-
+  const reportAction = useAction();
   const {
     currentQuestionIndex,
     currentStepIndex,
@@ -224,6 +230,14 @@ export const TutorWordProblem = ({ exercise }: { exercise: Exercise }) => {
                                     rounded={rounded}
                                     bgColor={isCurrent ? currentStepColor : itemBgColor}
                                     isDisabled={step.isBlocked}
+                                    onClick={() => {
+                                      reportAction({
+                                        verbName: "openStep",
+                                        stepID: "" + step.stepId,
+                                        contentID: exercise.code,
+                                        topicID: topicId,
+                                      });
+                                    }}
                                   >
                                     <h2>
                                       <AccordionButton

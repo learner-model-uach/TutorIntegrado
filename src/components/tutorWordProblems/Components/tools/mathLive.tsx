@@ -1,6 +1,4 @@
-import * as React from "react";
-
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { FontSize, MathfieldElement, Selector } from "mathlive";
 import { useMediaQuery } from "@chakra-ui/react";
 
@@ -18,7 +16,7 @@ export type MathEditorProps = {
 const Mathfield = (props: MathEditorProps) => {
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
 
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const mfe = useMemo(() => {
     const mathfield = props.mfe ?? new MathfieldElement();
     mathfield.virtualKeyboardTargetOrigin = "off";
@@ -27,10 +25,10 @@ const Mathfield = (props: MathEditorProps) => {
 
   mfe.readOnly = props.readOnly ?? true;
   //mfe.disabled = false
-  var size = isScreenLarge ? 6 : 3;
+  const size = isScreenLarge ? 6 : 3;
 
   mfe.applyStyle({ fontSize: size as FontSize }, { operation: "set", range: [0, -1] });
-  const currentValue = React.useRef<string>(""); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
+  const currentValue = useRef<string>(""); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
 
   //console.log("Renderizado mathLive")
 

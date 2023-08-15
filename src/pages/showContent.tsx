@@ -24,7 +24,7 @@ const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
 );
 
-const DynamicTutorWP = dynamic<{ exercise?: Object }>(() =>
+const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
 );
 
@@ -33,7 +33,6 @@ export default withAuth(function ShowContent() {
   const topic = sessionState.topic;
 
   //console.log("Content --------->", content);
-  //console.log("wpExercise ------>", wpExercise);
   //console.log("topic --------->", topic);
 
   return (
@@ -60,7 +59,7 @@ export default withAuth(function ShowContent() {
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
         ) : content && content?.json.type == "wordProblem" ? (
-          <DynamicTutorWP exercise={content.json}></DynamicTutorWP>
+          <DynamicTutorWP exercise={content.json} topicId={topic}></DynamicTutorWP>
         ) : (
           <Text>No existe el contenido que desea cargar</Text>
         )}

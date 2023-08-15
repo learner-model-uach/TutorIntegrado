@@ -25,21 +25,19 @@ interface Answer {
   value: string;
 }
 
-const MathComponent = ({ meta, hints, correctMsg }: Props) => {
-  const { unlockNextStep } = useStore();
-  // Función para normalizar expresiones LaTeX, incluyendo números decimales
-  const normalizeLatex = (latex: string) => {
-    // Reemplazar todas las comas con puntos para tener notación decimal consistente
-    const normalizedLatex = latex.replace(/(\d+),(\d+)/g, "$1.$2");
-    return normalizedLatex;
-  };
+// Función para normalizar expresiones LaTeX, incluyendo números decimales
+const normalizeLatex = (latex: string) => {
+  // Reemplazar todas las comas con puntos para tener notación decimal consistente
+  const normalizedLatex = latex.replace(/(\d+),(\d+)/g, "$1.$2");
+  return normalizedLatex;
+};
 
+const MathComponent = ({ meta, hints, correctMsg }: Props) => {
   const newComputerEngine = new ComputeEngine();
+  const { expression, readonly, answers, idCorrectAnswers } = meta;
   //const expr1 =  newComputerEngine.parse('\\frac{-1}  {40} ');
   //const expr2 =  newComputerEngine.parse('-\\frac{1}{-40}');
   //const expr3 = newComputerEngine.parse(normalizeLatex("3.5"))
-
-  const { expression, readonly, answers, idCorrectAnswers } = meta;
 
   //const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
   const answerStateRef = useRef<Answer[]>([]); // Utilizamos useRef para mantener una referencia mutable a answerState
@@ -75,6 +73,8 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     unlockHint,
     resetNumHintsActivated,
   } = useHint(hints);
+
+  const { unlockNextStep } = useStore();
 
   const checkAnswer = () => {
     try {
