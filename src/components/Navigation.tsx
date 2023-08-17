@@ -26,8 +26,17 @@ export function Navigation() {
         )}
       </Stack>
 
-      <Stack pb="6">
+      <Stack pb={6}>
         {user && (
+          <>
+            <Text fontWeight="black">Tópicos</Text>
+            <SidebarLink href="wpExercises">Ejercicios wp</SidebarLink>
+          </>
+        )}
+      </Stack>
+
+      <Stack pb="6">
+        {user && !user.tags.includes("wp-test-user") && (
           <>
             <Text fontWeight="black">Tópicos</Text>
             <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>

@@ -23,6 +23,8 @@ import {
   Center,
   useColorModeValue,
   useMediaQuery,
+  ButtonGroup,
+  Button,
 } from "@chakra-ui/react";
 
 import type { wpExercise, GraphMeta, MathComponentMeta, SelectionMeta, textAlign } from "./types";
@@ -32,9 +34,12 @@ import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import { CardInfo } from "./infCard/informationCard";
 //import JSXGraphComponent from "./Components/jsxGraphComponent";
-import { useStore } from "./store/store";
+import { useExerciseStore, useStore } from "./store/store";
 import { useEffect } from "react";
 import { useAction } from "../../utils/action";
+import { LoadContent } from "./LoadExercise";
+import { useRouter } from "next/router";
+import { useAuth } from "../Auth";
 
 const SelectionComponent = dynamic(() => import("./Components/answerSelection"), {
   ssr: false,
@@ -64,6 +69,10 @@ export const TutorWordProblem = ({
   const rounded = 5;
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
   const reportAction = useAction();
+  const { user } = useAuth();
+  const isTesting = user.tags.includes("wp-test-user");
+
+  console.log("istesting", isTesting);
   const {
     currentQuestionIndex,
     currentStepIndex,
@@ -86,14 +95,14 @@ export const TutorWordProblem = ({
     setQuestions(initialQuestions);
   }, []);
 
-  /** 
-  useEffect(()=>{
-    console.log("currentQuestionIndex",currentQuestionIndex)
-    console.log("curretStepIndex",currentStepIndex)
-    console.log("questions-->", questions);
-    
-  },[currentQuestionIndex, currentStepIndex])
-  */
+  const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
+  const router = useRouter();
+
+  const handleNextButtonClick = () => {
+    nextExercise();
+    router.replace("/showContent");
+  };
+
   return (
     <>
       <Tabs isFitted variant="enclosed" width="100%">
@@ -290,7 +299,20 @@ export const TutorWordProblem = ({
                   })}
               </Accordion>
             </Flex>
+            {isTesting && (
+              <ButtonGroup>
+                <Button
+                  onClick={() => {
+                    handleNextButtonClick();
+                    console.log("currentExercise:", currentExercise);
+                  }}
+                >
+                  Siguiente
+                </Button>
+              </ButtonGroup>
+            )}
           </TabPanel>
+          {isTesting && <LoadContent code={exerciseIds[currentExercise]} />}
         </TabPanels>
       </Tabs>
     </>

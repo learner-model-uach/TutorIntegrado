@@ -11,6 +11,15 @@ type Store = {
   setQuestions: (questions: Question[]) => void;
 };
 
+type ExerciseStore = {
+  currentExercise: number;
+  exerciseIds: string[];
+  exerciseCode: string;
+  nextExercise: () => void;
+  setExercise: (exercise: string[]) => void;
+  setExerciseCode: (code: string) => void;
+};
+
 export const useStore = create<Store>(set => ({
   currentQuestionIndex: 0,
   currentStepIndex: 0, // Ningún paso desbloqueado inicialmente
@@ -38,4 +47,26 @@ export const useStore = create<Store>(set => ({
       return state;
     }),
   setQuestions: ques => set(() => ({ questions: ques })),
+}));
+
+export const useExerciseStore = create<ExerciseStore>(set => ({
+  currentExercise: 0,
+  exerciseIds: [],
+  exerciseCode: "", // Nuevo estado para almacenar el código del ejercicio actual
+
+  setExercise: data => set(() => ({ exerciseIds: data })),
+  nextExercise: () =>
+    set(state => {
+      const nextIndexExcercise = state.currentExercise + 1;
+
+      if (nextIndexExcercise < state.exerciseIds.length) {
+        return {
+          currentExercise: nextIndexExcercise,
+          exerciseIds: state.exerciseIds,
+        };
+      } else {
+        return state;
+      }
+    }),
+  setExerciseCode: code => set(() => ({ exerciseCode: code })), // Nueva función para actualizar el código del ejercicio
 }));
