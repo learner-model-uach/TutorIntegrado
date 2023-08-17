@@ -58,6 +58,7 @@ export const TutorWordProblem = ({
   exercise: wpExercise;
   topicId: string;
 }) => {
+  //console.log("render tutorWordProblem")
   const textColor = useColorModeValue("dark", "white");
   const itemBgColor = useColorModeValue("#bde3f8", "#1A202C");
   const bgContentColor = useColorModeValue("white", "#2D3748");
@@ -71,19 +72,28 @@ export const TutorWordProblem = ({
   const reportAction = useAction();
   const { user } = useAuth();
   const isTesting = user.tags.includes("wp-test-user");
+  //const [expandedIndices, setExpandedIndices] = useState<number[]>([0]);
 
-  console.log("istesting", isTesting);
   const {
     currentQuestionIndex,
     currentStepIndex,
     questions,
+    expandedIndices,
+    expandedStepIndices,
     setQuestions,
     setCurrentStep,
     setCurrentQues,
+    toggleQuestionExpansion,
+    resetExpandedIndices,
+    resetExpandedStepIndices,
+    toggleStepExpansion,
   } = useStore();
+
   useEffect(() => {
-    setCurrentQues(0);
-    setCurrentStep(0);
+    setCurrentQues(0); // Reset currentQuestionIndex to 0 for the new exercise
+    setCurrentStep(0); // Reset currentStepIndex to 0 for the new exercise
+    resetExpandedIndices();
+    resetExpandedStepIndices();
     const initialQuestions = exercise.questions.map((ques, quesIndex) => ({
       ...ques,
       isBlocked: quesIndex !== 0,
@@ -93,52 +103,65 @@ export const TutorWordProblem = ({
       })),
     }));
     setQuestions(initialQuestions);
-  }, []);
+  }, [exercise]);
 
   const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
   const router = useRouter();
 
   const handleNextButtonClick = () => {
     nextExercise();
-    router.replace("/showContent");
+    //router.replace("/showContent");
+    router.push("/showContent");
   };
 
   return (
     <>
       <Tabs isFitted variant="enclosed" width="100%">
         <TabList>
-          <Tab>Presentación</Tab>
-          <Tab>Aprendizajes</Tab>
-          <Tab>Ejercicio</Tab>
+          {!isTesting && (
+            <>
+              <Tab>Presentación</Tab>
+              <Tab>Aprendizajes</Tab>
+              <Tab>Ejercicio</Tab>
+            </>
+          )}
         </TabList>
 
         <TabPanels>
+          {!isTesting && (
+            <TabPanel>
+              <Center flexDirection="column">
+                <Heading size="lg" pb="12">
+                  {" "}
+                  {exercise?.presentation.title}
+                </Heading>
+                <Image
+                  w={["sm", "md"]}
+                  src={exercise.presentation.urlImg}
+                  alt="Imagen de presentación"
+                />
+              </Center>
+            </TabPanel>
+          )}
+          {!isTesting && (
+            <TabPanel>
+              <Center width="100%" flexDirection="column">
+                {exercise.learningObjetives.title}
+                <br />
+
+                <Box width="100%" bg="green" display="flex" justifyContent="center">
+                  hola
+                </Box>
+              </Center>
+            </TabPanel>
+          )}
+
           <TabPanel>
-            <Center flexDirection="column">
+            <Flex flexDirection="column" alignItems="center">
               <Heading size="lg" pb="12">
                 {" "}
                 {exercise?.presentation.title}
               </Heading>
-              <Image
-                w={["sm", "md"]}
-                src={exercise.presentation.urlImg}
-                alt="Imagen de presentación"
-              />
-            </Center>
-          </TabPanel>
-          <TabPanel>
-            <Center width="100%" flexDirection="column">
-              {exercise.learningObjetives.title}
-              <br />
-
-              <Box width="100%" bg="green" display="flex" justifyContent="center">
-                hola
-              </Box>
-            </Center>
-          </TabPanel>
-
-          <TabPanel>
-            <Flex flexDirection="column" alignItems="center">
               {exercise.statement && (
                 <Box overflowX="auto" whiteSpace="normal" textOverflow="ellipsis" maxW="100%">
                   <Latex strict>{exercise.statement}</Latex>
@@ -193,10 +216,19 @@ export const TutorWordProblem = ({
                 </Box>
               )}
 
-              <Accordion allowMultiple pt="12px" w="100%" maxWidth="100%">
+              <Accordion
+                allowMultiple
+                allowToggle
+                pt="12px"
+                w="100%"
+                maxWidth="100%"
+                index={expandedIndices}
+              >
                 {questions &&
                   questions.map((ques, quesIndex) => {
                     const isCurrentQuestion = quesIndex === currentQuestionIndex;
+                    const stepExpandedIndices = expandedStepIndices[quesIndex] || [];
+
                     return (
                       <>
                         <AccordionItem key={quesIndex} isDisabled={ques.isBlocked} marginBottom={2}>
@@ -205,6 +237,7 @@ export const TutorWordProblem = ({
                               bgColor={isCurrentQuestion && currentButtonColor}
                               color={isCurrentQuestion ? "white" : textColor}
                               _hover={{}}
+                              onClick={() => toggleQuestionExpansion(quesIndex)}
                             >
                               <Box as="span" flex="1" textAlign="left">
                                 <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
@@ -213,85 +246,95 @@ export const TutorWordProblem = ({
                             </AccordionButton>
                           </h2>
                           <AccordionPanel bgColor={bgQuestion} rounded={rounded}>
-                            {ques.steps.map((step, index) => {
-                              const isCurrent =
-                                index === currentStepIndex && quesIndex === currentQuestionIndex;
-                              //console.log("meta s",step.componentToAnswer.nameComponent,step.componentToAnswer.meta);
+                            <Accordion
+                              allowMultiple
+                              allowToggle
+                              marginLeft={isScreenLarge ? 10 : 0}
+                              marginRight={5}
+                              marginY={2}
+                              index={stepExpandedIndices}
+                            >
+                              {ques.steps.map((step, stepIndex) => {
+                                const isCurrent =
+                                  stepIndex === currentStepIndex &&
+                                  quesIndex === currentQuestionIndex;
+                                //console.log("meta s",step.componentToAnswer.nameComponent,step.componentToAnswer.meta);
+                                //const arratIndex = expandedStepIndices[quesIndex]
+                                return (
+                                  <Box key={stepIndex}>
+                                    {step.stepExplanation && (
+                                      <CardInfo
+                                        text={step.stepExplanation.explanation}
+                                        srcImg={step.stepExplanation.srcImg}
+                                        bgColor={explanationBgColor}
+                                        hideCard={step.isBlocked}
+                                      ></CardInfo>
+                                    )}
 
-                              return (
-                                <Accordion
-                                  allowMultiple
-                                  key={index}
-                                  marginLeft={isScreenLarge ? 10 : 0}
-                                  marginRight={5}
-                                  marginY={2}
-                                >
-                                  {step.stepExplanation && (
-                                    <CardInfo
-                                      text={step.stepExplanation.explanation}
-                                      srcImg={step.stepExplanation.srcImg}
-                                      bgColor={explanationBgColor}
-                                      hideCard={step.isBlocked}
-                                    ></CardInfo>
-                                  )}
-
-                                  <AccordionItem
-                                    rounded={rounded}
-                                    bgColor={isCurrent ? currentStepColor : itemBgColor}
-                                    isDisabled={step.isBlocked}
-                                    onClick={() => {
-                                      reportAction({
-                                        verbName: "openStep",
-                                        stepID: "" + step.stepId,
-                                        contentID: exercise.code,
-                                        topicID: topicId,
-                                      });
-                                    }}
-                                  >
-                                    <h2>
-                                      <AccordionButton
-                                        rounded={rounded}
-                                        color={isCurrent ? "white" : textColor}
-                                        _expanded={
-                                          isCurrent ? { bg: currentStepColor } : { bg: itemBgColor }
-                                        }
-                                      >
-                                        <Box as="span" flex="1" textAlign="left">
-                                          <Latex>{step.stepTitle}</Latex>
+                                    <AccordionItem
+                                      rounded={rounded}
+                                      bgColor={isCurrent ? currentStepColor : itemBgColor}
+                                      isDisabled={step.isBlocked}
+                                    >
+                                      <h2>
+                                        <AccordionButton
+                                          rounded={rounded}
+                                          color={isCurrent ? "white" : textColor}
+                                          _expanded={
+                                            isCurrent
+                                              ? { bg: currentStepColor }
+                                              : { bg: itemBgColor }
+                                          }
+                                          onClick={() => {
+                                            toggleStepExpansion(quesIndex, stepIndex);
+                                            reportAction({
+                                              verbName: "openStep",
+                                              stepID: "" + step.stepId,
+                                              contentID: exercise.code,
+                                              topicID: topicId,
+                                            });
+                                          }}
+                                        >
+                                          <Box as="span" flex="1" textAlign="left">
+                                            <Latex>{step.stepTitle}</Latex>
+                                          </Box>
+                                          <AccordionIcon />
+                                        </AccordionButton>
+                                      </h2>
+                                      <AccordionPanel bg={bgContentColor}>
+                                        <Box paddingTop={2}>
+                                          {step.componentToAnswer.nameComponent ===
+                                          components.SLC ? (
+                                            <SelectionComponent
+                                              correctMsg={step.correctMsg ?? "Muy bien!"}
+                                              hints={step.hints}
+                                              meta={step.componentToAnswer.meta as SelectionMeta}
+                                            />
+                                          ) : step.componentToAnswer.nameComponent ===
+                                            components.MLC ? (
+                                            <MathComponent
+                                              correctMsg={step.correctMsg ?? "Muy bien!"}
+                                              hints={step.hints}
+                                              meta={
+                                                step.componentToAnswer.meta as MathComponentMeta
+                                              }
+                                            />
+                                          ) : step.componentToAnswer.nameComponent ===
+                                            components.GHPC ? (
+                                            <JSXGraphComponent
+                                              hints={step.hints}
+                                              meta={step.componentToAnswer.meta as GraphMeta}
+                                            ></JSXGraphComponent>
+                                          ) : (
+                                            <p>otro componente</p>
+                                          )}
                                         </Box>
-                                        <AccordionIcon />
-                                      </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel bg={bgContentColor}>
-                                      <Box paddingTop={2}>
-                                        {step.componentToAnswer.nameComponent === components.SLC ? (
-                                          <SelectionComponent
-                                            correctMsg={step.correctMsg ?? "Muy bien!"}
-                                            hints={step.hints}
-                                            meta={step.componentToAnswer.meta as SelectionMeta}
-                                          />
-                                        ) : step.componentToAnswer.nameComponent ===
-                                          components.MLC ? (
-                                          <MathComponent
-                                            correctMsg={step.correctMsg ?? "Muy bien!"}
-                                            hints={step.hints}
-                                            meta={step.componentToAnswer.meta as MathComponentMeta}
-                                          />
-                                        ) : step.componentToAnswer.nameComponent ===
-                                          components.GHPC ? (
-                                          <JSXGraphComponent
-                                            hints={step.hints}
-                                            meta={step.componentToAnswer.meta as GraphMeta}
-                                          ></JSXGraphComponent>
-                                        ) : (
-                                          <p>otro componente</p>
-                                        )}
-                                      </Box>
-                                    </AccordionPanel>
-                                  </AccordionItem>
-                                </Accordion>
-                              );
-                            })}
+                                      </AccordionPanel>
+                                    </AccordionItem>
+                                  </Box>
+                                );
+                              })}
+                            </Accordion>
                           </AccordionPanel>
                         </AccordionItem>
                       </>
@@ -311,8 +354,8 @@ export const TutorWordProblem = ({
                 </Button>
               </ButtonGroup>
             )}
+            {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
           </TabPanel>
-          {isTesting && <LoadContent code={exerciseIds[currentExercise]} />}
         </TabPanels>
       </Tabs>
     </>

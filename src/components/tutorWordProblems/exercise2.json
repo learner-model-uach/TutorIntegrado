@@ -17,7 +17,7 @@
   "meta": {},
   "statement": "Se tiene un circuito de tres sensores en serie conectados a una fuente de alimentación de 12V. El circuito se utiliza para medir la humedad en una sala de cultivos y cualquier fallo en la medición podría tener consecuencias negativas en el crecimiento de las plantas.",
   "img": "https://i.postimg.cc/cHbdqT5f/Captura-de-pantalla-2023-07-15-a-la-s-01-48-32.png",
-  "text": "Si la resistencia de cada sensor es de 100 ohm, es decir R1=R2=R3 = 100 ohm",
+  "text": "Si la resistencia de cada sensor es de 100 ohm, es decir $R_1 = R_2 = R_3$ = 100 ohm",
   "questions": [
     {
       "questionId": 0,
@@ -27,7 +27,7 @@
           "stepId": 0,
           "stepTitle": "Calcular resistencia en serie",
           "stepExplanation": {
-            "explanation": "En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R1 + R2 + R3$$"
+            "explanation": "En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R_1 + R_2 + R_3$$"
           },
           "componentToAnswer": {
             "nameComponent": "mathComponent",

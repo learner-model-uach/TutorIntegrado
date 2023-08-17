@@ -16,6 +16,7 @@ const Mathfield = (props: MathEditorProps) => {
   //const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
 
   const containerRef = useRef<HTMLDivElement>(null);
+  console.log("RENDER mathlive");
   const mfe = useMemo(() => {
     const mathfield = props.mfe ?? new MathfieldElement();
     mathfield.virtualKeyboardTargetOrigin = "off";
@@ -23,7 +24,7 @@ const Mathfield = (props: MathEditorProps) => {
   }, []);
 
   mfe.readOnly = props.readOnly ?? true;
-  //mfe.disabled = false
+  mfe.disabled = false;
   //const size = isScreenLarge ? 6 : 3;
   //const size = 6 ;
 
@@ -45,16 +46,6 @@ const Mathfield = (props: MathEditorProps) => {
     });
     */
     //mfe.addEventListener("keydown", (evt) =>  evt.preventDefault(), {capture: true});
-    mfe.addEventListener(
-      "mouseup",
-      evt => {
-        //console.log("CAPTURA DE EVENTO")
-        evt.stopPropagation();
-        evt.cancelBubble = true;
-        evt.preventDefault();
-      },
-      { capture: true },
-    );
 
     /*
     mfe.addEventListener("focusout", (evt) =>{
@@ -92,14 +83,7 @@ const Mathfield = (props: MathEditorProps) => {
   };
   return (
     <>
-      <div
-        onTouchStart={evt => evt.preventDefault()}
-        onFocus={() => {
-          console.log("FOCUS!!!!!");
-        }}
-        ref={containerRef}
-        style={{ maxWidth: "100%" }}
-      />
+      <div ref={containerRef} style={{ maxWidth: "100%" }} />
       {/**
          <ButtonGroup>
            <Button onClick={()=> {

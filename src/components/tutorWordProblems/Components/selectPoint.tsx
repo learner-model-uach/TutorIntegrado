@@ -13,6 +13,7 @@ interface Props {
   hints: Hint[];
 }
 export const SelectPoint = ({ meta, hints }: Props) => {
+  console.log("SelectPoint");
   const selectedPointRef = useRef(null); // Ref para el punto seleccionado
 
   const [answerCorrect, setAnswerCorrect] = useState(false);

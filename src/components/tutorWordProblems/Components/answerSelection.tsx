@@ -1,7 +1,7 @@
 //import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
 import { Button, ButtonGroup, Checkbox, Flex, List, ListItem, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ResAlert from "../Alert/responseAlert";
 import HintButton from "../Hint/hint";
 import { useAlert } from "../hooks/useAlert";
@@ -22,7 +22,7 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
   const [isCorrectUserAnswer, setIsCorrectUserAnswer] = useState<boolean>(false); // State to track if the user's answer is correct
 
   const { unlockNextStep } = useStore();
-  const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert } = useAlert(
+  const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert } = useAlert(
     "",
     AlertStatus.info,
     "",
@@ -42,6 +42,12 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
     unlockHint,
     resetNumHintsActivated,
   } = useHint(hints);
+
+  useEffect(() => {
+    setUserSelectedAnswer(null);
+    setIsCorrectUserAnswer(false);
+    resetAlert();
+  }, [meta]);
 
   // Function that controls the selection of an alternative
   const handleClick = (answerIndex: number) => {

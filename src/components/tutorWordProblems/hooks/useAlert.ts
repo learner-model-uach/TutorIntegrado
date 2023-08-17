@@ -39,5 +39,12 @@ export const useAlert = (
     setAlertHidden(false);
     newTimer !== undefined && setAlertTimer(newTimer);
   };
-  return { alertTitle, alertStatus, alertMsg, alertHidden, showAlert };
+  const resetAlert = () => {
+    setTitle(initialTitle);
+    setStatus(initialStatus);
+    setMsg(msg);
+    setAlertHidden(initialAlertHidden);
+    setAlertTimer(timerDuration);
+  };
+  return { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert };
 };

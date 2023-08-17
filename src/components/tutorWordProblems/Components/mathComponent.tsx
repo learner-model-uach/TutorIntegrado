@@ -1,7 +1,7 @@
 import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react";
 import type { Hint, MathComponentMeta } from "../types";
 import dynamic from "next/dynamic";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MathfieldElement } from "mathlive";
 import ResAlert from "../Alert/responseAlert";
 import { useAlert } from "../hooks/useAlert";
@@ -33,6 +33,7 @@ const normalizeLatex = (latex: string) => {
 };
 
 const MathComponent = ({ meta, hints, correctMsg }: Props) => {
+  //console.log("RE-RENDER MATHCOMPONENT")
   const newComputerEngine = new ComputeEngine();
   const { expression, readonly, answers, idCorrectAnswers } = meta;
   //const expr1 =  newComputerEngine.parse('\\frac{-1}  {40} ');
@@ -41,7 +42,6 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
 
   //const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
   const answerStateRef = useRef<Answer[]>([]); // Utilizamos useRef para mantener una referencia mutable a answerState
-
   const [disabledButton, setDisabledButton] = useState(false);
   const mfe = useMemo(() => new MathfieldElement(), []);
 
@@ -53,7 +53,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     return !idCorrectAnswers.some(correctId => correctId === answ.id);
   });
 
-  const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert } = useAlert(
+  const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert } = useAlert(
     "Titulo",
     AlertStatus.info,
     "mensaje de la alerta",
@@ -76,6 +76,10 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
 
   const { unlockNextStep } = useStore();
 
+  useEffect(() => {
+    resetAlert();
+    setDisabledButton(false);
+  }, [meta]);
   const checkAnswer = () => {
     try {
       const isEmpty = answerStateRef.current.some(userAnswer => userAnswer.value === "");
@@ -85,14 +89,14 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
       }
       let allCorrect = true;
       let genericHint = true;
-      console.log("idsCorrects", idCorrectAnswers);
-      console.log("corrAnswer-->", correctAnswers);
-      console.log("otherAnswers-->", otherAnswers);
+      //console.log("idsCorrects", idCorrectAnswers);
+      //console.log("corrAnswer-->", correctAnswers);
+      //console.log("otherAnswers-->", otherAnswers);
       answerStateRef.current.forEach(userAnswer => {
         // comprobar si userAnswer.value hace match con alguna respuesta en correctAnswers, si no, comprobar si hace match en otherAnswer
         //const isCorrect = correctAnswers.some(corrAnswer => corrAnswer.value.replace(/ /g, '') === userAnswer.value)
         const parUserAnswer = newComputerEngine.parse(normalizeLatex(userAnswer.value));
-        console.log("parUserAnswer--->", parUserAnswer.latex);
+        //console.log("parUserAnswer--->", parUserAnswer.latex);
 
         //const isCorrect = correctAnswers.some(corrAnswer =>   parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))))
         const isCorrect = correctAnswers.find(
