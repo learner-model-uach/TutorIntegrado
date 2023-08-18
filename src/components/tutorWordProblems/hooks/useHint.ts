@@ -14,11 +14,14 @@ export const useHint = (hints: Hint[]) => {
   const specificHints = hints.filter(hint => hint.associatedAnswer);
 
   useEffect(() => {
+    setIndUnlockedHint(1);
     setUnlockedHints([hints[0]]);
     setCurrentHint(0);
     setTotalHints(hints.length);
     setNumHintsActivated(0);
     setUnlockedAnswerIds([]);
+    setDisabledPrevButton(true);
+    setDisabledNextButton(false);
   }, [hints]);
 
   useEffect(() => {

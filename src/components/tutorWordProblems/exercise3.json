@@ -92,7 +92,7 @@
             },
             {
               "hintId": 1,
-              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar \\textcolor{green}{ha disminuido en el tiempo} . "
+              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar $\\textcolor{green}{\\text{ha disminuido en el tiempo}}$ . "
             }
           ],
           "correctMsg": "Muy bien! La superficie del glaciar ha disminuido a lo largo del tiempo."
@@ -143,11 +143,11 @@
               "answers": [
                 {
                   "id": 0,
-                  "value": "La variable dependiente es la superficie del glaciar y la       independiente el tiempo"
+                  "value": "La variable dependiente es la superficie del glaciar y la independiente el tiempo"
                 },
                 {
                   "id": 1,
-                  "value": "La variable dependiente es el tiempo y la independiente la        superficie del glaciar."
+                  "value": "La variable dependiente es el tiempo y la independiente la superficie del glaciar."
                 }
               ],
               "idCorrectAnswers": 0
@@ -162,6 +162,10 @@
             {
               "hintId": 1,
               "hint": "Una variable dependiente representa una cantidad cuyo valor depende de cómo se modifica la variable independiente"
+            },
+            {
+              "hintId": 2,
+              "hint": "La respuesta es: $$\\\\$$ La variable dependiente es la superficie del glaciar y la independiente el tiempo."
             }
           ]
         },
@@ -178,11 +182,7 @@
               "metaComponent": {
                 "data": [
                   {
-                    "coord": [1979, 265.05],
-                    "name": "Punto1",
-                    "color": "green",
-                    "isStatic": false,
-                    "face": "cross"
+                    "coord": [1979, 265.05]
                   },
                   { "coord": [1998, 247.23] },
                   { "coord": [2016, 234.14] }
@@ -215,12 +215,17 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Activar linea vertical",
+              "hint": "Revisa los valores pedidos en los ejes cartesianos",
               "graphinteractiveHint": true
             },
             {
               "hintId": 1,
-              "hint": "Activar linea horizontal",
+              "hint": "Recuerda que los años se representan en el eje horizontal.",
+              "graphinteractiveHint": true
+            },
+            {
+              "hintId": 2,
+              "hint": "Recuerda que el valor de la superficie se representan en el eje vertical.",
               "graphinteractiveHint": true
             }
           ],
@@ -295,11 +300,11 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Mueva la pendiente m a valores negativos"
+              "hint": "Mueva la pendiente $m$ a de manera que la línea se ajuste lo máximo posible a los puntos dados."
             },
             {
               "hintId": 1,
-              "hint": "Mueva la pendiente m entre valores -0,8 y -0,9."
+              "hint": "El valor correcto de $m$ es -0,858"
             }
           ],
           "correctMsg": "Muy bien! Realizaste correctamente el ajuste lineal."

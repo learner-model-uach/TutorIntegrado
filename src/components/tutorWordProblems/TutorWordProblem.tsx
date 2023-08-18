@@ -69,10 +69,10 @@ export const TutorWordProblem = ({
   const currentStepColor = "#2B4264";
   const rounded = 5;
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
+
   const reportAction = useAction();
   const { user } = useAuth();
   const isTesting = user.tags.includes("wp-test-user");
-  //const [expandedIndices, setExpandedIndices] = useState<number[]>([0]);
 
   const {
     currentQuestionIndex,
@@ -106,12 +106,14 @@ export const TutorWordProblem = ({
   }, [exercise]);
 
   const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
+
   const router = useRouter();
 
-  const handleNextButtonClick = () => {
-    nextExercise();
-    //router.replace("/showContent");
-    router.push("/showContent");
+  const handleNextButtonClick = async () => {
+    await nextExercise();
+    router.replace("/showContent");
+    //await router.push("/showContent")
+    //router.push("/showContent");
   };
 
   return (

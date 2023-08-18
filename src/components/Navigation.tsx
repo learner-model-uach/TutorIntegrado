@@ -10,6 +10,7 @@ export function Navigation() {
   const { user } = useAuth();
 
   const admin = (user?.role ?? "") == "ADMIN" ? true : false;
+
   return (
     <ScrollArea pt="5" pb="6">
       <Stack pb="6">
@@ -30,7 +31,7 @@ export function Navigation() {
         {user && (
           <>
             <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink href="wpExercises">Ejercicios wp</SidebarLink>
+            <SidebarLink href="wpExercises">Ejercicios en contexto</SidebarLink>
           </>
         )}
       </Stack>
