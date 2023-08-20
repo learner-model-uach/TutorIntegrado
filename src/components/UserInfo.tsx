@@ -78,7 +78,11 @@ export const UserInfo = () => {
             {picture ? <Avatar size="sm" name={name || undefined} src={picture} /> : null}
 
             <Box lineHeight="1">
-              {name ? <Text fontWeight="semibold">{name}</Text> : null}
+              {name ? (
+                <Text fontSize="2xl" fontWeight="semibold">
+                  {name}
+                </Text>
+              ) : null}
 
               {email ? (
                 <Text fontSize="xs" mt="1" color={emailTextColor}>

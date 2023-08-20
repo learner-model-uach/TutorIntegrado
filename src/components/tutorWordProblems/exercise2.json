@@ -25,7 +25,7 @@
       "steps": [
         {
           "stepId": 0,
-          "stepTitle": "Calcular resistencia en serie",
+          "stepTitle": "Calcular resistencia en serie.",
           "stepExplanation": {
             "explanation": "En un circuito en serie la resistencia total del circuito se calcula sumando las resistencias individuales $$R_{serie} = R_1 + R_2 + R_3$$"
           },
@@ -63,14 +63,14 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Ingresa los valores de las resistencias y realiza la suma"
+              "hint": "Ingresa los valores de las resistencias y realiza la suma."
             },
             {
               "hintId": 1,
               "hint": "La respuesta es: $$\\begin{align*} R_{serie} & = \\textcolor{green}{100} + \\textcolor{green}{100} + \\textcolor{green}{100} \\\\ & R_{serie} = \\textcolor{green}{300} ohm  \\end{align*}$$"
             }
           ],
-          "correctMsg": "¡Muy bien! Por lo tanto, la resistencia total en el circuito en serie es de 300 ohm"
+          "correctMsg": "¡Muy bien! Por lo tanto, la resistencia total en el circuito en serie es de 300 ohm."
         }
       ]
     },
@@ -118,7 +118,7 @@
       "steps": [
         {
           "stepId": 0,
-          "stepTitle": "Reemplaza valores de resistencias",
+          "stepTitle": "Reemplaza valores de resistencias.",
           "stepExplanation": {
             "explanation": "Para evitar problemas de medición causados por la falla de un sensor, se puede cambiar el circuito en serie por  uno en paralelo. En un circuito en paralelo, cada sensor está conectado en una rama independiente del circuito y la interrupción de un sensor no afecta a los demás. Sin embargo, la resistencia cambia al pasar a un circuito en paralelo, teniendo que aplicar una tensión mayor. $$\\newline$$ En un circuito en paralelo, la resistencia equivalente se calcula sumando las inversas de las resistencias individuales y luego tomando la inversa de la suma $$\\newline$$ $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$"
           },
@@ -156,7 +156,7 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Ingresa las inversas de las resistencias individuales"
+              "hint": "Ingresa las inversas de las resistencias individuales."
             },
             {
               "hintId": 1,
@@ -191,7 +191,7 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Realiza la suma de las fracciones del denominador"
+              "hint": "Realiza la suma de las fracciones del denominador."
             },
             {
               "hintId": 1,
@@ -226,26 +226,26 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Invierte la fracción del numerador"
+              "hint": "Invierte la fracción del denominador."
             },
             {
               "hintId": 1,
               "hint": "La respuesta es: $$\\frac{100}{3}$$"
             }
           ],
-          "correctMsg": "¡Muy bien! La resistencia equivalente es aproximadamente 33,3 ohm"
+          "correctMsg": "¡Muy bien! La resistencia equivalente es 33,3 ohm, aproximadamente."
         }
       ]
     },
     {
       "questionId": 3,
-      "question": "Determinar el valor 'x' (en ohm) de tres nuevas resistencias para mantener una resistencia equivalente en paralelo igual a la resistencia en serie de 300 ohm",
+      "question": "Determinar el valor 'x' (en ohm) de tres nuevas resistencias para mantener una resistencia equivalente en paralelo igual a la resistencia en serie de 300 ohm.",
       "steps": [
         {
           "stepId": 0,
-          "stepTitle": "Modelar ecuación",
+          "stepTitle": "Modelar ecuación en terminos de $x$.",
           "stepExplanation": {
-            "explanation": "El circuito original (en serie) tenía una resistencia equivalente de 300 ohm. El nuevo circuito en paralelo tiene una resistencia equivalente, aproximadamente, de 33,3 ohm. Eso quiere decir que el circuito se quema si se conecta, entonces lo que tenemos que hacer es aumentar la resistencia equivalente en paralelo para llegar a 300 ohm. Dado que la fórmula de la resistencia equivalente en paralelo es: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$ Calcula el valor $x$ de las nuevas resistencias.  "
+            "explanation": "El circuito original (en serie) tenía una resistencia equivalente de 300 ohm. El nuevo circuito en paralelo tiene una resistencia equivalente, aproximadamente, de 33,3 ohm. Eso quiere decir que el circuito se podría dañar si se conecta. Entonces, lo que tenemos que hacer es aumentar la resistencia equivalente en paralelo para llegar a 300 ohm. Dado que la fórmula de la resistencia equivalente en paralelo es: $$R_{paralelo} = \\frac{1}{\\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}}$$ Calcula el valor $x$ de las nuevas resistencias.  "
           },
           "componentToAnswer": {
             "nameComponent": "mathComponent",
@@ -280,7 +280,7 @@
             },
             {
               "hintId": 1,
-              "hint": "Los valores a ingresar corresponden a la inversa del valor x"
+              "hint": "Los valores a ingresar corresponden a la inversa del valor x."
             },
             {
               "hintId": 2,
@@ -290,7 +290,7 @@
         },
         {
           "stepId": 1,
-          "stepTitle": "Suma las fracciones del denominador",
+          "stepTitle": "Suma las fracciones del denominador.",
           "componentToAnswer": {
             "nameComponent": "mathComponent",
             "meta": {
@@ -310,7 +310,7 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Realiza la suma del denominador"
+              "hint": "Realiza la suma del denominador."
             },
             {
               "hintId": 0,
@@ -320,7 +320,7 @@
         },
         {
           "stepId": 2,
-          "stepTitle": "Reduce la expresión a una fracción simple",
+          "stepTitle": "Reduce la expresión a una fracción simple.",
           "componentToAnswer": {
             "nameComponent": "mathComponent",
             "meta": {
@@ -340,7 +340,7 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Invierte la fracción del denominador"
+              "hint": "Invierte la fracción del denominador."
             },
             {
               "hintId": 0,
@@ -370,14 +370,14 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Despeja 'x' de la expresión anterior"
+              "hint": "Despeja 'x' de la expresión anterior."
             },
             {
               "hintId": 1,
               "hint": "La respuesta es 900"
             }
           ],
-          "correctMsg": "¡Muy bien! Por lo tanto, el valor de las tres nuevas resistencias debe ser de 900 ohm"
+          "correctMsg": "¡Muy bien! Por lo tanto, el valor de cada una de las tres nuevas resistencias debe ser de 900 ohm."
         }
       ]
     }

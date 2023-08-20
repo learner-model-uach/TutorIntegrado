@@ -25,7 +25,6 @@ export default function Start() {
               <br /> Tu contribución nos ayudará a mejorar y perfeccionar nuestro contenido para
               futuros estudiantes. <br /> <br /> ¡Gracias por participar!
             </Text>
-            <Text>Página inicial [start] presentando el tutor (por definir)</Text>
           </Stack>
         )}
       </>

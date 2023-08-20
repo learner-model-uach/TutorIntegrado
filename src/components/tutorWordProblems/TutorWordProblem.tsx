@@ -345,16 +345,20 @@ export const TutorWordProblem = ({
               </Accordion>
             </Flex>
             {isTesting && (
-              <ButtonGroup>
-                <Button
-                  onClick={() => {
-                    handleNextButtonClick();
-                    console.log("currentExercise:", currentExercise);
-                  }}
-                >
-                  Siguiente
-                </Button>
-              </ButtonGroup>
+              <Flex justifyContent="end" paddingY={10}>
+                <ButtonGroup>
+                  <Button
+                    size="lg"
+                    colorScheme="facebook"
+                    onClick={() => {
+                      handleNextButtonClick();
+                      console.log("currentExercise:", currentExercise);
+                    }}
+                  >
+                    Siguiente
+                  </Button>
+                </ButtonGroup>
+              </Flex>
             )}
             {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
           </TabPanel>

@@ -136,7 +136,7 @@
         },
         {
           "stepId": 1,
-          "stepTitle": "Entonces, ¿cual es la variable dependiente y cual la independiente?",
+          "stepTitle": "Entonces, ¿cuál es la variable dependiente y cuál la independiente?",
           "componentToAnswer": {
             "nameComponent": "selectionComponent",
             "meta": {
@@ -313,7 +313,7 @@
           "stepId": 4,
           "stepTitle": "Selecciona la alternativa correcta",
           "stepExplanation": {
-            "explanation": "¿Que significa que la pendiente de la recta sea negativa?"
+            "explanation": "¿Qué significa que la pendiente de la recta sea negativa?"
           },
           "componentToAnswer": {
             "nameComponent": "selectionComponent",
@@ -475,7 +475,7 @@
             "nameComponent": "mathComponent",
             "meta": {
               "readonly": true,
-              "expression": "\\frac{265,05}{2} - \\placeholder[a]{} = 0,8583 \\cdot t ",
+              "expression": "\\frac{265,05}{2} - \\placeholder[a]{} = -0,8583 \\cdot t ",
               "answers": [
                 {
                   "id": 1,
@@ -516,6 +516,16 @@
                   "id": 2,
                   "placeholderId": "b",
                   "value": "2133,61"
+                },
+                {
+                  "id": 3,
+                  "placeholderId": "b",
+                  "value": "2133.60713"
+                },
+                {
+                  "id": 4,
+                  "placeholderId": "b",
+                  "value": "2133.60"
                 }
               ],
               "idCorrectAnswers": [1, 2]
@@ -533,6 +543,11 @@
             },
             {
               "hintId": 2,
+              "hint": "Debes aproximar el resultado final a dos decimales",
+              "associatedAnswer": [3, 4]
+            },
+            {
+              "hintId": 3,
               "hint": "La respuesta correcta es $$t = 2133,61$$"
             }
           ],

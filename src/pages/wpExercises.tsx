@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Divider, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAuth } from "../components/Auth";
@@ -31,48 +31,118 @@ export default function WpExercises() {
 
       setExercise(newExerciseIds);
       setIsCompleted(true);
-      console.log("exercises:", exerciseIds);
-      console.log("First exercise:", exerciseIds[currentExercise]);
+      //console.log("exercises:", exerciseIds);
+      //console.log("First exercise:", exerciseIds[currentExercise]);
     }
   }, []);
 
   return (
-    <Box w="70%" marginX="auto">
+    <Box w="90%" marginX="auto">
       {user &&
         (user.groups.some(group => group.code === "groupWPA") ? (
-          <h1>Grupo A </h1>
+          <Text fontSize="2xl" fontWeight="semibold">
+            Perteneces al Grupo A{" "}
+          </Text>
         ) : user.groups.some(group => group.code === "groupWPB") ? (
-          <h1>Grupo B </h1>
+          <Text fontSize="2xl" fontWeight="semibold">
+            Perteneces al Grupo B{" "}
+          </Text>
         ) : user.groups.some(group => group.code === "groupWPC") ? (
-          <h1>Grupo C </h1>
+          <Text fontSize="2xl" fontWeight="semibold">
+            Perteneces al Grupo C{" "}
+          </Text>
         ) : user.groups.some(group => group.code === "groupWPD") ? (
-          <h1>Grupo D </h1>
+          <Text fontSize="2xl" fontWeight="semibold">
+            Perteneces al Grupo D{" "}
+          </Text>
         ) : user.groups.some(group => group.code === "groupWPE") ? (
-          <h1>Grupo E </h1>
+          <Text fontSize="2xl" fontWeight="semibold">
+            Perteneces al Grupo E{" "}
+          </Text>
         ) : (
           <h1>otro grupo</h1>
         ))}
-      <Heading>¡Bienvenido {user?.name}!</Heading>
+      <Divider></Divider>
+      <br />
+      <Text fontWeight="semibold"> Instrucciones generales:</Text>
+      <br />
+      <UnorderedList>
+        <ListItem fontWeight="semibold"> Paso 1: Comenzar resolución de ejercicios</ListItem>
+        <Text>
+          Para comenzar a resolver los ejercicios presiona el boton{" "}
+          <Button size="xs" _focus={{}}>
+            Comenzar
+          </Button>
+          . Esto cargara el primer ejercicio que debes resolver
+        </Text>
+
+        <ListItem fontWeight="semibold">Paso 2: Completar el Cuestionario</ListItem>
+        <Text>
+          Una vez que hayas terminado de resolver el primer ejercicio, procede a responder el
+          cuestionario en la hoja N° 2.
+        </Text>
+
+        <ListItem fontWeight="semibold">Paso 3: Avanzar al Segundo Ejercicio</ListItem>
+        <Text>
+          Después de completar el cuestionario, presiona el botón{" "}
+          <Button size="xs" _focus={{}}>
+            Sigueinte
+          </Button>{" "}
+          que se encuentra al final de cada ejercicio. Esto te llevará al siguiente ejercicio que
+          debes resolver.
+        </Text>
+
+        <ListItem fontWeight="semibold">Paso 4: Completar el Cuestionario</ListItem>
+        <Text>
+          Una vez que hayas terminado de resolver el segundo ejercicio, responde el cuestionario en
+          la hoja N° 3.
+        </Text>
+
+        <ListItem fontWeight="semibold">Paso 5: Avanzar al Tercer Ejercicio</ListItem>
+        <Text>
+          Después de responder al cuestionario, vuelve a presionar el botón{" "}
+          <Button size="xs" _focus={{}}>
+            Siguiente
+          </Button>
+          . Esto te permitirá cargar el tercer y último ejercicio.
+        </Text>
+
+        <ListItem fontWeight="semibold">Paso 6: Completar el cuestionario</ListItem>
+        <Text>
+          Al finalizar la resolución del tercer ejercicio, completa el cuestionario en la hoja N° 4.
+        </Text>
+
+        <ListItem fontWeight="semibold">Paso 7: Responder cuestionario general</ListItem>
+        <Text>Finalmente, responde el cuestionario que abarca las hojas N° 5 a N° 7.</Text>
+      </UnorderedList>
+      <br />
+      <br />
+      <Divider></Divider>
       <Text>
-        {" "}
-        <br /> Te damos la bienvenida a esta sesión de prueba. Tu participación es esencial para
-        nosotros. Durante esta sesión, te presentaremos tres ejercicios matemátcos que te permitirán
-        explorar y aplicar tus habilidades. Después de resolver cada ejercicio, te pediremos que
-        respondas a una breve encuesta para obtener tus comentarios y opiniones.
-        <br /> <br /> Una vez hayas completado los tres ejercicios y las encuestas correspondientes,
-        te pediremos que respondas a una última encuesta general. <br /> <br /> Tu contribución nos
-        ayudará a mejorar y perfeccionar nuestro contenido para futuros estudiantes. <br /> <br />{" "}
-        ¡Gracias por participar!
+        Obs: Puedes regresar a esta página en cualquier momento seleccionando el Tópico Ejercicios
+        en Contexto. Ten en cuenta que al hacerlo, perderás el progreso del ejercicio que estés
+        resolviendo en ese momento. No obstante, puedes retomar el ejercicio presionando nuevamente
+        el botón{" "}
+        <Button size="xs" _focus={{}}>
+          Comenzar
+        </Button>{" "}
+        y avanzar con el botón{" "}
+        <Button size="xs" _focus={{}}>
+          Siguiente
+        </Button>{" "}
+        hasta el ejercicio que estabas resolviendo.
       </Text>
       <Text>
         {" "}
         <br />
-        Cuanto estes listo preciona el boton Comenzar
+        Cuanto estés listo para empezar a resolver los ejercicios presiona el botón Comenzar
+        <br />
+        <br />
       </Text>
       {isCompleted && <LoadContent code={exerciseIds[currentExercise]}></LoadContent>}
       <ButtonGroup>
         <Link href="showContent">
-          <Button> Comenzar!</Button>
+          <Button colorScheme="facebook"> Comenzar!</Button>
         </Link>
       </ButtonGroup>
     </Box>

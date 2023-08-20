@@ -2,7 +2,7 @@
   "code": "wp1",
   "type": "wordProblem",
   "presentation": {
-    "title": "Sectores productivos que emiten y absorven gases de efecto invernadero en Chile",
+    "title": "Ejercicio 1",
     "urlImg": "https://i.postimg.cc/SxTdyHkp/carbon-offset-carbon-climate-cycle-scheme-of-emission-and-absorption-of-carbon-and-greenhouse-gases.jpg"
   },
   "learningObjetives": {
@@ -216,7 +216,7 @@
             "nameComponent": "mathComponent",
             "meta": {
               "readonly": true,
-              "expression": "\\begin{align}-3,99152\\cdot 10^{13} & = -3,99152\\cdot 10^{\\placeholder[a]{}}\\cdot 10^9 \\\\ & = \\placeholder[b]{}\\cdot 10^9  \\end{align}",
+              "expression": "\\begin{align}-3,9915\\cdot 10^{13} & = -3,9915\\cdot 10^{\\placeholder[a]{}}\\cdot 10^9 \\\\ & = \\placeholder[b]{}\\cdot 10^9  \\end{align}",
               "answers": [
                 {
                   "id": 1,
@@ -226,12 +226,12 @@
                 {
                   "id": 2,
                   "placeholderId": "b",
-                  "value": "-39915,2"
+                  "value": "-39915"
                 },
                 {
                   "id": 3,
                   "placeholderId": "b",
-                  "value": "-3,99152"
+                  "value": "-3,9915"
                 }
               ],
               "idCorrectAnswers": [1, 2]
@@ -254,7 +254,7 @@
             },
             {
               "hintId": 3,
-              "hint": "La respuesta correcta es: $$\\begin{align*}-3,99152\\cdot 10^{13} & = -3,99152\\cdot 10^{\\textcolor{Green}{4}}\\cdot 10^9 \\\\ & =\\textcolor{Green}{-39915,2} \\cdot 10^9  \\end{align*}$$"
+              "hint": "La respuesta correcta es: $$\\begin{align*}-3,9915\\cdot 10^{13} & = -3,9915\\cdot 10^{\\textcolor{Green}{4}}\\cdot 10^9 \\\\ & =\\textcolor{Green}{-39915} \\cdot 10^9  \\end{align*}$$"
             }
           ]
         },
@@ -265,7 +265,7 @@
             "nameComponent": "mathComponent",
             "meta": {
               "readonly": true,
-              "expression": "\\begin{align}3\\cdot 10^{8} & = 3\\cdot 10^{\\overbrace{\\placeholder[a]{}}^\\text{prueba} }\\cdot 10^9 \\\\ & = \\placeholder[b]{}\\cdot 10^9  \\end{align}",
+              "expression": "\\begin{align}3\\cdot 10^{8} & = 3\\cdot 10^{\\placeholder[a]{}}\\cdot 10^9 \\\\ & = \\placeholder[b]{}\\cdot 10^9  \\end{align}",
               "answers": [
                 {
                   "id": 1,
