@@ -14,6 +14,7 @@ interface Props {
 }
 export const LinearFit = ({ meta, hints }: Props) => {
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
+  const [lineColor, setLineColor] = useState("black");
   const { data, linearFunction, correctAnswer, graphSettings } = meta;
   const positionTextEq = graphSettings.newAxis.yAxis.point1 ?? [0, 0];
   const { m, b } = linearFunction;
@@ -89,7 +90,10 @@ export const LinearFit = ({ meta, hints }: Props) => {
       return mval() * x + bval();
     };
     // @ts-ignore
-    var G = boardRef.current.create("functiongraph", [linF], { strokeWidth: 2 });
+    var G = boardRef.current.create("functiongraph", [linF], {
+      strokeWidth: 2,
+      strokeColor: lineColor,
+    });
     const fTextVal = () => {
       var vz = "";
       var tv = "";
@@ -107,6 +111,7 @@ export const LinearFit = ({ meta, hints }: Props) => {
       }
       return "y = " + JXG.toFixed(mval(), 3) + "x" + vz + tv;
     };
+
     // @ts-ignore
     var ftext = boardRef.current.create("text", [positionTextEq[0], positionTextEq[1], fTextVal], {
       fontSize: 18,
@@ -148,14 +153,16 @@ export const LinearFit = ({ meta, hints }: Props) => {
         : checkSliderValue(bvalue, correctAnswer.bCorrect as [number, number]);
 
     if (mIsCorrect && bIsCorrect) {
-      console.log("¡Respuesta correcta en ambos casos!");
+      //console.log("¡Respuesta correcta en ambos casos!");
       showAlert("😃", AlertStatus.success, "Muy bien!", null);
+      setLineColor("green");
       setDisabledButton(true);
       disableBoard();
       unlockNextStep();
     } else {
-      console.log("Respuesta incorrecta");
+      //console.log("Respuesta incorrecta");
       showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
+      setLineColor("red");
       unlockHint();
     }
   };

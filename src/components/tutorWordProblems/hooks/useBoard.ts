@@ -119,15 +119,22 @@ export const useBoard = (boardId: string, graphSettings: settings) => {
 
   const disableBoard = () => {
     if (boardRef.current) {
-      console.log("DISABLED");
-      boardRef.current.suspendUpdate();
+      //console.log("DISABLED");
+      //boardRef.current.suspendUpdate();
+      boardRef.current.removeEventHandlers();
     }
   };
 
+  const createLine = (point1, point2) => {
+    if (boardRef.current) {
+      boardRef.current.create("line", [point1, point2]);
+    }
+  };
   return {
     boardId,
     boardRef,
     bgBoardColor,
     disableBoard,
+    createLine,
   };
 };

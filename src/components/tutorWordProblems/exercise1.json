@@ -378,7 +378,7 @@
               "idCorrectAnswers": [1]
             }
           },
-          "kcs": ["kc1"],
+          "kcs": ["SumDec"],
           "hints": [
             {
               "hintId": 0,
@@ -443,7 +443,7 @@
               "idCorrectAnswers": [1, 2, 3, 4]
             }
           },
-          "kcs": ["kc1"],
+          "kcs": ["CancTermSem"],
           "hints": [
             {
               "hintId": 0,

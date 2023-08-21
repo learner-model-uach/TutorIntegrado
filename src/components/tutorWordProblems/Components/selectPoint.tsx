@@ -1,5 +1,5 @@
 import { AlertStatus, facePoint, Hint, selectPointerMeta } from "../types.d";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Box, ButtonGroup, Flex, useMediaQuery } from "@chakra-ui/react";
 import ResAlert from "../Alert/responseAlert";
 import { useAlert } from "../hooks/useAlert";
@@ -13,8 +13,7 @@ interface Props {
   hints: Hint[];
 }
 export const SelectPoint = ({ meta, hints }: Props) => {
-  console.log("SelectPoint");
-  const selectedPointRef = useRef(null); // Ref para el punto seleccionado
+  //console.log("SelectPoint");
 
   const [answerCorrect, setAnswerCorrect] = useState(false);
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
@@ -27,7 +26,10 @@ export const SelectPoint = ({ meta, hints }: Props) => {
     false,
     3000,
   );
-  const { boardId, boardRef, bgBoardColor, disableBoard } = useBoard("jxgbox", meta.graphSettings);
+  const { boardId, boardRef, bgBoardColor, disableBoard, createLine } = useBoard(
+    "jxgbox",
+    meta.graphSettings,
+  );
   const { unlockNextStep } = useStore();
   const {
     unlockedHints,
@@ -53,10 +55,31 @@ export const SelectPoint = ({ meta, hints }: Props) => {
         face: face,
         fixed: isStatic,
       });
-      p.on("down", () => {
+      p.on("up", () => {
         setUserAnswer(p.coords.usrCoords);
 
-        selectedPointRef.current = p; // Guarda el punto seleccionado en el estado
+        //console.log(p.coords)
+        const coordPoint = JSON.stringify(p.coords.usrCoords.slice(1));
+        //console.log("Coordpoint",coordPoint)
+        if (coordPoint === JSON.stringify(correctPoint)) {
+          p.setName("Punto correcto!");
+
+          p.setAttribute({
+            color: "green",
+            highlightFillColor: "green",
+            strokeColor: "green",
+            size: 8,
+          });
+
+          //p.board.BOARD_MODE_NONE
+          //p.board.removeEventHandlers()
+          //boardRef.current.removeEvent()
+        } else {
+          p.setName("Punto incorrecto");
+          p.setAttribute({ face: "cross", color: "red", size: 4 });
+        }
+
+        //selectedPointRef.current = p; // Guarda el punto seleccionado en el estado
       });
     });
   }, []);
@@ -68,7 +91,8 @@ export const SelectPoint = ({ meta, hints }: Props) => {
       if (isCorrect) {
         setAnswerCorrect(true);
         showAlert("😃", AlertStatus.success, "Muy bien!", null);
-
+        createLine(answer, [answer[0] + 1, answer[1]]);
+        createLine(answer, [answer[0], answer[1] + 1]);
         if (boardRef.current) {
           disableBoard();
 

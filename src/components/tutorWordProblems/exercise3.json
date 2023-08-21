@@ -296,7 +296,7 @@
               }
             }
           },
-          "kcs": ["IdPtGraf", "CompPendRec", "ExpA"],
+          "kcs": ["IdPtGraf", "ExpA"],
           "hints": [
             {
               "hintId": 0,
@@ -331,7 +331,7 @@
               "idCorrectAnswers": 0
             }
           },
-          "kcs": [],
+          "kcs": ["CompPendRec"],
           "hints": [
             {
               "hintId": 0,
@@ -453,7 +453,7 @@
               "idCorrectAnswers": [1]
             }
           },
-          "kcs": [],
+          "kcs": ["ExpA"],
           "hints": [
             {
               "hintId": 0,
