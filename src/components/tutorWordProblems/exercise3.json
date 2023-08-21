@@ -92,7 +92,7 @@
             },
             {
               "hintId": 1,
-              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar $\\textcolor{green}{\\text{ha disminuido en el tiempo}}$ . "
+              "hint": "La respuesta es: $$\\\\$$ La superficie del glaciar $\\textcolor{green}{\\text{ha disminuido en el tiempo}}$ . Ya que, si observas los datos en la tabla del enunciado, a medida que transcurre el tiempo la superficie del glaciar va disminuyendo."
             }
           ],
           "correctMsg": "Muy bien! La superficie del glaciar ha disminuido a lo largo del tiempo."
@@ -304,7 +304,7 @@
             },
             {
               "hintId": 1,
-              "hint": "El valor correcto de $m$ es -0,858"
+              "hint": "El valor correcto de $m$ es -0,858, ajusta el valor de $m$ lo máximo posible."
             }
           ],
           "correctMsg": "Muy bien! Realizaste correctamente el ajuste lineal."
@@ -375,7 +375,7 @@
             },
             {
               "hintId": 1,
-              "hint": "La respuesta es 2023."
+              "hint": "La respuesta es 2023. Ya que, 2023 es el año para el cual se pide estimar la superficie del glaciar."
             }
           ]
         },
@@ -461,6 +461,10 @@
             },
             {
               "hintId": 1,
+              "hint": "Revisa en la tabla el valor de la superficie del glaciar medida para el año 1971."
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: $$\\textcolor{green}{\\frac{265,05}{2} } = -0,8583  \\cdot t + 1963,8 $$"
             }
           ]
@@ -481,6 +485,11 @@
                   "id": 1,
                   "placeholderId": "a",
                   "value": "1963,8"
+                },
+                {
+                  "id": 2,
+                  "placeholderId": "a",
+                  "value": "-1963,8"
                 }
               ],
               "idCorrectAnswers": [1]
@@ -490,11 +499,20 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Reste el intercepto en ambos lados de la ecuación, para obtener la forma $$y – b = m\\cdot t$$"
+              "hint": "Pasa  el valor del intercepto al otro lado de la expresión."
             },
             {
               "hintId": 1,
+              "hint": "Resta el intercepto en ambos lados de la espresión, para obtener la forma $$y – b = m\\cdot t$$"
+            },
+            {
+              "hintId": 2,
               "hint": "El intercepto es $$b= 1963,8$$"
+            },
+            {
+              "hintId": 3,
+              "hint": "Revisa el signo del intercepto.",
+              "associatedAnswer": [2]
             }
           ]
         },
@@ -505,7 +523,7 @@
             "nameComponent": "mathComponent",
             "meta": {
               "readonly": true,
-              "expression": "\\begin{align} t & = \\frac{1963,8-\\frac{265,05}{2}}{\\placeholder[a]{} } \\\\ t & = \\placeholder[b]{}  \\end[align]",
+              "expression": "\\begin{align} t & = \\frac{1963,8-\\frac{265,05}{2}}{\\placeholder[a]{}} \\\\ t & = \\placeholder[b]{}  \\end[align]",
               "answers": [
                 {
                   "id": 1,
@@ -535,19 +553,23 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Divida por la pendiente, o sea, obtener la forma: $$\\frac{y-b}{m} = t$$"
+              "hint": "Despeja la variable $t$ de la expresión anterior."
             },
             {
               "hintId": 1,
-              "hint": "La pendiente es m= 0,8583"
+              "hint": "Divide por la pendiente, para obtener la forma: $$\\frac{y-b}{m} = t$$"
             },
             {
               "hintId": 2,
+              "hint": "La pendiente es m= 0,8583"
+            },
+            {
+              "hintId": 3,
               "hint": "Debes aproximar el resultado final a dos decimales",
               "associatedAnswer": [3, 4]
             },
             {
-              "hintId": 3,
+              "hintId": 4,
               "hint": "La respuesta correcta es $$t = 2133,61$$"
             }
           ],

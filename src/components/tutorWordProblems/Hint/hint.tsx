@@ -48,7 +48,7 @@ const HintButton = ({
     resetNumHintsActivated();
   };
   return (
-    <Popover placement="bottom" closeOnBlur={false}>
+    <Popover placement="bottom" closeOnBlur={true}>
       <PopoverTrigger>
         <Button
           color={numEnabledHints !== 0 ? "red" : undefined}

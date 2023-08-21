@@ -103,6 +103,11 @@ export const TutorWordProblem = ({
       })),
     }));
     setQuestions(initialQuestions);
+    reportAction({
+      verbName: "loadContent",
+      contentID: exercise.code,
+      topicID: topicId,
+    });
   }, [exercise]);
 
   const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();

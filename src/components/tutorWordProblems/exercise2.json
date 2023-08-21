@@ -195,6 +195,10 @@
             },
             {
               "hintId": 1,
+              "hint": "Debes realizar la suma de: $$\\frac{1}{100} + \\frac{1}{100} + \\frac{1}{100}$$"
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: $$\\frac{1}{\\frac{3}{100}}$$"
             }
           ]
@@ -230,6 +234,10 @@
             },
             {
               "hintId": 1,
+              "hint": "La fracción anterior se puede reducir invirtiendo la fracción del denominador. Por ejemplo: $$\\frac{1}{\\frac{2}{x}} = \\frac{x}{2}$$ "
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: $$\\frac{100}{3}$$"
             }
           ],
@@ -313,7 +321,11 @@
               "hint": "Realiza la suma del denominador."
             },
             {
-              "hintId": 0,
+              "hintId": 1,
+              "hint": "Debes realizar la siguiente suma de fracciones: $$\\frac{1}{x} + \\frac{1}{x} + \\frac{1}{x} $$"
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: $$\\frac{1}{\\frac{3}{x}} = 300$$"
             }
           ]
@@ -343,7 +355,11 @@
               "hint": "Invierte la fracción del denominador."
             },
             {
-              "hintId": 0,
+              "hintId": 1,
+              "hint": "La fracción anterior se puede reducir invirtiendo la fracción del denominador. Por ejemplo: $$\\frac{1}{\\frac{2}{x}} = \\frac{x}{2}$$ "
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: $$\\frac{x}{3}=300$$"
             }
           ]
@@ -371,6 +387,10 @@
             {
               "hintId": 0,
               "hint": "Despeja 'x' de la expresión anterior."
+            },
+            {
+              "hintId": 1,
+              "hint": "Puedes despejar $x$ de la expresión multiplicando toda la expresión por $3$"
             },
             {
               "hintId": 1,
