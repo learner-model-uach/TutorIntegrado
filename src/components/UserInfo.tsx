@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -8,6 +9,7 @@ import {
   Button,
   Flex,
   HStack,
+  Link,
   Popover,
   PopoverBody,
   PopoverCloseButton,
@@ -42,23 +44,34 @@ export const UserInfo = () => {
 
   if (!user || !auth0User)
     return (
-      <Button
-        colorScheme="blue"
-        onClick={() => {
-          setIsRedirecting(true);
-          loginWithRedirect();
-        }}
-        isLoading={isRedirecting}
-        isDisabled={isRedirecting}
-        variant={loginVariant}
-        width="100%"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        leftIcon={<AiOutlineLogin />}
-      >
-        Login
-      </Button>
+      <Stack spacing={3}>
+        <Button
+          colorScheme="blue"
+          onClick={() => {
+            setIsRedirecting(true);
+            loginWithRedirect();
+          }}
+          isLoading={isRedirecting}
+          isDisabled={isRedirecting}
+          variant={loginVariant}
+          width="100%"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          leftIcon={<AiOutlineLogin />}
+        >
+          Login
+        </Button>
+        <Text textAlign="center" color={emailTextColor}>
+          o solicita tu cuenta{" "}
+          <Box display="inline-flex" alignItems="center">
+            <Link color="blue.500" href="https://forms.gle/dJgg9H53fTxm56mHA">
+              aquí!{" "}
+            </Link>
+            <FaExternalLinkAlt size="0.8em" style={{ marginLeft: "0.3em", marginTop: "0.2em" }} />
+          </Box>
+        </Text>
+      </Stack>
     );
   const { name, email, picture } = user;
 
