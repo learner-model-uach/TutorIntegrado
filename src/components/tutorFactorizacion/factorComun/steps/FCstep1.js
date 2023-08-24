@@ -22,7 +22,9 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
     //contador de intentos
     setAttempts(attempts + 1);
     //responseStudent equals response with replace "space" and "*" (work string in lower case)
-    const responseStudent = response.current.value.replace(/[*]| /g, "").toLowerCase();
+    const responseStudent = response.current.value
+      .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+      .toLowerCase();
     //validate is a function that compares each element with response of student
     const validate = element => element === responseStudent;
 
