@@ -65,7 +65,12 @@ export const UserInfo = () => {
         <Text textAlign="center" color={emailTextColor}>
           o solicita tu cuenta{" "}
           <Box display="inline-flex" alignItems="center">
-            <Link color="blue.500" href="https://forms.gle/dJgg9H53fTxm56mHA">
+            <Link
+              color="blue.500"
+              href="https://forms.gle/dJgg9H53fTxm56mHA"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               aquí!{" "}
             </Link>
             <FaExternalLinkAlt size="0.8em" style={{ marginLeft: "0.3em", marginTop: "0.2em" }} />
