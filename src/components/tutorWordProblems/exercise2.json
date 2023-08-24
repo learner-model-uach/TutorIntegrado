@@ -67,6 +67,10 @@
             },
             {
               "hintId": 1,
+              "hint": "El valor de cada resistena es de $100 ohm.$"
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: $$\\begin{align*} R_{serie} & = \\textcolor{green}{100} + \\textcolor{green}{100} + \\textcolor{green}{100} \\\\ & R_{serie} = \\textcolor{green}{300} ohm  \\end{align*}$$"
             }
           ],
@@ -101,10 +105,14 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
+              "hint": "Piensa en cómo se comportan los circuitos en serie cuando un componente no funciona correctamente. ¿Qué sucede con la corriente en el circuito?"
             },
             {
               "hintId": 1,
+              "hint": "Imagina que tienes una cadena de luces en serie. Si una bombilla se quema, ¿qué pasa con las demás bombillas?"
+            },
+            {
+              "hintId": 2,
               "hint": "La respuesta es: El circuito se interrumpe por completo y dejaría de funcionar."
             }
           ],
@@ -156,16 +164,24 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Ingresa las inversas de las resistencias individuales."
+              "hint": "Revisa bien la expresión para calcular la resistencia en paralelo."
             },
             {
               "hintId": 1,
-              "hint": "Revisa bien la formula, recuerda que debes ingresar la inversa de las resistencias individuales, es decir: $$\\frac{1}{R}$$",
-              "associatedAnswer": [4]
+              "hint": "Ingresa las inversas de las resistencias individuales."
             },
             {
               "hintId": 2,
+              "hint": "La inversa de las resistencias corresponden a: $$\\frac{1}{100}$$ Reemplazalo en cada recuadro."
+            },
+            {
+              "hintId": 3,
               "hint": "La respuesta es: $$R_{eq} = \\frac{1}{\\frac{1}{100} + \\frac{1}{100} + \\frac{1}{100}}$$"
+            },
+            {
+              "hintId": 4,
+              "hint": "Revisa bien la formula, recuerda que debes ingresar la inversa de las resistencias individuales, es decir: $$\\frac{1}{R}$$",
+              "associatedAnswer": [4]
             }
           ]
         },
@@ -195,7 +211,7 @@
             },
             {
               "hintId": 1,
-              "hint": "Debes realizar la suma de: $$\\frac{1}{100} + \\frac{1}{100} + \\frac{1}{100}$$"
+              "hint": "Debes realizar la suma de las siguientes fracciones: $$\\frac{1}{100} + \\frac{1}{100} + \\frac{1}{100}$$"
             },
             {
               "hintId": 2,
@@ -394,7 +410,7 @@
             },
             {
               "hintId": 1,
-              "hint": "La respuesta es 900"
+              "hint": "La respuesta es $$x=900$$"
             }
           ],
           "correctMsg": "¡Muy bien! Por lo tanto, el valor de cada una de las tres nuevas resistencias debe ser de 900 ohm."

@@ -56,8 +56,8 @@ dependencies:
     specifier: 1.0.6
     version: 1.0.6(mathjax-full@3.2.2)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
   mathlive:
-    specifier: ^0.94.6
-    version: 0.94.6
+    specifier: ^0.95.5
+    version: 0.95.5
   next:
     specifier: ^12.0.8
     version: 12.0.8(react-dom@17.0.2)(react@17.0.2)
@@ -5398,8 +5398,8 @@ packages:
       react-dom: 17.0.2(react@17.0.2)
     dev: false
 
-  /mathlive@0.94.6:
-    resolution: {integrity: sha512-hiFtauIew87cTmQ6xzDB31hiV+cdQLog522ybNB4Oj0Mxf06+zqQa7uK1jGsiNKqA3+3+Znq6e16q7P5MjYyhg==}
+  /mathlive@0.95.5:
+    resolution: {integrity: sha512-FAAyx0m7hcYNIZKdmQ3/x+vk1lwSmQU30aGYRN2c5+Zz4H0z+B8+0h9fZgUN7SRvc1MmoeaOrO2iGvC2/RYDEg==}
     engines: {node: '>=16.14.2', npm: '>=8.5.0'}
     dependencies:
       '@cortex-js/compute-engine': 0.12.3

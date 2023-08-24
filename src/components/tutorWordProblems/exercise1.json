@@ -146,6 +146,10 @@
             },
             {
               "hintId": 1,
+              "hint": "Revisa que sector en la tabla presenta un valor negativo"
+            },
+            {
+              "hintId": 2,
               "hint": "El sector que absorve CO$_2$ es el sector de $\\textcolor{Green}{\\text{Usos de la tierra}}$, ya que es el único sector con valores negativos."
             }
           ],
@@ -192,19 +196,23 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 12. "
+              "hint": "Descompone la base 10 en la multiplicación de factores que te permitan igualar los exponentes."
             },
             {
               "hintId": 1,
-              "hint": "Si el exponente disminuye, la coma del número decimal se desplaza hacia la derecha."
+              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 12. "
             },
             {
               "hintId": 2,
+              "hint": "Si el exponente disminuye, la coma del número decimal se desplaza hacia la derecha."
+            },
+            {
+              "hintId": 3,
               "hint": "Recuerda que debes desplazar la coma del número decimal en 3 posiciones hacia la derecha.",
               "associatedAnswer": [3]
             },
             {
-              "hintId": 3,
+              "hintId": 4,
               "hint": "La respuesta correcta es: $$\\begin{align*}4,3602*10^{12} & = 4,3602*10^{\\textcolor{Green}{3}}*10^9 \\\\ & = \\textcolor{Green}{4360,2}*10^9  \\end{align*}$$"
             }
           ]
@@ -241,19 +249,23 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 13. "
+              "hint": "Descompone la base 10 en la multiplicación de factores que te permitan igualar los exponentes."
             },
             {
               "hintId": 1,
-              "hint": "Si el exponente disminuye, la coma del número decimal se desplaza hacia la derecha."
+              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 13. "
             },
             {
               "hintId": 2,
+              "hint": "Si el exponente disminuye, la coma del número decimal se desplaza hacia la derecha."
+            },
+            {
+              "hintId": 3,
               "hint": "Recuerda que debes desplazar la coma del número decimal en 4 posiciones hacia la derecha.",
               "associatedAnswer": [3]
             },
             {
-              "hintId": 3,
+              "hintId": 4,
               "hint": "La respuesta correcta es: $$\\begin{align*}-3,9915\\cdot 10^{13} & = -3,9915\\cdot 10^{\\textcolor{Green}{4}}\\cdot 10^9 \\\\ & =\\textcolor{Green}{-39915} \\cdot 10^9  \\end{align*}$$"
             }
           ]
@@ -290,19 +302,23 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 8. "
+              "hint": "Descompone la base 10 en la multiplicación de factores que te permitan igualar los exponentes."
             },
             {
               "hintId": 1,
-              "hint": "Si el exponente aumenta, la coma del número decimal se desplaza hacia la izquierda."
+              "hint": "La suma de los exponentes en números de igual base (en este caso base 10) debe ser igual a 8. "
             },
             {
               "hintId": 2,
+              "hint": "Si el exponente aumenta, la coma del número decimal se desplaza hacia la izquierda."
+            },
+            {
+              "hintId": 3,
               "hint": "Recuerda que debes desplazar la coma del número decimal en 1 posicion hacia la izquierda.",
               "associatedAnswer": [3]
             },
             {
-              "hintId": 3,
+              "hintId": 4,
               "hint": "La respuesta correcta es: $$\\begin{align*}3\\cdot 10^{8} & = 3\\cdot 10^{\\textcolor{Green}{-1}}\\cdot 10^9 \\\\ & = \\textcolor{Green}{0,3}\\cdot 10^9  \\end{align*}$$"
             }
           ]
@@ -329,6 +345,11 @@
                   "id": 1,
                   "placeholderId": "a",
                   "value": "86183,6"
+                },
+                {
+                  "id": 2,
+                  "placeholderId": "a",
+                  "value": "46268,6"
                 }
               ],
               "idCorrectAnswers": [1]
@@ -347,6 +368,11 @@
             {
               "hintId": 2,
               "hint": "El total de emisiones es de $$86183,6 \\cdot 10^9$$"
+            },
+            {
+              "hintId": 3,
+              "hint": "El valor ingresado corresponde al balance total (total emisiones + total absorciones). Solo debes calcular el total de emisiones.",
+              "associatedAnswer": [2]
             }
           ],
           "correctMsg": "Muy bien! El total de emisiones es de $86183,6 \\cdot 10^9$ gramos de CO$_2$"
@@ -438,6 +464,16 @@
                   "id": 6,
                   "placeholderId": "c",
                   "value": "0,9494"
+                },
+                {
+                  "id": 7,
+                  "placeholderId": "c",
+                  "value": "0,94"
+                },
+                {
+                  "id": 8,
+                  "placeholderId": "b",
+                  "value": "86183,6"
                 }
               ],
               "idCorrectAnswers": [1, 2, 3, 4]
@@ -447,25 +483,29 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "El valor de emisiones del sector de energía es: $$81823,1\\cdot 10^9$$"
+              "hint": "Reemplaza los valores de las emisiones del sector de energía y el valor del total de emisiones."
             },
             {
               "hintId": 1,
-              "hint": "El total de emisiones es: $$86183,6 \\cdot 10^9$$"
+              "hint": "El valor de emisiones del sector de energía es: $$81823,1\\cdot 10^9$$"
             },
             {
               "hintId": 2,
-              "hint": "La respuesta es $$0,95$$"
+              "hint": "El total de emisiones es: $$86183,6 \\cdot 10^9$$"
             },
             {
               "hintId": 3,
-              "hint": "Debes ingresar el numero en notacion cientifica",
-              "associatedAnswer": [5]
+              "hint": "La respuesta es $$\\frac{81823,1\\cdot 10^9}{86183,6 \\cdot 10^9}=0,95$$"
             },
             {
               "hintId": 4,
+              "hint": "Debes ingresar el numero en notacion cientifica",
+              "associatedAnswer": [5, 8]
+            },
+            {
+              "hintId": 5,
               "hint": "Debes aproximar el valor total a 2 decimales.",
-              "associatedAnswer": [6]
+              "associatedAnswer": [6, 7]
             }
           ],
           "correctMsg": "Muy bien! Por lo tanto el sector de energía aporta en un 95%, aproximadamente, de las emisiones totales "

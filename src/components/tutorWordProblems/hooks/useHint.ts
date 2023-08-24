@@ -8,7 +8,7 @@ export const useHint = (hints: Hint[]) => {
   const [totalHints, setTotalHints] = useState(hints.length);
   const [disabledPrevButton, setDisabledPrevButton] = useState(true);
   const [disabledNextButton, setDisabledNextButton] = useState(false);
-  const [numHintsActivated, setNumHintsActivated] = useState(0); // Nuevo estado para el número de hints activados
+  const [numHintsActivated, setNumHintsActivated] = useState(1); // Nuevo estado para el número de hints activados
   const [unlockedAnswerIds, setUnlockedAnswerIds] = useState<number[]>([]);
   const genericHints = hints.filter(hint => !hint.associatedAnswer);
   const specificHints = hints.filter(hint => hint.associatedAnswer);
@@ -18,7 +18,7 @@ export const useHint = (hints: Hint[]) => {
     setUnlockedHints([hints[0]]);
     setCurrentHint(0);
     setTotalHints(hints.length);
-    setNumHintsActivated(0);
+    setNumHintsActivated(1);
     setUnlockedAnswerIds([]);
     setDisabledPrevButton(true);
     setDisabledNextButton(false);

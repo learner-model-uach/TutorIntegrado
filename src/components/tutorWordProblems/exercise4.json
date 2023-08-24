@@ -23,7 +23,7 @@
           "componentToAnswer": {
             "nameComponent": "mathComponent",
             "meta": {
-              "expression": "\\begin{align} y &= - \\frac{1}{40} \\placeholder[a]{}^2 + \\frac{7}{2} \\placeholder[b]{} \\\\ &= \\placeholder[c]{} + \\placeholder[d]{} = \\placeholder[e]{} \\end{align}",
+              "expression": "\\begin{eqnarray} y &= - \\frac{1}{40} \\placeholder[a]{}^2 + \\frac{7}{2} \\placeholder[b]{} \\\\ &= \\placeholder[c]{} + \\placeholder[d]{} = \\placeholder[e]{} \\end{eqnarray}",
               "answers": [
                 {
                   "id": 1,

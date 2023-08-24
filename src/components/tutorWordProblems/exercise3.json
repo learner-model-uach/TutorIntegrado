@@ -285,8 +285,8 @@
                       "min": -0.9,
                       "max": -0.83,
                       "initialValue": -0.88,
-                      "snapWidth": 0.001,
-                      "precision": 3,
+                      "snapWidth": 0.0001,
+                      "precision": 4,
                       "name": "m"
                     }
                   },
@@ -300,7 +300,7 @@
           "hints": [
             {
               "hintId": 0,
-              "hint": "Mueva la pendiente $m$ a de manera que la línea se ajuste lo máximo posible a los puntos dados."
+              "hint": "Observa cómo se ajusta la línea a los puntos dados en la gráfica. Ajusta el valor de la pendiente 'm' utilizando el slider para que la línea se ajuste lo máximo posible a los puntos."
             },
             {
               "hintId": 1,
@@ -523,7 +523,7 @@
             "nameComponent": "mathComponent",
             "meta": {
               "readonly": true,
-              "expression": "\\begin{align} t & = \\frac{1963,8-\\frac{265,05}{2}}{\\placeholder[a]{}} \\\\ t & = \\placeholder[b]{}  \\end[align]",
+              "expression": "\\begin{align} t & = \\frac{1963,8-\\frac{265,05}{2}}{\\placeholder[a]{} } \\\\ t & = \\placeholder[b]{}  \\end{align}",
               "answers": [
                 {
                   "id": 1,
@@ -570,7 +570,7 @@
             },
             {
               "hintId": 4,
-              "hint": "La respuesta correcta es $$t = 2133,61$$"
+              "hint": "La respuesta correcta es $$ \\begin{align*} t & = \\frac{1963,8-\\frac{265,05}{2}}{0,8583} \\\\ t & = 2133,61  \\end{align*} $$"
             }
           ],
           "correctMsg": "Muy bien! Por lo tanto, en el año 2133 el glaciar llegaría al 50% de su tamaño medido en el año 1979."
