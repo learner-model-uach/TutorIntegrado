@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { MathfieldElement, Selector } from "mathlive";
+import { Box } from "@chakra-ui/react";
 
 export type MathEditorProps = {
   readOnly?: boolean;
@@ -16,7 +17,7 @@ const Mathfield = (props: MathEditorProps) => {
   //const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
 
   const containerRef = useRef<HTMLDivElement>(null);
-  console.log("RENDER mathlive");
+  //console.log("RENDER mathlive");
   const mfe = useMemo(() => {
     const mathfield = props.mfe ?? new MathfieldElement();
     mathfield.virtualKeyboardTargetOrigin = "off";
@@ -40,7 +41,7 @@ const Mathfield = (props: MathEditorProps) => {
     mfe.mathVirtualKeyboardPolicy = "auto";
     mfe.readOnly = true;
     mfe.environmentPopoverPolicy = "off";
-
+    mfe.resetUndo();
     /** 
     mfe.addEventListener("focusin", (evt) => {
       window.mathVirtualKeyboard.show()
@@ -60,12 +61,7 @@ const Mathfield = (props: MathEditorProps) => {
         if (ev.key === "\\") {
           ev.preventDefault();
           mfe.executeCommand(["insert", "\\backslash"]);
-          console.log("tecla:", ev.key);
         } else if (ev.key === "Escape") ev.preventDefault();
-        else if (ev.key === "Backspace" || ev.key === "Delete") {
-          const currentContent = mfe.selection;
-          console.log("Contenido actual:", currentContent);
-        }
       },
       { capture: true },
     );
@@ -98,9 +94,18 @@ const Mathfield = (props: MathEditorProps) => {
   const showVirtualKeyboard = () => {
     mfe.executeCommand("toggleVirtualKeyboard" as Selector);
   };
+
   return (
     <>
-      <div ref={containerRef} style={{ maxWidth: "100%" }} />
+      <Box
+        ref={containerRef}
+        border="1px"
+        borderRadius="5"
+        borderColor="black"
+        width="fit-content"
+        marginX="auto"
+        padding="2"
+      />
       {/**
          <ButtonGroup>
            <Button onClick={()=> {

@@ -20,7 +20,11 @@ const ResAlert = ({
       <Alert margin={2} status={status}>
         <AlertIcon />
         <AlertTitle>{title}</AlertTitle>
-        <AlertDescription>
+        <AlertDescription
+          width="100%"
+          whiteSpace="normal" // Permite que el texto se ajuste en varias líneas
+          maxW="100%" // Evita que el botón se desborde de su contenedor
+        >
           <Latex>{text}</Latex>
         </AlertDescription>
       </Alert>

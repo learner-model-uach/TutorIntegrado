@@ -99,7 +99,7 @@ export const TutorWordProblem = ({
       isBlocked: quesIndex !== 0,
       steps: ques.steps.map((step, stepIndex) => ({
         ...step,
-        isBlocked: quesIndex !== 0 && stepIndex !== 0,
+        isBlocked: stepIndex !== 0,
       })),
     }));
     setQuestions(initialQuestions);
@@ -244,7 +244,9 @@ export const TutorWordProblem = ({
                               bgColor={isCurrentQuestion && currentButtonColor}
                               color={isCurrentQuestion ? "white" : textColor}
                               _hover={{}}
-                              onClick={() => toggleQuestionExpansion(quesIndex)}
+                              onClick={() => {
+                                toggleQuestionExpansion(quesIndex);
+                              }}
                             >
                               <Box as="span" flex="1" textAlign="left">
                                 <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
@@ -294,9 +296,11 @@ export const TutorWordProblem = ({
                                           }
                                           onClick={() => {
                                             toggleStepExpansion(quesIndex, stepIndex);
+
                                             reportAction({
                                               verbName: "openStep",
-                                              stepID: "" + step.stepId,
+                                              stepID:
+                                                "[" + ques.questionId + "," + step.stepId + "]",
                                               contentID: exercise.code,
                                               topicID: topicId,
                                             });

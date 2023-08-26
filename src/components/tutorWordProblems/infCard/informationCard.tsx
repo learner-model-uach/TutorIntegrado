@@ -1,4 +1,4 @@
-import { Alert, Box, Flex, Image, useMediaQuery } from "@chakra-ui/react";
+import { Box, Image, useMediaQuery } from "@chakra-ui/react";
 import Latex from "react-latex-next";
 
 interface cardInfoProps {
@@ -12,8 +12,8 @@ export const CardInfo = ({ text, srcImg, bgColor, hideCard }: cardInfoProps) => 
   const [isDesktop] = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Alert overflowX="auto" status="warning" bgColor={bgColor} hidden={hideCard} mb={1} rounded={5}>
-      <Flex flexDirection="column">
+    <Box bgColor={bgColor} hidden={hideCard} mb={1} rounded={5}>
+      <Box overflow="hidden" width="100%" maxW="100%" whiteSpace="normal" padding="3">
         <Latex>{text}</Latex>
         {srcImg && (
           <Box
@@ -26,7 +26,7 @@ export const CardInfo = ({ text, srcImg, bgColor, hideCard }: cardInfoProps) => 
             <Image src={srcImg} alt="Imagen" maxWidth="100%" height="auto" />
           </Box>
         )}
-      </Flex>
-    </Alert>
+      </Box>
+    </Box>
   );
 };
