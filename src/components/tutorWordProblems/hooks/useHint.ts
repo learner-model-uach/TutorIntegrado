@@ -43,26 +43,30 @@ export const useHint = (hints: Hint[]) => {
   };
 
   const unlockHint = (answerId?: number) => {
-    if (answerId !== undefined && !unlockedAnswerIds.includes(answerId)) {
-      const hintToUnlock = specificHints.find(hint =>
-        hint.associatedAnswer.some(idAssAnswer => idAssAnswer === answerId),
-      );
-      if (hintToUnlock) {
-        setUnlockedHints(prevUnlockedHints => [...prevUnlockedHints, hintToUnlock]);
-        setUnlockedAnswerIds(prevUnlockedAnswerIds => [...prevUnlockedAnswerIds, answerId]);
-        setNumHintsActivated(prevNumHintsActivated => prevNumHintsActivated + 1); // Incrementar el número de hints activados
-        setCurrentHint(totalHints);
-        return;
+    // Solo se desbloquea un nuevo hint si no hay uno activo (numHintsActivated === 0)
+    // Esto evita que se acumulen los hint cuando el estudiante se equivoca repetidamente y no utiliza los hints
+    if (numHintsActivated === 0) {
+      if (answerId !== undefined && !unlockedAnswerIds.includes(answerId)) {
+        const hintToUnlock = specificHints.find(hint =>
+          hint.associatedAnswer.some(idAssAnswer => idAssAnswer === answerId),
+        );
+        if (hintToUnlock) {
+          setUnlockedHints(prevUnlockedHints => [...prevUnlockedHints, hintToUnlock]);
+          setUnlockedAnswerIds(prevUnlockedAnswerIds => [...prevUnlockedAnswerIds, answerId]);
+          setNumHintsActivated(prevNumHintsActivated => prevNumHintsActivated + 1); // Incrementar el número de hints activados
+          setCurrentHint(totalHints);
+          return;
+        }
       }
-    }
-    const nextGenericHint =
-      indUnlockedHint < genericHints.length ? genericHints[indUnlockedHint] : null;
-    if (nextGenericHint) {
-      // si hay un hint a mostrar
-      setIndUnlockedHint(indUnlockedHint + 1); // actualizamos el indice para el siguiente hint
-      setUnlockedHints(prevUnlockedHints => [...prevUnlockedHints, nextGenericHint]); //agregamos el hint desbloqueado
-      setNumHintsActivated(prevNumHintsActivated => prevNumHintsActivated + 1); // Incrementar el número de hints activados
-      setCurrentHint(totalHints); // establecemos el hint a mostrar como el ultimo desbloqueado
+      const nextGenericHint =
+        indUnlockedHint < genericHints.length ? genericHints[indUnlockedHint] : null;
+      if (nextGenericHint) {
+        // si hay un hint a mostrar
+        setIndUnlockedHint(indUnlockedHint + 1); // actualizamos el indice para el siguiente hint
+        setUnlockedHints(prevUnlockedHints => [...prevUnlockedHints, nextGenericHint]); //agregamos el hint desbloqueado
+        setNumHintsActivated(prevNumHintsActivated => prevNumHintsActivated + 1); // Incrementar el número de hints activados
+        setCurrentHint(totalHints); // establecemos el hint a mostrar como el ultimo desbloqueado
+      }
     }
   };
   const resetNumHintsActivated = () => {

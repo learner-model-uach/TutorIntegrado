@@ -80,6 +80,8 @@ export const TutorWordProblem = ({
     questions,
     expandedIndices,
     expandedStepIndices,
+    setTopicId,
+    setContentId,
     setQuestions,
     setCurrentStep,
     setCurrentQues,
@@ -90,6 +92,8 @@ export const TutorWordProblem = ({
   } = useStore();
 
   useEffect(() => {
+    setTopicId(topicId);
+    setContentId(exercise.code);
     setCurrentQues(0); // Reset currentQuestionIndex to 0 for the new exercise
     setCurrentStep(0); // Reset currentStepIndex to 0 for the new exercise
     resetExpandedIndices();
@@ -108,6 +112,7 @@ export const TutorWordProblem = ({
       contentID: exercise.code,
       topicID: topicId,
     });
+    //console.log("DATOS EJERCICIO topic, content", currentTopicId, currentContetId);
   }, [exercise]);
 
   const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
@@ -296,9 +301,10 @@ export const TutorWordProblem = ({
                                           }
                                           onClick={() => {
                                             toggleStepExpansion(quesIndex, stepIndex);
-
+                                            const isExpanded =
+                                              stepExpandedIndices.includes(stepIndex);
                                             reportAction({
-                                              verbName: "openStep",
+                                              verbName: isExpanded ? "closeStep" : "openStep",
                                               stepID:
                                                 "[" + ques.questionId + "," + step.stepId + "]",
                                               contentID: exercise.code,

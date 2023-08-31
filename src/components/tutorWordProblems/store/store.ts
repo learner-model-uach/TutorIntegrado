@@ -2,12 +2,16 @@ import { create } from "zustand";
 import type { Question } from "../types";
 
 type Store = {
+  currentTopicId: string;
+  currentContetId: string;
   currentQuestionIndex: number;
   currentStepIndex: number;
   questions: Question[];
   expandedIndices: number[]; // Nuevo estado para manejar los índices expandidos
   expandedStepIndices: number[][];
 
+  setTopicId: (id: string) => void;
+  setContentId: (id: string) => void;
   unlockNextStep: () => void;
   setCurrentStep: (n: number) => void;
   setCurrentQues: (n: number) => void;
@@ -30,12 +34,16 @@ type ExerciseStore = {
 };
 
 export const useStore = create<Store>(set => ({
+  currentTopicId: "",
+  currentContetId: "",
   currentQuestionIndex: 0,
   currentStepIndex: 0, // Ningún paso desbloqueado inicialmente
   questions: [],
   expandedIndices: [0], // Inicialmente, el índice de la primera pregunta
   expandedStepIndices: [],
 
+  setTopicId: id => set(() => ({ currentTopicId: id })),
+  setContentId: id => set(() => ({ currentContetId: id })),
   setCurrentStep: n => set(() => ({ currentStepIndex: n })),
   setCurrentQues: n => set(() => ({ currentQuestionIndex: n })),
   unlockNextStep: () =>

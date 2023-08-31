@@ -17,6 +17,8 @@ import {
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import type { Hint } from "../types";
 import Latex from "react-latex-next";
+import { useAction } from "../../../utils/action";
+import { useStore } from "../store/store";
 
 interface Props {
   hints: Hint[];
@@ -44,7 +46,22 @@ const HintButton = ({
   const popoverColor = useColorModeValue("dark", "white");
   const borderColor = useColorModeValue("dark", "#2B4264");
 
+  const reportAction = useAction();
+  const { currentQuestionIndex, currentStepIndex, currentTopicId, currentContetId } = useStore();
+
   const handleClick = () => {
+    numEnabledHints !== 0 &&
+      reportAction({
+        verbName: "requestHint",
+        stepID: "[" + currentQuestionIndex + "," + currentStepIndex + "]",
+        contentID: currentContetId,
+        topicID: currentTopicId,
+        hintID: "" + hints[currentHint].hintId,
+        extra: {
+          source: "open",
+          hint: hints[currentHint].hint,
+        },
+      });
     resetNumHintsActivated();
   };
   return (
