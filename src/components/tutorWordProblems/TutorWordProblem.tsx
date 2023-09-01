@@ -35,7 +35,7 @@ import Latex from "react-latex-next";
 import { CardInfo } from "./infCard/informationCard";
 //import JSXGraphComponent from "./Components/jsxGraphComponent";
 import { useExerciseStore, useStore } from "./store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAction } from "../../utils/action";
 import { LoadContent } from "./LoadExercise";
 import { useRouter } from "next/router";
@@ -69,17 +69,17 @@ export const TutorWordProblem = ({
   const currentStepColor = "#2B4264";
   const rounded = 5;
   const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
-
+  const [startTime, setStartTime] = useState<number>(null);
   const reportAction = useAction();
   const { user } = useAuth();
   const isTesting = user.tags.includes("wp-test-user");
-
   const {
     currentQuestionIndex,
     currentStepIndex,
     questions,
     expandedIndices,
     expandedStepIndices,
+    completeContent,
     setExercise,
     setTopicId,
     setContentId,
@@ -90,6 +90,7 @@ export const TutorWordProblem = ({
     resetExpandedIndices,
     resetExpandedStepIndices,
     toggleStepExpansion,
+    setCompleteContent,
   } = useStore();
 
   useEffect(() => {
@@ -98,6 +99,7 @@ export const TutorWordProblem = ({
     setContentId(exercise.code);
     setCurrentQues(0); // Reset currentQuestionIndex to 0 for the new exercise
     setCurrentStep(0); // Reset currentStepIndex to 0 for the new exercise
+    setCompleteContent(false);
     resetExpandedIndices();
     resetExpandedStepIndices();
     const initialQuestions = exercise.questions.map((ques, quesIndex) => ({
@@ -109,14 +111,29 @@ export const TutorWordProblem = ({
       })),
     }));
     setQuestions(initialQuestions);
+    setStartTime(Date.now());
     reportAction({
       verbName: "loadContent",
       contentID: exercise.code,
       topicID: topicId,
     });
+
     //console.log("DATOS EJERCICIO topic, content", currentTopicId, currentContetId);
   }, [exercise]);
 
+  useEffect(() => {
+    const endTime = (Date.now() - startTime) / 1000;
+    const formattedEndTime = formatTime(endTime); // Formatear el tiempo en hh:mm:ss
+    reportAction({
+      verbName: "completeContent",
+      contentID: exercise.code,
+      topicID: topicId,
+      result: 1,
+      extra: {
+        time: formattedEndTime,
+      },
+    });
+  }, [completeContent]);
   const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
 
   const router = useRouter();
@@ -127,6 +144,18 @@ export const TutorWordProblem = ({
     //await router.push("/showContent")
     //router.push("/showContent");
   };
+
+  // Función para convertir segundos a formato hora-minutos-segundos
+  function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
+    return formattedTime;
+  }
 
   return (
     <>

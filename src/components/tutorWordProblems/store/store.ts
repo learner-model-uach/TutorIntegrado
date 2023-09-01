@@ -10,6 +10,7 @@ type Store = {
   questions: Question[];
   expandedIndices: number[]; // Nuevo estado para manejar los índices expandidos
   expandedStepIndices: number[][];
+  completeContent: boolean;
 
   setExercise: (data: wpExercise) => void;
   setTopicId: (id: string) => void;
@@ -20,6 +21,7 @@ type Store = {
   setQuestions: (questions: Question[]) => void;
   toggleQuestionExpansion: (index: number) => void; // Nueva función para alternar la expansión de preguntas
   toggleStepExpansion: (questionIndex: number, stepIndex: number) => void;
+  setCompleteContent: (bool: boolean) => void;
 
   resetExpandedIndices: () => void;
   resetExpandedStepIndices: () => void;
@@ -44,7 +46,7 @@ export const useStore = create<Store>(set => ({
   questions: [],
   expandedIndices: [0], // Inicialmente, el índice de la primera pregunta
   expandedStepIndices: [],
-
+  completeContent: false,
   setExercise: data => set(() => ({ exerciseData: data })),
   setTopicId: id => set(() => ({ currentTopicId: id })),
   setContentId: id => set(() => ({ currentContetId: id })),
@@ -78,9 +80,13 @@ export const useStore = create<Store>(set => ({
             expandedIndices: [...state.expandedIndices, nextQuestionIndex], // Agregar el índice de la siguiente pregunta
             expandedStepIndices: newExpandedStepIndices, // Reiniciar los pasos expandidos al cambiar de pregunta
           };
+        } else {
+          // ya completo el ejercicio
+          return {
+            completeContent: true,
+          };
         }
       }
-      return state;
     }),
   setQuestions: ques => set(() => ({ questions: ques })),
   toggleQuestionExpansion: index => {
@@ -107,7 +113,7 @@ export const useStore = create<Store>(set => ({
 
       return { expandedStepIndices: newExpandedStepIndices };
     }),
-
+  setCompleteContent: bool => set(() => ({ completeContent: bool })),
   resetExpandedIndices: () => set(() => ({ expandedIndices: [0] })),
   resetExpandedStepIndices: () => set(() => ({ expandedStepIndices: [] })),
 }));
