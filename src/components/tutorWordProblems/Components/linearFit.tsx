@@ -7,6 +7,7 @@ import { useBoard } from "../hooks/useBoard";
 import { useHint } from "../hooks/useHint";
 import { useStore } from "../store/store";
 import { AlertStatus, Hint, linearFitMeta, slider } from "../types.d";
+import { useAction } from "../../../utils/action";
 
 interface Props {
   meta: linearFitMeta;
@@ -21,7 +22,15 @@ export const LinearFit = ({ meta, hints }: Props) => {
   const mSliderRef = useRef(null);
   const bSliderRef = useRef(null);
   const [disabledButton, setDisabledButton] = useState(false);
-  const { unlockNextStep } = useStore();
+  const {
+    unlockNextStep,
+    currentContetId,
+    currentTopicId,
+    currentQuestionIndex,
+    currentStepIndex,
+    exerciseData,
+  } = useStore();
+  const reportAction = useAction();
   const { boardId, boardRef, bgBoardColor, disableBoard } = useBoard(
     "linearFitBoard",
     meta.graphSettings,
@@ -151,6 +160,19 @@ export const LinearFit = ({ meta, hints }: Props) => {
       bvalue === undefined
         ? true
         : checkSliderValue(bvalue, correctAnswer.bCorrect as [number, number]);
+
+    reportAction({
+      verbName: "tryStep",
+      stepID: "[" + currentQuestionIndex + "," + currentStepIndex + "]",
+      contentID: currentContetId,
+      topicID: currentTopicId,
+      result: mIsCorrect && bIsCorrect ? 1 : 0,
+      kcsIDs: exerciseData.questions[currentQuestionIndex].steps[currentStepIndex].kcs,
+      extra: {
+        Response: { m: mvalue, b: bvalue },
+      },
+      detail: "LinearFit",
+    });
 
     if (mIsCorrect && bIsCorrect) {
       //console.log("¡Respuesta correcta en ambos casos!");
