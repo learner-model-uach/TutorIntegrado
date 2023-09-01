@@ -80,6 +80,7 @@ export const TutorWordProblem = ({
     questions,
     expandedIndices,
     expandedStepIndices,
+    setExercise,
     setTopicId,
     setContentId,
     setQuestions,
@@ -92,6 +93,7 @@ export const TutorWordProblem = ({
   } = useStore();
 
   useEffect(() => {
+    setExercise(exercise);
     setTopicId(topicId);
     setContentId(exercise.code);
     setCurrentQues(0); // Reset currentQuestionIndex to 0 for the new exercise

@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import type { Question } from "../types";
+import type { Question, wpExercise } from "../types";
 
 type Store = {
+  exerciseData: wpExercise | null;
   currentTopicId: string;
   currentContetId: string;
   currentQuestionIndex: number;
@@ -10,6 +11,7 @@ type Store = {
   expandedIndices: number[]; // Nuevo estado para manejar los índices expandidos
   expandedStepIndices: number[][];
 
+  setExercise: (data: wpExercise) => void;
   setTopicId: (id: string) => void;
   setContentId: (id: string) => void;
   unlockNextStep: () => void;
@@ -34,6 +36,7 @@ type ExerciseStore = {
 };
 
 export const useStore = create<Store>(set => ({
+  exerciseData: null,
   currentTopicId: "",
   currentContetId: "",
   currentQuestionIndex: 0,
@@ -42,6 +45,7 @@ export const useStore = create<Store>(set => ({
   expandedIndices: [0], // Inicialmente, el índice de la primera pregunta
   expandedStepIndices: [],
 
+  setExercise: data => set(() => ({ exerciseData: data })),
   setTopicId: id => set(() => ({ currentTopicId: id })),
   setContentId: id => set(() => ({ currentContetId: id })),
   setCurrentStep: n => set(() => ({ currentStepIndex: n })),

@@ -9,6 +9,8 @@ import { useHint } from "../hooks/useHint";
 import { useStore } from "../store/store";
 import type { Hint, SelectionMeta } from "../types";
 import { AlertStatus } from "../types.d";
+import { useAction } from "../../../utils/action";
+
 interface Props {
   meta: SelectionMeta;
   hints: Hint[];
@@ -21,7 +23,16 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
   const [userSelectedAnswer, setUserSelectedAnswer] = useState<number | null>(null); // State to track user-selected answer
   const [isCorrectUserAnswer, setIsCorrectUserAnswer] = useState<boolean>(false); // State to track if the user's answer is correct
 
-  const { unlockNextStep } = useStore();
+  const {
+    unlockNextStep,
+    currentStepIndex,
+    currentQuestionIndex,
+    currentContetId,
+    currentTopicId,
+    exerciseData,
+  } = useStore();
+  const reportAction = useAction();
+
   const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert } = useAlert(
     "",
     AlertStatus.info,
@@ -55,6 +66,17 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
     const isCorrectUserAnswer = answerIndex === meta.idCorrectAnswers;
     setUserSelectedAnswer(answerIndex);
 
+    reportAction({
+      verbName: "tryStep",
+      stepID: "[" + currentQuestionIndex + "," + currentStepIndex + "]",
+      contentID: currentContetId,
+      topicID: currentTopicId,
+      result: isCorrectUserAnswer ? 1 : 0,
+      kcsIDs: exerciseData.questions[currentQuestionIndex].steps[currentStepIndex].kcs,
+      extra: {
+        Response: meta.answers[answerIndex],
+      },
+    });
     if (isCorrectUserAnswer) {
       // Update color, message and type of alert
       setIsCorrectUserAnswer(true);
