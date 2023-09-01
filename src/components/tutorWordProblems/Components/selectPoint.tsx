@@ -7,6 +7,7 @@ import { useBoard } from "../hooks/useBoard";
 import HintButton from "../Hint/hint";
 import { useHint } from "../hooks/useHint";
 import { useStore } from "../store/store";
+import { useAction } from "../../../utils/action";
 
 interface Props {
   meta: selectPointerMeta;
@@ -30,7 +31,14 @@ export const SelectPoint = ({ meta, hints }: Props) => {
     "jxgbox",
     meta.graphSettings,
   );
-  const { unlockNextStep } = useStore();
+  const {
+    unlockNextStep,
+    currentContetId,
+    currentTopicId,
+    currentQuestionIndex,
+    currentStepIndex,
+    exerciseData,
+  } = useStore();
   const {
     unlockedHints,
     currentHint,
@@ -43,6 +51,8 @@ export const SelectPoint = ({ meta, hints }: Props) => {
     unlockHint,
     resetNumHintsActivated,
   } = useHint(hints);
+
+  const reportAction = useAction();
   //al utilizar useEffect S/D se ejecuta una unica vez despues del primer renderizado del componente
   useEffect(() => {
     // inicialización de datos
@@ -88,6 +98,20 @@ export const SelectPoint = ({ meta, hints }: Props) => {
     if (userAnswer.length !== 0 && !answerCorrect) {
       const answer = userAnswer.slice(-2);
       const isCorrect = answer.every((element, index) => element === correctPoint[index]);
+
+      reportAction({
+        verbName: "tryStep",
+        stepID: "[" + currentQuestionIndex + "," + currentStepIndex + "]",
+        contentID: currentContetId,
+        topicID: currentTopicId,
+        result: isCorrect ? 1 : 0,
+        kcsIDs: exerciseData.questions[currentQuestionIndex].steps[currentStepIndex].kcs,
+        extra: {
+          Response: answer,
+        },
+        detail: "SelectPoint",
+      });
+
       if (isCorrect) {
         setAnswerCorrect(true);
         showAlert("😃", AlertStatus.success, "Muy bien!", null);
