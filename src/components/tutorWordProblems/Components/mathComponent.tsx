@@ -10,6 +10,7 @@ import HintButton from "../Hint/hint";
 import { useHint } from "../hooks/useHint";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { useStore } from "../store/store";
+import { useAction } from "../../../utils/action";
 
 const MathField = dynamic(() => import("./tools/mathLive"), {
   ssr: false,
@@ -74,7 +75,15 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     resetNumHintsActivated,
   } = useHint(hints);
 
-  const { unlockNextStep } = useStore();
+  const {
+    unlockNextStep,
+    currentContetId,
+    currentQuestionIndex,
+    currentStepIndex,
+    currentTopicId,
+    exerciseData,
+  } = useStore();
+  const reportAction = useAction();
 
   useEffect(() => {
     resetAlert();
@@ -124,6 +133,19 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
             // TODO activar hint generico
           }
         }
+      });
+
+      reportAction({
+        verbName: "tryStep",
+        stepID: "[" + currentQuestionIndex + "," + currentStepIndex + "]",
+        contentID: currentContetId,
+        topicID: currentTopicId,
+        result: allCorrect ? 1 : 0,
+        kcsIDs: exerciseData.questions[currentQuestionIndex].steps[currentStepIndex].kcs,
+        extra: {
+          Response: answerStateRef.current,
+        },
+        detail: "MathComponent",
       });
       if (allCorrect) {
         showAlert("😃", AlertStatus.success, correctMsg, null);

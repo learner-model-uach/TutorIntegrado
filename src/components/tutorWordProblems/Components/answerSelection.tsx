@@ -76,6 +76,7 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
       extra: {
         Response: meta.answers[answerIndex],
       },
+      detail: "SelectionComponent",
     });
     if (isCorrectUserAnswer) {
       // Update color, message and type of alert
