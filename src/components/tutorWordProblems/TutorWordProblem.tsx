@@ -1,9 +1,4 @@
 import {
-  Tabs,
-  TabList,
-  Tab,
-  TabPanel,
-  TabPanels,
   Flex,
   Heading,
   Box,
@@ -20,7 +15,6 @@ import {
   Tbody,
   Tr,
   Td,
-  Center,
   useColorModeValue,
   useMediaQuery,
   ButtonGroup,
@@ -122,17 +116,19 @@ export const TutorWordProblem = ({
   }, [exercise]);
 
   useEffect(() => {
-    const endTime = (Date.now() - startTime) / 1000;
-    const formattedEndTime = formatTime(endTime); // Formatear el tiempo en hh:mm:ss
-    reportAction({
-      verbName: "completeContent",
-      contentID: exercise.code,
-      topicID: topicId,
-      result: 1,
-      extra: {
-        time: formattedEndTime,
-      },
-    });
+    if (completeContent) {
+      const endTime = (Date.now() - startTime) / 1000;
+      const formattedEndTime = formatTime(endTime); // Formatear el tiempo en hh:mm:ss
+      reportAction({
+        verbName: "completeContent",
+        contentID: exercise.code,
+        topicID: topicId,
+        result: 1,
+        extra: {
+          time: formattedEndTime,
+        },
+      });
+    }
   }, [completeContent]);
   const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
 
@@ -159,257 +155,207 @@ export const TutorWordProblem = ({
 
   return (
     <>
-      <Tabs isFitted variant="enclosed" width="100%">
-        <TabList>
-          {!isTesting && (
-            <>
-              <Tab>Presentación</Tab>
-              <Tab>Aprendizajes</Tab>
-              <Tab>Ejercicio</Tab>
-            </>
+      <Box>
+        <Flex flexDirection="column" alignItems="center">
+          <Heading size="lg" pb="12">
+            {" "}
+            {exercise?.presentation.title}
+          </Heading>
+          {exercise.statement && (
+            <Box overflowX="auto" whiteSpace="normal" textOverflow="ellipsis" maxW="100%">
+              <Latex strict>{exercise.statement}</Latex>
+            </Box>
           )}
-        </TabList>
-
-        <TabPanels>
-          {!isTesting && (
-            <TabPanel>
-              <Center flexDirection="column">
-                <Heading size="lg" pb="12">
-                  {" "}
-                  {exercise?.presentation.title}
-                </Heading>
-                <Image
-                  w={["sm", "md"]}
-                  src={exercise.presentation.urlImg}
-                  alt="Imagen de presentación"
-                />
-              </Center>
-            </TabPanel>
-          )}
-          {!isTesting && (
-            <TabPanel>
-              <Center width="100%" flexDirection="column">
-                {exercise.learningObjetives.title}
-                <br />
-
-                <Box width="100%" bg="green" display="flex" justifyContent="center">
-                  hola
-                </Box>
-              </Center>
-            </TabPanel>
-          )}
-
-          <TabPanel>
-            <Flex flexDirection="column" alignItems="center">
-              <Heading size="lg" pb="12">
-                {" "}
-                {exercise?.presentation.title}
-              </Heading>
-              {exercise.statement && (
-                <Box overflowX="auto" whiteSpace="normal" textOverflow="ellipsis" maxW="100%">
-                  <Latex strict>{exercise.statement}</Latex>
-                </Box>
-              )}
-              {exercise.table && (
-                <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
-                  <Table variant="striped" size="sm" borderColor={textColor}>
-                    <TableCaption>
-                      <Latex>{exercise.table.tableCaption}</Latex>
-                    </TableCaption>
-                    <Thead bgColor={bg}>
-                      <Tr>
-                        {exercise.table.header.map((head, index) => {
+          {exercise.table && (
+            <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
+              <Table variant="striped" size="sm" borderColor={textColor}>
+                <TableCaption>
+                  <Latex>{exercise.table.tableCaption}</Latex>
+                </TableCaption>
+                <Thead bgColor={bg}>
+                  <Tr>
+                    {exercise.table.header.map((head, index) => {
+                      return (
+                        <Th
+                          key={index}
+                          textAlign={head.align as textAlign}
+                          color="white"
+                          fontWeight="bold"
+                        >
+                          <Latex>{head.value}</Latex>
+                        </Th>
+                      );
+                    })}
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {exercise.table.rows.map((row, index) => {
+                    return (
+                      <Tr key={index}>
+                        {row.data?.map((value, i) => {
                           return (
-                            <Th
-                              key={index}
-                              textAlign={head.align as textAlign}
-                              color="white"
-                              fontWeight="bold"
-                            >
-                              <Latex>{head.value}</Latex>
-                            </Th>
+                            <Td key={i} textAlign={exercise.table.alignRows}>
+                              {<Latex strict>{value}</Latex>}
+                            </Td>
                           );
                         })}
                       </Tr>
-                    </Thead>
-                    <Tbody>
-                      {exercise.table.rows.map((row, index) => {
-                        return (
-                          <Tr key={index}>
-                            {row.data?.map((value, i) => {
-                              return (
-                                <Td key={i} textAlign={exercise.table.alignRows}>
-                                  {<Latex strict>{value}</Latex>}
-                                </Td>
-                              );
-                            })}
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </Box>
-              )}
-              {exercise.img && (
-                <Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio" />
-              )}
-              {exercise.text && (
-                <Box width="100%" textAlign="left">
-                  <Latex>{exercise.text}</Latex>
-                </Box>
-              )}
-
-              <Accordion
-                allowMultiple
-                allowToggle
-                pt="12px"
-                w="100%"
-                maxWidth="100%"
-                index={expandedIndices}
-              >
-                {questions &&
-                  questions.map((ques, quesIndex) => {
-                    const isCurrentQuestion = quesIndex === currentQuestionIndex;
-                    const stepExpandedIndices = expandedStepIndices[quesIndex] || [];
-
-                    return (
-                      <>
-                        <AccordionItem key={quesIndex} isDisabled={ques.isBlocked} marginBottom={2}>
-                          <h2>
-                            <AccordionButton
-                              bgColor={isCurrentQuestion && currentButtonColor}
-                              color={isCurrentQuestion ? "white" : textColor}
-                              _hover={{}}
-                              onClick={() => {
-                                toggleQuestionExpansion(quesIndex);
-                              }}
-                            >
-                              <Box as="span" flex="1" textAlign="left">
-                                <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
-                              </Box>
-                              <AccordionIcon />
-                            </AccordionButton>
-                          </h2>
-                          <AccordionPanel bgColor={bgQuestion} rounded={rounded}>
-                            <Accordion
-                              allowMultiple
-                              allowToggle
-                              marginLeft={isScreenLarge ? 10 : 0}
-                              marginRight={5}
-                              marginY={2}
-                              index={stepExpandedIndices}
-                            >
-                              {ques.steps.map((step, stepIndex) => {
-                                const isCurrent =
-                                  stepIndex === currentStepIndex &&
-                                  quesIndex === currentQuestionIndex;
-                                //console.log("meta s",step.componentToAnswer.nameComponent,step.componentToAnswer.meta);
-                                //const arratIndex = expandedStepIndices[quesIndex]
-                                return (
-                                  <Box key={stepIndex}>
-                                    {step.stepExplanation && (
-                                      <CardInfo
-                                        text={step.stepExplanation.explanation}
-                                        srcImg={step.stepExplanation.srcImg}
-                                        bgColor={explanationBgColor}
-                                        hideCard={step.isBlocked}
-                                      ></CardInfo>
-                                    )}
-
-                                    <AccordionItem
-                                      rounded={rounded}
-                                      bgColor={isCurrent ? currentStepColor : itemBgColor}
-                                      isDisabled={step.isBlocked}
-                                    >
-                                      <h2>
-                                        <AccordionButton
-                                          rounded={rounded}
-                                          color={isCurrent ? "white" : textColor}
-                                          _expanded={
-                                            isCurrent
-                                              ? { bg: currentStepColor }
-                                              : { bg: itemBgColor }
-                                          }
-                                          onClick={() => {
-                                            toggleStepExpansion(quesIndex, stepIndex);
-                                            const isExpanded =
-                                              stepExpandedIndices.includes(stepIndex);
-                                            reportAction({
-                                              verbName: isExpanded ? "closeStep" : "openStep",
-                                              stepID:
-                                                "[" + ques.questionId + "," + step.stepId + "]",
-                                              contentID: exercise.code,
-                                              topicID: topicId,
-                                            });
-                                          }}
-                                        >
-                                          <Box as="span" flex="1" textAlign="left">
-                                            <Latex>{step.stepTitle}</Latex>
-                                          </Box>
-                                          <AccordionIcon />
-                                        </AccordionButton>
-                                      </h2>
-                                      <AccordionPanel bg={bgContentColor}>
-                                        <Box paddingTop={2}>
-                                          {step.componentToAnswer.nameComponent ===
-                                          components.SLC ? (
-                                            <SelectionComponent
-                                              correctMsg={step.correctMsg ?? "Muy bien!"}
-                                              hints={step.hints}
-                                              meta={step.componentToAnswer.meta as SelectionMeta}
-                                            />
-                                          ) : step.componentToAnswer.nameComponent ===
-                                            components.MLC ? (
-                                            <MathComponent
-                                              correctMsg={step.correctMsg ?? "Muy bien!"}
-                                              hints={step.hints}
-                                              meta={
-                                                step.componentToAnswer.meta as MathComponentMeta
-                                              }
-                                            />
-                                          ) : step.componentToAnswer.nameComponent ===
-                                            components.GHPC ? (
-                                            <JSXGraphComponent
-                                              hints={step.hints}
-                                              meta={step.componentToAnswer.meta as GraphMeta}
-                                            ></JSXGraphComponent>
-                                          ) : (
-                                            <p>otro componente</p>
-                                          )}
-                                        </Box>
-                                      </AccordionPanel>
-                                    </AccordionItem>
-                                  </Box>
-                                );
-                              })}
-                            </Accordion>
-                          </AccordionPanel>
-                        </AccordionItem>
-                      </>
                     );
                   })}
-              </Accordion>
-            </Flex>
-            {isTesting && (
-              <Flex justifyContent="end" paddingY={10}>
-                <ButtonGroup>
-                  <Button
-                    size="lg"
-                    colorScheme="facebook"
-                    onClick={() => {
-                      handleNextButtonClick();
-                      console.log("currentExercise:", currentExercise);
-                    }}
-                  >
-                    Siguiente
-                  </Button>
-                </ButtonGroup>
-              </Flex>
-            )}
-            {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+                </Tbody>
+              </Table>
+            </Box>
+          )}
+          {exercise.img && (
+            <Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio" />
+          )}
+          {exercise.text && (
+            <Box width="100%" textAlign="left">
+              <Latex>{exercise.text}</Latex>
+            </Box>
+          )}
+
+          <Accordion
+            allowMultiple
+            allowToggle
+            pt="12px"
+            w="100%"
+            maxWidth="100%"
+            index={expandedIndices}
+          >
+            {questions &&
+              questions.map((ques, quesIndex) => {
+                const isCurrentQuestion = quesIndex === currentQuestionIndex;
+                const stepExpandedIndices = expandedStepIndices[quesIndex] || [];
+
+                return (
+                  <>
+                    <AccordionItem key={quesIndex} isDisabled={ques.isBlocked} marginBottom={2}>
+                      <h2>
+                        <AccordionButton
+                          bgColor={isCurrentQuestion && currentButtonColor}
+                          color={isCurrentQuestion ? "white" : textColor}
+                          _hover={{}}
+                          onClick={() => {
+                            toggleQuestionExpansion(quesIndex);
+                          }}
+                        >
+                          <Box as="span" flex="1" textAlign="left">
+                            <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
+                          </Box>
+                          <AccordionIcon />
+                        </AccordionButton>
+                      </h2>
+                      <AccordionPanel bgColor={bgQuestion} rounded={rounded}>
+                        <Accordion
+                          allowMultiple
+                          allowToggle
+                          marginLeft={isScreenLarge ? 10 : 0}
+                          marginRight={5}
+                          marginY={2}
+                          index={stepExpandedIndices}
+                        >
+                          {ques.steps.map((step, stepIndex) => {
+                            const isCurrent =
+                              stepIndex === currentStepIndex && quesIndex === currentQuestionIndex;
+                            //console.log("meta s",step.componentToAnswer.nameComponent,step.componentToAnswer.meta);
+                            //const arratIndex = expandedStepIndices[quesIndex]
+                            return (
+                              <Box key={stepIndex}>
+                                {step.stepExplanation && (
+                                  <CardInfo
+                                    text={step.stepExplanation.explanation}
+                                    srcImg={step.stepExplanation.srcImg}
+                                    bgColor={explanationBgColor}
+                                    hideCard={step.isBlocked}
+                                  ></CardInfo>
+                                )}
+
+                                <AccordionItem
+                                  rounded={rounded}
+                                  bgColor={isCurrent ? currentStepColor : itemBgColor}
+                                  isDisabled={step.isBlocked}
+                                >
+                                  <h2>
+                                    <AccordionButton
+                                      rounded={rounded}
+                                      color={isCurrent ? "white" : textColor}
+                                      _expanded={
+                                        isCurrent ? { bg: currentStepColor } : { bg: itemBgColor }
+                                      }
+                                      onClick={() => {
+                                        toggleStepExpansion(quesIndex, stepIndex);
+                                        const isExpanded = stepExpandedIndices.includes(stepIndex);
+                                        reportAction({
+                                          verbName: isExpanded ? "closeStep" : "openStep",
+                                          stepID: "[" + ques.questionId + "," + step.stepId + "]",
+                                          contentID: exercise.code,
+                                          topicID: topicId,
+                                        });
+                                      }}
+                                    >
+                                      <Box as="span" flex="1" textAlign="left">
+                                        <Latex>{step.stepTitle}</Latex>
+                                      </Box>
+                                      <AccordionIcon />
+                                    </AccordionButton>
+                                  </h2>
+                                  <AccordionPanel bg={bgContentColor}>
+                                    <Box paddingTop={2}>
+                                      {step.componentToAnswer.nameComponent === components.SLC ? (
+                                        <SelectionComponent
+                                          correctMsg={step.correctMsg ?? "Muy bien!"}
+                                          hints={step.hints}
+                                          meta={step.componentToAnswer.meta as SelectionMeta}
+                                        />
+                                      ) : step.componentToAnswer.nameComponent ===
+                                        components.MLC ? (
+                                        <MathComponent
+                                          correctMsg={step.correctMsg ?? "Muy bien!"}
+                                          hints={step.hints}
+                                          meta={step.componentToAnswer.meta as MathComponentMeta}
+                                        />
+                                      ) : step.componentToAnswer.nameComponent ===
+                                        components.GHPC ? (
+                                        <JSXGraphComponent
+                                          hints={step.hints}
+                                          meta={step.componentToAnswer.meta as GraphMeta}
+                                        ></JSXGraphComponent>
+                                      ) : (
+                                        <p>otro componente</p>
+                                      )}
+                                    </Box>
+                                  </AccordionPanel>
+                                </AccordionItem>
+                              </Box>
+                            );
+                          })}
+                        </Accordion>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </>
+                );
+              })}
+          </Accordion>
+        </Flex>
+        {isTesting && (
+          <Flex justifyContent="end" paddingY={10}>
+            <ButtonGroup>
+              <Button
+                size="lg"
+                colorScheme="facebook"
+                onClick={() => {
+                  handleNextButtonClick();
+                  console.log("currentExercise:", currentExercise);
+                }}
+              >
+                Siguiente
+              </Button>
+            </ButtonGroup>
+          </Flex>
+        )}
+        {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
+      </Box>
     </>
   );
 };

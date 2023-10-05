@@ -1,8 +1,8 @@
 export interface wpExercise {
   code: string;
   type: string;
-  presentation: Presentation;
-  learningObjetives: LearningObjetives;
+  presentation?: Presentation;
+  learningObjetives?: LearningObjetives;
   statement: string;
   mathExpression?: string;
   img?: string;
@@ -12,14 +12,14 @@ export interface wpExercise {
 }
 
 export interface LearningObjetives {
-  title: string;
-  text: string;
-  listObj: string[];
+  title?: string;
+  text?: string;
+  listObj?: string[];
 }
 
 export interface Presentation {
-  title: string;
-  urlImg: string;
+  title?: string;
+  urlImg?: string;
 }
 
 export interface Question {

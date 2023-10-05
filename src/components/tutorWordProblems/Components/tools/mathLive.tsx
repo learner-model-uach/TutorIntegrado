@@ -1,6 +1,18 @@
 import { useEffect, useMemo, useRef } from "react";
-import { MathfieldElement, Selector } from "mathlive";
+import {
+  MathfieldElement,
+  Selector,
+  VirtualKeyboardInterface,
+  VirtualKeyboardLayoutCore,
+  NormalizedVirtualKeyboardLayer,
+} from "mathlive";
 import { Box } from "@chakra-ui/react";
+
+type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
+  readonly normalizedLayouts: (VirtualKeyboardLayoutCore & {
+    layers: NormalizedVirtualKeyboardLayer[];
+  })[];
+};
 
 export type MathEditorProps = {
   readOnly?: boolean;
@@ -42,18 +54,12 @@ const Mathfield = (props: MathEditorProps) => {
     mfe.readOnly = true;
     mfe.environmentPopoverPolicy = "off";
     mfe.resetUndo();
-    /** 
-    mfe.addEventListener("focusin", (evt) => {
-      window.mathVirtualKeyboard.show()
-    });
-    */
-    //mfe.addEventListener("keydown", (evt) =>  evt.preventDefault(), {capture: true});
 
-    /*
-    mfe.addEventListener("focusout", (evt) =>{
-      window.mathVirtualKeyboard.hide()
-    })
-    */
+    // @ts-ignore
+    const keyboardLayout = (window.mathVirtualKeyboard as ExtendedVirtualKeyboard)
+      .normalizedLayouts[0]; // dejamos solo el teclado numerico
+    delete keyboardLayout.layers[0].rows[2][10].shift; // eliminamos el boton deleteAll del teclado (genera problemas)
+    window.mathVirtualKeyboard.layouts = keyboardLayout; // asignamos el teclado modificado como el nuevo teclado
 
     mfe.addEventListener(
       "keydown",
@@ -81,7 +87,6 @@ const Mathfield = (props: MathEditorProps) => {
 
   useEffect(() => {
     // Este efecto se encarga de actualizar el valor del editor de matemáticas cuando props.value cambia.
-
     if (currentValue.current !== props.value) {
       const position = mfe.position;
       mfe.setValue(props.value, { focus: true, feedback: false });
@@ -125,7 +130,7 @@ const Mathfield = (props: MathEditorProps) => {
            </Button>
          </ButtonGroup>
          
-         */}
+      */}
     </>
   );
 };
