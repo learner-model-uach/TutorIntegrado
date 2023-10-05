@@ -64,7 +64,9 @@ const Mathfield = (props: MathEditorProps) => {
     mfe.addEventListener(
       "keydown",
       ev => {
-        if (ev.key === "\\") {
+        if (ev.key === "Tab") {
+          mfe.executeCommand("moveToNextPlaceholder");
+        } else if (ev.key === "\\") {
           ev.preventDefault();
           mfe.executeCommand(["insert", "\\backslash"]);
         } else if (ev.key === "Escape") ev.preventDefault();
