@@ -33,8 +33,8 @@ dependencies:
     specifier: ^3.1.3
     version: 3.1.3(katex@0.13.13)(react@17.0.2)
   better-react-mathjax:
-    specifier: ^2.0.1
-    version: 2.0.1(react@17.0.2)
+    specifier: ^2.0.3
+    version: 2.0.3(react@17.0.2)
   framer-motion:
     specifier: ^6.2.1
     version: 6.2.1(react-dom@17.0.2)(react@17.0.2)
@@ -3074,8 +3074,8 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: false
 
-  /better-react-mathjax@2.0.1(react@17.0.2):
-    resolution: {integrity: sha512-Q9+2ScyNNuB7s7d9JxCoDm1Ms5rgfFoVmdhCWrKpO1BK8wMEI+DdDjaQUGBOa6AtaWemsy2VNSLFlyrNUnUG+A==}
+  /better-react-mathjax@2.0.3(react@17.0.2):
+    resolution: {integrity: sha512-wfifT8GFOKb1TWm2+E50I6DJpLZ5kLbch283Lu043EJtwSv0XvZDjr4YfR4d2MjAhqP6SH4VjjrKgbX8R00oCQ==}
     peerDependencies:
       react: '>=16.8'
     dependencies:
