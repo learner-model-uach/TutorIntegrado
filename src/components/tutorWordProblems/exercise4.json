@@ -1,0 +1,350 @@
+{
+  "code": "wp4",
+  "type": "wordProblem",
+  "presentation": {
+    "title": "Rendimiento de un automóvil",
+    "urlImg": ""
+  },
+  "learningObjetives": {
+    "title": "",
+    "text": "",
+    "listObj": []
+  },
+  "meta": {},
+  "statement": "El rendimiento de combustible de un automóvil se obtiene de acuerdo a la velocidad con la que se desplaza, si $x$ es la velocidad media en kilómetros por hora [km/h] y el rendimiento, para $0<x<120$, está dado por la siguiente expresión: $$\\begin{equation} y = -\\frac{1}{40}\\cdot x^2 + \\frac{7}{2}\\cdot x\\end{equation}$$",
+  "questions": [
+    {
+      "questionId": 0,
+      "question": "Calcula el rendimiento para las velocidades de 20, 60 y 100 en km/h.",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepTitle": "Calcular rendimiento para la velocidad de 20 km/h",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "\\begin{eqnarray} y &= - \\frac{1}{40} \\placeholder[a]{}^2 + \\frac{7}{2} \\placeholder[b]{} \\\\ &= \\placeholder[c]{} + \\placeholder[d]{} = \\placeholder[e]{} \\end{eqnarray}",
+              "answers": [
+                {
+                  "id": 1,
+                  "placeholderId": "a",
+                  "value": "20"
+                },
+                {
+                  "id": 2,
+                  "placeholderId": "b",
+                  "value": "20"
+                },
+                {
+                  "id": 3,
+                  "placeholderId": "c",
+                  "value": "-10"
+                },
+                {
+                  "id": 4,
+                  "placeholderId": "d",
+                  "value": "70"
+                },
+                {
+                  "id": 5,
+                  "placeholderId": "e",
+                  "value": "60"
+                }
+              ],
+              "idCorrectAnswers": [1, 2, 3, 4, 5]
+            }
+          },
+          "kcs": ["AN", "SusFor"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Reemplaza el valor de la velocidad (20) en la primera expresión."
+            },
+            {
+              "hintId": 1,
+              "hint": "La primera expresion debe quedar: $$y = - \\frac{1}{40} \\textcolor{green}{20}^2 + \\frac{7}{2} \\textcolor{green}{20}$$"
+            },
+            {
+              "hintId": 2,
+              "hint": "La respuesta es : $$\\begin{align} y &= - \\frac{1}{40} \\textcolor{green}{20}^2 + \\frac{7}{2} \\textcolor{green}{20} \\\\ &= \\textcolor{green}{-10} + \\textcolor{green}{70} = \\textcolor{green}{60} \\end{align}$$"
+            }
+          ]
+        },
+        {
+          "stepId": 1,
+          "stepTitle": "Calcular rendimiento para la velocidad de 60 km/h",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "y = -\\frac{1}{40} \\placeholder[a]{}^2 + \\frac{7}{2} \\placeholder[b]{} = \\placeholder[c]{}",
+              "answers": [
+                {
+                  "id": 1,
+                  "placeholderId": "a",
+                  "value": "60"
+                },
+                {
+                  "id": 2,
+                  "placeholderId": "b",
+                  "value": "60"
+                },
+                {
+                  "id": 3,
+                  "placeholderId": "c",
+                  "value": "120"
+                }
+              ],
+              "idCorrectAnswers": [1, 2, 3]
+            }
+          },
+          "kcs": ["AN", "SusFor"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Reemplaza el valor de la velocidad (60) en la ecuación."
+            },
+            {
+              "hintId": 1,
+              "hint": "La ecuacion debe quedar: $$ y = -\\frac{1}{40} \\textcolor{green}{60}^2 + \\frac{7}{2} \\textcolor{green}{60}$$ Ahora realiza las operaciones y obten el valor de 'y'."
+            },
+            {
+              "hintId": 2,
+              "hint": "La respuesta es: $$y = -\\frac{1}{40} \\textcolor{green}{60}^2 + \\frac{7}{2} \\textcolor{green}{60} = \\textcolor{green}{120}$$"
+            }
+          ]
+        },
+        {
+          "stepId": 2,
+          "stepTitle": "Calcular rendimiento para la velocidad de 100 km/h",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "y = \\placeholder[a]{}",
+              "answers": [
+                {
+                  "id": 1,
+                  "placeholderId": "a",
+                  "value": "100"
+                }
+              ],
+              "idCorrectAnswers": [1]
+            }
+          },
+          "kcs": ["AN", "SusFor"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Utiliza la expresion que denota el rendimiento para una velocidad 'x'"
+            },
+            {
+              "hintId": 1,
+              "hint": "reemplaza la velocidad (100) por 'x' en la expresión del rendimiento: $$y= - \\frac{1}{40} \\cdot x^2 + \\frac{7}{2} \\cdot x$$"
+            },
+            {
+              "hintId": 2,
+              "hint": "La expresión debe quedar: $$ y = -\\frac{1}{40} \\textcolor{green}{100}^2 + \\frac{7}{2} \\textcolor{green}{100}$$ Ahora realiza las operaciones y obten el valor de 'y'."
+            },
+            {
+              "hintId": 3,
+              "hint": "La respuesta es: $$y= 100$$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionId": 1,
+      "question": "¿A qué velocidad se obtiene el máximo rendimiento?",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepExplanation": {
+            "explanation": "Se pretende obtener la velocidad con que se obtendría el máximo rendimiento. Sabemos que la ecuación representa una parábola invertida como se ve en la siguiente imagen:",
+            "srcImg": "wp4_q2.png"
+          },
+          "stepTitle": "¿En qué punto de la parábola podríamos encontrar su máximo rendimiento?",
+          "componentToAnswer": {
+            "nameComponent": "selectionComponent",
+            "meta": {
+              "answers": [
+                {
+                  "id": 0,
+                  "value": "Foco"
+                },
+                {
+                  "id": 1,
+                  "value": "Vértice"
+                },
+                {
+                  "id": 2,
+                  "value": "Directriz"
+                }
+              ],
+              "idCorrectAnswers": 1
+            }
+          },
+          "kcs": ["IdPtGraf"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "El foco y la directriz no pertenecen a la parábola"
+            },
+            {
+              "hintId": 1,
+              "hint": "La respuesta es: Vértice"
+            }
+          ]
+        },
+        {
+          "stepId": 1,
+          "stepExplanation": {
+            "explanation": "Para obtener la coordenada $x$ del vértice, es decir, el valor de la velocidad para el máximo rendimiento, podemos utilizar la siguiente expresión: $$x = \\frac{-b}{2a}$$ Donde $b$ y $a$ son coeficientes de la expresión cuadrática $ y = ax^2 +bx + c$. En nuestro caso, recordemos que la ecuación es: $$y=-\\frac{1}{40}x^2 + \\frac{7}{2} x$$"
+          },
+          "stepTitle": "Identificar coeficientes",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "a = \\placeholder[a]{} ; b = \\placeholder[b]{}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "-\\frac{1}{40}"
+                },
+                {
+                  "id": 1,
+                  "placeholderId": "b",
+                  "value": "\\frac72"
+                }
+              ],
+              "idCorrectAnswers": [0, 1]
+            }
+          },
+          "kcs": ["IdeCoef"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Expresa como fracción"
+            },
+            {
+              "hintId": 1,
+              "hint": "La respuesta es: $$a = \\textcolor{green}{-\\frac{1}{40}} ; b = \\textcolor{green}{\\frac{7}{2}}$$"
+            }
+          ]
+        },
+        {
+          "stepId": 2,
+          "stepTitle": "Calcular coordenada x del vértice",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "\\begin{align} x &= \\frac{-\\placeholder[a]{}}{2\\cdot \\placeholder[b]{}} \\\\ \\Rightarrow & -\\frac{7}{2} \\cdot \\frac{\\placeholder[c]{}}{2} = \\placeholder[d]{} \\end{align}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "\\frac72"
+                },
+                {
+                  "id": 1,
+                  "placeholderId": "b",
+                  "value": "-\\frac{1}{40}"
+                },
+                {
+                  "id": 2,
+                  "placeholderId": "c",
+                  "value": "-40"
+                },
+                {
+                  "id": 3,
+                  "placeholderId": "d",
+                  "value": "70"
+                },
+                {
+                  "id": 4,
+                  "placeholderId": "c",
+                  "value": "40"
+                }
+              ],
+              "idCorrectAnswers": [0, 1, 2, 3]
+            }
+          },
+          "kcs": ["SusFor", "AN", "DivFrac"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Primero reemplaza los valores de los coeficientes."
+            },
+            {
+              "hintId": 1,
+              "hint": "Expresa la división de arriba como una multiplicación de fracciones."
+            },
+            {
+              "hintId": 2,
+              "hint": "Cuidado con el signo.",
+              "associatedAnswer": [4]
+            },
+            {
+              "hintId": 3,
+              "hint": "La respuesta es: $$\\begin{align} x &= \\frac{-\\textcolor{green}{\\frac{7}{2}}}{2\\cdot \\textcolor{green}{-\\frac{1}{40}}} \\\\ \\Rightarrow & -\\frac{7}{2} \\cdot \\frac{\\textcolor{green}{-40}}{2} = \\textcolor{green}{70} \\end{align}$$"
+            }
+          ],
+          "correctMsg": "Muy bien! Por lo tanto, la velocidad que permite un mayor rendimiento de combustible es 70 km/h"
+        }
+      ]
+    },
+    {
+      "questionId": 2,
+      "question": "¿Cuál es el máximo rendimiento? (Aproxima a un decimal)",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepExplanation": {
+            "explanation": "El máximo rendimiento de combustible esta dado por  $y$, al reemplazar $x$ por el valor de la velocidad donde se obtiene el máximo rendimiento."
+          },
+          "stepTitle": "Calcular valor del máximo rendimiento",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "y=-\\frac{1}{40} \\placeholder[a]{}^2 + \\frac{7}{2} \\placeholder[b]{} = \\placeholder[c]{}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "70"
+                },
+                {
+                  "id": 1,
+                  "placeholderId": "b",
+                  "value": "70"
+                },
+                {
+                  "id": 2,
+                  "placeholderId": "c",
+                  "value": "122,5"
+                }
+              ],
+              "idCorrectAnswers": [0, 1, 2]
+            }
+          },
+          "kcs": ["AN", "SusFor"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Reemplaza el valor de velocidad calculado previamente"
+            },
+            {
+              "hintId": 1,
+              "hint": "El valor corresponde a 70, reemplázalo en los dos primeros recuadros y realiza las operaciones."
+            },
+            {
+              "hintId": 2,
+              "hint": "El resultado del máximo rendimiento es: $$y= 122,5$$"
+            }
+          ],
+          "correctMsg": "Muy bien! El máximo rendimiento corresponde a 122,5"
+        }
+      ]
+    }
+  ]
+}

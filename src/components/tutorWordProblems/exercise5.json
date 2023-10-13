@@ -1,0 +1,384 @@
+{
+  "code": "wp5",
+  "type": "wordProblem",
+  "presentation": {
+    "title": "Plantando pinos y eucaliptus",
+    "urlImg": ""
+  },
+  "learningObjetives": {
+    "title": " ",
+    "text": "",
+    "listObj": []
+  },
+  "statement": "En un terreno de 1 hectárea se desea plantar dos tipos de árboles, eucaliptos y pinos radiata. Se sabe que un eucalipto necesita 9 metros cuadrados ($m^2$) de espacio y tiene un costo de plantación de 528 pesos, aproximadamente, mientras que un pino radiata necesita 7 $m^2$ de espacio y tiene un costo de plantación de 544 pesos, aproximadamente.",
+  "questions": [
+    {
+      "questionId": 0,
+      "question": "Sin considerar los precios, ¿qué tipo de árbol usarías si quisieras tener más árboles en esta plantación?",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepTitle": "Selecciona la alternativa correcta",
+          "componentToAnswer": {
+            "nameComponent": "selectionComponent",
+            "meta": {
+              "answers": [
+                {
+                  "id": 0,
+                  "value": "Eucalipto"
+                },
+                {
+                  "id": 1,
+                  "value": "Pino radiata"
+                }
+              ],
+              "idCorrectAnswers": 1
+            }
+          },
+          "kcs": [],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Revisa cuantos metros cuadrados necesita de espacio cada tipo de árbol."
+            },
+            {
+              "hintId": 1,
+              "hint": "La respuesta correcta es: pino Radiata."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questionId": 1,
+      "quesExplanation": "Considerando que cada pino cuesta más que cada eucalipto, tal vez no podríamos plantar solo pinos si tenemos una restricción de presupuesto.",
+      "question": "Si contamos con un presupuesto de $640.000, ¿cuantos árboles de cada tipo se deben plantar para maximizar el espacio?",
+      "steps": [
+        {
+          "stepId": 0,
+          "stepExplanation": {
+            "explanation": "Para responder esta pregunta primero definimos las variables a usar: $$\\begin{align*} &x\\text{: cantidad de eucaliptos a plantar} \\\\ &y\\text{: cantidad de pinos a plantar} \\end{align*}$$"
+          },
+          "stepTitle": "Identificar áreas",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "\\text{El área total de eucaliptos es $9x$ y el área total de pinos es $\\placeholder[a]{}$}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "7y"
+                }
+              ],
+              "idCorrectAnswers": [0]
+            }
+          },
+          "kcs": [],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "El área total de eucaliptos es $9x$, ya que $x$ representa a el número de eucaliptos y cada eucalipto ocupa 9$m^2$."
+            },
+            {
+              "hintId": 1,
+              "hint": "El área total de pinos es la cantidad de pinos por el área que ocupa cada pino."
+            },
+            {
+              "hintId": 2,
+              "hint": "El área total de pinos es $7y$. "
+            }
+          ],
+          "stepGuideText": "",
+          "correctMsg": "Muy bien! Eso quiere decir que la ecuación de áreas es: $$área_{eucalipto} + área_{pinos} = 1 [hectarea]$$ Por lo tanto, la ecuación de áreas queda: $$ec1: 9x + 7y = 10000$$"
+        },
+
+        {
+          "stepId": 1,
+          "stepTitle": "Definir segunda ecuación de costos",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "ec2: \\placeholder[a]{} + \\placeholder[b]{} = 640000",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "528x"
+                },
+                {
+                  "id": 1,
+                  "placeholderId": "b",
+                  "value": "544y"
+                }
+              ],
+              "idCorrectAnswers": [0, 1]
+            }
+          },
+          "kcs": ["PlanEcuContex", "ExpA"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "El valor gastado en pinos y el valor gastado en eucaliptos debe sumar 640.000"
+            },
+            {
+              "hintId": 1,
+              "hint": "La cantidad gastada en pinos es $528x$."
+            },
+            {
+              "hintId": 2,
+              "hint": "La cantidad gastada en eucaliptos es $544y$."
+            },
+            {
+              "hintId": 3,
+              "hint": "La respueseta es $$ec2: \\textcolor{green}{528x}+\\textcolor{green}{544y} = 640000$$"
+            }
+          ]
+        },
+
+        {
+          "stepId": 2,
+          "stepExplanation": {
+            "explanation": "Ya tenemos un sistema de dos ecuaciones, ahora puedes despejar una de las dos variables en función de la otra. Recuerda que la $exp1$ es: $$9x+7y=10000$$"
+          },
+          "stepTitle": "Despejar $x$ de $ec1$",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp1: x= \\frac{\\placeholder[a]{}}{9}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "10000 - 7y"
+                }
+              ],
+              "idCorrectAnswers": [0]
+            }
+          },
+          "kcs": ["DespVarEcu"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Resta $7y$ a ambos lados de la expresión"
+            },
+            {
+              "hintId": 1,
+              "hint": "Despeja la variable $x$ dividiendo (9) a ambos lados de la expresión."
+            },
+            {
+              "hintId": 2,
+              "hint": "La respuesta es: $$exp1: x = \\frac{\\textcolor{green}{10000-7y}}{9}$$"
+            }
+          ]
+        },
+
+        {
+          "stepId": 3,
+          "stepExplanation": {
+            "explanation": "Ya que tenemos una de las variables la podemos sustituir en la $ec2$:"
+          },
+          "stepTitle": "Sustituir $exp1$ en $ec2$",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp2: 528\\cdot \\placeholder[a]{} +544\\cdot y = 640000",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "\\frac{10000-7y}{9}"
+                }
+              ],
+              "idCorrectAnswers": [0]
+            }
+          },
+          "kcs": ["ReempVarEcu"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Reemplaza la expresión que representa a $x$ calculada anteriormente."
+            },
+            {
+              "hintId": 0,
+              "hint": "La repuesta es: $$exp2: 528\\cdot \\textcolor{green}{\\frac{10000-7y}{9}} +544\\cdot y = 640000$$"
+            }
+          ]
+        },
+
+        {
+          "stepId": 4,
+          "stepExplanation": {
+            "explanation": "Ahora, para poder factorizar y despejar $y$ debemos sumar ambas fracciones"
+          },
+          "stepTitle": "Sumar fracciones (solo expresa las multiplicaciones, no realices ningún cálculo)",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp3: \\frac{528\\cdot (\\placeholder[a]{})+ \\placeholder[b]{} \\cdot (544y)}{9} = 640000",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "10000-7y"
+                },
+                {
+                  "id": 1,
+                  "placeholderId": "b",
+                  "value": "9"
+                }
+              ],
+              "idCorrectAnswers": [0, 1]
+            }
+          },
+          "kcs": ["AN"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "La respuesta es: $$exp3: \\frac{528\\cdot \\textcolor{green}{(10000-7y) + 9} \\cdot 544 \\cdot y}{9} = 640000$$"
+            }
+          ]
+        },
+
+        {
+          "stepId": 5,
+          "stepTitle": "Simplificar $exp3$",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp4: \\frac{5280000+ \\placeholder[a]{}\\cdot y}{9} = 640000",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "1200"
+                }
+              ],
+              "idCorrectAnswers": [0]
+            }
+          },
+          "kcs": ["ReducExp"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Realiza las operaciones del numerador"
+            },
+            {
+              "hintId": 1,
+              "hint": "La respuesta es: $$exp4: \\frac{5280000+ \\textcolor{green}{1200}\\cdot y}{9} = 640000$$"
+            }
+          ],
+          "correctMsg": "Muy bien! Aunque la expresión se puede simplificar aun más: $$exp4: \\frac{1760000+400y}{3} = 640000$$ "
+        },
+
+        {
+          "stepId": 6,
+          "stepTitle": "Despejar $y$ en $exp4$",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp5: y=\\frac{\\placeholder[a]{}- \\placeholder[b]{}}{400}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "1920000"
+                },
+                {
+                  "id": 1,
+                  "placeholderId": "b",
+                  "value": "1760000"
+                }
+              ],
+              "idCorrectAnswers": [0, 1]
+            }
+          },
+          "kcs": ["DespVarEcu"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Comienza Mmltiplicando toda la expresión por 3"
+            },
+            {
+              "hintId": 1,
+              "hint": "Ahora pasa restando la constante (1760000) al lado derecho de la expresión."
+            },
+            {
+              "hintId": 2,
+              "hint": "Pasa dividiendo el numero que acompaña a la variable $y$ (400) al lado derecho de la expresión."
+            },
+            {
+              "hintId": 3,
+              "hint": "La respuesta es: $$exp5: y= \\frac{1920000-1760000}{400}$$"
+            }
+          ]
+        },
+
+        {
+          "stepId": 7,
+          "stepTitle": "Calcular $y$",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp6: y=\\placeholder[a]{}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "400"
+                }
+              ],
+              "idCorrectAnswers": [0]
+            }
+          },
+          "kcs": ["AN", "DespVarEcu"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Revisa las operaciones"
+            },
+            {
+              "hintId": 1,
+              "hint": "La respuesta es: $$y=400$$"
+            }
+          ],
+          "correctMsg": "Muy bien! los pinos son 400."
+        },
+
+        {
+          "stepId": 8,
+          "stepExplanation": {
+            "explanation": "Ahora. ¿Cuántos eucaliptos son? recordando que: $$exp1: x = \\frac{10000-7y}{9}$$"
+          },
+          "stepTitle": "Calcular $x$",
+          "componentToAnswer": {
+            "nameComponent": "mathComponent",
+            "meta": {
+              "expression": "exp7: x = \\placeholder[a]{}",
+              "answers": [
+                {
+                  "id": 0,
+                  "placeholderId": "a",
+                  "value": "800"
+                }
+              ],
+              "idCorrectAnswers": [0]
+            }
+          },
+          "kcs": ["ReempVarEcu", "AN"],
+          "hints": [
+            {
+              "hintId": 0,
+              "hint": "Reemplaza el valor de $y$ calculado en el paso anterior en la $exp1$"
+            },
+            {
+              "hintId": 1,
+              "hint": "La respuesta es $$x=800$$"
+            }
+          ],
+          "correctMsg": "Muy bien! Por lo tanto, se deberá plantar 800 eucaliptos y 400 pinos"
+        }
+      ]
+    }
+  ]
+}

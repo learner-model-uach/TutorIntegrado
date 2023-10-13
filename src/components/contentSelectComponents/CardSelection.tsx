@@ -14,12 +14,21 @@ import NextLink from "next/link";
 import { FaStar } from "react-icons/fa";
 import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
 import type { ExType } from "../../components/lvltutor/Tools/ExcerciseType";
-import { MathComponent } from "mathjax-react";
+//import { MathComponent } from "mathjax-react";
+import dynamic from "next/dynamic";
+import type { ComponentProps } from "react";
+
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
 import parameters from "./parameters.json";
 
+const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
+  () => import("mathjax-react").then(v => v.MathComponent),
+  {
+    ssr: false,
+  },
+);
 export const CardSelection = ({
   id,
   code,
@@ -128,6 +137,8 @@ export const CardSelection = ({
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
           {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
             <MathComponent tex={String.raw`${json.eqc}`} display={false} />
+          ) : json.type === "wordProblem" ? (
+            <MathComponent tex={String.raw`${"wpExercise"}`} display={false} />
           ) : (
             <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
           )}
