@@ -23,7 +23,7 @@ export const CardInfo = ({ text, srcImg, bgColor, hideCard }: cardInfoProps) => 
             maxW="100%"
             marginY={5}
           >
-            <Image src={srcImg} alt="Imagen" maxWidth="100%" height="auto" />
+            <Image src={`/img/${srcImg}`} alt="Imagen" maxWidth="100%" height="auto" />
           </Box>
         )}
       </Box>

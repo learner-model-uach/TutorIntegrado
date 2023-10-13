@@ -34,6 +34,7 @@ import { useAction } from "../../utils/action";
 import { LoadContent } from "./LoadExercise";
 import { useRouter } from "next/router";
 import { useAuth } from "../Auth";
+import RatingQuestion from "../RatingQuestion";
 
 const SelectionComponent = dynamic(() => import("./Components/answerSelection"), {
   ssr: false,
@@ -207,7 +208,8 @@ export const TutorWordProblem = ({
             </Box>
           )}
           {exercise.img && (
-            <Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio" />
+            //<Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio" /> // carga desde url
+            <Image src={`/img/${exercise.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" /> // carga local (public/img)
           )}
           {exercise.text && (
             <Box width="100%" textAlign="left">
@@ -355,6 +357,7 @@ export const TutorWordProblem = ({
           </Flex>
         )}
         {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
+        {completeContent && <RatingQuestion/>}
       </Box>
     </>
   );

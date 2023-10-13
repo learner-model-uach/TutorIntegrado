@@ -2,7 +2,7 @@
   "code": "wp2",
   "type": "wordProblem",
   "presentation": {
-    "title": "Ejercicio 2 ",
+    "title": "Resistencias en serie o paralelo",
     "urlImg": "https://i.postimg.cc/SxTdyHkp/carbon-offset-carbon-climate-cycle-scheme-of-emission-and-absorption-of-carbon-and-greenhouse-gases.jpg"
   },
   "learningObjetives": {
@@ -16,7 +16,7 @@
   },
   "meta": {},
   "statement": "Se tiene un circuito de tres sensores en serie conectados a una fuente de alimentación de 12V. El circuito se utiliza para medir la humedad en una sala de cultivos y cualquier fallo en la medición podría tener consecuencias negativas en el crecimiento de las plantas.",
-  "img": "https://i.postimg.cc/cHbdqT5f/Captura-de-pantalla-2023-07-15-a-la-s-01-48-32.png",
+  "img": "wp2.png",
   "text": "Si la resistencia de cada sensor es de 100 ohm, es decir $R_1 = R_2 = R_3$ = 100 ohm",
   "questions": [
     {

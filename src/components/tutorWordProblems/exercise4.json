@@ -2,7 +2,7 @@
   "code": "wp4",
   "type": "wordProblem",
   "presentation": {
-    "title": "Ejercicio 4",
+    "title": "Rendimiento de un automóvil",
     "urlImg": ""
   },
   "learningObjetives": {
@@ -160,7 +160,7 @@
           "stepId": 0,
           "stepExplanation": {
             "explanation": "Se pretende obtener la velocidad con que se obtendría el máximo rendimiento. Sabemos que la ecuación representa una parábola invertida como se ve en la siguiente imagen:",
-            "srcImg": "https://i.postimg.cc/GhC16st4/image.png"
+            "srcImg": "wp4_q2.png"
           },
           "stepTitle": "¿En qué punto de la parábola podríamos encontrar su máximo rendimiento?",
           "componentToAnswer": {
