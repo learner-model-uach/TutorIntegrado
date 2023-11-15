@@ -41,10 +41,6 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     })
     .filter(x => x !== undefined);
 
-  console.log(query.registerTopic); //undefined
-  console.log(query); // {}
-  console.log(pathname);
-  console.log(href);
   return (
     <LinkBox
       marginEnd="2"
@@ -55,17 +51,15 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       rounded="md"
       cursor="pointer"
       bg={
-        query.registerTopic == registerTopic
+        query.registerTopic == registerTopic //interactive mark
           ? activeBg
           : href == (query.registerTopic ?? "/") &&
             pathname != "/showContent" &&
-            pathname != "/wpExercises"
+            pathname != "/wpExercises" //inicio mark
           ? activeBg
-          : href == "wpExercises" &&
-            pathname != (query.registerTopic ?? "/") &&
-            pathname != "/showContent"
+          : href == "wpExercises" && pathname != "/" && pathname != "/contentSelect" //wpExercises mark
           ? activeBg
-          : pathname == "/showContent" && sessionState.topic == registerTopic[0]
+          : pathname == "/showContent" && sessionState.topic == registerTopic[0] //showcontent mark
           ? activeBg
           : undefined
       }
