@@ -121,6 +121,11 @@ export const CardSelection = ({
 
         {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
           <TeX>{json.title}</TeX>
+        ) : json.type == "wordProblem" ? (
+          <Text fontSize=".8em">
+            {parameters.card.text}{" "}
+            <span style={{ fontWeight: "bold" }}>{json.presentation.title}</span>
+          </Text>
         ) : (
           <Text fontSize=".8em">
             {parameters.card.text} <span style={{ fontWeight: "bold" }}>{json.title}</span>
@@ -138,7 +143,7 @@ export const CardSelection = ({
           {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
             <MathComponent tex={String.raw`${json.eqc}`} display={false} />
           ) : json.type === "wordProblem" ? (
-            <MathComponent tex={String.raw`${"wpExercise"}`} display={false} />
+            <MathComponent tex={String.raw`${""}`} display={false} />
           ) : (
             <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
           )}

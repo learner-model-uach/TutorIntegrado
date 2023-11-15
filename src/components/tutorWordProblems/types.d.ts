@@ -9,6 +9,7 @@ export interface wpExercise {
   table?: Table;
   text?: string;
   questions: Question[];
+  kcs: Object[];
 }
 
 export interface LearningObjetives {
@@ -20,6 +21,7 @@ export interface LearningObjetives {
 export interface Presentation {
   title?: string;
   urlImg?: string;
+  description?: string;
 }
 
 export interface Question {

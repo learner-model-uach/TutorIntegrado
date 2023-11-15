@@ -3,6 +3,7 @@ import { proxy } from "valtio";
 import type { AuthState } from "./Auth";
 import type { User } from "@auth0/auth0-react";
 import type { UserRole } from "../graphql";
+import type { wpExercise } from "./tutorWordProblems/types";
 
 interface ContentJson {
   code: string;
@@ -32,7 +33,7 @@ export const sessionState = proxy<{
     label: string;
     description: string;
     kcs: Object[];
-    json: ContentJson;
+    json: ContentJson | wpExercise;
     state?: Object;
   };
   selectionData: selectionDataType[];
