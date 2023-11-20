@@ -13,7 +13,7 @@ const colors = {
   grey: "#a9a9a9",
 };
 
-function RatingQuestion() {
+function RatingQuestion({ useAlternateRoute = false }) {
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(undefined);
   const stars = Array(5).fill(0);
@@ -84,7 +84,7 @@ function RatingQuestion() {
           );
         })}
       </div>
-      <Link href={ruta}>
+      <Link href={useAlternateRoute ? "/wpExercises" : ruta}>
         <Button
           style={styles.button}
           disabled={currentValue != 0 && !mutation.isLoading ? false : true}

@@ -59,7 +59,7 @@ export default withAuth(function ShowContent() {
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
         ) : content && content?.json.type == "wordProblem" ? (
-          <DynamicTutorWP exercise={content.json} topicId={topic}></DynamicTutorWP>
+          <DynamicTutorWP key="5" exercise={content.json} topicId={topic}></DynamicTutorWP>
         ) : (
           <Text>No existe el contenido que desea cargar</Text>
         )}

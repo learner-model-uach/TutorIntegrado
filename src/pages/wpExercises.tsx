@@ -1,8 +1,6 @@
 import { Center, Heading, SimpleGrid } from "@chakra-ui/react";
-import Link from "next/link";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
-import { useEffect, useState } from "react";
 import { useAuth, withAuth } from "../components/Auth";
 import { CardSelectionwp } from "../components/contentSelectComponents/CardSelectionWp";
 import type { wpExercise } from "../components/tutorWordProblems/types";
