@@ -20,14 +20,14 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
     {
       onError(err) {
         console.error(err);
-        if (process.env.NODE_ENV === "development") {
+        /*if (process.env.NODE_ENV === "development") {
           toast({
             status: "error",
             title:
               "Error while sending Action to API (this message is only seen in Development Mode)",
             description: err.message,
           });
-        }
+        }*/
       },
       retry: 3,
     },

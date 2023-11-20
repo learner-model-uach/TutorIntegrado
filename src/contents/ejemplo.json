@@ -1,0 +1,65 @@
+{
+  "code": "fracc35",
+  "meta": {},
+  "text": "Suma las siguientes fracciones:",
+  "type": "lvltutor",
+  "steps": [
+    {
+      "KCs": ["MCM"],
+      "hints": [
+        {
+          "hint": "Comenzar encontrando los factores para cada denominador usando números primos y variables. Por ejemplo, 6x²y tiene por factores 2, 3, x², y.",
+          "hintId": 0
+        },
+        {
+          "hint": "Multiplicar todos los factores únicos de los dos denominadores en su máxima potencia.",
+          "hintId": 1
+        },
+        { "hint": "El mínimo común múltiplo de los denominadores es a²b².", "hintId": 2 }
+      ],
+      "stepId": "0",
+      "values": [
+        { "name": "a", "value": 1 },
+        { "name": "b", "value": 2 }
+      ],
+      "answers": [{ "answer": ["a^{2}\\cdot b^{2}"], "nextStep": "1" }],
+      "summary": "1) Se obtiene el mínimo común múltiplo entre dos denominadores.",
+      "stepTitle": "Encuentra el mínimo común múltiplo entre los denominadores y escríbelo",
+      "correctMsg": "Has encontrado el mínimo común múltiplo de los denominadores.",
+      "expression": "\\frac{1}{b^{2}} + \\frac{1}{a^{2}\\cdot b}",
+      "validation": "evaluateAndCount",
+      "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+      "displayResult": ["a^{2}\\cdot b^{2}"],
+      "matchingError": []
+    },
+    {
+      "KCs": ["SRFrac"],
+      "hints": [
+        {
+          "hint": "Usa el mínimo común múltiplo encontrado como denominador común en el resultado.",
+          "hintId": 0
+        },
+        {
+          "hint": "Cada fracción en la suma de las dos fracciones se multiplica por el mínimo común múltiplo, y la expresión resultante se divide por el mínimo común múltiplo.",
+          "hintId": 1
+        },
+        { "hint": "El resultado es: (a²+b)/(a²b²).", "hintId": 2 }
+      ],
+      "stepId": "1",
+      "values": [
+        { "name": "a", "value": 1 },
+        { "name": "b", "value": 2 }
+      ],
+      "answers": [{ "answer": ["\\frac{a^{2}+b}{a^{2}\\cdot b^{2}}"], "nextStep": "-1" }],
+      "summary": "2) Finalmente se realiza la suma de fracciones haciendo uso del mínimo común múltiplo encontrado.",
+      "stepTitle": "Suma las siguientes fracciones aplicando el mínimo común múltiplo encontrado.",
+      "correctMsg": "Has realizado la suma de fracciones aplicando mínimo común múltiplo correctamente.",
+      "expression": "\\frac{1}{b^{2}}+\\frac{1}{a^{2}\\cdot b}",
+      "validation": "evaluateAndCount",
+      "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+      "displayResult": ["\\frac{a^{2}+b}{a^{2}\\cdot b^{2}}"],
+      "matchingError": []
+    }
+  ],
+  "title": "Suma de fracciones"
+}

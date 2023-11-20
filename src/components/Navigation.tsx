@@ -10,6 +10,7 @@ export function Navigation() {
   const { user } = useAuth();
 
   const admin = (user?.role ?? "") == "ADMIN" ? true : false;
+
   return (
     <ScrollArea pt="5" pb="6">
       <Stack pb="6">
@@ -27,10 +28,10 @@ export function Navigation() {
       </Stack>
 
       <Stack pb="6">
-        {user && (
+        {user && !user.tags.includes("wp-test-user") && (
           <>
             <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
+            {/*<SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
             <SidebarLink href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
@@ -44,7 +45,9 @@ export function Navigation() {
             </SidebarLink>
             <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces
-            </SidebarLink>
+        </SidebarLink>
+            <SidebarLink href={"wpExercises"}>Ejercicios con contexto</SidebarLink>*/}
+            <SidebarLink href={"lvlContent"}>nuevo ejercicio</SidebarLink>
           </>
         )}
       </Stack>
