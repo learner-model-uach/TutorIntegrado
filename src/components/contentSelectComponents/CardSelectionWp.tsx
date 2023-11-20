@@ -10,8 +10,7 @@ import {
 
 //import Link from "next/link";
 import NextLink from "next/link";
-import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
-import type { ExType } from "../lvltutor/Tools/ExcerciseType";
+import { sessionState, sessionStateBD } from "../SessionState";
 import type { wpExercise } from "../tutorWordProblems/types";
 //import { MathComponent } from "mathjax-react";
 import "katex/dist/katex.min.css";
