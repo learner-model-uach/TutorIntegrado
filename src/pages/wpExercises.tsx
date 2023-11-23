@@ -41,6 +41,7 @@ export default withAuth(function WpExercises() {
         <SimpleGrid columns={2} spacing={10} marginTop="4">
           {wpdata?.topicByCode?.content?.map(ejercicio => (
             <CardSelectionwp
+              key={ejercicio?.id}
               ej={ejercicio?.json as unknown as wpExercise}
               id={ejercicio?.id}
               label={ejercicio?.label}
