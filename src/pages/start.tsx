@@ -7,11 +7,11 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Box,
+  Box
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Carousel from "../components/Carrusel";
-
+import { CircularP } from "../components/oml/circularProgress";
 //import { withAuth } from "./../components/Auth";
 
 export default function Start() {
@@ -150,6 +150,7 @@ export default function Start() {
             </TabPanels>
           </Tabs>
 
+
           <Box mt={4} p={4} bg="gray.200" textAlign="center">
             <p>Más información sobre el proyecto:</p>
             <p>
@@ -161,6 +162,7 @@ export default function Start() {
               jguerra@inf.uach.cl
             </p>
           </Box>
+          <CircularP/>
         </Stack>
       </>
     </Stack>

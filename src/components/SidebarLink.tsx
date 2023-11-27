@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/router";
 import { useAction } from "../utils/action";
 import { sessionState } from "./SessionState";
+import { CircularP } from "./oml/circularProgress";
 
 interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
@@ -20,10 +21,11 @@ interface SidebarLinkProps extends BoxProps {
   href: string;
   isExternal?: boolean;
   target?: LinkProps["target"];
+  display?:boolean;
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const { children, icon = <ArrowRight />, avatar, href, isExternal, target, ...rest } = props;
+  const { children, icon , avatar, href, isExternal, target, display,...rest } = props;
   const { push, prefetch, pathname, query } = useRouter();
 
   const activeBg = useColorModeValue("blue.900", "gray.700");
@@ -72,8 +74,9 @@ export const SidebarLink = (props: SidebarLinkProps) => {
         <Box opacity={avatar ? 1 : 0.5} _groupHover={{ opacity: 1 }}>
           {avatar || icon}
         </Box>
-
+        {display && <CircularP href={registerTopic}/>}
         {href ? (
+
           isExternal ? (
             <Link href={href} target={target} textDecor="none !important">
               {children}

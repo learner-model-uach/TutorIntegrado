@@ -5,6 +5,7 @@ import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
+import { CircularP } from "./oml/circularProgress";
 
 export function Navigation() {
   const { user } = useAuth();
@@ -40,19 +41,19 @@ export function Navigation() {
         {user && !user.tags.includes("wp-test-user") && (
           <>
             <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
+            <SidebarLink display={true} href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
+            <SidebarLink display={true} href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
               Fracción Algebraica
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=24,25&registerTopic=24"}>
+            <SidebarLink display={true} href={"contentSelect?topic=24,25&registerTopic=24"}>
               Ecuaciones Cuadráticas
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=33,26&registerTopic=33"}>
+            <SidebarLink display={true} href={"contentSelect?topic=33,26&registerTopic=33"}>
               Ecuaciones Lineales
             </SidebarLink>
-            <SidebarLink href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
+            <SidebarLink display={true} href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
           </>
