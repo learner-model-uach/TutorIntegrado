@@ -357,7 +357,7 @@ export const TutorWordProblem = ({
           </Flex>
         )}
         {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
-        {completeContent && <RatingQuestion useAlternateRoute={true} />}
+        {completeContent && <RatingQuestion />}
       </Box>
     </>
   );

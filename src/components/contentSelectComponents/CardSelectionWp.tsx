@@ -24,6 +24,8 @@ export const CardSelectionwp = ({
   kcs,
   selectionTitle,
   selectionText,
+  registerTopic,
+  nextContentPath,
 }: {
   ej: wpExercise;
   id: string;
@@ -31,6 +33,8 @@ export const CardSelectionwp = ({
   kcs: Object[];
   selectionTitle: string | undefined;
   selectionText: string | undefined;
+  registerTopic: string;
+  nextContentPath: string | undefined;
 }) => {
   const action = useAction();
   return (
@@ -66,10 +70,16 @@ export const CardSelectionwp = ({
             JSON.parse(JSON.stringify(sessionState.selectionData)),
           );
 
+          sessionState.topic = registerTopic;
+          sessionStateBD.setItem("topic", sessionState.topic);
+
+          sessionState.nextContentPath = nextContentPath;
+          sessionStateBD.setItem("nextContentPath", sessionState.nextContentPath);
+
           action({
             verbName: "selectContent",
             contentID: ej.code,
-            topicID: "35",
+            topicID: registerTopic,
             extra: { selectionData: sessionState.selectionData },
           });
         }}

@@ -46,7 +46,7 @@ export function Navigation() {
             <SidebarLink key="5" href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
-            <SidebarLink key="6" href={"wpExercises"}>
+            <SidebarLink key="6" href={"wpExercises?topic=34,35&registerTopic=34"}>
               Ejercicios con contexto
             </SidebarLink>
           </>

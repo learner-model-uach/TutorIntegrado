@@ -144,7 +144,7 @@ export default withAuth(function ContentSelect() {
         topicID: registerTopic,
         extra: { selectionData },
       });
-  }, [data]); //duplicate Action :c
+  }, [data]);
   return (
     <>
       {isError ? (

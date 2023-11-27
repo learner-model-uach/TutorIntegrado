@@ -84,7 +84,7 @@ function RatingQuestion({ useAlternateRoute = false }) {
           );
         })}
       </div>
-      <Link href={useAlternateRoute ? "/wpExercises" : ruta}>
+      <Link href={ruta}>
         <Button
           style={styles.button}
           disabled={currentValue != 0 && !mutation.isLoading ? false : true}
