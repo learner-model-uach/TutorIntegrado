@@ -1,7 +1,7 @@
 const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) => {
   const value = { name: String, value: Number };
 
-  const valueReplace = (input: string, values: typeof value[]) => {
+  const valueReplace = (input: string, values: (typeof value)[]) => {
     let l = values.length;
     let output = input;
     for (let i = 0; i < l; i++) {
@@ -63,12 +63,12 @@ const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) =>
     return stack[0];
   };
 
-  const solve = (input: string, values: typeof value[]) => {
+  const solve = (input: string, values: (typeof value)[]) => {
     let a = input;
     if (values != undefined && values.length > 0) a = valueReplace(a, values);
     return solveExpresion(a.substring(1));
   };
 
-  return solve(MQPostfixExpression, ValuesObject as typeof value[]);
+  return solve(MQPostfixExpression, ValuesObject as (typeof value)[]);
 };
 export default MQPostfixSolver;

@@ -21,6 +21,7 @@ interface sharedValues {
   endDate: number;
   hints: number;
   error: boolean;
+  finishedEval: boolean;
 }
 
 const initialObj: sharedValues = {
@@ -41,6 +42,7 @@ const initialObj: sharedValues = {
   endDate: 0,
   hints: 0,
   error: false,
+  finishedEval: false,
 };
 
 const MQProxy = proxy(initialObj);

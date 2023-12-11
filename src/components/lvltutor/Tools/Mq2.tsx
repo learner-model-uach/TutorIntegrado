@@ -8,7 +8,7 @@ import MQPostfixparser from "../../../utils/MQPostfixparser";
 //reporte de acciones
 import { useAction } from "../../../utils/action";
 
-import type { Step } from "./ExcerciseType";
+import type { Step, answer } from "./ExcerciseType";
 import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
@@ -72,6 +72,39 @@ const EMFStyle = {
   border: "3px solid #73AD21",
 };
 
+const evaluation = ({
+  input,
+  answer,
+  values,
+}: {
+  input: string;
+  answer: answer;
+  values: Array<object>;
+}) => {
+  let parseAns = MQPostfixparser(answer.answer[0]);
+  let evaluation1 = MQPostfixSolver(input.substring(0), values);
+  let evaluation2 = MQPostfixSolver(parseAns.substring(0), values);
+
+  if (!MQProxy.finishedEval || isNaN(evaluation1)) {
+    return false;
+  }
+  MQProxy.finishedEval = true;
+
+  let correctAns = false;
+  let answer1 = "" + evaluation1;
+  let answer2 = "" + evaluation2;
+  let y = parseFloat(answer1);
+  let x = parseFloat(answer2);
+  if (parseFloat(answer2) == 0) {
+    x = 1;
+  }
+
+  let relativeError = Math.abs(1 - y / x);
+  if (relativeError < 0.005 && MQPostfixstrict(input, parseAns)) correctAns = true;
+
+  return correctAns;
+};
+
 const Mq2 = ({
   step,
   content,
@@ -112,24 +145,21 @@ const Mq2 = ({
     let answers = step.answers;
     let correctAns = false;
     let parseInput = MQPostfixparser(latex);
-    let answer1 = "";
-    let answer2 = "";
+    let values = [];
+
+    if (step.values != undefined) {
+      values = step.values;
+    } else {
+      values = [{}];
+    }
+
     if (validationType) {
       //console.log(1);
       if (validationType.localeCompare("evaluate") == 0) {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
-          let parseAns = MQPostfixparser(e.answer[0]);
-          if (step.values != undefined) {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          } else {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), [{}]);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          }
-          let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-          if (relativeError < 0.005) correctAns = true;
+          correctAns = evaluation({ input: parseInput, answer: e, values: values });
         }
       } else if (validationType.localeCompare("countElements") == 0) {
         for (let i = 0; i < answers.length; i++) {
@@ -143,17 +173,7 @@ const Mq2 = ({
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
-          let parseAns = MQPostfixparser(e.answer[0]);
-          //console.log(3, parseInput, parseAns);
-          if (step.values != undefined) {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          } else {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), [{}]);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          }
-          let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-          if (relativeError < 0.005 && MQPostfixstrict(parseInput, parseAns)) correctAns = true;
+          correctAns = evaluation({ input: parseInput, answer: e, values: values });
         }
       } else {
         for (let i = 0; i < answers.length; i++) {
