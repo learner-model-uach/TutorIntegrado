@@ -1,3 +1,4 @@
+import MQProxy from "../components/lvltutor/Tools/MQProxy";
 const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) => {
   const value = { name: String, value: Number };
 
@@ -60,6 +61,7 @@ const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) =>
         }
       }
     }
+    MQProxy.finishedEval = stack.length == 1 ? true : false;
     return stack[0];
   };
 
