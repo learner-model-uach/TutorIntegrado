@@ -65,10 +65,10 @@ const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) =>
     return stack[0];
   };
 
-  const solve =(input: string, values: (typeof value)[]) => {
+  const solve = (input: string, values: (typeof value)[]) => {
     let a = input;
 
-    if (values     != undefined && values.length > 0) a = valueReplace(a, values);
+    if (values != undefined && values.length > 0) a = valueReplace(a, values);
     return solveExpresion(a.substring(1));
   };
 
