@@ -66,7 +66,7 @@ export const CardSelection = ({
         bg={useColorModeValue("blue.700", "gray.800")}
         _hover={{
           color: "white",
-          bg: useColorModeValue("blue.900", "gray.600"),
+          bg: useColorModeValue("blu`1e.900", "gray.600"),
         }}
         as="article"
         maxW="sm"

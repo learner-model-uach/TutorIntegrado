@@ -15,13 +15,16 @@ export const CircularP = (href?: String) => {
                 lastOnline
                 projects{
                 topics{
+                    label
                     code
                     id
                     childrens{
+                    label
                     code
                     id
                     content{
                         kcs{
+                        label
                         id
                         code
                         }
@@ -42,15 +45,33 @@ export const CircularP = (href?: String) => {
           refetchOnReconnect: false,
         },
       );
+    // Supongamos que `data` contiene la respuesta de la consulta GraphQL
+    //const topicsLength = data.currentUser.projects[0].topics.length;
+    //console.log(`Cantidad de topics: ${topicsLength}`);
 
-    !isLoading && console.log(data?.currentUser?.projects[0].topics)
 
 
+    //!isLoading && console.log(data?.currentUser?.projects[0].topics)
+    //!isLoading && console.log(data?.currentUser?.modelStates.nodes[0].json)
+    const modelo = data?.currentUser?.modelStates.nodes[0].json
+    // !isLoading && console.log(modelo)
+    //!isLoading && console.log(data?.currentUser?.projects[0].topics.filter((x) => x) )//.filter((Topic) => {Topic.childrens!= undefined}))
+    
 
 
     return (
         <CircularProgress value={40} color='green.400'>
-            <CircularProgressLabel>40% </CircularProgressLabel>
-        </CircularProgress>
+          <CircularProgressLabel>40% </CircularProgressLabel>
+          </CircularProgress>
     )
-}
+
+    // return (
+    //   <CircularProgress value={promedioLevel * 100}>
+    //     <CircularProgressLabel>{`${(promedioLevel * 100).toFixed(2)}%`}</CircularProgressLabel>
+    //   </CircularProgress>
+    //)
+    
+
+    };
+    
+    
