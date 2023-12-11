@@ -16,6 +16,7 @@ import {
   AlertIcon,
   HStack,
   VStack,
+  Center,
 } from "@chakra-ui/react";
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
@@ -293,9 +294,9 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
           <Alert status="info" hidden={resumen} alignItems="top">
             <AlertIcon />
             <VStack w="100%" align="left">
-              <Heading fontSize="xl" align="center">
-                Resumen
-              </Heading>
+              <Center>
+                <Heading fontSize="xl">Resumen</Heading>
+              </Center>
               <HStack>
                 <Text>Expresión:</Text>
                 <MQStaticMathField exp={steps.steps[0]!.expression} currentExpIndex={!resumen} />
