@@ -12,7 +12,6 @@ const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) =>
     }
     return output;
   };
-  console.log("safe");
 
   const solveExpresion = (expression: String) => {
     let exp = expression.split(" ");
