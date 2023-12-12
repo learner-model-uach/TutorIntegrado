@@ -1,12 +1,19 @@
 import MQProxy from "../components/lvltutor/Tools/MQProxy";
-const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) => {
-  const value = { name: String, value: Number };
 
-  const valueReplace = (input: string, values: (typeof value)[]) => {
-    let l = values.length;
+interface value {
+  name: String;
+  value: Number;
+}
+
+interface values {
+  values: Array<value>;
+}
+const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: values) => {
+  const valueReplace = (input: string, values: values) => {
+    let l = values.values.length;
     let output = input;
     for (let i = 0; i < l; i++) {
-      let value = values[i];
+      let value = values.values[i];
       if (!value) continue;
       output = output.replaceAll(" " + value.name, " " + value.value);
     }
@@ -65,13 +72,13 @@ const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: object[]) =>
     return stack[0];
   };
 
-  const solve = (input: string, values: (typeof value)[]) => {
+  const solve = (input: string, values: values | undefined) => {
     let a = input;
 
-    if (values != undefined && values.length > 0) a = valueReplace(a, values);
+    if (values != undefined && values.values.length > 0) a = valueReplace(a, values);
     return solveExpresion(a.substring(1));
   };
 
-  return solve(MQPostfixExpression, ValuesObject as (typeof value)[]);
+  return solve(MQPostfixExpression, ValuesObject);
 };
 export default MQPostfixSolver;

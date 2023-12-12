@@ -8,7 +8,7 @@ import MQPostfixparser from "../../../utils/MQPostfixparser";
 //reporte de acciones
 import { useAction } from "../../../utils/action";
 
-import type { Step, answer } from "./ExcerciseType";
+import type { Step, answer, value } from "./ExcerciseType";
 import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
@@ -72,6 +72,10 @@ const EMFStyle = {
   border: "3px solid #73AD21",
 };
 
+interface values {
+  values: Array<value>;
+}
+
 const evaluation = ({
   input,
   answer,
@@ -79,7 +83,7 @@ const evaluation = ({
 }: {
   input: string;
   answer: answer;
-  values: Array<object>;
+  values: values;
 }) => {
   let parseAns = MQPostfixparser(answer.answer[0]);
   let evaluation1 = MQPostfixSolver(input.substring(0), values);
@@ -145,12 +149,10 @@ const Mq2 = ({
     let answers = step.answers;
     let correctAns = false;
     let parseInput = MQPostfixparser(latex);
-    let values = [];
+    let values: values;
 
     if (step.values != undefined) {
-      values = step.values;
-    } else {
-      values = [{}];
+      values.values = step.values;
     }
 
     if (validationType) {
