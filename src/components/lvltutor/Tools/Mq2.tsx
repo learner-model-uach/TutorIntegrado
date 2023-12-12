@@ -161,7 +161,7 @@ const Mq2 = ({
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
-          correctAns = evaluation({ input: parseInput, answer: e, values: values });
+          if (evaluation({ input: parseInput, answer: e, values: values })) correctAns = true;
         }
       } else if (validationType.localeCompare("countElements") == 0) {
         for (let i = 0; i < answers.length; i++) {
@@ -175,7 +175,7 @@ const Mq2 = ({
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
-          correctAns = evaluation({ input: parseInput, answer: e, values: values });
+          if (evaluation({ input: parseInput, answer: e, values: values })) correctAns = true;
         }
       } else {
         for (let i = 0; i < answers.length; i++) {
