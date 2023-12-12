@@ -1,11 +1,12 @@
 import MQProxy from "../components/lvltutor/Tools/MQProxy";
 
-interface value{
-  name: String, value: Number 
+interface value {
+  name: String;
+  value: Number;
 }
 
-interface values{
-  values:Array<value>
+interface values {
+  values: Array<value>;
 }
 
 const valueReplace = (input: string, values: values) => {
@@ -67,18 +68,18 @@ const solveExpresion = (expression: String) => {
       }
     }
   }
-  MQProxy.finishedEval = (stack.length == 1) ? true : false;
+  MQProxy.finishedEval = stack.length == 1 ? true : false;
   return stack[0];
 };
 
-const solve = (input: string, values: values|undefined) => {
+const solve = (input: string, values: values | undefined) => {
   let a = input;
 
   if (values != undefined && values.values.length > 0) a = valueReplace(a, values as values);
   return solveExpresion(a.substring(1));
 };
 
-const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: values|undefined) => {
+const MQPostfixSolver = (MQPostfixExpression: string, ValuesObject: values | undefined) => {
   return solve(MQPostfixExpression, ValuesObject);
 };
 

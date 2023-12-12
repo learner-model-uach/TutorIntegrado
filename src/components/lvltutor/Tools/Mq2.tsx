@@ -149,7 +149,7 @@ const Mq2 = ({
     let answers = step.answers;
     let correctAns = false;
     let parseInput = MQPostfixparser(latex);
-    let values:values={values:[]};
+    let values: values = { values: [] };
 
     if (step.values != undefined) {
       values.values = step.values;
