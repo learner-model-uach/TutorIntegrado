@@ -2,7 +2,7 @@ import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 
-export const CircularP = (href?: String) => {
+export const CircularP = ({ href }: { href: String }) => {
   //console.log(href);
   const { data, isLoading, isError } = useGQLQuery(
     gql(/* GraphQL */ `
@@ -67,9 +67,9 @@ export const CircularP = (href?: String) => {
   // !isLoading && console.log(modelo)
   //!isLoading && console.log(dominio.map(x => x.childrens)); //.filter((Topic) => {Topic.childrens!= undefined}))
 
-  !isLoading && console.log(kcs); //.map(x => x.flat()));
+  !isLoading && console.log(data?.currentUser?.projects[0].topics.filter(x => x.id == href)); //.map(x => x.flat()));
 
-  //console.log(href);
+  console.log(href);
   return (
     <CircularProgress value={40} color="green.400">
       <CircularProgressLabel>40% </CircularProgressLabel>

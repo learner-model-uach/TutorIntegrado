@@ -21,11 +21,11 @@ interface SidebarLinkProps extends BoxProps {
   href: string;
   isExternal?: boolean;
   target?: LinkProps["target"];
-  display?:boolean;
+  display?: boolean;
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const { children, icon , avatar, href, isExternal, target, display,...rest } = props;
+  const { children, icon, avatar, href, isExternal, target, display, ...rest } = props;
   const { push, prefetch, pathname, query } = useRouter();
 
   const activeBg = useColorModeValue("blue.900", "gray.700");
@@ -74,9 +74,8 @@ export const SidebarLink = (props: SidebarLinkProps) => {
         <Box opacity={avatar ? 1 : 0.5} _groupHover={{ opacity: 1 }}>
           {avatar || icon}
         </Box>
-        {display && <CircularP href={registerTopic}/>}
+        {display && <CircularP href={registerTopic[0]} />}
         {href ? (
-
           isExternal ? (
             <Link href={href} target={target} textDecor="none !important">
               {children}
