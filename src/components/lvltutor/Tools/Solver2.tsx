@@ -17,6 +17,7 @@ import {
   HStack,
   VStack,
   Center,
+  Image,
 } from "@chakra-ui/react";
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
@@ -220,7 +221,11 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         <Heading as="h5" size="sm" mt={2}>
           {steps.text}
         </Heading>
-        <MQStaticMathField exp={steps.steps[0]?.expression || ""} currentExpIndex={true} />
+        {steps.img ? (
+          <Image src={`/img/${steps.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
+        ) : (
+          <MQStaticMathField exp={steps.steps[0]?.expression || ""} currentExpIndex={true} />
+        )}
         <Accordion
           onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
           index={MQProxy.defaultIndex}
