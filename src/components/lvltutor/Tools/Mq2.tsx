@@ -100,7 +100,8 @@ const evaluation = ({
   let y = parseFloat(answer1);
   let x = parseFloat(answer2);
   if (parseFloat(answer2) == 0) {
-    x = 1;
+    x = x + 1;
+    y = y + 1;
   }
 
   let relativeError = Math.abs(1 - y / x);
