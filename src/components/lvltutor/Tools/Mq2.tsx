@@ -71,7 +71,7 @@ const EMFStyle = {
   marginBottom: "12px",
   border: "3px solid #73AD21",
   "line-height": "1",
-  font: "revert",
+  font: "revert"
 };
 
 interface values {
