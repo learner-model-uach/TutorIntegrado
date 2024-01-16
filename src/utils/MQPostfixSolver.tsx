@@ -65,6 +65,10 @@ const solveExpresion = (expression: String) => {
       } else if (value.localeCompare("\\um") == 0) {
         let a: number = stack.pop()!;
         stack.push(-a);
+      } else if (value.localeCompare("√") == 0) {
+        let a: number = stack.pop()!;
+        let b: number = stack.pop()!;
+        stack.push(Math.pow(a, 1 / b));
       }
     }
   }

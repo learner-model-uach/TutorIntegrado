@@ -5,6 +5,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
     sin: 17,
     cos: 17,
     sqrt: 17,
+    "√": 17,
     "\\um": 14,
     "^": 13,
     "*": 12,
@@ -29,6 +30,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
   };
 
   const operator = {
+    "√": "√",
     "^": "^",
     "*": "*",
     "/": "/",
@@ -42,7 +44,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
 
   //method to add multiplications where regular notation assumes so,
   //example 1 : aa => a*a, example 2 : 3a => 3*a, example 3: (a)(a)=> (a)*(a), example 4: a(a)=> a*(a)
-  const lazymath = (word: String) => {
+  const lazymath = (word: string) => {
     let a = word;
     let l = a.length;
     let literal = "";
@@ -112,7 +114,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
   };
 
   //method to transform a word with fraction on latex notation to infix notation with /
-  const fracctoInfix = (a: String) => {
+  const fracctoInfix = (a: string) => {
     let word = a;
     let l = word.length;
     let literal = "";
@@ -160,15 +162,76 @@ const MQPostfixparser = (MQinfixInput: string) => {
     return word;
   };
 
-  const MQinfixToPostfix = (word: String) => {
+  const prefixFunctionToInfix = (
+    a: string,
+    prefixExp: string,
+    replaceValue: string,
+    bracketType: string,
+    bracketType2: string,
+    bracketType3: string,
+  ) => {
+    let word = a;
+    let l = word.length;
+    let literal = "";
+    let alphabet = new RegExp(/^[a-zA-Z]$/);
+    let stack = [];
+    let replacePositions = [];
+    //stack 1:first mark, 2:second mark, 18: (, 19: )
+    for (let i = 0; i < l; i++) {
+      let value = word[i];
+      if (!value) continue;
+      if (alphabet.test(value)) {
+        literal = literal + value;
+      } else if ("\\".localeCompare(value) == 0) {
+        literal = "\\";
+      } else if ((literal + bracketType).localeCompare("\\" + prefixExp + bracketType) == 0) {
+        console.log("2");
+        stack.push(1);
+        literal = "";
+      } else if (typeof reservedWords[literal as keyof typeof reservedWords] != "undefined") {
+        literal = "";
+      } else {
+        literal = "";
+      }
+      if (value.localeCompare(bracketType) == 0 || value.localeCompare(bracketType3) == 0) {
+        if (stack[stack.length - 1] == 2) {
+          stack.pop();
+          replacePositions.push(i);
+        }
+        if (stack[stack.length - 1] == 1) {
+          stack.pop();
+          stack.push(2);
+        }
+        stack.push(18);
+      }
+      if (value.localeCompare(bracketType2) == 0) {
+        while (stack.length > 0 && 18 != stack[stack.length - 1]) stack.pop();
+        if (stack.length > 0 && 18 == stack[stack.length - 1]) stack.pop();
+      }
+    }
+    for (let i = 0; i < replacePositions.length; i++) {
+      let value = replacePositions[i];
+      if (!value) continue;
+      console.log("entro");
+      word = replaceAt(word, value + i, value + i + 1, replaceValue + bracketType3);
+    }
+    //let re= new RegExp(replaceValue,"g")
+    word = word.replaceAll("\\" + prefixExp, "");
+    return word;
+  };
+
+  const MQinfixToPostfix = (word: string) => {
     let a = word;
     a = a.replace(/\\right\)/g, ")");
     a = a.replace(/\\left\(/g, "(");
+    if (a.search("sqrt") != -1) a = prefixFunctionToInfix(a, "sqrt", "√", "[", "]", "{");
     a = a.replace(/}/g, ")");
     a = a.replace(/{/g, "(");
     a = a.replace(/\\cdot/g, "*");
     a = a.replace(/\\sqrt/g, "sqrt");
     if (a.search("frac") != -1) a = fracctoInfix(a);
+    a = a.replace(/\]/g, ")");
+    a = a.replace(/\[/g, "(");
     a = lazymath(a);
     a = a.replace(/\)\(/g, ")*(");
     let l = a.length;
