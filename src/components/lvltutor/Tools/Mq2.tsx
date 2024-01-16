@@ -1,6 +1,6 @@
 import { Alert, AlertIcon, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
-import { addStyles, EditableMathField, MathField } from "react-mathquill";
+import { addStyles, EditableMathField, MathField, StaticMathField } from "react-mathquill";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -70,6 +70,8 @@ const EMFStyle = {
   maxHeight: "120px",
   marginBottom: "12px",
   border: "3px solid #73AD21",
+  "line-height": "1",
+  font: "revert",
 };
 
 interface values {
@@ -265,6 +267,8 @@ const Mq2 = ({
           <Stack spacing={4} direction="row" align="center" pb={4}>
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -274,6 +278,8 @@ const Mq2 = ({
               {"("}
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -283,28 +289,45 @@ const Mq2 = ({
               {")"}
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("^");
               }}
             >
-              ^
+              <MQStaticMathField exp={"x^y"} currentExpIndex={true} />
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\sqrt");
               }}
             >
-              √
+              <MQStaticMathField exp={"\\sqrt{x}"} currentExpIndex={true} />
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorScheme="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("\\nthroot");
+              }}
+            >
+              <MQStaticMathField exp={"\\sqrt[y]{x}"} currentExpIndex={true} />
             </Button>
           </Stack>
           <Stack spacing={4} direction="row" align="center" pb={4}>
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
                            Ademas con mousedown se puede usar preventDefault*/}
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -314,6 +337,8 @@ const Mq2 = ({
               +
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -323,6 +348,8 @@ const Mq2 = ({
               -
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -332,6 +359,8 @@ const Mq2 = ({
               *
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -341,6 +370,8 @@ const Mq2 = ({
               /
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -352,6 +383,8 @@ const Mq2 = ({
           </Stack>
           <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
