@@ -21,8 +21,28 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
     //contador de intentos
     setAttempts(attempts + 1);
     const responseStudent = [
-      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response1.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
+      response2.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
     ];
     //valida que la entrada es correctas
     const validate = element =>
