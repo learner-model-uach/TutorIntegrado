@@ -5,7 +5,7 @@ addStyles();
 
 const mqo = {
   "line-height": "1",
-  font: "revert"
+  font: "revert",
 };
 
 //wrapper created because expresion elements render distorted on document changes
