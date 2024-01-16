@@ -45,4 +45,5 @@ export interface ExType {
   eqc: string | undefined;
   steps: Array<Step>;
   img?: string;
+  initialExpression?: string;
 }

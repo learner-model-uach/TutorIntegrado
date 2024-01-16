@@ -203,6 +203,8 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
     }
   }, [mqSnap.submit]);
 
+  let initialExp = steps.initialExpression ? steps.initialExpression : steps.steps[0]?.expression;
+
   return (
     <Flex alignItems="center" justifyContent="center" margin={"auto"}>
       <Flex
@@ -224,7 +226,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         {steps.img ? (
           <Image src={`/img/${steps.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
         ) : (
-          <MQStaticMathField exp={steps.steps[0]?.expression || ""} currentExpIndex={true} />
+          <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
         )}
         <Accordion
           onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
