@@ -1,6 +1,6 @@
 import { Alert, AlertIcon, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
-import { addStyles, EditableMathField, MathField, StaticMathField } from "react-mathquill";
+import { addStyles, EditableMathField, MathField } from "react-mathquill";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -71,7 +71,7 @@ const EMFStyle = {
   marginBottom: "12px",
   border: "3px solid #73AD21",
   "line-height": "1",
-  font: "revert"
+  font: "revert",
 };
 
 interface values {
