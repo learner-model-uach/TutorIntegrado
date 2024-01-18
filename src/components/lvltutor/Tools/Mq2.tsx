@@ -70,8 +70,7 @@ const EMFStyle = {
   maxHeight: "120px",
   marginBottom: "12px",
   border: "3px solid #73AD21",
-  "line-height": "1",
-  font: "revert",
+  overflow: "visible",
 };
 
 interface values {

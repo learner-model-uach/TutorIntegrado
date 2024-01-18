@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 addStyles();
 
 const mqo = {
-  "line-height": "1",
-  font: "revert",
+  overflow: "visible",
 };
 
 //wrapper created because expresion elements render distorted on document changes
