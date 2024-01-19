@@ -296,7 +296,10 @@ const Mq2 = ({
                 MQtools("^");
               }}
             >
-              <MQStaticMathField exp={"x^y"} currentExpIndex={true} />
+              <MQStaticMathField
+                exp={"x^y"}
+                currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+              />
             </Button>
             <Button
               width={"40px"}
@@ -307,7 +310,10 @@ const Mq2 = ({
                 MQtools("\\sqrt");
               }}
             >
-              <MQStaticMathField exp={"\\sqrt{x}"} currentExpIndex={true} />
+              <MQStaticMathField
+                exp={"\\sqrt{x}"}
+                currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+              />
             </Button>
             <Button
               width={"40px"}
@@ -318,7 +324,10 @@ const Mq2 = ({
                 MQtools("\\nthroot");
               }}
             >
-              <MQStaticMathField exp={"\\sqrt[y]{x}"} currentExpIndex={true} />
+              <MQStaticMathField
+                exp={"\\sqrt[y]{x}"}
+                currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+              />
             </Button>
           </Stack>
           <Stack spacing={4} direction="row" align="center" pb={4}>
@@ -382,8 +391,6 @@ const Mq2 = ({
           </Stack>
           <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
             <Button
-              width={"40px"}
-              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
