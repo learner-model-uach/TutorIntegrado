@@ -2,9 +2,14 @@ import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 
-export const CircularP = ({ href }: { href: String }) => {
+import { useAuth, withAuth } from "../Auth";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
+export const CircularP = ({href}: {href: String}) => {
+  const { user } = useAuth();
   //console.log(href);
-  const { data, isLoading, isError } = useGQLQuery(
+  const { data, isLoading, isError, refetch} = useGQLQuery(
     gql(/* GraphQL */ `
       query LastExercises {
         currentUser {
@@ -46,39 +51,74 @@ export const CircularP = ({ href }: { href: String }) => {
       refetchOnReconnect: false,
     },
   );
-  // Supongamos que `data` contiene la respuesta de la consulta GraphQL
-  //const topicsLength = data.currentUser.projects[0].topics.length;
-  //console.log(`Cantidad de topics: ${topicsLength}`);
 
-  //!isLoading && console.log(data?.currentUser?.projects[0].topics)
-  //!isLoading && console.log(data?.currentUser?.modelStates.nodes[0].json)
-  const modelo = data?.currentUser?.modelStates.nodes[0].json;
-  const topics = data?.currentUser?.projects[0].topics
-    .filter(x => x.childrens[0]?.code)
-    .map(x => x.id);
-  const subtopics = data?.currentUser?.projects[0].topics
-    .filter(x => x.childrens[0]?.code)
-    .map(x => x.childrens.map(x => x.code));
+  
+  const router= useRouter()
+  const [model, setModel] = useState(data?.currentUser?.modelStates.nodes[0].json)
+  //const [url, setUrl] = useState("")
+  useEffect(() => {
+    //setUrl(router.asPath)
+    setModel(data?.currentUser?.modelStates.nodes[0].json)
+    refetch()
+  }, [router.asPath,data])
+  
 
-  const kcs = data?.currentUser?.projects[0].topics
-    .filter(x => x.childrens[0]?.code)
-    .map(x => x.childrens.map(x => x.content.map(x => x.kcs.map(x => x.code))))
-    .map(x => x.map(x => x.flat().filter((value, index, self) => self.indexOf(value) === index)));
-  // !isLoading && console.log(modelo)
-  //!isLoading && console.log(dominio.map(x => x.childrens)); //.filter((Topic) => {Topic.childrens!= undefined}))
+  //const model = data?.currentUser?.modelStates.nodes[0].json;
+  !isLoading && console.log(model);
 
-  !isLoading && console.log(data?.currentUser?.projects[0].topics.filter(x => x.id == href)); //.map(x => x.flat()));
+  // // topics
+  // const topics = data?.currentUser?.projects[0].topics
+  //   .filter(x => x.childrens[0]?.code)
+  //   .map(x => x.code)
 
-  console.log(href);
+  // const subtopics = data.currentUser?.projects[0].topics
+  //   .filter(x => x.childrens[0]?.code)
+  //   .map(x => x.childrens.map( x => x.code))
+
+  // const kcs = data.currentUser?.projects[0].topics
+  //   .filter(x => x.childrens[0]?.code)
+  //   .map(x => x.childrens.map(x => x.content.map(x => x.kcs.map(x => x.code))))
+  //   .map(x => x.map(x => x.flat().filter((value, index, self) => self.indexOf(value) === index)));
+
+  // !isLoading && console.log(kcs);
+
+
+  const filteredTopics = !isError ? data?.currentUser?.projects[0]?.topics
+    .filter(x => x?.childrens[0]?.code) : [];
+
+  !isLoading && console.log(filteredTopics);
+
+
+  const topicAverages = filteredTopics?.map(topic => {
+    const subtopicAverages = topic?.childrens[0]?.content[0]?.kcs?.length > 0 ? topic?.childrens?.map(subtopic => {
+      const kcs = subtopic?.content?.flatMap(x => x?.kcs?.map( kc => kc?.code));
+      const levels = kcs?.map(kcCode => model ? model[kcCode]?.level : 0);
+      const averageLevel = levels.length > 0 ? levels.reduce((sum,level) => sum + level, 0) / levels.length : 0;
+      return averageLevel;
+    }):[];
+    const topicAverage = subtopicAverages.length > 0
+      ? subtopicAverages.reduce((sum, averageLevel) => sum + averageLevel, 0) / subtopicAverages.length
+      : 0;
+    
+    return topicAverage;
+  });
+
+  !isLoading && console.log(topicAverages);
+
+  //  const overallAverage = topicAverages.length > 0
+  //  ? topicAverages.reduce((sum, topicAverage) => sum + topicAverage, 0) / topicAverages.length
+  //  : 0;
+
+  // !isLoading && console.log(overallAverage);
+
+
+const promedioLevel = topicAverages?.length>0 ? topicAverages[filteredTopics.findIndex((x)=>x?.id==href)]: 0;
+  
+
   return (
-    <CircularProgress value={40} color="green.400">
-      <CircularProgressLabel>40% </CircularProgressLabel>
+    <CircularProgress value={promedioLevel * 100} color="green.400">
+      <CircularProgressLabel>{`${(promedioLevel * 100).toFixed(0)}%`}</CircularProgressLabel>
     </CircularProgress>
   );
 
-  // return (
-  //   <CircularProgress value={promedioLevel * 100}>
-  //     <CircularProgressLabel>{`${(promedioLevel * 100).toFixed(2)}%`}</CircularProgressLabel>
-  //   </CircularProgress>
-  //)
 };
