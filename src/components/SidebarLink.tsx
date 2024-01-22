@@ -53,7 +53,13 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       bg={
         query.registerTopic == registerTopic //interactive mark
           ? activeBg
-          : href == (query.registerTopic ?? "/") && pathname != "/showContent" //inicio mark
+          : href == (query.registerTopic ?? "tutorial") &&
+            pathname != "/showContent" &&
+            pathname != "/" //tutorial mark
+          ? activeBg
+          : href == (query.registerTopic ?? "/") &&
+            pathname != "/showContent" &&
+            pathname != "/tutorial" //inicio mark
           ? activeBg
           : //: href == "wpExercises" && pathname != "/" && pathname != "/contentSelect" //wpExercises mark
           //? activeBg

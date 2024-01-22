@@ -1,4 +1,4 @@
-import { Center, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Center, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import { withAuth } from "../components/Auth";
@@ -48,9 +48,17 @@ export default withAuth(function WpExercises() {
       <Center>
         <Heading marginBottom="4">
           {parameters.CSMain.title}
-          ejercicios con contexto
+          {parameters.CSMain.topic6.topic}
         </Heading>
         &nbsp;&nbsp;&nbsp;
+      </Center>
+      <Center>
+        <Text marginBottom={5}>
+          Los siguientes ejercicios te permitirán aplicar conceptos matemáticos de fracciones,
+          potencias, notación científica, ecuaciones, etc. para entender fenómenos
+          socio-medioambientales. Realizar estos ejercicios te dará una visión de cómo las
+          matemáticas se usan en problemas reales.
+        </Text>
       </Center>
       <Center>
         <SimpleGrid columns={2} spacing={10} marginTop="4">
