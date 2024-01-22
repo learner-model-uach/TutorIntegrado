@@ -11,6 +11,11 @@ interface ContentJson {
   meta: Object;
   steps: Array<Object>;
 }
+
+// interface modelType {
+//   currentModel: string;
+// }
+
 export interface selectionDataType {
   optionCode: string;
   optionTitle: string;
@@ -37,6 +42,10 @@ export const sessionState = proxy<{
   };
   selectionData: selectionDataType[];
   nextContentPath: string | undefined;
+  currentModel: {
+    timestampModel: string,
+    model: Object
+  };
   learnerTraces: Object[];
 }>({
   currentUser: null,
@@ -58,6 +67,10 @@ export const sessionState = proxy<{
   },
   selectionData: [],
   nextContentPath: "",
+  currentModel:{
+    timestampModel: "",
+    model: {},
+  },
   learnerTraces: [],
 });
 
@@ -95,6 +108,9 @@ export const sessionStateInitial = (
 ) => {
   sessionState.currentUser = JSON.parse(JSON.stringify(user));
   sessionState.sessionId = `${auth0User?.updated_at}`;
+  
+  
+
 
   for (const key in sessionState) {
     sessionStateBD.getItem(key).then(function (value) {
