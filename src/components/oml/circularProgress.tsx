@@ -5,6 +5,7 @@ import { gql } from "../../graphql";
 import { useAuth, withAuth } from "../Auth";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { sessionState, sessionStateBD } from "../SessionState";
 
 export const CircularP = ({href}: {href: String}) => {
   const { user } = useAuth();
@@ -60,6 +61,10 @@ export const CircularP = ({href}: {href: String}) => {
     //setUrl(router.asPath)
     setModel(data?.currentUser?.modelStates.nodes[0].json)
     refetch()
+    sessionState.currentModel.timestampModel = Date.now().toString();
+    sessionState.currentModel.model = data?.currentUser?.modelStates.nodes[0].json;
+    //sessionStateBD.setItem("currentModel", JSON.parse)
+    console.log(sessionState.currentModel.timestampModel)
   }, [router.asPath,data])
   
 
