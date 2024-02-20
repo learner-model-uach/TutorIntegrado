@@ -1,0 +1,163 @@
+{
+  "code": "logic1",
+  "title": "Representacion Intervalos",
+  "type": "lvltutor",
+  "url":"recta.png",
+  "meta": {},
+  "text": "Escriba como conjunto e intervalo la siguiente recta perteneciente a los números Reales.",
+  "steps": [
+    {
+      "stepId": "0",
+      "expression": "",
+      "StepType":"MultiplePlaceholders",
+      "validation":"evaluate",
+      "stepTitle": "Paso 1: Reconozca los valores extremos de la recta",
+      "displayResult": [
+        "Extremo Inferior $\\placeholder[a]{}$ \\ \\quad \\ Extremo Superior $\\placeholder[b]{}$"
+      ],
+      "KCs": [
+        "RecValExt"
+      ],
+      "values": [],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Los valores extremos se representan a ambos lados de la recta"
+        },
+        {
+          "hintId": 1,
+          "hint": "El extremo inferior se representa a la izquierda y el superior a la derecha"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": [
+            "-3",
+            "7"
+          ],
+          "nextStep": "1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Los Extremos corresponden",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    },
+    {
+      "stepId": "1",
+      "expression": "El valor es:  $$\\sqrt{3}$$",
+      "StepType":"TrueFalse",
+      "stepTitle": "Paso 2: Reconozca si el valor pertenece al conjunto",
+      "displayResult": [
+        
+      ],
+      "KCs": [
+        "RecExtCerr"
+      ],
+      "values": [
+        {
+          "name": "a",
+          "value": 3
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Un valor pertenece al intervalo si esta contenido en el conjunto"
+        },
+        {
+          "hintId": 1,
+          "hint": "El valor corresponde a 1.73"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": [
+            "V"
+          ],
+          "nextStep": "2"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "El valor pertenece al conjunto",
+      "summary": "2)Se comprueba si el valor pertenece al conjunto"
+    },
+    {
+      "stepId": "2",
+      "expression": "",
+      "StepType":"Blank",
+      "stepTitle": "Paso 3: Escriba el intervalo que representa la recta",
+      "displayResult": [
+
+      ],
+      "KCs": [
+        "RepRecInt"
+      ],
+      "values": [ ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "El un intervalo cerrado se representa como [a,b] Siendo a y b los extremos inferior y superior respectivamente"
+        },
+        {
+          "hintId": 1,
+          "hint": "Recuerda que los extremos de un intervalo cerrado se representan con ["
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": [
+            "[-3,7]"
+          ],
+          "nextStep": "3"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Intervalo correcto",
+      "summary": "3)El intervalo esta correcto"
+    },
+    {
+      "stepId": "3",
+      "expression": "",
+      "StepType":"InputButtons",
+      "stepTitle": "Paso 4: Represente el intervalo por comprensión ",
+      "displayResult": [
+
+      ],
+      "KCs": [
+        "IdConNum"
+      ],
+      "values": [],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Atento a la notación"
+        },
+        {
+          "hintId": 1,
+          "hint": "Por compresión un intervalo cerrado se representa como: ",
+          "expression": "x \\in \\mathrm{P}:a \\leq x \\leq b"
+        },
+        {
+          "hintId": 2,
+          "hint": "La respuesta es: ",
+          "expression": "x\\inℝ:-3\\leq x\\leq7"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": [
+            "x∈ℝ:-3≤x≤7"
+          ],
+          "nextStep": "-1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "El conjunto por extension esta correcto",
+      "summary": "4)Intervalo por extension correcto"
+    }
+  ]
+}
