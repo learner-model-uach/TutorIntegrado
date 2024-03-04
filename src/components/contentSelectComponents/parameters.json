@@ -42,7 +42,7 @@
     "text": "Has completado este capítulo"
   },
   "ratingQuestion": {
-    "controlQuestion": "¿Cómo fue tu experiencia con este ejercicio que el sistema eligio para ti?",
+    "controlQuestion": "¿Cómo fue tu experiencia con este ejercicio que el sistema eligio para tí?",
     "experimentalQuestion": "¿Cómo fue tu experiencia con este ejercicio escogido?",
     "buttonMsg": "Siguiente Ejercicio",
     "buttonWaitMsg": "Actualizando  "

@@ -30,22 +30,31 @@ export function Navigation() {
         {user && !user.tags.includes("wp-test-user") && (
           <>
             <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink key="1" href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
+            <SidebarLink
+              key="1"
+              href={"contentSelect?topic=44,45,46,47,48,49,50,51,62&registerTopic=44"}
+            >
+              Productos Notables
+            </SidebarLink>
+            <SidebarLink key="2" href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
-            <SidebarLink key="2" href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
-              Fracción Algebraica
+            <SidebarLink key="3" href={"contentSelect?topic=16,31,17,18&registerTopic=31"}>
+              Fracciones
             </SidebarLink>
-            <SidebarLink key="3" href={"contentSelect?topic=24,25&registerTopic=24"}>
+            <SidebarLink key="4" href={"contentSelect?topic=24,25&registerTopic=24"}>
               Ecuaciones Cuadráticas
             </SidebarLink>
-            <SidebarLink key="4" href={"contentSelect?topic=33,26&registerTopic=33"}>
+            <SidebarLink key="5" href={"contentSelect?topic=33,26&registerTopic=33"}>
               Ecuaciones Lineales
             </SidebarLink>
-            <SidebarLink key="5" href={"contentSelect?topic=19,20,21,22,23&registerTopic=19"}>
+            <SidebarLink key="6" href={"contentSelect?topic=19,20,21,22,23,64&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
-            <SidebarLink key="6" href={"wpExercises?topic=34,35&registerTopic=34"}>
+            <SidebarLink key="7" href={"contentSelect?topic=52,53,54,55,56&registerTopic=52"}>
+              Álgebra de Polinomios
+            </SidebarLink>
+            <SidebarLink key="8" href={"wpExercises?topic=34,35&registerTopic=34"}>
               Ejercicios con contexto
             </SidebarLink>
           </>
