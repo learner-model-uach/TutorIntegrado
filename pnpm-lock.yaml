@@ -102,8 +102,8 @@ dependencies:
     specifier: ^1.4.1
     version: 1.4.1(react@17.0.2)
   react-super-responsive-table:
-    specifier: ^5.2.1
-    version: 5.2.1(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
+    specifier: ^5.2.2
+    version: 5.2.2(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
   rq-gql:
     specifier: ^0.4.3
     version: 0.4.3(@graphql-typed-document-node/core@3.1.1)(graphql@16.2.0)(react-query@3.34.12)(valtio@1.2.9)
@@ -6522,12 +6522,13 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /react-super-responsive-table@5.2.1(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-93DAJbI4FjR0Yops+0v1MZIUhIMRQOm/N//o35mk/g4NCZ99HIOB+gdZPorZwKX3mfr3h3H3ATcU4jLMfpuC9Q==}
+  /react-super-responsive-table@5.2.2(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-LDsGq8X3TBn0AMv5gX/0wFeWoFMMmiZXNTD1kIMMWz3WflPMHUZOSHXXlG5EOO2u3WSNcVl7MLIk83maS/Xj0g==}
+    engines: {node: '>=12'}
     peerDependencies:
       prop-types: '>= 15'
-      react: ^16.9.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.9.0 || ^17.0.0 || ^18.0.0
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
     dependencies:
       prop-types: 15.8.1
       react: 17.0.2
