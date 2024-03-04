@@ -26,7 +26,7 @@ export const DCstep2 = ({
 
   const compare = () => {
     setFeedbackMsg(null);
-    //contador de intentos
+    //contador de intentos pasos
     setAttempts(attempts + 1);
 
     const responseStudent = [
