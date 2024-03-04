@@ -9,6 +9,7 @@ export default function Start() {
   const { user } = useAuth();
   const proyecto = user?.projects?.some(x => x.code == "NivPreAlg");
   console.log(proyecto);
+    
   return (
     <>
       <Stack width="100%" padding="1em" alignItems="center">
@@ -39,5 +40,6 @@ export default function Start() {
         </Box>
       </VStack>
     </>
+
   );
 }
