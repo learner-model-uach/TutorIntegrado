@@ -1,0 +1,23 @@
+.circularprogress {
+    transform: rotate(-90deg);
+}
+.circular {
+    fill:none;
+    stroke:#EDFDFD;
+}
+.progress1 {
+    fill:none;
+    /* stroke: #00B5D8; */
+    stroke: #48BB78;
+
+    /* stroke-linecap: round; */
+    transition: stroke-dashoffset 0.3s;
+}
+.progress2 {
+    fill:none;
+    /* stroke: #48BB78; */
+    stroke: #00B5D8;
+
+    /* stroke-linecap: round; */
+    transition: stroke-dashoffset 0.3s;
+}

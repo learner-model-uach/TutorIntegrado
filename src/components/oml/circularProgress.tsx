@@ -1,11 +1,14 @@
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
+
+import React from "react";
 
 import { useAuth, withAuth } from "../Auth";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { sessionState, sessionStateBD } from "../SessionState";
+
+import  CircularProgressBar  from "./omlComponents/CircularProgressBar";
 
 export const CircularP = ({href}: {href: String}) => {
   const { user } = useAuth();
@@ -64,29 +67,14 @@ export const CircularP = ({href}: {href: String}) => {
     sessionState.currentModel.timestampModel = Date.now().toString();
     sessionState.currentModel.model = data?.currentUser?.modelStates.nodes[0].json;
     //sessionStateBD.setItem("currentModel", JSON.parse)
+    //sessionStateBD.setItem("currentModel", JSON.parse(JSON.stringify(sessionState.currentModel)));
+
     console.log(sessionState.currentModel.timestampModel)
   }, [router.asPath,data])
   
 
   //const model = data?.currentUser?.modelStates.nodes[0].json;
   !isLoading && console.log(model);
-
-  // // topics
-  // const topics = data?.currentUser?.projects[0].topics
-  //   .filter(x => x.childrens[0]?.code)
-  //   .map(x => x.code)
-
-  // const subtopics = data.currentUser?.projects[0].topics
-  //   .filter(x => x.childrens[0]?.code)
-  //   .map(x => x.childrens.map( x => x.code))
-
-  // const kcs = data.currentUser?.projects[0].topics
-  //   .filter(x => x.childrens[0]?.code)
-  //   .map(x => x.childrens.map(x => x.content.map(x => x.kcs.map(x => x.code))))
-  //   .map(x => x.map(x => x.flat().filter((value, index, self) => self.indexOf(value) === index)));
-
-  // !isLoading && console.log(kcs);
-
 
   const filteredTopics = !isError ? data?.currentUser?.projects[0]?.topics
     .filter(x => x?.childrens[0]?.code) : [];
@@ -114,16 +102,12 @@ export const CircularP = ({href}: {href: String}) => {
   //  ? topicAverages.reduce((sum, topicAverage) => sum + topicAverage, 0) / topicAverages.length
   //  : 0;
 
-  // !isLoading && console.log(overallAverage);
-
-
 const promedioLevel = topicAverages?.length>0 ? topicAverages[filteredTopics.findIndex((x)=>x?.id==href)]: 0;
-  
 
-  return (
-    <CircularProgress value={promedioLevel * 100} color="green.400">
-      <CircularProgressLabel>{`${(promedioLevel * 100).toFixed(0)}%`}</CircularProgressLabel>
-    </CircularProgress>
-  );
 
+!isLoading && console.log(promedioLevel);
+
+return(
+  <CircularProgressBar progress1={promedioLevel * 100} progress2={0} strokeWidth={5} size={44}/>
+  )
 };
