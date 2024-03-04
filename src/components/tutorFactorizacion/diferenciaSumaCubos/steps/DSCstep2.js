@@ -52,6 +52,7 @@ export const DSCstep2 = ({
         .replace(/[⁹]| /g, "^9")
         .toLowerCase(),
     ];
+
     const validate = element =>
       element[0] === responseStudent[0] && element[1] === responseStudent[1];
 

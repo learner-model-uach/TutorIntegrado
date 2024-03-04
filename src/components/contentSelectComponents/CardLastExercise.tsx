@@ -8,12 +8,21 @@ import {
   WrapItem,
   Spinner,
 } from "@chakra-ui/react";
-import { MathComponent } from "mathjax-react";
+//import { MathComponent } from "mathjax-react";
+import dynamic from "next/dynamic";
+import type { ComponentProps } from "react";
+
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import TeX from "@matejmazur/react-katex";
 import parameters from "./parameters.json";
 
+const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
+  () => import("mathjax-react").then(v => v.MathComponent),
+  {
+    ssr: false,
+  },
+);
 export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => {
   //hacer query de lastExercise
   const { data, isLoading, isError } = useGQLQuery(

@@ -36,8 +36,14 @@ export interface ExType {
   code: string;
   meta: {};
   title: string;
+  presentation: {
+    title: string;
+    urlImg: string;
+  };
   text: string;
   type: string;
   eqc: string | undefined;
   steps: Array<Step>;
+  img?: string;
+  initialExpression?: string;
 }

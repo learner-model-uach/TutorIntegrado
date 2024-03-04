@@ -15,7 +15,9 @@ export default withAuth(function ContentSelect() {
   const { user, project } = useAuth();
   const router = useRouter();
   const topics = router.query.topic?.toString() || ""; //topics in array
+  console.log(topics);
   const registerTopic = router.query.registerTopic + ""; //topics in array
+  console.log(registerTopic);
   const nextContentPath = router.asPath + ""; //topics in array
   const domainId = parameters.CSMain.domain;
 
@@ -142,7 +144,7 @@ export default withAuth(function ContentSelect() {
         topicID: registerTopic,
         extra: { selectionData },
       });
-  }, [data]); //duplicate Action :c
+  }, [data]);
   return (
     <>
       {isError ? (
@@ -165,7 +167,9 @@ export default withAuth(function ContentSelect() {
                 ? parameters.CSMain.topic4.topic
                 : registerTopic == parameters.CSMain.topic5.registerTopic
                 ? parameters.CSMain.topic5.topic
-                : parameters.CSMain.topic6.topic}
+                : registerTopic == parameters.CSMain.topic6.registerTopic
+                ? parameters.CSMain.topic6.topic
+                : parameters.CSMain.topic7.topic}
             </Heading>
             &nbsp;&nbsp;&nbsp;
           </Center>
