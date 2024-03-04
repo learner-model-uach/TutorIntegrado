@@ -21,7 +21,9 @@ const Potato = () => {
                 <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Table1"}})}>
                     TablaVerdad
                 </Heading>
-
+                <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Union1"}})}>
+                    Union
+                </Heading>
             </Flex> 
         </Flex>
     )

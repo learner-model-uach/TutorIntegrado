@@ -4,6 +4,8 @@ import { Button, Stack,Input, Alert, AlertIcon} from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import StepComponent  from "../LogicTutor/StepComponent"
+import { useAction } from '../../utils/action';
+import { sessionState } from '../SessionState';
 
 const Blank = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     let pasoSt=exc.steps[nStep].answers[0].nextStep
@@ -15,17 +17,35 @@ const Blank = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     const [error, setError] = useState(false);
     const [hints, setHints] = useState(0)
     const [lastHint, setLastHint] = useState(0);
+    const [attempts, setAttempts] = useState(0)
+    const action = useAction()
     const evaluar = () => {
       console.log('Input:', inputText);
+      let respuesta = false
       console.log('Respuesta esperada:', exc.steps[nStep].answers[0].answer[0]);
       setRespuestas(prevRespuestas => [...prevRespuestas, inputText]);
       setFirstTime(false);
       if (inputText === exc.steps[nStep].answers[0].answer[0]) {
           setIsCorrectvalue(true);
+          respuesta = true
       } else {
         setError(true)
         setHints(hints+1);
       }
+      setAttempts(attempts + 1);
+      action({
+        verbName: "tryStep",
+        stepID: "" + exc.steps[nStep].stepId,
+        contentID: exc.code,
+        topicID: sessionState.topic,
+        result: respuesta?1:0,
+        kcsIDs: exc.steps[nStep].KCs,
+        extra: {
+          response: [Response],
+          attempts: attempts,
+          hints: exc.steps[nStep].hints,
+        },
+      });
     };
     const handleButtonClick = (symbol: string) => {
       setInputText((prevText) => prevText + symbol);

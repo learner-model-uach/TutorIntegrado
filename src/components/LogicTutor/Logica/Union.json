@@ -1,8 +1,8 @@
 {
-    "code": "inter1",
-    "title": "Intersección",
+    "code": "un1",
+    "title": "Unión",
     "type": "lvltutor2",
-    "url":"RectaFinal.png",
+    "url":"Union1.png",
     "meta": {},
     "text": "Dada la siguiente representación de intervalos ",
     "steps": [
@@ -10,50 +10,54 @@
         "stepId": "0",
         "expression": "",
         "StepType":"Alternatives",
-        "stepTitle": "Paso 1: Reconozca la intersección",
+        "stepTitle": "Paso 1: Reconozca la Unión",
         "displayResult": [
           "¿Cuál de los siguientes tramos en la gráfica representa la intersección de los 2 intervalos"
         ],
         "KCs": [
-          "RecInter"
+          "RecUnGraf"
         ],
         "values": [
             {
               "name": "a",
-              "value": "[1,4]"
+              "value": "[3,5["
             },
             {
               "name": "a",
-              "value": "[1,7]"
+              "value": "]5,8]"
             },
             {
               "name": "a",
-              "value": "[4,7]"
+              "value": "]-3,8]"
             },
             {
               "name": "a",
-              "value": "[-3,1]"
+              "value": "[-3,8]"
             },
             {
               "name": "a",
-              "value": "[-3,7]"
+              "value": "[3,8]"
             }
           ],
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
+            "hint": "La Union esta representada por el area que incluye ambos intervalos"
           },
           {
             "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "Un intervalo extremo cerrado se representa con corchetes cerrados [ mientras que el abierto utiliza corchete abierto ]"
+          },
+          {
+            "hintId": 1,
+            "hint": "La interseccion corresponde a  ]-3,8]"
           }
         ],
         "matchingError": [],
         "answers": [
           {
             "answer": [
-                "[1,4]"
+                "]-3,8]"
             ],
             "nextStep": "1"
           }
@@ -66,12 +70,12 @@
         "stepId": "1",
         "expression": "El valor es -3",
         "StepType":"TrueFalse",
-        "stepTitle": "Paso 2: Reconozca si el valor pertenece a la interseccion",
+        "stepTitle": "Paso 2: Reconozca si el valor pertenece a la Unión",
         "displayResult": [
-          "El valor -3 pertenece a la interseccion"
+          "El valor -3 pertenece a la Unión"
         ],
         "KCs": [
-          "RecValMed"
+          "RecValMedio"
         ],
         "values": [
           {
@@ -82,7 +86,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "Debes seleccionar si el valor pertenece a la interseccion"
+            "hint": "Debes seleccionar si el valor pertenece a la Unión"
           }
         ],
         "matchingError": [],
@@ -95,7 +99,7 @@
           }
         ],
         "incorrectMsg": "Compruebe su respuesta",
-        "correctMsg": "El Valor no pertenece a la interseccion",
+        "correctMsg": "El Valor no pertenece a la Unión",
         "summary": "2)Luego se debe representar el intervalo"
       },
       {
@@ -107,30 +111,26 @@
   
         ],
         "KCs": [
-          "RepRecInt"
+          "RepRecInt","RepIntCerr","RepIntAb"
         ],
         "values": [ ],
         "hints": [
           {
             "hintId": 0,
-            "hint": "Un intervalo extremo cerrado se representa con corchetes cerrados ["
-          },
-          {
-            "hintId": 1,
-            "hint": "El un intervalo cerrado se representa como [a,b]Siendo a y b los extremos inferior y superior respectivamente"
+            "hint": "Un intervalo cerrado es [a,b], incluyendo a y b. Abierto es ]a,b[, excluyendo a y b. Semiabierto es [a,b[ o ]a,b], incluyendo uno y excluyendo el otro.            "
           }
         ],
         "matchingError": [],
         "answers": [
           {
             "answer": [
-              "[1,4]"
+              "]-3,8]"
             ],
             "nextStep": "-1"
           }
         ],
         "incorrectMsg": "Compruebe su respuesta",
-        "correctMsg": "El intervalo corresponde a la interseccion",
+        "correctMsg": "El intervalo corresponde a la Unión",
         "summary": "3)Ejercicio terminado"
       }
     ]

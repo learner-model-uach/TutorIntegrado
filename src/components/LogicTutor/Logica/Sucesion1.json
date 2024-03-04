@@ -1,7 +1,7 @@
 {
-  "code": "logic1",
-  "title": "sucesion",
-  "type": "lvltutor",
+  "code": "succ1",
+  "title": "Sucesión",
+  "type": "lvltutor2",
   "url":"",
   "meta": {},
   "text": "Dada la siguiente sucesión:  $$B_n = \\frac{{(-1)^n \\cdot (n^2 - n)}}{{n^2 + 1}}$$",

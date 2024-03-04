@@ -3,6 +3,8 @@ import { Alert, AlertIcon, Button, Stack } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import StepComponent  from "../LogicTutor/StepComponent"
+import { useAction } from '../../utils/action';
+import { sessionState } from '../SessionState';
 
 const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
   const pasoSt = exc.steps[nStep]?.answers?.[0]?.nextStep;
@@ -16,7 +18,9 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
   const [hints, setHints] = useState(0)
   const [lastHint, setLastHint] = useState(false);
   const [valoresBarajados, setValoresBarajados] = useState<Array<any>>([]);
-
+  const action = useAction()
+  const [attempts, setAttempts] = useState(0)
+  let respuesta = false
   useEffect(() => {
     if (valores_a_elegir && firstTime) {
       const shuffledValues = [...valores_a_elegir].sort(() => Math.random() - 0.5);
@@ -33,11 +37,26 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     if (String(valor) === respuestaCorrecta) {
       setIsCorrectValue(true);
       setShowError(false);
+      respuesta = true
     } else {
       setIsCorrectValue(false);
       setShowError(true);
       setHints(hints+1);
     }
+    setAttempts(attempts + 1);
+    action({
+      verbName: "tryStep",
+      stepID: "" + exc.steps[nStep].stepId,
+      contentID: exc.code,
+      topicID: sessionState.topic,
+      result: respuesta?1:0,
+      kcsIDs: exc.steps[nStep].KCs,
+      extra: {
+        response: [valor],
+        attempts: attempts,
+        hints: exc.steps[nStep].hints,
+      },
+    });
   };
 
   return (
@@ -65,19 +84,19 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
               Respuesta incorrecta
             </Alert>
           )}
-                         <Hint
-                            hints={exc.steps[nStep].hints}
-                            contentId={exc.code}
-                            topicId={exc.type}
-                            stepId={exc.steps[nStep].stepId}
-                            matchingError={exc.steps[nStep].matchingError}
-                            response={[response]}
-                            error={showError}
-                            setError={setShowError}
-                            hintCount={hints}
-                            setHints={setHints}
-                            setLastHint={setLastHint}
-                        ></Hint>  
+           <Hint
+              hints={exc.steps[nStep].hints}
+              contentId={exc.code}
+              topicId={exc.type}
+              stepId={exc.steps[nStep].stepId}
+              matchingError={exc.steps[nStep].matchingError}
+              response={[response]}
+              error={showError}
+              setError={setShowError}
+              hintCount={hints}
+              setHints={setHints}
+              setLastHint={setLastHint}
+            />
         </>
       )}
     </>

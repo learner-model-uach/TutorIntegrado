@@ -9,6 +9,8 @@ import dynamic from "next/dynamic";
 import MQPostfixSolver from '../../utils/MQPostfixSolver';
 import MQPostfixparser from '../../utils/MQPostfixparser';
 import { convertirNotacion } from './convertirNotacion';
+import { sessionState } from '../SessionState';
+import { useAction } from '../../utils/action';
 const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"),{
     ssr:false,
 });
@@ -23,6 +25,8 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     const [isCorrectValue, setIsCorrectvalue] = useState(false);
     const [Values, setValues] = useState<Array<any>>([]);
     const [hints, setHints] = useState(0)
+    const [attempts, setAttempts] = useState(0)
+    const action = useAction()
     const [lastHint, setLastHint] = useState(false);
     console.log(exc.steps[nStep].hints)
     //@ts-ignore
@@ -37,14 +41,30 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
         let a=MQPostfixparser(answer[0])
         //@ts-ignore
         let b =MQPostfixSolver(a,[{}])
+        let response=false
         console.log(b)
         if (b==c) {
             console.log("true");
             setIsCorrectvalue(true);
+            response=true
         } else {
             setError(true)
             setHints(hints+1);
         }
+        setAttempts(attempts + 1);
+        action({
+            verbName: "tryStep",
+            stepID: "" + exc.steps[nStep].stepId,
+            contentID: exc.code,
+            topicID: sessionState.topic,
+            result: response?1:0,
+            kcsIDs: exc.steps[nStep].KCs,
+            extra: {
+              response: [Values],
+              attempts: attempts,
+              hints: exc.steps[nStep].hints,
+            },
+          });
     };
 
 

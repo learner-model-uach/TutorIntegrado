@@ -22,6 +22,8 @@ import type {ExLog, textAlign}   from '../../components/lvltutor/Tools/Excercise
 import Hint from '../../components/Hint';
 import StepComponent  from "../LogicTutor/StepComponent"
 import Latex from 'react-latex-next';
+import { useAction } from '../../utils/action';
+import { sessionState } from '../SessionState';
 
 const TableStep = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
   const [valor, setValor] = useState('');
@@ -38,15 +40,38 @@ const TableStep = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
   let numero: number = parseFloat(pasoSt);
   const textColor = useColorModeValue("dark", "white");
   const bg = useColorModeValue("#2B4264", "#1A202C");
+  const [attempts, setAttempts] = useState(0)
+  const action = useAction()
   const evaluar = () => {
+    let respuesta = false
     const isCorrect = userAnswers.every((userAnswer, index) => userAnswer === exc.steps[nStep].answers[0].answer[index]);
     console.log(isCorrect);
-    isCorrect ? (
-      setIsCorrectValue(true)
-    ):
-    setError(true)
-    setHints(hints+1);
-    setFirstTime(false);
+
+    isCorrect 
+      ? (
+        setIsCorrectValue(true),
+        respuesta = true
+      )
+      :(
+
+        setHints(hints+1),
+        setFirstTime(false),
+        setError(true)
+        )
+        setAttempts(attempts + 1);
+        action({
+          verbName: "tryStep",
+          stepID: "" + exc.steps[nStep].stepId,
+          contentID: exc.code,
+          topicID: sessionState.topic,
+          result: respuesta?1:0,
+          kcsIDs: exc.steps[nStep].KCs,
+          extra: {
+            response: [userAnswers],
+            attempts: attempts,
+            hints: exc.steps[nStep].hints,
+          },
+        });
   };
 
   return (

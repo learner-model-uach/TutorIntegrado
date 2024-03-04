@@ -1,7 +1,7 @@
 {
-    "code": "logic1",
+    "code": "table1",
     "title": "Tablas de Verdad",
-    "type": "lvltutor",
+    "type": "lvltutor2",
     "meta": {},
     "text": "Utilizando una tabla de verdad compruebe que se satisface la siguiente equivalencia lógica: $$\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}$$",
     "steps": [
@@ -13,7 +13,7 @@
         "displayResult": [
         ],
         "KCs": [
-          "RecIntGraf"
+          "IdConLog","UtRec"
         ],
         "table": {
           "header": [
@@ -83,7 +83,7 @@
         "displayResult": [
         ],
         "KCs": [
-          "RecIntGraf"
+          "IdConLog","UtNeg"
         ],
         "table": {
           "header": [
@@ -157,7 +157,7 @@
         "displayResult": [
         ],
         "KCs": [
-          "RecIntGraf"
+          "IdConLog","UtNeg"
         ],
         "table": {
           "header": [
@@ -235,7 +235,7 @@
         "displayResult": [
         ],
         "KCs": [
-          "RecIntGraf"
+          "IdConLog","UtConj"
         ],
         "table": {
           "header": [
@@ -317,7 +317,7 @@
         "displayResult": [
         ],
         "KCs": [
-          "RecIntGraf"
+          "RecEcLog"
         ],
         "values": [
             {

@@ -9,20 +9,24 @@ import MQPostfixparser from '../../utils/MQPostfixparser';
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { convertirNotacion } from './convertirNotacion';
+import { useAction } from '../../utils/action';
+import { sessionState } from '../SessionState';
 const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"),{
     ssr:false,
 });
 
 
 const Sucession = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
+    const action = useAction()
     let pasoSt=exc.steps[nStep].answers[0].nextStep
     let numero: number = parseFloat(pasoSt);
     //@ts-ignore
     const [firstTime, setFirstTime] = useState(true);
-    const [isCorrectValue, setIsCorrectvalue] = useState(false);
+    const [isCorrectValue, setIsCorrectValue] = useState(false);
     const [ValuesArray, setValuesArray] = useState<Array<any>>([]);
     const [error, setError] = useState(false);
     const [hints, setHints] = useState(0)
+    const [attempts, setAttempts] = useState(0)
     const [lastHint, setLastHint] = useState(0);
 
     const evaluar = () => {
@@ -33,12 +37,13 @@ const Sucession = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
         console.log("valor 1 convertido "+convertirNotacion(ValuesArray[0]));
         console.log("valor 2 convertido "+convertirNotacion(ValuesArray[1]));
         const answer = exc.steps[nStep].answers[0].answer;
-
+        let respuesta = false
         if(exc.steps[nStep].validation=='evaluate'){
-                //@ts-ignore
+            //@ts-ignore
             if (ValuesArray.every((value, index) => (MQPostfixSolver(MQPostfixparser(convertirNotacion(value)),[{}])) === MQPostfixSolver(MQPostfixparser(convertirNotacion(answer[index])),[{}]))) {
-                console.log("true");
-                setIsCorrectvalue(true);
+                setIsCorrectValue(true);
+                respuesta=true
+                console.log("correctValueSeteado "+isCorrectValue)
             } else {
                 setError(true)
                 setHints(hints+1);
@@ -47,13 +52,31 @@ const Sucession = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
 
         else{
             if (ValuesArray.every((value, index) => value === answer[index])) {
-                console.log("true");
-                setIsCorrectvalue(true);
+                console.log("true1");
+                respuesta=true
+                setIsCorrectValue(true);
+                console.log("correctValueSeteado "+isCorrectValue)
             }else{
                 setError(true)
                 setHints(hints+1);
             }
         }
+        setAttempts(attempts + 1);
+        console.log("valor de correctValue: "+isCorrectValue)
+        console.log("Valor VERIFICACION: "+(isCorrectValue?1:0))
+        action({
+            verbName: "tryStep",
+            stepID: "" + exc.steps[nStep].stepId,
+            contentID: exc.code,
+            topicID: sessionState.topic,
+            result: respuesta?1:0,
+            kcsIDs: exc.steps[nStep].KCs,
+            extra: {
+              response: [ValuesArray],
+              attempts: attempts,
+              hints: exc.steps[nStep].hints,
+            },
+          });
     };
 
     //@ts-ignore    valuesArrayvaluesArray
@@ -65,7 +88,7 @@ const Sucession = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
         setValuesArray(newValuesArray);
     }
     const mfe = useMemo(() => new MathfieldElement(), []);
-    
+    console.log(exc.code)
     //
     return (
         <>

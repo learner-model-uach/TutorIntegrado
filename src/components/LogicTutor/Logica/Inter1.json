@@ -1,7 +1,7 @@
 {
-  "code": "logic1",
+  "code": "inter1",
   "title": "Representacion Intervalos",
-  "type": "lvltutor",
+  "type": "lvltutor2",
   "url":"recta.png",
   "meta": {},
   "text": "Escriba como conjunto e intervalo la siguiente recta perteneciente a los números Reales.",
@@ -92,7 +92,7 @@
 
       ],
       "KCs": [
-        "RepRecInt"
+        "RepRecInt","RepIntCerr"
       ],
       "values": [ ],
       "hints": [
@@ -127,7 +127,7 @@
 
       ],
       "KCs": [
-        "IdConNum"
+        "RepComp"
       ],
       "values": [],
       "hints": [
