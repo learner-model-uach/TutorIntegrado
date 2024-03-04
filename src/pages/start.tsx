@@ -9,7 +9,7 @@ export default function Start() {
   const { user } = useAuth();
   const proyecto = user?.projects?.some(x => x.code == "NivPreAlg");
   console.log(proyecto);
-    
+
   return (
     <>
       <Stack width="100%" padding="1em" alignItems="center">
@@ -26,6 +26,7 @@ export default function Start() {
 
         {proyecto ? <AssigndUser /> : <NewUser />}
       </Stack>
+
       <VStack justify="end" height="80%">
         <Box mt={4} p={4} bg="gray.200" textAlign="center">
           <Text>Más información sobre el proyecto:</Text>
@@ -40,6 +41,5 @@ export default function Start() {
         </Box>
       </VStack>
     </>
-
   );
 }
