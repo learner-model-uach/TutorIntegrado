@@ -108,6 +108,6 @@ const promedioLevel = topicAverages?.length>0 ? topicAverages[filteredTopics.fin
 !isLoading && console.log(promedioLevel);
 
 return(
-  <CircularProgressBar progress1={promedioLevel * 100} progress2={0} strokeWidth={5} size={44}/>
+  <CircularProgressBar progress1={promedioLevel * 100} progress2={null} strokeWidth={5} size={44}/>
   )
 };

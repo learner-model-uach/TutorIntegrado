@@ -14,8 +14,8 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
 }) => {
     const radius = (size - strokeWidth) / 2;
     const circumference = radius * 2 * Math.PI;
-    const offset1 = circumference - (progress1 / 100) * circumference;
-    const offset2 = circumference - (progress2 / 100) * circumference;
+    const offset1 = (circumference - (progress1 / 100) * circumference).toFixed(0);
+    const offset2 = (circumference - (progress2 / 100) * circumference);
     return (
         <svg className={styles.circularprogress} width={size} height={size}>
             <circle
