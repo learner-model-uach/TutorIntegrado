@@ -52,11 +52,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
-          },
-          {
-            "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "Debe utilizar el recíproco"
           }
         ],
         "matchingError": [],
@@ -126,11 +122,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
-          },
-          {
-            "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "Debe utilizar la negación"
           }
         ],
         "matchingError": [],
@@ -204,11 +196,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
-          },
-          {
-            "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "Debe utilizar la negación"
           }
         ],
         "matchingError": [],
@@ -286,11 +274,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
-          },
-          {
-            "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "Debe utilizar la conjunción"
           }
         ],
         "matchingError": [],

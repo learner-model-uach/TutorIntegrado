@@ -1,5 +1,5 @@
 {
-    "code": "inter1",
+    "code": "inters1",
     "title": "Intersección",
     "type": "lvltutor2",
     "url":"RectaFinal.png",
@@ -42,11 +42,11 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
+            "hint": "La intersección esta representada por el área compartida entre los intervalos"
           },
           {
             "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "La interseccion corresponde a [1,4]"
           }
         ],
         "matchingError": [],
@@ -66,9 +66,9 @@
         "stepId": "1",
         "expression": "El valor es -3",
         "StepType":"TrueFalse",
-        "stepTitle": "Paso 2: Reconozca si el valor pertenece a la interseccion",
+        "stepTitle": "Paso 2: Reconozca si el valor pertenece a la intersección",
         "displayResult": [
-          "El valor -3 pertenece a la interseccion"
+          "El valor -3 pertenece a la intersección"
         ],
         "KCs": [
           "RecValMed"
@@ -82,7 +82,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "Debes seleccionar si el valor pertenece a la interseccion"
+            "hint": "Debes seleccionar si el valor pertenece a la intersección"
           }
         ],
         "matchingError": [],

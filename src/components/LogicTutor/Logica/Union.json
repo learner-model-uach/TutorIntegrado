@@ -1,5 +1,5 @@
 {
-    "code": "un1",
+    "code": "uni1",
     "title": "Unión",
     "type": "lvltutor2",
     "url":"Union1.png",
@@ -42,7 +42,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La Union esta representada por el area que incluye ambos intervalos"
+            "hint": "La Unión esta representada por el área que incluye ambos intervalos"
           },
           {
             "hintId": 1,
@@ -50,7 +50,7 @@
           },
           {
             "hintId": 1,
-            "hint": "La interseccion corresponde a  ]-3,8]"
+            "hint": "La Unión corresponde a  ]-3,8]"
           }
         ],
         "matchingError": [],
