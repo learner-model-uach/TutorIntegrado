@@ -40,7 +40,6 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       }
     })
     .filter(x => x !== undefined);
-
   return (
     <LinkBox
       marginEnd="2"

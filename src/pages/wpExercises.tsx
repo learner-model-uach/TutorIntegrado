@@ -48,7 +48,7 @@ export default withAuth(function WpExercises() {
       <Center>
         <Heading marginBottom="4">
           {parameters.CSMain.title}
-          {parameters.CSMain.topic6.topic}
+          {parameters.CSMain.topic8.topic}
         </Heading>
         &nbsp;&nbsp;&nbsp;
       </Center>

@@ -144,6 +144,8 @@ export const CardSelection = ({
             <MathComponent tex={String.raw`${json.eqc}`} display={false} />
           ) : json.type === "wordProblem" ? (
             <MathComponent tex={String.raw`${""}`} display={false} />
+          ) : json.initialExpression ? (
+            <MathComponent tex={String.raw`${json.initialExpression}`} display={false} />
           ) : (
             <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
           )}

@@ -169,7 +169,11 @@ export default withAuth(function ContentSelect() {
                 ? parameters.CSMain.topic5.topic
                 : registerTopic == parameters.CSMain.topic6.registerTopic
                 ? parameters.CSMain.topic6.topic
-                : parameters.CSMain.topic7.topic}
+                : registerTopic == parameters.CSMain.topic7.registerTopic
+                ? parameters.CSMain.topic7.topic
+                : registerTopic == parameters.CSMain.topic8.registerTopic
+                ? parameters.CSMain.topic8.topic
+                : parameters.CSMain.topic9.topic}
             </Heading>
             &nbsp;&nbsp;&nbsp;
           </Center>
