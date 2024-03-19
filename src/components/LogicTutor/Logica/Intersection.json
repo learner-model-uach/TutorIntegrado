@@ -10,7 +10,7 @@
         "stepId": "0",
         "expression": "",
         "StepType":"Alternatives",
-        "stepTitle": "Paso 1: Reconozca la intersección",
+        "stepTitle": "Paso 1: La intersección de los intervalos, es:",
         "displayResult": [
           "¿Cuál de los siguientes tramos en la gráfica representa la intersección de los 2 intervalos"
         ],
@@ -42,7 +42,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La intersección esta representada por el área compartida entre los intervalos"
+            "hint": "La intersección esta representada por los elementos en común entre los intervalos"
           },
           {
             "hintId": 1,
@@ -66,7 +66,7 @@
         "stepId": "1",
         "expression": "El valor es -3",
         "StepType":"TrueFalse",
-        "stepTitle": "Paso 2: Reconozca si el valor pertenece a la intersección",
+        "stepTitle": "Paso 2: Reconozca si el valor siguiente pertenece a la intersección",
         "displayResult": [
           "El valor -3 pertenece a la intersección"
         ],
@@ -82,7 +82,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "Debes seleccionar si el valor pertenece a la intersección"
+            "hint": "Debes verificar si el valor pertenece a ambos intervalos"
           }
         ],
         "matchingError": [],

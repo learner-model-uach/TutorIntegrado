@@ -52,6 +52,10 @@
         "hints": [
           {
             "hintId": 0,
+            "hint": "Revise el material de estudio"
+          },
+          {
+            "hintId": 1,
             "hint": "Debe utilizar el recíproco"
           }
         ],
@@ -122,6 +126,10 @@
         "hints": [
           {
             "hintId": 0,
+            "hint": "Revise el material de estudio"
+          },
+          {
+            "hintId": 1,
             "hint": "Debe utilizar la negación"
           }
         ],
@@ -196,6 +204,10 @@
         "hints": [
           {
             "hintId": 0,
+            "hint": "Revise el material de estudio"
+          },
+          {
+            "hintId": 1,
             "hint": "Debe utilizar la negación"
           }
         ],
@@ -274,6 +286,10 @@
         "hints": [
           {
             "hintId": 0,
+            "hint": "Revise el material de estudio"
+          },
+          {
+            "hintId": 1,
             "hint": "Debe utilizar la conjunción"
           }
         ],
@@ -324,11 +340,11 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La interseccion esta representada por el area compartida entre los intervalos"
+            "hint": "Revise el material de estudio"
           },
           {
             "hintId": 1,
-            "hint": "La interseccion corresponde a la alternativa B"
+            "hint": "Si ambas tablas son iguales se satisface la equivalencia"
           }
         ],
         "matchingError": [],

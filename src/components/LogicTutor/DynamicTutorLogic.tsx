@@ -3,7 +3,7 @@ import { Image, StackDivider, VStack, Container, Center } from "@chakra-ui/react
 import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
 import Latex from 'react-latex-next';
 import 'katex/dist/katex.min.css';
-import StepComponent from './StepComponent';
+import StepComponent from './StepTest';
 
 const DynamicTutorLogic = ({ exc}: { exc: ExLog }) => {
     let nStep: number = 0;

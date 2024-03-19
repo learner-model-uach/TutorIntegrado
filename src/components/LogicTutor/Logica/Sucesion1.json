@@ -4,13 +4,13 @@
   "type": "lvltutor2",
   "url":"",
   "meta": {},
-  "text": "Dada la siguiente sucesión:  $$B_n = \\frac{{(-1)^n \\cdot (n^2 - n)}}{{n^2 + 1}}$$",
+  "text": "Dado el siguiente término general de una sucesión:  $$B_n = \\frac{{(-1)^n \\cdot (n^2 - n)}}{{n^2 + 1}}$$",
   "steps": [
     {
       "stepId": "0",
       "expression": "",
       "StepType":"MultiplePlaceholders",
-      "stepTitle": "Paso 1: Represente el primer valor de la sucesión",
+      "stepTitle": "Paso 1: Represente el término de la sucesión",
       "displayResult": [
         "$B_1 = \\frac{{(-1)^\\placeholder[a]{n} \\cdot (\\placeholder[b]{n}^2 - \\placeholder[c]{n})}}{{\\placeholder[d]{n}^2 + 1}}$"
       ],
@@ -29,7 +29,7 @@
         },
         {
           "hintId": 1,
-          "hint": "Reemplaza los valores de n por 1"
+          "hint": "Debes reemplazar los valores de n en la expresion por 1"
         }
       ],
       "matchingError": [],
@@ -52,7 +52,7 @@
       "stepId": "1",
       "expression": "",
       "StepType":"SinglePlaceholder",
-      "stepTitle": "Paso 2: Resuelva el primer valor de la sucesión, si no es entero represéntelo como fracción de la forma $\\frac{a}{b}$",
+      "stepTitle": "Paso 2: Resuelva el primer valor de la sucesión, si no es entero, represéntelo como fracción de la forma $\\frac{a}{b}$",
       "displayResult": [
         "$\\placeholder[a]{}$"
       ],

@@ -4,14 +4,14 @@
   "type": "lvltutor2",
   "url":"recta.png",
   "meta": {},
-  "text": "Escriba como conjunto e intervalo la siguiente recta perteneciente a los números Reales.",
+  "text": "Considere la siguiente representación gráfica de un intervalo.",
   "steps": [
     {
       "stepId": "0",
       "expression": "",
       "StepType":"MultiplePlaceholders",
       "validation":"evaluate",
-      "stepTitle": "Paso 1: Reconozca los valores extremos de la recta",
+      "stepTitle": "Paso 1: Reconozca los valores extremos del intervalo",
       "displayResult": [
         "Extremo Inferior $\\placeholder[a]{}$ \\ \\quad \\ Extremo Superior $\\placeholder[b]{}$"
       ],
@@ -22,7 +22,7 @@
       "hints": [
         {
           "hintId": 0,
-          "hint": "Los valores extremos se representan a ambos lados de la recta"
+          "hint": "Los valores extremos se representan a ambos lados del intervalo"
         },
         {
           "hintId": 1,
@@ -47,7 +47,7 @@
       "stepId": "1",
       "expression": "El valor es:  $$\\sqrt{3}$$",
       "StepType":"TrueFalse",
-      "stepTitle": "Paso 2: Reconozca si el valor pertenece al conjunto",
+      "stepTitle": "Paso 2: Reconozca si el valor siguiente pertenece al conjunto",
       "displayResult": [
         
       ],
@@ -63,7 +63,7 @@
       "hints": [
         {
           "hintId": 0,
-          "hint": "Un valor pertenece al intervalo si esta contenido en el conjunto"
+          "hint": "Un número pertenece al intervalo, si este es mayor que el extremo inferior y menos que el extremo superior"
         },
         {
           "hintId": 1,
@@ -87,7 +87,7 @@
       "stepId": "2",
       "expression": "",
       "StepType":"Blank",
-      "stepTitle": "Paso 3: Escriba el intervalo que representa la recta",
+      "stepTitle": "Paso 3: Escriba el intervalo representado en la recta",
       "displayResult": [
 
       ],
@@ -98,11 +98,11 @@
       "hints": [
         {
           "hintId": 0,
-          "hint": "El un intervalo cerrado se representa como [a,b] Siendo a y b los extremos inferior y superior respectivamente"
+          "hint": "El un intervalo cerrado se representa como [a,b]. Siendo a y b los extremos inferior y superior, respectivamente."
         },
         {
           "hintId": 1,
-          "hint": "Recuerda que los extremos de un intervalo cerrado se representan con ["
+          "hint": "Recuerda que los extremos de un intervalo cerrado se representan de esta forma [a,b]"
         }
       ],
       "matchingError": [],

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Stack, Alert, AlertIcon } from "@chakra-ui/react";
 
-import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
+import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
 
 import { DualInputs } from "./OldComponents/DualInputs";
 import dynamic from "next/dynamic";
@@ -14,7 +14,7 @@ const TrueFalse = dynamic(() => import("./TrueFalse"), { ssr: false });
 const Blank = dynamic(() => import("./Blank"), { ssr: false });
 const InputButtons = dynamic(() => import("./InputButtons"), { ssr: false });
 const Alternatives = dynamic(() => import("./Alternatives"), { ssr: false });
-const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"), { ssr: false });
+const Mathfield = dynamic(() => import("../lvltutor/Tools/mathLive"), { ssr: false });
 const MultiplePlaceholders = dynamic(() => import("./MultiplePlaceholders"), { ssr: false });
 const TableStep = dynamic(() => import("./TableStep"), { ssr: false });
 const SinglePlaceholder = dynamic(() => import("./SinglePlaceholder"), { ssr: false });

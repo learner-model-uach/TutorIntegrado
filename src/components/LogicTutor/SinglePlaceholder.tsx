@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { Button, Box, Stack, Alert, AlertIcon} from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
-import StepComponent  from "../LogicTutor/StepComponent"
+import StepComponent  from "./StepComponent"
 import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from '../../utils/MQPostfixSolver';
@@ -95,11 +95,8 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
                             </Mathfield>
                         </Box>
                     </Stack>
+                    <Stack spacing={8} mb={2} direction='row'>
                     <Button colorScheme='teal' size='sm' onClick={() => evaluar(latex,Values)} > enviar</Button>
-                    {firstTime ? null : <Alert status='error'>
-                            <AlertIcon />
-                            Tu respuesta no es la esperada intentalo denuevo.
-                        </Alert>}
                         <Hint
                             hints={exc.steps[nStep].hints}
                             contentId={exc.code}
@@ -112,7 +109,13 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
                             hintCount={hints}
                             setHints={setHints}
                             setLastHint={setLastHint}
-                        ></Hint>  
+                        ></Hint>
+                    </Stack>
+
+                    {firstTime ? null : <Alert status='error'>
+                            <AlertIcon />
+                            Tu respuesta no es la esperada intentalo denuevo.
+                        </Alert>}
                 </>
             )}
         </>

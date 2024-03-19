@@ -20,7 +20,7 @@ import {
 
 import type {ExLog, textAlign}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
-import StepComponent  from "../LogicTutor/StepComponent"
+import StepComponent  from "./StepComponent"
 import Latex from 'react-latex-next';
 import { useAction } from '../../utils/action';
 import { sessionState } from '../SessionState';

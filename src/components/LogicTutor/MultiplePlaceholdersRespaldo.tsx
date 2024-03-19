@@ -1,22 +1,25 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
 import { Button, Box, Stack, Alert, AlertIcon} from "@chakra-ui/react";
+import StepComponent  from "./StepComponent"
 import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from '../../utils/MQPostfixSolver';
 import MQPostfixparser from '../../utils/MQPostfixparser';
-import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
-import Hint from '../../components/Hint';
+import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
+import Hint from '../Hint';
 import { convertirNotacion } from './convertirNotacion';
 import { useAction } from '../../utils/action';
 import { sessionState } from '../SessionState';
-const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"),{
+const Mathfield = dynamic(() => import("../lvltutor/Tools/mathLive"),{
     ssr:false,
 });
 
 
-const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: ExLog; nStep: number; completed: boolean; setCompleted: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const MultiplePlaceholders = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     const action = useAction()
+    let pasoSt=exc.steps[nStep].answers[0].nextStep
+    let numero: number = parseFloat(pasoSt);
     //@ts-ignore
     const [firstTime, setFirstTime] = useState(true);
     const [isCorrectValue, setIsCorrectValue] = useState(false);
@@ -38,7 +41,6 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
         if(exc.steps[nStep].validation=='evaluate'){
             //@ts-ignore
             if (ValuesArray.every((value, index) => (MQPostfixSolver(MQPostfixparser(convertirNotacion(value)),[{}])) === MQPostfixSolver(MQPostfixparser(convertirNotacion(answer[index])),[{}]))) {
-                setCompleted(true)
                 setIsCorrectValue(true);
                 respuesta=true
                 console.log("correctValueSeteado "+isCorrectValue)
@@ -53,7 +55,6 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
                 console.log("true1");
                 respuesta=true
                 setIsCorrectValue(true);
-                setCompleted(true)
                 console.log("correctValueSeteado "+isCorrectValue)
             }else{
                 setError(true)
@@ -91,6 +92,9 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
     //
     return (
         <>
+            {isCorrectValue ? (
+                <StepComponent exc={exc} nStep={numero} />
+            ) : (
                 <>
                     <Stack spacing={8} mb={2} direction='row'>
                         <Box mr={1}>
@@ -115,18 +119,13 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
                             setLastHint={setLastHint}
                         ></Hint>                                  
                     </Stack>
-                    {firstTime ? null : !isCorrectValue?
-                         <Alert status='error'>
+                    {firstTime ? null : <Alert status='error'>
                             <AlertIcon />
                                 Tu respuesta no es la esperada intentalo denuevo.
-                        </Alert>
-                        :                         <Alert status='success'>
-                        <AlertIcon />
-                            {exc.steps[nStep].correctMsg}
-                    </Alert>
+                            </Alert>
                     }
                 </>
-            
+            )}
         </>
     );
 }

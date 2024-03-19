@@ -1,6 +1,6 @@
 {
     "code": "uni1",
-    "title": "Unión",
+    "title": "Unión de intervalos",
     "type": "lvltutor2",
     "url":"Union1.png",
     "meta": {},
@@ -42,7 +42,7 @@
         "hints": [
           {
             "hintId": 0,
-            "hint": "La Unión esta representada por el área que incluye ambos intervalos"
+            "hint": "La Unión esta representada por el conjunto que reune los elementos de ambos conjuntos"
           },
           {
             "hintId": 1,
@@ -70,7 +70,7 @@
         "stepId": "1",
         "expression": "El valor es -3",
         "StepType":"TrueFalse",
-        "stepTitle": "Paso 2: Reconozca si el valor pertenece a la Unión",
+        "stepTitle": "Paso 2: Reconozca si el valor siguiente pertenece a la Unión",
         "displayResult": [
           "El valor -3 pertenece a la Unión"
         ],
@@ -106,7 +106,7 @@
         "stepId": "2",
         "expression": "",
         "StepType":"Blank",
-        "stepTitle": "Paso 3: Escriba el intervalo que representa la recta",
+        "stepTitle": "Paso 3: Escriba el intervalo que representa la Unión",
         "displayResult": [
   
         ],

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Alert, AlertIcon, Button, Stack } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
-import StepComponent  from "../LogicTutor/StepComponent"
+import StepComponent  from "./StepComponent"
 import { useAction } from '../../utils/action';
 import { sessionState } from '../SessionState';
 

@@ -82,7 +82,8 @@ const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
                 <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('>')}> &lt; </Button>
                 <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('<')}> &gt;</Button>
             </Stack>
-            
+            <Stack spacing={8} mb={2} direction='row'>
+
             <Button colorScheme='teal' size='sm' onClick={() => evaluar()}> Enviar</Button>
             <Hint
             hints={exc.steps[nStep].hints}
@@ -97,6 +98,7 @@ const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
             setHints={setHints}
             setLastHint={setLastHint}
             ></Hint>  
+            </Stack>
 
             {isCorrectValue ? (
                 <StepComponent exc={exc} nStep={numero} />
