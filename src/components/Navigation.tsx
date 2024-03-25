@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
