@@ -313,11 +313,13 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                   <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
                     {step.summary}
                   </Text>
-                  <MQStaticMathField
-                    key={"ResumenMC" + i}
-                    exp={step.displayResult[0]!}
-                    currentExpIndex={!resumen}
-                  />
+                  <Box key={"ResumenMCContainer" + i} display="flex" justifyContent="center">
+                    <MQStaticMathField
+                      key={"ResumenMC" + i}
+                      exp={step.displayResult[0]!}
+                      currentExpIndex={!resumen}
+                    />
+                  </Box>
                 </Box>
               ))}
             </VStack>
