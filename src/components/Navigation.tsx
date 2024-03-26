@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
@@ -45,38 +45,18 @@ export function Navigation() {
             <SidebarLink key="4" href={"contentSelect?topic=19,20,21,22,23,64&registerTopic=19"}>
               Potencias y raíces
             </SidebarLink>
-            {user && admin && (
-              <>
-                <SidebarLink key="5" href={"contentSelect?topic=33,26&registerTopic=33"}>
-                  Ecuaciones Lineales
-                </SidebarLink>
-                <SidebarLink key="6" href={"contentSelect?topic=24,25&registerTopic=24"}>
-                  Ecuaciones Cuadráticas
-                </SidebarLink>
-                <SidebarLink key="7" href={"contentSelect?topic=52,53,54,55,56&registerTopic=52"}>
-                  Álgebra de Polinomios
-                </SidebarLink>
-                <SidebarLink key="8" href={"wpExercises?topic=34,35&registerTopic=34"}>
-                  Ejercicios con contexto
-                </SidebarLink>
-              </>
-            )}
-            {user && !admin && (
-              <>
-                <Box key="9" opacity={0.5} paddingLeft="35px">
-                  Ecuaciones Lineales
-                </Box>
-                <Box key="10" opacity={0.5} paddingLeft="35px">
-                  Ecuaciones Cuadráticas
-                </Box>
-                <Box key="11" opacity={0.5} paddingLeft="35px">
-                  Álgebra de Polinomios
-                </Box>
-                <Box key="12" opacity={0.5} paddingLeft="35px">
-                  Ejercicios con contexto
-                </Box>
-              </>
-            )}
+            <SidebarLink key="5" href={"contentSelect?topic=33,26&registerTopic=33"}>
+              Ecuaciones Lineales
+            </SidebarLink>
+            <SidebarLink key="6" href={"contentSelect?topic=24,25&registerTopic=24"}>
+              Ecuaciones Cuadráticas
+            </SidebarLink>
+            <SidebarLink key="7" href={"contentSelect?topic=52,53,54,55,56&registerTopic=52"}>
+              Álgebra de Polinomios
+            </SidebarLink>
+            <SidebarLink key="8" href={"wpExercises?topic=34,35&registerTopic=34"}>
+              Ejercicios con contexto
+            </SidebarLink>
           </>
         )}
       </Stack>
