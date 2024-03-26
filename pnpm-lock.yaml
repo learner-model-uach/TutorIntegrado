@@ -90,8 +90,8 @@ dependencies:
     specifier: ^2.2.0
     version: 2.2.0(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
   react-mathquill:
-    specifier: 1.0.2
-    version: 1.0.2(react@17.0.2)
+    specifier: 1.0.3
+    version: 1.0.3(react@17.0.2)
   react-notification-badge:
     specifier: 1.5.0
     version: 1.5.0(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
@@ -6448,10 +6448,10 @@ packages:
       react-dom: 17.0.2(react@17.0.2)
     dev: false
 
-  /react-mathquill@1.0.2(react@17.0.2):
-    resolution: {integrity: sha512-1r7obwMmkIYp/RDdmm8kWUvifs65E3J3iSoqFRff4r4GpdRzMeY+VvYeirVkuZEPTFrqR5JPLT824lILasau6w==}
+  /react-mathquill@1.0.3(react@17.0.2):
+    resolution: {integrity: sha512-H0z0FJsrjgKzXA1kR3rxcQyO28bXyeyMUM13VJ9jAn5cA9SJ35eScE5AK46R0O/H5zRyycGlSo2u+Pdxakbpkg==}
     peerDependencies:
-      react: ^17.0.2
+      react: ^18.2.0
     dependencies:
       react: 17.0.2
     dev: false
