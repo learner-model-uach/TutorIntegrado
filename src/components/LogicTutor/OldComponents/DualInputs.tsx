@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Button, Box, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
 import { ExLog } from '../../Tools/ExcerciseType';
-import StepComponent  from "../StepComponent"
+import StepComponent  from "./StepComponent"
 export function DualInputs({ exc, nStep }: { exc: ExLog; nStep: number }) {
   const [input1Value, setInput1Value] = useState<string>('');
   const [input2Value, setInput2Value] = useState<string>('');

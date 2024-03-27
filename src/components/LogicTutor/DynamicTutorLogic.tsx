@@ -3,10 +3,10 @@ import { Image, StackDivider, VStack, Container, Center } from "@chakra-ui/react
 import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
 import Latex from 'react-latex-next';
 import 'katex/dist/katex.min.css';
-import StepComponent from './StepTest';
+import StepComponent from './StepComponent';
 
-const DynamicTutorLogic = ({ exc}: { exc: ExLog }) => {
-    let nStep: number = 0;
+const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) => {
+
     console.log(exc.url)
     return (
         <>
@@ -16,7 +16,10 @@ const DynamicTutorLogic = ({ exc}: { exc: ExLog }) => {
                 align='stretch'
             >
                 <Container maxW='container.sm' bg='green.400' color='#262626'>
-                    Titulo: {exc.title}
+                    <Center>
+
+                        Titulo: {exc.title}
+                    </Center>
                 </Container>
                 <Container maxW='container.sm' color='#262626'>
                     <Latex>{exc.text}</Latex>
@@ -36,7 +39,7 @@ const DynamicTutorLogic = ({ exc}: { exc: ExLog }) => {
                     }
                 </Container>
                 <Container maxW='container.sm' color='#262626' centerContent>
-                    <StepComponent exc={exc} nStep={nStep} />
+                    <StepComponent exc={exc} nStep={0} topicId={topicId} />
                 </Container>
             </VStack>
         </>

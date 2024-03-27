@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Stack, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertIcon } from "@chakra-ui/react";
+import { Box, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertIcon } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import Latex from 'react-latex-next';
 import type { ExLog } from '../lvltutor/Tools/ExcerciseType2';
@@ -10,17 +10,17 @@ const Alternatives = dynamic(() => import("./Alternatives"), { ssr: false });
 const MultiplePlaceholders = dynamic(() => import("./MultiplePlaceholders"), { ssr: false });
 const TableStep = dynamic(() => import("./TableStep"), { ssr: false });
 const SinglePlaceholder = dynamic(() => import("./SinglePlaceholder"), { ssr: false });
-import { DualInputs } from "./OldComponents/DualInputs";
-
-const ShowSteps = ({ exc, nStep , Step , setStep}: { exc: ExLog; nStep:number; Step: number ,setStep:React.Dispatch<React.SetStateAction<number>>}) => {
+const ShowSteps = ({ exc, nStep , Step , setStep, topic}: { exc: ExLog; nStep:number; Step: any ,setStep:any, topic:string}) => {
     const [completed, setCompleted] = useState(false);
     const next=parseInt(exc.steps[nStep].answers[0].nextStep)
+    const [changed, setChanged] = useState(false);
     console.log("valor Step: " ,Step)
-
     return (
         <AccordionItem>
             <h2>
-                <AccordionButton >
+                <AccordionButton onClick={() => {
+                        setStep(nStep)
+                    }}>
                     <Box as="span" flex='1' textAlign='left'>
                         <Box mr={1}>
                             <Latex>{exc.steps[nStep].stepTitle}</Latex>
@@ -29,17 +29,14 @@ const ShowSteps = ({ exc, nStep , Step , setStep}: { exc: ExLog; nStep:number; S
                     <AccordionIcon />
                 </AccordionButton>
             </h2>
-            <AccordionPanel pb={8}>
-                {exc.steps[nStep].StepType === "DualInputs" && <DualInputs exc={exc} nStep={nStep} />}
-                {exc.steps[nStep].StepType === "TrueFalse" && <TrueFalse exc={exc} nStep={nStep} completed={completed} setCompleted={setCompleted}/>}
-                {exc.steps[nStep].StepType === "Blank" && <Blank exc={exc} nStep={nStep} />}
-                {exc.steps[nStep].StepType === "Alternatives" && <Alternatives exc={exc} nStep={nStep} />}
-                {exc.steps[nStep].StepType === "InputButtons" && <InputButtons exc={exc} nStep={nStep} />}
-                {exc.steps[nStep].StepType === "MultiplePlaceholders" && <MultiplePlaceholders exc={exc} nStep={nStep} completed={completed} setCompleted={setCompleted} />}
-                {exc.steps[nStep].StepType === "SinglePlaceholder" && <SinglePlaceholder exc={exc} nStep={nStep} />}
-                {exc.steps[nStep].StepType === "TableStep" && <TableStep exc={exc} nStep={nStep} />}
-                <Stack spacing={8} mb={2} direction='row'>
-                </Stack>
+            <AccordionPanel pb={8} index={nStep}>
+                {exc.steps[nStep].StepType === "TrueFalse" && <TrueFalse exc={exc} nStep={nStep}  setCompleted={setCompleted}  topic={topic}/>}
+                {exc.steps[nStep].StepType === "Blank" && <Blank exc={exc} nStep={nStep}  setCompleted={setCompleted} topic={topic}/>}
+                {exc.steps[nStep].StepType === "Alternatives" && <Alternatives exc={exc} nStep={nStep}  setCompleted={setCompleted} topic={topic}/>}
+                {exc.steps[nStep].StepType === "InputButtons" && <InputButtons exc={exc} nStep={nStep}  setCompleted={setCompleted} topic={topic}/>}
+                {exc.steps[nStep].StepType === "MultiplePlaceholders" && <MultiplePlaceholders exc={exc} nStep={nStep}  setCompleted={setCompleted} topic={topic} />}
+                {exc.steps[nStep].StepType === "SinglePlaceholder" && <SinglePlaceholder exc={exc} nStep={nStep}  setCompleted={setCompleted} topic={topic}/>}
+                {exc.steps[nStep].StepType === "TableStep" && <TableStep exc={exc} nStep={nStep}  setCompleted={setCompleted} topic={topic}/>}
             </AccordionPanel>
             {(completed && next === -1) ? (
                     <>
@@ -50,8 +47,11 @@ const ShowSteps = ({ exc, nStep , Step , setStep}: { exc: ExLog; nStep:number; S
                     </>
                     ):completed && next !== -1? (
                     <>
-                        {setStep(next)}
-                        <ShowSteps exc={exc} nStep={next} Step={Step} setStep={setStep} />
+                        <ShowSteps exc={exc} nStep={next} Step={Step} setStep={setStep} topic={topic}/>
+                        {(!changed)?(
+                            setStep(next),
+                            setChanged(true)
+                        ) : null}
                     </>
                     ) : null}
             </AccordionItem>

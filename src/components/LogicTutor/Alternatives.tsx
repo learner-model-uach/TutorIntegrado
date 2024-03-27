@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Alert, AlertIcon, Button, Stack } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
-import StepComponent  from "./StepComponent"
 import { useAction } from '../../utils/action';
-import { sessionState } from '../SessionState';
 
-const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
-  const pasoSt = exc.steps[nStep]?.answers?.[0]?.nextStep;
-  const numero: number = parseFloat(pasoSt);
+
+const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>>; topic:string })=> {
+
   const [firstTime, setFirstTime, ] = useState(true);
   const valores_a_elegir = exc.steps[nStep]?.values;
   const respuestaCorrecta = String(exc.steps[nStep]?.answers?.[0]?.answer?.[0]);
@@ -36,10 +34,10 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     setFirstTime(false);
     if (String(valor) === respuestaCorrecta) {
       setIsCorrectValue(true);
+      setCompleted(true)
       setShowError(false);
       respuesta = true
     } else {
-      setIsCorrectValue(false);
       setShowError(true);
       setHints(hints+1);
     }
@@ -48,7 +46,7 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
       contentID: exc.code,
-      topicID: sessionState.topic,
+      topicID: topic,
       result: respuesta?1:0,
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
@@ -60,10 +58,6 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
   };
 
   return (
-    <>
-      {isCorrectValue ? (
-        <StepComponent exc={exc} nStep={numero} />
-      ) : (
         <>
           <Stack spacing={6} mb={2} direction='row'>
             {valoresBarajados.map((valor, index) => (
@@ -78,12 +72,16 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
               </Button>
             ))}
           </Stack>
-          {showError && (
-            <Alert status='error'>
-              <AlertIcon />
-              Respuesta incorrecta
-            </Alert>
-          )}
+          {firstTime ? null : !isCorrectValue?
+                         <Alert status='error'>
+                            <AlertIcon />
+                                Tu respuesta no es la esperada intentalo denuevo.
+                        </Alert>
+                        :                         <Alert status='success'>
+                        <AlertIcon />
+                            {exc.steps[nStep].correctMsg}
+                    </Alert>
+                    }          
            <Hint
               hints={exc.steps[nStep].hints}
               contentId={exc.code}
@@ -99,8 +97,6 @@ const Alternatives = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
             />
         </>
       )}
-    </>
-  );
-};
+
 
 export default Alternatives;

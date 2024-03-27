@@ -3,16 +3,11 @@ import { useState } from 'react';
 import { Button, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
-import StepComponent  from "./StepComponent"
 import { useAction } from '../../utils/action';
-import { sessionState } from '../SessionState';
 
-
-const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
-    let pasoSt = exc.steps[nStep].answers[0].nextStep;
+const InputButtons = ({ exc, nStep,  setCompleted ,topic}: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>> ; topic:string})=> {
     const [isCorrectValue, setIsCorrectvalue] = useState(false);
     const [firstTime, setFirstTime] = useState(true);
-    let numero: number = parseFloat(pasoSt);
     const [inputText, setInputText] = useState<string>('');
     const [respuestas, setRespuestas] = useState<string[]>([]);
     const [error, setError] = useState(false);
@@ -25,11 +20,11 @@ const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
         let respuesta = false
         console.log('Respuesta esperada:', exc.steps[nStep].answers[0].answer[0]);
         setRespuestas(prevRespuestas => [...prevRespuestas, inputText]);
-        
         setFirstTime(false);
         if (inputText === exc.steps[nStep].answers[0].answer[0]) {
             console.log("Correcto");
             setIsCorrectvalue(true);
+            setCompleted(true);
             respuesta = true
         } else {
             console.log("Respuesta incorrecta");
@@ -42,7 +37,7 @@ const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
             verbName: "tryStep",
             stepID: "" + exc.steps[nStep].stepId,
             contentID: exc.code,
-            topicID: sessionState.topic,
+            topicID: topic,
             result: respuesta?1:0,
             kcsIDs: exc.steps[nStep].KCs,
             extra: {
@@ -58,10 +53,7 @@ const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     };
 
     return (
-        <>
-        {isCorrectValue ? (
-            <StepComponent exc={exc} nStep={numero} />
-            ) : (
+
                 <>
             <Stack spacing={6} mb={2} direction='row'>
                 <span>&#123;</span>
@@ -100,17 +92,18 @@ const InputButtons = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
             ></Hint>  
             </Stack>
 
-            {isCorrectValue ? (
-                <StepComponent exc={exc} nStep={numero} />
-                ) : firstTime ? null : (
-                    <Alert status='error'>
-                    <AlertIcon />
-                    Respuesta Incorrecta
-                </Alert>
-            )}
-        </>
+            {firstTime ? null : !isCorrectValue?
+                         <Alert status='error'>
+                            <AlertIcon />
+                                Tu respuesta no es la esperada intentalo denuevo.
+                        </Alert>
+                        :                         <Alert status='success'>
+                        <AlertIcon />
+                            {exc.steps[nStep].correctMsg}
+                    </Alert>
+                    }
+                </>
         )}
-        </>
-    );
-}
+
+
 export default InputButtons;

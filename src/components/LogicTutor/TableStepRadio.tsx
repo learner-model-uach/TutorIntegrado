@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Button,
   Box,
+  Stack,
   Alert,
   AlertIcon,
   useColorModeValue,
@@ -12,8 +13,8 @@ import {
   Tbody,
   Tr,
   Td,
-  Center,
-  Stack,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 
 
@@ -21,32 +22,13 @@ import type {ExLog, textAlign}   from '../lvltutor/Tools/ExcerciseType2';
 import Hint from '../Hint';
 import Latex from 'react-latex-next';
 import { useAction } from '../../utils/action';
+import { sessionState } from '../SessionState';
 
-
-function BotonAlternar({ valores, setValor }) {
-  const [indice, setIndice] = useState(0); // Estado para almacenar el índice del valor actual
-
-  // Función para cambiar el valor del botón cuando se hace clic
-  const handleClick = () => {
-    // Obtenemos el índice del próximo valor (alternando entre 0 y 1)
-    const siguienteIndice = indice === 0 ? 1 : 0;
-    // Actualizamos el índice
-    setIndice(siguienteIndice);
-    // Actualizamos el valor
-    setValor(valores[siguienteIndice]);
-  };
-
-  return (
-    <Button colorScheme='teal' size='sm' onClick={handleClick}>
-      {valores[indice]}
-    </Button>
-  );
-}
-const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: number; setCompleted: React.Dispatch<React.SetStateAction<boolean>> ; topic:string}) => {
-  const [valor, setValor] = useState(exc.steps[nStep].button[0][0]);
-  const [valor1, setValor1] = useState(exc.steps[nStep].button[1][0]);
-  const [valor2, setValor2] = useState(exc.steps[nStep].button[2][0]);
-  const [valor3, setValor3] = useState(exc.steps[nStep].button[3][0]);
+const TableStep = ({ exc, nStep,  setCompleted }: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>> }) => {
+  const [valor, setValor] = useState('');
+  const [valor1, setValor1] = useState('');
+  const [valor2, setValor2] = useState('');
+  const [valor3, setValor3] = useState('');
   const userAnswers = [valor, valor1, valor2, valor3];
   const [hints, setHints] = useState(0)
   const [lastHint, setLastHint] = useState(false);
@@ -78,7 +60,7 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
           verbName: "tryStep",
           stepID: "" + exc.steps[nStep].stepId,
           contentID: exc.code,
-          topicID: topic,
+          topicID: sessionState.topic,
           result: respuesta?1:0,
           kcsIDs: exc.steps[nStep].KCs,
           extra: {
@@ -118,28 +100,33 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
                         return (
                           <Td key={i} textAlign={exc.steps[nStep].table?.alignRows}>
                             {value === 'a' ? (
-
-                                  <Center>
-                                    <BotonAlternar valores={exc.steps[nStep].button[0]} setValor={setValor} />
-                                  </Center>
-
+                              <RadioGroup onChange={setValor} value={valor}>
+                                <Stack direction="row">
+                                  <Radio value="V">V</Radio>
+                                  <Radio value="F">F</Radio>
+                                </Stack>
+                              </RadioGroup>
                             ) : value === 'b' ? (
-
-
-                                <Center>
-                                    <BotonAlternar valores={exc.steps[nStep].button[1]} setValor={setValor1} />
-                                  </Center>
-
+                              <RadioGroup onChange={setValor1} value={valor1}>
+                                <Stack direction="row">
+                                  <Radio value="V">V</Radio>
+                                  <Radio value="F">F</Radio>
+                                </Stack>
+                              </RadioGroup>
                             ) : value === 'c' ? (
-                              
-                                <Center>
-                                    <BotonAlternar valores={exc.steps[nStep].button[2]} setValor={setValor2} />
-                                  </Center>
-
+                              <RadioGroup onChange={setValor2} value={valor2}>
+                                <Stack direction="row">
+                                  <Radio value="V">V</Radio>
+                                  <Radio value="F">F</Radio>
+                                </Stack>
+                              </RadioGroup>
                             ) : value === 'd' ? (
-                                <Center>
-                                    <BotonAlternar valores={exc.steps[nStep].button[3]} setValor={setValor3} />
-                                  </Center>
+                              <RadioGroup onChange={setValor3} value={valor3}>
+                                <Stack direction="row">
+                                  <Radio value="V">V</Radio>
+                                  <Radio value="F">F</Radio>
+                                </Stack>
+                              </RadioGroup>
                             ) : (
                               <Latex strict>{value}</Latex>
                             )}
@@ -152,11 +139,19 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
               </Table>
             </Box>
           )}
-          <Stack spacing={8} mb={2} direction='row'>
-
           <Button colorScheme="teal" size="sm" onClick={() => evaluar()}>
             Enviar
           </Button>
+          {firstTime ? null : !isCorrectValue?
+                         <Alert status='error'>
+                            <AlertIcon />
+                                Tu respuesta no es la esperada intentalo denuevo.
+                        </Alert>
+                        :                         <Alert status='success'>
+                        <AlertIcon />
+                            {exc.steps[nStep].correctMsg}
+                    </Alert>
+                    }
            <Hint
             hints={exc.steps[nStep].hints}
             contentId={exc.code}
@@ -170,17 +165,6 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
             setHints={setHints}
             setLastHint={setLastHint}
             ></Hint>  
-            </Stack>
-            {firstTime ? null : !isCorrectValue?
-                           <Alert status='error'>
-                              <AlertIcon />
-                                  Tu respuesta no es la esperada intentalo denuevo.
-                          </Alert>
-                          :                         <Alert status='success'>
-                          <AlertIcon />
-                              {exc.steps[nStep].correctMsg}
-                      </Alert>
-                      }
         </>
       )}
 

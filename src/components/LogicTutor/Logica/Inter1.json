@@ -137,11 +137,16 @@
         },
         {
           "hintId": 1,
+          "hint": "Por ejemplo el intervalo [-1,1] representado por comprensión es: ",
+          "expression": "x \\in \\mathrm{R}:-1 \\leq x \\leq 1"
+        },
+        {
+          "hintId": 2,
           "hint": "Por compresión un intervalo cerrado se representa como: ",
           "expression": "x \\in \\mathrm{P}:a \\leq x \\leq b"
         },
         {
-          "hintId": 2,
+          "hintId": 3,
           "hint": "La respuesta es: ",
           "expression": "x\\inℝ:-3\\leq x\\leq7"
         }

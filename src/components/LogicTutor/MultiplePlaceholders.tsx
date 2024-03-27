@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
-import { Button, Box, Stack, Alert, AlertIcon} from "@chakra-ui/react";
+import { Button,  Stack, Alert, AlertIcon, Center} from "@chakra-ui/react";
 import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from '../../utils/MQPostfixSolver';
@@ -9,14 +9,15 @@ import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { convertirNotacion } from './convertirNotacion';
 import { useAction } from '../../utils/action';
-import { sessionState } from '../SessionState';
+
 const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"),{
     ssr:false,
 });
 
 
-const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: ExLog; nStep: number; completed: boolean; setCompleted: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>> ; topic:string}) => {
     const action = useAction()
+    console.log("topic multiple placeholders: "+topic)
     //@ts-ignore
     const [firstTime, setFirstTime] = useState(true);
     const [isCorrectValue, setIsCorrectValue] = useState(false);
@@ -38,7 +39,6 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
         if(exc.steps[nStep].validation=='evaluate'){
             //@ts-ignore
             if (ValuesArray.every((value, index) => (MQPostfixSolver(MQPostfixparser(convertirNotacion(value)),[{}])) === MQPostfixSolver(MQPostfixparser(convertirNotacion(answer[index])),[{}]))) {
-                setCompleted(true)
                 setIsCorrectValue(true);
                 respuesta=true
                 console.log("correctValueSeteado "+isCorrectValue)
@@ -53,7 +53,6 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
                 console.log("true1");
                 respuesta=true
                 setIsCorrectValue(true);
-                setCompleted(true)
                 console.log("correctValueSeteado "+isCorrectValue)
             }else{
                 setError(true)
@@ -67,7 +66,7 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
             verbName: "tryStep",
             stepID: "" + exc.steps[nStep].stepId,
             contentID: exc.code,
-            topicID: sessionState.topic,
+            topicID: topic,
             result: respuesta?1:0,
             kcsIDs: exc.steps[nStep].KCs,
             extra: {
@@ -87,17 +86,14 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
         setValuesArray(newValuesArray);
     }
     const mfe = useMemo(() => new MathfieldElement(), []);
-    console.log(exc.code)
-    //
     return (
         <>
                 <>
-                    <Stack spacing={8} mb={2} direction='row'>
-                        <Box mr={1}>
-                            <Mathfield readOnly={true} mfe={mfe} value={exc.steps[nStep].displayResult[0]} onChange={test}>
-                            </Mathfield>
-                        </Box>
-                    </Stack>
+                    <Center>
+                        <Mathfield readOnly={true} mfe={mfe} value={exc.steps[nStep].displayResult[0]} onChange={test}>
+                        </Mathfield>
+                    </Center>
+
                     <Stack spacing={8} mb={2} direction='row'>
 
                     <Button colorScheme='teal' size='sm' onClick={() => evaluar()}> enviar</Button>
@@ -120,10 +116,12 @@ const MultiplePlaceholders = ({ exc, nStep, completed, setCompleted }: { exc: Ex
                             <AlertIcon />
                                 Tu respuesta no es la esperada intentalo denuevo.
                         </Alert>
-                        :                         <Alert status='success'>
-                        <AlertIcon />
+                        :                         
+                        <Alert status='success'>
+                            <AlertIcon />
                             {exc.steps[nStep].correctMsg}
-                    </Alert>
+                            {setCompleted(true)}
+                        </Alert>
                     }
                 </>
             

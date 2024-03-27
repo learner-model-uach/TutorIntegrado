@@ -4,14 +4,14 @@ import { Button, Box, Stack, Alert, AlertIcon} from "@chakra-ui/react";
 import StepComponent  from "./StepComponent"
 import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
-import MQPostfixSolver from '../../utils/MQPostfixSolver';
-import MQPostfixparser from '../../utils/MQPostfixparser';
-import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
-import Hint from '../Hint';
-import { convertirNotacion } from './convertirNotacion';
-import { useAction } from '../../utils/action';
-import { sessionState } from '../SessionState';
-const Mathfield = dynamic(() => import("../lvltutor/Tools/mathLive"),{
+import MQPostfixSolver from '../../../utils/MQPostfixSolver';
+import MQPostfixparser from '../../../utils/MQPostfixparser';
+import type {ExLog}   from '../../lvltutor/Tools/ExcerciseType2';
+import Hint from '../../Hint';
+import { convertirNotacion } from '../convertirNotacion';
+import { useAction } from '../../../utils/action';
+import { sessionState } from '../../SessionState';
+const Mathfield = dynamic(() => import("../../lvltutor/Tools/mathLive"),{
     ssr:false,
 });
 

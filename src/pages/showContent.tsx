@@ -35,7 +35,7 @@ export default withAuth(function ShowContent() {
   const topic = sessionState.topic;
 
   //console.log("Content --------->", content);
-  //console.log("topic --------->", topic);
+  console.log("topic --------->", topic);
 
   return (
     <>
@@ -63,7 +63,7 @@ export default withAuth(function ShowContent() {
         ) : content && content?.json.type == "wordProblem" ? (
           <DynamicTutorWP key="5" exercise={content.json} topicId={topic}></DynamicTutorWP>
         ) : content && content?.json.type==("lvltutor2") ? (
-          <DynamicTutorLogic exc={content.json as ExLog}/>
+          <DynamicTutorLogic exc={content.json as ExLog} topicId={topic}/>
         )
         : (
           <Text>No existe el contenido que desea cargar</Text>

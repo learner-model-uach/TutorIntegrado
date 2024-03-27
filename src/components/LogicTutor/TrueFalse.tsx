@@ -1,13 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, Box, Stack, Alert, AlertIcon } from "@chakra-ui/react";
+import { Button,  Stack, Alert, AlertIcon, Center } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import Latex from 'react-latex-next';
 import { useAction } from '../../utils/action';
-import { sessionState } from '../SessionState';
 
-const TrueFalse = ({ exc, nStep, completed, setCompleted }: { exc: ExLog; nStep: number; completed: boolean; setCompleted: React.Dispatch<React.SetStateAction<boolean>> }) => {
+
+const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>>; topic:string }) => {
     const action = useAction()
     const [isCorrectValue, setIsCorrectvalue] = useState(false);
     const [firstTime, setFirstTime] = useState(true);
@@ -39,7 +39,7 @@ const TrueFalse = ({ exc, nStep, completed, setCompleted }: { exc: ExLog; nStep:
             verbName: "tryStep",
             stepID: "" + exc.steps[nStep].stepId,
             contentID: exc.code,
-            topicID: sessionState.topic,
+            topicID: topic,
             result: respuesta?1:0,
             kcsIDs: exc.steps[nStep].KCs,
             extra: {
@@ -54,13 +54,12 @@ const TrueFalse = ({ exc, nStep, completed, setCompleted }: { exc: ExLog; nStep:
         <>
 
                 <>
-                    <Stack spacing={8} mb={2} direction='row'>
-                        <Box mr={1}>
+                    <Center>
                             <Latex>
                             {exc.steps[nStep].expression}
                             </Latex>
-                        </Box>
-                    </Stack>
+                    </Center>
+
                     <Stack spacing={8} mb={2} direction='row'>
                         <Button colorScheme='teal' size='sm' onClick={() => evaluar('V')}>
                             Verdadero

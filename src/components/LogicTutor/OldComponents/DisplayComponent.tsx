@@ -23,7 +23,7 @@ const MultiplePlaceholders = dynamic(() => import("../MultiplePlaceholders"),{
     ssr:false,
 })
 
-const TableStep = dynamic(() => import("../TableStep"),{
+const TableStep = dynamic(() => import("../TableStepRadio"),{
     ssr:false,
 })
 

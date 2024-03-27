@@ -1,24 +1,20 @@
 import React from 'react';
 import { useState, useMemo } from 'react';
-import { Button, Box, Stack, Alert, AlertIcon} from "@chakra-ui/react";
+import { Button, Stack, Alert, AlertIcon, Center} from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
-import StepComponent  from "./StepComponent"
 import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from '../../utils/MQPostfixSolver';
 import MQPostfixparser from '../../utils/MQPostfixparser';
 import { convertirNotacion } from './convertirNotacion';
-import { sessionState } from '../SessionState';
 import { useAction } from '../../utils/action';
 const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"),{
     ssr:false,
 });
 
 
-const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
-    let pasoSt=exc.steps[nStep].answers[0].nextStep
-    let numero: number = parseFloat(pasoSt);
+const SinglePlaceholder = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: number; setCompleted: React.Dispatch<React.SetStateAction<boolean>>; topic:string }) => {
     const [latex, setLatex]=useState("")
     const [error,setError] = useState(false);
     const [firstTime, setFirstTime] = useState(true);
@@ -46,6 +42,7 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
         if (b==c) {
             console.log("true");
             setIsCorrectvalue(true);
+            setCompleted(true)
             response=true
         } else {
             setError(true)
@@ -56,7 +53,7 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
             verbName: "tryStep",
             stepID: "" + exc.steps[nStep].stepId,
             contentID: exc.code,
-            topicID: sessionState.topic,
+            topicID: topic,
             result: response?1:0,
             kcsIDs: exc.steps[nStep].KCs,
             extra: {
@@ -84,17 +81,12 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
     
     //
     return (
-        <>
-            {isCorrectValue ? (
-                <StepComponent exc={exc} nStep={numero} />
-            ) : (
+
                 <>
-                    <Stack spacing={8} mb={2} direction='row'>
-                        <Box mr={1}>
+                     <Center>
                             <Mathfield readOnly={true} mfe={mfe} value={exc.steps[nStep].displayResult[0]} onChange={modify}>
                             </Mathfield>
-                        </Box>
-                    </Stack>
+                    </Center>
                     <Stack spacing={8} mb={2} direction='row'>
                     <Button colorScheme='teal' size='sm' onClick={() => evaluar(latex,Values)} > enviar</Button>
                         <Hint
@@ -112,15 +104,18 @@ const SinglePlaceholder = ({ exc, nStep }: { exc: ExLog; nStep: number }) => {
                         ></Hint>
                     </Stack>
 
-                    {firstTime ? null : <Alert status='error'>
+                    {firstTime ? null : !isCorrectValue?
+                         <Alert status='error'>
                             <AlertIcon />
-                            Tu respuesta no es la esperada intentalo denuevo.
-                        </Alert>}
+                                Tu respuesta no es la esperada intentalo denuevo.
+                        </Alert>
+                        :                         <Alert status='success'>
+                        <AlertIcon />
+                            {exc.steps[nStep].correctMsg}
+                    </Alert>
+                    }
                 </>
             )}
-        </>
-    );
-}
 
 export default SinglePlaceholder;
 

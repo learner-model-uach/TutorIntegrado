@@ -62,6 +62,7 @@ export interface ExType {
 export interface StepLog extends Step {
   StepType: "Alternatives"|"TrueFalse"|"MultiplePlaceholders"|"Blank"|"DualInputs"|"InputButtons"|"Notation"|"Rect"|"TableStep"|"SinglePlaceholder";
   table?: Table|undefined;
+  button?: string[]
   
 }
 

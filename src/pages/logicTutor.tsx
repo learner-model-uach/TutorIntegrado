@@ -33,7 +33,7 @@ function App() {
     return (
         
         <div>
-            <DynamicTutorLogic exc={exc} />
+            <DynamicTutorLogic exc={exc} topicId={"38"} />
         </div>
     )
 }
