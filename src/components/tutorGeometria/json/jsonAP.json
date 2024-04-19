@@ -1,0 +1,235 @@
+{
+  "code": "ap2",
+  "title": "Área y perímetro I.",
+  "type": "areaperimetro1",
+  "exerciseType": "steps",
+  "meta": {},
+  "text": "Él area de un triangulo es de 24 mts2. Si su base es 3 veces su altura, cual sería el valor de la altura del triangulo?",
+  "selectSteps": false,
+  "image": "/img/tutorGeometria/areaperimetro/AP1_1.png",
+  "conclusion": "La altura del triángulo es 4 mts.",
+  "steps": [
+      {
+          "KCs": [],
+          "hints": [
+              {
+                  "hint": "La variable b es 3 veces h.",
+                  "hintId": 0
+              },
+              {
+                  "hint": "Para calcular 'b' multiplica h por 3",
+                  "hintId": 1
+              },
+              {
+                  "hint": "La respuesta es b = 3h",
+                  "hintId": 2
+              }
+          ],
+          "stepId": 0,
+          "inputs":["input"],
+          "answers": [
+              {
+                  "answer": [
+                      "3h"
+                  ],
+                  "nextStep": 1
+              },
+              {
+                  "answer": [
+                      "h3"
+                  ],
+                  "nextStep": 1
+              }
+          ],
+          "summary": "1) Si definimos la base del triángulo en razón de la altura nos da como resultado b = 3h.",
+          "stepTitle": "Definir la base 'b' en razón de la altura'h'.",
+          "correctMsg": "La respuesta ingresada corresponde a la base del triángulo en razón a su altura.",
+          "expression": "b = ",
+          "incorrectMsg": "La respuesta ingresada no corresponde a la base del triángulo en razón a la altura.",
+          "displayResult": "b = 3h",
+          "matchingError": [
+              {
+                  "hint": "No ha ingresado respuesta",
+                  "error": [
+                      ""
+                  ],
+                  "hintId": 3
+              }
+          ]
+      },
+      {
+          "KCs": [
+              "AreaT"
+          ],
+          "hints": [
+              {
+                  "hint": "El área es la mitad del producto de la base por la altura.",
+                  "hintId": 0
+              },
+              {
+                  "hint": "La altura es h y la base es b.",
+                  "hintId": 1
+              },
+              {
+                  "hint": "La respuesta es: (b*h)/2.",
+                  "hintId": 2
+              }
+          ],
+          "stepId": 1,
+          "answers": [
+              {
+                  "answer": [
+                      "bh",
+                      "2"
+                  ],
+                  "nextStep": 2
+              },
+              {
+                  "answer": [
+                      "hb",
+                      "2"
+                  ],
+                  "nextStep": 2
+              }
+          ],
+          "inputs":["input","/","input"],
+          "summary": "2) El área del triángulo es la mitad de su base por su altura bh/2. ",
+          "stepTitle": "Expresa la fórmula general del área del triángulo.",
+          "correctMsg": "La expresión ingresada corresponde al área del triángulo.",
+          "expression": "A = ",
+          "incorrectMsg": "La expresión ingresada no corresponde al área del triángulo.",
+          "displayResult": "A = bh/2",
+          "matchingError": [
+              {
+                  "hint": "No ha ingresado respuesta",
+                  "error": [
+                      ""
+                  ],
+                  "hintId": 3
+              }
+          ]
+      },
+      {
+          "KCs": [],
+          "hints": [
+              {
+                  "hint": "El área es la mitad del producto de la base por la altura.",
+                  "hintId": 0
+              },
+              {
+                  "hint": "De la imagen inferimos que el área del triángulo es 24.",
+                  "hintId": 1
+              },
+              {
+                  "hint": "La altura es 'h'.",
+                  "hintId": 2
+              },
+              {
+                  "hint": "La base es '3h'.",
+                  "hintId": 3
+              },
+              {
+                  "hint": "La respuesta es 24 = 3h^2/2.",
+                  "hintId": 4
+              }
+          ],
+          "stepId": 2,
+          "inputs":["input","=","input","/","input"],
+          "answers": [
+              {
+                  "answer": [
+                      "24",
+                      "3h^2",
+                      "2"
+                  ],
+                  "nextStep": 3
+              },
+              {
+                  "answer": [
+                      "24",
+                      "(h^2)3",
+                      "2"
+                  ],
+                  "nextStep": 3
+              },
+              {
+                  "answer": [
+                      "24",
+                      "3hh",
+                      "2"
+                  ],
+                  "nextStep": 3
+              },
+              {
+                  "answer": [
+                      "24",
+                      "hh3",
+                      "2"
+                  ],
+                  "nextStep": 3
+              }
+          ],
+          "summary": "3) Para reemplazar en la formula del area del triangulo es necesario recordar que la altura es 'h' y que la base corresponde a '3h'.",
+          "stepTitle": "Ahora que ya conocemos la fórmula del área de triángulo, reemplazar en función de nuestra variable de altura 'h'.",
+          "correctMsg": "Haz reemplazado la formula de manera exitosa.",
+          "expression": "",
+          "incorrectMsg": "Hay un error en el reemplazo de la fórmula.",
+          "displayResult": "A = \\frac{3h^2}{2}",
+          "matchingError": [
+              {
+                  "hint": "Debe ingresar una respuesta",
+                  "error": [
+                      ""
+                  ],
+                  "hintId": 5
+              }
+          ]
+      },
+      {
+          "KCs": [
+              "DespVarEcu",
+              "PropsRaiz",
+              "AN"
+          ],
+          "hints": [
+              {
+                  "hint": "Despeja la variable de altura 'h'.",
+                  "hintId": 0
+              },
+              {
+                  "hint": "Recuerda que el valor del área 'A' es 24",
+                  "hintId": 1
+              },
+              {
+                  "hint": "La respuesta es  h = 4 mts",
+                  "hintId": 2
+              }
+          ],
+          "stepId": 3,
+          "answers": [
+              {
+                  "answer": [
+                      "4"
+                  ],
+                  "nextStep": -1
+              }
+          ],
+          "inputs":["input"],
+          "summary": "3) Desarrollamos la ecuación y obtenemos el valor de la altura del triángulo",
+          "stepTitle": "Calcular la altura del triángulo.",
+          "correctMsg": "La altura del triángulo es 4 mts",
+          "expression": "h = ",
+          "incorrectMsg": "El número ingresado no corresponde a la altura del triángulo.",
+          "displayResult": "h = 4 mts",
+          "matchingError": [
+              {
+                  "hint": "Debe ingresar una respuesta",
+                  "error": [
+                      ""
+                  ],
+                  "hintId": 4
+              }
+          ]
+      }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+    "code": "",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": null,
+    "steps": [
+      {
+        "KCs": [""],
+        "hints": [
+          { "hint": "El perímetro de un rectángulo se calcula sumando dos veces el largo más dos veces el ancho.", "hintId": 0 },
+          { "hint": "Tienes que hacer dos sumas: 10 cm + 10 cm y 5 cm + 5 cm.", "hintId": 1 },
+          { "hint": "Después de sumar, combina ambas sumas para obtener el perímetro total.", "hintId": 2 }
+        ],
+        "stepId": 0,
+        "answers": [
+          { "correct":1, "answer": ["30cm"], "nextStep": -1 },
+          { "correct":0, "answer": ["50cm"], "nextStep": -1 },
+          { "correct":0, "answer": ["15cm"], "nextStep": -1 },
+          { "correct":0, "answer": ["25cm"], "nextStep": -1 }
+        ],
+        "summary": "1) Si sumamos todos los lados del rectángulo nos da 30 cm.",
+        "stepTitle": "Un rectángulo tiene un largo de 10 cm y un ancho de 5 cm. ¿Cuál es su perímetro?.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 10 + 10 + 5 + 5 = 30 cm.",
+        "matchingError": [{ "hint": "No ha seleccionado respuesta", "error": [""], "hintId": 3 }]
+      }
+    ],
+    "title": "Área y perímetro II",
+    "conclusion": "Luego de sumar todos los lados del rectángulo obtenemos que su perímetro es 30cm."
+  }
+  

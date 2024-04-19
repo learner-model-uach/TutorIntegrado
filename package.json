@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.9.0",
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^1.7.4",
     "@chakra-ui/system": "^1.9.1",
     "@cortex-js/compute-engine": "^0.12.3",
@@ -46,6 +47,7 @@
     "react-mathquill": "1.0.2",
     "react-notification-badge": "1.5.0",
     "react-query": "^3.34.12",
+    "react-sketch-canvas": "^6.2.0",
     "react-star-rating-component": "^1.4.1",
     "react-super-responsive-table": "^5.2.1",
     "rq-gql": "^0.4.3",
