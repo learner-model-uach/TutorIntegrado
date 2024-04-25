@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import type { ComponentProps } from "react";
 import type { Tutor } from "../components/tutorEcuaciones/Tutor";
 import type Plain from "../components/lvltutor/Plain";
+
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { Text, Box } from "@chakra-ui/react";
 import Info from "../utils/Info";
@@ -29,6 +30,10 @@ const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(() =>
 const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
 );
+
+//const DynamicTutorL = dynamic<ComponentProps<typeof DynamicTutorLogic>>(() =>
+//  import("../components/LogicTutor/DynamicTutorLogic").then(mod => mod.DynamicTutorLogic),
+//);
 
 export default withAuth(function ShowContent() {
   const content = sessionState.currentContent;
@@ -63,7 +68,7 @@ export default withAuth(function ShowContent() {
         ) : content && content?.json.type == "wordProblem" ? (
           <DynamicTutorWP key="5" exercise={content.json} topicId={topic}></DynamicTutorWP>
         ) : content && content?.json.type==("lvltutor2") ? (
-          <DynamicTutorLogic exc={content.json as ExLog} topicId={topic}/>
+          <DynamicTutorLogic exc={content.json as ExLog} topicId={"38"}/>
         )
         : (
           <Text>No existe el contenido que desea cargar</Text>

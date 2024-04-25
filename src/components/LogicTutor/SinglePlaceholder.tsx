@@ -87,8 +87,8 @@ const SinglePlaceholder = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nS
                             <Mathfield readOnly={true} mfe={mfe} value={exc.steps[nStep].displayResult[0]} onChange={modify}>
                             </Mathfield>
                     </Center>
-                    <Stack spacing={8} mb={2} direction='row'>
-                    <Button colorScheme='teal' size='sm' onClick={() => evaluar(latex,Values)} > enviar</Button>
+                    <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
+                    <Button colorScheme='blue' size='sm' onClick={() => evaluar(latex,Values)} > enviar</Button>
                         <Hint
                             hints={exc.steps[nStep].hints}
                             contentId={exc.code}

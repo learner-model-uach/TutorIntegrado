@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertIcon, Button, Stack } from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Center, Stack } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { useAction } from '../../utils/action';
@@ -59,11 +59,11 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
 
   return (
         <>
-          <Stack spacing={6} mb={2} direction='row'>
+          <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
             {valoresBarajados.map((valor, index) => (
               <Button
                 key={index}
-                colorScheme='teal'
+                colorScheme='blue'
                 size='sm'
                 onClick={() => evaluar(valor.value)}
                 isDisabled={isCorrectValue}
@@ -82,6 +82,8 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
                             {exc.steps[nStep].correctMsg}
                     </Alert>
                     }          
+          <Center>
+
            <Hint
               hints={exc.steps[nStep].hints}
               contentId={exc.code}
@@ -94,7 +96,8 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
               hintCount={hints}
               setHints={setHints}
               setLastHint={setLastHint}
-            />
+              />
+              </Center>
         </>
       )}
 

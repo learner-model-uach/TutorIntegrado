@@ -94,9 +94,9 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
                         </Mathfield>
                     </Center>
 
-                    <Stack spacing={8} mb={2} direction='row'>
-
-                    <Button colorScheme='teal' size='sm' onClick={() => evaluar()}> enviar</Button>
+                    <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
+                    
+                    <Button colorScheme='blue' size='sm' onClick={() => evaluar()}> enviar</Button>
                     <Hint
                             hints={exc.steps[nStep].hints}
                             contentId={exc.code}
@@ -109,7 +109,8 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
                             hintCount={hints}
                             setHints={setHints}
                             setLastHint={setLastHint}
-                        ></Hint>                                  
+                            ></Hint>                                  
+                    
                     </Stack>
                     {firstTime ? null : !isCorrectValue?
                          <Alert status='error'>

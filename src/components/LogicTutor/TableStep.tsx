@@ -37,7 +37,7 @@ function BotonAlternar({ valores, setValor }) {
   };
 
   return (
-    <Button colorScheme='teal' size='sm' onClick={handleClick}>
+    <Button colorScheme='blue' size='sm' onClick={handleClick}>
       {valores[indice]}
     </Button>
   );
@@ -152,9 +152,9 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
               </Table>
             </Box>
           )}
-          <Stack spacing={8} mb={2} direction='row'>
+          <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
 
-          <Button colorScheme="teal" size="sm" onClick={() => evaluar()}>
+          <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
             Enviar
           </Button>
            <Hint

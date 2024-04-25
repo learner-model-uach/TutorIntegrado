@@ -2,7 +2,7 @@
     "code": "inters1",
     "title": "Intersección de Intervalos",
     "type": "lvltutor2",
-    "url":"RectaFinal.png",
+    "img":"RectaFinal.png",
     "meta": {},
     "text": "Dada la siguiente representación de intervalos ",
     "steps": [
@@ -101,37 +101,42 @@
       {
         "stepId": "2",
         "expression": "",
-        "StepType":"Blank",
-        "stepTitle": "Paso 3: Escriba el intervalo que representa la recta",
+        "StepType":"MultiplePlaceholders",
+        "stepTitle": "Paso 3: Escriba por comprensión el intervalo que representa la intersección",
         "displayResult": [
-  
+          "${x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}$}"
         ],
         "KCs": [
-          "RepRecInt"
+          "RepComp"
         ],
-        "values": [ ],
+        "values": [
+          ],
         "hints": [
           {
             "hintId": 0,
-            "hint": "Un intervalo extremo cerrado se representa con corchetes cerrados ["
+            "hint": "La intersección esta representada por los elementos en común entre los intervalos"
           },
           {
             "hintId": 1,
-            "hint": "El un intervalo cerrado se representa como [a,b]Siendo a y b los extremos inferior y superior respectivamente"
+            "hint": "La interseccion corresponde a [1,4]"
           }
         ],
         "matchingError": [],
-        "answers": [
-          {
-            "answer": [
-              "[1,4]"
-            ],
-            "nextStep": "-1"
-          }
-        ],
-        "incorrectMsg": "Compruebe su respuesta",
-        "correctMsg": "El intervalo corresponde a la interseccion",
-        "summary": "3)Ejercicio terminado"
-      }
+          "answers": [
+            {
+              "answer": [
+                "R",
+                "1",
+                "\\le",
+                "\\le",
+                "4"
+              ],
+              "nextStep": "-1"
+            }
+          ],
+          "incorrectMsg": "Compruebe su respuesta",
+          "correctMsg": "El intervalo corresponde a la interseccion",
+          "summary": "3)Ejercicio terminado"
+        }
     ]
   }

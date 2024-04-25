@@ -2,6 +2,10 @@ export interface value {
   name: string;
   value: number;
 }
+export interface tvalue {
+  name: string
+  value: string
+}
 export interface hint {
   hintId: number;
   hint: string;
@@ -23,7 +27,7 @@ export interface Step {
   expression: string;
   stepTitle: string;
   displayResult: Array<string>;
-  values?: Array<value>;
+  values?: Array<value>|Array<tvalue>;
   hints: Array<hint>;
   matchingError?: Array<matchingError>;
   validation?: "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount";
@@ -67,7 +71,7 @@ export interface StepLog extends Step {
 }
 
 export interface ExLog extends ExType {
-  url?: string|undefined;
+  img?: string|undefined;
   steps: Array<StepLog>;
 
 }

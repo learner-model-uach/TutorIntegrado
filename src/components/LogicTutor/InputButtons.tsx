@@ -55,28 +55,28 @@ const InputButtons = ({ exc, nStep,  setCompleted ,topic}: { exc: ExLog; nStep: 
     return (
 
                 <>
-            <Stack spacing={6} mb={2} direction='row'>
+            <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
                 <span>&#123;</span>
                 <Input htmlSize={4} size='sm' width='xs' type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} />
                 <span>&#125;</span>
             </Stack>
 
-            <Stack spacing={6} mb={2} direction='row'>
-                <Button colorScheme="teal" size="sm" onClick={() => handleButtonClick('√')}>√</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('∈')}> ∈</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('ℂ')}> ℂ</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('ℤ')}> ℤ</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('ℝ')}> ℝ</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('ℕ')}> ℕ</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('∞')}> ∞</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('≤')}> ≤</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('≥')}> ≥</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('>')}> &lt; </Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('<')}> &gt;</Button>
+            <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
+                <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick('√')}>√</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('∈')}> ∈</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('ℂ')}> ℂ</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('ℤ')}> ℤ</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('ℝ')}> ℝ</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('ℕ')}> ℕ</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('∞')}> ∞</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('≤')}> ≤</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('≥')}> ≥</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('>')}> &lt; </Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('<')}> &gt;</Button>
             </Stack>
-            <Stack spacing={8} mb={2} direction='row'>
+            <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
 
-            <Button colorScheme='teal' size='sm' onClick={() => evaluar()}> Enviar</Button>
+            <Button colorScheme='blue' size='sm' onClick={() => evaluar()}> Enviar</Button>
             <Hint
             hints={exc.steps[nStep].hints}
             contentId={exc.code}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  Accordion } from "@chakra-ui/react";
+import {  Accordion, Center } from "@chakra-ui/react";
 import type { ExLog } from '../lvltutor/Tools/ExcerciseType2';
 import 'katex/dist/katex.min.css';
 import { useAction } from '../../utils/action';
@@ -22,9 +22,13 @@ const StepComponent = ({ exc, nStep , topicId}: { exc: ExLog; nStep: number ; to
 
     return (
             <>
-                <Accordion allowToggle defaultIndex={0} index={Step}>
-                    <ShowSteps exc={exc} nStep={nStep} Step={Step} setStep={setStep} topic={topicId}/>
-                </Accordion>
+                <Center>
+                    <Accordion allowToggle defaultIndex={0}  index={Step}>
+                        <Center>
+                            <ShowSteps exc={exc} nStep={nStep} Step={Step} setStep={setStep} topic={topicId}/>
+                        </Center>
+                    </Accordion>
+                </Center>
             </>
         ) 
 

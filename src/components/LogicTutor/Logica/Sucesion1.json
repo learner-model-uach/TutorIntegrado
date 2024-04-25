@@ -2,7 +2,7 @@
   "code": "succ1",
   "title": "Sucesión",
   "type": "lvltutor2",
-  "url":"",
+  "img":"",
   "meta": {},
   "text": "Dado el siguiente término general de una sucesión:  $$B_n = \\frac{{(-1)^n \\cdot (n^2 - n)}}{{n^2 + 1}}$$",
   "steps": [
@@ -45,7 +45,7 @@
         }
       ],
       "incorrectMsg": "Compruebe su respuesta",
-      "correctMsg": "Los Extremos corresponden",
+      "correctMsg": "La representacion esta correcta",
       "summary": "1)Luego se comprueban valores del conjunto"
     },
     {
@@ -93,7 +93,7 @@
         }
       ],
       "incorrectMsg": "Compruebe su respuesta",
-      "correctMsg": "Los Extremos corresponden",
+      "correctMsg": "El valor de B1 es correcto",
       "summary": "1)Luego se comprueban valores del conjunto"
     },
     {
@@ -134,7 +134,7 @@
         }
       ],
       "incorrectMsg": "Compruebe su respuesta",
-      "correctMsg": "Los Extremos corresponden",
+      "correctMsg": "La sucesion corresponde",
       "summary": "1)Luego se comprueban valores del conjunto"
     }
   ]

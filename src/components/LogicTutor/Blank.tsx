@@ -50,16 +50,16 @@ const Blank = ({ exc, nStep,  setCompleted, topic }: { exc: ExLog; nStep: number
     };
     return (
             <>
-            <Stack spacing={8} mb={2} direction='row'>
+            <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
                 <Input htmlSize={4} width='auto' type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} />
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('[')}> [</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick(']')}> ]</Button>
-                <Button colorScheme='teal' size='sm' onClick={() => handleButtonClick('∞')}> ∞</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('[')}> [</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick(']')}> ]</Button>
+                <Button colorScheme='blue' size='sm' onClick={() => handleButtonClick('∞')}> ∞</Button>
     
             </Stack>
-            <Stack spacing={8} mb={2} direction='row'>
+            <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
 
-            <Button colorScheme='teal' size='sm' onClick={() => evaluar()}> Enviar</Button>
+            <Button colorScheme='blue' size='sm' onClick={() => evaluar()}> Enviar</Button>
             <Hint
                     hints={exc.steps[nStep].hints}
                     contentId={exc.code}

@@ -60,26 +60,27 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
                             </Latex>
                     </Center>
 
-                    <Stack spacing={8} mb={2} direction='row'>
-                        <Button colorScheme='teal' size='sm' onClick={() => evaluar('V')}>
+                    <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
+
+                        <Button colorScheme='blue' size='sm' onClick={() => evaluar('V')}>
                             Verdadero
                         </Button>
-                        <Button colorScheme='teal' size='sm' onClick={() => evaluar('F')}>
+                        <Button colorScheme='blue' size='sm' onClick={() => evaluar('F')}>
                             Falso
                         </Button>
-                    <Hint
-                        hints={exc.steps[nStep].hints}
-                        contentId={exc.code}
-                        topicId={exc.type}
-                        stepId={exc.steps[nStep].stepId}
-                        matchingError={exc.steps[nStep].matchingError}
-                        response={respuestas}
-                        error={error}
-                        setError={setError}
-                        hintCount={hints}
-                        setHints={setHints}
-                        setLastHint={setLastHint}
-                    ></Hint>  
+                        <Hint
+                            hints={exc.steps[nStep].hints}
+                            contentId={exc.code}
+                            topicId={exc.type}
+                            stepId={exc.steps[nStep].stepId}
+                            matchingError={exc.steps[nStep].matchingError}
+                            response={respuestas}
+                            error={error}
+                            setError={setError}
+                            hintCount={hints}
+                            setHints={setHints}
+                            setLastHint={setLastHint}
+                            ></Hint>  
                     </Stack>
                 </>
                 {firstTime ? null : !isCorrectValue?

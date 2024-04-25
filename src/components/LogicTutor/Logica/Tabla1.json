@@ -45,7 +45,7 @@
             }
           ],
           "alignRows": "center",
-          "tableCaption": "Tabla de verdad"
+          "tableCaption": "Paso 1"
         },
         "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "values": [],
@@ -119,7 +119,7 @@
             }
           ],
           "alignRows": "center",
-          "tableCaption": "Tabla de verdad"
+          "tableCaption": "Paso 2"
         },
         "values": [
           ],
@@ -198,7 +198,7 @@
             }
           ],
           "alignRows": "center",
-          "tableCaption": "Tabla de verdad"
+          "tableCaption": "Paso 3"
         },
         "values": [
           ],
@@ -281,7 +281,7 @@
             }
           ],
           "alignRows": "center",
-          "tableCaption": "Tabla de verdad"
+          "tableCaption": "Paso 4"
         },
         "values": [
           ],

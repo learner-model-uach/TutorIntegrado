@@ -2,7 +2,7 @@
   "code": "inter1",
   "title": "Representacion Intervalos",
   "type": "lvltutor2",
-  "url":"recta.png",
+  "img":"recta.png",
   "meta": {},
   "text": "Considere la siguiente representación gráfica de un intervalo.",
   "steps": [
@@ -121,48 +121,53 @@
     {
       "stepId": "3",
       "expression": "",
-      "StepType":"InputButtons",
+      "StepType":"MultiplePlaceholders",
       "stepTitle": "Paso 4: Represente el intervalo por comprensión ",
       "displayResult": [
-
+        "${x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}$}"
       ],
       "KCs": [
         "RepComp"
       ],
-      "values": [],
-      "hints": [
-        {
-          "hintId": 0,
-          "hint": "Atento a la notación"
-        },
-        {
-          "hintId": 1,
-          "hint": "Por ejemplo el intervalo [-1,1] representado por comprensión es: ",
-          "expression": "x \\in \\mathrm{R}:-1 \\leq x \\leq 1"
-        },
-        {
-          "hintId": 2,
-          "hint": "Por compresión un intervalo cerrado se representa como: ",
-          "expression": "x \\in \\mathrm{P}:a \\leq x \\leq b"
-        },
-        {
-          "hintId": 3,
-          "hint": "La respuesta es: ",
-          "expression": "x\\inℝ:-3\\leq x\\leq7"
-        }
-      ],
+      "values": [
+        ],
+        "hints": [
+          {
+            "hintId": 0,
+            "hint": "Atento a la notación"
+          },
+          {
+            "hintId": 1,
+            "hint": "Por ejemplo el intervalo [-1,1] representado por comprensión es: ",
+            "expression": "x \\in \\mathrm{R}:-1 \\leq x \\leq 1"
+          },
+          {
+            "hintId": 2,
+            "hint": "Por compresión un intervalo cerrado se representa como: ",
+            "expression": "x \\in \\mathrm{P}:a \\leq x \\leq b"
+          },
+          {
+            "hintId": 3,
+            "hint": "La respuesta es: ",
+            "expression": "x\\inℝ:-3\\leq x\\leq7"
+          }
+        ],
       "matchingError": [],
-      "answers": [
-        {
-          "answer": [
-            "x∈ℝ:-3≤x≤7"
-          ],
-          "nextStep": "-1"
-        }
-      ],
-      "incorrectMsg": "Compruebe su respuesta",
-      "correctMsg": "El conjunto por extension esta correcto",
-      "summary": "4)Intervalo por extension correcto"
-    }
+        "answers": [
+          {
+            "answer": [
+              "R",
+              "-3",
+              "\\le",
+              "\\le",
+              "7"
+            ],
+            "nextStep": "-1"
+          }
+        ],
+        "incorrectMsg": "Compruebe su respuesta",
+        "correctMsg": "El conjunto por Comprension está correcto",
+        "summary": "4)Intervalo por extension correcto"
+      }
   ]
 }

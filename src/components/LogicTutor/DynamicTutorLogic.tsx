@@ -1,36 +1,28 @@
 import React from 'react';
-import { Image, StackDivider, VStack, Container, Center } from "@chakra-ui/react";
+import { Image,  Container, Center,  Stack } from "@chakra-ui/react";
 import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
 import Latex from 'react-latex-next';
 import 'katex/dist/katex.min.css';
 import StepComponent from './StepComponent';
-
 const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) => {
-
-    console.log(exc.url)
     return (
         <>
-            <VStack
-                divider={<StackDivider borderColor='gray.200' />}
-                spacing={4}
-                align='stretch'
-            >
-                <Container maxW='container.sm' bg='green.400' color='#262626'>
+                <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
                     <Center>
-
                         Titulo: {exc.title}
                     </Center>
-                </Container>
-                <Container maxW='container.sm' color='#262626'>
                     <Latex>{exc.text}</Latex>
+                </Stack>
+                
+                <Container maxW='container.sm' color='#262626'>
                     <br />
                     {
-                        exc.url? (
+                        exc.img? (
                             <>
                                 <Center>
                                 <Image
                                     objectFit='cover'
-                                    src={`img/${exc.url}`}
+                                    src={`img/${exc.img}`}
                                     alt='Broken image'
                                 />
                                 </Center>
@@ -38,10 +30,10 @@ const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) =>
                         ) : null
                     }
                 </Container>
-                <Container maxW='container.sm' color='#262626' centerContent>
+                <Stack style={{ justifyContent: "center", margin: "auto" }}>
                     <StepComponent exc={exc} nStep={0} topicId={topicId} />
-                </Container>
-            </VStack>
+                </Stack>
+
         </>
     )
 }

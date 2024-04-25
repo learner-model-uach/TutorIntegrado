@@ -2,7 +2,7 @@
     "code": "uni1",
     "title": "Unión de intervalos",
     "type": "lvltutor2",
-    "url":"Union1.png",
+    "img":"Union1.png",
     "meta": {},
     "text": "Dada la siguiente representación de intervalos ",
     "steps": [
@@ -105,33 +105,42 @@
       {
         "stepId": "2",
         "expression": "",
-        "StepType":"Blank",
-        "stepTitle": "Paso 3: Escriba el intervalo que representa la Unión",
+        "StepType":"MultiplePlaceholders",
+        "stepTitle": "Paso 3: Escriba por comprensión el intervalo que representa la Unión:",
         "displayResult": [
-  
+          "${x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}$}"
         ],
         "KCs": [
-          "RepRecInt","RepIntCerr","RepIntAb"
+          "RecInter","RepIntCerr","RepIntAb"
         ],
-        "values": [ ],
+        "values": [
+          ],
         "hints": [
           {
             "hintId": 0,
-            "hint": "Un intervalo cerrado es [a,b], incluyendo a y b. Abierto es ]a,b[, excluyendo a y b. Semiabierto es [a,b[ o ]a,b], incluyendo uno y excluyendo el otro.            "
+            "hint": "La Unión esta representada por el conjunto que reune los elementos de ambos conjuntos"
+          },
+          {
+            "hintId": 1,
+            "hint": "La Unión corresponde a  ]-3,8]"
           }
         ],
         "matchingError": [],
-        "answers": [
-          {
-            "answer": [
-              "]-3,8]"
-            ],
-            "nextStep": "-1"
-          }
-        ],
-        "incorrectMsg": "Compruebe su respuesta",
-        "correctMsg": "El intervalo corresponde a la Unión",
-        "summary": "3)Ejercicio terminado"
-      }
+          "answers": [
+            {
+              "answer": [
+                "R",
+                "-3",
+                "<",
+                "\\le",
+                "8"
+              ],
+              "nextStep": "-1"
+            }
+          ],
+          "incorrectMsg": "Compruebe su respuesta",
+          "correctMsg": "El intervalo corresponde a la Unión",
+          "summary": "3)Ejercicio terminado"
+        }
     ]
   }
