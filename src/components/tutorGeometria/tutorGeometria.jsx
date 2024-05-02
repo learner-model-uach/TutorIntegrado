@@ -29,12 +29,12 @@ import {
   Input,
   RadioGroup,
   Stack,
-  Radio
+  Radio,
 } from "@chakra-ui/react";
 import RatingQuestion from "../RatingQuestion";
 
 export const GEO = ({ exercise, topicId }) => {
-  exercise = (exercise.code == 'ap1_2') ? jsonAPmultiple : jsonAP
+  exercise = exercise.code == "ap1_2" ? jsonAPmultiple : jsonAP;
   const action = useAction();
   const content = exercise.code;
   const steps = exercise.steps;
@@ -182,7 +182,7 @@ const StepGeometria = ({
   topicId,
   contentId,
   extras,
-  setExtras
+  setExtras,
 }) => {
   const responseRefs = step.inputs.map(input => (input === "input" ? useRef(null) : null));
   const [feedbackMsg, setFeedbackMsg] = useState(null);
@@ -193,7 +193,7 @@ const StepGeometria = ({
   const [response, setResponse] = useState([]);
   const [hints, setHints] = useState(0);
   const [attempts, setAttempts] = useState(0);
-  
+
   useEffect(() => {
     if (attempts != 0 && extras.steps[step.stepId]) {
       setExtras(prevExtras => {
@@ -210,7 +210,7 @@ const StepGeometria = ({
             response: response,
             attempts: attempts,
             hints: hints,
-          }
+          },
         });
         return newExtras;
       });
@@ -352,7 +352,7 @@ const SeleccionGeometria = ({
   topicId,
   contentId,
   extras,
-  setExtras
+  setExtras,
 }) => {
   const action = useAction();
   const [feedbackMsg, setFeedbackMsg] = useState(null);
@@ -395,7 +395,7 @@ const SeleccionGeometria = ({
     }
   };
   const [value, setValue] = useState(null);
-  const handleRadioChange = (event) => {
+  const handleRadioChange = event => {
     setValue(parseInt(event, 10));
   };
   useEffect(() => {
@@ -411,9 +411,9 @@ const SeleccionGeometria = ({
           response: response,
           attempts: attempts,
           hints: hints,
-        }
+        },
       });
-      if(extras.steps[step.stepId]){
+      if (extras.steps[step.stepId]) {
         setExtras(prevExtras => {
           const newExtras = JSON.parse(JSON.stringify(prevExtras));
           newExtras.steps[step.stepId].att = attempts;
@@ -428,30 +428,31 @@ const SeleccionGeometria = ({
         <WrapItem padding="5px 0px 10px 0px" width="20%">
           <Center>
             <RadioGroup onChange={handleRadioChange} value={value}>
-              <Stack direction='column'>
+              <Stack direction="column">
                 {step.answers.map((ans, i) => (
-                  <Radio key={i} value={i + 1} correct={ans.correct}>{ans.answer}</Radio>
+                  <Radio key={i} value={i + 1} correct={ans.correct}>
+                    {ans.answer}
+                  </Radio>
                 ))}
               </Stack>
             </RadioGroup>
           </Center>
         </WrapItem>
         <WrapItem width="100%">
-        {!stepValid.includes(step.stepId) && (
-
-          <Center>
-            <Button
-              colorScheme="cyan"
-              variant="outline"
-              onClick={() => {
-                compare();
-              }}
-              size="sm"
-            >
-              Aceptar
-            </Button>
-            &nbsp;&nbsp;
-            <Hint
+          {!stepValid.includes(step.stepId) && (
+            <Center>
+              <Button
+                colorScheme="cyan"
+                variant="outline"
+                onClick={() => {
+                  compare();
+                }}
+                size="sm"
+              >
+                Aceptar
+              </Button>
+              &nbsp;&nbsp;
+              <Hint
                 hints={step.hints}
                 contentId={contentId}
                 topicId={topicId}
@@ -464,10 +465,9 @@ const SeleccionGeometria = ({
                 setHints={setHints}
                 setLastHint={setLastHint}
               ></Hint>
-          </Center>
-        )}
+            </Center>
+          )}
         </WrapItem>
-        
       </Wrap>
       {!stepValid.includes(step.stepId) && feedbackMsg}
     </>
