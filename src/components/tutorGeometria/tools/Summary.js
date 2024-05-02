@@ -4,7 +4,7 @@ import { MathComponent } from "../../MathJax";
 
 export const Summary = ({ expression, steps }) => {
   return (
-    <Box style={{marginTop:20}}>
+    <Box style={{ marginTop: 20 }}>
       <Alert status="info">
         <Wrap>
           <Heading w="100%" fontSize="xl" align="center">
