@@ -6,6 +6,9 @@ import Inters from "../components/LogicTutor/Logica/Intersection.json";
 import Suc from "../components/LogicTutor/Logica/Sucesion1.json";
 import Table1 from "../components/LogicTutor/Logica/Tabla1.json";
 import Union1 from "../components/LogicTutor/Logica/Union.json";
+import Prop1 from "../components/LogicTutor/Logica/Prop1.json";
+import Conj1 from "../components/LogicTutor/Logica/Conj1.json";
+
 
 import 'katex/dist/katex.min.css';
 import { useRouter } from 'next/router';
@@ -26,9 +29,16 @@ function App() {
     } else if (pid === 'Table1') {
         exc = Table1 as ExLog; 
     }
-     else if (pid === 'Union1') {
+     else if (pid === 'Prop1') {
+        exc = Prop1 as ExLog; 
+    }
+    else if (pid === 'Union1') {
         exc = Union1 as ExLog; 
     }
+    else if (pid === 'Conj1') {
+        exc = Conj1 as ExLog; 
+    }
+    
     
     return (
         

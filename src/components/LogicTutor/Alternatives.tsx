@@ -59,7 +59,7 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
 
   return (
         <>
-          <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>
+          <Stack spacing={4} m={2}  justifyContent={'center'}>
             {valoresBarajados.map((valor, index) => (
               <Button
                 key={index}

@@ -7,10 +7,10 @@ const Potato = () => {
         <Flex height="100vh"  alignItems="center" justifyContent="center">
             <Flex direction="column" background="gray.100" p={12} rounded={6}>
                 <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Inter"}})}>
-                    Logica1
+                    Representacion de conjuntos1
                 </Heading>
                 <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Inter1"}})}>
-                    Logica2
+                    Representacion de conjuntos2
                 </Heading>
                 <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Sucesion"}})}>
                     Sucesion
@@ -23,6 +23,12 @@ const Potato = () => {
                 </Heading>
                 <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Union1"}})}>
                     Union
+                </Heading>
+                <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Prop1"}})}>
+                    Proposiciones
+                </Heading>
+                <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Conj1"}})}>
+                    Conjunciones
                 </Heading>
             </Flex> 
         </Flex>

@@ -49,7 +49,7 @@
             "hint": "Un intervalo extremo cerrado se representa con corchetes cerrados [ mientras que el abierto utiliza corchete abierto ]"
           },
           {
-            "hintId": 1,
+            "hintId": 2,
             "hint": "La Unión corresponde a  ]-3,8]"
           }
         ],

@@ -7,13 +7,37 @@ import StepComponent from './StepComponent';
 const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) => {
     return (
         <>
-                <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
+                <Stack textAlign="center" fontSize={{ base: "12px", sm: "15px", lg: "20px" }}>
                     <Center>
                         Titulo: {exc.title}
                     </Center>
                     <Latex>{exc.text}</Latex>
                 </Stack>
-                
+                {
+                    exc.eqc ? (
+                        exc.eqc !== "" ? (
+                            <>
+                                <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
+                                    <Center>
+                                        <Latex>{exc.eqc}</Latex>
+                                    </Center>
+                                </Stack>
+                            </>
+                        ) : null
+                    ) : (
+                        exc.steps[0]?.expression ? (
+                            exc.steps[0].expression !== "" ? (
+                                <>
+                                <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
+                                    <Center>
+                                        <Latex>{exc.steps[0].expression}</Latex>
+                                    </Center>
+                                </Stack>
+                                </>
+                            ) : null
+                        ) : null
+                    )
+                }
                 <Container maxW='container.sm' color='#262626'>
                     <br />
                     {
