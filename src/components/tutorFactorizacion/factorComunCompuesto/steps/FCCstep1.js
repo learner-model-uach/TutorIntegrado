@@ -31,8 +31,28 @@ const FCCstep1 = ({
     setAttempts(attempts + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
     const responseStudent = [
-      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response1.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
+      response2.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
     ];
     //valida que la entrada es correctas
     const validate = element =>

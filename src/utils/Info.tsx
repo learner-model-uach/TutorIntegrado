@@ -116,7 +116,7 @@ const Info = ({ exType }: { exType?: string }) => {
     });
   };
   return (
-    <Box spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
+    <Box p="4" alignItems="center" justifyContent="center" margin={"auto"}>
       <Popover onOpen={handleClick}>
         <PopoverTrigger>
           <IconButton

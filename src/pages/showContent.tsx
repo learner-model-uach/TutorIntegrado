@@ -46,7 +46,7 @@ export default withAuth(function ShowContent() {
           <DynamicTutorFac key="1" exercise={content.json} topicId={topic}></DynamicTutorFac>
         ) : content && content?.json?.type == "lvltutor" && !!content.json ? (
           <DynamicPlain key="2" steps={content.json as ExType} topicId={topic}></DynamicPlain>
-        ) : content && ["ecc5s", "secl5s", "ecl2s"].includes(content?.json?.type) ? (
+        ) : content && ["ecc5s", "secl5s", "ecl2s", "mo"].includes(content?.json?.type) ? (
           <DynamicTutorEcu key="3" exercise={content.json} topicId={topic}></DynamicTutorEcu>
         ) : content &&
           [
@@ -59,7 +59,7 @@ export default withAuth(function ShowContent() {
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
         ) : content && content?.json.type == "wordProblem" ? (
-          <DynamicTutorWP exercise={content.json} topicId={topic}></DynamicTutorWP>
+          <DynamicTutorWP key="5" exercise={content.json} topicId={topic}></DynamicTutorWP>
         ) : (
           <Text>No existe el contenido que desea cargar</Text>
         )}

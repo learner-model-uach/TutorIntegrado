@@ -1,4 +1,4 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Image, Box, Flex, useColorModeValue } from "@chakra-ui/react";
 
 import { MobileMenuButton } from "./MobileMenuButton";
 import { Navigation } from "./Navigation";
@@ -34,6 +34,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
         color="gray.200"
         position="fixed"
       >
+        <Image src="/img/logo.png" alt="Logo" w="220px" h="80px" mb="1" ml="6" />
         <Box fontSize="sm" lineHeight="tall">
           <UserInfo />
 

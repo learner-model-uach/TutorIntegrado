@@ -26,15 +26,37 @@ export const DCstep2 = ({
 
   const compare = () => {
     setFeedbackMsg(null);
-    //contador de intentos
+    //contador de intentos pasos
     setAttempts(attempts + 1);
 
     const responseStudent = [
-      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response1.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
+      response2.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
     ];
+
     const validate = element =>
-      element[0] === responseStudent[0] && element[1] === responseStudent[1];
+      (element[0] === responseStudent[0] && element[1] === responseStudent[1]) ||
+      (element[0] === responseStudent[1] && element[1] === responseStudent[0]);
 
     if (correctAlternatives.some(validate)) {
       setStep2Valid((step2Valid = "Terminado"));

@@ -8,7 +8,7 @@ import MQPostfixparser from "../../../utils/MQPostfixparser";
 //reporte de acciones
 import { useAction } from "../../../utils/action";
 
-import type { Step } from "./ExcerciseType";
+import type { Step, answer, value } from "./ExcerciseType";
 import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
@@ -70,6 +70,45 @@ const EMFStyle = {
   maxHeight: "120px",
   marginBottom: "12px",
   border: "3px solid #73AD21",
+  overflow: "visible",
+};
+
+interface values {
+  values: Array<value>;
+}
+
+const evaluation = ({
+  input,
+  answer,
+  values,
+}: {
+  input: string;
+  answer: answer;
+  values: values;
+}) => {
+  let parseAns = MQPostfixparser(answer.answer[0]);
+  let evaluation1 = MQPostfixSolver(input.substring(0), values);
+  let evaluation2 = MQPostfixSolver(parseAns.substring(0), values);
+
+  if (!MQProxy.finishedEval || isNaN(evaluation1)) {
+    return false;
+  }
+  MQProxy.finishedEval = true;
+
+  let correctAns = false;
+  let answer1 = "" + evaluation1;
+  let answer2 = "" + evaluation2;
+  let y = parseFloat(answer1);
+  let x = parseFloat(answer2);
+  if (parseFloat(answer2) == 0) {
+    x = x + 1;
+    y = y + 1;
+  }
+
+  let relativeError = Math.abs(1 - y / x);
+  if (relativeError < 0.005 && MQPostfixstrict(input, parseAns)) correctAns = true;
+
+  return correctAns;
 };
 
 const Mq2 = ({
@@ -112,24 +151,19 @@ const Mq2 = ({
     let answers = step.answers;
     let correctAns = false;
     let parseInput = MQPostfixparser(latex);
-    let answer1 = "";
-    let answer2 = "";
+    let values: values = { values: [] };
+
+    if (step.values != undefined) {
+      values.values = step.values;
+    }
+
     if (validationType) {
       //console.log(1);
       if (validationType.localeCompare("evaluate") == 0) {
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
-          let parseAns = MQPostfixparser(e.answer[0]);
-          if (step.values != undefined) {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          } else {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), [{}]);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          }
-          let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-          if (relativeError < 0.005) correctAns = true;
+          if (evaluation({ input: parseInput, answer: e, values: values })) correctAns = true;
         }
       } else if (validationType.localeCompare("countElements") == 0) {
         for (let i = 0; i < answers.length; i++) {
@@ -143,17 +177,7 @@ const Mq2 = ({
         for (let i = 0; i < answers.length; i++) {
           let e = answers[i];
           if (!e) continue;
-          let parseAns = MQPostfixparser(e.answer[0]);
-          //console.log(3, parseInput, parseAns);
-          if (step.values != undefined) {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), step.values);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          } else {
-            answer1 = "" + MQPostfixSolver(parseInput.substring(0), [{}]);
-            answer2 = "" + MQPostfixSolver(parseAns.substring(0), step.values);
-          }
-          let relativeError = Math.abs(1 - parseFloat(answer1) / parseFloat(answer2));
-          if (relativeError < 0.005 && MQPostfixstrict(parseInput, parseAns)) correctAns = true;
+          if (evaluation({ input: parseInput, answer: e, values: values })) correctAns = true;
         }
       } else {
         for (let i = 0; i < answers.length; i++) {
@@ -242,6 +266,8 @@ const Mq2 = ({
           <Stack spacing={4} direction="row" align="center" pb={4}>
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -251,6 +277,8 @@ const Mq2 = ({
               {"("}
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -260,28 +288,54 @@ const Mq2 = ({
               {")"}
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("^");
               }}
             >
-              ^
+              <MQStaticMathField
+                exp={"x^y"}
+                currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+              />
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\sqrt");
               }}
             >
-              √
+              <MQStaticMathField
+                exp={"\\sqrt{x}"}
+                currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+              />
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorScheme="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("\\nthroot");
+              }}
+            >
+              <MQStaticMathField
+                exp={"\\sqrt[y]{x}"}
+                currentExpIndex={parseInt(step.stepId) == mqSnap.defaultIndex[0] ? true : false}
+              />
             </Button>
           </Stack>
           <Stack spacing={4} direction="row" align="center" pb={4}>
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
                            Ademas con mousedown se puede usar preventDefault*/}
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -291,6 +345,8 @@ const Mq2 = ({
               +
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -300,6 +356,8 @@ const Mq2 = ({
               -
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -309,6 +367,8 @@ const Mq2 = ({
               *
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();
@@ -318,6 +378,8 @@ const Mq2 = ({
               /
             </Button>
             <Button
+              width={"40px"}
+              height={"40px"}
               colorScheme="teal"
               onMouseDown={e => {
                 e.preventDefault();

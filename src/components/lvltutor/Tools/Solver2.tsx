@@ -16,6 +16,8 @@ import {
   AlertIcon,
   HStack,
   VStack,
+  Center,
+  Image,
 } from "@chakra-ui/react";
 
 //la siguiente linea se utiliza para el wraper del componente Mq, el cual usa la libreria JS mathquill
@@ -201,6 +203,8 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
     }
   }, [mqSnap.submit]);
 
+  let initialExp = steps.initialExpression ? steps.initialExpression : steps.steps[0]?.expression;
+
   return (
     <Flex alignItems="center" justifyContent="center" margin={"auto"}>
       <Flex
@@ -219,7 +223,11 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         <Heading as="h5" size="sm" mt={2}>
           {steps.text}
         </Heading>
-        <MQStaticMathField exp={steps.steps[0]?.expression || ""} currentExpIndex={true} />
+        {steps.img ? (
+          <Image src={`/img/${steps.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
+        ) : (
+          <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
+        )}
         <Accordion
           onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
           index={MQProxy.defaultIndex}
@@ -293,23 +301,25 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
           <Alert status="info" hidden={resumen} alignItems="top">
             <AlertIcon />
             <VStack w="100%" align="left">
-              <Heading fontSize="xl" align="center">
-                Resumen
-              </Heading>
+              <Center>
+                <Heading fontSize="xl">Resumen</Heading>
+              </Center>
               <HStack>
                 <Text>Expresión:</Text>
-                <MQStaticMathField exp={steps.steps[0]!.expression} currentExpIndex={!resumen} />
+                <MQStaticMathField exp={initialExp || ""} currentExpIndex={!resumen} />
               </HStack>
               {steps.steps.map((step, i) => (
                 <Box key={"ResumenBox" + i}>
                   <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
                     {step.summary}
                   </Text>
-                  <MQStaticMathField
-                    key={"ResumenMC" + i}
-                    exp={step.displayResult[0]!}
-                    currentExpIndex={!resumen}
-                  />
+                  <Box key={"ResumenMCContainer" + i} display="flex" justifyContent="center">
+                    <MQStaticMathField
+                      key={"ResumenMC" + i}
+                      exp={step.displayResult[0]!}
+                      currentExpIndex={!resumen}
+                    />
+                  </Box>
                 </Box>
               ))}
             </VStack>
