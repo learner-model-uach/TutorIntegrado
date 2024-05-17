@@ -5,6 +5,7 @@ import { Navigation } from "./Navigation";
 import { SearchInput } from "./SearchInput";
 import { useMobileMenuState } from "./useMobileMenuState";
 import { UserInfo } from "./UserInfo";
+import { EmojiBar } from "./EmojieBar";
 
 import type { ReactNode } from "react";
 
@@ -77,12 +78,13 @@ export function MainLayout({ children }: { children: ReactNode }) {
               maxW={{
                 md: "calc(97vw - var(--sidebar-width))",
               }}
-            >
+              >
               {children}
             </Flex>
           </Flex>
         </Box>
       </Box>
+      <EmojiBar/>
     </Flex>
   );
 }
