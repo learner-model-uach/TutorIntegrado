@@ -2,10 +2,6 @@ export interface value {
   name: string;
   value: number;
 }
-export interface tvalue {
-  name: string
-  value: string
-}
 export interface hint {
   hintId: number;
   hint: string;
@@ -20,7 +16,6 @@ export interface answer {
   nextStep: string;
 }
 
-export type textAlign = "left" | "right" | "center" | "justify" | "end" | "start";
 export interface Step {
   stepId: string;
   KCs: Array<string>;
@@ -42,10 +37,15 @@ export interface Table {
   alignRows: textAlign;
   tableCaption: string;
 }
+export type textAlign = "left" | "right" | "center" | "justify" | "end" | "start";
 
 export interface Header {
   align: string;
   value: string;
+}
+export interface tvalue {
+  name: string
+  value: string
 }
 
 export interface Row {
@@ -57,10 +57,16 @@ export interface ExType {
   code: string;
   meta: {};
   title: string;
+  presentation?: {
+    title: string;
+    urlImg: string;
+  };
   text: string;
   type: string;
   eqc?: string | undefined;
   steps: Array<Step>;
+  img?: string;
+  initialExpression?: string;
 }
 
 export interface StepLog extends Step {

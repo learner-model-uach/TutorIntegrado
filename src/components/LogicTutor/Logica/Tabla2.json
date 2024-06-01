@@ -1,9 +1,9 @@
 {
-    "code": "table1",
+    "code": "table2",
     "title": "Tablas de Verdad",
     "type": "lvltutor2",
     "meta": {},
-    "text": "Utilizando una tabla de verdad compruebe que se satisface la siguiente equivalencia lógica: $$\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}$$",
+    "text": "Completela tabla de verdad de la siguiente equivalencia lógica: $$[(p\\Rightarrow q)\\wedge p]\\Rightarrow q$$",
     "steps": [
       {
         "stepId": "0",
@@ -19,7 +19,7 @@
           "header": [
             {
               "align": "center",
-              "value": "$parte$"
+              "value": "$p$"
             },
             {
               "align": "center",
@@ -79,7 +79,7 @@
         "stepId": "1",
         "expression": "",
         "StepType":"TableStep",
-        "stepTitle": "Paso 2: Complete para: $\\overline{p\\Rightarrow q}$",
+        "stepTitle": "Paso 2: Complete para: $(p\\Rightarrow q)\\wedge p$",
         "displayResult": [
         ],
         "KCs": [
@@ -101,7 +101,7 @@
             },
             {
               "align": "center",
-              "value": "$\\overline{p\\Rightarrow q}$"
+              "value": "$(p\\Rightarrow q)\\wedge p$"
             }
           ],
           "rows": [
@@ -138,8 +138,8 @@
         "answers": [
           {
             "answer": [
-                "F",
                 "V",
+                "F",
                 "F",
                 "F"
             ],
@@ -154,7 +154,7 @@
         "stepId": "2",
         "expression": "",
         "StepType":"TableStep",
-        "stepTitle": "Paso 3: Complete para: $\\overline{q}$ ",
+        "stepTitle": "Paso 3: Complete para: $[(p\\Rightarrow q)\\wedge p]\\Rightarrow q$ ",
         "displayResult": [
         ],
         "KCs": [
@@ -176,19 +176,19 @@
             },
             {
               "align": "center",
-              "value": "$\\overline{p\\Rightarrow q}$"
+              "value": "$(p\\Rightarrow q)\\wedge p$"
             },
             {
               "align": "center",
-              "value": "$\\overline{q}$"
+              "value": "$[(p\\Rightarrow q)\\wedge p]\\Rightarrow q$"
             }
           ],
           "rows": [
             {
-              "data": ["V", "V","V","F","a"]
+              "data": ["V", "V","V","V","a"]
             },
             {
-              "data": ["V", "F", "F","V","b"]
+              "data": ["V", "F", "F","F","b"]
             },
             {
               "data": ["F", "V","V","F","c"]
@@ -217,144 +217,10 @@
         "answers": [
           {
             "answer": [
-                "F",
                 "V",
-                "F",
+                "V",
+                "V",
                 "V"
-            ],
-            "nextStep": "3"
-          }
-        ],
-        "incorrectMsg": "Compruebe su respuesta",
-        "correctMsg": "B corresponde al intervalo",
-        "summary": "1)Luego se comprueban valores del conjunto"
-      },
-      {
-        "stepId": "3",
-        "expression": "",
-        "StepType":"TableStep",
-        "stepTitle": "Paso 4: Complete para $p\\wedge \\overline{q}$",
-        "displayResult": [
-        ],
-        "KCs": [
-          "IdConLog","UtConj"
-        ],
-        "table": {
-          "header": [
-            {
-              "align": "center",
-              "value": "$p$"
-            },
-            {
-              "align": "center",
-              "value": "$q$"
-            },
-            {
-              "align": "center",
-              "value": "${p\\Rightarrow q}$"
-            },
-            {
-              "align": "center",
-              "value": "$\\overline{p\\Rightarrow q}$"
-            },
-            {
-              "align": "center",
-              "value": "$\\overline{q}$"
-            },
-            {
-              "align": "center",
-              "value": "$p\\wedge \\overline{q}$"
-            }
-          ],
-          "rows": [
-            {
-              "data": ["V", "V","V","F","F","a"]
-            },
-            {
-              "data": ["V", "F", "F","V","V","b"]
-            },
-            {
-              "data": ["F", "V","V","F","F","c"]
-            },
-            {
-              "data": ["F", "F","V","F","V","d"]
-            }
-          ],
-          "alignRows": "center",
-          "tableCaption": "Paso 4"
-        },
-        "values": [
-          ],
-          "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
-        "hints": [
-          {
-            "hintId": 0,
-            "hint": "Revise el material de estudio"
-          },
-          {
-            "hintId": 1,
-            "hint": "Debe utilizar la conjunción"
-          }
-        ],
-        "matchingError": [],
-        "answers": [
-          {
-            "answer": [
-                "F",
-                "V",
-                "F",
-                "F"
-            ],
-            "nextStep": "4"
-          }
-        ],
-        "incorrectMsg": "Compruebe su respuesta",
-        "correctMsg": "B corresponde al intervalo",
-        "summary": "1)Luego se comprueban valores del conjunto"
-      },
-      {
-        "stepId": "4",
-        "expression": "",
-        "StepType":"Alternatives",
-        "stepTitle": "Paso 5: Seleccione si se satisface la equivalencia",
-        "displayResult": [
-        ],
-        "KCs": [
-          "RecEcLog"
-        ],
-        "values": [
-            {
-              "name": "a",
-              "value": "Si, porque las columnas de las tablas son iguales"
-            },
-            {
-              "name": "a",
-              "value": "No, porque las tablas son diferentes"
-            },
-            {
-              "name": "a",
-              "value": "Si, porque El primer valor es verdadero"
-            },
-            {
-              "name": "a",
-              "value": "No, porque El primer valor es verdadero"
-            }
-          ],
-        "hints": [
-          {
-            "hintId": 0,
-            "hint": "Revise el material de estudio"
-          },
-          {
-            "hintId": 1,
-            "hint": "Si ambas tablas son iguales se satisface la equivalencia"
-          }
-        ],
-        "matchingError": [],
-        "answers": [
-          {
-            "answer": [
-                "a) Si, porque las columnas de las tablas son iguales"
             ],
             "nextStep": "-1"
           }

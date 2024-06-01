@@ -22,7 +22,7 @@ export interface Step {
   expression: string;
   stepTitle: string;
   displayResult: Array<string>;
-  values: Array<value>;
+  values?: Array<value>;
   hints: Array<hint>;
   matchingError?: Array<matchingError>;
   validation?: "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount";
@@ -36,13 +36,13 @@ export interface ExType {
   code: string;
   meta: {};
   title: string;
-  presentation: {
+  presentation?: {
     title: string;
     urlImg: string;
   };
   text: string;
   type: string;
-  eqc: string | undefined;
+  eqc?: string | undefined;
   steps: Array<Step>;
   img?: string;
   initialExpression?: string;

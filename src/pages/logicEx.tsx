@@ -30,6 +30,9 @@ const Potato = () => {
                 <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"Conj1"}})}>
                     Conjunciones
                 </Heading>
+                <Heading onClick={() => router.push({pathname:"logicTutor",query:{pid:"pot1"}})}>
+                    TestLvlTutor
+                </Heading>
             </Flex> 
         </Flex>
     )

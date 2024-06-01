@@ -1,8 +1,8 @@
 {
-  "code": "inter2",
+  "code": "inter7",
   "title": "Representacion Intervalos",
   "type": "lvltutor2",
-  "img":"recta.png",
+  "img":"rectaEj7.png",
   "meta": {},
   "text": "Escriba como conjunto e intervalo la siguiente recta perteneciente a los números Reales.",
   "steps": [
@@ -12,7 +12,7 @@
       "StepType":"MultiplePlaceholders",
       "stepTitle": "Paso 1: Reconozca los valores extremos de la recta",
       "displayResult": [
-        "Extremo\\; Inferior \\quad \\placeholder[a]{}$ \\quad  Extremo\\; Superior \\quad $\\placeholder[b]{}$"
+        "Extremo\\; Inferior \\quad \\placeholder[a]{}$ \\quad  Extremo\\; Superior \\quad $\\placeholder[b]{}"
       ],
       "KCs": [
         "RecValExt"
@@ -33,7 +33,7 @@
         {
           "answer": [
             "-3",
-            "7"
+            "\\infty"
           ],
           "nextStep": "1"
         }
@@ -56,11 +56,11 @@
       "values": [
         {
           "name": "a",
-          "value": -5
+          "value": 584
         },
         {
           "name": "a",
-          "value": 0
+          "value": 6
         },
         {
           "name": "a",
@@ -68,13 +68,13 @@
         },
         {
           "name": "a",
-          "value": 2
+          "value": -5
         }
       ],
       "hints": [
         {
           "hintId": 0,
-          "hint": "Los extremos en un intervalo cerrado pertenecen al conjunto"
+          "hint": "Los extremos en un intervalo abierto no pertenecen al conjunto"
         }
       ],
       "matchingError": [],

@@ -52,6 +52,9 @@ export function Navigation() {
             <SidebarLink key="7" href={"logicEx?topic=38,39,40,41&registerTopic=38"}>
               Lógica y Teoría de Conjuntos
             </SidebarLink>
+            <SidebarLink key="7" href={"contentSelect?topic=38,39,40,41&registerTopic=38"}>
+              Lógica y Teoría de Conjuntos seleccion
+            </SidebarLink>
           </>
         )}
       </Stack>

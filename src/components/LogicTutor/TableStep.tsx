@@ -105,6 +105,7 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
                         textAlign={head?.align as textAlign}
                         color="white"
                         fontWeight="bold"
+                        textTransform="none"
                       >
                         <Latex>{head?.value}</Latex>
                       </Th>

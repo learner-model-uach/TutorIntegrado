@@ -84,7 +84,7 @@ const SinglePlaceholder = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nS
 
                 <>
                      <Center>
-                            <Mathfield readOnly={true} mfe={mfe} value={exc.steps[nStep].displayResult[0]} onChange={modify}>
+                            <Mathfield readOnly={true} mfe={mfe} value={`${exc.steps[nStep].displayResult[0]} \\quad`} onChange={modify}>
                             </Mathfield>
                     </Center>
                     <Stack spacing={4} m={2} direction='row' justifyContent={'center'}>

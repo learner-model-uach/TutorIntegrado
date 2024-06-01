@@ -90,7 +90,7 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
         <>
                 <>
                     <Center>
-                        <Mathfield readOnly={true} mfe={mfe} value={exc.steps[nStep].displayResult[0]} onChange={test}>
+                        <Mathfield readOnly={true} mfe={mfe} value={`\\large ${exc.steps[nStep].displayResult[0]}\\;`} onChange={test}>
                         </Mathfield>
                     </Center>
 

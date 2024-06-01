@@ -13,7 +13,7 @@
       "validation":"evaluate",
       "stepTitle": "Paso 1: Reconozca los valores extremos del intervalo",
       "displayResult": [
-        "Extremo Inferior $\\placeholder[a]{}$ \\ \\quad \\ Extremo Superior $\\placeholder[b]{}$"
+        "Extremo\\; Inferior \\quad \\placeholder[a]{}$ \\quad  Extremo\\; Superior \\quad $\\placeholder[b]{}$"
       ],
       "KCs": [
         "RecValExt"
