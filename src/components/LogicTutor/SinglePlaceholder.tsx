@@ -23,7 +23,7 @@ const SinglePlaceholder = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nS
     const [hints, setHints] = useState(0)
     const [attempts, setAttempts] = useState(0)
     const action = useAction()
-    const [lastHint, setLastHint] = useState(false);
+    const [_, setLastHint] = useState(false);
     //console.log(exc.steps[nStep].hints)
     //@ts-ignore
     function evaluar(latex, Values) {

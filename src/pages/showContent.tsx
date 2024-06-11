@@ -9,7 +9,7 @@ import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { Text, Box } from "@chakra-ui/react";
 import Info from "../utils/Info";
 import DynamicTutorLogic from "../components/LogicTutor/DynamicTutorLogic";
-import type { ExLog } from "../components/lvltutor/Tools/ExcerciseType2";
+import type { ExLog } from "../components/LogicTutor/Tools/ExcerciseType2";
 //import wpExercise from "../components/tutorWordProblems/exercise1.json";
 const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),

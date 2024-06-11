@@ -15,7 +15,8 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
     const [error, setError] = useState(false);
     const [attempts, setAttempts] = useState(0)
     const [hints, setHints] = useState(0)
-    const [lastHint, setLastHint] = useState(0);
+    const [_, setLastHint] = useState(0);
+     //@ts-ignore
     let valor: number | string;
     if (exc && exc.steps && exc.steps[1] && exc.steps[1].values && exc.steps[1].values[0]) {
         valor = exc.steps[1].values[0].value;

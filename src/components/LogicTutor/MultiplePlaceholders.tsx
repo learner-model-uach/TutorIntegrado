@@ -25,7 +25,7 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
     const [error, setError] = useState(false);
     const [hints, setHints] = useState(0)
     const [attempts, setAttempts] = useState(0)
-    const [lastHint, setLastHint] = useState(0);
+    const [_, setLastHint] = useState(0);
 
     const evaluar = () => {
         setFirstTime(!firstTime);

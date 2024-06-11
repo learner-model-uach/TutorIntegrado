@@ -12,7 +12,7 @@ const InputButtons = ({ exc, nStep,  setCompleted ,topic}: { exc: ExLog; nStep: 
     const [respuestas, setRespuestas] = useState<string[]>([]);
     const [error, setError] = useState(false);
     const [hints, setHints] = useState(0)
-    const [lastHint, setLastHint] = useState(0);
+    const [_, setLastHint] = useState(0);
     const action = useAction()
     const [attempts, setAttempts] = useState(0)
     const evaluar = () => {
