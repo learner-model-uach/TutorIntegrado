@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image,  Container, Center,  Stack } from "@chakra-ui/react";
 import Inter1 from "../../components/LogicTutor/LogicaJson/Inter1.json"
-import type {ExLog}   from '../lvltutor/Tools/ExcerciseType2';
+import type {ExLog}   from './Tools/ExcerciseType2';
 import Latex from 'react-latex-next';
 import 'katex/dist/katex.min.css';
 import StepComponent from './StepComponent';

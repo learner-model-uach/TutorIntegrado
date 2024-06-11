@@ -1,5 +1,5 @@
 import React from 'react';
-import type {ExLog}   from '../components/lvltutor/Tools/ExcerciseType2';
+import type {ExLog}   from '../components/LogicTutor/Tools/ExcerciseType2';
 
 import Inter from "../components/LogicTutor/LogicaJson/Inter3.json";
 import Inter1 from "../components/LogicTutor/LogicaJson/Inter2.json";

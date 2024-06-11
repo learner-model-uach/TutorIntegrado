@@ -5,12 +5,12 @@ import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from '../../utils/MQPostfixSolver';
 import MQPostfixparser from '../../utils/MQPostfixparser';
-import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
+import type {ExLog}   from './Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { convertirNotacion } from './convertirNotacion';
 import { useAction } from '../../utils/action';
 
-const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive"),{
+const Mathfield = dynamic(() => import("./Tools/mathLive"),{
     ssr:false,
 });
 
