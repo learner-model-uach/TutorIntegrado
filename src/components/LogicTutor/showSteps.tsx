@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertIcon } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import Latex from 'react-latex-next';
-import type { ExLog } from '../lvltutor/Tools/ExcerciseType2';
+import type { ExLog } from './Tools/ExcerciseType2';
 import { FaHandPointRight } from 'react-icons/fa';
 const TrueFalse = dynamic(() => import("./TrueFalse"), { ssr: false });
 const Blank = dynamic(() => import("./Blank"), { ssr: false });

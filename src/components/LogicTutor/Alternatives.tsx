@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, AlertIcon, Button, Center, Stack } from "@chakra-ui/react";
-import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
+import type {ExLog}   from './Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { useAction } from '../../utils/action';
 import Latex from 'react-latex-next';

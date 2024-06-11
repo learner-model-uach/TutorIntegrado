@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Button, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
-import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
+import type {ExLog}   from './Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { useAction } from '../../utils/action';
 

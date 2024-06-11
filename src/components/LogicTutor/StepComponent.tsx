@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {  Accordion, Center } from "@chakra-ui/react";
-import type { ExLog } from '../lvltutor/Tools/ExcerciseType2';
+import type { ExLog } from './Tools/ExcerciseType2';
 import 'katex/dist/katex.min.css';
 import { useAction } from '../../utils/action';
 import ShowSteps from './showSteps';

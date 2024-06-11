@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 
 
-import type {ExLog, textAlign}   from '../lvltutor/Tools/ExcerciseType2';
+import type {ExLog, textAlign}   from './Tools/ExcerciseType2';
 import Hint from '../Hint';
 import Latex from 'react-latex-next';
 import { useAction } from '../../utils/action';
