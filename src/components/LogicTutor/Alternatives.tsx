@@ -28,10 +28,10 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
   }, [valores_a_elegir, firstTime]); 
 
   const evaluar = (valor: number) => {
-    console.log(lastHint)
+    //console.log(lastHint)
     setResponse(valor)
-    console.log("Valor clickeado:", valor);
-    console.log("Respuesta correcta:", respuestaCorrecta);
+    //console.log("Valor clickeado:", valor);
+    //console.log("Respuesta correcta:", respuestaCorrecta);
     setFirstTime(false);
     if (String(valor) === respuestaCorrecta) {
       setIsCorrectValue(true);

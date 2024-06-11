@@ -19,7 +19,7 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
     let valor: number | string;
     if (exc && exc.steps && exc.steps[1] && exc.steps[1].values && exc.steps[1].values[0]) {
         valor = exc.steps[1].values[0].value;
-        {console.log("valor: "+valor)}
+        //{console.log("valor: "+valor)}
     }
     const evaluar = (Response: string) => {
         setRespuestas(prevRespuestas => [...prevRespuestas, Response]);

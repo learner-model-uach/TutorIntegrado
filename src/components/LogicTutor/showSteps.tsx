@@ -15,7 +15,7 @@ const ShowSteps = ({ exc, nStep , Step , setStep, topic}: { exc: ExLog; nStep:nu
     const [completed, setCompleted] = useState(false);
     const next=parseInt(exc.steps[nStep].answers[0].nextStep)
     const [changed, setChanged] = useState(false);
-    console.log("valor Step: " ,Step)
+    //console.log("valor Step: " ,Step)
     const [color, setColor]=useState("#bee3f8")
     return (
         <AccordionItem>

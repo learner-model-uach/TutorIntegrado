@@ -24,23 +24,23 @@ const SinglePlaceholder = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nS
     const [attempts, setAttempts] = useState(0)
     const action = useAction()
     const [lastHint, setLastHint] = useState(false);
-    console.log(exc.steps[nStep].hints)
+    //console.log(exc.steps[nStep].hints)
     //@ts-ignore
     function evaluar(latex, Values) {
         setFirstTime(!firstTime);
-        console.log("Valor Latex ",latex, "Value ", Values);
+        //console.log("Valor Latex ",latex, "Value ", Values);
         //@ts-ignore
         let c=MQPostfixSolver(MQPostfixparser(convertirNotacion(Values)),[{}])
-        console.log("Entrada usuario Evaluada: ",c)
+        //console.log("Entrada usuario Evaluada: ",c)
         const answer = exc.steps[nStep].answers[0].answer;
-        console.log("Respuesta:", answer)
+        //console.log("Respuesta:", answer)
         let a=MQPostfixparser(answer[0])
         //@ts-ignore
         let b =MQPostfixSolver(a,[{}])
         let response=false
-        console.log(b)
+        //console.log(b)
         if (b==c) {
-            console.log("true");
+            //console.log("true");
             setIsCorrectvalue(true);
             setCompleted(true)
             response=true
@@ -67,15 +67,15 @@ const SinglePlaceholder = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nS
 
     //@ts-ignore
     function modify(latex, prompsValues) {
-        console.log(latex)
-        console.log(prompsValues);
+        //console.log(latex)
+        //console.log(prompsValues);
         let a = MQPostfixparser(prompsValues.a)
         //@ts-ignore
         let b = MQPostfixSolver(a,[{}])
-        console.log(b)
+        //console.log(b)
         setLatex(latex)
         setValues(prompsValues.a)
-        console.log("Evaluar:", b, "Latex ", latex ,"Valores ", prompsValues)
+        //console.log("Evaluar:", b, "Latex ", latex ,"Valores ", prompsValues)
     }
     const mfe = useMemo(() => new MathfieldElement(), []);
     

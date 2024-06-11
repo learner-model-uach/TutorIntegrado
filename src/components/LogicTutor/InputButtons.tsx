@@ -16,18 +16,18 @@ const InputButtons = ({ exc, nStep,  setCompleted ,topic}: { exc: ExLog; nStep: 
     const action = useAction()
     const [attempts, setAttempts] = useState(0)
     const evaluar = () => {
-        console.log('Input:', inputText);
+        //console.log('Input:', inputText);
         let respuesta = false
-        console.log('Respuesta esperada:', exc.steps[nStep].answers[0].answer[0]);
+        //console.log('Respuesta esperada:', exc.steps[nStep].answers[0].answer[0]);
         setRespuestas(prevRespuestas => [...prevRespuestas, inputText]);
         setFirstTime(false);
         if (inputText === exc.steps[nStep].answers[0].answer[0]) {
-            console.log("Correcto");
+            //console.log("Correcto");
             setIsCorrectvalue(true);
             setCompleted(true);
             respuesta = true
         } else {
-            console.log("Respuesta incorrecta");
+            //console.log("Respuesta incorrecta");
             setError(true)
             setHints(hints+1);
             

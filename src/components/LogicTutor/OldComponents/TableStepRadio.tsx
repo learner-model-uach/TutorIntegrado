@@ -18,11 +18,11 @@ import {
 } from "@chakra-ui/react";
 
 
-import type {ExLog, textAlign}   from '../lvltutor/Tools/ExcerciseType2';
-import Hint from '../Hint';
+import type {ExLog, textAlign}   from '../../lvltutor/Tools/ExcerciseType2';
+import Hint from '../../Hint';
 import Latex from 'react-latex-next';
-import { useAction } from '../../utils/action';
-import { sessionState } from '../SessionState';
+import { useAction } from '../../../utils/action';
+import { sessionState } from '../../SessionState';
 
 const TableStep = ({ exc, nStep,  setCompleted }: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [valor, setValor] = useState('');
@@ -42,7 +42,7 @@ const TableStep = ({ exc, nStep,  setCompleted }: { exc: ExLog; nStep: number;  
   const evaluar = () => {
     let respuesta = false
     const isCorrect = userAnswers.every((userAnswer, index) => userAnswer === exc.steps[nStep].answers[0].answer[index]);
-    console.log(isCorrect);
+    //console.log(isCorrect);
 
     isCorrect 
       ? (

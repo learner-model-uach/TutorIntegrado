@@ -8,12 +8,12 @@ import { sessionState } from '../SessionState';
 
 
 const StepComponent = ({ exc, nStep , topicId}: { exc: ExLog; nStep: number ; topicId:string}) => {
-    console.log(exc?.code)
-    console.log("Sesion topic " + sessionState.topic)
-    console.log("current code "+sessionState.currentContent.code)
+    //console.log(exc?.code)
+    //console.log("Sesion topic " + sessionState.topic)
+    //console.log("current code "+sessionState.currentContent.code)
     const action = useAction();
     const [Step, setStep] = useState(0);
-    console.log("Valor Step Base: ", Step)
+    //console.log("Valor Step Base: ", Step)
     useEffect(() => {
         action({
             verbName: "loadContent",

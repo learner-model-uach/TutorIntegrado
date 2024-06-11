@@ -17,7 +17,7 @@ const Mathfield = dynamic(() => import("../../components/lvltutor/Tools/mathLive
 
 const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>> ; topic:string}) => {
     const action = useAction()
-    console.log("topic multiple placeholders: "+topic)
+    //console.log("topic multiple placeholders: "+topic)
     //@ts-ignore
     const [firstTime, setFirstTime] = useState(true);
     const [isCorrectValue, setIsCorrectValue] = useState(false);
@@ -29,11 +29,11 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
 
     const evaluar = () => {
         setFirstTime(!firstTime);
-        console.log(ValuesArray);
-        console.log("values "+ValuesArray)
-        console.log(exc.steps[nStep].answers[0].answer);
-        console.log("valor 1 convertido "+convertirNotacion(ValuesArray[0]));
-        console.log("valor 2 convertido "+convertirNotacion(ValuesArray[1]));
+        //console.log(ValuesArray);
+        //console.log("values "+ValuesArray)
+        //console.log(exc.steps[nStep].answers[0].answer);
+        //console.log("valor 1 convertido "+convertirNotacion(ValuesArray[0]));
+        //console.log("valor 2 convertido "+convertirNotacion(ValuesArray[1]));
         const answer = exc.steps[nStep].answers[0].answer;
         let respuesta = false
         if(exc.steps[nStep].validation=='evaluate'){
@@ -41,7 +41,7 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
             if (ValuesArray.every((value, index) => (MQPostfixSolver(MQPostfixparser(convertirNotacion(value)),[{}])) === MQPostfixSolver(MQPostfixparser(convertirNotacion(answer[index])),[{}]))) {
                 setIsCorrectValue(true);
                 respuesta=true
-                console.log("correctValueSeteado "+isCorrectValue)
+                //console.log("correctValueSeteado "+isCorrectValue)
             } else {
                 setError(true)
                 setHints(hints+1);
@@ -50,18 +50,18 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
 
         else{
             if (ValuesArray.every((value, index) => value === answer[index])) {
-                console.log("true1");
+                //console.log("true1");
                 respuesta=true
                 setIsCorrectValue(true);
-                console.log("correctValueSeteado "+isCorrectValue)
+                //console.log("correctValueSeteado "+isCorrectValue)
             }else{
                 setError(true)
                 setHints(hints+1);
             }
         }
         setAttempts(attempts + 1);
-        console.log("valor de correctValue: "+isCorrectValue)
-        console.log("Valor VERIFICACION: "+(isCorrectValue?1:0))
+        //console.log("valor de correctValue: "+isCorrectValue)
+        //console.log("Valor VERIFICACION: "+(isCorrectValue?1:0))
         action({
             verbName: "tryStep",
             stepID: "" + exc.steps[nStep].stepId,

@@ -60,7 +60,7 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
   const evaluar = () => {
     let respuesta = false
     const isCorrect = userAnswers.every((userAnswer, index) => userAnswer === exc.steps[nStep].answers[0].answer[index]);
-    console.log(isCorrect);
+    //console.log(isCorrect);
 
     isCorrect 
       ? (

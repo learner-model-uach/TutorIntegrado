@@ -16,7 +16,7 @@ const InputButtons = dynamic(() => import("../InputButtons"), { ssr: false });
 const Alternatives = dynamic(() => import("../Alternatives"), { ssr: false });
 const Mathfield = dynamic(() => import("../../lvltutor/Tools/mathLive"), { ssr: false });
 const MultiplePlaceholders = dynamic(() => import("../MultiplePlaceholders"), { ssr: false });
-const TableStep = dynamic(() => import("../TableStepRadio"), { ssr: false });
+const TableStep = dynamic(() => import("./TableStepRadio"), { ssr: false });
 const SinglePlaceholder = dynamic(() => import("../SinglePlaceholder"), { ssr: false });
 
 
