@@ -16,7 +16,7 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
     const [attempts, setAttempts] = useState(0)
     const [hints, setHints] = useState(0)
     const [lastHint, setLastHint] = useState(0);
-    let valor: number | undefined;
+    let valor: number | string;
     if (exc && exc.steps && exc.steps[1] && exc.steps[1].values && exc.steps[1].values[0]) {
         valor = exc.steps[1].values[0].value;
         {console.log("valor: "+valor)}
@@ -45,7 +45,7 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
             extra: {
               response: [Response],
               attempts: attempts,
-              hints: exc.steps[nStep].hints,
+              hints: hints,
             },
           });
     };
@@ -56,7 +56,7 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
                 <>
                     <Center>
                             <Latex>
-                            {exc.steps[nStep].expression}
+                            {"$$"+exc.steps[nStep].expression+"$$"}
                             </Latex>
                     </Center>
 
@@ -71,7 +71,7 @@ const TrueFalse = ({ exc, nStep,  setCompleted , topic}: { exc: ExLog; nStep: nu
                         <Hint
                             hints={exc.steps[nStep].hints}
                             contentId={exc.code}
-                            topicId={exc.type}
+                            topicId={topic}
                             stepId={exc.steps[nStep].stepId}
                             matchingError={exc.steps[nStep].matchingError}
                             response={respuestas}

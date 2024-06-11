@@ -12,7 +12,7 @@
         "StepType":"Alternatives",
         "stepTitle": "Paso 1: Reconozca la Unión",
         "displayResult": [
-          "¿Cuál de los siguientes tramos en la gráfica representa la intersección de los 2 intervalos"
+          "\\text{¿Cuál de los siguientes tramos en la gráfica representa la unión de los 2 intervalos?}"
         ],
         "KCs": [
           "RecUnGraf"
@@ -68,7 +68,7 @@
       },
       {
         "stepId": "1",
-        "expression": "El valor es 3",
+        "expression": "\\text{El valor es 3}",
         "StepType":"TrueFalse",
         "stepTitle": "Paso 2: Reconozca si el valor siguiente pertenece a la Unión",
         "displayResult": [
@@ -108,7 +108,7 @@
         "StepType":"MultiplePlaceholders",
         "stepTitle": "Paso 3: Escriba por comprensión el intervalo que representa la Unión:",
         "displayResult": [
-          "${x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}$}"
+          "{x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}}"
         ],
         "KCs": [
           "RecInter","RepIntCerr","RepIntAb"

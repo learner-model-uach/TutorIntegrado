@@ -1,14 +1,14 @@
 import React from 'react';
 import type {ExLog}   from '../components/lvltutor/Tools/ExcerciseType2';
 
-import Inter from "../components/LogicTutor/Logica/Inter2.json";
+import Inter from "../components/LogicTutor/Logica/Inter3.json";
 import Inter1 from "../components/LogicTutor/Logica/Inter2.json";
-import Inters from "../components/LogicTutor/Logica/Intersection2.json";
-import Suc from "../components/LogicTutor/Logica/Sucesion2.json";
+import Inters from "../components/LogicTutor/Logica/Intersection4.json";
+import Suc from "../components/LogicTutor/Logica/Sucesion4.json";
 import Table1 from "../components/LogicTutor/Logica/Tabla1.json";
-import Union1 from "../components/LogicTutor/Logica/Union.json";
-import Prop1 from "../components/LogicTutor/Logica/Prop1.json";
-import Conj1 from "../components/LogicTutor/Logica/Conj1.json";
+import Union1 from "../components/LogicTutor/Logica/Union4.json";
+import Prop1 from "../components/LogicTutor/Logica/Prop4.json";
+import Conj1 from "../components/LogicTutor/Logica/Conj4.json";
 
 
 

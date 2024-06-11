@@ -4,7 +4,8 @@
   "type": "lvltutor2",
   "img":"",
   "meta": {},
-  "text": "Dadas las siguientes proposiciones   $$P:El\\:área\\:de\\:un\\:círculo\\:es:\\:\\pi*r²$$  $$Q:4²=8$$ Determine el valor de verdad de la siguiente conjunción $$P\\wedge Q$$",
+  "eqc":"\\text{P: El área de un círculo es: }\\pi*r² \\\\ Q:4²=8 \\\\ \\text{Determine el valor de verdad de la siguiente conjunción} \\\\ P\\wedge Q",
+  "text": "Dadas las siguientes proposiciones ",
   "steps": [
     {
       "stepId": "0",
@@ -12,7 +13,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 1: Determine el valor de verdad de la proposicion P",
       "displayResult": [
-        "$$P:El\\:área\\:de\\:un\\:círculo\\:es:\\:\\pi*r²$$"
+        "\\text{P: El área de un círculo es: }\\pi*r²"
       ],
       "KCs": [
         "RecProp"
@@ -52,7 +53,7 @@
       "StepType":"MultiplePlaceholders",
       "stepTitle": "Paso 2: Resuelva la proposición",
       "displayResult": [
-        "$Q:4²=\\placeholder[a]{}$"
+        "Q:4²=\\placeholder[a]{}"
       ],
       "KCs": [
         "EvProp"
@@ -128,7 +129,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 4: Determine el valor de verdad de la conjunción",
       "displayResult": [
-        "$$P\\wedge Q$$"
+        "P\\wedge Q"
       ],
       "KCs": [
         "RecProp"

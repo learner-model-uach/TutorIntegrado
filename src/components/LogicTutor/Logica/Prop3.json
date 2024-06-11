@@ -8,11 +8,10 @@
   "steps": [
     {
       "stepId": "0",
-      "expression": "Para todo x>1, la siguiente expresión siempre es positiva: $\\frac{1}{x²-1}",
+      "expression": "",
       "StepType":"Alternatives",
       "stepTitle": "Paso 1: Reconozca si la frase es una proposición",
-      "displayResult": [
-        
+      "displayResult": ["\\text{Para todo x>1, la siguiente expresión siempre es positiva: }\\frac{1}{x²-1}"
       ],
       "KCs": [
         "RecProp"
@@ -60,7 +59,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 2: Determine el valor de verdad de la proposicion",
       "displayResult": [
-        ""
+        "\\text{Para todo x>1, la siguiente expresión siempre es positiva: }\\frac{1}{x²-1}"
       ],
       "KCs": [
         "RecProp"

@@ -3,13 +3,14 @@
     "title": "Tablas de Verdad",
     "type": "lvltutor2",
     "meta": {},
-    "text": "Utilizando una tabla de verdad compruebe que se satisface la siguiente equivalencia lógica: $$\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}$$",
+    "eqc":"\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}",
+    "text": "Utilizando una tabla de verdad compruebe que se satisface la siguiente equivalencia lógica: ",
     "steps": [
       {
         "stepId": "0",
-        "expression": "",
+        "expression": "\\text{La expresión es: }p\\Rightarrow q ",
         "StepType":"TableStep",
-        "stepTitle": "Paso 1: Complete para: ${p\\Rightarrow q}$",
+        "stepTitle": "Paso 1: Complete la tabla de verdad para la siguiente expresión",
         "displayResult": [
         ],
         "KCs": [
@@ -19,15 +20,15 @@
           "header": [
             {
               "align": "center",
-              "value": "$parte$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             }
           ],
           "rows": [
@@ -47,8 +48,8 @@
           "alignRows": "center",
           "tableCaption": "Paso 1"
         },
-        "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "values": [],
+        "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "hints": [
           {
             "hintId": 0,
@@ -77,9 +78,9 @@
       },
       {
         "stepId": "1",
-        "expression": "",
+        "expression": "\\text{La expresión es: }p\\Rightarrow q",
         "StepType":"TableStep",
-        "stepTitle": "Paso 2: Complete para: $\\overline{p\\Rightarrow q}$",
+        "stepTitle": "Paso 2: Complete tabla de verdad para la siguiente expresión",
         "displayResult": [
         ],
         "KCs": [
@@ -89,19 +90,19 @@
           "header": [
             {
               "align": "center",
-              "value": "$p$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$\\overline{p\\Rightarrow q}$"
+              "value": "\\overline{p\\Rightarrow q}"
             }
           ],
           "rows": [
@@ -123,6 +124,7 @@
         },
         "values": [
           ],
+        "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "hints": [
           {
             "hintId": 0,
@@ -134,7 +136,6 @@
           }
         ],
         "matchingError": [],
-        "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "answers": [
           {
             "answer": [
@@ -152,9 +153,9 @@
       },
       {
         "stepId": "2",
-        "expression": "",
+        "expression": "\\text{La expresión es: }\\overline{q}",
         "StepType":"TableStep",
-        "stepTitle": "Paso 3: Complete para: $\\overline{q}$ ",
+        "stepTitle": "Paso 3: Complete tabla de verdad para la siguiente expresión ",
         "displayResult": [
         ],
         "KCs": [
@@ -164,23 +165,23 @@
           "header": [
             {
               "align": "center",
-              "value": "$p$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$\\overline{p\\Rightarrow q}$"
+              "value": "\\overline{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$\\overline{q}$"
+              "value": "\\overline{q}"
             }
           ],
           "rows": [
@@ -202,7 +203,7 @@
         },
         "values": [
           ],
-          "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
+        "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "hints": [
           {
             "hintId": 0,
@@ -231,9 +232,9 @@
       },
       {
         "stepId": "3",
-        "expression": "",
+        "expression": "\\text{La expresión es: }p\\wedge \\overline{q}",
         "StepType":"TableStep",
-        "stepTitle": "Paso 4: Complete para $p\\wedge \\overline{q}$",
+        "stepTitle": "Paso 4: Complete tabla de verdad para la siguiente expresión",
         "displayResult": [
         ],
         "KCs": [
@@ -243,27 +244,27 @@
           "header": [
             {
               "align": "center",
-              "value": "$p$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$\\overline{p\\Rightarrow q}$"
+              "value": "\\overline{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$\\overline{q}$"
+              "value": "\\overline{q}"
             },
             {
               "align": "center",
-              "value": "$p\\wedge \\overline{q}$"
+              "value": "p\\wedge \\overline{q}"
             }
           ],
           "rows": [
@@ -285,7 +286,7 @@
         },
         "values": [
           ],
-          "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
+        "button": [["V","F"],["V","F"],["V","F"],["V","F"]],
         "hints": [
           {
             "hintId": 0,
@@ -318,6 +319,7 @@
         "StepType":"Alternatives",
         "stepTitle": "Paso 5: Seleccione si se satisface la equivalencia",
         "displayResult": [
+          "\\text{La equivalencia lógica es: }\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}"
         ],
         "KCs": [
           "RecEcLog"

@@ -84,13 +84,18 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
           extra: {
             response: [userAnswers],
             attempts: attempts,
-            hints: exc.steps[nStep].hints,
+            hints: hints,
           },
         });
   };
 
   return (
         <>
+          <Center>
+            <Latex>
+              {"$$"+exc.steps[nStep].expression+"$$"}
+            </Latex>
+          </Center>
           {exc.steps[nStep].table?.tableCaption && (
             <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
               <Table variant="striped" size="sm" borderColor={textColor}>
@@ -107,7 +112,7 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
                         fontWeight="bold"
                         textTransform="none"
                       >
-                        <Latex>{head?.value}</Latex>
+                        <Latex>{"$"+head?.value+"$"}</Latex>
                       </Th>
                     ))}
                   </Tr>
@@ -161,7 +166,7 @@ const TableStep = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: num
            <Hint
             hints={exc.steps[nStep].hints}
             contentId={exc.code}
-            topicId={exc.type}
+            topicId={topic}
             stepId={exc.steps[nStep].stepId}
             matchingError={exc.steps[nStep].matchingError}
             response={userAnswers}

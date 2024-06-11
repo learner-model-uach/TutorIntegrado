@@ -4,18 +4,20 @@ import type { ExLog } from '../lvltutor/Tools/ExcerciseType2';
 import 'katex/dist/katex.min.css';
 import { useAction } from '../../utils/action';
 import ShowSteps from './showSteps';
+import { sessionState } from '../SessionState';
 
 
 const StepComponent = ({ exc, nStep , topicId}: { exc: ExLog; nStep: number ; topicId:string}) => {
     console.log(exc?.code)
-    console.log("Sesion topic" + topicId)
+    console.log("Sesion topic " + sessionState.topic)
+    console.log("current code "+sessionState.currentContent.code)
     const action = useAction();
     const [Step, setStep] = useState(0);
     console.log("Valor Step Base: ", Step)
     useEffect(() => {
         action({
             verbName: "loadContent",
-            contentID: exc?.code,
+            contentID: sessionState.currentContent.code,
             topicID: topicId,
         });
     }, []);

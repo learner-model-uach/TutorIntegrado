@@ -8,11 +8,11 @@
   "steps": [
     {
       "stepId": "0",
-      "expression": "6 es divisible por 2 y por 3 a la vez",
+      "expression": "",
       "StepType":"Alternatives",
       "stepTitle": "Paso 1: Reconozca si la frase es una proposición",
       "displayResult": [
-        
+        "\\text{ 6 es divisible por 2 y por 3 a la vez}"
       ],
       "KCs": [
         "RecProp"
@@ -60,7 +60,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 2: Determine el valor de verdad de la proposicion",
       "displayResult": [
-        ""
+        "\\text{ 6 es divisible por 2 y por 3 a la vez}"
       ],
       "KCs": [
         "RecProp"

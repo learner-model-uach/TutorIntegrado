@@ -13,7 +13,7 @@
         "validation":"evaluate",
         "stepTitle": "Paso 1: Reconozca los valores extremos del intervalo",
         "displayResult": [
-          "Extremo\\; Inferior \\quad \\placeholder[a]{}$ \\quad  Extremo\\; Superior \\quad $\\placeholder[b]{}"
+          "Extremo\\; Inferior \\quad \\placeholder[a]{} \\quad  Extremo\\; Superior \\quad \\placeholder[b]{}"
         ],
         "KCs": [
           "RecValExt"
@@ -45,7 +45,7 @@
       },
       {
         "stepId": "1",
-        "expression": "El valor es:  $$2^{2}$$",
+        "expression": "El valor es:  2^{2}",
         "StepType":"TrueFalse",
         "stepTitle": "Paso 2: Reconozca si el valor siguiente pertenece al conjunto",
         "displayResult": [
@@ -124,7 +124,7 @@
         "StepType":"MultiplePlaceholders",
         "stepTitle": "Paso 4: Represente el intervalo por comprensión ",
         "displayResult": [
-          "${x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}$}"
+          "{x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}}"
         ],
         "KCs": [
           "RepComp"

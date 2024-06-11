@@ -4,7 +4,8 @@
   "type": "lvltutor2",
   "img":"",
   "meta": {},
-  "text": "Dadas las siguientes proposiciones   $$P:Júpiter\\:es\\:un\\:planeta$$  $$Q:3²+4²=5²$$ Determine el valor de verdad de la siguiente conjunción $$P\\wedge Q$$",
+  "eqc": "\\text{P:Júpiter es un planeta}  \\\\ Q:3²+4²=5² \\\\ \\text{Determine el valor de verdad de la siguiente conjunción} \\\\ P\\wedge Q",
+  "text": "Dadas las siguientes proposiciones ",
   "steps": [
     {
       "stepId": "0",
@@ -12,7 +13,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 1: Determine el valor de verdad de la proposicion P",
       "displayResult": [
-        "P:Júpiter es un planeta"
+        "\\text{P: Júpiter es un planeta}"
       ],
       "KCs": [
         "RecProp"
@@ -52,7 +53,7 @@
       "StepType":"MultiplePlaceholders",
       "stepTitle": "Paso 2: Resuelva ambos lados de la proposición",
       "displayResult": [
-        "$Q:3²+4²=\\placeholder[a]{}||5²=\\placeholder[b]{}$"
+        "Q:3²+4²=\\placeholder[a]{}||5²=\\placeholder[b]{}"
       ],
       "KCs": [
         "EvProp"
@@ -129,7 +130,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 4: Determine el valor de verdad de la conjunción",
       "displayResult": [
-        "$$P\\wedge Q$$"
+        "P\\wedge Q"
       ],
       "KCs": [
         "RecProp"

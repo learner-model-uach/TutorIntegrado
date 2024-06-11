@@ -43,7 +43,7 @@ const InputButtons = ({ exc, nStep,  setCompleted ,topic}: { exc: ExLog; nStep: 
             extra: {
               response: [inputText],
               attempts: attempts,
-              hints: exc.steps[nStep].hints,
+              hints: hints,
             },
           });
     };
@@ -80,7 +80,7 @@ const InputButtons = ({ exc, nStep,  setCompleted ,topic}: { exc: ExLog; nStep: 
             <Hint
             hints={exc.steps[nStep].hints}
             contentId={exc.code}
-            topicId={exc.type}
+            topicId={topic}
             stepId={exc.steps[nStep].stepId}
             matchingError={exc.steps[nStep].matchingError}
             response={respuestas}

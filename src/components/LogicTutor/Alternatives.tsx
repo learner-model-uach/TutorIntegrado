@@ -3,6 +3,7 @@ import { Alert, AlertIcon, Button, Center, Stack } from "@chakra-ui/react";
 import type {ExLog}   from '../../components/lvltutor/Tools/ExcerciseType2';
 import Hint from '../../components/Hint';
 import { useAction } from '../../utils/action';
+import Latex from 'react-latex-next';
 
 
 const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: number;  setCompleted: React.Dispatch<React.SetStateAction<boolean>>; topic:string })=> {
@@ -52,7 +53,7 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
       extra: {
         response: [valor],
         attempts: attempts,
-        hints: exc.steps[nStep].hints,
+        hints: hints,
       },
     });
   };
@@ -60,6 +61,9 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
   return (
         <>
           <Stack spacing={4} m={2}  justifyContent={'center'}>
+            <Center>
+              <Latex>{"$$"+exc.steps[nStep].displayResult[0]+"$$"}</Latex>
+            </Center>
             {valoresBarajados.map((valor, index) => (
               <Button
                 key={index}
@@ -87,7 +91,7 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
            <Hint
               hints={exc.steps[nStep].hints}
               contentId={exc.code}
-              topicId={exc.type}
+              topicId={topic}
               stepId={exc.steps[nStep].stepId}
               matchingError={exc.steps[nStep].matchingError}
               response={[response]}
@@ -98,7 +102,9 @@ const Alternatives = ({ exc, nStep,  setCompleted,topic }: { exc: ExLog; nStep: 
               setLastHint={setLastHint}
               />
               </Center>
+
         </>
+        
       )}
 
 

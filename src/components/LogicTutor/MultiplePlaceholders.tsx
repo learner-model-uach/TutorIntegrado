@@ -72,7 +72,7 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
             extra: {
               response: [ValuesArray],
               attempts: attempts,
-              hints: exc.steps[nStep].hints,
+              hints: hints,
             },
           });
     };
@@ -100,7 +100,7 @@ const MultiplePlaceholders = ({ exc, nStep, setCompleted , topic}: { exc: ExLog;
                     <Hint
                             hints={exc.steps[nStep].hints}
                             contentId={exc.code}
-                            topicId={exc.type}
+                            topicId={topic}
                             stepId={exc.steps[nStep].stepId}
                             matchingError={exc.steps[nStep].matchingError}
                             response={ValuesArray}

@@ -4,7 +4,8 @@
   "type": "lvltutor2",
   "img":"",
   "meta": {},
-  "text": "Dado el siguiente término general de una sucesión:  $$B_n = \\frac{{n^3 \\cdot (1-n^2)}}{{n^2 + n}\\cdot (n+1)}$$",
+  "text": "Dado el siguiente término general de una sucesión:  ",
+  "eqc": "B_n = \\frac{{n^3 \\cdot (1-n^2)}}{{n^2 + n}\\cdot (n+1)}",
   "steps": [
     {
       "stepId": "0",
@@ -12,7 +13,7 @@
       "StepType":"MultiplePlaceholders",
       "stepTitle": "Paso 1: Represente el término de la sucesión",
       "displayResult": [
-        "$B_1 = \\frac{{\\placeholder[a]{n}^3 \\cdot (1-\\placeholder[b]{n}^2)}}{{\\placeholder[c]{n}^2 + \\placeholder[d]{n}\\cdot(\\placeholder[e]{n}+1)}$"
+        "B_1 = \\frac{{\\placeholder[a]{n}^3 \\cdot (1-\\placeholder[b]{n}^2)}}{{\\placeholder[c]{n}^2 + \\placeholder[d]{n}\\cdot(\\placeholder[e]{n}+1)}"
       ],
       "KCs": [
         "RecNotSuc"
@@ -55,7 +56,7 @@
       "StepType":"SinglePlaceholder",
       "stepTitle": "Paso 2: Resuelva el primer valor de la sucesión, si no es entero, represéntelo como fracción de la forma $\\frac{a}{b}$",
       "displayResult": [
-        "$\\placeholder[a]{}$"
+        "\\placeholder[a]{}"
       ],
       "KCs": [
       ],
@@ -104,7 +105,7 @@
       "validation":"evaluate",
       "stepTitle": "Paso 3: Encuentre los primeros 4 términos de la sucesión, simplifica las fracciones cuando corresponda",
       "displayResult": [
-        "0, $-\\frac{12}{5}  ,   \\placeholder[a]{}, \\placeholder[b]{}"
+        "0,\\; -\\frac{12}{5}  , \\;  \\placeholder[a]{},\\; \\placeholder[b]{}"
       ],
       "KCs": ["CalcValSuc"],
       "values": [],

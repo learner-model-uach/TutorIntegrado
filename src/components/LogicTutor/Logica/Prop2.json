@@ -8,11 +8,11 @@
   "steps": [
     {
       "stepId": "0",
-      "expression": "La raíz cuadrada de 25 es 5",
+      "expression": "",
       "StepType":"Alternatives",
       "stepTitle": "Paso 1: Reconozca si la frase es una proposición",
       "displayResult": [
-        
+        "\\text{La raíz cuadrada de 25 es 5}"
       ],
       "KCs": [
         "RecProp"
@@ -60,7 +60,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 2: Determine el valor de verdad de la proposicion",
       "displayResult": [
-        ""
+        "\\text{La raíz cuadrada de 25 es 5}"
       ],
       "KCs": [
         "RecProp"

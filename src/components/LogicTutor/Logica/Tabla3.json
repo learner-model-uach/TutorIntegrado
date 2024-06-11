@@ -3,13 +3,14 @@
     "title": "Tablas de Verdad",
     "type": "lvltutor2",
     "meta": {},
-    "text": "Completela tabla de verdad de la siguiente equivalencia lógica: $$[(p\\Rightarrow q)\\wedge \\overline{q}]\\Rightarrow \\overline{q}$$",
+    "eqc":"[(p\\Rightarrow q)\\wedge \\overline{q}]\\Rightarrow \\overline{q}",
+    "text": "Utilizando una tabla de verdad compruebe que se satisface la siguiente equivalencia lógica: ",
     "steps": [
       {
         "stepId": "0",
-        "expression": "",
+        "expression": "{p\\Rightarrow q}",
         "StepType":"TableStep",
-        "stepTitle": "Paso 1: Complete para: ${p\\Rightarrow q}$",
+        "stepTitle": "Paso 1: Complete la tabla de verdad para la siguiente expresión ",
         "displayResult": [
         ],
         "KCs": [
@@ -19,15 +20,15 @@
           "header": [
             {
               "align": "center",
-              "value": "$p$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             }
           ],
           "rows": [
@@ -77,9 +78,9 @@
       },
       {
         "stepId": "1",
-        "expression": "",
+        "expression": "(p\\Rightarrow q)\\wedge \\overline{q}",
         "StepType":"TableStep",
-        "stepTitle": "Paso 2: Complete para: $(p\\Rightarrow q)\\wedge \\overline{q}$",
+        "stepTitle": "Paso 2: Complete la tabla de verdad para la siguiente expresión ",
         "displayResult": [
         ],
         "KCs": [
@@ -89,19 +90,19 @@
           "header": [
             {
               "align": "center",
-              "value": "$p$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$(p\\Rightarrow q)\\wedge \\overline{q}$"
+              "value": "(p\\Rightarrow q)\\wedge \\overline{q}"
             }
           ],
           "rows": [
@@ -152,9 +153,9 @@
       },
       {
         "stepId": "2",
-        "expression": "",
+        "expression": "[(p\\Rightarrow q)\\wedge \\overline{q}]\\Rightarrow \\overline{q}",
         "StepType":"TableStep",
-        "stepTitle": "Paso 3: Complete para: $[(p\\Rightarrow q)\\wedge \\overline{q}]\\Rightarrow \\overline{q}$ ",
+        "stepTitle": "Paso 3: Complete la tabla de verdad para la siguiente expresión  ",
         "displayResult": [
         ],
         "KCs": [
@@ -164,23 +165,23 @@
           "header": [
             {
               "align": "center",
-              "value": "$p$"
+              "value": "p"
             },
             {
               "align": "center",
-              "value": "$q$"
+              "value": "q"
             },
             {
               "align": "center",
-              "value": "${p\\Rightarrow q}$"
+              "value": "{p\\Rightarrow q}"
             },
             {
               "align": "center",
-              "value": "$(p\\Rightarrow q)\\wedge \\overline{q}$"
+              "value": "(p\\Rightarrow q)\\wedge \\overline{q}"
             },
             {
               "align": "center",
-              "value": "$[(p\\Rightarrow q)\\wedge \\overline{q}]\\Rightarrow \\overline{q}$"
+              "value": "[(p\\Rightarrow q)\\wedge \\overline{q}]\\Rightarrow \\overline{q}"
             }
           ],
           "rows": [

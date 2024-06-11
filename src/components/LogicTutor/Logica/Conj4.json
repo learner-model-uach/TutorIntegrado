@@ -4,7 +4,8 @@
   "type": "lvltutor2",
   "img":"",
   "meta": {},
-  "text": "Dadas las siguientes proposiciones   $$P:El\\:número\\:-5\\:es\\:positivo$$  $$Q:Un\\:tríangulo\\:isósceles\\:tiene\\:todos\\:sus\\:lados\\:iguales$$ Determine el valor de verdad de la siguiente conjunción $$P\\vee Q$$",
+  "eqc":"\\text{P: El número -5 es positivo} \\\\ \\text{Q: Un tríangulo isósceles tiene todos sus lados iguales} \\\\ \\text{Determine el valor de verdad de la siguiente conjunción} \\\\ P\\vee Q",
+  "text": "Dadas las siguientes proposiciones   ",
   "steps": [
     {
       "stepId": "0",
@@ -12,7 +13,7 @@
       "StepType":"Alternatives",
       "stepTitle": "Paso 1: Determine el valor de verdad de la proposicion P",
       "displayResult": [
-        "$$P:El\\:número\\:-5\\:es\\:positivo$$"
+        "\\text{P: El número -5 es positivo}"
       ],
       "KCs": [
         "RecProp"
@@ -50,9 +51,9 @@
       "stepId": "1",
       "expression": "",
       "StepType":"Alternatives",
-      "stepTitle": "Paso 1: Determine el valor de verdad de la proposicion Q",
+      "stepTitle": "Paso 2: Determine el valor de verdad de la proposicion Q",
       "displayResult": [
-        "$$Q:Un\\:tríangulo\\:isósceles\\:tiene\\:todos\\:sus\\:lados\\:iguales$$"
+        "\\text{Q: Un tríangulo isósceles tiene todos sus lados iguales}"
       ],
       "KCs": [
         "RecProp"
@@ -90,9 +91,9 @@
       "stepId": "2",
       "expression": "",
       "StepType":"Alternatives",
-      "stepTitle": "Paso 4: Determine el valor de verdad de la conjunción",
+      "stepTitle": "Paso 3: Determine el valor de verdad de la conjunción",
       "displayResult": [
-        "$$P\\wedge Q$$"
+        "P\\vee Q"
       ],
       "KCs": [
         "RecProp"

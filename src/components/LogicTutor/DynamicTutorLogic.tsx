@@ -19,7 +19,7 @@ const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) =>
                             <>
                                 <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
                                     <Center>
-                                        <Latex>{exc.eqc}</Latex>
+                                        <Latex>{"$$"+exc.eqc+"$$"}</Latex>
                                     </Center>
                                 </Stack>
                             </>
@@ -30,7 +30,7 @@ const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) =>
                                 <>
                                 <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>
                                     <Center>
-                                        <Latex>{exc.steps[0].expression}</Latex>
+                                        <Latex>{`$$`+exc.steps[0].expression+`$$`}</Latex>
                                     </Center>
                                 </Stack>
                                 </>

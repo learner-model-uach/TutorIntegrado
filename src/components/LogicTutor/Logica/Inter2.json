@@ -12,7 +12,7 @@
       "StepType":"MultiplePlaceholders",
       "stepTitle": "Paso 1: Reconozca los valores extremos de la recta",
       "displayResult": [
-        "Extremo\\; Inferior \\quad \\placeholder[a]{}$ \\quad  Extremo\\; Superior \\quad $\\placeholder[b]{}$"
+        "\\text{Extremo Inferior} \\quad \\placeholder[a]{} \\quad  \\text{Extremo Superior} \\quad \\placeholder[b]{}"
       ],
       "KCs": [
         "RecValExt"
@@ -44,11 +44,11 @@
     },
     {
       "stepId": "1",
-      "expression": "Seleccione que valor no pertenece al conjunto",
+      "expression": "\\text{El valor -3 pertenece al conjunto}",
       "StepType":"Alternatives",
       "stepTitle": "Paso 2: Reconozca que valor no pertenece al conjunto",
       "displayResult": [
-        "El valor -3 pertenece al conjunto"
+        ""
       ],
       "KCs": [
         "RecExtCerr"
