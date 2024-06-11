@@ -21,7 +21,7 @@ function App() {
     let exc: ExLog // 
     const router = useRouter();
     const { pid } = router.query;
-    console.log(pid)
+    //console.log(pid)
     if (pid === 'Inter') {
         exc = Inter as ExLog; 
     } else if (pid === 'Inter1') {

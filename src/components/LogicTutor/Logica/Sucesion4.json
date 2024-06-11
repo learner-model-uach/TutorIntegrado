@@ -5,7 +5,7 @@
   "img":"",
   "meta": {},
   "text": "Dado el siguiente término general de una sucesión: ",
-  "eqc":"B_n = \\frac{{(3n+1)^{2} \\cdot (2n)}}{(1+n²)\\cdot (-n-3)}",
+  "eqc":"B_n = \\frac{{(3n+1)^{2} \\cdot (2n)}}{(1+n^2)\\cdot (-n-3)}",
   "steps": [
     {
       "stepId": "0",
