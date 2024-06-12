@@ -2,7 +2,7 @@
   "code": "conj2",
   "title": "Uso de Conjunciones",
   "type": "lvltutor2",
-  "img":"",
+  "img": "",
   "meta": {},
   "eqc": "\\text{P:Júpiter es un planeta}  \\\\ Q:3²+4²=5² \\\\ \\text{Determine el valor de verdad de la siguiente conjunción} \\\\ P\\wedge Q",
   "text": "Dadas las siguientes proposiciones ",
@@ -10,24 +10,20 @@
     {
       "stepId": "0",
       "expression": "",
-      "StepType":"Alternatives",
+      "StepType": "Alternatives",
       "stepTitle": "Paso 1: Determine el valor de verdad de la proposicion P",
-      "displayResult": [
-        "\\text{P: Júpiter es un planeta}"
-      ],
-      "KCs": [
-        "RecProp"
-      ],
+      "displayResult": ["\\text{P: Júpiter es un planeta}"],
+      "KCs": ["RecProp"],
       "values": [
-          {
-            "name": "a",
-            "value": "Verdadero"
-          },
-          {
-            "name": "a",
-            "value": "Falso"
-          }
-        ],
+        {
+          "name": "a",
+          "value": "Verdadero"
+        },
+        {
+          "name": "a",
+          "value": "Falso"
+        }
+      ],
       "hints": [
         {
           "hintId": 0,
@@ -37,9 +33,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-              "Verdadero"
-          ],
+          "answer": ["Verdadero"],
           "nextStep": "1"
         }
       ],
@@ -50,16 +44,11 @@
     {
       "stepId": "1",
       "expression": "",
-      "StepType":"MultiplePlaceholders",
+      "StepType": "MultiplePlaceholders",
       "stepTitle": "Paso 2: Resuelva ambos lados de la proposición",
-      "displayResult": [
-        "Q:3²+4²=\\placeholder[a]{}||5²=\\placeholder[b]{}"
-      ],
-      "KCs": [
-        "EvProp"
-      ],
-      "values": [
-        ],
+      "displayResult": ["Q:3²+4²=\\placeholder[a]{}||5²=\\placeholder[b]{}"],
+      "KCs": ["EvProp"],
+      "values": [],
       "hints": [
         {
           "hintId": 0,
@@ -69,10 +58,7 @@
       "matchingError": [],
       "answers": [
         {
-            "answer": [
-                "25",
-                "25"
-              ],
+          "answer": ["25", "25"],
           "nextStep": "2"
         }
       ],
@@ -83,28 +69,24 @@
     {
       "stepId": "2",
       "expression": "",
-      "StepType":"Alternatives",
+      "StepType": "Alternatives",
       "stepTitle": "Paso 3: Determine el valor de verdad de la proposicion",
-      "displayResult": [
-        "3²+4²=5²"
-      ],
-      "KCs": [
-        "RecProp"
-      ],
+      "displayResult": ["3²+4²=5²"],
+      "KCs": ["RecProp"],
       "values": [
-          {
-            "name": "a",
-            "value": "Verdadero, ya que 25=25"
-          },
-          {
-            "name": "a",
-            "value": "Falso, pues 7² es distinto a 5²"
-          },
-          {
-            "name": "a",
-            "value": "Verdadero, pues ambas condiciones son falsas"
-          }
-        ],
+        {
+          "name": "a",
+          "value": "Verdadero, ya que 25=25"
+        },
+        {
+          "name": "a",
+          "value": "Falso, pues 7² es distinto a 5²"
+        },
+        {
+          "name": "a",
+          "value": "Verdadero, pues ambas condiciones son falsas"
+        }
+      ],
       "hints": [
         {
           "hintId": 0,
@@ -114,9 +96,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-              "Verdadero, ya que 25=25"
-          ],
+          "answer": ["Verdadero, ya que 25=25"],
           "nextStep": "3"
         }
       ],
@@ -127,32 +107,28 @@
     {
       "stepId": "3",
       "expression": "",
-      "StepType":"Alternatives",
+      "StepType": "Alternatives",
       "stepTitle": "Paso 4: Determine el valor de verdad de la conjunción",
-      "displayResult": [
-        "P\\wedge Q"
-      ],
-      "KCs": [
-        "RecProp"
-      ],
+      "displayResult": ["P\\wedge Q"],
+      "KCs": ["RecProp"],
       "values": [
-          {
-            "name": "a",
-            "value": "Ya que una de las 2 proposiciones es falsa, la conjunción es falsa"
-          },
-          {
-            "name": "a",
-            "value": "Ambas proposiciones son falsas por lo que la conjunción es falsa"
-          },
-          {
-            "name": "a",
-            "value": "Ambas preposiciones son verdaderas por lo que la conjunción es verdadera"
-          },
-          {
-            "name": "a",
-            "value": "Ya que una de las 2 proposiciones es verdadera, la conjunción es verdadera"
-          }
-        ],
+        {
+          "name": "a",
+          "value": "Ya que una de las 2 proposiciones es falsa, la conjunción es falsa"
+        },
+        {
+          "name": "a",
+          "value": "Ambas proposiciones son falsas por lo que la conjunción es falsa"
+        },
+        {
+          "name": "a",
+          "value": "Ambas preposiciones son verdaderas por lo que la conjunción es verdadera"
+        },
+        {
+          "name": "a",
+          "value": "Ya que una de las 2 proposiciones es verdadera, la conjunción es verdadera"
+        }
+      ],
       "hints": [
         {
           "hintId": 0,
@@ -162,9 +138,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-              "Ambas preposiciones son verdaderas por lo que la conjunción es verdadera"
-          ],
+          "answer": ["Ambas preposiciones son verdaderas por lo que la conjunción es verdadera"],
           "nextStep": "-1"
         }
       ],

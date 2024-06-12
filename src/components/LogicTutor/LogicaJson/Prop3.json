@@ -2,38 +2,37 @@
   "code": "prop3",
   "title": "Reconocimiento de proposiciones",
   "type": "lvltutor2",
-  "img":"",
+  "img": "",
   "meta": {},
   "text": "Reconoce si la siguiente frase representa una proposición. En caso de serlo, dé su valor de verdad.",
   "steps": [
     {
       "stepId": "0",
       "expression": "",
-      "StepType":"Alternatives",
+      "StepType": "Alternatives",
       "stepTitle": "Paso 1: Reconozca si la frase es una proposición",
-      "displayResult": ["\\text{Para todo x>1, la siguiente expresión siempre es positiva: }\\frac{1}{x²-1}"
+      "displayResult": [
+        "\\text{Para todo x>1, la siguiente expresión siempre es positiva: }\\frac{1}{x²-1}"
       ],
-      "KCs": [
-        "RecProp"
-      ],
+      "KCs": ["RecProp"],
       "values": [
-          {
-            "name": "a",
-            "value": "Si, pues posee una condición asociada"
-          },
-          {
-            "name": "a",
-            "value": "No, pues no posee una condicion asociada"
-          },
-          {
-            "name": "a",
-            "value": "No, pues la proposición no está bien definida"
-          },
-          {
-            "name": "a",
-            "value": "Si, pues se puede obtener valor numérico a partir de la frase"
-          }
-        ],
+        {
+          "name": "a",
+          "value": "Si, pues posee una condición asociada"
+        },
+        {
+          "name": "a",
+          "value": "No, pues no posee una condicion asociada"
+        },
+        {
+          "name": "a",
+          "value": "No, pues la proposición no está bien definida"
+        },
+        {
+          "name": "a",
+          "value": "Si, pues se puede obtener valor numérico a partir de la frase"
+        }
+      ],
       "hints": [
         {
           "hintId": 0,
@@ -43,9 +42,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-              "Si, pues posee una condición asociada"
-          ],
+          "answer": ["Si, pues posee una condición asociada"],
           "nextStep": "1"
         }
       ],
@@ -56,32 +53,30 @@
     {
       "stepId": "1",
       "expression": "",
-      "StepType":"Alternatives",
+      "StepType": "Alternatives",
       "stepTitle": "Paso 2: Determine el valor de verdad de la proposicion",
       "displayResult": [
         "\\text{Para todo x>1, la siguiente expresión siempre es positiva: }\\frac{1}{x²-1}"
       ],
-      "KCs": [
-        "RecProp"
-      ],
+      "KCs": ["RecProp"],
       "values": [
-          {
-            "name": "a",
-            "value": "Verdadero, ya que el denominador siempre será positivo"
-          },
-          {
-            "name": "a",
-            "value": "Falso, pues el denominador será siempre negativo"
-          },
-          {
-            "name": "a",
-            "value": "Falso, pues la expresión se indetermina"
-          },
-          {
-            "name": "a",
-            "value": "Falso, ya que la expresión da 0"
-          }
-        ],
+        {
+          "name": "a",
+          "value": "Verdadero, ya que el denominador siempre será positivo"
+        },
+        {
+          "name": "a",
+          "value": "Falso, pues el denominador será siempre negativo"
+        },
+        {
+          "name": "a",
+          "value": "Falso, pues la expresión se indetermina"
+        },
+        {
+          "name": "a",
+          "value": "Falso, ya que la expresión da 0"
+        }
+      ],
       "hints": [
         {
           "hintId": 0,
@@ -91,9 +86,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-              "Verdadero, ya que el denominador siempre será positivo"
-          ],
+          "answer": ["Verdadero, ya que el denominador siempre será positivo"],
           "nextStep": "-1"
         }
       ],

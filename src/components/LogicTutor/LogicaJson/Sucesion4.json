@@ -2,22 +2,20 @@
   "code": "succ4",
   "title": "Sucesión",
   "type": "lvltutor2",
-  "img":"",
+  "img": "",
   "meta": {},
   "text": "Dado el siguiente término general de una sucesión: ",
-  "eqc":"B_n = \\frac{{(3n+1)^{2} \\cdot (2n)}}{(1+n^2)\\cdot (-n-3)}",
+  "eqc": "B_n = \\frac{{(3n+1)^{2} \\cdot (2n)}}{(1+n^2)\\cdot (-n-3)}",
   "steps": [
     {
       "stepId": "0",
       "expression": "",
-      "StepType":"MultiplePlaceholders",
+      "StepType": "MultiplePlaceholders",
       "stepTitle": "Paso 1: Represente el término de la sucesión",
       "displayResult": [
         "B_1 = \\frac{{(3\\placeholder[a]{n}+1)^{2} \\cdot (2\\placeholder[b]{n})}}{{(1+\\placeholder[c]{n}²)\\cdot (-\\placeholder[d]{n}-3)}"
       ],
-      "KCs": [
-        "RecNotSuc"
-      ],
+      "KCs": ["RecNotSuc"],
       "values": [],
       "hints": [
         {
@@ -36,12 +34,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-            "1",
-            "1",
-            "1",
-            "1"
-          ],
+          "answer": ["1", "1", "1", "1"],
           "nextStep": "1"
         }
       ],
@@ -52,13 +45,10 @@
     {
       "stepId": "1",
       "expression": "",
-      "StepType":"SinglePlaceholder",
+      "StepType": "SinglePlaceholder",
       "stepTitle": "Paso 2: Resuelva el primer valor de la sucesión, si no es entero, represéntelo como fracción de la forma $\\frac{a}{b}$",
-      "displayResult": [
-        "\\placeholder[a]{}"
-      ],
-      "KCs": [
-      ],
+      "displayResult": ["\\placeholder[a]{}"],
+      "KCs": [],
       "values": [],
       "hints": [
         {
@@ -74,22 +64,15 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-            "-4"
-          ],
-          "nextStep": "2"
-        }
-        ,
-        {
-          "answer": [
-            "-\\frac{1}{3}"
-          ],
+          "answer": ["-4"],
           "nextStep": "2"
         },
         {
-          "answer": [
-            "\\frac{-1}{3}"
-          ],
+          "answer": ["-\\frac{1}{3}"],
+          "nextStep": "2"
+        },
+        {
+          "answer": ["\\frac{-1}{3}"],
           "nextStep": "2"
         }
       ],
@@ -100,12 +83,10 @@
     {
       "stepId": "2",
       "expression": "",
-      "StepType":"MultiplePlaceholders",
-      "validation":"evaluate",
+      "StepType": "MultiplePlaceholders",
+      "validation": "evaluate",
       "stepTitle": "Paso 3: Encuentre los primeros 4 términos de la sucesión, simplifica las fracciones cuando corresponda",
-      "displayResult": [
-        "-4,\\; -\\frac{196}{25}\\; ,   \\placeholder[a]{},\\; \\placeholder[b]{}"
-      ],
+      "displayResult": ["-4,\\; -\\frac{196}{25}\\; ,   \\placeholder[a]{},\\; \\placeholder[b]{}"],
       "KCs": ["CalcValSuc"],
       "values": [],
       "hints": [
@@ -122,15 +103,11 @@
           "hint": "Los valores son: ",
           "expression": "-10 y -\\frac{1352}{119}"
         }
-
       ],
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-            "-10",
-            "-\\frac{1352}{119}"
-          ],
+          "answer": ["-10", "-\\frac{1352}{119}"],
           "nextStep": "-1"
         }
       ],

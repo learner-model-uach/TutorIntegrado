@@ -2,21 +2,19 @@
   "code": "inter6",
   "title": "Representacion Intervalos",
   "type": "lvltutor2",
-  "img":"rectaEj6.png",
+  "img": "rectaEj6.png",
   "meta": {},
   "text": "Escriba como conjunto e intervalo la siguiente recta perteneciente a los números Reales.",
   "steps": [
     {
       "stepId": "0",
       "expression": "",
-      "StepType":"MultiplePlaceholders",
+      "StepType": "MultiplePlaceholders",
       "stepTitle": "Paso 1: Reconozca los valores extremos de la recta",
       "displayResult": [
         "\\text{Extremo Inferior} \\quad \\placeholder[a]{} \\quad  \\text{Extremo Superior} \\quad \\placeholder[b]{}"
       ],
-      "KCs": [
-        "RecValExt"
-      ],
+      "KCs": ["RecValExt"],
       "values": [],
       "hints": [
         {
@@ -31,10 +29,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-            "-6",
-            "2"
-          ],
+          "answer": ["-6", "2"],
           "nextStep": "1"
         }
       ],
@@ -45,14 +40,10 @@
     {
       "stepId": "1",
       "expression": "Seleccione que valor no pertenece al conjunto",
-      "StepType":"Alternatives",
+      "StepType": "Alternatives",
       "stepTitle": "Paso 2: Reconozca que valor no pertenece al conjunto",
-      "displayResult": [
-        "\\text{El valor -3 pertenece al conjunto}"
-      ],
-      "KCs": [
-        "RecExtCerr"
-      ],
+      "displayResult": ["\\text{El valor -3 pertenece al conjunto}"],
+      "KCs": ["RecExtCerr"],
       "values": [
         {
           "name": "a",
@@ -80,9 +71,7 @@
       "matchingError": [],
       "answers": [
         {
-          "answer": [
-            "2"
-          ],
+          "answer": ["2"],
           "nextStep": "-1"
         }
       ],

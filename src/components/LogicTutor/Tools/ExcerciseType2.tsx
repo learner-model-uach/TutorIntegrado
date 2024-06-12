@@ -22,7 +22,7 @@ export interface Step {
   expression: string;
   stepTitle: string;
   displayResult: Array<string>;
-  values?: Array<value>|Array<tvalue>;
+  values?: Array<value> | Array<tvalue>;
   hints: Array<hint>;
   matchingError?: Array<matchingError>;
   validation?: "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount";
@@ -44,14 +44,13 @@ export interface Header {
   value: string;
 }
 export interface tvalue {
-  name: string
-  value: string
+  name: string;
+  value: string;
 }
 
 export interface Row {
-  data: string[]
+  data: string[];
 }
-
 
 export interface ExType {
   code: string;
@@ -70,14 +69,22 @@ export interface ExType {
 }
 
 export interface StepLog extends Step {
-  StepType: "Alternatives"|"TrueFalse"|"MultiplePlaceholders"|"Blank"|"DualInputs"|"InputButtons"|"Notation"|"Rect"|"TableStep"|"SinglePlaceholder";
-  table?: Table|undefined;
-  button?: any
-  
+  StepType:
+    | "Alternatives"
+    | "TrueFalse"
+    | "MultiplePlaceholders"
+    | "Blank"
+    | "DualInputs"
+    | "InputButtons"
+    | "Notation"
+    | "Rect"
+    | "TableStep"
+    | "SinglePlaceholder";
+  table?: Table | undefined;
+  button?: any;
 }
 
 export interface ExLog extends ExType {
-  img?: string|undefined;
+  img?: string | undefined;
   steps: Array<StepLog>;
-
 }
