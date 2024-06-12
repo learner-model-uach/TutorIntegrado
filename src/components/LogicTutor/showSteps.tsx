@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import Latex from "react-latex-next";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import { FaHandPointRight } from "react-icons/fa";
+import { useAction } from "../../utils/action";
 const TrueFalse = dynamic(() => import("./TrueFalse"), { ssr: false });
 const Blank = dynamic(() => import("./Blank"), { ssr: false });
 const InputButtons = dynamic(() => import("./InputButtons"), { ssr: false });
@@ -19,6 +20,7 @@ const Alternatives = dynamic(() => import("./Alternatives"), { ssr: false });
 const MultiplePlaceholders = dynamic(() => import("./MultiplePlaceholders"), { ssr: false });
 const TableStep = dynamic(() => import("./TableStep"), { ssr: false });
 const SinglePlaceholder = dynamic(() => import("./SinglePlaceholder"), { ssr: false });
+const extras = { steps: {} };
 const ShowSteps = ({
   exc,
   nStep,
@@ -35,6 +37,8 @@ const ShowSteps = ({
   const [completed, setCompleted] = useState(false);
   const next = parseInt(exc.steps[nStep].answers[0].nextStep);
   const [changed, setChanged] = useState(false);
+  const action = useAction();
+  const [report, setReport] = useState(true);
   //console.log("valor Step: " ,Step)
   const [color, setColor] = useState("#bee3f8");
   return (
@@ -90,6 +94,18 @@ const ShowSteps = ({
             Ejercicio Terminado
           </Alert>
           {!changed ? (setColor("#C6F6D5"), setChanged(true)) : null}
+          {report ? (
+            <>
+              {action({
+                verbName: "completeContent",
+                contentID: exc.code,
+                topicID: topic,
+                result: 1,
+                extra: extras,
+              })}
+              {setReport(false)}
+            </>
+          ) : null}
         </>
       ) : completed && next !== -1 ? (
         <>
