@@ -49,11 +49,11 @@ export function Navigation() {
             <SidebarLink key="6" href={"wpExercises?topic=34,35&registerTopic=34"}>
               Ejercicios con contexto
             </SidebarLink>
-            <SidebarLink key="9" href={"logicEx?topic=38,39,40,41&registerTopic=38"}>
+            <SidebarLink key="9" href={"contentSelect?topic=38,39,40,41&registerTopic=38"}>
               Lógica y Teoría de Conjuntos
             </SidebarLink>
-            <SidebarLink key="9" href={"contentSelect?topic=38,39,40,41&registerTopic=38"}>
-              Lógica y Teoría de Conjuntos seleccion
+            <SidebarLink key="9" href={"logicEx?topic=38,39,40,41&registerTopic=38"}>
+              Lógica y Teoría de Conjuntos Validación
             </SidebarLink>
           </>
         )}

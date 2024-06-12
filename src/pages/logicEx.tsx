@@ -7,19 +7,16 @@ const Potato = () => {
     <Flex height="100vh" alignItems="center" justifyContent="center">
       <Flex direction="column" background="gray.100" p={12} rounded={6}>
         <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Inter" } })}>
-          Representacion de conjuntos1
-        </Heading>
-        <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Inter1" } })}>
-          Representacion de conjuntos2
+          Representación de conjuntos
         </Heading>
         <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Sucesion" } })}>
-          Sucesion
+          Sucesión
         </Heading>
         <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Inters" } })}>
-          Interseccion
+          Intersección
         </Heading>
         <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Table1" } })}>
-          TablaVerdad
+          Tablas de Verdad
         </Heading>
         <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Union1" } })}>
           Union
@@ -29,9 +26,6 @@ const Potato = () => {
         </Heading>
         <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "Conj1" } })}>
           Conjunciones
-        </Heading>
-        <Heading onClick={() => router.push({ pathname: "logicTest", query: { pid: "pot1" } })}>
-          TestLvlTutor
         </Heading>
       </Flex>
     </Flex>

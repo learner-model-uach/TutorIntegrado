@@ -1,14 +1,14 @@
 import React from "react";
 import type { ExLog } from "../components/LogicTutor/Tools/ExcerciseType2";
 
-import Inter from "../components/LogicTutor/LogicaJson/Inter3.json";
+import Inter from "../components/LogicTutor/LogicaJson/Inter1.json";
 import Inter1 from "../components/LogicTutor/LogicaJson/Inter2.json";
-import Inters from "../components/LogicTutor/LogicaJson/Intersection4.json";
-import Suc from "../components/LogicTutor/LogicaJson/Sucesion4.json";
+import Inters from "../components/LogicTutor/LogicaJson/Intersection.json";
+import Suc from "../components/LogicTutor/LogicaJson/Sucesion1.json";
 import Table1 from "../components/LogicTutor/LogicaJson/Tabla1.json";
-import Union1 from "../components/LogicTutor/LogicaJson/Union4.json";
-import Prop1 from "../components/LogicTutor/LogicaJson/Prop4.json";
-import Conj1 from "../components/LogicTutor/LogicaJson/Conj4.json";
+import Union1 from "../components/LogicTutor/LogicaJson/Union.json";
+import Prop1 from "../components/LogicTutor/LogicaJson/Prop1.json";
+import Conj1 from "../components/LogicTutor/LogicaJson/Conj1.json";
 
 import "katex/dist/katex.min.css";
 import { useRouter } from "next/router";
