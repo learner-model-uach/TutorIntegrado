@@ -2,7 +2,6 @@ import React from "react";
 import type { ExLog } from "../components/LogicTutor/Tools/ExcerciseType2";
 
 import Inter from "../components/LogicTutor/LogicaJson/Inter1.json";
-import Inter1 from "../components/LogicTutor/LogicaJson/Inter2.json";
 import Inters from "../components/LogicTutor/LogicaJson/Intersection.json";
 import Suc from "../components/LogicTutor/LogicaJson/Sucesion1.json";
 import Table1 from "../components/LogicTutor/LogicaJson/Tabla1.json";
@@ -21,8 +20,6 @@ function App() {
   //console.log(pid)
   if (pid === "Inter") {
     exc = Inter as ExLog;
-  } else if (pid === "Inter1") {
-    exc = Inter1 as ExLog;
   } else if (pid === "Inters") {
     exc = Inters as ExLog;
   } else if (pid === "Table1") {
