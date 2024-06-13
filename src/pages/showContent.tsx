@@ -4,9 +4,12 @@ import dynamic from "next/dynamic";
 import type { ComponentProps } from "react";
 import type { Tutor } from "../components/tutorEcuaciones/Tutor";
 import type Plain from "../components/lvltutor/Plain";
+
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { Text, Box } from "@chakra-ui/react";
 import Info from "../utils/Info";
+import DynamicTutorLogic from "../components/LogicTutor/DynamicTutorLogic";
+import type { ExLog } from "../components/LogicTutor/Tools/ExcerciseType2";
 //import wpExercise from "../components/tutorWordProblems/exercise1.json";
 const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
@@ -28,12 +31,16 @@ const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../components/tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
 );
 
+//const DynamicTutorL = dynamic<ComponentProps<typeof DynamicTutorLogic>>(() =>
+//  import("../components/LogicTutor/DynamicTutorLogic").then(mod => mod.DynamicTutorLogic),
+//);
+
 export default withAuth(function ShowContent() {
   const content = sessionState.currentContent;
   const topic = sessionState.topic;
 
   //console.log("Content --------->", content);
-  //console.log("topic --------->", topic);
+  console.log("topic --------->", topic);
 
   return (
     <>
@@ -60,6 +67,8 @@ export default withAuth(function ShowContent() {
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
         ) : content && content?.json.type == "wordProblem" ? (
           <DynamicTutorWP key="5" exercise={content.json} topicId={topic}></DynamicTutorWP>
+        ) : content && content?.json.type == "lvltutor2" ? (
+          <DynamicTutorLogic exc={content.json as ExLog} topicId={"38"} />
         ) : (
           <Text>No existe el contenido que desea cargar</Text>
         )}
