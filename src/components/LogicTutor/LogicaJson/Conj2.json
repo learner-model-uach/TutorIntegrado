@@ -1,0 +1,150 @@
+{
+  "code": "conj2",
+  "title": "Uso de Conjunciones",
+  "type": "lvltutor2",
+  "img": "",
+  "meta": {},
+  "eqc": "\\text{P:Júpiter es un planeta}  \\\\ Q:3²+4²=5² \\\\ \\text{Determine el valor de verdad de la siguiente conjunción} \\\\ P\\wedge Q",
+  "text": "Dadas las siguientes proposiciones ",
+  "steps": [
+    {
+      "stepId": "0",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 1: Determine el valor de verdad de la proposicion P",
+      "displayResult": ["\\text{P: Júpiter es un planeta}"],
+      "KCs": ["RecProp"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Verdadero"
+        },
+        {
+          "name": "a",
+          "value": "Falso"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Si ambas condiciones son ciertas el valor de verdad de la proposicion es verdadero"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["Verdadero"],
+          "nextStep": "1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1) Se determina el valor de verdad de la proposición"
+    },
+    {
+      "stepId": "1",
+      "expression": "",
+      "StepType": "MultiplePlaceholders",
+      "stepTitle": "Paso 2: Resuelva ambos lados de la proposición",
+      "displayResult": ["Q:3²+4²=\\placeholder[a]{}||5²=\\placeholder[b]{}"],
+      "KCs": ["EvProp"],
+      "values": [],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Una proposición es una afirmación o declaración que puede ser considerada verdadera o falsa."
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["25", "25"],
+          "nextStep": "2"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1)Luego se determina el valor de verdad de la proposición"
+    },
+    {
+      "stepId": "2",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 3: Determine el valor de verdad de la proposicion",
+      "displayResult": ["3²+4²=5²"],
+      "KCs": ["RecProp"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Verdadero, ya que 25=25"
+        },
+        {
+          "name": "a",
+          "value": "Falso, pues 7² es distinto a 5²"
+        },
+        {
+          "name": "a",
+          "value": "Verdadero, pues ambas condiciones son falsas"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Si ambas condiciones son ciertas el valor de verdad de la proposicion es verdadero"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["Verdadero, ya que 25=25"],
+          "nextStep": "3"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1)Luego se determina el valor de verdad de la proposición"
+    },
+    {
+      "stepId": "3",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 4: Determine el valor de verdad de la conjunción",
+      "displayResult": ["P\\wedge Q"],
+      "KCs": ["RecProp"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Ya que una de las 2 proposiciones es falsa, la conjunción es falsa"
+        },
+        {
+          "name": "a",
+          "value": "Ambas proposiciones son falsas por lo que la conjunción es falsa"
+        },
+        {
+          "name": "a",
+          "value": "Ambas preposiciones son verdaderas por lo que la conjunción es verdadera"
+        },
+        {
+          "name": "a",
+          "value": "Ya que una de las 2 proposiciones es verdadera, la conjunción es verdadera"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Para verificar si la conjuncion "
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["Ambas preposiciones son verdaderas por lo que la conjunción es verdadera"],
+          "nextStep": "-1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1)Luego se determina el valor de verdad de la proposición"
+    }
+  ]
+}

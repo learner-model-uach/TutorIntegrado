@@ -1,0 +1,52 @@
+{
+  "code": "prop4",
+  "title": "Reconocimiento de proposiciones",
+  "type": "lvltutor2",
+  "img": "",
+  "meta": {},
+  "text": "Reconoce si la siguiente frase representa una proposición. En caso de serlo, dé su valor de verdad.",
+  "steps": [
+    {
+      "stepId": "0",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 1: Reconozca si la frase es una proposición",
+      "displayResult": ["\\text{El cuadrado es una figura geométrica de 4 lados}"],
+      "KCs": ["RecProp"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Si, pues es verdadera"
+        },
+        {
+          "name": "a",
+          "value": "No, pues no posee una condicion asociada y es una oración aseverativa"
+        },
+        {
+          "name": "a",
+          "value": "No, pues la proposición no está bien definida"
+        },
+        {
+          "name": "a",
+          "value": "Si, pues se puede obtener valor numérico a partir de la frase"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Una proposición es una afirmación o declaración que puede ser considerada verdadera o falsa."
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["No, pues no posee una condicion asociada y es una oración aseverativa"],
+          "nextStep": "-1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1)Luego se determina el valor de verdad de la proposición"
+    }
+  ]
+}

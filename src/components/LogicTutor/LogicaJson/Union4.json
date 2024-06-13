@@ -1,0 +1,127 @@
+{
+  "code": "uni4",
+  "title": "Unión de intervalos",
+  "type": "lvltutor2",
+  "img": "union4.png",
+  "meta": {},
+  "text": "Dada la siguiente representación de intervalos ",
+  "steps": [
+    {
+      "stepId": "0",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 1: Reconozca la Unión",
+      "displayResult": [
+        "\\text{¿Cuál de los siguientes tramos en la gráfica representa la unión de los 2 intervalos?}"
+      ],
+      "KCs": ["RecUnGraf"],
+      "values": [
+        {
+          "name": "a",
+          "value": "[-1,2]"
+        },
+        {
+          "name": "a",
+          "value": "[0,2]"
+        },
+        {
+          "name": "a",
+          "value": "[1,2]"
+        },
+        {
+          "name": "a",
+          "value": "]-1,2]"
+        },
+        {
+          "name": "a",
+          "value": "[-1,1]"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "La Unión esta representada por el conjunto que reune los elementos de ambos conjuntos"
+        },
+        {
+          "hintId": 1,
+          "hint": "Un intervalo extremo cerrado se representa con corchetes cerrados [ mientras que el abierto utiliza corchete abierto ]"
+        },
+        {
+          "hintId": 2,
+          "hint": "La Unión corresponde a  [-1,2]"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["[-1,2]"],
+          "nextStep": "1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "B corresponde al intervalo",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    },
+    {
+      "stepId": "1",
+      "expression": "\\text{El valor es -1}",
+      "StepType": "TrueFalse",
+      "stepTitle": "Paso 2: Reconozca si el valor siguiente pertenece a la Unión",
+      "displayResult": ["El valor -1 si pertenece a la Unión"],
+      "KCs": ["RecValMedio"],
+      "values": [
+        {
+          "name": "a",
+          "value": -1
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Debes seleccionar si el valor pertenece a la Unión"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["V"],
+          "nextStep": "2"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "El Valor si pertenece a la Unión",
+      "summary": "2)Luego se debe representar el intervalo"
+    },
+    {
+      "stepId": "2",
+      "expression": "",
+      "StepType": "MultiplePlaceholders",
+      "stepTitle": "Paso 3: Escriba por comprensión el intervalo que representa la Unión:",
+      "displayResult": [
+        "{x\\in \\placeholder[a]{} : \\placeholder[b]{} \\placeholder[c]{} x \\placeholder[d]{} \\placeholder[e]{}}"
+      ],
+      "KCs": ["RecInter", "RepIntCerr", "RepIntAb"],
+      "values": [],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "La Unión esta representada por el conjunto que reune los elementos de ambos conjuntos"
+        },
+        {
+          "hintId": 1,
+          "hint": "La Unión corresponde a  [-1,2]"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["R", "-1", "\\le", "\\le", "2"],
+          "nextStep": "-1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "El intervalo corresponde a la Unión",
+      "summary": "3)Ejercicio terminado"
+    }
+  ]
+}
