@@ -79,13 +79,13 @@ export function MainLayout({ children }: { children: ReactNode }) {
               maxW={{
                 md: "calc(97vw - var(--sidebar-width))",
               }}
-              >
+            >
               {children}
             </Flex>
           </Flex>
         </Box>
       </Box>
-      <EmojiBar/>
+      <EmojiBar />
     </Flex>
   );
 }
