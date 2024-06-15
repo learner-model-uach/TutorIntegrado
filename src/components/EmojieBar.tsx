@@ -8,7 +8,7 @@ export const EmojiBar = () => {
   const [inputReason, setInputReason] = useState(""); // Estado para almacenar la razón del input
   const [showInput, setShowInput] = useState(false);
   const [nubePosition, setNubePosition] = useState({ top: 0, left: 0 });
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLDivElement>(null);
   const startAction = useAction({});
   const emojis = [
     { src: "/img/feliz.png", alt: "feliz" },
@@ -28,7 +28,7 @@ export const EmojiBar = () => {
       alignItems: "center",
     },
     nube: {
-      position: "absolute",
+      position: "absolute" as "absolute",
       padding: "20px",
       backgroundColor: "#f1f1f1",
       borderRadius: "10px",
