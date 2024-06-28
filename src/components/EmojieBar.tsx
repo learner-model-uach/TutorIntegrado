@@ -34,7 +34,6 @@ export const EmojiBar = () => {
       borderRadius: "10px",
       boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
       zIndex: 1,
-      
       transition: "top 0.3s ease-in-out, left 0.3s ease-in-out",
     },
     input: {
