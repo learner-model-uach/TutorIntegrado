@@ -13,13 +13,13 @@ export const EmojiBar = () => {
   const emojis = [
     { src: "/img/feliz.png", alt: "feliz" },
     { src: "/img/alivio.png", alt: "alivio" },
-    { src: "/img/cool.png", alt: "cool" },
     { src: "/img/eureka2.png", alt: "eureka" },
     { src: "/img/sorpresa.png", alt: "sorpresa" },
     { src: "/img/neutral.png", alt: "neutral" },
     { src: "/img/pensativo.png", alt: "pensativo" },
     { src: "/img/aburrido.png", alt: "aburrimiento" },
     { src: "/img/angustia.png", alt: "angustia" },
+    { src: "/img/enojado.png", alt: "enojo" },
   ];
 
   const estilos = {
