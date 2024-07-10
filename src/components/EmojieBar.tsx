@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import React, { useState, useRef } from "react";
+=======
+import React, { useState, useEffect, useRef } from "react";
+>>>>>>> 234d240d4f3c36142b6b205b835af09cd354982a
 import {
   Box,
   VStack,
   Button,
   Input,
+<<<<<<< HEAD
+=======
+  Text,
+>>>>>>> 234d240d4f3c36142b6b205b835af09cd354982a
   Popover,
   PopoverTrigger,
   PopoverContent,
