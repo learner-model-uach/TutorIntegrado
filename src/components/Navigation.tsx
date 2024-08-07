@@ -39,27 +39,36 @@ export function Navigation() {
             <SidebarLink key="2" href={"contentSelect?topic=16,4,3,5,6,7,8&registerTopic=4"}>
               Factorización
             </SidebarLink>
-            <SidebarLink key="3" href={"contentSelect?topic=16,31,17,18,63&registerTopic=31"}>
+            <SidebarLink key="3" href={"contentSelect?topic=19,21,22,64&registerTopic=19"}>
+              Potencias
+            </SidebarLink>
+            <SidebarLink key="4" href={"contentSelect?topic=68,23,67&registerTopic=68"}>
+              Raíces
+            </SidebarLink>
+            <SidebarLink key="5" href={"contentSelect?topic=69,20&registerTopic=69"}>
+              Notación Científica
+            </SidebarLink>
+            <SidebarLink key="6" href={"contentSelect?topic=16,31,17,18,63&registerTopic=31"}>
               Fracciones
             </SidebarLink>
-            <SidebarLink key="4" href={"contentSelect?topic=19,20,21,22,23,64&registerTopic=19"}>
-              Potencias y raíces
-            </SidebarLink>
-            <SidebarLink key="5" href={"contentSelect?topic=33,26&registerTopic=33"}>
+            <SidebarLink key="7" href={"contentSelect?topic=33,26&registerTopic=33"}>
               Ecuaciones Lineales
             </SidebarLink>
-            <SidebarLink key="6" href={"contentSelect?topic=24,25&registerTopic=24"}>
+            <SidebarLink key="8" href={"contentSelect?topic=24,25&registerTopic=24"}>
               Ecuaciones Cuadráticas
             </SidebarLink>
-            <SidebarLink key="7" href={"contentSelect?topic=52,53,54,55,56&registerTopic=52"}>
+            <SidebarLink key="9" href={"contentSelect?topic=52,53,54,55,56&registerTopic=52"}>
               Álgebra de Polinomios
             </SidebarLink>
-            <SidebarLink key="8" href={"wpExercises?topic=34,35&registerTopic=34"}>
+            <SidebarLink key="10" href={"wpExercises?topic=34,35&registerTopic=34"}>
               Ejercicios con contexto
             </SidebarLink>
-            <SidebarLink key="9" href={"contentSelect?topic=38,40,43&registerTopic=37"}>
+            {/*<SidebarLink key="11" href={"contentSelect?topic=38,40,43&registerTopic=37"}>
               Lógica y Teoría de Conjuntos
             </SidebarLink>
+            <SidebarLink key="12" href={"topicSelect?topic=4,3,5,6,7,8&registerTopic=4"}>
+              Fcprueba
+            </SidebarLink>*/}
           </>
         )}
       </Stack>
