@@ -22,7 +22,7 @@ export interface Step {
   expression: string;
   stepTitle: string;
   displayResult: Array<string>;
-  values?: Array<value>;
+  values?: Array<value> | Array<tvalue>;
   hints: Array<hint>;
   matchingError?: Array<matchingError>;
   validation?: "stringComparison" | "evaluate" | "countElements" | "evaluateAndCount";
@@ -30,6 +30,26 @@ export interface Step {
   incorrectMsg: string;
   correctMsg: string;
   summary: string;
+}
+export interface Table {
+  header: Header[];
+  rows: Row[];
+  alignRows: textAlign;
+  tableCaption: string;
+}
+export type textAlign = "left" | "right" | "center" | "justify" | "end" | "start";
+
+export interface Header {
+  align: string;
+  value: string;
+}
+export interface tvalue {
+  name: string;
+  value: string;
+}
+
+export interface Row {
+  data: string[];
 }
 
 export interface ExType {
@@ -46,4 +66,25 @@ export interface ExType {
   steps: Array<Step>;
   img?: string;
   initialExpression?: string;
+}
+
+export interface StepLog extends Step {
+  StepType:
+    | "Alternatives"
+    | "TrueFalse"
+    | "MultiplePlaceholders"
+    | "Blank"
+    | "DualInputs"
+    | "InputButtons"
+    | "Notation"
+    | "Rect"
+    | "TableStep"
+    | "SinglePlaceholder";
+  table?: Table | undefined;
+  button?: any;
+}
+
+export interface ExLog extends ExType {
+  img?: string | undefined;
+  steps: Array<StepLog>;
 }

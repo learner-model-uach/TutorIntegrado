@@ -1,0 +1,94 @@
+{
+  "code": "prop1",
+  "title": "Reconocimiento de proposiciones",
+  "type": "lvltutor2",
+  "img": "",
+  "meta": {},
+  "text": "Reconoce si la siguiente frase representa una proposición. En caso de serlo, dé su valor de verdad.",
+  "steps": [
+    {
+      "stepId": "0",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 1: Reconozca si la frase es una proposición",
+      "displayResult": ["\\text{ 6 es divisible por 2 y por 3 a la vez}"],
+      "KCs": ["RecProp"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Si, pues posee una condición asociada"
+        },
+        {
+          "name": "a",
+          "value": "No, pues no posee una condicion asociada"
+        },
+        {
+          "name": "a",
+          "value": "No, pues la proposición no está bien definida"
+        },
+        {
+          "name": "a",
+          "value": "Si, pues se puede obtener valor numérico a partir de la frase"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Una proposición es una afirmación o declaración que puede ser considerada verdadera o falsa."
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["Si, pues posee una condición asociada"],
+          "nextStep": "1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1)Luego se determina el valor de verdad de la proposición"
+    },
+    {
+      "stepId": "1",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 2: Determine el valor de verdad de la proposicion",
+      "displayResult": ["\\text{ 6 es divisible por 2 y por 3 a la vez}"],
+      "KCs": ["RecProp"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Verdadero, ya que ambas condiciones son ciertas"
+        },
+        {
+          "name": "a",
+          "value": "Falso, pues 6 no es divisible por 2"
+        },
+        {
+          "name": "a",
+          "value": "Falso, pues 6 no es divisible por 3"
+        },
+        {
+          "name": "a",
+          "value": "Verdadero, pues ambas condiciones son falsas"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Si ambas condiciones son ciertas el valor de verdad de la proposicion es verdadero"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["Verdadero, ya que ambas condiciones son ciertas"],
+          "nextStep": "-1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "Existe una condicion asociada a la frase",
+      "summary": "1)Luego se determina el valor de verdad de la proposición"
+    }
+  ]
+}

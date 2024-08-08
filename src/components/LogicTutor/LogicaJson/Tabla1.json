@@ -1,0 +1,350 @@
+{
+  "code": "table1",
+  "title": "Tablas de Verdad",
+  "type": "lvltutor2",
+  "meta": {},
+  "eqc": "\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}",
+  "text": "Utilizando una tabla de verdad compruebe que se satisface la siguiente equivalencia lógica: ",
+  "steps": [
+    {
+      "stepId": "0",
+      "expression": "\\text{La expresión es: }p\\Rightarrow q ",
+      "StepType": "TableStep",
+      "stepTitle": "Paso 1: Complete la tabla de verdad para la siguiente expresión",
+      "displayResult": [],
+      "KCs": ["IdConLog", "UtRec"],
+      "table": {
+        "header": [
+          {
+            "align": "center",
+            "value": "p"
+          },
+          {
+            "align": "center",
+            "value": "q"
+          },
+          {
+            "align": "center",
+            "value": "{p\\Rightarrow q}"
+          }
+        ],
+        "rows": [
+          {
+            "data": ["V", "V", "a"]
+          },
+          {
+            "data": ["V", "F", "b"]
+          },
+          {
+            "data": ["F", "V", "c"]
+          },
+          {
+            "data": ["F", "F", "d"]
+          }
+        ],
+        "alignRows": "center",
+        "tableCaption": "Paso 1"
+      },
+      "values": [],
+      "button": [
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"]
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Revise el material de estudio"
+        },
+        {
+          "hintId": 1,
+          "hint": "Debe utilizar el recíproco"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["V", "F", "V", "V"],
+          "nextStep": "1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "B corresponde al intervalo",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    },
+    {
+      "stepId": "1",
+      "expression": "\\text{La expresión es: }p\\Rightarrow q",
+      "StepType": "TableStep",
+      "stepTitle": "Paso 2: Complete tabla de verdad para la siguiente expresión",
+      "displayResult": [],
+      "KCs": ["IdConLog", "UtNeg"],
+      "table": {
+        "header": [
+          {
+            "align": "center",
+            "value": "p"
+          },
+          {
+            "align": "center",
+            "value": "q"
+          },
+          {
+            "align": "center",
+            "value": "{p\\Rightarrow q}"
+          },
+          {
+            "align": "center",
+            "value": "\\overline{p\\Rightarrow q}"
+          }
+        ],
+        "rows": [
+          {
+            "data": ["V", "V", "V", "a"]
+          },
+          {
+            "data": ["V", "F", "F", "b"]
+          },
+          {
+            "data": ["F", "V", "V", "c"]
+          },
+          {
+            "data": ["F", "F", "V", "d"]
+          }
+        ],
+        "alignRows": "center",
+        "tableCaption": "Paso 2"
+      },
+      "values": [],
+      "button": [
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"]
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Revise el material de estudio"
+        },
+        {
+          "hintId": 1,
+          "hint": "Debe utilizar la negación"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["F", "V", "F", "F"],
+          "nextStep": "2"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "B corresponde al intervalo",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    },
+    {
+      "stepId": "2",
+      "expression": "\\text{La expresión es: }\\overline{q}",
+      "StepType": "TableStep",
+      "stepTitle": "Paso 3: Complete tabla de verdad para la siguiente expresión ",
+      "displayResult": [],
+      "KCs": ["IdConLog", "UtNeg"],
+      "table": {
+        "header": [
+          {
+            "align": "center",
+            "value": "p"
+          },
+          {
+            "align": "center",
+            "value": "q"
+          },
+          {
+            "align": "center",
+            "value": "{p\\Rightarrow q}"
+          },
+          {
+            "align": "center",
+            "value": "\\overline{p\\Rightarrow q}"
+          },
+          {
+            "align": "center",
+            "value": "\\overline{q}"
+          }
+        ],
+        "rows": [
+          {
+            "data": ["V", "V", "V", "F", "a"]
+          },
+          {
+            "data": ["V", "F", "F", "V", "b"]
+          },
+          {
+            "data": ["F", "V", "V", "F", "c"]
+          },
+          {
+            "data": ["F", "F", "V", "F", "d"]
+          }
+        ],
+        "alignRows": "center",
+        "tableCaption": "Paso 3"
+      },
+      "values": [],
+      "button": [
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"]
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Revise el material de estudio"
+        },
+        {
+          "hintId": 1,
+          "hint": "Debe utilizar la negación"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["F", "V", "F", "V"],
+          "nextStep": "3"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "B corresponde al intervalo",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    },
+    {
+      "stepId": "3",
+      "expression": "\\text{La expresión es: }p\\wedge \\overline{q}",
+      "StepType": "TableStep",
+      "stepTitle": "Paso 4: Complete tabla de verdad para la siguiente expresión",
+      "displayResult": [],
+      "KCs": ["IdConLog", "UtConj"],
+      "table": {
+        "header": [
+          {
+            "align": "center",
+            "value": "p"
+          },
+          {
+            "align": "center",
+            "value": "q"
+          },
+          {
+            "align": "center",
+            "value": "{p\\Rightarrow q}"
+          },
+          {
+            "align": "center",
+            "value": "\\overline{p\\Rightarrow q}"
+          },
+          {
+            "align": "center",
+            "value": "\\overline{q}"
+          },
+          {
+            "align": "center",
+            "value": "p\\wedge \\overline{q}"
+          }
+        ],
+        "rows": [
+          {
+            "data": ["V", "V", "V", "F", "F", "a"]
+          },
+          {
+            "data": ["V", "F", "F", "V", "V", "b"]
+          },
+          {
+            "data": ["F", "V", "V", "F", "F", "c"]
+          },
+          {
+            "data": ["F", "F", "V", "F", "V", "d"]
+          }
+        ],
+        "alignRows": "center",
+        "tableCaption": "Paso 4"
+      },
+      "values": [],
+      "button": [
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"],
+        ["V", "F"]
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Revise el material de estudio"
+        },
+        {
+          "hintId": 1,
+          "hint": "Debe utilizar la conjunción"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["F", "V", "F", "F"],
+          "nextStep": "4"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "B corresponde al intervalo",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    },
+    {
+      "stepId": "4",
+      "expression": "",
+      "StepType": "Alternatives",
+      "stepTitle": "Paso 5: Seleccione si se satisface la equivalencia",
+      "displayResult": [
+        "\\text{La equivalencia lógica es: }\\overline{p \\Rightarrow q}\\equiv {p\\wedge q}"
+      ],
+      "KCs": ["RecEcLog"],
+      "values": [
+        {
+          "name": "a",
+          "value": "Si, porque las columnas de las tablas son iguales"
+        },
+        {
+          "name": "a",
+          "value": "No, porque las tablas son diferentes"
+        },
+        {
+          "name": "a",
+          "value": "Si, porque El primer valor es verdadero"
+        },
+        {
+          "name": "a",
+          "value": "No, porque El primer valor es verdadero"
+        }
+      ],
+      "hints": [
+        {
+          "hintId": 0,
+          "hint": "Revise el material de estudio"
+        },
+        {
+          "hintId": 1,
+          "hint": "Si ambas tablas son iguales se satisface la equivalencia"
+        }
+      ],
+      "matchingError": [],
+      "answers": [
+        {
+          "answer": ["a) Si, porque las columnas de las tablas son iguales"],
+          "nextStep": "-1"
+        }
+      ],
+      "incorrectMsg": "Compruebe su respuesta",
+      "correctMsg": "B corresponde al intervalo",
+      "summary": "1)Luego se comprueban valores del conjunto"
+    }
+  ]
+}
