@@ -24,6 +24,14 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
     //responseStudent equals response with replace "space" and "*" (work string in lower case)
     const responseStudent = response.current.value
       .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+      .replace(/[²]| /g, "^2")
+      .replace(/[³]| /g, "^3")
+      .replace(/[⁴]| /g, "^4")
+      .replace(/[⁵]| /g, "^5")
+      .replace(/[⁶]| /g, "^6")
+      .replace(/[⁷]| /g, "^7")
+      .replace(/[⁸]| /g, "^8")
+      .replace(/[⁹]| /g, "^9")
       .toLowerCase();
     //validate is a function that compares each element with response of student
     const validate = element => element === responseStudent;

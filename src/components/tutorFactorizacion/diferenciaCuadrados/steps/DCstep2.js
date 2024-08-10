@@ -15,7 +15,7 @@ export const DCstep2 = ({
 }) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
-  const correctAlternatives = step2.answers[0].answer; //list of answers valid
+  const correctAlternatives = step2.answers.map(elemento => elemento.answer);
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const action = useAction(); //send action to central system
@@ -30,14 +30,34 @@ export const DCstep2 = ({
     setAttempts(attempts + 1);
 
     const responseStudent = [
-      response1.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
-      response2.current.value.replace(/[*]|[(]|[)]|[{]|[}]| /g, "").toLowerCase(),
+      response1.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
+      response2.current.value
+        .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+        .replace(/[²]| /g, "^2")
+        .replace(/[³]| /g, "^3")
+        .replace(/[⁴]| /g, "^4")
+        .replace(/[⁵]| /g, "^5")
+        .replace(/[⁶]| /g, "^6")
+        .replace(/[⁷]| /g, "^7")
+        .replace(/[⁸]| /g, "^8")
+        .replace(/[⁹]| /g, "^9")
+        .toLowerCase(),
     ];
+    const validate = element =>
+      (element[0] === responseStudent[0] && element[1] === responseStudent[1]) ||
+      (element[0] === responseStudent[1] && element[1] === responseStudent[0]);
 
-    if (
-      responseStudent[0] === correctAlternatives[0] &&
-      responseStudent[1] === correctAlternatives[1]
-    ) {
+    if (correctAlternatives.some(validate)) {
       setStep2Valid((step2Valid = "Terminado"));
       extra.att = attempts;
       extra.hints = hints;
