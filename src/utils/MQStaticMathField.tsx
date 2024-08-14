@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 
 addStyles();
 
+const mqo = {
+  overflow: "visible",
+};
+
 //wrapper created because expresion elements render distorted on document changes
 const MQStaticMathField = ({ exp, currentExpIndex }: { exp: string; currentExpIndex: boolean }) => {
   const [texExp, setTexExp] = useState("");
@@ -13,6 +17,6 @@ const MQStaticMathField = ({ exp, currentExpIndex }: { exp: string; currentExpIn
       }, 10);
   }, [exp, currentExpIndex]);
 
-  return <StaticMathField>{texExp}</StaticMathField>;
+  return <StaticMathField style={mqo}>{texExp}</StaticMathField>;
 };
 export default MQStaticMathField;
