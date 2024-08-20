@@ -56,7 +56,7 @@ export default withAuth(function ShowContent() {
             "pitagoras2",
             "thales1",
             "thales2",
-            "geom"
+            "geom",
           ].includes(content?.json?.type) ? (
           <DynamicTutorGeom key="4" exercise={content.json} topicId={topic}></DynamicTutorGeom>
         ) : content && content?.json.type == "wordProblem" ? (

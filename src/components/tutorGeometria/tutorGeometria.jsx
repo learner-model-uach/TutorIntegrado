@@ -30,7 +30,7 @@ import {
   RadioGroup,
   Stack,
   Radio,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import RatingQuestion from "../RatingQuestion";
 
@@ -83,7 +83,7 @@ export const GEO = ({ exercise, topicId }) => {
           marginTop: 20,
         }}
       >
-        {exercise.image && <Image src={exercise.image} style={{ width: 300, height: 300 }}/>}
+        {exercise.image && <Image src={exercise.image} style={{ width: 300, height: 300 }} />}
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0, marginBottom: 20 }}>
@@ -114,10 +114,10 @@ export const GEO = ({ exercise, topicId }) => {
                       </Wrap>
                     </Center>
                     <Box mt={2}>
-                    <Text fontSize="sm" color="gray.600">
-                      KCs: {step.KCs.join(", ")}
-                    </Text>
-                  </Box>
+                      <Text fontSize="sm" color="gray.600">
+                        KCs: {step.KCs.join(", ")}
+                      </Text>
+                    </Box>
                   </Wrap>
                 </Box>
                 <AccordionIcon />
@@ -263,9 +263,7 @@ const StepGeometria = ({
     <>
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
-          <Center>
-            {step.expression}
-          </Center>
+          <Center>{step.expression}</Center>
         </WrapItem>
 
         <Spacer />
