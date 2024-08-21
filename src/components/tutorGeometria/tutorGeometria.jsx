@@ -35,20 +35,19 @@ import {
 import RatingQuestion from "../RatingQuestion";
 
 export const GEO = ({ exercise, topicId }) => {
-  
   let kc = {
-    "AreaC": "Conocimiento del área del círculo",
-    "PerC": "Conocimiento del perímetro del círculo",
-    "AreaT": "Conocimiento del área del triángulo",
-    "PerT": "Conocimiento del perímetro del triángulo",
-    "AreaR": "Conocimiento del área del rectángulo",
-    "PerR": "Conocimiento del perímetro del rectángulo",
-    "PlanTh": "Plantear teorema de Thales",
-    "CatHip": "Conocimiento Catetos e Hipotenusa",
-    "AN": "Aritmética de números",
-    "AD": "Asociar Datos",
-    "DespVarEcu": "Despejar variable en ecuación"
-  }
+    AreaC: "Conocimiento del área del círculo",
+    PerC: "Conocimiento del perímetro del círculo",
+    AreaT: "Conocimiento del área del triángulo",
+    PerT: "Conocimiento del perímetro del triángulo",
+    AreaR: "Conocimiento del área del rectángulo",
+    PerR: "Conocimiento del perímetro del rectángulo",
+    PlanTh: "Plantear teorema de Thales",
+    CatHip: "Conocimiento Catetos e Hipotenusa",
+    AN: "Aritmética de números",
+    AD: "Asociar Datos",
+    DespVarEcu: "Despejar variable en ecuación",
+  };
   const action = useAction();
   const content = exercise.code;
   const steps = exercise.steps;
@@ -379,7 +378,7 @@ const SeleccionGeometria = ({
   const [response, setResponse] = useState([]);
   const [hints, setHints] = useState(0);
   const [attempts, setAttempts] = useState(0);
-  console.log('topicId', topicId, 'contentId', contentId)
+  console.log("topicId", topicId, "contentId", contentId);
   const compare = () => {
     const isCorrect = step.answers[value - 1]?.correct == 1;
     setAttempts(prevAttempts => prevAttempts + 1);
