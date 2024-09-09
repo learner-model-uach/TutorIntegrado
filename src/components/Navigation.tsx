@@ -1,5 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
-import { FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
+import { FaHome, FaQuestionCircle, FaSearch, FaPlusCircle, FaWrench } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
@@ -21,6 +21,13 @@ export function Navigation() {
             <Text fontWeight="black">Selección por Código</Text>
             <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
               Search by Code
+            </SidebarLink>
+            <Text fontWeight="black">Crear o modificar archivo</Text>
+            <SidebarLink icon={<FaPlusCircle />} href={"newExercise"}>
+              Crear ejercicio
+            </SidebarLink>
+            <SidebarLink icon={<FaWrench />} href={"selectByCode"}>
+              Modificar ejercicio
             </SidebarLink>
           </>
         )}
