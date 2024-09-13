@@ -63,12 +63,18 @@ export function Navigation() {
             <SidebarLink key="10" href={"wpExercises?topic=34,35&registerTopic=34"}>
               Ejercicios con contexto
             </SidebarLink>
-            {/*<SidebarLink key="11" href={"contentSelect?topic=38,40,43&registerTopic=37"}>
+            <SidebarLink key="11" href={"contentSelect?topic=38,40,43&registerTopic=37"}>
               Lógica y Teoría de Conjuntos
             </SidebarLink>
             <SidebarLink key="12" href={"topicSelect?topic=4,3,5,6,7,8&registerTopic=4"}>
               Fcprueba
-            </SidebarLink>*/}
+            </SidebarLink>
+            <SidebarLink
+              key="13"
+              href={"topicSelect?topic=44,45,46,47,48,49,50,51,62&registerTopic=44"}
+            >
+              Productos Notables
+            </SidebarLink>
           </>
         )}
       </Stack>
