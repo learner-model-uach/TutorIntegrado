@@ -1,4 +1,4 @@
-import { Select, Box, Button, Input, Flex, Text } from '@chakra-ui/react';
+import { Select, Box, Button, Input, Flex, Text, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 
 export default function newExercise() {
@@ -48,6 +48,13 @@ export default function newExercise() {
       default:
         return 'Desconocido';
     }
+  };
+
+  const saveData = () => {
+    alert('Datos a guardar:\n' +
+      'Tópico: ' + selectedTopic + '\n' +
+      'Subtópico: ' + selectedSubtopic + '\n' +
+      'Tarjetas: ' + JSON.stringify(cards));
   };
 
   return (
@@ -109,6 +116,7 @@ export default function newExercise() {
               <Box flex="1">
                 {/* Select para definir el tipo de tarjeta */}
                 <Select
+                  bg="white"
                   mb={2}
                   placeholder="Selecciona tipo"
                   value={card.type}
@@ -120,15 +128,23 @@ export default function newExercise() {
                 </Select>
 
                 {/* Cuadro de texto dentro de la tarjeta */}
-                <Input placeholder={`Contenido de la tarjeta ${index + 1}`} />
+                <Input
+                  placeholder={`Contenido de la tarjeta ${index + 1}`} 
+                  bg="white"
+                />
               </Box>
             </Flex>
           ))}
 
           {/* Botón para agregar una nueva tarjeta */}
-          <Button mt={8} onClick={addCard} alignSelf="center">
-            Agregar tarjeta
-          </Button>
+          <Stack spacing={4} direction="row" align="center">
+          <Button onClick={addCard} alignSelf="center">
+              Agregar tarjeta
+            </Button>
+            <Button colorScheme='green' onClick={saveData} alignSelf="center">
+              Guardar Cambios
+            </Button>
+          </Stack>
         </Flex>
       </div>
     </>
