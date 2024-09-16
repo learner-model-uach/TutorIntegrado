@@ -26,8 +26,14 @@ export function Navigation() {
             <SidebarLink icon={<FaPlusCircle />} href={"newExercise"}>
               Crear ejercicio
             </SidebarLink>
+            <SidebarLink icon={<FaPlusCircle />} href={"newExercise_v2"}>
+              Crear ejercicio 2
+            </SidebarLink>
             <SidebarLink icon={<FaWrench />} href={"selectByCode"}>
               Modificar ejercicio
+            </SidebarLink>
+            <SidebarLink icon={<FaWrench />} href={"jsonTransform"}>
+            transformador Json 
             </SidebarLink>
           </>
         )}

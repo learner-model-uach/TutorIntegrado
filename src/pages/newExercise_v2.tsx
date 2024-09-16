@@ -5,38 +5,26 @@ export default function newExercise() {
   // Estado inicial: tarjeta de tipo "enunciado"
   const [cards, setCards] = useState([{ type: 'enunciado', content: '', subtasks: [] }]);
 
-  const topics = {
-    Factorización: ['Factorización por factor común', 'Factorización por agrupación', 'Diferencia de cuadrados'],
-    ProductosNotables: ['Binomio al cuadrado', 'Trinomio cuadrado perfecto', 'Binomio conjugado'],
-    Fracciones: ['Suma y resta de fracciones', 'Multiplicación y división de fracciones'],
-    Raíces: ['Raíz cuadrada', 'Raíz cúbica', 'Raíces de índice n'],
-  };
-
   const addCard = () => {
-    // Agregar siempre una tarjeta de tipo "paso"
-    setCards([...cards, { type: 'paso', content: '', subtasks: [] }]);
+    // Agregar siempre una tarjeta de tipo "paso" con 3 inputs de alternativas por defecto
+    setCards([...cards, { type: 'paso', content: '', alternatives: ['', '', ''] }]);
   };
 
-  const handleCardTypeChange = (index, newType) => {
+  const handleCardContentChange = (index, newContent) => {
     const updatedCards = [...cards];
-    updatedCards[index].type = newType;
-    if (newType === 'paso') {
-      updatedCards[index].subtasks = [];
-    }
+    updatedCards[index].content = newContent;
     setCards(updatedCards);
   };
 
-  const addSubtask = (index) => {
+  const handleAlternativeChange = (cardIndex, altIndex, newContent) => {
     const updatedCards = [...cards];
-    if (updatedCards[index].type === 'paso') {
-      updatedCards[index].subtasks.push({ type: 'pista', content: '' });
-      setCards(updatedCards);
-    }
+    updatedCards[cardIndex].alternatives[altIndex] = newContent;
+    setCards(updatedCards);
   };
 
-  const handleSubtaskContentChange = (cardIndex, subtaskIndex, newContent) => {
+  const addAlternative = (index) => {
     const updatedCards = [...cards];
-    updatedCards[cardIndex].subtasks[subtaskIndex].content = newContent;
+    updatedCards[index].alternatives.push('');
     setCards(updatedCards);
   };
 
@@ -46,8 +34,6 @@ export default function newExercise() {
         return 'blue.200'; // Color para "Enunciado"
       case 'paso':
         return 'green.200'; // Color para "Paso"
-      case 'pista':
-        return 'yellow.200'; // Color para "Pista"
       default:
         return 'gray.200'; // Color por defecto
     }
@@ -59,8 +45,6 @@ export default function newExercise() {
         return 'Enunciado';
       case 'paso':
         return 'Paso';
-      case 'pista':
-        return 'Pista';
       default:
         return 'Desconocido';
     }
@@ -99,67 +83,82 @@ export default function newExercise() {
                 fontSize="lg"
                 fontWeight="bold"
               >
-                {getCardLabel(card.type)}
+                {getCardLabel(card.type) +" "+ index}
               </Text>
 
               <Box flex="1" w="100%">
-                {/* Tarjeta de tipo "enunciado" no puede cambiarse */}
+                {/* Tarjeta de tipo "enunciado" */}
                 {card.type === 'enunciado' ? (
                   <>
-
                     <Input
                       placeholder={`Contenido del enunciado`}
                       value={card.content}
-                      onChange={(e) => {
-                        const updatedCards = [...cards];
-                        updatedCards[index].content = e.target.value;
-                        setCards(updatedCards);
-                      }}
+                      onChange={(e) => handleCardContentChange(index, e.target.value)}
                       bg="white"
                     />
                   </>
                 ) : (
                   <>
-                    {/* Cuadro de texto dentro de la tarjeta */}
+                    {/* Cuadro de texto dentro de la tarjeta tipo "paso" */}
                     <Input
-                      placeholder={`Contenido de la tarjeta ${index + 1}`}
+                      placeholder={`Titulo del paso ${index}`}
                       value={card.content}
-                      onChange={(e) => {
-                        const updatedCards = [...cards];
-                        updatedCards[index].content = e.target.value;
-                        setCards(updatedCards);
-                      }}
+                      onChange={(e) => handleCardContentChange(index, e.target.value)}
                       bg="white"
+                      mb={4}
+                    />
+                    <Input
+                      placeholder={`Pregunta del paso`}
+                      value={card.content}
+                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      bg="white"
+                      mb={4}
+                    />
+                    <Input
+                      placeholder={`Expresion del paso`}
+                      value={card.content}
+                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      bg="white"
+                      mb={4}
                     />
 
-                    {/* Si la tarjeta es de tipo "paso", mostrar un botón para agregar subtareas */}
-                    {card.type === 'paso' && (
-                      <>
-                        <Button onClick={() => addSubtask(index)} mt={4}>
-                          Agregar pista
-                        </Button>
-                        {/* Renderiza las subtareas */}
-                        {card.subtasks.map((subtask, subIndex) => (
-                          <Flex
-                            key={subIndex}
-                            mt={2}
-                            p={4}
-                            bg={getCardColor(subtask.type)}
-                            borderRadius="md"
-                            boxShadow="md"
-                            alignItems="center"
-                          >
-                            <Text mr={4} fontWeight="bold">{getCardLabel(subtask.type)+subIndex}</Text>
-                            <Input
-                              placeholder={`Pista ${subIndex + 1}`}
-                              value={subtask.content}
-                              onChange={(e) => handleSubtaskContentChange(index, subIndex, e.target.value)}
-                              bg="white"
-                            />
-                          </Flex>
-                        ))}
-                      </>
-                    )}
+                    {/* Sub-tarjeta de "Alternativas" */}
+                    <Box mb={4} p={4} bg="yellow.100" borderRadius="md" boxShadow="md">
+                      <Text fontWeight="bold" mb={2}>
+                        Alternativas
+                      </Text>
+
+                      {/* Inputs de texto para las alternativas */}
+                      {card.alternatives.map((alt, altIndex) => (
+                        <Input
+                          key={altIndex}
+                          mt={2}
+                          placeholder={`Alternativa ${altIndex + 1}`}
+                          value={alt}
+                          onChange={(e) => handleAlternativeChange(index, altIndex, e.target.value)}
+                          bg="white"
+                        />
+                      ))}
+
+                      {/* Botón para agregar más inputs de alternativas */}
+                      <Button mt={4} onClick={() => addAlternative(index)}>
+                        Agregar alternativa
+                      </Button>
+                    </Box>
+                    <Input
+                      placeholder={`Summary del paso`}
+                      value={card.content}
+                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      bg="white"
+                      mb={4}
+                    />
+                    <Input
+                      placeholder={`Mensaje de paso correcto`}
+                      value={card.content}
+                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      bg="white"
+                      mb={4}
+                    />
                   </>
                 )}
               </Box>
