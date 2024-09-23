@@ -38,6 +38,9 @@ export function Navigation() {
             <SidebarLink icon={<FaPlusCircle />} href={"Seba"}>
             Testing
             </SidebarLink>
+            <SidebarLink icon={<FaWrench />} href={"luis"}>
+            Luis 
+            </SidebarLink>
           </>
         )}
       </Stack>
