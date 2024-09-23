@@ -35,6 +35,9 @@ export function Navigation() {
             <SidebarLink icon={<FaWrench />} href={"jsonTransform"}>
             transformador Json 
             </SidebarLink>
+            <SidebarLink icon={<FaPlusCircle />} href={"Seba"}>
+            Testing
+            </SidebarLink>
           </>
         )}
       </Stack>
