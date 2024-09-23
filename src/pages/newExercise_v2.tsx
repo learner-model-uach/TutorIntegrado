@@ -1,24 +1,31 @@
-import { Select, Box, Button, Input, Flex, Text, Stack } from '@chakra-ui/react';
+import { Select, Box, Button, Input, Flex, Text, Stack, Checkbox } from '@chakra-ui/react';
 import { useState } from 'react';
+
 
 export default function newExercise() {
   // Estado inicial: tarjeta de tipo "enunciado"
-  const [cards, setCards] = useState([{ type: 'enunciado', content: '', subtasks: [] }]);
+  const [cards, setCards] = useState([
+    { type: 'enunciado', title: '', question: '', expression: '', summary: '',
+      successMessage: '', alternatives: [{ text:'', correct: false},{ text: '', correct: false}] }])
 
   const addCard = () => {
     // Agregar siempre una tarjeta de tipo "paso" con 3 inputs de alternativas por defecto
-    setCards([...cards, { type: 'paso', content: '', alternatives: ['', '', ''] }]);
+    setCards([...cards, { type: 'paso', content: '', alternatives: [{ text:'', correct: false},{ text: '', correct: false}] }]);
   };
 
-  const handleCardContentChange = (index, newContent) => {
+
+  const handleCardContentChange = (index, field,newContent) => {
     const updatedCards = [...cards];
-    updatedCards[index].content = newContent;
+    updatedCards[index][field] = newContent;
     setCards(updatedCards);
   };
 
   const handleAlternativeChange = (cardIndex, altIndex, newContent) => {
     const updatedCards = [...cards];
-    updatedCards[cardIndex].alternatives[altIndex] = newContent;
+    updatedCards[cardIndex].alternatives = updatedCards[cardIndex].alternatives.map((alt, index) => ({
+      ...alt,
+      text: index === altIndex ? newContent : alt.text,
+    }));
     setCards(updatedCards);
   };
 
@@ -26,6 +33,24 @@ export default function newExercise() {
     const updatedCards = [...cards];
     updatedCards[index].alternatives.push('');
     setCards(updatedCards);
+  };
+
+  const handleCorrectChange = (cardIndex, altIndex) => {
+    const updatedCards = [...cards];
+    updatedCards[cardIndex].alternatives = updatedCards[cardIndex].alternatives.map((alt, index) => ({
+      ...alt,
+      correct: index === altIndex
+    }));
+    setCards(updatedCards);
+  };
+
+  // Elimina una alternativa especifica de una tarjeta especifica. (Min 2 alternativas)
+  const removeAlternative = (cardIndex, altIndex) => {
+    const updatedCards = [...cards];
+    if (updatedCards[cardIndex].alternatives.length > 2) {
+      updatedCards[cardIndex].alternatives.splice(altIndex, 1);
+      setCards(updatedCards);
+    }
   };
 
   const getCardColor = (type) => {
@@ -101,23 +126,23 @@ export default function newExercise() {
                   <>
                     {/* Cuadro de texto dentro de la tarjeta tipo "paso" */}
                     <Input
-                      placeholder={`Titulo del paso ${index}`}
-                      value={card.content}
-                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      placeholder="Titulo del paso"
+                      value={card.title}
+                      onChange={(e) => handleCardContentChange(index,'title',e.target.value)}
                       bg="white"
-                      mb={4}
+                      mb={2}
                     />
                     <Input
                       placeholder={`Pregunta del paso`}
-                      value={card.content}
-                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      value={card.question}
+                      onChange={(e) => handleCardContentChange(index, 'question',e.target.value)}
                       bg="white"
-                      mb={4}
+                      mb={2}
                     />
                     <Input
                       placeholder={`Expresion del paso`}
-                      value={card.content}
-                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      value={card.expression}
+                      onChange={(e) => handleCardContentChange(index, 'expression',e.target.value)}
                       bg="white"
                       mb={4}
                     />
@@ -130,15 +155,29 @@ export default function newExercise() {
 
                       {/* Inputs de texto para las alternativas */}
                       {card.alternatives.map((alt, altIndex) => (
-                        <Input
-                          key={altIndex}
-                          mt={2}
-                          placeholder={`Alternativa ${altIndex + 1}`}
-                          value={alt}
-                          onChange={(e) => handleAlternativeChange(index, altIndex, e.target.value)}
-                          bg="white"
-                        />
-                      ))}
+                        <Flex key={altIndex} align="center">
+                          <Input
+                            placeholder={`Alternativa ${altIndex + 1}`}
+                            value={alt.text}
+                            onChange={(e) => handleAlternativeChange(index, altIndex, e.target.value)}
+                            bg="white"
+                            mr={2}
+                            mb={2}
+                          />
+                          <Checkbox
+                            isChecked={alt.correct}
+                            onChange={() => handleCorrectChange(index, altIndex)}
+                            mr={2}
+                          >
+                            Correcta
+                          </Checkbox>
+                          {card.alternatives.length > 2 && (
+                            <Button colorScheme="red" onClick={() => removeAlternative(index, altIndex)}>
+                              Eliminar
+                            </Button>
+                          )}
+                        </Flex>
+                        ))}
 
                       {/* Botón para agregar más inputs de alternativas */}
                       <Button mt={4} onClick={() => addAlternative(index)}>
@@ -147,15 +186,15 @@ export default function newExercise() {
                     </Box>
                     <Input
                       placeholder={`Summary del paso`}
-                      value={card.content}
-                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      value={card.summary}
+                      onChange={(e) => handleCardContentChange(index, 'summary',e.target.value)}
                       bg="white"
                       mb={4}
                     />
                     <Input
                       placeholder={`Mensaje de paso correcto`}
-                      value={card.content}
-                      onChange={(e) => handleCardContentChange(index, e.target.value)}
+                      value={card.successMessage}
+                      onChange={(e) => handleCardContentChange(index, 'successMessage',e.target.value)}
                       bg="white"
                       mb={4}
                     />
