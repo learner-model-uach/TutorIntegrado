@@ -173,7 +173,7 @@ export default function newExercise() {
                           </Checkbox>
                           {card.alternatives.length > 2 && (
                             <Button colorScheme="red" onClick={() => removeAlternative(index, altIndex)}>
-                              Eliminar
+                              🗑️
                             </Button>
                           )}
                         </Flex>
