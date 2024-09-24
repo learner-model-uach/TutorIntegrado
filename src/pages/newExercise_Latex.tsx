@@ -110,7 +110,7 @@ export default function NewExercise() {
                 mb={2} placeholder={`Texto adicional en la tarjeta ${index + 1}`}
                 value={card.text || ''} onChange={(e) => updateCard(index, { text: e.target.value })}
               />
-
+              {/* CUADRO PARA INGRESAR EXPRESIÓN (INICIO)*/}
               <Box display="flex" alignItems="center">
                 {card.isEditing ? (
                   <Input
@@ -126,13 +126,14 @@ export default function NewExercise() {
                 )}
                 <Button size="xs" ml={2} onClick={() => { setCurrentCardIndex(index); onOpen(); }}>?</Button>
               </Box>
+              {/* CUADRO PARA INGRESAR EXPRESIÓN (FIN)*/}
             </Box>
           </Flex>
         ))}
 
         <Button mt={8} onClick={addCard}>Agregar tarjeta</Button>
 
-        {/* Modal de ayuda con LaTeX */}
+        {/* Modal de ayuda con LaTeX (INICIO)*/}
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalOverlay />
           <ModalContent>
@@ -167,6 +168,7 @@ export default function NewExercise() {
             </ModalFooter>
           </ModalContent>
         </Modal>
+        {/* Modal de ayuda con LaTeX (FIN)*/}
       </Flex>
     </MathJaxContext>
   );
