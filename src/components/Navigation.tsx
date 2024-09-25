@@ -38,8 +38,8 @@ export function Navigation() {
             <SidebarLink icon={<FaPlusCircle />} href={"SebaModalGuardado"}>
             Testing
             </SidebarLink>
-            <SidebarLink icon={<FaWrench />} href={"luis"}>
-            Luis 
+            <SidebarLink icon={<FaWrench />} href={"verJSON"}>
+            Ver JSON
             </SidebarLink>
             <SidebarLink icon={<FaPlusCircle />} href={"SebaVyF"}>
             Verdadero y Falso
