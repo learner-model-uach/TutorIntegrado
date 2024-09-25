@@ -26,7 +26,7 @@ export function Navigation() {
             <SidebarLink icon={<FaPlusCircle />} href={"newExercise"}>
               Crear ejercicio
             </SidebarLink>
-            <SidebarLink icon={<FaPlusCircle />} href={"newExercise_v2"}>
+            <SidebarLink icon={<FaPlusCircle />} href={"SebaAlternativas"}>
               Crear ejercicio 2
             </SidebarLink>
             <SidebarLink icon={<FaWrench />} href={"selectByCode"}>
@@ -35,11 +35,14 @@ export function Navigation() {
             <SidebarLink icon={<FaWrench />} href={"jsonTransform"}>
             transformador Json 
             </SidebarLink>
-            <SidebarLink icon={<FaPlusCircle />} href={"Seba"}>
+            <SidebarLink icon={<FaPlusCircle />} href={"SebaModalGuardado"}>
             Testing
             </SidebarLink>
             <SidebarLink icon={<FaWrench />} href={"luis"}>
             Luis 
+            </SidebarLink>
+            <SidebarLink icon={<FaPlusCircle />} href={"SebaVyF"}>
+            Verdadero y Falso
             </SidebarLink>
           </>
         )}
