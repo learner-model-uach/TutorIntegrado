@@ -1,16 +1,13 @@
-import {
-  Select, Box, Button, Input, Flex, Text, Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure
-} from '@chakra-ui/react';
+import { Select, Box, Button, Input, Flex, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure } from '@chakra-ui/react'; // Agregar Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure
 import { useState } from 'react';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
-export default function NewExercise() {
+export default function newExercise() {
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedSubtopic, setSelectedSubtopic] = useState('');
-  const [cards, setCards] = useState([]);
-  const [currentCardIndex, setCurrentCardIndex] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [cards, setCards] = useState([]); // Array para almacenar las tarjetas
+  const [currentCardIndex, setCurrentCardIndex] = useState(null); // Índice de la tarjeta seleccionada
+  const { isOpen, onOpen, onClose } = useDisclosure(); // Estado del modal
 
   const topics = {
     Factorización: ['Factorización por factor común', 'Factorización por agrupación', 'Diferencia de cuadrados'],
@@ -19,72 +16,83 @@ export default function NewExercise() {
     Raíces: ['Raíz cuadrada', 'Raíz cúbica', 'Raíces de índice n'],
   };
 
-  const operations = [
-    { label: '+', command: '+' }, { label: '-', command: '-' }, { label: '×', command: '\\times' }, 
+  const operations = [ //Operaciones del modal
+    { label: '+', command: '+' }, { label: '-', command: '-' }, { label: '×', command: '\\times' },
     { label: '÷', command: '\\div' }, { label: '\\frac{□}{□}', command: '\\frac{}{}' }, { label: '=', command: '=' },
     { label: '≠', command: '\\neq' }, { label: '<', command: '<' }, { label: '>', command: '>' },
-    { label: '≤', command: '\\leq' }, { label: '≥', command: '\\geq' }, { label: '±', command: '\\pm' }, 
-    { label: '·', command: '\\cdot' }, { label: '\\sqrt{□}', command: '\\sqrt{}' }, { label: '□^n', command: '^{}' }, 
-    { label: '□ₙ', command: '_{}' }, { label: '\\sum', command: '\\sum_{}^{}' }, { label: '\\int_{□}^{□}', command: '\\int_{}^{}' }, 
+    { label: '≤', command: '\\leq' }, { label: '≥', command: '\\geq' }, { label: '±', command: '\\pm' },
+    { label: '·', command: '\\cdot' }, { label: '\\sqrt{□}', command: '\\sqrt{}' }, { label: '□^n', command: '^{}' },
+    { label: '□ₙ', command: '_{}' }, { label: '\\sum', command: '\\sum_{}^{}' }, { label: '\\int_{□}^{□}', command: '\\int_{}^{}' },
     { label: '∞', command: '\\infty' }, { label: 'π', command: '\\pi' }, { label: '\\sin', command: '\\sin' },
     { label: '\\cos', command: '\\cos' }, { label: '\\tan', command: '\\tan' }, { label: '\\log', command: '\\log' },
     { label: '\\ln', command: '\\ln' }, { label: '\\lim_{x \\to {□}}{□}', command: '\\lim_{x \\to {}}' }, { label: '()', command: '()' },
     { label: '[]', command: '\\left[ \\right]' }, { label: '{}', command: '\\left\\{ \\right\\}' }
   ];
 
-  const updateCard = (index, updatedProps) => {
+  const addCard = () => { //agrega una nueva tarjeta al array
+    setCards([...cards, { type: 'enunciado', text: '', latex: '', isEditing: false }]); //text: '' — El texto de la tarjeta está vacío inicialmente. latex: '' — El contenido en LaTeX de la tarjeta está vacío inicialmente. isEditing: false — Indica que la tarjeta no está en modo de edición inicialmente.
+  };
+
+  const updateCard = (index, updatedProps) => { //se encarga de actualizar una tarjeta específica en el array 
     setCards(cards.map((card, i) => (i === index ? { ...card, ...updatedProps } : card)));
   };
 
-  const addCard = () => {
-    setCards([...cards, { type: 'enunciado', text: '', latex: '', isEditing: false }]);
-  };
-
-  const insertLatex = (command) => {
+  const insertLatex = (command) => { // inserta un comando LaTeX en la tarjeta que está actualmente seleccionada para edición (currentCardIndex)
     if (currentCardIndex !== null) {
-      const textarea = document.getElementById(`latex-input-${currentCardIndex}`);
-      if (textarea) {
-        const { selectionStart, selectionEnd } = textarea;
-        const updatedLatex = [
-          cards[currentCardIndex].latex.substring(0, selectionStart),
-          command,
-          cards[currentCardIndex].latex.substring(selectionEnd),
-        ].join('');
-        updateCard(currentCardIndex, { latex: updatedLatex });
-        setTimeout(() => {
-          textarea.focus();
-          textarea.setSelectionRange(selectionStart + command.length, selectionStart + command.length);
-        }, 0);
-      }
+      const updatedLatex = cards[currentCardIndex].latex + command;
+      updateCard(currentCardIndex, { latex: updatedLatex });
     }
   };
 
-  const getCardColor = (type) => ({
-    enunciado: 'blue.200',
-    paso: 'green.200',
-    pista: 'yellow.200',
-  }[type] || 'gray.200');
+  const getCardColor = (type) => {
+    switch (type) {
+      case 'enunciado':
+        return 'blue.200';
+      case 'paso':
+        return 'green.200';
+      case 'pista':
+        return 'yellow.200';
+      default:
+        return 'gray.200';
+    }
+  };
 
-  const getCardLabel = (type) => ({
-    enunciado: 'Enunciado',
-    paso: 'Paso',
-    pista: 'Pista',
-  }[type] || 'Desconocido');
+  const getCardLabel = (type) => {
+    switch (type) {
+      case 'enunciado':
+        return 'Enunciado';
+      case 'paso':
+        return 'Paso';
+      case 'pista':
+        return 'Pista';
+      default:
+        return 'Desconocido';
+    }
+  };
 
   return (
-    <MathJaxContext>
+    <MathJaxContext> {/*OJO*/}
       <Flex direction="column" align="center" justify="center" minH="100vh" p={4}>
         <Box mb={4} w="100%" maxW="600px">
           <Select
-            width="100%" placeholder="Tópico" mb={2}
-            onChange={(e) => { setSelectedTopic(e.target.value); setSelectedSubtopic(''); }}
+            width="100%"
+            placeholder="Tópico"
+            mb={2}
+            onChange={(e) => {
+              setSelectedTopic(e.target.value);
+              setSelectedSubtopic('');
+            }}
           >
-            {Object.keys(topics).map(topic => <option key={topic} value={topic}>{topic}</option>)}
+            {Object.keys(topics).map(topic => (
+              <option key={topic} value={topic}>{topic}</option>
+            ))}
           </Select>
           {selectedTopic && (
             <Select
-              width="100%" placeholder="Subtópico"
-              value={selectedSubtopic} onChange={(e) => setSelectedSubtopic(e.target.value)}
+              width="100%"
+              placeholder="Subtópico"
+              value={selectedSubtopic}
+              onChange={(e) => setSelectedSubtopic(e.target.value)}
             >
               {topics[selectedTopic].map(subtopic => (
                 <option key={subtopic} value={subtopic}>{subtopic}</option>
@@ -99,7 +107,8 @@ export default function NewExercise() {
             <Box flex="1">
               <Select
                 mb={2} placeholder="Selecciona tipo"
-                value={card.type} onChange={(e) => updateCard(index, { type: e.target.value })}
+                value={card.type}
+                onChange={(e) => updateCard(index, { type: e.target.value })}
               >
                 <option value="enunciado">Enunciado</option>
                 <option value="paso">Paso</option>
@@ -108,9 +117,11 @@ export default function NewExercise() {
 
               <Input
                 mb={2} placeholder={`Texto adicional en la tarjeta ${index + 1}`}
-                value={card.text || ''} onChange={(e) => updateCard(index, { text: e.target.value })}
+                value={card.text || ''}
+                onChange={(e) => updateCard(index, { text: e.target.value })}
               />
-              {/* CUADRO PARA INGRESAR EXPRESIÓN (INICIO)*/}
+
+              {/* CUADRO DE TEXTO PARA LATEX (INICIO)*/}
               <Box display="flex" alignItems="center">
                 {card.isEditing ? (
                   <Input
@@ -126,7 +137,7 @@ export default function NewExercise() {
                 )}
                 <Button size="xs" ml={2} onClick={() => { setCurrentCardIndex(index); onOpen(); }}>?</Button>
               </Box>
-              {/* CUADRO PARA INGRESAR EXPRESIÓN (FIN)*/}
+              {/* CUADRO DE TEXTO PARA LATEX (FIN)*/}
             </Box>
           </Flex>
         ))}
@@ -155,9 +166,7 @@ export default function NewExercise() {
                       </Button>
                     ))}
                   </Flex>
-
                   <Box mt={4} p={2} borderWidth="1px" borderRadius="md">
-                    <Text fontWeight="bold">Vista previa:</Text>
                     <MathJax hideUntilTypeset="first" dynamic>{`\\(${cards[currentCardIndex].latex}\\)`}</MathJax>
                   </Box>
                 </>
