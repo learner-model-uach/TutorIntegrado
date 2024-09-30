@@ -27,7 +27,10 @@ export function Navigation() {
               Crear ejercicio
             </SidebarLink>
             <SidebarLink icon={<FaPlusCircle />} href={"SebaAlternativas"}>
-              Crear ejercicio 2
+              Alternativas
+            </SidebarLink>
+            <SidebarLink icon={<FaPlusCircle />} href={"multiplaceholders"}>
+              Multiplaceholder
             </SidebarLink>
             <SidebarLink icon={<FaWrench />} href={"selectByCode"}>
               Modificar ejercicio

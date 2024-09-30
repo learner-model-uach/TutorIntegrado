@@ -8,9 +8,9 @@ export default function newExercise() {
   const handleTransformToJson = () => {
     // JSON base
     let jsonResult = {
-      code: "pnc2b15",
+      code: "",
       meta: {},
-      text: "La siguiente expresión se puede expresar como un cuadrado de binomio, sin embargo, le falta un término. Encuentra el término faltante para luego completar el cuadrado de binomio:",
+      text: "",
       type: "lvltutor",
       steps: [
         {
@@ -72,8 +72,8 @@ export default function newExercise() {
       const lines = input.split('\n'); // Dividir el texto en líneas por saltos de línea
       
       lines.forEach((line) => {
-        const [key, ...valueArr] = line.split(':'); // Dividir cada línea en clave y valor por ":"
-        const value = valueArr.join(':').trim(); // Unir el resto por si hay más ":" en el valor
+        const [key, ...valueArr] = line.split(':'); 
+        const value = valueArr.join(':').trim();
         switch (key.trim().toLowerCase()) {
           case 'code':
             jsonResult.code = value;
@@ -83,7 +83,7 @@ export default function newExercise() {
             break;
           case 'meta':
             try {
-              jsonResult.meta = JSON.parse(value); // Intentar convertir el valor en JSON si es posible
+              jsonResult.meta = JSON.parse(value);
             } catch (error) {
               console.error("Error parsing meta:", error);
             }
@@ -97,10 +97,8 @@ export default function newExercise() {
       });
     };
 
-    // Actualizamos el JSON según el texto ingresado
     updateJsonWithInput(textInput);
 
-    // Actualiza el estado con el resultado JSON
     setJsonOutput(JSON.stringify(jsonResult, null, 2));
   };
 
