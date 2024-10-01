@@ -1,9 +1,7 @@
-import { Select, Box, Button, Input, Flex, Text, Stack, Checkbox, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Table,Thead,Tbody,Tr,Th,Td,TableContainer,useToast  } from '@chakra-ui/react';
+import { Select, Box, Button, Input, Flex, Text, Stack, Checkbox, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Table,Thead,Tbody,Tr,Th,Td,TableContainer } from '@chakra-ui/react';
 import { useState,useCallback } from 'react';
 import React from 'react';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
-
-
 
 export default function NewExercise() {
   const [cards, setCards] = useState([
@@ -47,9 +45,6 @@ export default function NewExercise() {
       updateCard(currentCardIndex, { latex: updatedLatex });  // Actualiza el campo latex de la tarjeta actual
     }
   };
-
-  const toast = useToast();
-
   
   const [newCardType, setNewCardType] = useState('alternativas');
 
@@ -538,23 +533,7 @@ export default function NewExercise() {
 
           <Stack spacing={4} mt={4} direction="row" align="center">
             <Button onClick={() => { setActiveModal('modal1'); onOpen(); }} alignSelf="center">Agregar tarjeta</Button>
-            <Button
-  colorScheme="green"
-  onClick={() => {
-    cards.length <= 1
-      ? toast({
-          title: "Error",
-          description: "No puedes guardar sin tener pasos en el ejercicio",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        })
-      : (setActiveModal('modal2'), onOpen());
-  }}
-  alignSelf="center"
->
-  Guardar Ejercicio
-</Button>
+            <Button colorScheme="green" onClick={() => { setActiveModal('modal2'); onOpen(); }} alignSelf="center">Guardar Cambios</Button>
           </Stack>
         
           <Modal isOpen={isOpen && activeModal === 'modal1'} onClose={onClose}>
