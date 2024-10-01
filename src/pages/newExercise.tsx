@@ -162,14 +162,9 @@ export default function NewExercise() {
     setExerciseName(tempExerciseName);
     setExerciseCode(tempExerciseCode);
     setExerciseTopic(tempExerciseTopic);
+    alert('Nombre de archivo:\n' + tempExerciseName + 'Código de ejercicio:\n' + tempExerciseCode + 'Tópico de ejercicio:\n' + tempExerciseTopic + 'Tarjetas: ' + JSON.stringify(cards));
     onClose();
   };
-
-
-  const saveData = () => {
-    alert('Datos a guardar:\n' + 'Tarjetas: ' + JSON.stringify(cards));
-  };
-
 
   const [rowValues, setRowValues] = useState(new Array(4).fill('')); 
   const handleButtonClick = useCallback((cardIndex, answerIndex) => {
