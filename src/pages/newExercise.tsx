@@ -21,9 +21,17 @@ export default function NewExercise() {
   const [currentCardIndex, setCurrentCardIndex] = useState(null); // Índice de la tarjeta seleccionada
   const { isOpen, onOpen, onClose } = useDisclosure(); // Estado del modal
   const { isOpen: isLatexOpen, onOpen: onOpenLatex, onClose: onLatexClose } = useDisclosure();
-  const operations = [
+  const operations = [ //Operaciones del modal
     { label: '+', command: '+' }, { label: '-', command: '-' }, { label: '×', command: '\\times' },
-    { label: '÷', command: '\\div' }, { label: '\\frac{□}{□}', command: '\\frac{}{}' }, { label: '=', command: '=' }
+    { label: '÷', command: '\\div' }, { label: '\\frac{□}{□}', command: '\\frac{}{}' }, { label: '=', command: '=' },
+    { label: '≠', command: '\\neq' }, { label: '<', command: '<' }, { label: '>', command: '>' },
+    { label: '≤', command: '\\leq' }, { label: '≥', command: '\\geq' }, { label: '±', command: '\\pm' },
+    { label: '·', command: '\\cdot' }, { label: '\\sqrt{□}', command: '\\sqrt{}' }, { label: '□^n', command: '^{}' },
+    { label: '□ₙ', command: '_{}' }, { label: '\\sum', command: '\\sum_{}^{}' }, { label: '\\int_{□}^{□}', command: '\\int_{}^{}' },
+    { label: '∞', command: '\\infty' }, { label: 'π', command: '\\pi' }, { label: '\\sin', command: '\\sin' },
+    { label: '\\cos', command: '\\cos' }, { label: '\\tan', command: '\\tan' }, { label: '\\log', command: '\\log' },
+    { label: '\\ln', command: '\\ln' }, { label: '\\lim_{x \\to {□}}{□}', command: '\\lim_{x \\to {}}' }, { label: '()', command: '()' },
+    { label: '[]', command: '\\left[ \\right]' }, { label: '{}', command: '\\left\\{ \\right\\}' }
   ];
   const updateCard = (index, updatedProps) => {
     setCards(cards.map((card, i) => (i === index ? { ...card, ...updatedProps } : card)));
