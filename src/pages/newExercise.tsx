@@ -1,14 +1,30 @@
 import { Select, Box, Button, Input, Flex, Text, Stack, Checkbox, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Table,Thead,Tbody,Tr,Th,Td,TableContainer } from '@chakra-ui/react';
 import { useState,useCallback } from 'react';
 import React from 'react';
-
+import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
 export default function NewExercise() {
   const [cards, setCards] = useState([
     { type: 'enunciado', title: '', question: '', expression: '', summary: '', successMessage: '', alternatives: [{ text:'', correct: false }, { text: '', correct: false }], hints: [{ text: ''}, { text: ''}], respuestas: '' }
   ]);
+  const [currentCardIndex, setCurrentCardIndex] = useState(null); // Índice de la tarjeta seleccionada
+  const { isOpen, onOpen, onClose } = useDisclosure(); // Estado del modal
+  const { isOpen: isLatexOpen, onOpen: onLatexOpen, onClose: onLatexClose } = useDisclosure(); // Estado del modal de LaTeX
+  const operations = [
+    { label: '+', command: '+' }, { label: '-', command: '-' }, { label: '×', command: '\\times' },
+    { label: '÷', command: '\\div' }, { label: '\\frac{□}{□}', command: '\\frac{}{}' }, { label: '=', command: '=' }
+  ];
+  const updateCard = (index, updatedProps) => {
+    setCards(cards.map((card, i) => (i === index ? { ...card, ...updatedProps } : card)));
+  };
 
 
+  const insertLatex = (command) => {
+    if (currentCardIndex !== null) {
+      const updatedLatex = cards[currentCardIndex].latex + command;
+      updateCard(currentCardIndex, { latex: updatedLatex });
+    }
+  };
   
   const [newCardType, setNewCardType] = useState('alternativas');
 
@@ -155,7 +171,7 @@ export default function NewExercise() {
   const [tempExerciseCode, setTempExerciseCode] = useState('');
   const [tempExerciseTopic, setTempExerciseTopic] = useState('');
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isModal2Open, onOpen: onModal2Open, onClose: onModal2Close } = useDisclosure();
   const [activeModal, setActiveModal] = React.useState(null);
 
   const handleSave = () => {
@@ -165,6 +181,12 @@ export default function NewExercise() {
     alert('Nombre de archivo:\n' + tempExerciseName + 'Código de ejercicio:\n' + tempExerciseCode + 'Tópico de ejercicio:\n' + tempExerciseTopic + 'Tarjetas: ' + JSON.stringify(cards));
     onClose();
   };
+
+
+  const saveData = () => {
+    alert('Datos a guardar:\n' + 'Tarjetas: ' + JSON.stringify(cards));
+  };
+
 
   const [rowValues, setRowValues] = useState(new Array(4).fill('')); 
   const handleButtonClick = useCallback((cardIndex, answerIndex) => {
@@ -184,7 +206,7 @@ export default function NewExercise() {
   ];
 
   return (
-    <>
+    <MathJaxContext> 
       <div>
         <Flex direction="column" align="center" justify="center" minH="100vh" p={4}>
           {cards.map((card, index) => (
@@ -232,13 +254,45 @@ export default function NewExercise() {
       bg="white"
       mb={2}
     />
-    <Input
-      placeholder={`Expresion del paso`}
-      value={card.expression}
-      onChange={(e) => handleCardContentChange(index, 'expression', e.target.value)}
-      bg="white"
-      mb={4}
-    />
+    {/* CUADRO DE TEXTO PARA LATEX (INICIO)*/}
+    <Box display="flex" alignItems="center" w="100%" mb={2}>
+      {card.isEditingExpression ? (
+        <Input
+          id={`latex-input-${index}`}
+          value={card.expression}
+          onChange={(e) => handleCardContentChange(index, 'expression', e.target.value)}
+          onBlur={() => handleCardContentChange(index, 'isEditingExpression', false)}
+          placeholder="Expresión del paso"
+          bg="white"
+          size="md"
+          autoFocus
+        />
+      ) : (
+        <Box
+          p={2}
+          borderWidth="1px"
+          borderRadius="md"
+          w="100%"
+          h="40px"
+          bg="white"
+          onClick={() => handleCardContentChange(index, 'isEditingExpression', true)}
+          cursor="pointer"
+          color={card.expression ? "black" : "gray.400"}
+        >
+          {card.expression ? (
+            <MathJax dynamic inline>
+              {`\\(${card.expression}\\)`}
+            </MathJax>
+          ) : (
+            <Text opacity={0.5}>Expresión del paso</Text>
+          )}
+        </Box>
+      )}
+      <Button size="xs" ml={2} onClick={() => handleOpenLatexModal(index)}>
+        ?
+      </Button>
+    </Box>
+    {/* CUADRO DE TEXTO PARA LATEX (FIN)*/}
   </> 
 ) : (
   <></>
@@ -489,54 +543,87 @@ export default function NewExercise() {
             </ModalContent>
           </Modal>
 
-        <Modal isOpen={isOpen && activeModal === 'modal2'} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent width="80%" maxWidth="800px">
-          <ModalHeader>Rellene los campos solicitados</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Stack spacing={3}>
-              <Flex align="center">
-                <Text width="200px">Nombre Del Ejercicio:</Text>
-                <Input 
-                  placeholder="Nombre Del Ejercicio" 
-                  value={tempExerciseName} 
-                  onChange={(e) => setTempExerciseName(e.target.value)} 
-                />
-              </Flex>
-              <Flex align="center">
-                <Text width="200px">Codigo Del Ejercicio:</Text>
-                <Input 
-                  placeholder="Codigo Del Ejercicio" 
-                  value={tempExerciseCode} 
-                  onChange={(e) => setTempExerciseCode(e.target.value)} 
-                />
-              </Flex>
-              <Flex align="center">
-                <Text width="200px">Topico del Ejercicio:</Text>
-                <Select 
-                  placeholder="Seleccione un Topico" 
-                  value={tempExerciseTopic} 
-                  onChange={(e) => setTempExerciseTopic(e.target.value)} 
-                >
-                  <option value="Factorización">Factorización</option>
-                  <option value="Logica y Conjunto">Logica y Conjunto</option>
-                  <option value="Productos Notables">Productos Notables</option>
-              </Select>
-              </Flex>
-            </Stack>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSave}>
-              Save
-            </Button>
-            <Button variant="ghost" onClick={onClose}>Cancelar</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
+          <Modal isOpen={isOpen && activeModal === 'modal2'} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent width="80%" maxWidth="800px">
+              <ModalHeader>Rellene los campos solicitados</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Stack spacing={3}>
+                  <Flex align="center">
+                    <Text width="200px">Nombre Del Ejercicio:</Text>
+                    <Input 
+                      placeholder="Nombre Del Ejercicio" 
+                      value={tempExerciseName} 
+                      onChange={(e) => setTempExerciseName(e.target.value)} 
+                    />
+                  </Flex>
+                  <Flex align="center">
+                    <Text width="200px">Codigo Del Ejercicio:</Text>
+                    <Input 
+                      placeholder="Codigo Del Ejercicio" 
+                      value={tempExerciseCode} 
+                      onChange={(e) => setTempExerciseCode(e.target.value)} 
+                    />
+                  </Flex>
+                  <Flex align="center">
+                    <Text width="200px">Topico del Ejercicio:</Text>
+                    <Select 
+                      placeholder="Seleccione un Topico" 
+                      value={tempExerciseTopic} 
+                      onChange={(e) => setTempExerciseTopic(e.target.value)} 
+                    >
+                      <option value="Factorización">Factorización</option>
+                      <option value="Logica y Conjunto">Logica y Conjunto</option>
+                      <option value="Productos Notables">Productos Notables</option>
+                  </Select>
+                  </Flex>
+                </Stack>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={handleSave}>
+                  Save
+                </Button>
+                <Button variant="ghost" onClick={onClose}>Cancelar</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+      {/* Modal de ayuda con LaTeX (INICIO)*/}
+      <Modal isOpen={isLatexOpen} onClose={onLatexClose} size="xl">
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Ayuda con LaTeX</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    {currentCardIndex !== null && (
+                      <>
+                        <Input
+                          id={`latex-input-${currentCardIndex}`}
+                          value={cards[currentCardIndex].latex || ''}
+                          onChange={(e) => updateCard(currentCardIndex, { latex: e.target.value })}
+                          mb={3}
+                        />
+                        <Flex wrap="wrap" gap={2}>
+                          {operations.map(({ label, command }, index) => (
+                            <Button key={index} onClick={() => insertLatex(command)} size="sm">
+                              <MathJax dynamic inline>{`\\(${label}\\)`}</MathJax>
+                            </Button>
+                          ))}
+                        </Flex>
+                        <Box mt={4} p={2} borderWidth="1px" borderRadius="md">
+                          <MathJax hideUntilTypeset="first" dynamic>{`\\(${cards[currentCardIndex].latex}\\)`}</MathJax>
+                        </Box>
+                      </>
+                    )}
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={onClose}>Cerrar</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+              {/* Modal de ayuda con LaTeX (FIN)*/}
         </Flex>
       </div>
-    </>
+    </MathJaxContext>
   );
 }
