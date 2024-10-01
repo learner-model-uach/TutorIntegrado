@@ -5,11 +5,22 @@ import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
 export default function NewExercise() {
   const [cards, setCards] = useState([
-    { type: 'enunciado', title: '', question: '', expression: '', summary: '', successMessage: '', alternatives: [{ text:'', correct: false }, { text: '', correct: false }], hints: [{ text: ''}, { text: ''}], respuestas: '' }
+    { 
+      type: 'enunciado', 
+      title: '', 
+      question: '', 
+      expression: '', 
+      summary: '', 
+      successMessage: '', 
+      latex: '', // Este campo debe estar presente y vacío
+      alternatives: [{ text: '', correct: false }, { text: '', correct: false }], 
+      hints: [{ text: '' }, { text: '' }], 
+      respuestas: '' 
+    }
   ]);
   const [currentCardIndex, setCurrentCardIndex] = useState(null); // Índice de la tarjeta seleccionada
   const { isOpen, onOpen, onClose } = useDisclosure(); // Estado del modal
-  const { isOpen: isLatexOpen, onOpen: onLatexOpen, onClose: onLatexClose } = useDisclosure(); // Estado del modal de LaTeX
+  const { isOpen: isLatexOpen, onOpen: onOpenLatex, onClose: onLatexClose } = useDisclosure();
   const operations = [
     { label: '+', command: '+' }, { label: '-', command: '-' }, { label: '×', command: '\\times' },
     { label: '÷', command: '\\div' }, { label: '\\frac{□}{□}', command: '\\frac{}{}' }, { label: '=', command: '=' }
@@ -21,8 +32,9 @@ export default function NewExercise() {
 
   const insertLatex = (command) => {
     if (currentCardIndex !== null) {
-      const updatedLatex = cards[currentCardIndex].latex + command;
-      updateCard(currentCardIndex, { latex: updatedLatex });
+      const currentLatex = cards[currentCardIndex]?.latex || '';  // Asegura que no sea undefined
+      const updatedLatex = currentLatex + command;  // Agrega el nuevo comando al final del texto actual
+      updateCard(currentCardIndex, { latex: updatedLatex });  // Actualiza el campo latex de la tarjeta actual
     }
   };
   
@@ -107,6 +119,10 @@ export default function NewExercise() {
       updatedCards[cardIndex].alternatives.splice(altIndex, 1);
       setCards(updatedCards);
     }
+  };
+  const handleOpenLatexModal = (index) => {
+    setCurrentCardIndex(index); // Establecemos el índice de la tarjeta actual
+    onLatexOpen(); // Abre el modal de LaTeX, asegúrate de tener un useDisclosure para este modal
   };
 
   const removeHints = (cardIndex, hintIndex) => {
@@ -254,45 +270,34 @@ export default function NewExercise() {
       bg="white"
       mb={2}
     />
-    {/* CUADRO DE TEXTO PARA LATEX (INICIO)*/}
-    <Box display="flex" alignItems="center" w="100%" mb={2}>
-      {card.isEditingExpression ? (
-        <Input
-          id={`latex-input-${index}`}
-          value={card.expression}
-          onChange={(e) => handleCardContentChange(index, 'expression', e.target.value)}
-          onBlur={() => handleCardContentChange(index, 'isEditingExpression', false)}
-          placeholder="Expresión del paso"
-          bg="white"
-          size="md"
-          autoFocus
-        />
-      ) : (
-        <Box
-          p={2}
-          borderWidth="1px"
-          borderRadius="md"
-          w="100%"
-          h="40px"
-          bg="white"
-          onClick={() => handleCardContentChange(index, 'isEditingExpression', true)}
-          cursor="pointer"
-          color={card.expression ? "black" : "gray.400"}
-        >
-          {card.expression ? (
-            <MathJax dynamic inline>
-              {`\\(${card.expression}\\)`}
-            </MathJax>
-          ) : (
-            <Text opacity={0.5}>Expresión del paso</Text>
-          )}
-        </Box>
-      )}
-      <Button size="xs" ml={2} onClick={() => handleOpenLatexModal(index)}>
-        ?
-      </Button>
-    </Box>
-    {/* CUADRO DE TEXTO PARA LATEX (FIN)*/}
+              {/* CUADRO DE TEXTO PARA LATEX (INICIO)*/}
+              {/* CUADRO DE TEXTO PARA LATEX (INICIO) */}
+              <Box display="flex" alignItems="center">
+                {card.isEditing ? (
+                  <Input
+                    id={`latex-input-${index}`}
+                    value={card.latex || ''}
+                    onChange={(e) => updateCard(index, { latex: e.target.value })}
+                    onBlur={() => updateCard(index, { isEditing: false })}
+                    placeholder={`Contenido en LaTeX tarjeta ${index + 1}`} 
+                    autoFocus
+                  />
+                ) : (
+                  <Box 
+                    p={2} 
+                    borderWidth="1px" 
+                    borderRadius="md" 
+                    onClick={() => updateCard(index, { isEditing: true })} 
+                    cursor="pointer" 
+                    flex="1"
+                  >
+                    <MathJax hideUntilTypeset="first" dynamic>{`\\(${card.latex || 'Expresión'}\\)`}</MathJax>
+                  </Box>
+                )}
+                <Button size="xs" ml={2} onClick={() => { setCurrentCardIndex(index); onOpenLatex(); }}>?</Button>
+              </Box>
+              {/* CUADRO DE TEXTO PARA LATEX (FIN) */}
+
   </> 
 ) : (
   <></>
@@ -559,30 +564,30 @@ export default function NewExercise() {
                     />
                   </Flex>
                   <Flex align="center">
-                    <Text width="200px">Codigo Del Ejercicio:</Text>
+                    <Text width="200px">Código Del Ejercicio:</Text>
                     <Input 
-                      placeholder="Codigo Del Ejercicio" 
+                      placeholder="Código Del Ejercicio" 
                       value={tempExerciseCode} 
                       onChange={(e) => setTempExerciseCode(e.target.value)} 
                     />
                   </Flex>
                   <Flex align="center">
-                    <Text width="200px">Topico del Ejercicio:</Text>
+                    <Text width="200px">Tópico del Ejercicio:</Text>
                     <Select 
-                      placeholder="Seleccione un Topico" 
+                      placeholder="Seleccione un Tópico" 
                       value={tempExerciseTopic} 
                       onChange={(e) => setTempExerciseTopic(e.target.value)} 
                     >
                       <option value="Factorización">Factorización</option>
-                      <option value="Logica y Conjunto">Logica y Conjunto</option>
+                      <option value="Lógica y Conjuntos">Lógica y Conjuntos</option>
                       <option value="Productos Notables">Productos Notables</option>
-                  </Select>
+                    </Select>
                   </Flex>
                 </Stack>
               </ModalBody>
               <ModalFooter>
                 <Button colorScheme="blue" mr={3} onClick={handleSave}>
-                  Save
+                  Guardar
                 </Button>
                 <Button variant="ghost" onClick={onClose}>Cancelar</Button>
               </ModalFooter>
@@ -590,38 +595,46 @@ export default function NewExercise() {
           </Modal>
       {/* Modal de ayuda con LaTeX (INICIO)*/}
       <Modal isOpen={isLatexOpen} onClose={onLatexClose} size="xl">
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Ayuda con LaTeX</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    {currentCardIndex !== null && (
-                      <>
-                        <Input
-                          id={`latex-input-${currentCardIndex}`}
-                          value={cards[currentCardIndex].latex || ''}
-                          onChange={(e) => updateCard(currentCardIndex, { latex: e.target.value })}
-                          mb={3}
-                        />
-                        <Flex wrap="wrap" gap={2}>
-                          {operations.map(({ label, command }, index) => (
-                            <Button key={index} onClick={() => insertLatex(command)} size="sm">
-                              <MathJax dynamic inline>{`\\(${label}\\)`}</MathJax>
-                            </Button>
-                          ))}
-                        </Flex>
-                        <Box mt={4} p={2} borderWidth="1px" borderRadius="md">
-                          <MathJax hideUntilTypeset="first" dynamic>{`\\(${cards[currentCardIndex].latex}\\)`}</MathJax>
-                        </Box>
-                      </>
-                    )}
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={onClose}>Cerrar</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-              {/* Modal de ayuda con LaTeX (FIN)*/}
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Ayuda con LaTeX</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {currentCardIndex !== null && (
+              <>
+                {/* Input de LaTeX dentro del modal */}
+                <Input
+                  id={`latex-input-${currentCardIndex}`}
+                  value={cards[currentCardIndex]?.latex || ''}
+                  onChange={(e) => updateCard(currentCardIndex, { latex: e.target.value })}
+                  mb={3}
+                />
+
+                {/* Botones para insertar comandos LaTeX */}
+                <Flex wrap="wrap" gap={2}>
+                  {operations.map(({ label, command }, index) => (
+                    <Button key={index} onClick={() => insertLatex(command)} size="sm">
+                      <MathJax dynamic inline>{`\\(${label}\\)`}</MathJax>
+                    </Button>
+                  ))}
+                </Flex>
+
+                {/* Vista previa de LaTeX */}
+                <Box mt={4} p={2} borderWidth="1px" borderRadius="md">
+                  <MathJax hideUntilTypeset="first" dynamic>
+                    {`\\(${cards[currentCardIndex]?.latex || 'Expresión'}\\)`}
+                  </MathJax>
+                </Box>
+              </>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onLatexClose}>Cerrar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {/* Modal de ayuda con LaTeX (FIN) */}
+
         </Flex>
       </div>
     </MathJaxContext>
