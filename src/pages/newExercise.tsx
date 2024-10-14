@@ -3,8 +3,6 @@ import { useState,useCallback } from 'react';
 import React from 'react';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
-
-
 export default function NewExercise() {
   const [cards, setCards] = useState([
     { 
@@ -38,21 +36,23 @@ export default function NewExercise() {
   const updateCard = (index, updatedProps) => {
     setCards(cards.map((card, i) => (i === index ? { ...card, ...updatedProps } : card)));
   };
-
-
-  const insertLatex = (command) => {
-    if (currentCardIndex !== null) {
-      const currentLatex = cards[currentCardIndex]?.latex || '';  // Asegura que no sea undefined
-      const updatedLatex = currentLatex + command;  // Agrega el nuevo comando al final del texto actual
-      updateCard(currentCardIndex, { latex: updatedLatex });  // Actualiza el campo latex de la tarjeta actual
+const insertLatex = (command) => {
+  if (currentCardIndex !== null) {
+    const inputElement = document.getElementById(`latex-input-${currentCardIndex}`);
+    if (inputElement) {
+      const startPos = inputElement.selectionStart;
+      const endPos = inputElement.selectionEnd;
+      const currentLatex = cards[currentCardIndex]?.latex || '';
+      const updatedLatex = currentLatex.slice(0, startPos) + command + currentLatex.slice(endPos);
+      updateCard(currentCardIndex, { latex: updatedLatex });
+      setTimeout(() => {
+        inputElement.selectionStart = inputElement.selectionEnd = startPos + command.length;
+      }, 0);
     }
-  };
-
+  }
+};
   const toast = useToast();
-
-  
   const [newCardType, setNewCardType] = useState('alternativas');
-
   const addCard = () => {
     if (newCardType === 'alternativas') {
       setCards([...cards, { type: 'alternativas', title: '', question: '', expression: '', summary: '', successMessage: '', alternatives: [{ text: '', correct: false }, { text: '', correct: false }], hints: [{ text: ''}, { text: ''}],kcs: ''}]);
@@ -68,13 +68,11 @@ export default function NewExercise() {
     }
     onClose();
   };
-
   const handleCardContentChange = (index, field, newContent) => {
     const updatedCards = [...cards];
     updatedCards[index][field] = newContent;
     setCards(updatedCards);
   };
-
   const handleHintChange = (cardIndex, hintIndex, newContent) => {
     const updatedCards = [...cards];
     updatedCards[cardIndex].hints = updatedCards[cardIndex].hints.map((hint, index) => ({
@@ -83,7 +81,6 @@ export default function NewExercise() {
     }));
     setCards(updatedCards);
   };
-
   const handleAlternativeChange = (cardIndex, altIndex, newContent) => {
     const updatedCards = [...cards];
     updatedCards[cardIndex].alternatives = updatedCards[cardIndex].alternatives.map((alt, index) => ({
@@ -92,7 +89,6 @@ export default function NewExercise() {
     }));
     setCards(updatedCards);
   };
-
   const handleCorrectChange = (cardIndex, altIndex) => {
     const updatedCards = [...cards];
     updatedCards[cardIndex].alternatives = updatedCards[cardIndex].alternatives.map((alt, index) => ({
@@ -101,7 +97,6 @@ export default function NewExercise() {
     }));
     setCards(updatedCards);
   };
-
   const handleTrueFalseChange = (index, option) => {
     const updatedCards = [...cards];
     if (option === 'trueOption') {
@@ -113,19 +108,16 @@ export default function NewExercise() {
     }
     setCards(updatedCards);
   };
-
   const addAlternative = (index) => {
     const updatedCards = [...cards];
     updatedCards[index].alternatives.push({ text: '', correct: false });
     setCards(updatedCards);
   };
-
   const addHints = (index) => {
     const updatedCards = [...cards];
     updatedCards[index].hints.push({ text: ''});
     setCards(updatedCards);
   };
-
   const removeAlternative = (cardIndex, altIndex) => {
     const updatedCards = [...cards];
     if (updatedCards[cardIndex].alternatives.length > 2) {
@@ -137,7 +129,6 @@ export default function NewExercise() {
     setCurrentCardIndex(index); // Establecemos el índice de la tarjeta actual
     onLatexOpen(); // Abre el modal de LaTeX, asegúrate de tener un useDisclosure para este modal
   };
-
   const removeHints = (cardIndex, hintIndex) => {
     const updatedCards = [...cards];
     if (updatedCards[cardIndex].hints.length > 2) {
@@ -145,7 +136,6 @@ export default function NewExercise() {
       setCards(updatedCards);
     }
   };
-
   const getCardColor = (type) => {
     switch (type) {
       case 'enunciado':
@@ -164,7 +154,6 @@ export default function NewExercise() {
         return 'gray.200';
     }
   };
-
   const getCardLabel = (type) => {
     switch (type) {
       case 'enunciado':
@@ -187,22 +176,16 @@ export default function NewExercise() {
     const updatedCards = cards.filter((_, i) => i !== index);
     setCards(updatedCards);
   };
-
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedSubtopic, setSelectedSubtopic] = useState('');
-  
-
   const [exerciseName, setExerciseName] = useState('');
   const [exerciseCode, setExerciseCode] = useState('');
   const [exerciseTopic, setExerciseTopic] = useState('');
-
   const [tempExerciseName, setTempExerciseName] = useState('');
   const [tempExerciseCode, setTempExerciseCode] = useState('');
   const [tempExerciseTopic, setTempExerciseTopic] = useState('');
-
   const { isOpen: isModal2Open, onOpen: onModal2Open, onClose: onModal2Close } = useDisclosure();
   const [activeModal, setActiveModal] = React.useState(null);
-
   const handleSave = () => {
     setExerciseName(tempExerciseName);
     setExerciseCode(tempExerciseCode);
@@ -291,8 +274,9 @@ export default function NewExercise() {
                     value={card.latex || ''}
                     onChange={(e) => updateCard(index, { latex: e.target.value })}
                     onBlur={() => updateCard(index, { isEditing: false })}
-                    placeholder={`Contenido en LaTeX tarjeta ${index + 1}`} 
+                    placeholder={`Contenido en LaTeX tarjeta`} 
                     autoFocus
+                    bg="white"
                   />
                 ) : (
                   <Box 
@@ -305,19 +289,21 @@ export default function NewExercise() {
                     cursor="pointer" 
                     flex="1"
                   >
-                    <MathJax hideUntilTypeset="first" dynamic>{`\\(${card.latex || 'Expresión'}\\)`}</MathJax>
+                    <MathJax>
+                    {card.latex 
+                      ? `\\(${card.latex}\\)` // Expresión LaTeX en color negro
+                      : <span style={{ color: '#ccd3dd' }}> Expresión</span> // Texto "Expresión" en color gris
+                    }
+                    </MathJax>
                   </Box>
                 )}
                 <Button size="xs" ml={2} onClick={() => { setCurrentCardIndex(index); onOpenLatex(); }}>?</Button>
               </Box>
               {/* CUADRO DE TEXTO PARA LATEX (FIN) */}
-
   </> 
 ) : (
   <></>
 )}
-                
-                
                 {card.type === 'enunciado' ? (
                   <>
                     <Input
@@ -342,7 +328,6 @@ export default function NewExercise() {
                             mr={2}
                             mb={2}
                           />
-
                 <Select 
                   placeholder="Seleccione un metodo correccion" 
                   value={card.respuestas} 
@@ -355,7 +340,6 @@ export default function NewExercise() {
                   <option value="EvaluateandCount">EvaluateandCount</option>
                   <option value="Evaluete">Evaluete</option>
                 </Select>
-
                         </Flex>
                       </Box>
                     </>
@@ -416,7 +400,6 @@ export default function NewExercise() {
                         </Table>
                       </TableContainer>
                     </Box>
-
                   </>
                 ) : card.type === 'verdadero/falso' ? (
                   <>
@@ -442,7 +425,6 @@ export default function NewExercise() {
                   </>
                 ) : (
                   <>
-                    
                     <Box mb={4} p={4} bg="yellow.300" borderRadius="md" boxShadow="md">
                       <Text fontWeight="bold" mb={2}>Alternativas</Text>
                       {card.alternatives.map((alt, altIndex) => (
@@ -523,8 +505,6 @@ export default function NewExercise() {
                       />
                       </Box>
 )}
-              
-              
               {/* Botón de Eliminar */}
               {card.type !== 'enunciado' && (
                 <Flex justifyContent="center" >
@@ -535,7 +515,6 @@ export default function NewExercise() {
 )}
             </Flex>
           ))}
-
           <Stack spacing={4} mt={4} direction="row" align="center">
             <Button onClick={() => { setActiveModal('modal1'); onOpen(); }} alignSelf="center">Agregar tarjeta</Button>
             <Button
@@ -556,7 +535,6 @@ export default function NewExercise() {
   Guardar Ejercicio
 </Button>
           </Stack>
-        
           <Modal isOpen={isOpen && activeModal === 'modal1'} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -577,7 +555,6 @@ export default function NewExercise() {
               </ModalFooter>
             </ModalContent>
           </Modal>
-
           <Modal isOpen={isOpen && activeModal === 'modal2'} onClose={onClose}>
             <ModalOverlay />
             <ModalContent width="80%" maxWidth="800px">
@@ -639,7 +616,6 @@ export default function NewExercise() {
                   onChange={(e) => updateCard(currentCardIndex, { latex: e.target.value })}
                   mb={3}
                 />
-
                 {/* Botones para insertar comandos LaTeX */}
                 <Flex wrap="wrap" gap={2}>
                   {operations.map(({ label, command }, index) => (
@@ -648,7 +624,6 @@ export default function NewExercise() {
                     </Button>
                   ))}
                 </Flex>
-
                 {/* Vista previa de LaTeX */}
                 <Box mt={4} p={2} borderWidth="1px" borderRadius="md">
                   <MathJax hideUntilTypeset="first" dynamic>
@@ -664,7 +639,6 @@ export default function NewExercise() {
         </ModalContent>
       </Modal>
       {/* Modal de ayuda con LaTeX (FIN) */}
-
         </Flex>
       </div>
     </MathJaxContext>
