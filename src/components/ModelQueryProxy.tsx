@@ -6,8 +6,13 @@ export interface g {
   tags: Array<string>;
 }
 
+export interface model {
+  mth: number;
+  level: number;
+}
+
 export interface n {
-  json: Object;
+  json: Record<string, model>;
   fecha: string;
 }
 
@@ -26,35 +31,38 @@ export interface usuario {
 }
 
 export interface query {
-  usuario: Object;
+  usuario: usuario;
 }
 
-const initialObj: query = {
+/*const initialObj: query = {
   usuario: {},
-};
-/*const initialObj: usuario = {
-  user: [
-    {
-      email: "incialprueba",
-      groups: [
-        {
-          code: "",
-          ids: "",
-          tags: [],
-        },
-      ],
-      modelStates: {
-        nodes: [
-          {
-            json: {},
+};*/
 
-            fecha: "",
+const initialObj: query = {
+  usuario: {
+    users: [
+      {
+        email: "incialprueba",
+        groups: [
+          {
+            code: "",
+            ids: "",
+            tags: [],
           },
         ],
+        modelStates: {
+          nodes: [
+            {
+              json: {},
+
+              fecha: "",
+            },
+          ],
+        },
       },
-    },
-  ],
-};*/
+    ],
+  },
+};
 
 const UmProxy = proxy(initialObj);
 
