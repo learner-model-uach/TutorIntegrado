@@ -1,21 +1,22 @@
-import { LinkBox, Heading, Center, HStack, LinkOverlay, Text } from "@chakra-ui/react";
+import { LinkBox, Heading, Center, HStack, LinkOverlay, Text, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
+import UserModelQuery from "../UserModelQuery";
 
 export const CardSelectionTopic = ({
   id,
   label,
   registerTopic,
   nextContentPath,
+  KCs,
 }: {
   id: string;
   label: string | undefined;
   registerTopic: string;
   nextContentPath: string | undefined;
+  KCs: { code: string }[];
 }) => {
   const topicPath = `contentSelect?topic=${id}&registerTopic=${registerTopic}`;
-  console.log(id);
-  console.log(registerTopic);
-  console.log(topicPath);
+
   return (
     <LinkBox
       as="article"
@@ -41,6 +42,15 @@ export const CardSelectionTopic = ({
         </HStack>
       </Center>
 
+      {/* Muestra los KCs asociados */}
+      <VStack spacing={1} align="start" mt={2}>
+        {KCs.map(kc => (
+          <Text key={kc.code} fontSize={"sm"}>
+            {kc.code}
+          </Text>
+        ))}
+      </VStack>
+
       <NextLink href={topicPath} passHref>
         <LinkOverlay>
           <Text paddingTop={"2"} fontSize={"sm"}>
@@ -48,6 +58,7 @@ export const CardSelectionTopic = ({
           </Text>
         </LinkOverlay>
       </NextLink>
+      <UserModelQuery KCs={KCs} />
     </LinkBox>
   );
 };

@@ -1,22 +1,25 @@
 import { Box, Center, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
-import { withAuth } from "../components/Auth";
+import { withAuth, useAuth } from "../components/Auth";
 import { CardSelectionTopic } from "../components/contentSelectComponents/CardSelectionTopics";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAction } from "../utils/action";
+import UmProxy from "../components/ModelQueryProxy";
 
 export default withAuth(function topicSelect() {
   const router = useRouter();
+  const { user } = useAuth();
   const registerTopic = router.query.registerTopic as string; // topics in array
   console.log(registerTopic);
   const topic = parseInt(registerTopic, 10).toString(); // Convertir a string
   const nextContentPath = router.asPath + "";
 
   const [topicCodes, setTopicCodes] = useState<string[]>([]);
+  const [kcsData, setKcsData] = useState<any>({}); // Cambiar a objeto para mapear id a KCs
 
-  const { data, isLoading } = useGQLQuery(
+  const { data: subtopicsData, isLoading: isSubtopicsLoading } = useGQLQuery(
     gql(/* GraphQL */ `
       query GetSubtopics($parentIds: [IntID!]!) {
         topics(ids: $parentIds) {
@@ -33,29 +36,27 @@ export default withAuth(function topicSelect() {
       parentIds: [topic], // Convertir a número para la consulta
     },
   );
+
+  // Acción para el registro
   const action = useAction();
   useEffect(() => {
     action({
-      verbName: "displaySelection",
+      verbName: "displaySubTopics",
       topicID: registerTopic,
       //extra: { selectionData },
     });
-  }, []);
+  }, [registerTopic, action]);
 
-  console.log(data);
-  console.log(data?.topics?.[0]);
-
+  // Manejo de subtópicos
   useEffect(() => {
-    if (data) {
-      const codes = data.topics[0]?.childrens?.map(child => child.code) || [];
+    if (subtopicsData) {
+      const codes = subtopicsData.topics[0]?.childrens?.map(child => child.code) || [];
       setTopicCodes(codes);
     }
-  }, [data]);
-
-  console.log(topicCodes);
+  }, [subtopicsData]);
 
   // obtengo los KCs asociados a los códigos de los subtemas
-  const { data: kcsData } = useGQLQuery(
+  const { data: kcsQueryData, isLoading: isKcsLoading } = useGQLQuery(
     gql(/* GraphQL */ `
       query GetKcsByTopics($topicsCodes: [String!]!) {
         kcsByContentByTopics(projectCode: "NivPreAlg", topicsCodes: $topicsCodes) {
@@ -84,14 +85,37 @@ export default withAuth(function topicSelect() {
   );
 
   useEffect(() => {
-    if (kcsData) {
-      console.log("KC Data:", kcsData);
+    if (kcsQueryData) {
+      const kcsByTopic = {};
+      kcsQueryData.kcsByContentByTopics.forEach(({ topic, kcs }) => {
+        kcsByTopic[topic.id] = kcs.map(kc => kc); // Guarda el objeto completo de KCs
+      });
+      setKcsData(kcsByTopic); // guarda el objeto que contiene KCs por topic
     }
-  }, [kcsData]);
+  }, [kcsQueryData]);
 
   const sortedChildrens =
-    data?.topics?.[0]?.childrens?.sort((a, b) => a.sortIndex - b.sortIndex) || [];
-  console.log(nextContentPath);
+    subtopicsData?.topics?.[0]?.childrens?.sort((a, b) => a.sortIndex - b.sortIndex) || [];
+
+  const { data: userModelData } = useGQLQuery(
+    gql(/* GraphQL */ `
+      query usermodel($userId: IntID!) {
+        users(ids: [$userId]) {
+          modelStates(
+            input: { filters: { type: ["BKT"] }, orderBy: { id: DESC }, pagination: { first: 1 } }
+          ) {
+            nodes {
+              json
+            }
+          }
+        }
+      }
+    `),
+    { userId: user.id },
+  );
+
+  UmProxy.usuario = userModelData;
+
   return (
     <>
       <Center h="100vh" flexDirection="column" p={4}>
@@ -99,7 +123,8 @@ export default withAuth(function topicSelect() {
         <Text mb="5">Lista de subtópicos</Text>
         <Box maxW="md" w="full" mx="auto" overflowY="auto" maxH="80vh" p={4}>
           <SimpleGrid columns={1} spacing={10} mt="4">
-            {!isLoading &&
+            {!isSubtopicsLoading &&
+              !isKcsLoading &&
               sortedChildrens.map(ejercicio => (
                 <CardSelectionTopic
                   key={ejercicio.id}
@@ -107,6 +132,7 @@ export default withAuth(function topicSelect() {
                   label={ejercicio.label}
                   registerTopic={registerTopic}
                   nextContentPath={nextContentPath}
+                  KCs={kcsData[ejercicio.id] || []} // pasar KCs correspondientes
                 />
               ))}
           </SimpleGrid>
