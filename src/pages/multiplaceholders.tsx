@@ -2,6 +2,8 @@ import { Select, Box, Button, Input, Flex, Text, Stack, Modal, ModalOverlay, Mod
 import { useState } from 'react';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
+//aaaa prueba
+
 export default function newExercise() {
   const [cards, setCards] = useState([
     { type: 'enunciado', title: '', question: '', expression: '', summary: '', successMessage: '', placeholders: '', respuestas: '', isEditingExpression: false, isEditingPlaceholders: false }
