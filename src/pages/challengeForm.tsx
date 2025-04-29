@@ -31,6 +31,7 @@ import { extractExercise, formatDate } from "../components/challenge/tools";
 import { withAuth } from "../components/Auth";
 import { useAction } from "../utils/action";
 import { sessionState } from "../components/SessionState";
+import { LoadingOverlay } from "../components/challenge/LoadingOverlay";
 
 const mutationUpdateChallenge = gql(`
   mutation UpdateChallenge($challengeId: IntID!, $challenge: ChallengeInput!) {
@@ -320,8 +321,6 @@ const MathRecursiveAccordion = ({
   setSelectedExercises,
   selectedExercises = [],
 }) => {
-  console.log("selectedTopics", selectedTopics);
-  console.log("selectedExercises", selectedExercises);
   // Verifica si un item está seleccionado
   const isItemSelected = exercise => {
     return selectedExercises.some(
@@ -767,9 +766,9 @@ export default withAuth(function ChallengesForm() {
       ? isTopicsLoading || isGroupsLoading || isChallengeLoading // En modo edición, carga todo
       : isTopicsLoading || isGroupsLoading; // Fuera del modo edición, carga solo topics y groups
 
-  // Si está cargando, muestra el mensaje de carga
+  // Si está cargando, muestra un Spinner
   if (isLoading) {
-    return <Box p={5}>Cargando...</Box>;
+    return <LoadingOverlay />;
   }
 
   if (errorUpdateChallenge) {

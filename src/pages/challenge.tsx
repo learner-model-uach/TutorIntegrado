@@ -379,6 +379,10 @@ const StudentCard = ({
     );
   };
 
+  if (isKcsByTopicsLoading) {
+    return <LoadingOverlay />;
+  }
+
   return (
     <Box
       borderWidth={status === "finalized" ? "4px" : "1px"}
@@ -553,7 +557,6 @@ const ChallengeCard = ({
 }) => {
   const router = useRouter();
   const [uniqueKcs, setUniqueKcs] = useState([]);
-  //const [groupAverages, setGroupAverages] = useState({});
 
   const challengeFilter = challengesOriginal.find(challenge => challenge.id === id);
 
@@ -679,16 +682,24 @@ const ChallengeCard = ({
   //---------------------------------------
 
   useEffect(() => {
-    if (!isKcsByTopicsLoading) {
+    if (!isKcsByTopicsLoading || dataKcsByTopics) {
       const kcsByContentByTopics = dataKcsByTopics.kcsByContentByTopics || [];
       setUniqueKcs(getUniqueKcs(kcsByContentByTopics));
     }
-  }, [isKcsByTopicsLoading]);
+  }, [isKcsByTopicsLoading, dataKcsByTopics]);
+
+  //------------------------------
+
+  // Si está cargando, muestra un Spinner, se ve un doble Spinner
+  /*if (isKcsByTopicsLoading) {
+    return <LoadingOverlay />;
+  }*/
 
   //------------------------------
 
   return (
     <Box
+      key={`challengeId-{id}`}
       borderWidth={status === "finalized" ? "4px" : "1px"}
       borderRadius="md"
       p={4}
@@ -698,198 +709,202 @@ const ChallengeCard = ({
       boxShadow="md"
       w="100%"
     >
-      <VStack align="start" spacing={4}>
-        <HStack w="100%" justify="space-between" align="center">
-          <Stack
-            w={{ lg: "95%", sm: "90%" }}
-            spacing={4}
-            direction={{ base: "column", md: "row" }}
-            align={{ base: "flex-start", md: "center" }}
-          >
-            <Text
-              w={{ lg: "85%", base: "100%" }}
-              fontWeight="bold"
-              fontSize="lg"
-              textAlign="center"
+      {isKcsByTopicsLoading ? (
+        <LoadingOverlay />
+      ) : (
+        <VStack align="start" spacing={4}>
+          <HStack w="100%" justify="space-between" align="center">
+            <Stack
+              w={{ lg: "95%", sm: "90%" }}
+              spacing={4}
+              direction={{ base: "column", md: "row" }}
+              align={{ base: "flex-start", md: "center" }}
             >
-              {title}
-            </Text>
+              <Text
+                w={{ lg: "85%", base: "100%" }}
+                fontWeight="bold"
+                fontSize="lg"
+                textAlign="center"
+              >
+                {title}
+              </Text>
 
-            <Text
-              w={{ lg: "30%", sm: "100%" }}
-              fontSize="sm"
-              color="gray.600"
-              fontWeight="bold"
-              ml={{ base: 8 }}
-              textAlign="center"
-            >
-              Fecha de término: {formatDate(endDate)}
-            </Text>
-          </Stack>
+              <Text
+                w={{ lg: "30%", sm: "100%" }}
+                fontSize="sm"
+                color="gray.600"
+                fontWeight="bold"
+                ml={{ base: 8 }}
+                textAlign="center"
+              >
+                Fecha de término: {formatDate(endDate)}
+              </Text>
+            </Stack>
 
-          <HStack spacing={4}>
-            {status === "finalized" && <FaFlagCheckered size={24} />}
-            {status === "published" && <FaEye size={24} />}
-            {status === "unpublished" && <FaEyeSlash size={24} />}
+            <HStack spacing={4}>
+              {status === "finalized" && <FaFlagCheckered size={24} />}
+              {status === "published" && <FaEye size={24} />}
+              {status === "unpublished" && <FaEyeSlash size={24} />}
+            </HStack>
           </HStack>
-        </HStack>
-        <Box w="100%" textAlign="center">
-          <LatexPreview content={description} />
-        </Box>
+          <Box w="100%" textAlign="center">
+            <LatexPreview content={description} />
+          </Box>
 
-        {/* Accordion for groups */}
-        <Accordion allowToggle w="100%">
-          {groups.map((group, index) => {
-            const groupsWithModelStates = usersWithModelStates?.groups?.find(
-              item => item.id === group.id,
-            );
+          {/* Accordion for groups */}
+          <Accordion allowToggle w="100%">
+            {groups.map((group, index) => {
+              const groupsWithModelStates = usersWithModelStates?.groups?.find(
+                item => item.id === group.id,
+              );
 
-            // Calcular el promedio del grupo
-            const groupAverage =
-              group?.students?.reduce((sum, student) => {
-                const studentsWithModelStates = groupsWithModelStates?.users?.find(
-                  item => item.id === student.id,
-                );
+              // Calcular el promedio del grupo
+              const groupAverage =
+                group?.students?.reduce((sum, student) => {
+                  const studentsWithModelStates = groupsWithModelStates?.users?.find(
+                    item => item.id === student.id,
+                  );
 
-                const averageLevelStudent =
-                  calculateUserProgress(
-                    uniqueKcs,
-                    studentsWithModelStates?.modelStates?.nodes[0]?.json,
-                  ) * 100;
+                  const averageLevelStudent =
+                    calculateUserProgress(
+                      uniqueKcs,
+                      studentsWithModelStates?.modelStates?.nodes[0]?.json,
+                    ) * 100;
 
-                //console.log("averageLevelStudent", averageLevelStudent)
-                return sum + averageLevelStudent;
-              }, 0) / group.students.length;
+                  //console.log("averageLevelStudent", averageLevelStudent)
+                  return sum + averageLevelStudent;
+                }, 0) / group.students.length;
 
-            return (
-              <AccordionItem key={index} w="100%">
-                <AccordionButton>
-                  <HStack justify="space-between" w="100%">
-                    <Text fontSize="sm">{group.name}</Text>
-                    <HStack w="70%" justify="space-between">
-                      <Box
-                        w={{ base: "70%", sm: "85%" }}
-                        bg="white"
-                        p={1}
-                        borderWidth="1px"
-                        borderColor="gray.300"
-                      >
-                        <Progress
-                          value={groupAverage}
-                          size="lg"
-                          colorScheme="gray"
-                          sx={{
-                            "&&": {
-                              backgroundColor: "white", // Set the progress track color to white
-                            },
-                            "& > div": {
-                              /*https://v2.chakra-ui.com/docs/styled-system/theme#red */
-                              background: getColorScheme(groupAverage),
-                              //background: "linear-gradient(to right, #E53E3E, #F6AD55)"//red.500 = #E53E3E, orange.300 = #F6AD55
-                            },
-                          }}
-                        />
-                      </Box>
-                      <Text fontWeight="bold" color={getColorScheme(groupAverage)}>
-                        {Math.round(groupAverage) + " %"}
-                      </Text>
+              return (
+                <AccordionItem key={index} w="100%">
+                  <AccordionButton>
+                    <HStack justify="space-between" w="100%">
+                      <Text fontSize="sm">{group.name}</Text>
+                      <HStack w="70%" justify="space-between">
+                        <Box
+                          w={{ base: "70%", sm: "85%" }}
+                          bg="white"
+                          p={1}
+                          borderWidth="1px"
+                          borderColor="gray.300"
+                        >
+                          <Progress
+                            value={groupAverage}
+                            size="lg"
+                            colorScheme="gray"
+                            sx={{
+                              "&&": {
+                                backgroundColor: "white", // Set the progress track color to white
+                              },
+                              "& > div": {
+                                /*https://v2.chakra-ui.com/docs/styled-system/theme#red */
+                                background: getColorScheme(groupAverage),
+                                //background: "linear-gradient(to right, #E53E3E, #F6AD55)"//red.500 = #E53E3E, orange.300 = #F6AD55
+                              },
+                            }}
+                          />
+                        </Box>
+                        <Text fontWeight="bold" color={getColorScheme(groupAverage)}>
+                          {Math.round(groupAverage) + " %"}
+                        </Text>
+                      </HStack>
                     </HStack>
-                  </HStack>
-                  <AccordionIcon display="none" />
-                </AccordionButton>
-                <AccordionPanel pb={4}>
-                  {/* List of students */}
-                  {group?.students?.map((student, idx) => {
-                    const studentsWithModelStates = groupsWithModelStates?.users?.find(
-                      item => item.id === student.id,
-                    );
-                    const averageLevelStudent =
-                      calculateAverageLevel(
-                        studentsWithModelStates?.modelStates?.nodes[0]?.json,
-                        uniqueKcs,
-                      ) * 100;
-                    return (
-                      <HStack key={idx} justify="space-between" w="100%">
-                        <Text>{student.name}</Text>
-                        <HStack w="70%" justify="space-between">
-                          <Box
-                            w={{ base: "70%", sm: "85%" }}
-                            bg="white"
-                            p={1}
-                            borderWidth="1px"
-                            borderColor="gray.300"
-                          >
-                            {/*
+                    <AccordionIcon display="none" />
+                  </AccordionButton>
+                  <AccordionPanel pb={4}>
+                    {/* List of students */}
+                    {group?.students?.map((student, idx) => {
+                      const studentsWithModelStates = groupsWithModelStates?.users?.find(
+                        item => item.id === student.id,
+                      );
+                      const averageLevelStudent =
+                        calculateUserProgress(
+                          uniqueKcs,
+                          studentsWithModelStates?.modelStates?.nodes[0]?.json,
+                        ) * 100;
+                      return (
+                        <HStack key={idx} justify="space-between" w="100%">
+                          <Text>{student.name}</Text>
+                          <HStack w="70%" justify="space-between">
+                            <Box
+                              w={{ base: "70%", sm: "85%" }}
+                              bg="white"
+                              p={1}
+                              borderWidth="1px"
+                              borderColor="gray.300"
+                            >
+                              {/*
   https://v2.chakra-ui.com/docs/styled-system/the-sx-prop
   https://v2.chakra-ui.com/docs/styled-system/style-props
   https://v2.chakra-ui.com/docs/styled-system/gradient
   https://www.w3schools.com/cssref/css3_pr_color-scheme.php
   https://stackoverflow.com/questions/65590038/how-to-add-the-gradient-to-chakra-ui-progress
   //  */}
-                            <Progress
-                              value={averageLevelStudent}
-                              size="sm"
-                              colorScheme="gray"
-                              sx={{
-                                "&&": {
-                                  backgroundColor: "white", // Set the progress track color to white
-                                },
-                                "& > div": {
-                                  background: getColorScheme(averageLevelStudent), // Set the progress color
-                                },
-                              }}
-                            />
-                          </Box>
-                          <Text fontWeight="bold" color={getColorScheme(averageLevelStudent)}>
-                            {Math.round(averageLevelStudent) + " %"}
-                          </Text>
+                              <Progress
+                                value={averageLevelStudent}
+                                size="sm"
+                                colorScheme="gray"
+                                sx={{
+                                  "&&": {
+                                    backgroundColor: "white", // Set the progress track color to white
+                                  },
+                                  "& > div": {
+                                    background: getColorScheme(averageLevelStudent), // Set the progress color
+                                  },
+                                }}
+                              />
+                            </Box>
+                            <Text fontWeight="bold" color={getColorScheme(averageLevelStudent)}>
+                              {Math.round(averageLevelStudent) + " %"}
+                            </Text>
+                          </HStack>
                         </HStack>
-                      </HStack>
-                    );
-                  })}
-                </AccordionPanel>
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
-        {/* Botón Preview */}
+                      );
+                    })}
+                  </AccordionPanel>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
+          {/* Botón Preview */}
 
-        <HStack justify="center" w="100%" mt={4}>
-          <Button
-            colorScheme="teal" // Cambia el color para diferenciarlo
-            onClick={previewClick} // Función para manejar el clic
-            flex="1"
-            maxW="200px"
-          >
-            Preview
-          </Button>
-        </HStack>
+          <HStack justify="center" w="100%" mt={4}>
+            <Button
+              colorScheme="teal" // Cambia el color para diferenciarlo
+              onClick={previewClick} // Función para manejar el clic
+              flex="1"
+              maxW="200px"
+            >
+              Preview
+            </Button>
+          </HStack>
 
-        <HStack spacing={4} mt={4} justify="center" w="100%" wrap="wrap">
-          {/* Botón para eliminar el desafío */}
-          <Button colorScheme="red" onClick={handleDelete} flex="1" maxW="200px">
-            <FaTrashAlt size={16} />
-            {/* Botón para modificar el desafío */}
-          </Button>
-          {(status == "unpublished" || status == "published") && (
-            <Button colorScheme="blue" onClick={() => handleModify(id)} flex="1" maxW="200px">
-              <FaEdit size={24} />
+          <HStack spacing={4} mt={4} justify="center" w="100%" wrap="wrap">
+            {/* Botón para eliminar el desafío */}
+            <Button colorScheme="red" onClick={handleDelete} flex="1" maxW="200px">
+              <FaTrashAlt size={16} />
+              {/* Botón para modificar el desafío */}
             </Button>
-          )}
-          {/* Botón para publicar el desafío */}
-          {status === "unpublished" ? (
-            // Botón para publicar
-            <Button colorScheme="green" onClick={() => handlePublish()} flex="1" maxW="200px">
-              <FaPaperPlane size={16} />
-            </Button>
-          ) : status === "published" ? (
-            // Botón para despublicar
-            <Button colorScheme="red" onClick={() => handleUnpublish()} flex="1" maxW="200px">
-              <FaTimes size={16} />
-            </Button>
-          ) : null}
-        </HStack>
-      </VStack>
+            {(status == "unpublished" || status == "published") && (
+              <Button colorScheme="blue" onClick={() => handleModify(id)} flex="1" maxW="200px">
+                <FaEdit size={24} />
+              </Button>
+            )}
+            {/* Botón para publicar el desafío */}
+            {status === "unpublished" ? (
+              // Botón para publicar
+              <Button colorScheme="green" onClick={() => handlePublish()} flex="1" maxW="200px">
+                <FaPaperPlane size={16} />
+              </Button>
+            ) : status === "published" ? (
+              // Botón para despublicar
+              <Button colorScheme="red" onClick={() => handleUnpublish()} flex="1" maxW="200px">
+                <FaTimes size={16} />
+              </Button>
+            ) : null}
+          </HStack>
+        </VStack>
+      )}
     </Box>
   );
 };
@@ -1016,7 +1031,7 @@ function addTagsToStudents(data) {
         group.students?.forEach(student => {
           if (!student.tags) {
             //student.tags = [];
-            console.log("Faltan los tags de los estudiantes");
+            //console.log("Faltan los tags de los estudiantes");
           }
 
           // Agregamos los tags del grupo al estudiante, evitando duplicados
@@ -1025,7 +1040,6 @@ function addTagsToStudents(data) {
       });
     }
   });
-  console.log("return", data);
   return data;
 }
 
@@ -1298,31 +1312,6 @@ function getAllUsersJson(users) {
   return allJsons; // Retorna el arreglo con todos los `json` encontrados
 }
 
-function calculateAverageLevel(data, keysToSearch) {
-  // Check if data is defined
-  if (!data) {
-    //console.log("Data is undefined:", { data, keysToSearch });
-    return 0; // default value
-  }
-
-  // Filtra los datos que están en la lista `keysToSearch`
-  const filteredData = keysToSearch?.map(key => data[key]).filter(Boolean);
-
-  // Obtiene los valores de `level` de los datos filtrados
-  const levels = filteredData.map(item => item.level);
-
-  // Si no hay valores de `level`, imprime los datos recibidos y retorna 0
-  if (levels.length === 0) {
-    //console.log("Datos recibidos:", { data, keysToSearch });
-    return 0; // O cualquier valor por defecto
-  }
-
-  // Calcula el promedio de los valores de `level`
-  const averageLevel = levels.reduce((sum, level) => sum + level, 0) / levels.length;
-
-  return averageLevel;
-}
-
 //-------------------------------------
 
 const removeUnpublished = arr => {
@@ -1404,21 +1393,34 @@ export default withAuth(function ChallengesPage() {
   const [allUsersJson, setAllUsersJson] = useState([]);
   const [usersWithModelStates, setUsersWithModelStates] = useState({});
 
-  //const [isPreview, setIsPreview] = useState(false);
   const [uniqueUsers, setUniqueUsers] = useState([]);
 
   const { user, isLoading } = useAuth();
   const userId = user?.id;
-  //const tagsUser = user?.tags;
+
   const isAdmin = (user?.role ?? "") == "ADMIN" ? true : false;
 
   const numbersAsStrings = Array.from({ length: 200 }, (_, i) => String(i + 1));
-  const { data: dataChallenges, isLoading: isChallengesLoading } = useGQLQuery(queryGetChallenges, {
-    challengesIds: numbersAsStrings,
-  });
+  const { data: dataChallenges, isLoading: isChallengesLoading } = useGQLQuery(
+    queryGetChallenges,
+    {
+      challengesIds: numbersAsStrings,
+    },
+    {
+      staleTime: 0,
+      cacheTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+    },
+  );
 
   const { data: dataGroupUsersWithModelStates, isLoading: isGroupUsersWithModelStatesLoading } =
-    useGQLQuery(queryGroupUsersWithModelStates);
+    useGQLQuery(queryGroupUsersWithModelStates, undefined, {
+      staleTime: 0,
+      cacheTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+    });
 
   const {
     /*data: dataUpdateChallenge,
@@ -1504,14 +1506,10 @@ export default withAuth(function ChallengesPage() {
 
   useEffect(() => {
     const challengesUnpublished = removeUnpublished(challenges); // remueve los desafios no publicados
-    setChallengesStudents(addTagsToStudents(challengesUnpublished));
-    console.log("addTags", addTagsToStudents(challengesUnpublished));
-    //setChallengesStudents(updateArray(challengesUnpublished)); //, user?.id)); // agrega tags de forma artificial
-  }, [challenges]);
 
-  useEffect(() => {
-    console.log("challengeStudents", challengesStudents);
-  }, [challengesStudents]);
+    // agrega los tags de los grupos a los que pertence el estudiante al estudiante
+    setChallengesStudents(addTagsToStudents(challengesUnpublished));
+  }, [challenges]);
 
   useEffect(() => {
     if (!isGroupUsersWithModelStatesLoading && dataGroupUsersWithModelStates) {
@@ -1631,13 +1629,11 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
                   setChallengeId={setChallengeId}
                   challengesOriginal={challengesOriginal}
                   usersWithModelStates={usersWithModelStates}
-                  //allUsersJson={allUsersJson}
-                  //uniqueUsers={uniqueUsers}
                 />
               ))}
             </VStack>
           ) : (
-            <p>Cargando datos...</p>
+            <LoadingOverlay />
           )}
         </Box>
       ) : (
@@ -1652,5 +1648,3 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
     </Box>
   );
 });
-
-//export default ChallengesPage;
