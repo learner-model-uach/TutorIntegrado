@@ -3,12 +3,28 @@ import { useCallback } from "react";
 import { useGQLMutation } from "rq-gql";
 import { useAuth } from "../components/Auth";
 import { ActionInput, gql } from "../graphql";
+import { proxy, useSnapshot } from "valtio";
 
 export type ActionArguments = Omit<ActionInput, "projectId" | "timestamp">;
 
-export const useAction = (baseAction?: Partial<ActionArguments>) => {
-  const toast = useToast();
+const actionState = proxy({
+  actionsEnabled: true,
+});
 
+// Función para habilitar/deshabilitar acciones
+export const setActionsEnabled = (enabled: boolean) => {
+  actionState.actionsEnabled = enabled;
+};
+
+// Hook para acceder al estado de las acciones
+export const useActionsStatus = () => {
+  return useSnapshot(actionState);
+};
+
+export const useAction = (baseAction?: Partial<ActionArguments>) => {
+  const { actionsEnabled } = useActionsStatus();
+
+  const toast = useToast();
   const latestBaseAction = useLatestRef(baseAction);
 
   const mutation = useGQLMutation(
@@ -41,6 +57,14 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
 
   return useCallback(
     (data?: Partial<ActionArguments>) => {
+      // Verificamos si las acciones están habilitadas antes de ejecutar
+      if (!actionsEnabled) {
+        if (process.env.NODE_ENV === "development") {
+          console.log("Action skipped: actions are disabled");
+        }
+        return; // No ejecutamos la acción si están deshabilitadas
+      }
+
       if (!projectId) throw Error("Invalid projectId");
 
       const verbName = latestBaseAction.current?.verbName || data?.verbName;
@@ -57,6 +81,6 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
         },
       });
     },
-    [projectId, latestMutation, latestBaseAction],
+    [projectId, latestMutation, latestBaseAction, actionsEnabled],
   );
 };

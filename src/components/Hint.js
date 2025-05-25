@@ -17,6 +17,45 @@ import { MathComponent } from "mathjax-react";
 
 import MQStaticMathField from "../utils/MQStaticMathField";
 
+export const HintNavigation = ({ list, currentIndex, onPrev, onNext }) => {
+  const currentItem = list[currentIndex];
+
+  if (!currentItem) {
+    return <PopoverBody>Error: Índice no válido</PopoverBody>;
+  }
+
+  return (
+    <PopoverBody>
+      <br />
+      {currentItem.hint}
+      <Center>
+        {currentItem.expression && (
+          <MQStaticMathField exp={currentItem.expression} currentExpIndex={true} />
+        )}
+      </Center>
+      <br />
+      <Center>
+        {currentIndex > 0 && (
+          <Button
+            onClick={onPrev}
+            colorScheme="cyan"
+            variant="outline"
+            size="sm"
+            mr={2} // Reemplaza &nbsp;&nbsp;&nbsp; con margen de Chakra
+          >
+            Atrás
+          </Button>
+        )}
+        {currentIndex < list.length - 1 && (
+          <Button onClick={onNext} colorScheme="cyan" variant="outline" size="sm">
+            Siguiente
+          </Button>
+        )}
+      </Center>
+    </PopoverBody>
+  );
+};
+
 const Hint = ({
   hints, //all hints
   stepId, //id for send data
