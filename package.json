@@ -51,7 +51,8 @@
     "rq-gql": "^0.4.3",
     "serialize-error": "^9.0.0",
     "valtio": "1.2.9",
-    "zustand": "4.3.8"
+    "zustand": "4.3.8",
+    "@react-buddy/ide-toolbox-next": "^2.4.1"
   },
   "devDependencies": {
     "@graphql-codegen/schema-ast": "^2.4.1",
