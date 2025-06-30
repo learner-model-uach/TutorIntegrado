@@ -50,21 +50,13 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       rounded="md"
       cursor="pointer"
       bg={
-        query.registerTopic == registerTopic //interactive mark
-          ? activeBg
-          : href == (query.registerTopic ?? "tutorial") &&
-            pathname != "/showContent" &&
-            pathname != "/" //tutorial mark
-          ? activeBg
-          : href == (query.registerTopic ?? "/") &&
-            pathname != "/showContent" &&
-            pathname != "/tutorial" //inicio mark
-          ? activeBg
-          : //: href == "wpExercises" && pathname != "/" && pathname != "/contentSelect" //wpExercises mark
-          //? activeBg
-          pathname == "/showContent" && sessionState.topic == registerTopic[0] //showcontent mark
-          ? activeBg
-          : undefined
+        pathname == href
+        ? activeBg
+          : query.registerTopic && query.registerTopic == registerTopic
+        ? activeBg
+          : pathname == "/showContent" && sessionState.topic == registerTopic[0]
+        ? activeBg
+            : undefined
       }
       _hover={{ color: "white", bg: hoverBg }}
       className="group"

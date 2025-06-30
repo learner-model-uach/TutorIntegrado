@@ -9,8 +9,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
 import { ErrorToast, queryClient, rqGQLClient } from "../rqClient";
 import "../app.css";
-import { DevSupport } from "@react-buddy/ide-toolbox-next";
-import { ComponentPreviews, useInitial } from "../dev";
+
 
 const theme = extendTheme({});
 
@@ -29,11 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <SyncAuth />
               <ErrorToast />
               <MainLayout>
-                <DevSupport ComponentPreviews={ComponentPreviews}
-                            useInitialHook={useInitial}
-                >
                   <Component {...pageProps} />
-                </DevSupport>
               </MainLayout>
             </DndProvider>
           </ChakraProvider>
