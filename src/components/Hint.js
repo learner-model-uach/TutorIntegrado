@@ -13,7 +13,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useAction } from "../utils/action";
-import { MathComponent } from "mathjax-react";
+import { MathComponent } from "./MathJax";//"mathjax-react";
 
 import MQStaticMathField from "../utils/MQStaticMathField";
 

@@ -61,7 +61,16 @@ export interface potato {
   open: boolean;
 }
 
-const Steporans = ({
+export const FeedbackAlert = ({ topicId, status = "success", mqMsg, fallbackMsg, mt = 2 }) => {
+  return (
+    <Alert key={`Alert-${topicId}`} status={status} mt={mt}>
+      <AlertIcon key={`AlertIcon-${topicId}`} />
+      {mqMsg || fallbackMsg}
+    </Alert>
+  );
+};
+
+export const Steporans = ({
   step,
   topicId,
   content,
@@ -80,10 +89,12 @@ const Steporans = ({
       setCC(
         <>
           <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
-          <Alert key={"Alert" + topicId + "i"} status={"success"} mt={2}>
-            <AlertIcon key={"AlertIcon" + topicId + "i"} />
-            {MQProxy.spaghettimsg ? MQProxy.spaghettimsg : step.correctMsg}
-          </Alert>
+          <FeedbackAlert
+  topicId={topicId + "i"}
+  mqMsg={MQProxy.spaghettimsg}
+  fallbackMsg={step.correctMsg}
+  status={"success"}
+/>
         </>,
       );
     } else {

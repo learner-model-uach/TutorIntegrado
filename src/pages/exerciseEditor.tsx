@@ -42,6 +42,7 @@ import {
   CustomAccordionItem as CustomAccordionItemlvltutor,
   potato as potatolvltutor,
   SummaryStep as SummarySteplvltutor,
+  FeedbackAlert as FeedbackAlertlvltutor
 } from "../components/lvltutor/Tools/Solver2";
 import { HintNavigation } from "../components/Hint";
 
@@ -254,11 +255,11 @@ const localTimeToUTC = localDateTime => {
 };
 
 //---------------------------------
-function SearchableSelect() {
+function SearchableSelect({kcs}) {
   const [inputValue, setInputValue] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const allOptions = ["KC1", "KC2", "KC3", "KC4", "KC5"];
+  const allOptions = kcs;
 
   const filteredOptions = allOptions.filter(
     item => !selectedItems.includes(item) && item.toLowerCase().includes(inputValue.toLowerCase()),
@@ -331,15 +332,19 @@ const EditButton = ({
 
 //----------------------------------
 
-const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, topic }) => {
+const EditableStep = ({ step, index, stepName, setSteps, exerciseJSON, topic }) => {
   // Estado para controlar si estamos en modo de edición
   const [isEditingStep, setIsEditingStep] = useState(false);
   const [isEditingKcs, setIsEditingKcs] = useState(false);
   const [isEditingHint, setIsEditingHint] = useState(false);
   const [isEditingSummary, setIsEditingSummary] = useState(false);
+  const [isEditingCorrectMessage, setIsEditingCorrectMessage] = useState(false);
+const [isEditingIncorrectMessage, setIsEditingIncorrectMessage] = useState(false);
+const [isEditingAnswers, setIsEditingAnswers] = useState(false);
 
   // Estado local para mantener la visualización actualizada
   const [localStep, setLocalStep] = useState({ ...step });
+  const [localStepCopy, setLocalStepCopy] = useState({ ...step });
   const [test, setTest] = useState<Array<potatolvltutor>>([]);
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -353,6 +358,7 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
   // Sincronizar el estado local cuando cambia el step desde props
   useEffect(() => {
     setLocalStep({ ...step });
+    setLocalStepCopy({...step});
   }, [step]);
 
   // Función para aplicar los cambios, tanto al estado local como al global
@@ -361,38 +367,74 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
     setSteps(updatedStep); // Actualizar el estado global
   };
 
-  // Manejar la actualización de campos simples
-  const handleStepUpdate = (field, value) => {
+
+  const handleStepUpdateCopy = (field, value) => {
     // Crear el objeto actualizado
-    const updatedStep = {
-      ...localStep,
+    const updatedStepCopy = {
+      ...localStepCopy,
       [field]: value,
     };
-
-    // Aplicar los cambios tanto al estado local como al global
-    applyChanges(updatedStep);
+    setLocalStepCopy(updatedStepCopy);
   };
 
   // Manejar la actualización de opciones múltiples
-  const handleMultipleChoiceUpdate = (choiceIndex, field, value) => {
-    if (localStep.multipleChoice) {
+  const handleMultipleChoiceUpdateCopy = (choiceIndex, field, value) => {
+    if (localStepCopy.multipleChoice) {
       // Crear un nuevo objeto actualizado
-      const updatedStep = {
+      const updatedStepCopy = {
         ...localStep,
-        multipleChoice: localStep.multipleChoice.map((choice, i) =>
+        multipleChoice: localStepCopy.multipleChoice.map((choice, i) =>
           i === choiceIndex ? { ...choice, [field]: value } : choice,
         ),
       };
-
-      // Aplicar los cambios tanto al estado local como al global
-      applyChanges(updatedStep);
+setLocalStepCopy(updatedStepCopy);
     }
   };
 
+  const handleHintUpdateCopy = (hintIndex, field, value) => {
+  const updatedHints = [...localStepCopy.hints]; // Copia el array de hints
+  updatedHints[hintIndex] = {
+    ...updatedHints[hintIndex], // Mantiene los demás campos del hint
+    [field]: value, // Actualiza el campo específico
+  };
+
+  // Actualiza el paso con los nuevos hints
+  const updatedStepCopy = {
+    ...localStepCopy,
+    hints: updatedHints,
+  };
+
+  setLocalStepCopy(updatedStepCopy);
+};
+
+
+  const handleAnswerUpdateCopy = (answerIndex, field, value) => {
+  const updatedAnswers = [...localStepCopy.answers]; // Copia el array de answers
+  updatedAnswers[answerIndex] = {
+    ...updatedAnswers[answerIndex], // Mantiene los demás campos del answer
+    [field]: value, // Actualiza el campo específico
+  };
+
+    // Actualiza el paso con los nuevos answers
+  const updatedStepCopy = {
+    ...localStepCopy,
+    answers: updatedAnswers,
+  };
+
+  setLocalStepCopy(updatedStepCopy);
+};
+
   // Toggle para el modo de edición
   const toggleEditMode = () => {
+    if (isEditingStep) {
+      // Al cancelar, restaurar la copia desde el estado original
+      setLocalStepCopy({ ...localStep });
+    }
     setIsEditingStep(!isEditingStep);
   };
+
+
+  
   // se entra a editar un ejercicio, editingContent: contentId
   // newContent: user
   //
@@ -400,17 +442,37 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
 
   return (
     <Box border="2px" borderColor={formBackgroundColor} borderRadius="lg" p={4} mb={4}>
-      {/* Botón para alternar entre modo edición y visualización */}
-      <EditButton isEditing={isEditingStep} onClick={toggleEditMode} editText="Editar paso" />
 
-      {/* Formulario de edición - Solo se muestra en modo edición */}
+  <Heading key={index} as="h2" textAlign="center" mb={6}>
+    {stepName}
+  </Heading>
+
+      {/* Edición de paso*/}
+      <EditButton width="full" isEditing={isEditingStep} onClick={
+        () => {
+    if (isEditingStep) {
+      // Al cancelar, restaurar la copia desde el estado original
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingStep(!isEditingStep);
+  }
+      } editText="Editar paso" />
+
       {isEditingStep && (
+        <Box>
+                <SaveButton 
+                width="full"
+            onSave={() => {
+              applyChanges(localStepCopy);
+              setIsEditingStep(false);
+            }} />
+
         <Box bg={formBackgroundColor} mb={4}>
           <FormControl borderRadius="md" p={4}>
             <FormLabel>{`Paso ${index + 1}`}</FormLabel>
             <Input
-              value={localStep.stepTitle || ""}
-              onChange={e => handleStepUpdate("stepTitle", e.target.value)}
+              value={localStepCopy.stepTitle || ""}
+              onChange={e => handleStepUpdateCopy("stepTitle", e.target.value)}
               placeholder="Título del paso"
             />
           </FormControl>
@@ -418,21 +480,21 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
           <FormControl borderRadius="md" p={4}>
             <FormLabel>Expresión</FormLabel>
             <Input
-              value={localStep.expression || ""}
-              onChange={e => handleStepUpdate("expression", e.target.value)}
+              value={localStepCopy.expression || ""}
+              onChange={e => handleStepUpdateCopy("expression", e.target.value)}
               placeholder="Expresión"
             />
           </FormControl>
 
-          {localStep.multipleChoice &&
-            localStep.multipleChoice.length > 0 &&
-            localStep.multipleChoice.map((choice, choiceIndex) => (
+          {localStepCopy.multipleChoice &&
+            localStepCopy.multipleChoice.length > 0 &&
+            localStepCopy.multipleChoice.map((choice, choiceIndex) => (
               <FormControl key={`choice-${choiceIndex}`} mb={3} p={4}>
                 <FormLabel>{`Opción ${choiceIndex + 1}`}</FormLabel>
                 <Input
                   value={choice.expression || ""}
                   onChange={e =>
-                    handleMultipleChoiceUpdate(choiceIndex, "expression", e.target.value)
+                    handleMultipleChoiceUpdateCopy(choiceIndex, "expression", e.target.value)
                   }
                   placeholder={`Opción ${choiceIndex + 1}`}
                 />
@@ -440,7 +502,7 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
                 <Input
                   value={choice.feedbackMsg || ""}
                   onChange={e =>
-                    handleMultipleChoiceUpdate(choiceIndex, "feedbackMsg", e.target.value)
+                    handleMultipleChoiceUpdateCopy(choiceIndex, "feedbackMsg", e.target.value)
                   }
                   placeholder={`Mensaje feedback ${choiceIndex + 1}`}
                 />
@@ -448,23 +510,24 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
                 <Input
                   value={choice.feedbackMsgExp || ""}
                   onChange={e =>
-                    handleMultipleChoiceUpdate(choiceIndex, "feedbackMsgExp", e.target.value)
+                    handleMultipleChoiceUpdateCopy(choiceIndex, "feedbackMsgExp", e.target.value)
                   }
                   placeholder={`Expresión del mensaje feedback ${choiceIndex + 1}`}
                 />
               </FormControl>
             ))}
         </Box>
+        </Box>
       )}
 
-      {/* Edición de paso*/}
+      {/* Vista del paso*/}
       <Box>
         <Accordion allowToggle={true} allowMultiple={true}>
-          {localStep && (
+          {localStepCopy && (
             <CustomAccordionItemlvltutor
               key={`AccordionItem-${index}`}
               index={0}
-              step={localStep}
+              step={localStepCopy}
               test={test}
               steps={{ code: exerciseJSON?.code }}
               topicId={topic?.childrens?.[0]}
@@ -476,68 +539,224 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
         </Accordion>
       </Box>
 
+      {/* Edición de opciones de respuesta */}
+            <EditButton
+      width="full"
+        isEditing={isEditingAnswers}
+        onClick={() => {
+    if (isEditingAnswers) {
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingAnswers(!isEditingAnswers);
+  }}
+        editText="Editar respuestas"
+        mt={4}
+      />
+
+            {isEditingAnswers && (
+                      <Box>
+          <SaveButton 
+            width="full"
+            onSave={() => {
+              applyChanges(localStepCopy);
+              setIsEditingAnswers(false);
+            }} 
+          />
+        {localStepCopy?.answers.map(answer => (
+          <FormControl key={`Answer-${index}`} mb={3} p={4}>
+            <FormLabel>{`Respuesta ${index + 1}`}</FormLabel>
+            
+              <Input
+                value={answer.answer || ""}
+                onChange={e => handleAnswerUpdateCopy(index, "answer", e.target.value)}
+                placeholder={`Respuesta ${index + 1}`}
+              />
+              <FormLabel>{`Siguiente paso`}</FormLabel>
+              <Input
+                value={parseInt(answer.nextStep) + 1 || ""}
+                onChange={e => handleAnswerUpdateCopy(index, "nextStep", String(parseInt(e.target.value) - 1))}
+                placeholder={`Siguiente paso ${index + 1}`}
+              />
+          
+          </FormControl>
+
+          
+        ))}      </Box>
+      )}
+
+
       {/* Edición de pistas*/}
       <EditButton
+      width="full"
         isEditing={isEditingHint}
         onClick={() => {
-          setIsEditingHint(!isEditingHint);
-        }}
+    if (isEditingHint) {
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingHint(!isEditingHint);
+  }}
         editText="Editar pistas del paso"
         mt={4}
       />
 
-      {isEditingHint &&
-        localStep?.hints.map(hint => (
+      {isEditingHint && (
+        <Box>
+          <SaveButton 
+            width="full"
+            onSave={() => {
+              applyChanges(localStepCopy);
+              setIsEditingHint(false);
+            }} 
+          />{
+        localStepCopy?.hints.map(hint => (
           <FormControl key={`Hint-${hint.hintId}`} mb={3} p={4}>
             <FormLabel>{`Pista ${hint.hintId + 1}`}</FormLabel>
             <Stack direction="row" spacing={4}>
               <Input
                 value={hint.hint || ""}
-                onChange={e => handleMultipleChoiceUpdate(0, "", e.target.value)}
+                onChange={e => handleHintUpdateCopy(hint.hintId, "hint", e.target.value)}
                 placeholder={`Pista ${hint.hintId + 1}`}
               />
               <Input
                 value={hint.expression || ""}
-                onChange={e => handleMultipleChoiceUpdate(0, "", e.target.value)}
+                onChange={e => handleHintUpdateCopy(hint.hintId, "expression", e.target.value)}
                 placeholder={`Expresión de la pista ${hint.hintId + 1}`}
               />
             </Stack>
           </FormControl>
-        ))}
+        ))}        </Box>
+      )}
 
       <Popover>
         <HintNavigation
-          list={localStep.hints}
+          list={localStepCopy.hints}
           currentIndex={currentStep}
           onPrev={handlePrev}
           onNext={handleNext}
         />
       </Popover>
+
+        {/* Editar mensaje de respuesta correcta*/}
+                  <EditButton
+                   width="full"
+          isEditing={isEditingCorrectMessage}
+          onClick={() => {
+    if (isEditingCorrectMessage) {
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingCorrectMessage(!isEditingCorrectMessage);
+  }}
+          editText="Editar mensajes de respuesta correcta"
+          mt={4}
+        />
+        {isEditingCorrectMessage && (
+        <Box>
+          <SaveButton 
+            width="full"
+            onSave={() => {
+              applyChanges(localStepCopy);
+              setIsEditingCorrectMessage(false);
+            }} 
+          />
+                  <FormControl key={`CorrectMessage-${index + 1}`} mb={3} p={4}>
+            <FormLabel>{`Mensaje de respuesta correcta`}</FormLabel>
+            <Input
+              value={localStepCopy.correctMsg || ""}
+              onChange={e => handleStepUpdateCopy("correctMsg", e.target.value)}
+              placeholder={`Mensaje de respuesta correcta ${index + 1}`}
+            />
+          </FormControl>
+                </Box>
+      )}
+
+       { <FeedbackAlertlvltutor   topicId={""}
+  mqMsg={localStepCopy.correctMsg}
+  fallbackMsg={step.correctMsg}
+  status={"success"}/>}
+
+        {/* Editar mensaje de respuesta incorrecta*/}
+                  <EditButton
+                   width="full"
+          isEditing={isEditingIncorrectMessage}
+          onClick={() => {
+    if (isEditingIncorrectMessage) {
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingIncorrectMessage(!isEditingIncorrectMessage);
+  }}
+          editText="Editar mensajes de respuesta incorrecta"
+          mt={4}
+        />
+        {isEditingIncorrectMessage && (
+        <Box>
+          <SaveButton 
+            width="full"
+            onSave={() => {
+              applyChanges(localStepCopy);
+              setIsEditingIncorrectMessage(false);
+            }} 
+          />
+                  <FormControl key={`IncorrectMessage-${index + 1}`} mb={3} p={4}>
+            <FormLabel>{`Mensaje de respuesta incorrecta`}</FormLabel>
+            <Input
+              value={localStepCopy.incorrectMsg || ""}
+              onChange={e => handleStepUpdateCopy("incorrectMsg", e.target.value)}
+              placeholder={`Mensaje de respuesta incorrecta ${index + 1}`}
+            />
+          </FormControl>
+                </Box>
+      )}
+
+       { <FeedbackAlertlvltutor   topicId={""}
+  mqMsg={localStepCopy.incorrectMsg}
+  fallbackMsg={step.incorrectMsg}
+  status={"error"}/>}
+
+
       <Stack>
         {/* Edición de resumen */}
-        {/* Botón para alternar entre modo edición y visualización */}
         <EditButton
           isEditing={isEditingSummary}
-          onClick={() => setIsEditingSummary(!isEditingSummary)}
+          onClick={() => {
+    if (isEditingSummary) {
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingSummary(!isEditingSummary);
+  }}
           editText="Editar resumen"
+          mt={4}
         />
 
         {isEditingSummary && (
+          <Box>
+            <SaveButton 
+              width="full"
+              onSave={() => {
+                applyChanges(localStepCopy);
+                setIsEditingSummary(false);
+              }} 
+            />
           <FormControl key={`Summary-${index + 1}`} mb={3} p={4}>
-            <FormLabel>{`Resumen ${index + 1}`}</FormLabel>
+            <FormLabel>{`Resumen`}</FormLabel>
             <Input
-              value={localStep.summary || ""}
-              onChange={e => handleStepUpdate("summary", e.target.value)}
+              value={localStepCopy.summary || ""}
+              onChange={e => handleStepUpdateCopy("summary", e.target.value)}
+              placeholder={`Resumen ${index + 1}`}
+            />
+            <Input
+              value={localStepCopy.displayResult[0] || ""}
+              onChange={e => handleStepUpdateCopy("displayResult", [e.target.value])}
               placeholder={`Resumen ${index + 1}`}
             />
           </FormControl>
+                  </Box>
         )}
 
         {/* Summary */}
         <SummarySteplvltutor
           key={`step-${index + 1}`}
-          summary={localStep.summary}
-          displayResult={localStep.summary}
+          summary={localStepCopy.summary}
+          displayResult={localStepCopy.displayResult}
           currentExpIndex={true}
           stepIndex={index + 1}
         />
@@ -546,18 +765,47 @@ const EditableStep = ({ step, index, onUpdate, steps, setSteps, exerciseJSON, to
         <EditButton
           isEditing={isEditingKcs}
           onClick={() => {
-            setIsEditingKcs(!isEditingKcs);
-          }}
+    if (isEditingKcs) {
+      setLocalStepCopy({ ...localStep });
+    }
+    setIsEditingKcs(!isEditingKcs);
+  }}
           editText="Editar KCs del paso"
           mt={4}
         />
-        {isEditingKcs && <SearchableSelect />}
+        {isEditingKcs && (
+          <Box>
+            <SaveButton 
+              width="full"
+              onSave={() => {
+                applyChanges(localStepCopy);
+                setIsEditingKcs(false);
+              }} 
+            />
+            <SearchableSelect kcs={localStepCopy.KCs}/>
+          </Box>
+        )}
+        
       </Stack>
     </Box>
   );
 };
 
 //---------------------------
+
+const SaveButton = ({
+  onSave, label = "Guardar",
+  saveColor = "blue",
+  ...props
+}) => {
+  return (
+    <Button onClick={onSave} colorScheme={saveColor} mb={4} {...props}>
+      {label}
+    </Button>
+  );
+};
+
+//------------------------------
 
 export default withAuth(function ExerciseEditor() {
   //const ChallengeForm = () => {
@@ -573,6 +821,8 @@ export default withAuth(function ExerciseEditor() {
   const [isCreated, setIsCreated] = useState(false);
   const [challenge, setChallenge] = useState({});
 
+  const [isLoadingExercise, setIsLoadingExercise] = useState(true)
+
   //---------------------------------------------
   const [topic, setTopic] = useState({});
   const [title, setTitle] = useState("");
@@ -581,8 +831,20 @@ export default withAuth(function ExerciseEditor() {
   const [exerciseJSON, setExerciseJSON] = useState({});
 
   const [steps, setSteps] = useState([]);
+  const [finalAnswer, setFinalAnswer] = useState({});
 
   //--------------------------------------------
+
+  const [topicCopy, setTopicCopy] = useState({});
+  const [titleCopy, setTitleCopy] = useState("");
+  const [textCopy, setTextCopy] = useState("");
+  const [initialExpCopy, setInitialExpCopy] = useState("");
+  const [exerciseJSONCopy, setExerciseJSONCopy] = useState({});
+
+  const [stepsCopy, setStepsCopy] = useState([]);
+  const [finalAnswerCopy, setFinalAnswerCopy] = useState({});
+
+  //--------------------------------------
   const [isEditingHeader, setIsEditingHeader] = useState(false);
 
   //-------------------------------------
@@ -647,6 +909,18 @@ export default withAuth(function ExerciseEditor() {
       setText(pot?.text);
       setInitialExp(initExp);
       setSteps(pot?.steps);
+      setFinalAnswer(pot?.finalAnswer)
+
+      // Copy
+      setTopicCopy(topics[3]);
+      setExerciseJSONCopy(pot);
+      setTitleCopy(pot?.title);
+      setTextCopy(pot?.text);
+      setInitialExpCopy(initExp);
+      setStepsCopy(pot?.steps);
+      setFinalAnswerCopy(pot?.finalAnswer)
+
+      setIsLoadingExercise(false)
     }
   }, [isTopicsLoading]);
 
@@ -734,29 +1008,18 @@ export default withAuth(function ExerciseEditor() {
     }
 
     router.push({
-      pathname: "/challenge",
+      pathname: "/",
     });
   };
 
   const handleCancel = () => {
-    setTitle("");
-    setDescription("");
-    setSelectedGroups([]);
-    setEndDate("");
-    setSelectedTopics([]);
-    setSelectedExercises([]);
-    setIsUpdated(false);
-    setIsCreated(false);
+    //setIsUpdated(false);
+    //setIsCreated(false);
 
     router.push({
-      pathname: "/challenge",
+      pathname: "/",
     });
   };
-
-  // Si está cargando, muestra un Spinner
-  if (isTopicsLoading && TopicsData) {
-    return <LoadingOverlay />;
-  }
 
   if (errorUpdateChallenge) {
     return (
@@ -790,58 +1053,79 @@ export default withAuth(function ExerciseEditor() {
   // recomendar los mas usados en el topico, luego una busqueda con autocompletacion con el code del kcs, y mostrar code y las descripciones
   // Si uso el celular, dos o tres preguntas, como fue la experiencia en celular
 
-  const step_position_text = {
-    0: "Primer paso",
-    1: "Segundo paso",
-    2: "Tercer paso",
-    3: "Cuarto paso",
-    4: "Quinto paso",
-  };
+  // Si está cargando, muestra un Spinner
+  if (isTopicsLoading || isLoadingExercise) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <ChakraProvider>
       <Box key={exerciseJSON?.code} p={5}>
-        <Heading mb={6} textAlign="center">
-          {"Editar ejercicio"}
+        <Heading mb={6} textAlign="center" as="h1">
+          {"Editar ejercicio " + exerciseJSON?.code}
         </Heading>
         <Box border="2px" borderColor={formBackgroundColor} borderRadius="lg" p={4} mb={4}>
+         
+          <Heading as="h2" textAlign="center" mb={6}>
+        Encabezado
+      </Heading>
+         
           <EditButton
+          width="full"
             isEditing={isEditingHeader}
             onClick={() => {
+              if(isEditingHeader) {
+                setTitleCopy(title)
+                setTextCopy(text)
+                setInitialExpCopy(initialExp)
+              }
               setIsEditingHeader(!isEditingHeader);
             }}
+            editText="Editar encabezado"
           />
 
           {isEditingHeader && (
+              <Box>            
+              
+              <SaveButton 
+              width="full"
+              onSave={()=>{
+                setTitle(titleCopy)
+                setText(textCopy)
+                setInitialExp(initialExpCopy)
+                setIsEditingHeader(!isEditingHeader);
+              }} />
+
             <Box bg={formBackgroundColor}>
               <FormControl borderRadius="md" p={4}>
                 <FormLabel>Encabezado</FormLabel>
                 <Input
-                  value={title}
-                  onChange={e => setTitle(e.target.value)}
+                  value={titleCopy}
+                  onChange={e => setTitleCopy(e.target.value)}
                   placeholder="Título del ejercicio"
                 />
               </FormControl>
 
               <FormControl borderRadius="md" p={4}>
-                <Input value={text} onChange={e => setText(e.target.value)} placeholder="" />
+                <Input value={textCopy} onChange={e => setTextCopy(e.target.value)} placeholder="" />
               </FormControl>
 
               <FormControl borderRadius="md" p={4}>
                 <Input
-                  value={initialExp}
-                  onChange={e => setInitialExp(e.target.value)}
+                  value={initialExpCopy}
+                  onChange={e => setInitialExpCopy(e.target.value)}
                   placeholder="title"
                 />
               </FormControl>
             </Box>
+            </Box>
           )}
 
           <Headerlvltutor
-            title={title}
-            subtitle={text}
-            img={exerciseJSON?.img}
-            mathExp={initialExp}
+            title={titleCopy}
+            subtitle={textCopy}
+            img={exerciseJSONCopy?.img}
+            mathExp={initialExpCopy}
           />
         </Box>
 
@@ -849,27 +1133,25 @@ export default withAuth(function ExerciseEditor() {
           <EditableStep
             key={i}
             index={i}
+            stepName={`Paso ${i + 1}`}
             step={step}
-            steps={steps}
             setSteps={setSteps}
-            onUpdate={(index, field, value) => {
-              const newSteps = [...steps];
-              if (typeof field === "object") {
-                // Si onUpdate recibe el objeto completo
-                newSteps[index] = field;
-              } else {
-                // Si onUpdate recibe un campo específico para actualizar
-                newSteps[index] = {
-                  ...newSteps[index],
-                  [field]: value,
-                };
-              }
-              setSteps(newSteps);
-            }}
             exerciseJSON={exerciseJSON}
             topic={topic}
           />
         ))}
+
+        {/*Final answer*/}
+            <EditableStep
+            key={exerciseJSON?.steps?.length}
+            index={exerciseJSON?.steps?.length}
+            stepName={"Paso final (opcional)"}
+            step={exerciseJSON?.finalAnswer}
+            setSteps={setFinalAnswer}
+            exerciseJSON={exerciseJSON}
+            topic={topic}
+          />
+
 
         <Box mt={6} display="flex" justifyContent="space-between">
           <Button colorScheme="red" onClick={handleCancel}>

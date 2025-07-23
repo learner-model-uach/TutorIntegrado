@@ -345,7 +345,7 @@ const GetInfoExercises = () => {
     <ChakraProvider>
       <Box p={5}>
         <Heading mb={6} textAlign="center">
-          {isEditMode ? "Editar Desafío" : "Crear Desafío"}
+          {"Panel de auditoría"}
         </Heading>
 
         <FormControl mb={4} border="2px" borderColor="gray.600" borderRadius="md" p={4}>
