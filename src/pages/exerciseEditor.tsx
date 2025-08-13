@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   ChakraProvider,
   Box,
@@ -45,6 +45,8 @@ import {
   FeedbackAlert as FeedbackAlertlvltutor
 } from "../components/lvltutor/Tools/Solver2";
 import { HintNavigation } from "../components/Hint";
+import dynamic from 'next/dynamic';
+
 
 const mutationUpdateChallenge = gql(`
   mutation UpdateChallenge($challengeId: IntID!, $challenge: ChallengeInput!) {
@@ -83,6 +85,33 @@ const mutationCreateChallenge = gql(`
       }
     }
   }`);
+/*
+const queryGetKCs = gql(`
+  query getKCs ($ids: [IntID!]!){
+  topics(ids: $ids){
+      kcs {
+        code
+        label
+      }
+      childrens {
+        code
+        label
+        kcs {
+          code
+          label
+        }
+        childrens {
+          code
+          label
+          kcs {
+            code
+            label
+          }
+        }
+      }
+    }
+} 
+`)*/
 
 const queryTopics = gql(/* GraphQL */ `
   query GetTopics {
@@ -125,10 +154,14 @@ const queryTopics = gql(/* GraphQL */ `
   }
 `);
 
-//--------------------------------------------------
-
-const formBackgroundColor = "gray.300";
-
+const queryGetKCs = gql(`
+  query GetKcs($ids: [IntID!]!) {
+    kcs(ids: $ids) {
+      code
+      label
+    }
+  }
+  `)
 //------------------------------------
 
 const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTopics = [] }) => {
@@ -255,34 +288,41 @@ const localTimeToUTC = localDateTime => {
 };
 
 //---------------------------------
-function SearchableSelect({kcs}) {
+function SearchableSelect({selectedItems, onChange, availableKCs }) {
   const [inputValue, setInputValue] = useState("");
-  const [selectedItems, setSelectedItems] = useState([]);
+  
+  const options = useMemo(() => {
+    // Opciones que no están en selectedItems
+    return availableKCs.filter(kc => !selectedItems.some(sel => sel.code === kc.code));
+  }, [availableKCs, selectedItems]);
 
-  const allOptions = kcs;
+  const filteredOptions = useMemo(() => {
+    const q = inputValue.trim().toLowerCase();
+    return options.filter(opt =>
+      q === "" || 
+      (opt.label && opt.label.toLowerCase().includes(q)) || 
+      (opt.code && opt.code.toLowerCase().includes(q))
+    );
+  }, [options, inputValue]);
 
-  const filteredOptions = allOptions.filter(
-    item => !selectedItems.includes(item) && item.toLowerCase().includes(inputValue.toLowerCase()),
-  );
-
-  const handleSelect = item => {
-    setSelectedItems([...selectedItems, item]);
+  const handleSelect = (item) => {
+    onChange([...selectedItems, item]);
     setInputValue("");
   };
 
-  const removeItem = itemToRemove => {
-    setSelectedItems(selectedItems.filter(item => item !== itemToRemove));
+  const removeItem = (code) => {
+    onChange(selectedItems.filter(item => item.code !== code));
   };
 
   return (
     <Box bg="gray.50" borderRadius="md" p={4}>
       <Flex wrap="wrap" gap={2} mb={2}>
-        {selectedItems.map(item => (
-          <Tag key={item} size="md" variant="solid" colorScheme="blue">
-            <TagLabel>{item}</TagLabel>
-            <TagCloseButton onClick={() => removeItem(item)} />
-          </Tag>
-        ))}
+{selectedItems.map(item => (
+  <Tag key={item.code} size="md" variant="solid" colorScheme="blue">
+    <TagLabel>{item.label}</TagLabel>
+    <TagCloseButton onClick={() => removeItem(item.code)} />
+  </Tag>
+))}
       </Flex>
       <Input
         value={inputValue}
@@ -297,17 +337,19 @@ function SearchableSelect({kcs}) {
         borderColor="gray.200"
         borderRadius="md"
       >
-        {filteredOptions.map(item => (
-          <ListItem
-            key={item}
-            p={2}
-            _hover={{ bg: "gray.100" }}
-            cursor="pointer"
-            onClick={() => handleSelect(item)}
-          >
-            {item}
-          </ListItem>
-        ))}
+
+  {filteredOptions.map(item => (
+    <ListItem
+      key={item.code}
+          p={2}
+    _hover={{ bg: "gray.100" }}
+      onClick={() => handleSelect(item)}
+      cursor="pointer"
+    >
+      {item.label}
+    </ListItem>
+  ))}
+
       </List>
     </Box>
   );
@@ -332,7 +374,7 @@ const EditButton = ({
 
 //----------------------------------
 
-const EditableStep = ({ step, index, stepName, setSteps, exerciseJSON, topic }) => {
+const EditableStep = ({ step, index, stepName, setSteps, exerciseJSON, topic, availableKCs }) => {
   // Estado para controlar si estamos en modo de edición
   const [isEditingStep, setIsEditingStep] = useState(false);
   const [isEditingKcs, setIsEditingKcs] = useState(false);
@@ -352,6 +394,8 @@ const [isEditingAnswers, setIsEditingAnswers] = useState(false);
 
   const action = useAction();
 
+//--------------------------------
+
   const handlePrev = () => setCurrentStep(prev => prev - 1);
   const handleNext = () => setCurrentStep(prev => prev + 1);
 
@@ -360,6 +404,13 @@ const [isEditingAnswers, setIsEditingAnswers] = useState(false);
     setLocalStep({ ...step });
     setLocalStepCopy({...step});
   }, [step]);
+
+const handleUpdateKCs = (newKCs) => {
+  setLocalStepCopy(prev => ({
+    ...prev,
+    KCs: newKCs.map(kc => kc.code),
+  }));
+};
 
   // Función para aplicar los cambios, tanto al estado local como al global
   const applyChanges = updatedStep => {
@@ -423,17 +474,6 @@ setLocalStepCopy(updatedStepCopy);
 
   setLocalStepCopy(updatedStepCopy);
 };
-
-  // Toggle para el modo de edición
-  const toggleEditMode = () => {
-    if (isEditingStep) {
-      // Al cancelar, restaurar la copia desde el estado original
-      setLocalStepCopy({ ...localStep });
-    }
-    setIsEditingStep(!isEditingStep);
-  };
-
-
   
   // se entra a editar un ejercicio, editingContent: contentId
   // newContent: user
@@ -782,7 +822,9 @@ setLocalStepCopy(updatedStepCopy);
                 setIsEditingKcs(false);
               }} 
             />
-            <SearchableSelect kcs={localStepCopy.KCs}/>
+            <SearchableSelect       selectedItems={availableKCs.filter(kc => localStepCopy.KCs.includes(kc.code))}
+      onChange={handleUpdateKCs}
+      availableKCs={availableKCs}/>
           </Box>
         )}
         
@@ -806,6 +848,9 @@ const SaveButton = ({
 };
 
 //------------------------------
+//const EditableStepDynamic = dynamic(() => import('.EditableStep'), { ssr: false });
+
+//------------------
 
 export default withAuth(function ExerciseEditor() {
   //const ChallengeForm = () => {
@@ -848,6 +893,8 @@ export default withAuth(function ExerciseEditor() {
   const [isEditingHeader, setIsEditingHeader] = useState(false);
 
   //-------------------------------------
+  const [availableKCs, setAvailableKCs] = useState([])
+
   const router = useRouter();
   const { mode, challengeId: id } = router.query;
 
@@ -861,9 +908,23 @@ export default withAuth(function ExerciseEditor() {
   //const { user } = useAuth();
   const userId = sessionState.currentUser.id;
 
+  // Generar array con números del 1 al 147
+  const ids = Array.from({ length: 147 }, (_, i) => i + 1);
+  
   //----------------------------------------
 
   const { data: TopicsData, isLoading: isTopicsLoading } = useGQLQuery(queryTopics);
+
+     const { data: KCsData, isLoading: isGetKCsLoading } = useGQLQuery(queryGetKCs, {
+  ids: ids
+});
+
+
+useEffect(()=> {
+  if(!isGetKCsLoading) {
+    setAvailableKCs(KCsData.kcs)
+  }
+}, [isGetKCsLoading])
 
   const {
     //data: dataUpdateChallenge,
@@ -1054,7 +1115,7 @@ export default withAuth(function ExerciseEditor() {
   // Si uso el celular, dos o tres preguntas, como fue la experiencia en celular
 
   // Si está cargando, muestra un Spinner
-  if (isTopicsLoading || isLoadingExercise) {
+  if (isTopicsLoading || isLoadingExercise || isGetKCsLoading) {
     return <LoadingOverlay />;
   }
 
@@ -1138,6 +1199,7 @@ export default withAuth(function ExerciseEditor() {
             setSteps={setSteps}
             exerciseJSON={exerciseJSON}
             topic={topic}
+            availableKCs={KCsData.kcs}
           />
         ))}
 
@@ -1150,6 +1212,7 @@ export default withAuth(function ExerciseEditor() {
             setSteps={setFinalAnswer}
             exerciseJSON={exerciseJSON}
             topic={topic}
+            availableKCs={KCsData.kcs}
           />
 
 
