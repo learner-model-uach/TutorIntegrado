@@ -1,6 +1,8 @@
 import { Alert, AlertIcon, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
-import { addStyles, EditableMathField, MathField } from "react-mathquill";
+//import { addStyles, EditableMathField, MathField } from "react-mathquill";
+import type { MathField } from "react-mathquill";
+//import { addStyles } from "react-mathquill";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -13,8 +15,18 @@ import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
+import dynamic from "next/dynamic";
 
-addStyles();
+const EditableMathField = dynamic(
+  async () => {
+    const mod = await import("react-mathquill");
+    mod.addStyles(); // Esto inyecta el CSS
+    return mod.EditableMathField;
+  },
+  { ssr: false }, // Se asegura que solo se renderice en cliente
+);
+
+//addStyles();
 
 const Enabledhint = ({
   disablehint,
