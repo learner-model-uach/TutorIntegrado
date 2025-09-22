@@ -17,7 +17,6 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import "katex/dist/katex.min.css";
@@ -314,11 +313,6 @@ const GetInfoExercises = () => {
   //const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const { data: TopicsData, isLoading: isTopicsLoading } = useGQLQuery(queryTopics);
-
-  const router = useRouter();
-  const { mode } = router.query;
-
-  const isEditMode = mode === "edit";
 
   const topics = TopicsData?.topics || [];
 

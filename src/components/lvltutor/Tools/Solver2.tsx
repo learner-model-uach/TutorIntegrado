@@ -61,7 +61,23 @@ export interface potato {
   open: boolean;
 }
 
-export const FeedbackAlert = ({ topicId, status = "success", mqMsg, fallbackMsg, mt = 2 }) => {
+type AlertStatus = "error" | "info" | "warning" | "success";
+
+interface FeedbackAlertProps {
+  topicId: string;
+  status?: AlertStatus;
+  mqMsg?: string;
+  fallbackMsg?: string;
+  mt?: number;
+}
+
+export const FeedbackAlert = ({
+  topicId,
+  status = "success",
+  mqMsg,
+  fallbackMsg,
+  mt = 2,
+}: FeedbackAlertProps) => {
   return (
     <Alert key={`Alert-${topicId}`} status={status} mt={mt}>
       <AlertIcon key={`AlertIcon-${topicId}`} />
@@ -90,11 +106,11 @@ export const Steporans = ({
         <>
           <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
           <FeedbackAlert
-  topicId={topicId + "i"}
-  mqMsg={MQProxy.spaghettimsg}
-  fallbackMsg={step.correctMsg}
-  status={"success"}
-/>
+            topicId={topicId + "i"}
+            mqMsg={MQProxy.spaghettimsg}
+            fallbackMsg={step.correctMsg}
+            status={"success"}
+          />
         </>,
       );
     } else {

@@ -324,7 +324,7 @@ export default withAuth(function ChallengesStart() {
     ) {
       const kcsByContentByTopics = dataKcsByTopics?.kcsByContentByTopics || [];
       const uniqueKcs = getUniqueKcs(kcsByContentByTopics);
-
+      //console.log("uniqueKcs", uniqueKcs)
       //console.log("userByJsonById", userByJsonById);
       const averageLevelUser = calculateUserProgress(uniqueKcs, userByJsonById) * 100;
       setStudentProgress(averageLevelUser);
