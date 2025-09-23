@@ -15,18 +15,8 @@ import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
-import dynamic from "next/dynamic";
-
-const EditableMathField = dynamic(
-  async () => {
-    const mod = await import("react-mathquill");
-    mod.addStyles(); // Esto inyecta el CSS
-    return mod.EditableMathField;
-  },
-  { ssr: false }, // Se asegura que solo se renderice en cliente
-);
-
-//addStyles();
+import EditableMathField from "../../../components/exerciseEditor/EditableMathFieldDynamic";
+//import  StaticMathField  from "../../../components/exerciseEditor/StaticMathFieldDynamic";
 
 const Enabledhint = ({
   disablehint,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { StaticMathField, addStyles } from "react-mathquill";
+//import { StaticMathField, addStyles } from "react-mathquill";
+import StaticMathField from "../../exerciseEditor/StaticMathFieldDynamic";
 import {
   Button,
   Popover,
@@ -29,7 +30,7 @@ const Hint = ({
   setHints,
   setLastHint,
 }) => {
-  addStyles(); //mathquill
+  //addStyles(); //mathquill
   const [i, setI] = useState(0); //i es el último hint desbloqueado
   const [list] = useState([hints[0]]);
   const [j, setJ] = useState(0); //j es el hint que se despliega con los botones

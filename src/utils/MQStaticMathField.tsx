@@ -1,7 +1,8 @@
-import { addStyles, StaticMathField } from "react-mathquill";
+//import { addStyles, StaticMathField } from "react-mathquill";
 import { useState, useEffect } from "react";
+import StaticMathField from "../components/exerciseEditor/StaticMathFieldDynamic";
 
-addStyles();
+//addStyles();
 
 const mqo = {
   overflow: "visible",

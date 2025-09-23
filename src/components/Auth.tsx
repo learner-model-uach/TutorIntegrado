@@ -62,39 +62,53 @@ export function SyncAuth() {
     `),
     undefined,
     {
-      enabled: hasAuthorizationToken,
+      enabled: hasAuthorizationToken, // Solo ejecutar si ya tenemos token
       onSuccess(data) {
+        // Actualizar estado global con usuario y proyecto
         AuthState.user = data.currentUser;
         AuthState.project = data.project;
       },
       onSettled() {
+        // Termina la carga aunque haya error
         AuthState.isLoading = false;
       },
     },
   );
 
+  // Sincronizar estado de carga general
   useEffect(() => {
     AuthState.isLoading = currentUserIsLoading || isLoading;
   }, [isLoading, currentUserIsLoading]);
 
+  // Sincroniza el usuario de Auth0 en el estado global
   useEffect(() => {
     AuthState.auth0User = user || null;
   }, [user]);
 
+  // Obtener token de autorización cuando el usuario se autentica
   useEffect(() => {
     if (user) {
-      AuthState.isLoading = true;
-      latestGetIdToken.current().then(data => {
-        AuthState.authorizationToken = rqGQLClient.headers.authorization = data
-          ? `Bearer ${data.__raw}`
-          : undefined;
+      AuthState.isLoading = true; // Mientras se obtiene token
+      latestGetIdToken
+        .current()
+        .then(data => {
+          // Guardar token en estado y headers
+          AuthState.authorizationToken = rqGQLClient.headers.authorization = data
+            ? `Bearer ${data.__raw}`
+            : undefined;
 
-        AuthState.isLoading = true;
-      });
+          AuthState.isLoading = false; // Termina carga
+        })
+        .catch(error => {
+          console.error("Error obteniendo token:", error);
+          AuthState.authorizationToken = undefined;
+          rqGQLClient.headers.authorization = undefined;
+          AuthState.isLoading = false; // Termina carga en caso de error
+        });
     }
-  }, [user, latestGetIdToken]);
+  }, [user]);
 
-  return <OnStart />;
+  return <OnStart />; // Inicializa acciones al cargar
 }
 
 const OnStart = memo(function OnStart() {
@@ -106,9 +120,10 @@ const OnStart = memo(function OnStart() {
 
   const projectId = project?.id;
   const { updateModel } = useUpdateModel();
+
   useEffect(() => {
     if (projectId) {
-      //lógica al iniciar sesión, lógica de sessionState
+      // Inicializar sesión con datos de usuario
       sessionStateInitial(AuthState.user, AuthState.auth0User);
       startAction();
       updateModel({
@@ -116,13 +131,14 @@ const OnStart = memo(function OnStart() {
         domainID: "1",
       });
     }
-  }, [projectId, startAction]);
+  }, [projectId, startAction, updateModel]);
 
   return null;
 });
 
 export const useAuth = () => useSnapshot(AuthState);
 
+// HOC para proteger rutas y componentes
 export function withAuth<Props extends Record<string, unknown>>(Cmp: FC<Props>) {
   const WithAuth: {
     (props: Props): JSX.Element;
@@ -130,13 +146,16 @@ export function withAuth<Props extends Record<string, unknown>>(Cmp: FC<Props>) 
   } = function WithAuth(props: Props) {
     const { isLoading, user } = useAuth();
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner />; // Mientras carga, mostrar spinner
 
-    if (user) return <Cmp {...props} />;
+    if (user) return <Cmp {...props} />; // Usuario autenticado: renderiza componente
 
-    typeof window !== "undefined" && Router.replace("/");
+    // Usuario no autenticado: redirigir a /
+    if (typeof window !== "undefined") {
+      Router.replace("/");
+    }
 
-    return <Spinner />;
+    return <Spinner />; // Mostrar spinner mientras redirige
   };
 
   WithAuth.displayName = Cmp.name;
