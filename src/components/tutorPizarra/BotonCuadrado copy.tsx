@@ -6,14 +6,14 @@ import {
   Flex,
   Image,
   Text,
-  SlideFade, // ✅ v1: usamos SlideFade en lugar de Presence
+  SlideFade, 
 } from "@chakra-ui/react";
 
 import Superior from "./RecSuperior";
 import Inferior from "./RecInferior";
 import { useAction } from "../../utils/action";
 import Summary from "../LogicTutor/Summary";
-import RatingQuestion from "../RatingQuestionV2";
+import RatingQuestion from "../RatingQuestion";
 import TalkBubble from "./TalkBubble";
 import TypeText from "./TypeText";
 
