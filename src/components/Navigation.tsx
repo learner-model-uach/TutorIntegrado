@@ -61,6 +61,12 @@ export function Navigation() {
               <SidebarLink icon={<FaBookOpen />} href="challenge">
                 Desafíos
               </SidebarLink>
+              <SidebarLink key="14" href={"pizarraPlain?topic=4,3,5,6,7"}>
+                DaniPrueba
+              </SidebarLink>
+              <SidebarLink key="15" href="/quickPlay">
+                Pruebas JSON
+              </SidebarLink>
             </Stack>
           </>
         )}

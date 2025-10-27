@@ -1,0 +1,371 @@
+{
+  "code": "pnc3b08",
+  "meta": {},
+  "text": "Utilizando la identidad de cubo de binomio (a - b)³ = (a³ - 3a²b + 3ab² - b³), desarrolla el siguiente cubo de binomio:",
+  "type": "lvltutor",
+  "initialExpression": "(7x-6y)³",
+  "steps": [
+    {
+      "KCs": ["IdeTer3"],
+      "hints": [
+        {
+          "hint": "Para encontrar el resultado debes elevar al cubo el primer término del binomio.",
+          "hintId": 0
+        },
+        {
+          "hint": "Recuerda que elevar al cubo es multiplicar un número por si mismo 3 veces. Por ejemplo: ",
+          "expression": "(4a)^{3}=4a\\cdot4a\\cdot4a=64a^{3}",
+          "hintId": 1
+        },
+        {
+          "hint": "El resultado es: ",
+          "expression": "343x^{3}",
+          "hintId": 2
+        }
+      ],
+      "stepId": "0",
+      "values": [
+        {
+          "name": "x",
+          "value": 1
+        },
+        {
+          "name": "y",
+          "value": 2
+        }
+      ],
+      "answers": [
+        {
+          "answer": ["343x^{3}"],
+          "nextStep": "1"
+        }
+      ],
+      "summary": "1) De acuerdo con la fórmula del cubo del binomio (a + b)³ = (a³ + 3a²b + 3ab² + b³), el primer término a³ se obtiene al elevar 7x al cubo.",
+      "stepTitle": "Encuentra el primer término del cubo de binomio.",
+      "correctMsg": "Has encontrado el primer término.",
+      "expression": "(7x-6y)^{3} = □ + □ + □ + □",
+      "validation": "evaluateAndCount",
+      "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+      "displayResult": ["343x^{3}"],
+      "matchingError": [],
+      "multipleChoice": [
+        {
+          "id": 0,
+          "expression": "343x^{3}",
+          "correct": true
+        },
+        {
+          "id": 1,
+          "expression": "343",
+          "correct": false,
+          "feedbackMsg": "La variable x también forma parte del primer término"
+        },
+        {
+          "id": 2,
+          "expression": "21",
+          "correct": false,
+          "feedbackMsg": "Debes elevar al cubo el primer término, no multiplicarlo por 3, y no olvides la variable x."
+        },
+        {
+          "id": 3,
+          "expression": "21x^3",
+          "correct": false,
+          "feedbackMsg": "Debes elevar al cubo el coeficiente, no multiplicarlo por 3"
+        }
+      ]
+    },
+    {
+      "KCs": ["C3BTIMultVar"],
+      "hints": [
+        {
+          "hint": "El término que estás buscando es 3a²b.",
+          "hintId": 0
+        },
+        {
+          "hint": "¿Cuanto vale 3a²b?, si:",
+          "expression": "a=7x, \\quad b=6y",
+          "hintId": 1
+        },
+        {
+          "hint": "Recuerda revisar el signo, si hay un signo menos en el binomio, el término 3a²b tendrá un signo menos.",
+          "hintId": 2
+        },
+        {
+          "hint": "El resultado es: ",
+          "expression": "-882x^{2}y",
+          "hintId": 3
+        }
+      ],
+      "stepId": "1",
+      "values": [
+        {
+          "name": "x",
+          "value": 1
+        },
+        {
+          "name": "y",
+          "value": 2
+        }
+      ],
+      "answers": [
+        {
+          "answer": ["-882x^{2}y"],
+          "nextStep": "2"
+        }
+      ],
+      "summary": "2) Según la identidad, el segundo término 3a²b se calcula al multiplicar 3, (7x)² y (-6y).",
+      "stepTitle": "Encuentra el segundo término del cubo de binomio.",
+      "correctMsg": "Has encontrado el segundo término.",
+      "expression": "(7x-6y)^{3} = 343x³ + □ + □ + □",
+      "validation": "evaluateAndCount",
+      "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+      "displayResult": ["-882x^{2}y"],
+      "matchingError": [],
+      "multipleChoice": [
+        {
+          "id": 0,
+          "expression": "-882x^{2}y",
+          "correct": true
+        },
+        {
+          "id": 1,
+          "expression": "153xy",
+          "correct": false,
+          "feedbackMsg": "El término que estás buscando es 3a²b y ten cuidado con el signo."
+        },
+        {
+          "id": 2,
+          "expression": "-153x²y",
+          "correct": false,
+          "feedbackMsg": "El término que estás buscando es 3a²b. Sigue la fórmula paso a paso."
+        },
+        {
+          "id": 3,
+          "expression": "882xy",
+          "correct": false,
+          "feedbackMsg": "También debes elevar la variable 'x' al cuadrado, ya que a=7x. También ten cuidado con el signo."
+        }
+      ]
+    },
+    {
+      "KCs": ["C3BTIMultVar"],
+      "hints": [
+        {
+          "hint": "El término que estás buscando es 3ab².",
+          "hintId": 0
+        },
+        {
+          "hint": "¿Cuanto vale 3ab²?, si:",
+          "expression": "a=7x, \\quad b=6y",
+          "hintId": 1
+        },
+        {
+          "hint": "El término 3ab² siempre será positivo.",
+          "hintId": 2
+        },
+        {
+          "hint": "El resultado es: ",
+          "expression": "756xy^{2}",
+          "hintId": 3
+        }
+      ],
+      "stepId": "2",
+      "values": [
+        {
+          "name": "x",
+          "value": 1
+        },
+        {
+          "name": "y",
+          "value": 2
+        }
+      ],
+      "answers": [
+        {
+          "answer": ["756xy^{2}"],
+          "nextStep": "3"
+        }
+      ],
+      "summary": "3) El tercer término 3ab² surge de multiplicar 3, 7x y (-6y)².",
+      "stepTitle": "Encuentra el tercer término del cubo de binomio.",
+      "correctMsg": "Has encontrado el tercer término.",
+      "expression": "(7x-6y)^{3} = 343x³ - 882x²y + □ + □",
+      "validation": "evaluateAndCount",
+      "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+      "displayResult": ["756xy^{2}"],
+      "matchingError": [],
+      "multipleChoice": [
+        {
+          "id": 0,
+          "expression": "756xy^{2}",
+          "correct": true
+        },
+        {
+          "id": 1,
+          "expression": "756",
+          "correct": false,
+          "feedbackMsg": "No te olvides de las variables 'x' e 'y'"
+        },
+        {
+          "id": 2,
+          "expression": "756x^2y^2",
+          "correct": false,
+          "feedbackMsg": "El término 'a' no debe estar elevado al cuadrado"
+        },
+        {
+          "id": 3,
+          "expression": "756xy",
+          "correct": false,
+          "feedbackMsg": "El término 'b' debe estar al cuadrado, incluyendo la variable y"
+        }
+      ]
+    },
+    {
+      "KCs": ["IdeTer3", "C3BTIMultVar"],
+      "hints": [
+        {
+          "hint": "Para calcular el último término, debes elevar al cubo el segundo término del binomio.",
+          "hintId": 0
+        },
+        {
+          "hint": "Recuerda que elevar al cubo es multiplicar un número por si mismo 3 veces. Por ejemplo: ",
+          "expression": "(4a)^{3}=4a\\cdot4a\\cdot4a=64a^{3}",
+          "hintId": 1
+        },
+        {
+          "hint": "Recuerda revisar el signo, si hay un signo menos en el binomio, el término b³ tiene un signo menos.",
+          "hintId": 2
+        },
+        {
+          "hint": "El resultado es: ",
+          "expression": "-216y^{3}",
+          "hintId": 3
+        }
+      ],
+      "stepId": "3",
+      "values": [
+        {
+          "name": "x",
+          "value": 1
+        },
+        {
+          "name": "y",
+          "value": 2
+        }
+      ],
+      "answers": [
+        {
+          "answer": ["-216y^{3}"],
+          "nextStep": "-1"
+        }
+      ],
+      "summary": "4) Por último, el cuarto término b³ se obtiene al elevar (-6y) al cubo.",
+      "stepTitle": "Finalmente obtén el cuarto término.",
+      "correctMsg": "Has encontrado el resultado.",
+      "expression": "(7x-6y)^{3} = 343x³ - 882x²y + 756xy² + □",
+      "validation": "evaluateAndCount",
+      "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+      "displayResult": ["-216y³"],
+      "matchingError": [],
+      "multipleChoice": [
+        {
+          "id": 0,
+          "expression": "-216y^{3}",
+          "correct": true
+        },
+        {
+          "id": 1,
+          "expression": "36y²",
+          "correct": false,
+          "feedbackMsg": "El coeficiente 'b' debe estar al cubo, no al cuadrado"
+        },
+        {
+          "id": 2,
+          "expression": "216y³",
+          "correct": false,
+          "feedbackMsg": "Ten cuidado con el signo"
+        },
+        {
+          "id": 3,
+          "expression": "-216y",
+          "correct": false,
+          "feedbackMsg": "La variable 'y' tambien debe estar elevada"
+        }
+      ]
+    }
+  ],
+  "title": "Cubo de binomio",
+  "finalAnswer": {
+    "KCs": ["IdeTer3", "C3BTIMultVar"],
+    "hints": [
+      {
+        "hint": "Para calcular el último término, debes elevar al cubo el segundo término del binomio.",
+        "hintId": 0
+      },
+      {
+        "hint": "Recuerda que elevar al cubo es multiplicar un número por si mismo 3 veces. Por ejemplo: ",
+        "expression": "(4a)^{3}=4a\\cdot4a\\cdot4a=64a^{3}",
+        "hintId": 1
+      },
+      {
+        "hint": "Recuerda revisar el signo, si hay un signo menos en el binomio, el término b³ tiene un signo menos.",
+        "hintId": 2
+      },
+      {
+        "hint": "El resultado es: ",
+        "expression": "-216y^{3}",
+        "hintId": 3
+      }
+    ],
+    "stepId": "3",
+    "values": [
+      {
+        "name": "x",
+        "value": 1
+      },
+      {
+        "name": "y",
+        "value": 2
+      }
+    ],
+    "answers": [
+      {
+        "answer": ["-216y^{3}"],
+        "nextStep": "-1"
+      }
+    ],
+    "summary": "4) Por último, el cuarto término b³ se obtiene al elevar (-6y) al cubo.",
+    "stepTitle": "Finalmente obtén el cuarto término.",
+    "correctMsg": "Has encontrado el resultado.",
+    "expression": "(7x-6y)^{3} = 343x³ - 882x²y + 756xy² + □",
+    "validation": "evaluateAndCount",
+    "incorrectMsg": "Revisa que la expresión ingresada este correcta.",
+    "displayResult": ["-216y³"],
+    "matchingError": [],
+    "multipleChoice": [
+      {
+        "id": 0,
+        "expression": "-216y^{3}",
+        "correct": true
+      },
+      {
+        "id": 1,
+        "expression": "36y²",
+        "correct": false,
+        "feedbackMsg": "El coeficiente 'b' debe estar al cubo, no al cuadrado"
+      },
+      {
+        "id": 2,
+        "expression": "216y³",
+        "correct": false,
+        "feedbackMsg": "Ten cuidado con el signo"
+      },
+      {
+        "id": 3,
+        "expression": "-216y",
+        "correct": false,
+        "feedbackMsg": "La variable 'y' tambien debe estar elevada"
+      }
+    ]
+  }
+}
