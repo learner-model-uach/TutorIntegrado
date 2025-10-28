@@ -12,7 +12,7 @@ import {
 import Superior from "./RecSuperior";
 import Inferior from "./RecInferior";
 import { useAction } from "../../utils/action";
-import Summary from "../LogicTutor/Summary";
+import Summary from "./Summary";
 import RatingQuestion from "../RatingQuestion";
 import TalkBubble from "./TalkBubble";
 import TypeText from "./TypeText";
