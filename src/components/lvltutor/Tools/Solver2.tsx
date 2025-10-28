@@ -1,5 +1,5 @@
 import React, { useState, memo, useEffect, useRef } from "react";
-import RatingQuestion from "../../RatingQuestion";
+import RatingQuestion from "../../RatingQuestionV2";
 import { FaHandPointRight } from "react-icons/fa";
 
 import {

@@ -6,7 +6,7 @@ import {
   Flex,
   Image,
   Text,
-  SlideFade, // ✅ v1: usamos SlideFade en lugar de Presence
+  SlideFade, 
 } from "@chakra-ui/react";
 
 import Superior from "./RecSuperior";
@@ -100,7 +100,6 @@ const BotonCuadradoCopy: React.FC<BotonCuadradoCopyProps> = ({
       />
 
       {complete ? (
-        // ✅ Chakra v1: SlideFade con in/unmountOnExit + transición
         <SlideFade
           in={complete}
           unmountOnExit

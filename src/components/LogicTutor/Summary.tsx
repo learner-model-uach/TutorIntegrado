@@ -4,6 +4,7 @@ import Latex from "react-latex-next";
 import type { ExLog } from "./Tools/ExcerciseType2";
 
 const Summary = ({ exc }: { exc: ExLog }) => {
+  console.log("Resumen del ejercicio:", exc);
   return (
     <>
       <Alert status="info" alignItems="top">
@@ -13,7 +14,8 @@ const Summary = ({ exc }: { exc: ExLog }) => {
             <Heading fontSize="xl">Resumen</Heading>
           </Center>
           <VStack spacing={4} align="center" justify="center" w="100%">
-            <Latex>{exc.text + "$$" + exc.initialExpression + "$$"}</Latex>
+            {/*<Latex>{exc.text + "$$" + exc.initialExpression + "$$"}</Latex>*/}
+            <Latex>{exc.text + "$$" + (exc.initialExpression ?? exc.steps[0].expression) + "$$"}</Latex>
             {exc.img ? (
               <>
                 <Center>

@@ -34,7 +34,7 @@ export const all = { j1, j2, j3, j4, j5, j6, j7, j8, j9 } as const;
 // El mismo arreglo de arreglos que tenías, pero aquí centralizado:
 export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorType]>> = [
   [
-    [j1, 2],
+    [j1, 1],
     [j1, 2],
   ], //array de prueba
   //  [[j1, 1], [j4, 2], [j7, 1], [j2, 2], [j5, 1]],
