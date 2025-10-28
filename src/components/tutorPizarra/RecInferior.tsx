@@ -34,7 +34,7 @@ interface RecInferiorProps {
 // Función para mezclar el arreglo de alternativas
 const shuffleArray = (array: any[]) => {
   return array
-    .map((value) => ({ value, sort: Math.random() }))
+    .map(value => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
 };
@@ -112,7 +112,7 @@ const RecInferior: React.FC<RecInferiorProps> = ({
         return;
       }
 
-      const altObj = alternativas.find((a) => a.expression === selectedAlt);
+      const altObj = alternativas.find(a => a.expression === selectedAlt);
       isCorrect = !!altObj?.correct;
 
       if (isCorrect) {
@@ -333,11 +333,7 @@ const RecInferior: React.FC<RecInferiorProps> = ({
       </Flex>
 
       {hasMultipleChoice ? (
-        <RadioGroup
-          name="alternativas"
-          value={selectedAlt ?? ""}
-          onChange={(v) => setSelectedAlt(v)}
-        >
+        <RadioGroup name="alternativas" value={selectedAlt ?? ""} onChange={v => setSelectedAlt(v)}>
           <SlideFade
             in
             key={`${steps.stepId}-alts`}
@@ -373,9 +369,7 @@ const RecInferior: React.FC<RecInferiorProps> = ({
                     {/* Card clickeable con los mismos colores que en v3 */}
                     <Box
                       border="1px solid"
-                      borderColor={
-                        isSelected ? `${statusColor}.700` : "blue.500"
-                      }
+                      borderColor={isSelected ? `${statusColor}.700` : "blue.500"}
                       bg={
                         isSelected
                           ? `${statusColor}.${statusColor === "blue" ? 600 : 500}`
@@ -407,7 +401,7 @@ const RecInferior: React.FC<RecInferiorProps> = ({
         </RadioGroup>
       ) : (
         <Flex direction="column" align="center">
-          <Mathfield value={userInput} onChange={(v) => setUserInput(v)} readOnly={false} />
+          <Mathfield value={userInput} onChange={v => setUserInput(v)} readOnly={false} />
         </Flex>
       )}
 

@@ -1,8 +1,8 @@
 .accordionPadding {
-   padding-right: 0;
+  padding-right: 0;
 }
 @media screen and (min-width: 365) {
-   .accordionPadding {
-      padding-right: 20px;
-   }
+  .accordionPadding {
+    padding-right: 20px;
+  }
 }

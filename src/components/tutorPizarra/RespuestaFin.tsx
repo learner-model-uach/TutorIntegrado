@@ -19,7 +19,7 @@ const RespuestaFin: React.FC<RespuestaFinProps> = ({ exerciseData, topicID }) =>
   const respuestaEsperada = `\\large\\placeholder[a]{${lastStep.answers[0].answer[0]}}\\qquad`;
 
   const [attempts, setAttempts] = useState(0);
-  const [hintsShow,] = useState(0);
+  const [hintsShow] = useState(0);
 
   const allKCs = exerciseData.steps.flatMap((step: any) => step.KCs || []);
   const extras = { steps: {} };

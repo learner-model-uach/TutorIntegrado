@@ -1,14 +1,6 @@
 // Pestanas.tsx — versión Chakra v1
 import React, { useState } from "react";
-import {
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanels, TabPanel, Heading, Text } from "@chakra-ui/react";
 import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 
@@ -35,20 +27,14 @@ const tabStyles = {
   },
 };
 
-const Pestanas: React.FC<PestanasProps> = ({
-  tabContents,
-  exerciseData,
-  topicID,
-}) => {
+const Pestanas: React.FC<PestanasProps> = ({ tabContents, exerciseData, topicID }) => {
   // v1: Tabs controladas por índice (0,1,...)
   const [tabIndex, setTabIndex] = useState(0 as 0 | 1);
 
-  const enunciado =
-    exerciseData?.steps?.[0]?.expression || "No hay enunciado disponible.";
+  const enunciado = exerciseData?.steps?.[0]?.expression || "No hay enunciado disponible.";
 
   // Helper para instanciar componente con props comunes
-  const render = (C?: TabComp) =>
-    C ? <C exerciseData={exerciseData} topicID={topicID} /> : null;
+  const render = (C?: TabComp) => (C ? <C exerciseData={exerciseData} topicID={topicID} /> : null);
 
   return (
     <div>
@@ -60,7 +46,7 @@ const Pestanas: React.FC<PestanasProps> = ({
       {/* v1: Tabs con index/onChange, variant y colorScheme */}
       <Tabs
         index={tabIndex}
-        onChange={(i) => setTabIndex(i as 0 | 1)}
+        onChange={i => setTabIndex(i as 0 | 1)}
         variant="enclosed"
         colorScheme="blue"
       >

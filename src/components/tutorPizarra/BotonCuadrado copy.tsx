@@ -1,13 +1,6 @@
 // BotonCuadrado copy.tsx — versión Chakra v1
 import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  Box,
-  Flex,
-  Image,
-  Text,
-  SlideFade, 
-} from "@chakra-ui/react";
+import { Grid, Box, Flex, Image, Text, SlideFade } from "@chakra-ui/react";
 
 import Superior from "./RecSuperior";
 import Inferior from "./RecInferior";
@@ -22,10 +15,7 @@ interface BotonCuadradoCopyProps {
   topicID: string;
 }
 
-const BotonCuadradoCopy: React.FC<BotonCuadradoCopyProps> = ({
-  exerciseData,
-  topicID,
-}) => {
+const BotonCuadradoCopy: React.FC<BotonCuadradoCopyProps> = ({ exerciseData, topicID }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = exerciseData.steps;
   const action = useAction();
@@ -78,16 +68,11 @@ const BotonCuadradoCopy: React.FC<BotonCuadradoCopyProps> = ({
   const stepTitlesBase = exerciseSteps.map((s: any) => s.stepTitle);
 
   const lastStep = exerciseSteps[exerciseSteps.length - 1];
-  const finalExprFromLastStep =
-    lastStep?.displayResult?.[0] ?? lastStep?.expression ?? null;
+  const finalExprFromLastStep = lastStep?.displayResult?.[0] ?? lastStep?.expression ?? null;
 
   const addFinal = Boolean(complete && finalExprFromLastStep);
-  const expressionsForTop = addFinal
-    ? [...baseExprs, finalExprFromLastStep]
-    : baseExprs;
-  const stepTitlesForTop = addFinal
-    ? [...stepTitlesBase, "Respuesta final"]
-    : stepTitlesBase;
+  const expressionsForTop = addFinal ? [...baseExprs, finalExprFromLastStep] : baseExprs;
+  const stepTitlesForTop = addFinal ? [...stepTitlesBase, "Respuesta final"] : stepTitlesBase;
 
   const currentForTop = addFinal ? currentStep + 1 : currentStep;
 

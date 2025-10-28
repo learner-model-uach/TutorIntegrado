@@ -14,7 +14,9 @@ const Summary = ({ exc }: { exc: ExLog }) => {
           </Center>
           <VStack spacing={4} align="center" justify="center" w="100%">
             {/*<Latex>{exc.text + "$$" + exc.initialExpression + "$$"}</Latex>*/}
-            <Latex>{exc.text + "$$" + (exc.initialExpression ?? exc.steps[0].expression) + "$$"}</Latex>
+            <Latex>
+              {exc.text + "$$" + (exc.initialExpression ?? exc.steps[0].expression) + "$$"}
+            </Latex>
             {exc.img ? (
               <>
                 <Center>

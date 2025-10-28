@@ -9,11 +9,7 @@ interface RecSuperiorProps {
   stepTitles: string[];
 }
 
-const RecSuperior: React.FC<RecSuperiorProps> = ({
-  expressions,
-  currentStep,
-  stepTitles,
-}) => {
+const RecSuperior: React.FC<RecSuperiorProps> = ({ expressions, currentStep, stepTitles }) => {
   return (
     <Box
       bg="black"
@@ -61,9 +57,7 @@ const RecSuperior: React.FC<RecSuperiorProps> = ({
       {expressions.slice(0, currentStep + 1).map((expression, index) => {
         const title = stepTitles?.[index];
         const tooltipLabel =
-          title === "Respuesta final"
-            ? "Respuesta final"
-            : `Paso ${index + 1}: ${title ?? ""}`;
+          title === "Respuesta final" ? "Respuesta final" : `Paso ${index + 1}: ${title ?? ""}`;
 
         return (
           <Box key={index} position="relative" mb={2} width="100%">
