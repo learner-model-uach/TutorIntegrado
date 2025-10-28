@@ -2,7 +2,7 @@
 // Requiere "resolveJsonModule": true en tsconfig (ya lo tienes)
 
 // Importa los JSON de ejercicios
-import exercise1 from "./jsons/pnc3b02.json";
+//import exercise1 from "./jsons/pnc3b02.json";
 import exercise2 from "./jsons/pnc3b05.json";
 import exercise3 from "./jsons/pnc3b08.json";
 import exercise4 from "./jsons/raNum5.json";
