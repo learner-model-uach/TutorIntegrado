@@ -66,5 +66,4 @@ const Pestanas: React.FC<PestanasProps> = ({ tabContents, exerciseData, topicID 
   );
 };
 
-
 export default Pestanas;
