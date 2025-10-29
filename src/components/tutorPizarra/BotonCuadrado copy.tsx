@@ -4,7 +4,6 @@ import { Grid, Box, Flex, Image, Text, SlideFade } from "@chakra-ui/react";
 
 import Superior from "./RecSuperior";
 import Inferior from "./RecInferior";
-import { useAction } from "../../utils/action";
 import Summary from "./Summary";
 import RatingQuestion from "../RatingQuestionV2";
 import TalkBubble from "./TalkBubble";
@@ -18,7 +17,6 @@ interface BotonCuadradoCopyProps {
 const BotonCuadradoCopy: React.FC<BotonCuadradoCopyProps> = ({ exerciseData, topicID }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = exerciseData.steps;
-  const action = useAction();
   const [complete, setComplete] = useState(false);
 
   const handleAlternativeClick = (isCorrect: boolean) => {
@@ -39,14 +37,6 @@ const BotonCuadradoCopy: React.FC<BotonCuadradoCopyProps> = ({ exerciseData, top
     setTimeout(() => {
       setComplete(true);
     }, 1000);
-
-    action({
-      verbName: "completeContent",
-      contentID: exerciseData.code,
-      topicID: topicID,
-      result: 1,
-      extra: { steps: {}, tutor: ["PIZARRA"] },
-    });
   };
 
   useEffect(() => {

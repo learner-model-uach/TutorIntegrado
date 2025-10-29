@@ -319,7 +319,7 @@ const RecInferior: React.FC<RecInferiorProps> = ({
             </Text>
           ) : (
             <>
-              <strong>{`PASO ${Number(steps.stepId) + 1}:`}</strong>{" "}
+              <Text as="span" fontWeight="black">{`PASO ${Number(steps.stepId) + 1}: `}</Text>
               <TypeText text={stepTitle + (feedbackMsg ?? "")} speed={15} />
               {feedbackMsgExp && (
                 <>

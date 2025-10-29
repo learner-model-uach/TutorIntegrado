@@ -65,7 +65,7 @@ export function Navigation() {
                 DaniPrueba
               </SidebarLink>
               <SidebarLink key="15" href="/quickPlay">
-                Pruebas JSON
+                Pruebas Laboratorio
               </SidebarLink>
             </Stack>
           </>
