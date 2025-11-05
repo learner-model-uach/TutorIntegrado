@@ -33,17 +33,26 @@ export const all = { j1, j2, j3, j4, j5, j6, j7, j8, j9 } as const;
 
 // El mismo arreglo de arreglos que tenías, pero aquí centralizado:
 export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorType]>> = [
-  [
+  /*[
     [j1, 1],
     [j1, 2],
   ], //array de prueba
-  //  [[j1, 1], [j4, 2], [j7, 1], [j2, 2], [j5, 1]],
+  */
+  [
+    [j1, 1],
+    [j4, 2],
+    [j7, 1],
+    [j2, 2],
+    [j5, 1],
+    [j8, 2],
+  ],
   [
     [j3, 2],
     [j6, 1],
     [j8, 2],
     [j5, 1],
     [j1, 2],
+    [j4, 1],
   ],
   [
     [j9, 1],
@@ -51,6 +60,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j2, 1],
     [j6, 2],
     [j3, 1],
+    [j7, 2],
   ],
   [
     [j5, 2],
@@ -58,6 +68,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j7, 2],
     [j3, 1],
     [j8, 2],
+    [j2, 1],
   ],
   [
     [j6, 1],
@@ -65,6 +76,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j1, 1],
     [j4, 2],
     [j2, 1],
+    [j5, 2],
   ],
   [
     [j7, 2],
@@ -72,6 +84,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j2, 2],
     [j8, 1],
     [j6, 2],
+    [j3, 1],
   ],
   [
     [j3, 1],
@@ -79,6 +92,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j4, 1],
     [j1, 2],
     [j9, 1],
+    [j6, 2],
   ],
   [
     [j4, 2],
@@ -86,6 +100,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j5, 2],
     [j9, 1],
     [j3, 2],
+    [j7, 1],
   ],
   [
     [j8, 1],
@@ -93,6 +108,7 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j6, 1],
     [j7, 2],
     [j5, 1],
+    [j2, 2],
   ],
   [
     [j2, 2],
@@ -100,5 +116,6 @@ export const exerciseGroups: ReadonlyArray<ReadonlyArray<readonly [any, MotorTyp
     [j4, 2],
     [j3, 1],
     [j7, 2],
+    [j1, 1],
   ],
 ] as const;

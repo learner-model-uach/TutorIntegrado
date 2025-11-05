@@ -1,14 +1,6 @@
 // /pages/quickPlay.tsx — versión Chakra v1
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  VStack,
-  Image,
-  Text,
-  // ❌ Presence (v3) -> ✅ ScaleFade (v1)
-  ScaleFade,
-  Center,
-} from "@chakra-ui/react";
+import { Button, VStack, Image, Text, ScaleFade, Center } from "@chakra-ui/react";
 import Plain from "../components/lvltutor/Plain";
 import Pizarra from "../components/tutorPizarra/tutorPizarra";
 import { sessionState } from "../components/SessionState";
@@ -95,9 +87,22 @@ const QuickPlay = () => {
           />
           <Text fontSize="lg" textAlign="center">
             <TypeText
-              text="¡Felicidades! Has completado todos los ejercicios. Muchas gracias por tu participación."
+              text="¡Felicidades! Has completado todos los ejercicios. Muchas gracias por tu participación xd."
               speed={15}
             />
+          </Text>
+          <Text fontSize="lg" textAlign="center">
+            Por favor ingresa a este enlace para una breve encuesta sobre tu experiencia:
+          </Text>
+          <Text fontSize="lg" textAlign="center" mt="10px" mb="30px">
+            <a
+              href="https://forms.gle/BZ2HiwW6pRjTFJM46"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "blue", textDecoration: "underline" }}
+            >
+              https://forms.gle/BZ2HiwW6pRjTFJM46
+            </a>
           </Text>
         </Center>
       </ScaleFade>

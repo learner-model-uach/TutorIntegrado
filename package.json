@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    
     "build": "pnpm generate && pnpm pretty && next build",
     "build:old": "concurrently -m 1 -r pnpm:generate \"next build\" pnpm:pretty:check",
     "predev": "pnpm generate",
