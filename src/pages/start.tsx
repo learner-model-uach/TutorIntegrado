@@ -1,11 +1,12 @@
-import { Stack, Heading, Box, VStack, Text } from "@chakra-ui/react";
+import { Stack, Heading, Box, VStack, Text, Em, HStack } from "@chakra-ui/react";
 import { AssigndUser } from "../components/startComponents/projectUser";
 import { NewUser } from "../components/startComponents/noProjectUser";
-
+import { FaEnvelope } from "react-icons/fa";
 import { useAuth } from "./../components/Auth";
 
+
 export default function Start() {
-  const bgColor = "#2A4365";
+  // const bgColor = "#2A4365";
   const { user } = useAuth();
   const proyecto = user?.projects?.some(x => x.code == "NivPreAlg");
   console.log(proyecto);
@@ -14,9 +15,9 @@ export default function Start() {
     <>
       <Stack width="100%" padding="1em" alignItems="center">
         <Stack alignItems="center">
-          <Heading color={bgColor}>Bienvenid@ al Tutor Inteligente de Matemática</Heading>
+          <Heading size="4xl" color={"heading"} fontWeight="bold">Bienvenid@ al Tutor Inteligente de Matemáticas</Heading>
         </Stack>
-        <Text marginBottom={10}>
+        <Text textAlign= "justify" marginBottom={10}>
           Un tutor inteligente es un sistema que te ayuda a aprender y ejercitar tus habilidades de
           resolución de problemas, paso a paso. El Tutor Inteligente de Matemática te permitirá
           practicar resolviendo ejercicios de diversos tópicos que hemos identificado como
@@ -28,16 +29,22 @@ export default function Start() {
       </Stack>
 
       <VStack justify="end" height="80%">
-        <Box mt={4} p={4} bg="gray.200" textAlign="center">
-          <Text>Más información sobre el proyecto:</Text>
-          <Text>
-            Esta plataforma <Text as="i">Tutor Inteligente de Matemática</Text> está siendo
+        <Box mt={4} p={4} bg={"boxinfo"} rounded="xs">
+          <Heading textAlign="center" size="md">Más información sobre el proyecto:</Heading>
+          <Text textAlign={"justify"}>
+            Esta plataforma Tutor Inteligente de Matemática está siendo
             desarrollada y mantenida gracias el proyecto Fondecyt Iniciación 11220709, titulado
-            &quot;Diseño motivacional de tutores cognitivos para apoyar el aprendizaje de
-            matemáticas en los estudiantes de primer año de ingeniería&quot;. Para consultas o más
-            información, contactarse con el Investigador Principal: Julio Daniel Guerra Hollstein
-            jguerra@inf.uach.cl
+            &quot;<Em>Diseño motivacional de tutores cognitivos para apoyar el aprendizaje de
+            matemáticas en los estudiantes de primer año de ingeniería</Em>&quot;. Para consultas o más
+            información, contactarse con el Investigador Principal: Julio Daniel Guerra Hollstein.
           </Text>
+
+          <HStack justify="center">
+          <Text textAlign="center">Contacto:</Text>
+
+            <FaEnvelope />
+            <Text >  jguerra@inf.uach.cl </Text>
+          </HStack>
         </Box>
       </VStack>
     </>

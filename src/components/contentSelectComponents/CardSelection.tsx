@@ -3,10 +3,9 @@ import {
   LinkOverlay,
   Heading,
   Text,
-  useColorModeValue,
   HStack,
   Center,
-  Divider,
+  Separator,
   Stack,
   Image,
 } from "@chakra-ui/react";
@@ -66,11 +65,13 @@ export const CardSelection = ({
     <>
       <LinkBox
         color="white"
-        bg={useColorModeValue("blue.700", "gray.800")}
+        bg={"cardselection_bg"}
         _hover={{
           color: "white",
-          bg: useColorModeValue("blue.900", "gray.600"),
+          bg: "cardselection_hover",
+          cursor: "pointer"
         }}
+        position="relative"
         as="article"
         maxW="90%"
         p="3"
@@ -111,7 +112,7 @@ export const CardSelection = ({
       >
         <Center>
           <HStack>
-            <Heading size="md" my="2" textAlign="center">
+            <Heading size="lg" my="2" textAlign="center" fontWeight={"bold"}>
               {selectionTitle}
             </Heading>
             {selectionBest && <FaStar size={20} color="yellow" />}
@@ -120,7 +121,7 @@ export const CardSelection = ({
 
         <Text fontSize={"sm"}>{selectionText}</Text>
 
-        <Divider my="3" />
+        <Separator my="3" />
 
         {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
           <TeX>{json.title}</TeX>
@@ -135,13 +136,13 @@ export const CardSelection = ({
           </Text>
         )}
 
-        <NextLink href={"showContent"} passHref>
-          <LinkOverlay>
+        <LinkOverlay asChild>
+          <NextLink href={"showContent"} passHref aria-label={`Abrir contenido: ${selectionTitle || code || id}`}>
             <Text paddingTop={"2"} fontSize={"sm"}>
               {json.text}
             </Text>
-          </LinkOverlay>
-        </NextLink>
+          </NextLink>
+        </LinkOverlay>
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
           {json ? (
             json.type == "lvltutor2" ? (

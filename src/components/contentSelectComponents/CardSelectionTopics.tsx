@@ -124,10 +124,11 @@ export const CardSelectionTopic = ({
       borderRadius="md"
       textAlign="center"
       color="white"
-      bg="blue.700"
+      bg="cardselection_bg"
       _hover={{
         color: "white",
-        bg: "blue.900",
+        bg: "cardselection_hover",
+        cursor: "pointer"
       }}
       minH="100px"
       onClick={() => {
@@ -156,7 +157,7 @@ export const CardSelectionTopic = ({
     >
       <Center>
         <HStack>
-          <Heading size="md" my="2" textAlign="center" minH="70px">
+          <Heading size="lg" my="2" textAlign="center" minH="70px">
             {label}
           </Heading>
         </HStack>
@@ -181,13 +182,45 @@ export const CardSelectionTopic = ({
             </Stack>
           )
         ) : (
-          <Center fontSize={"2xl"} paddingBottom={"3"} paddingTop={"1"} overflow="hidden">
+          <Center
+            fontSize={label?.toLowerCase().includes('polinomios') ? "lg" : "2xl"}
+            paddingBottom={"3"}
+            paddingTop={"1"}
+            overflow="visible"
+            wordBreak="break-word"
+            whiteSpace="normal"
+            maxWidth="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+
+            css={label?.toLowerCase().includes('polinomios') ? {
+              "& .MathJax": {
+                fontSize: "0.75em !important",
+                lineHeight: "1.4 !important",
+                maxWidth: "100% !important",
+                overflow: "visible !important",
+                whiteSpace: "normal !important",
+                wordWrap: "break-word !important"
+              },
+              "& mjx-container": {
+                maxWidth: "100% !important",
+                overflow: "visible !important",
+                display: "inline-block !important"
+              },
+              "& mjx-math": {
+                maxWidth: "100% !important",
+                overflow: "visible !important"
+              }
+            } : null
+            }
+          >
             {selectedExcercise.ejercicio[index].img ? (
               <Image src={"img/" + selectedExcercise.ejercicio[index].img} />
             ) : null}
             {selectedExcercise.ejercicio[index].type == "ecc5s" ||
-            selectedExcercise.ejercicio[index].type == "secl5s" ||
-            selectedExcercise.ejercicio[index].type == "ecl2s" ? (
+              selectedExcercise.ejercicio[index].type == "secl5s" ||
+              selectedExcercise.ejercicio[index].type == "ecl2s" ? (
               <MathComponent
                 tex={String.raw`${selectedExcercise.ejercicio[index].eqc}`}
                 display={false}
@@ -219,11 +252,11 @@ export const CardSelectionTopic = ({
           ))}
         </VStack>*/}
 
-      <NextLink href={topicPath} passHref>
-        <LinkOverlay>
+      <LinkOverlay asChild>
+        <NextLink href={topicPath} passHref aria-label={`Abrir tópico: ${label || id}`}>
           <Text paddingTop={"2"} fontSize={"sm"}></Text>
-        </LinkOverlay>
-      </NextLink>
+        </NextLink>
+      </LinkOverlay>
       <PBLoad
         uservalues={pbValues.uservalues}
         groupvalues={pbValues.groupvalues}

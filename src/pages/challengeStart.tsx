@@ -968,7 +968,7 @@ de montar el componente por primera vez reiniciando el contador a 0*/
                       ? 1
                       : (processedContentResult ?? []).length,
                 }}
-                spacing="8"
+                gap="8"
                 p="10"
                 textAlign="center"
                 rounded="lg"

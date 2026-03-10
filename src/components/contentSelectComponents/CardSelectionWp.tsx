@@ -3,11 +3,9 @@ import {
   LinkOverlay,
   Heading,
   Text,
-  useColorModeValue,
   HStack,
   Center,
 } from "@chakra-ui/react";
-
 //import Link from "next/link";
 import NextLink from "next/link";
 import { sessionState, sessionStateBD } from "../SessionState";
@@ -41,10 +39,11 @@ export const CardSelectionwp = ({
     <>
       <LinkBox
         color="white"
-        bg={useColorModeValue("blue.700", "gray.800")}
+        cursor={"pointer"}
+        bg={"cardselection_bg"}
         _hover={{
           color: "white",
-          bg: useColorModeValue("blue.900", "gray.600"),
+          bg: "cardselection_hover",
         }}
         as="article"
         maxW="sm"

@@ -1,5 +1,5 @@
-import { Heading, Text, useColorModeValue, HStack, Center, Divider, Box } from "@chakra-ui/react";
-
+import { Heading, Text, HStack, Center, Separator, Box } from "@chakra-ui/react";
+import { useColorModeValue} from "../ui/color-mode";
 //import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";
@@ -111,7 +111,7 @@ export const CardSelection = ({
 
         <Text fontSize={"sm"}>{selectionText}</Text>
 
-        <Divider my="3" />
+        <Separator my="3" />
 
         {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
           <TeX>{json.title}</TeX>

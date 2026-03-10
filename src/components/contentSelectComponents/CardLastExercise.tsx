@@ -3,11 +3,12 @@ import {
   LinkBox,
   LinkOverlay,
   Text,
-  useColorModeValue,
   Wrap,
   WrapItem,
   Spinner,
+  Heading
 } from "@chakra-ui/react";
+import { useColorModeValue} from "../ui/color-mode";
 //import { MathComponent } from "mathjax-react";
 import dynamic from "next/dynamic";
 import type { ComponentProps } from "react";
@@ -47,12 +48,12 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
       <Center>
         <Wrap padding="15px 10px 10px 10px">
           <Center>
-            <WrapItem>{parameters.lastExercise.lastExerciseDone}</WrapItem>
+            {/* <WrapItem>{parameters.lastExercise.lastExerciseDone}</WrapItem> */}
           </Center>
           <WrapItem>
             <LinkBox
-              color="white"
-              bg={useColorModeValue("green.700", "green.800")}
+              color="heading"
+              bg={useColorModeValue("green.subtle", "green.600")}
               as="article"
               //maxW="sm"
               p="3"
@@ -63,16 +64,17 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
               {!isLoading && !isError && lastExercise ? (
                 <>
                   <LinkOverlay fontSize=".8em">
+                  <Heading fontSize="md" fontWeight="bold">{parameters.lastExercise.lastExerciseDone}</Heading>
                     <span>Ejercicio de </span>{" "}
                     <span style={{ fontWeight: "bold" }}>
                       {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type
-                        ? parameters.lastExercise.topic1.name
-                        : data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type
-                        ? parameters.lastExercise.topic2.name
-                        : data?.contentByCode.json?.type == parameters.lastExercise.topic3.type
-                        ? parameters.lastExercise.topic3.name
-                        : data?.contentByCode?.json?.title}
-                    </span>
+                      ? parameters.lastExercise.topic1.name
+                      : data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type
+                      ? parameters.lastExercise.topic2.name
+                      : data?.contentByCode.json?.type == parameters.lastExercise.topic3.type
+                      ? parameters.lastExercise.topic3.name
+                      : String(data?.contentByCode?.json?.title || '')}
+                      </span>
                   </LinkOverlay>
 
                   <br />
@@ -80,9 +82,9 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                     {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type ||
                     data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type ||
                     data?.contentByCode?.json?.type == parameters.lastExercise.topic3.type ? (
-                      <TeX>{data?.contentByCode?.json?.title}</TeX>
+                      <TeX>{String(data?.contentByCode?.json?.title || '')}</TeX>
                     ) : (
-                      data?.contentByCode?.json?.text
+                      String(data?.contentByCode?.json?.text || '')
                     )}
                   </Text>
                   <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
@@ -109,7 +111,12 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
               ) : isLoading ? (
                 <Spinner />
               ) : (
+                <>
+                  <Heading fontSize="md" fontWeight="bold">{parameters.lastExercise.lastExerciseDone}</Heading>
+                  
+                  
                 <Text>{parameters.lastExercise.noDataTarget}</Text>
+                </>
               )}
             </LinkBox>
           </WrapItem>

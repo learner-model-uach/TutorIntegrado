@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {
   ChakraProvider,
+  defaultSystem,
   Box,
   Input,
   Textarea,
   Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Heading,
   Checkbox,
   Button,
   Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  FormControl,
-  FormLabel,
+  Portal,
+  Field,
   Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -272,15 +265,16 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
   };
 
   return (
-    <>
+
+    <Accordion.Root collapsible w="100%">
       {data.map(item => (
-        <AccordionItem key={item.id}>
+        <Accordion.Item key={item.id} value={item.id}>
           <h2>
-            <AccordionButton>
+            <Accordion.ItemTrigger>
               <Box flex="1" textAlign="left">
-                <Checkbox
-                  isChecked={isItemSelected(item.id)}
-                  onChange={() => {
+                <Checkbox.Root
+                  checked={isItemSelected(item.id)}
+                  onCheckedChange={() => {
                     if (item.childrens?.length > 0) {
                       handleParentChange(item);
                     } else {
@@ -288,30 +282,38 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
                     }
                   }}
                 >
-                  {item.label}
-                </Checkbox>
+                  <Checkbox.HiddenInput />
+                  <Checkbox.Control />
+                  <Checkbox.Label>
+
+                    {item.label}
+                  </Checkbox.Label>
+                </Checkbox.Root>
               </Box>
-              {item.childrens?.length > 0 && <AccordionIcon />}
-            </AccordionButton>
+              {item.childrens?.length > 0 && <Accordion.ItemIndicator />}
+            </Accordion.ItemTrigger>
           </h2>
+
           {item.childrens?.length > 0 && (
-            <AccordionPanel pb={4}>
-              <Accordion allowMultiple>
-                <RecursiveAccordion
-                  data={item.childrens.map(children => ({
-                    ...children,
-                    parent: item,
-                  }))}
-                  onShowDetails={onShowDetails}
-                  setSelectedTopics={setSelectedTopics}
-                  selectedTopics={selectedTopics}
-                />
-              </Accordion>
-            </AccordionPanel>
+            <Accordion.ItemContent >
+              <Accordion.ItemBody pb={4}>
+                <Accordion.Root multiple>
+                  <RecursiveAccordion
+                    data={item.childrens.map(children => ({
+                      ...children,
+                      parent: item,
+                    }))}
+                    onShowDetails={onShowDetails}
+                    setSelectedTopics={setSelectedTopics}
+                    selectedTopics={selectedTopics}
+                  />
+                </Accordion.Root>
+              </Accordion.ItemBody>
+            </Accordion.ItemContent>
           )}
-        </AccordionItem>
+        </Accordion.Item>
       ))}
-    </>
+    </Accordion.Root>
   );
 };
 
@@ -372,41 +374,47 @@ const MathRecursiveAccordion = ({
 
             return (
               exercises.length > 0 && (
-                <AccordionItem key={topic.id}>
+                <Accordion.Item key={topic.id} value={topic.id}>
                   <h2>
-                    <AccordionButton>
+                    <Accordion.ItemTrigger>
                       <Box flex="1" textAlign="left">
                         <Text fontWeight="bold" mb={2}>
                           {topic.label}
                         </Text>
                       </Box>
-                      {topic.content?.length > 0 && <AccordionIcon />}
-                    </AccordionButton>
+                      {topic.content?.length > 0 && <Accordion.ItemIndicator />}
+                    </Accordion.ItemTrigger>
                   </h2>
-                  <AccordionPanel pb={4}>
+                  <Accordion.ItemContent>
+                    <Accordion.ItemBody pb={4}>
                     {exercises.length > 0 ? (
                       exercises.map(exercise => (
-                        <Checkbox
+                        <Checkbox.Root
                           key={`${exercise.exerciseId}-checkbox`}
                           mb={2}
-                          isChecked={isItemSelected(exercise)}
-                          onChange={() => handleItemChange(exercise)}
+                          checked={isItemSelected(exercise)}
+                          onCheckedChange={() => handleItemChange(exercise)}
                         >
-                          <MathDisplay
-                            key={`${exercise.exerciseId}-math`}
-                            description={exercise.description}
-                            mathExpression={exercise.mathExpression}
-                            image={exercise.image}
-                          />
-                        </Checkbox>
+                          <Checkbox.HiddenInput />
+                          <Checkbox.Control />
+                          <Checkbox.Label>
+                            <MathDisplay
+                              key={`${exercise.exerciseId}-math`}
+                              description={exercise.description}
+                              mathExpression={exercise.mathExpression}
+                              image={exercise.image}
+                            />
+                          </Checkbox.Label>
+                        </Checkbox.Root>
                       ))
                     ) : (
                       <Text fontSize="sm" color="gray.500">
                         No hay ejercicios disponibles para este tópico
                       </Text>
                     )}
-                  </AccordionPanel>
-                </AccordionItem>
+                    </Accordion.ItemBody>
+                  </Accordion.ItemContent>
+                </Accordion.Item>
               )
             );
           })}
@@ -568,7 +576,7 @@ export default withAuth(function ChallengesForm() {
       console.log("challenge", challenge);
       setSelectedExercises(
         extractExercise([{ content: challenge.content, id: challenge.content[0].topics[0].id }]) ||
-          [],
+        [],
       );
       setStartDate(challenge.startDate !== null ? utcToLocalTime(challenge.startDate) : null);
     }
@@ -793,104 +801,108 @@ export default withAuth(function ChallengesForm() {
   const summaryFormBackgroundColor = "gray.100";
 
   return (
-    <ChakraProvider>
+    <ChakraProvider value={defaultSystem}>
       <Box key={challengeId} p={5}>
         <Heading mb={6} textAlign="center">
           {isEditMode ? "Editar Desafío" : "Crear Desafío"}
         </Heading>
 
         <Box bg={formBackgroundColor}>
-          <FormControl mb={4} borderRadius="md" p={4}>
-            <FormLabel>Nombre del desafío</FormLabel>
+          <Field.Root mb={4} borderRadius="md" p={4}>
+            <Field.Label>Nombre del desafío</Field.Label>
             <Input
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="Nombre del desafío"
             />
-          </FormControl>
+          </Field.Root>
 
-          <FormControl mb={4} borderRadius="md" p={4}>
-            <FormLabel>Descripción</FormLabel>
+          <Field.Root mb={4} borderRadius="md" p={4}>
+            <Field.Label>Descripción</Field.Label>
             <Textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Descripción del desafío (opcional)"
             />
             <LatexPreview content={description} />
-          </FormControl>
+          </Field.Root>
 
-          <FormControl mb={4} borderRadius="md" p={4}>
-            <FormLabel>Fecha de término</FormLabel>
+          <Field.Root mb={4} borderRadius="md" p={4}>
+            <Field.Label>Fecha de término</Field.Label>
             <Input
               type="datetime-local"
               value={endDate}
               onChange={e => setEndDate(e.target.value)}
             />
-          </FormControl>
+          </Field.Root>
         </Box>
 
-        <ChakraProvider>
+        <ChakraProvider value={defaultSystem}>
           <Box bg={formBackgroundColor}>
-            <FormControl mb={4} borderRadius="md" p={4}>
-              <FormLabel>
+            <Field.Root mb={4} borderRadius="md" p={4}>
+              <Field.Label>
                 Grupos
                 <Text as="span" display="block" fontSize="sm" color="gray.500">
                   Selecciona los grupos que participarán en este desafío
                 </Text>
-              </FormLabel>
+              </Field.Label>
               <Box>
                 {groups.map(group => (
                   <Box key={group.id} mb={2}>
-                    <Checkbox
-                      isChecked={selectedGroups.some(g => g.id === group.id)}
-                      onChange={() => handleSelectGroup(group)}
+                    <Checkbox.Root
+                      checked={selectedGroups.some(g => g.id === group.id)}
+                      onCheckedChange={() => handleSelectGroup(group)}
                     >
-                      {group.label}
-                    </Checkbox>
+                      <Checkbox.HiddenInput />
+                      <Checkbox.Control />
+                      <Checkbox.Label>
+                        {group.label}
+                      </Checkbox.Label>
+                    </Checkbox.Root>
                   </Box>
                 ))}
               </Box>
-            </FormControl>
+            </Field.Root>
           </Box>
         </ChakraProvider>
 
         <Box bg={formBackgroundColor}>
-          <FormControl mb={4} borderRadius="md" p={4}>
-            <FormLabel htmlFor="topicsAccordion">
+          <Field.Root mb={4} borderRadius="md" p={4}>
+            <Field.Label htmlFor="topicsAccordion">
               Tópicos y subtópicos
               <Text as="span" display="block" fontSize="sm" color="gray.500">
                 Selecciona los tópicos para el desafío
               </Text>
-            </FormLabel>
-            <Accordion id="topicsAccordion" allowMultiple>
+            </Field.Label>
+            <Accordion.Root id="topicsAccordion" multiple>
               <RecursiveAccordion
                 data={topics}
                 onShowDetails={handleShowDetails}
                 setSelectedTopics={setSelectedTopics}
                 selectedTopics={selectedTopics}
               />
-            </Accordion>
-          </FormControl>
+            </Accordion.Root>
+          </Field.Root>
         </Box>
 
         <Box bg={formBackgroundColor}>
-          <FormControl mb={4} borderRadius="md" p={4}>
-            <FormLabel htmlFor="exercisesAccordion" mt={4}>
+          <Field.Root mb={4} borderRadius="md" p={4}>
+            <Field.Label htmlFor="exercisesAccordion" mt={4}>
               Ejercicios iniciales
               <Text as="span" display="block" fontSize="sm" color="gray.500">
                 Selecciona los ejercicios con los que comenzará este desafío, considerando los
                 tópicos seleccionados
               </Text>
-            </FormLabel>
-            <Accordion id="exercisesAccordion" allowMultiple>
+            </Field.Label>
+            <Accordion.Root id="exercisesAccordion" multiple>
               <MathRecursiveAccordion
                 selectedTopics={selectedTopics}
                 //onShowDetails={[]}
                 setSelectedExercises={setSelectedExercises}
                 selectedExercises={selectedExercises}
               />
-            </Accordion>
-          </FormControl>
+            </Accordion.Root>
+          </Field.Root>
         </Box>
 
         <Box p={4} bg={summaryFormBackgroundColor}>
@@ -961,16 +973,26 @@ export default withAuth(function ChallengesForm() {
           </Button>
         </Box>
       </Box>
-
-      <Drawer isOpen={isDrawerOpen} placement="right" onClose={() => setDrawerOpen(false)}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader>{detailItem?.title}</DrawerHeader>
-          <DrawerBody>
-            <p>Detalles sobre {detailItem?.title}...</p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <Drawer.Root
+        open={isDrawerOpen}
+        placement="end"
+        onOpenChange={(e) => {
+          if (!e.open) setDrawerOpen(false);
+        }}
+      >
+        <Portal>
+          <Drawer.Backdrop/>
+          <Drawer.Positioner>
+            <Drawer.Content>
+              <Drawer.Header> Detalles sobre {detailItem?.title} </Drawer.Header>
+              <Drawer.Body>
+                <p>Detalles sobre {detailItem?.title}...</p>
+              </Drawer.Body>
+              <Drawer.CloseTrigger />
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
     </ChakraProvider>
   );
 });

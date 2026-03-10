@@ -2,6 +2,7 @@ import { HStack, Text, Box, Progress } from "@chakra-ui/react";
 import { getColorScheme } from "./tools";
 
 const ProgressBar = ({ label, progress, color }) => {
+  const valueColor = color ?? getColorScheme(progress)
   return (
     <HStack w="100%" justify="space-between">
       <HStack justify="space-between" w="100%">
@@ -14,19 +15,15 @@ const ProgressBar = ({ label, progress, color }) => {
             borderWidth="1px"
             borderColor="gray.300"
           >
-            <Progress
+            <Progress.Root
               value={progress}
               size="lg"
-              colorScheme="gray"
-              sx={{
-                "&&": {
-                  backgroundColor: "white",
-                },
-                "& > div": {
-                  background: color || getColorScheme(progress),
-                },
-              }}
-            />
+              colorPalette="gray"
+            >
+              <Progress.Track bg="white">
+                <Progress.Range bg={valueColor} />
+              </Progress.Track>
+            </Progress.Root>
           </Box>
           <Text
             fontWeight="bold"
