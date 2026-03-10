@@ -19,7 +19,7 @@ export function Navigation() {
         {user && admin && (
           <>
             <Text fontWeight="black">Selección por Código</Text>
-            <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
+            <SidebarLink icon={<FaSearch />} href={"/selectByCode"}>
               Search by Code
             </SidebarLink>
           </>
@@ -58,7 +58,7 @@ export function Navigation() {
               Lógica y Teoría de Conjuntos
             </SidebarLink>
             <Stack fontWeight="black" pb="6">
-              <SidebarLink icon={<FaBookOpen />} href="challenge">
+              <SidebarLink icon={<FaBookOpen />} href="/challenge">
                 Desafíos
               </SidebarLink>
             </Stack>
@@ -67,7 +67,7 @@ export function Navigation() {
       </Stack>
 
       <Stack fontWeight="black" pb="6">
-        <SidebarLink icon={<FaQuestionCircle />} href="tutorial">
+        <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
           Tutorial
         </SidebarLink>
       </Stack>

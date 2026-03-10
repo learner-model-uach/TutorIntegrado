@@ -1,25 +1,26 @@
+import { Input, InputGroup, InputGroupProps, InputProps } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
-
-import { Input, InputGroup, InputGroupProps, InputLeftElement, InputProps } from "@chakra-ui/react";
 
 interface SearchInputProps extends InputProps {
   rootProps?: InputGroupProps;
 }
 
-export const SearchInput = (props: SearchInputProps) => {
-  const { rootProps, ...rest } = props;
+export const SearchInput = ({ rootProps, ...rest }: SearchInputProps) => {
   return (
     <InputGroup
       maxW="2xs"
-      size="sm"
-      variant="filled"
       display={{ base: "none", lg: "block" }}
+      startElement={<BsSearch color="gray.400" />}
       {...rootProps}
     >
-      <InputLeftElement color="gray.400" pointerEvents="none">
-        <BsSearch />
-      </InputLeftElement>
-      <Input {...rest} placeholder="Search" rounded="md" _placeholder={{ color: "gray.400" }} />
+      <Input
+        size="sm"
+        variant="outline"
+        placeholder="Search"
+        rounded="md"
+        _placeholder={{ color: "gray.400" }}
+        {...rest}
+      />
     </InputGroup>
   );
 };

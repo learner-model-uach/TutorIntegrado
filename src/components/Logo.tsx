@@ -1,4 +1,5 @@
-import { Text, TextProps, useColorModeValue } from "@chakra-ui/react";
+import { Text, TextProps } from "@chakra-ui/react";
+import { useColorModeValue } from "./ui/color-mode";
 
 export const Logo = (props: TextProps) => {
   return (

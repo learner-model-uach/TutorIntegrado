@@ -1,4 +1,4 @@
-import { Image, Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Image, Box, Flex } from "@chakra-ui/react";
 
 import { MobileMenuButton } from "./MobileMenuButton";
 import { Navigation } from "./Navigation";
@@ -10,18 +10,17 @@ import type { ReactNode } from "react";
 import { GroupSelect } from "./GroupSelect";
 
 export function MainLayout({ children }: { children: ReactNode }) {
-  const { isOpen, toggle } = useMobileMenuState();
+  const { open, onToggle } = useMobileMenuState();
 
-  const mainContainerBackground = useColorModeValue("blue.800", "gray.800");
-
-  const contentContainerBackground = useColorModeValue("white", "gray.700");
+  const mainContainerBackground = "bg";
+  const contentContainerBackground = "bg.secondary";
 
   return (
     <Flex
       height="100vh"
       bg={mainContainerBackground}
       overflow="clip"
-      sx={{ "--sidebar-width": "16rem" }}
+      style={{ "--sidebar-width": "16rem" } as React.CSSProperties}
     >
       <Box
         as="nav"
@@ -34,6 +33,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
         color="gray.200"
         position="fixed"
       >
+        {/* <Image src="/img/logo.svg" alt="Logo" ml="6"mb="4" /> */}
         <Image src="/img/logo.png" alt="Logo" w="220px" h="80px" mb="1" ml="6" />
         <Box fontSize="sm" lineHeight="tall">
           <UserInfo />
@@ -46,7 +46,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
         p={{ base: "0", md: "6" }}
         marginStart={{ md: "var(--sidebar-width)" }}
         position="relative"
-        left={isOpen ? "var(--sidebar-width)" : "0"}
+        left={open ? "var(--sidebar-width)" : "0"}
         transition="left 0.2s"
       >
         <Box bg={contentContainerBackground} height="100%" pb="6" rounded={{ md: "lg" }}>
@@ -60,7 +60,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
               display={{ base: "block", md: "none" }}
             >
               <Flex align="center" minH="8">
-                <MobileMenuButton onClick={toggle} isOpen={isOpen} />
+                <MobileMenuButton onClick={onToggle} isOpen={open} />
               </Flex>
               {false && <SearchInput />}
             </Flex>

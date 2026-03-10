@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   BoxProps,
@@ -8,7 +9,6 @@ import {
   LinkOverlay,
   LinkProps,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAction } from "../utils/action";
@@ -23,23 +23,28 @@ interface SidebarLinkProps extends BoxProps {
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const { children, icon = <ArrowRight />, avatar, href, isExternal, target, ...rest } = props;
+  const {
+    children,
+    icon = <ArrowRightIcon boxSize={4} color="inherit" />,
+    avatar,
+    href,
+    isExternal,
+    target,
+    ...rest
+  } = props;
   const { push, prefetch, pathname, query } = useRouter();
 
-  const activeBg = useColorModeValue("blue.900", "gray.700");
-  const hoverBg = useColorModeValue("blue.700", "gray.600");
+  const activeBg = "sidebarselect_active";
+  const hoverBg = "sidebarselect_hover";
   const action = useAction();
   const registerTopic = href
     .substring(href.indexOf("?") + 1)
     .split("&")
-    .map(x => {
-      if (x.split("=")[0] == "registerTopic") {
-        return x.split("=")[1];
-      } else {
-        return undefined;
-      }
-    })
-    .filter(x => x !== undefined);
+    .map((x) =>
+      x.split("=")[0] === "registerTopic" ? x.split("=")[1] : undefined
+    )
+    .filter((x) => x !== undefined);
+
   return (
     <LinkBox
       marginEnd="2"
@@ -50,21 +55,13 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       rounded="md"
       cursor="pointer"
       bg={
-        query.registerTopic == registerTopic //interactive mark
+        pathname == href
           ? activeBg
-          : href == (query.registerTopic ?? "tutorial") &&
-            pathname != "/showContent" &&
-            pathname != "/" //tutorial mark
-          ? activeBg
-          : href == (query.registerTopic ?? "/") &&
-            pathname != "/showContent" &&
-            pathname != "/tutorial" //inicio mark
-          ? activeBg
-          : //: href == "wpExercises" && pathname != "/" && pathname != "/contentSelect" //wpExercises mark
-          //? activeBg
-          pathname == "/showContent" && sessionState.topic == registerTopic[0] //showcontent mark
-          ? activeBg
-          : undefined
+          : query.registerTopic && query.registerTopic == registerTopic
+            ? activeBg
+            : pathname == "/showContent" && sessionState.topic == registerTopic[0]
+              ? activeBg
+              : undefined
       }
       _hover={{ color: "white", bg: hoverBg }}
       className="group"
@@ -84,14 +81,15 @@ export const SidebarLink = (props: SidebarLinkProps) => {
             </Link>
           ) : (
             <LinkOverlay
-              onClick={ev => {
+              onClick={(ev) => {
                 ev.preventDefault();
                 pathname !== href && push(href);
                 registerTopic[0] &&
-                  action({
-                    verbName: "selectTopic",
-                    topicID: registerTopic[0],
-                  });
+                action({
+                  verbName: "selectTopic",
+                  topicID: registerTopic[0],
+                });
+
               }}
               onMouseOver={() => {
                 pathname !== href && prefetch(href);
@@ -110,12 +108,17 @@ export const SidebarLink = (props: SidebarLinkProps) => {
   );
 };
 
-const ArrowRight = createIcon({
+const ArrowRightIcon = createIcon({
+  displayName: "ArrowRightIcon",
   viewBox: "0 0 16 16",
+  defaultProps: {
+    boxSize: 4,
+    color: "currentColor",
+  },
   path: (
     <path
       d="M3.38974 12.6633L9.42974 12.6633C9.86308 12.6633 10.2697 12.4567 10.5164 12.1033L13.1497 8.39C13.3164 8.15667 13.3164 7.85 13.1497 7.61667L10.5097 3.89667C10.2697 3.54334 9.86308 3.33667 9.42974 3.33667L3.38974 3.33667C2.84974 3.33667 2.53641 3.95667 2.84974 4.39667L5.42974 8.00334L2.84974 11.61C2.53641 12.05 2.84974 12.6633 3.38974 12.6633V12.6633Z"
-      fill="currentcolor"
+      fill="currentColor"
     />
   ),
 });

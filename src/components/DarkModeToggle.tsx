@@ -1,20 +1,13 @@
-import { RiMoonClearFill, RiSunFill } from "react-icons/ri";
-
-import { IconButton, useColorMode } from "@chakra-ui/react";
+import { ColorModeButton} from "./ui/color-mode";
 
 export const DarkModeToggle = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-
   return (
-    <IconButton
-      isRound
-      size="md"
-      fontSize="2xl"
+    <ColorModeButton
+      // size="lg"
+      rounded="full"
+      // fontSize="2xl"
+      color="gray.100"
       aria-label="Dark mode toggle"
-      variant="link"
-      color="white"
-      icon={colorMode === "light" ? <RiMoonClearFill /> : <RiSunFill />}
-      onClick={toggleColorMode}
     />
   );
 };

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   Avatar,
@@ -11,15 +10,13 @@ import {
   HStack,
   Link,
   Popover,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
   Spinner,
   Stack,
   Text,
-  useColorModeValue,
+  CloseButton,
+  Portal,
 } from "@chakra-ui/react";
+import { useColorModeValue } from "./ui/color-mode";
 
 import { Logout } from "./Logout";
 import { useAuth } from "./Auth";
@@ -33,8 +30,6 @@ export const UserInfo = () => {
 
   const loginVariant = useColorModeValue("solid", "outline");
 
-  const fontColor = useColorModeValue("black", "white");
-
   if (isLoading)
     return (
       <Flex justifyContent="center">
@@ -44,23 +39,31 @@ export const UserInfo = () => {
 
   if (!user || !auth0User)
     return (
-      <Stack spacing={3}>
-        <Button
-          colorScheme="blue"
+      <Stack gap={3}>
+        <Button   //Boton de login
+          // colorPalette="blue"
+          bg={{ base: "loginButton", _hover: "stealblue.600" }}
+          
+          color="white"
+          fontSize="md"
+          fontWeight="semibold"
           onClick={() => {
             setIsRedirecting(true);
             loginWithRedirect();
           }}
-          isLoading={isRedirecting}
-          isDisabled={isRedirecting}
+          loading={isRedirecting}
+          disabled={isRedirecting}
           variant={loginVariant}
           width="100%"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          leftIcon={<AiOutlineLogin />}
+          rounded="md"
         >
-          Login
+          <HStack>
+            <AiOutlineLogin />
+            <span>Login</span>
+          </HStack>
         </Button>
         <Text textAlign="center" color={emailTextColor}>
           o solicita tu cuenta{" "}
@@ -78,11 +81,12 @@ export const UserInfo = () => {
         </Text>
       </Stack>
     );
-  const { name, email, picture } = user;
 
+  const { name, email, picture } = user;
+  // @ts-ignore
   return (
-    <Popover>
-      <PopoverTrigger>
+    <Popover.Root>
+      <Popover.Trigger asChild>
         <Box
           p="3"
           cursor="pointer"
@@ -90,12 +94,16 @@ export const UserInfo = () => {
           transition="background 0.1s"
           rounded="xl"
           _hover={{ bg: "whiteAlpha.200" }}
-          whiteSpace="nowrap"
+          whiteSpace="normal"
         >
           <HStack display="inline-flex">
-            {picture ? <Avatar size="sm" name={name || undefined} src={picture} /> : null}
+            {picture ?
+              <Avatar.Root size="sm">
+                <Avatar.Fallback name={name || ""} />
+                <Avatar.Image src={picture} />
+              </Avatar.Root> : null}
 
-            <Box lineHeight="1">
+            <Box lineHeight="1" textAlign="left">
               {name ? (
                 <Text fontSize="2xl" fontWeight="semibold">
                   {name}
@@ -110,15 +118,23 @@ export const UserInfo = () => {
             </Box>
           </HStack>
         </Box>
-      </PopoverTrigger>
-      <PopoverContent width="100%">
-        <PopoverCloseButton color={fontColor} />
-        <PopoverBody>
-          <Stack alignItems="flex-start" paddingTop="2em" paddingBottom="1em">
-            <Logout />
-          </Stack>
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+      </Popover.Trigger>
+      <Portal>
+        <Popover.Positioner>
+          <Popover.Content width="auto" position="relative">
+            <Flex justify="flex-end" p="2" pb="0">
+              <Popover.CloseTrigger asChild>
+                <CloseButton
+                  size="xs"
+                  variant="ghost" />
+              </Popover.CloseTrigger>
+            </Flex>
+            <Popover.Body pt="1">
+              <Logout />
+            </Popover.Body>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Portal>
+    </Popover.Root>
   );
 };
