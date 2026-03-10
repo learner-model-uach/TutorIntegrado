@@ -4,3 +4,4 @@ node_modules
 tsconfig.tsbuildinfo
 schema.graphql
 src/graphql
+.vscode/

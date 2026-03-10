@@ -1,6 +1,12 @@
-import { useToast } from "@chakra-ui/react";
+import { toaster } from "./components/ui/toaster";
 import { memo, useEffect } from "react";
-import { QueryClient } from "react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useMutation,
+  useInfiniteQuery,
+} from "react-query";
 import { RQGQLClient } from "rq-gql";
 import { serializeError } from "serialize-error";
 import { proxy, useSnapshot } from "valtio";
@@ -31,6 +37,11 @@ export const queryClient = new QueryClient({
 
 export const rqGQLClient = new RQGQLClient({
   endpoint: API_URL,
+  proxy,
+  QueryClientProvider,
+  useQuery,
+  useMutation,
+  useInfiniteQuery,
 });
 
 const errorState = proxy({
@@ -39,17 +50,12 @@ const errorState = proxy({
 
 export const ErrorToast = memo(() => {
   const { message } = useSnapshot(errorState);
-
-  const toast = useToast();
-
   useEffect(() => {
     if (!message) return;
-
     errorState.message = null;
-
-    toast({
+    toaster.create({
       title: message,
-      status: "error",
+      type: "error",
     });
   }, [message]);
 
