@@ -1,19 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
 import TeX from "@matejmazur/react-katex";
-import { useEffect } from "react";
 import { Flex, Text } from "@chakra-ui/react";
 import { BOX, COLUMN1, COLUMN2, DRAG_TEXT } from "../../../types";
 import { useAction } from "../../../utils/action";
 
-const style = {
-  border: "1px dashed gray",
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
-  cursor: "move",
-};
+// const style = {
+//   border: "1px dashed gray",
+//   padding: "0.5rem 1rem",
+//   marginBottom: ".5rem",
+//   backgroundColor: "white",
+//   cursor: "move",
+// };
 
 export const MovableItem = ({
   answer,
@@ -177,7 +176,14 @@ export const MovableItem = ({
       onDoubleClick={onDoubleClick}
       className={styles["movable-item"]}
       fontSize={{ base: "10px" }}
-      style={{ textAlign: "center", opacity: opacity }}
+      textAlign="center"
+      opacity={opacity}
+      border="1px dashed"
+      borderColor="gray.400"
+      bg="white"
+      cursor="move"
+      p="0.5rem 1rem"
+      mb=".5rem"
     >
       {type == "drag-text" ? <Text>{newValue}</Text> : <TeX math={value} as="figcaption" />}
     </Flex>

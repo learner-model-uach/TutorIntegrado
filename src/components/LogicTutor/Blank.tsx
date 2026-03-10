@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
+import { Button, Stack, Input, Alert } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -58,7 +58,7 @@ const Blank = ({
   };
   return (
     <>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         <Input
           htmlSize={4}
           width="auto"
@@ -79,7 +79,7 @@ const Blank = ({
           ∞
         </Button>
       </Stack>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         {isCorrectValue ? null : (
           <>
             <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
@@ -103,15 +103,19 @@ const Blank = ({
         )}
       </Stack>
       {firstTime ? null : !isCorrectValue ? (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       ) : (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

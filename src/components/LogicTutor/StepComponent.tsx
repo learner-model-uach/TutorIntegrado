@@ -11,7 +11,7 @@ const StepComponent = ({ exc, nStep, topicId }: { exc: ExLog; nStep: number; top
   //console.log("Sesion topic " + sessionState.topic)
   //console.log("current code "+sessionState.currentContent.code)
   const action = useAction();
-  const [Step, setStep] = useState(0);
+  const [Step, setStep] = useState<number>(nStep ?? 0);
   //console.log("Valor Step Base: ", Step)
   useEffect(() => {
     action({
@@ -24,11 +24,18 @@ const StepComponent = ({ exc, nStep, topicId }: { exc: ExLog; nStep: number; top
   return (
     <>
       <Center>
-        <Accordion allowToggle defaultIndex={0} index={Step}>
+        <Accordion.Root
+          collapsible
+          value={Step === -1 ? [] : [String(Step)]}
+          onValueChange={({ value }) => {
+            // value siempre es string[]
+            setStep(value.length ? parseInt(value[0], 10) : -1);
+          }}
+        >
           <Center>
             <ShowSteps exc={exc} nStep={nStep} Step={Step} setStep={setStep} topic={topicId} />
           </Center>
-        </Accordion>
+        </Accordion.Root>
       </Center>
     </>
   );

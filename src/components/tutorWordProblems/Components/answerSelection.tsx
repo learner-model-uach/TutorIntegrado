@@ -1,6 +1,6 @@
 //import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { BsCheckLg, BsXLg } from "react-icons/bs";
-import { Button, ButtonGroup, Checkbox, Flex, List, ListItem, Text } from "@chakra-ui/react";
+import { Button, ButtonGroup, Checkbox, Flex, List, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ResAlert from "../Alert/responseAlert";
 import HintButton from "../Hint/hint";
@@ -8,7 +8,7 @@ import { useAlert } from "../hooks/useAlert";
 import { useHint } from "../hooks/useHint";
 import { useStore } from "../store/store";
 import type { Hint, SelectionMeta } from "../types";
-import { AlertStatus } from "../types.d";
+import { AlertStatus } from "../types";
 import { useAction } from "../../../utils/action";
 
 interface Props {
@@ -108,10 +108,10 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
   };
   return (
     <Flex flexDirection="column" width="100%">
-      <List>
+      <List.Root>
         {meta.answers.map((answer, index) => {
           return (
-            <ListItem paddingBottom={1} key={index}>
+            <List.Item paddingBottom={1} key={index}>
               <Button
                 border="1px"
                 borderColor="gray.100"
@@ -133,29 +133,33 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
                 maxW="100%" // Evita que el botón se desborde de su contenedor
               >
                 <Flex alignItems="center">
-                  <Checkbox
+                  <Checkbox.Root
                     key={index}
-                    icon={
-                      userSelectedAnswer === index ? ( // Mostrar íconos solo cuando se selecciona una alternativa
+                    readOnly
+                    checked={userSelectedAnswer === index}
+                    colorPalette={meta.idCorrectAnswers === index ? "green" : "red"}
+                    pr={4}
+                  >
+                    <Checkbox.HiddenInput />
+                    <Checkbox.Control>
+                      {userSelectedAnswer === index ? ( // Mostrar íconos solo cuando se selecciona una alternativa
                         meta.idCorrectAnswers === index ? (
                           <BsCheckLg />
                         ) : (
                           <BsXLg style={{ color: "white" }} />
                         )
-                      ) : undefined // Dejar vacío cuando no está seleccionado
-                    }
-                    isReadOnly={true}
-                    isChecked={userSelectedAnswer === index}
-                    colorScheme={meta.idCorrectAnswers === index ? "green" : "red"}
-                    paddingRight={4}
-                  />
+                      ) : (
+                        null // Dejar vacío cuando no está seleccionado
+                      )}
+                    </Checkbox.Control>
+                  </Checkbox.Root>
                   <Text marginY={2}>{answer.value}</Text>
                 </Flex>
               </Button>
-            </ListItem>
+            </List.Item>
           );
         })}
-      </List>
+      </List.Root>
       <ButtonGroup size="lg" display="flex" justifyContent="flex-end" paddingTop={2}>
         <HintButton
           hints={unlockedHints}

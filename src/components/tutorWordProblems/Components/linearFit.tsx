@@ -6,15 +6,17 @@ import { useAlert } from "../hooks/useAlert";
 import { useBoard } from "../hooks/useBoard";
 import { useHint } from "../hooks/useHint";
 import { useStore } from "../store/store";
-import { AlertStatus, Hint, linearFitMeta, slider } from "../types.d";
+import { AlertStatus } from "../types";
+import type { Hint, linearFitMeta, slider } from "../types";
 import { useAction } from "../../../utils/action";
+
 
 interface Props {
   meta: linearFitMeta;
   hints: Hint[];
 }
 export const LinearFit = ({ meta, hints }: Props) => {
-  const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
+  const [isScreenLarge] = useMediaQuery(["(min-width: 768px)"]);
   const [lineColor, setLineColor] = useState("black");
   const { data, linearFunction, correctAnswer, graphSettings } = meta;
   const positionTextEq = graphSettings.newAxis.yAxis.point1 ?? [0, 0];

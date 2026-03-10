@@ -1,16 +1,8 @@
 import {
   Text,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Box,
+  Accordion,
   Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
 } from "@chakra-ui/react";
 import Carousel from "../components/Carrusel";
 
@@ -28,26 +20,26 @@ export default function Tutorial() {
   ];
   const imagesfrac = ["imgfrac1.jpg", "imgfrac2.jpg", "imgfrac3.jpg", "imgfrac4.jpg"];
   return (
-    <Tabs mt={10} isFitted align="start" variant="enclosed">
-      <TabList>
-        <Tab>Sobre el Tutor</Tab>
-      </TabList>
+    <Tabs.Root mt={10} fitted justify="start" variant="enclosed" defaultValue="about">
+      <Tabs.List>
+        <Tabs.Trigger value="about" fontSize="lg">Sobre el Tutor</Tabs.Trigger>
+      </Tabs.List>
 
-      <TabPanels>
-        <TabPanel>
-          <Accordion defaultIndex={[0, 4]} allowMultiple>
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left">
-                    <Text textColor={bgColor} fontWeight="extrabold">
-                      ¿Cómo aprendo con el tutor?
-                    </Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
+      <Tabs.Content value="about">
+        <Accordion.Root defaultValue={["0", "4"]} multiple>
+          <Accordion.Item value="0">
+            <h2>
+              <Accordion.ItemTrigger>
+                <Box as="span" flex="1" textAlign="left">
+                  <Text color={bgColor} fontWeight="extrabold">
+                    ¿Cómo aprendo con el tutor?
+                  </Text>
+                </Box>
+                <Accordion.ItemIndicator />
+              </Accordion.ItemTrigger>
+            </h2>
+            <Accordion.ItemContent>
+              <Accordion.ItemBody pb={4}>
                 Accede a uno de lo tópicos del menú de la izquierda y el Tutor te presentará
                 ejercicios para resolver. En cada ejercicio deberás avanzar paso a paso y el tutor
                 te indicará que hacer en cada paso y corregirá tus respuestas. Además, en cada paso
@@ -55,82 +47,87 @@ export default function Tutorial() {
                 que completas ejercicios, el tutor escogerá ejercicios de acuerdo a tu nivel de
                 aprendizaje. Existen 3 implementaciones distintas para resolver los ejercicios, las
                 cuales te presentamos a continuación.
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        <Text textColor={bgColor} fontWeight="extrabold">
-                          Factorización
-                        </Text>
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4} alignItems="center">
-                    <Box>
-                      <Carousel images={imagesfac} />
-                    </Box>
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        <Text textColor={bgColor} fontWeight="extrabold">
-                          Ecuaciones Cuadráticas y Ecuaciones Lineales
-                        </Text>
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Box>
-                      <Carousel images={imagesecu} />
-                    </Box>
-                  </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        <Text textColor={bgColor} fontWeight="extrabold">
-                          Fracción Algebraica | Potencias y Raíces
-                        </Text>
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <Box>
-                      <Carousel images={imagesfrac} />
-                    </Box>
-                  </AccordionPanel>
-                </AccordionItem>
-              </AccordionPanel>
-            </AccordionItem>
+              </Accordion.ItemBody>
 
-            <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box as="span" flex="1" textAlign="left">
-                    <Text textColor={bgColor} fontWeight="extrabold">
-                      ¿Cómo funciona el tutor?
-                    </Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>
-                Cada vez que respondes correctamente un paso en un ejercicio sin ver hints, el Tutor
-                lo considera como evidencia de que has incrementado tu nivel de aprendizaje. Si tu
-                respuesta al paso es incorrecta puedes intentar nuevamente y ver hints, pero ya no
-                contará como evidencia de aprendizaje, hasta que resuelvas correctamente el mismo
-                paso en otro ejercicio.
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
+              <Accordion.Item value="1">
+                <h2>
+                  <Accordion.ItemTrigger>
+                    <Box as="span" flex="1" textAlign="left">
+                      <Text color={bgColor} fontWeight="extrabold">
+                        Factorización
+                      </Text>
+                    </Box>
+                    <Accordion.ItemIndicator />
+                  </Accordion.ItemTrigger>
+                </h2>
+                <Accordion.ItemContent>
+                  <Accordion.ItemBody pb={4} alignItems="center">
+                    <Carousel images={imagesfac} />
+                  </Accordion.ItemBody>
+                </Accordion.ItemContent>
+              </Accordion.Item>
+
+              <Accordion.Item value="2">
+                <h2>
+                  <Accordion.ItemTrigger>
+                    <Box as="span" flex="1" textAlign="left">
+                      <Text color={bgColor} fontWeight="extrabold">
+                        Ecuaciones Cuadráticas y Ecuaciones Lineales
+                      </Text>
+                    </Box>
+                    <Accordion.ItemIndicator />
+                  </Accordion.ItemTrigger>
+                </h2>
+                <Accordion.ItemContent>
+                  <Accordion.ItemBody pb={4}>
+                    <Carousel images={imagesecu} />
+                  </Accordion.ItemBody>
+                </Accordion.ItemContent>
+              </Accordion.Item>
+
+              <Accordion.Item value="3">
+                <h2>
+                  <Accordion.ItemTrigger>
+                    <Box as="span" flex="1" textAlign="left">
+                      <Text color={bgColor} fontWeight="extrabold">
+                        Fracción Algebraica | Potencias y Raíces
+                      </Text>
+                    </Box>
+                    <Accordion.ItemIndicator />
+                  </Accordion.ItemTrigger>
+                </h2>
+                <Accordion.ItemContent>
+                  <Accordion.ItemBody pb={4}>
+                    <Carousel images={imagesfrac} />
+                  </Accordion.ItemBody>
+                </Accordion.ItemContent>
+              </Accordion.Item>
+
+              <Accordion.Item value="4">
+                <h2>
+                  <Accordion.ItemTrigger>
+                    <Box as="span" flex="1" textAlign="left">
+                      <Text color={bgColor} fontWeight="extrabold">
+                        ¿Cómo funciona el tutor?
+                      </Text>
+                    </Box>
+                    <Accordion.ItemIndicator />
+                  </Accordion.ItemTrigger>
+                </h2>
+                <Accordion.ItemContent>
+                  <Accordion.ItemBody pb={4}>
+                    Cada vez que respondes correctamente un paso en un ejercicio sin ver hints, el Tutor
+                    lo considera como evidencia de que has incrementado tu nivel de aprendizaje. Si tu
+                    respuesta al paso es incorrecta puedes intentar nuevamente y ver hints, pero ya no
+                    contará como evidencia de aprendizaje, hasta que resuelvas correctamente el mismo
+                    paso en otro ejercicio.
+                  </Accordion.ItemBody>
+                </Accordion.ItemContent>
+              </Accordion.Item>
+            </Accordion.ItemContent>
+          </Accordion.Item>
+        </Accordion.Root>
+      </Tabs.Content>
+    </Tabs.Root>
   );
 }

@@ -46,7 +46,7 @@ export default withAuth(function WpExercises() {
   return (
     <>
       <Center>
-        <Heading marginBottom="4">
+        <Heading fontSize={"3xl"} fontWeight={"bold"} textAlign={"center"} color="heading" marginBottom="4">
           {parameters.CSMain.title}
           {parameters.CSMain.topic10.topic}
         </Heading>
@@ -61,7 +61,7 @@ export default withAuth(function WpExercises() {
         </Text>
       </Center>
       <Center>
-        <SimpleGrid columns={2} spacing={10} marginTop="4">
+        <SimpleGrid columns={2} gap={10} marginTop="4">
           {!isLoading &&
             data?.topicByCode?.content?.map(ejercicio => (
               <CardSelectionwp

@@ -1,6 +1,5 @@
-import React from "react";
-import { useState, useMemo } from "react";
-import { Button, Stack, Alert, AlertIcon, Center, Text, Image, Box } from "@chakra-ui/react";
+import React, { useState, useMemo, useEffect } from "react";
+import { Button, Stack, Alert, Center, Text, Image, Box } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { MathfieldElement } from "mathlive";
@@ -10,9 +9,8 @@ import MQPostfixparser from "../../utils/MQPostfixparser";
 import { convertirNotacion } from "./convertirNotacion";
 import { useAction } from "../../utils/action";
 import type { value } from "../../components/lvltutor/Tools/ExcerciseType";
-const Mathfield = dynamic(() => import("./Tools/mathLive"), {
-  ssr: false,
-});
+
+const Mathfield = dynamic(() => import("./Tools/mathLive"), { ssr: false });
 
 const SinglePlaceholder = ({
   exc,
@@ -29,46 +27,44 @@ const SinglePlaceholder = ({
   const [error, setError] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
   const [isCorrectValue, setIsCorrectvalue] = useState(false);
-  const [Values, setValues] = useState<Array<any>>([]);
+  const [valueA, setValueA] = useState<string>("");
   const [hints, setHints] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const action = useAction();
   const [_, setLastHint] = useState(false);
-  //console.log(exc.steps[nStep].hints)
+
   interface values {
     values: Array<value>;
   }
-  const evaluation: {
-    input1: string;
-    answer: values;
-    values: Array<value>;
-  } = {
+  const evaluation: { input1: string; answer: values; values: Array<value> } = {
     input1: "",
     answer: { values: [] },
     values: [],
   };
-  function evaluar(_, Values) {
+
+  // ✅ Marca como completado cuando sea correcto (sin efectos en el render)
+  useEffect(() => {
+    if (isCorrectValue) setCompleted(true);
+  }, [isCorrectValue, setCompleted]);
+
+  function evaluar(_: unknown, val: string) {
+  const c = MQPostfixSolver(MQPostfixparser(convertirNotacion(val)), evaluation.answer);
     setFirstTime(!firstTime);
-    //console.log("Valor Latex ",latex, "Value ", Values);
-
-    let c = MQPostfixSolver(MQPostfixparser(convertirNotacion(Values)), evaluation.answer);
-    //console.log("Entrada usuario Evaluada: ",c)
     const answer = exc.steps[nStep].answers[0].answer;
-    //console.log("Respuesta:", answer)
-    let a = MQPostfixparser(answer[0]);
+    const a = MQPostfixparser(answer[0]);
+    const b = MQPostfixSolver(a, evaluation.answer);
 
-    let b = MQPostfixSolver(a, evaluation.answer);
     let response = false;
-    //console.log(b)
-    if (b == c) {
-      //console.log("true");
+    if (b === c) {
       setIsCorrectvalue(true);
-      setCompleted(true);
       response = true;
+      setError(false);
     } else {
       setError(true);
     }
-    setAttempts(attempts + 1);
+
+    const nextAttempts = attempts + 1;
+    setAttempts(nextAttempts);
 
     action({
       verbName: "tryStep",
@@ -78,25 +74,21 @@ const SinglePlaceholder = ({
       result: response ? 1 : 0,
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
-        response: [Values],
-        attempts: attempts + 1,
-        hints: hints,
+        response: [valueA],
+        attempts: nextAttempts,
+        hints,
       },
     });
   }
 
-  function modify(latex, prompsValues) {
-    //console.log(latex)
-    //console.log(prompsValues);
+  function modify(newLatex: string, prompsValues: any) {
+  setLatex(newLatex);
+  const a = prompsValues?.a;
+  setValueA(Array.isArray(a) ? a[0] ?? "" : a ?? "");
+}
 
-    //console.log(b)
-    setLatex(latex);
-    setValues(prompsValues.a);
-    //console.log("Evaluar:", b, "Latex ", latex ,"Valores ", prompsValues)
-  }
   const mfe = useMemo(() => new MathfieldElement(), []);
 
-  //
   return (
     <>
       <Center>
@@ -113,17 +105,18 @@ const SinglePlaceholder = ({
             />{" "}
           </Text>
           <Mathfield
-            readOnly={true}
+            readOnly
             mfe={mfe}
             value={`\\large ${exc.steps[nStep].expression} \\quad`}
             onChange={modify}
-          ></Mathfield>
+          />
         </Box>
       </Center>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
-        {isCorrectValue ? null : (
+
+      <Stack gap={4} m={2} direction="row" justifyContent="center">
+        {!isCorrectValue && (
           <>
-            <Button colorScheme="blue" size="sm" onClick={() => evaluar(latex, Values)}>
+            <Button colorPalette="blue" size="sm" onClick={() => evaluar(latex, valueA)}>
               Enviar
             </Button>
             <Hint
@@ -138,23 +131,27 @@ const SinglePlaceholder = ({
               hintCount={hints}
               setHints={setHints}
               setLastHint={setLastHint}
-            ></Hint>
+            />
           </>
         )}
       </Stack>
 
       {error && (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
+
       {isCorrectValue && (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-          {setCompleted(true)}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

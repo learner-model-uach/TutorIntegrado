@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
-import { useColorModeValue } from "@chakra-ui/react";
+import { useColorModeValue } from "../../ui/color-mode";
 import type { Board, BoardAttributes } from "jsxgraph";
 import JXG from "jsxgraph";
-import type { settings } from "../types.d";
+import type { settings } from "../types";
 
 export const useBoard = (boardId: string, graphSettings: settings) => {
   const strokeWidthAxes = 1;

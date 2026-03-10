@@ -4,20 +4,21 @@ import { BOX, ORDER_STEPS_CARD_COLOR } from "../types";
 import { Icon, Flex } from "@chakra-ui/react";
 import { RiDragMove2Fill } from "react-icons/ri";
 
-const style = {
-  border: "2px dashed gray",
-  paddingTop: "1rem",
-  marginTop: ".25rem",
-  marginBottom: ".25rem",
-  marginLeft: "1rem",
-  marginRight: "1.5rem",
-  cursor: "move",
-  display: "flex",
-  textAlign: "center",
-};
+// const style = {
+//   border: "2px dashed gray",
+//   paddingTop: "1rem",
+//   marginTop: ".25rem",
+//   marginBottom: ".25rem",
+//   marginLeft: "1rem",
+//   marginRight: "1.5rem",
+//   cursor: "move",
+//   display: "flex",
+//   textAlign: "center",
+// };
 
 export const CardsOrderSteps = memo(function Card({ id, text, moveCard, findCard, color }) {
   const originalIndex = findCard(id).index;
+  
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: BOX,
@@ -51,20 +52,22 @@ export const CardsOrderSteps = memo(function Card({ id, text, moveCard, findCard
   const opacity = isDragging ? 0 : 1;
   return (
     <Flex
-      width={{
-        base: "100%",
-      }}
-      height={{
-        base: "50px",
-      }}
       ref={node => drag(drop(node))}
-      style={{
-        ...style,
-        opacity,
-        backgroundColor: color ? color : ORDER_STEPS_CARD_COLOR,
-      }}
+      w="100%"
+      h="50px"
+      border="2px dashed"
+      borderColor="gray.500"
+      pt="1rem"
+      my=".25rem"
+      ml="1rem"
+      mr="1.5rem"
+      cursor="move"
+      textAlign="center"
+      opacity={opacity}
+      bg={color ?? ORDER_STEPS_CARD_COLOR}
+      align="center"
     >
-      <Icon w={"2em"} style={{ paddingRight: "5px" }} as={RiDragMove2Fill} />
+      <Icon as={RiDragMove2Fill} boxSize="2em" pr="5px" />
       {text}
     </Flex>
   );

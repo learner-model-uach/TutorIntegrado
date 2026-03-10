@@ -1,47 +1,41 @@
 import React, { useEffect, useState } from "react";
 import {
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Button,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 
-import { useDisclosure } from "@chakra-ui/hooks";
 export const FeedbackTesting = ({ showFeedback }) => {
   const [showF, setShowF] = useState(false);
 
   useEffect(() => {
     setShowF(showFeedback);
   }, [showFeedback]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <>
-      <Modal isOpen={showF} onClose={onClose} size={"xl"}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader style={{ margin: "auto" }}>
+      <Modal.Root
+        open={showF} 
+        onOpenChange={({open}) => setShowF(open)} 
+        size="xl"
+      >
+        <Modal.Overlay />
+        <Modal.Content>
+          <Modal.Header m="auto">
             Felicidades has completado todos los ejercicios
-          </ModalHeader>
-          <ModalCloseButton onClick={() => setShowF(false)} />
-          <ModalBody style={{ fontSize: "20px", margin: "auto" }}>
+          </Modal.Header>
+          <Modal.CloseTrigger/>
+
+          <Modal.Body fontSize="20px" m="auto">
             <Text> Gracias por participar de esta prueba general de usabilidad.</Text>
             <Text>Tu feedback nos sera de gran ayuda.</Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={() => setShowF(false)}>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button colorPalette="red" mr={3} onClick={() => setShowF(false)}>
               Cerrar
             </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
   );
 };

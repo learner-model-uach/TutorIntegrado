@@ -6,9 +6,9 @@ import RatingQuestion from "../../RatingQuestion";
 export const FCsummary = ({ exercise }) => {
   return (
     <Box>
-      <Alert status="info">
+      <Alert.Root status="info">
         <Wrap>
-          <Heading w="100%" fontSize="xl" align="center">
+          <Heading w="100%" fontSize="xl" textAlign="center">
             Resumen
           </Heading>
           <Text w="100%" />
@@ -21,7 +21,7 @@ export const FCsummary = ({ exercise }) => {
             display={false}
           />
         </Wrap>
-      </Alert>
+      </Alert.Root>
       <RatingQuestion />
     </Box>
   );
@@ -30,9 +30,9 @@ export const FCsummary = ({ exercise }) => {
 export const FCCsummary = ({ exercise }) => {
   return (
     <Box>
-      <Alert status="info">
+      <Alert.Root status="info">
         <Wrap>
-          <Heading w="100%" fontSize="xl" align="center">
+          <Heading w="100%" fontSize="xl" textAlign="center">
             {" "}
             Resumen
           </Heading>
@@ -112,7 +112,7 @@ export const FCCsummary = ({ exercise }) => {
             </>
           )}
         </Wrap>
-      </Alert>
+      </Alert.Root>
       <RatingQuestion />
     </Box>
   );
@@ -121,9 +121,9 @@ export const FCCsummary = ({ exercise }) => {
 export const DCsummary = ({ exercise }) => {
   return (
     <Box>
-      <Alert status="info">
+      <Alert.Root status="info">
         <Wrap>
-          <Heading w="100%" fontSize="xl" align="center">
+          <Heading w="100%" fontSize="xl" textAlign="center">
             Resumen
           </Heading>
           <Text w="100%" />
@@ -193,7 +193,7 @@ export const DCsummary = ({ exercise }) => {
           </Text>
           <Spacer />
         </Wrap>
-      </Alert>
+      </Alert.Root>
       <RatingQuestion />
     </Box>
   );
@@ -202,9 +202,9 @@ export const DCsummary = ({ exercise }) => {
 export const DSCsummary = ({ step1, step2 }) => {
   return (
     <Box>
-      <Alert status="info">
+      <Alert.Root status="info">
         <Wrap>
-          <Heading w="100%" fontSize="xl" align="center">
+          <Heading w="100%" fontSize="xl" textAlign="center">
             Resumen
           </Heading>
           <Text w="100%" />
@@ -217,7 +217,7 @@ export const DSCsummary = ({ step1, step2 }) => {
           <Text w="100%">{step2.summary}</Text>
           <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
         </Wrap>
-      </Alert>
+      </Alert.Root>
       <RatingQuestion />
     </Box>
   );
@@ -226,9 +226,9 @@ export const DSCsummary = ({ step1, step2 }) => {
 export const TCsummary = ({ step1, step2, step3, step4, step5 }) => {
   return (
     <Box>
-      <Alert status="info">
+      <Alert.Root status="info">
         <Wrap>
-          <Heading w="100%" fontSize="xl" align="center">
+          <Heading w="100%" fontSize="xl" textAlign="center">
             Resumen
           </Heading>
           <Text w="100%" />
@@ -253,7 +253,7 @@ export const TCsummary = ({ step1, step2, step3, step4, step5 }) => {
             </>
           )}
         </Wrap>
-      </Alert>
+      </Alert.Root>
       <RatingQuestion />
     </Box>
   );

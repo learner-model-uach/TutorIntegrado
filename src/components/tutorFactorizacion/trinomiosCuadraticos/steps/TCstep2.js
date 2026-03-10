@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
+import { Alert, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
 export const TCstep2 = ({
   step2,
@@ -44,10 +44,12 @@ export const TCstep2 = ({
       if (response.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -55,10 +57,12 @@ export const TCstep2 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step2.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step2.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -87,10 +91,11 @@ export const TCstep2 = ({
               }}
               size="sm"
               w={165}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="Ingrese discriminante"
               ref={response}
-              isReadOnly={step2Valid != null}
+              readOnly={step2Valid != null}
             />
           </Center>
         </WrapItem>
@@ -101,7 +106,7 @@ export const TCstep2 = ({
           {step2Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

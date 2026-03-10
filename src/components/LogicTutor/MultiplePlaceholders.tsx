@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { Button, Stack, Alert, AlertIcon, Center, Box, Text, Image } from "@chakra-ui/react";
+import React, { useState, useMemo, useEffect } from "react";
+import { Button, Stack, Alert, Center, Box, Text, Image } from "@chakra-ui/react";
 import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from "../../utils/MQPostfixSolver";
@@ -10,9 +10,7 @@ import { useAction } from "../../utils/action";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import type { value } from "../../components/lvltutor/Tools/ExcerciseType";
 
-const Mathfield = dynamic(() => import("./Tools/mathLive"), {
-  ssr: false,
-});
+const Mathfield = dynamic(() => import("./Tools/mathLive"), { ssr: false });
 
 const MultiplePlaceholders = ({
   exc,
@@ -33,19 +31,17 @@ const MultiplePlaceholders = ({
   const [attempts, setAttempts] = useState(0);
   const [_, setLastHint] = useState(0);
 
+  useEffect(() => {
+    if (isCorrectValue) setCompleted(true);
+  }, [isCorrectValue, setCompleted]);
+
   const evaluar = () => {
     setError(false); // Resetear el estado de error antes de la evaluación
-    interface values {
-      values: Array<value>;
-    }
+    interface values { values: Array<value>; }
 
     const answer = exc.steps[nStep].answers[0].answer;
     let respuesta = false;
-    const evaluation: {
-      input1: string;
-      answer: values;
-      values: [];
-    } = {
+    const evaluation: { input1: string; answer: values; values: [] } = {
       input1: "",
       answer: { values: [] },
       values: [],
@@ -73,7 +69,7 @@ const MultiplePlaceholders = ({
       }
     }
 
-    setAttempts(attempts + 1);
+    setAttempts((a) => a + 1);
 
     action({
       verbName: "tryStep",
@@ -90,11 +86,9 @@ const MultiplePlaceholders = ({
     });
   };
 
-  function test(_, prompsValues) {
-    let newValuesArray = [];
-    for (let key in prompsValues) {
-      newValuesArray.push(prompsValues[key]);
-    }
+  function test(_ignored, prompsValues) {
+    const newValuesArray: string[] = [];
+    for (const key in prompsValues) newValuesArray.push(prompsValues[key]);
     setValuesArray(newValuesArray);
   }
 
@@ -120,48 +114,50 @@ const MultiplePlaceholders = ({
             mfe={mfe}
             value={`\\large ${exc.steps[nStep].expression}\\;`}
             onChange={test}
-          ></Mathfield>
+          />
         </Box>
       </Center>
 
-      <Stack spacing={4} m={2} direction={{ base: "row" }} justifyContent="center">
+      <Stack gap={4} m={2} direction={{ base: "row" }} justifyContent="center">
         {!isCorrectValue && (
           <>
-            <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
+            {/* Button v3: usa colorPalette */}
+            <Button colorPalette="blue" size="sm" onClick={evaluar}>
               Enviar
             </Button>
-            {isCorrectValue ? null : (
-              <>
-                <Hint
-                  hints={exc.steps[nStep].hints}
-                  contentId={exc.code}
-                  topicId={topic}
-                  stepId={exc.steps[nStep].stepId}
-                  matchingError={exc.steps[nStep].matchingError}
-                  response={ValuesArray}
-                  error={error}
-                  setError={setError}
-                  hintCount={hints}
-                  setHints={setHints}
-                  setLastHint={setLastHint}
-                />
-              </>
-            )}
+            <Hint
+              hints={exc.steps[nStep].hints}
+              contentId={exc.code}
+              topicId={topic}
+              stepId={exc.steps[nStep].stepId}
+              matchingError={exc.steps[nStep].matchingError}
+              response={ValuesArray}
+              error={error}
+              setError={setError}
+              hintCount={hints}
+              setHints={setHints}
+              setLastHint={setLastHint}
+            />
           </>
         )}
       </Stack>
+
       {error && (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
+
       {isCorrectValue && (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-          {setCompleted(true)}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

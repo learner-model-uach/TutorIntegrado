@@ -2,11 +2,7 @@ import { BsFillInfoCircleFill } from "react-icons/bs";
 import {
   IconButton,
   Popover,
-  PopoverContent,
-  PopoverTrigger,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
+  Portal,
   Box,
   VStack,
   Heading,
@@ -73,10 +69,10 @@ const AyudaMQ = ({ exType }: { exType?: string }) => {
   return (
     <Box>
       <VStack>
-        <Heading size="m">Ayuda para ingreso de operaciones</Heading>
+        <Heading size="md">Ayuda para ingreso de operaciones</Heading>
         <Box>
           {iVal.map((item, i) => (
-            <HStack key={"AHSB" + i} spacing="75px">
+            <HStack key={"AHSB" + i} gap="75px">
               <Box key={"AB1B" + i} w="100px">
                 {item.colA}
               </Box>
@@ -86,10 +82,10 @@ const AyudaMQ = ({ exType }: { exType?: string }) => {
             </HStack>
           ))}
         </Box>
-        <Heading size="m">Importante el uso de parentesis</Heading>
+        <Heading size="md">Importante el uso de parentesis</Heading>
         <Box>
           {ej.map((item, i) => (
-            <HStack key={"EHSB" + i} spacing="75px">
+            <HStack key={"EHSB" + i} gap="75px">
               <Box key={"EB1B" + i} w="100px">
                 {item.colA}
               </Box>
@@ -117,23 +113,35 @@ const Info = ({ exType }: { exType?: string }) => {
   };
   return (
     <Box p="4" alignItems="center" justifyContent="center" margin={"auto"}>
-      <Popover onOpen={handleClick}>
-        <PopoverTrigger>
+      <Popover.Root
+        positioning={{ strategy: "fixed", placement: "top-end" }}
+        onOpenChange={({ open }) => {
+          if (open) handleClick();
+        }}
+      >
+        <Popover.Trigger asChild>
           <IconButton
-            //onClick={or here}
-            variant="outline"
-            colorScheme="teal"
             aria-label="Call Sage"
-            fontSize="20px"
-            icon={<BsFillInfoCircleFill />}
-          />
-        </PopoverTrigger>
-        <PopoverContent position="fixed" top={0} right={0} zIndex={9999}>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverBody>{exType ? <AyudaMQ exType={exType} /> : <AyudaMQ />}</PopoverBody>
-        </PopoverContent>
-      </Popover>
+            variant="outline"
+            colorPalette="teal"
+            _icon={{ fontSize: "20px" }}   // tamaño del ícono
+          >
+            <BsFillInfoCircleFill />
+          </IconButton>
+        </Popover.Trigger>
+
+        <Portal>
+          <Popover.Positioner>
+            <Popover.Content>
+              <Popover.Arrow />
+              <Popover.CloseTrigger />
+              <Popover.Body>{exType ? <AyudaMQ exType={exType} /> : <AyudaMQ />}</Popover.Body>
+            </Popover.Content>
+          </Popover.Positioner>
+
+        </Portal>
+
+      </Popover.Root>
     </Box>
   );
 };

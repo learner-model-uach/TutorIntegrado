@@ -9,7 +9,7 @@ interface cardInfoProps {
 }
 
 export const CardInfo = ({ text, srcImg, bgColor, hideCard }: cardInfoProps) => {
-  const [isDesktop] = useMediaQuery("(min-width: 768px)");
+  const [isDesktop] = useMediaQuery(["(min-width: 768px)"]);
 
   return (
     <Box bgColor={bgColor} hidden={hideCard} mb={1} rounded={5}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
+import { Button, Stack, Input, Alert } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -61,7 +61,7 @@ const InputButtons = ({
 
   return (
     <>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         <span>&#123;</span>
         <Input
           htmlSize={4}
@@ -74,7 +74,7 @@ const InputButtons = ({
         <span>&#125;</span>
       </Stack>
 
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("√")}>
           √
         </Button>
@@ -119,7 +119,7 @@ const InputButtons = ({
           &gt;
         </Button>
       </Stack>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
           {" "}
           Enviar
@@ -140,15 +140,19 @@ const InputButtons = ({
       </Stack>
 
       {firstTime ? null : !isCorrectValue ? (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root>
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       ) : (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

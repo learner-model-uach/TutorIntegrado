@@ -1,98 +1,91 @@
-import React, { useState, useMemo } from "react";
-import { Button, Stack, Alert, AlertIcon, Center, Text, Image, Box } from "@chakra-ui/react";
+import React, { useState, useMemo, useEffect } from "react";
+import { Button, Stack, Alert, Center, Text, Image, Box } from "@chakra-ui/react";
+import type { ExLog } from "./Tools/ExcerciseType2";
+import Hint from "../../components/Hint";
+import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
-import Latex from "react-latex-next";
 import MQPostfixSolver from "../../utils/MQPostfixSolver";
 import MQPostfixparser from "../../utils/MQPostfixparser";
 import { convertirNotacion } from "./convertirNotacion";
 import { useAction } from "../../utils/action";
-import { MathfieldElement } from "mathlive";
-import Hint from "../../components/Hint";
-import MQPostfixstrict from "../../utils/MQPostfixstrict";
+import type { value } from "../../components/lvltutor/Tools/ExcerciseType";
 
-const Mathfield = dynamic(() => import("./Tools/mathLive"), {
-  ssr: false,
-});
+const Mathfield = dynamic(() => import("./Tools/mathLive"), { ssr: false });
 
-const SingleAnswer = ({ exc, nStep, setCompleted, topic }) => {
+const SinglePlaceholder = ({
+  exc,
+  nStep,
+  setCompleted,
+  topic,
+}: {
+  exc: ExLog;
+  nStep: number;
+  setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
+  topic: string;
+}) => {
   const [latex, setLatex] = useState("");
   const [error, setError] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
   const [isCorrectValue, setIsCorrectvalue] = useState(false);
-  const [Values, setValues] = useState([]);
+  const [valueA, setValueA] = useState<string>("");
   const [hints, setHints] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const action = useAction();
+  const [_, setLastHint] = useState(false);
 
-  function evaluar(_, Values) {
+  interface values {
+    values: Array<value>;
+  }
+  const evaluation: { input1: string; answer: values; values: Array<value> } = {
+    input1: "",
+    answer: { values: [] },
+    values: [],
+  };
+
+  // ✅ Marca como completado cuando sea correcto (sin efectos en el render)
+  useEffect(() => {
+    if (isCorrectValue) setCompleted(true);
+  }, [isCorrectValue, setCompleted]);
+
+  function evaluar(_: unknown, val: string) {
+  const c = MQPostfixSolver(MQPostfixparser(convertirNotacion(val)), evaluation.answer);
     setFirstTime(!firstTime);
-    const validationType = exc.steps[nStep].validation;
-    const answers = exc.steps[nStep].answers;
-    let correctAns = false;
+    const answer = exc.steps[nStep].answers[0].answer;
+    const a = MQPostfixparser(answer[0]);
+    const b = MQPostfixSolver(a, evaluation.answer);
 
-    if (validationType === "evaluate") {
-      const inputEvaluated = MQPostfixSolver(MQPostfixparser(convertirNotacion(Values)), {
-        values: [],
-      });
-      const answerParsed = MQPostfixparser(answers[0].answer[0]);
-      const answerEvaluated = MQPostfixSolver(answerParsed, { values: [] });
-      correctAns = inputEvaluated === answerEvaluated;
-    } else if (validationType === "evaluateAndCount") {
-      for (let i = 0; i < answers.length; i++) {
-        const e = answers[i];
-        if (!e) continue;
-        const parsedInput = MQPostfixparser(convertirNotacion(Values));
-        const parsedAnswer = MQPostfixparser(e.answer[0]);
-
-        const inputEvaluated = MQPostfixSolver(parsedInput, { values: [] });
-        const answerEvaluated = MQPostfixSolver(parsedAnswer, { values: [] });
-
-        if (inputEvaluated === answerEvaluated) {
-          correctAns = true;
-          break;
-        }
-      }
-    } else if (validationType === "stringComparison") {
-      const userAnswer = convertirNotacion(Values);
-      correctAns = userAnswer === answers[0].answer;
-    } else if (validationType === "countElements") {
-      const parseInput = MQPostfixparser(convertirNotacion(Values));
-      for (let i = 0; i < answers.length; i++) {
-        let e = answers[i];
-        if (!e) continue;
-        let parseAns = MQPostfixparser(e.answer[0]);
-        if (MQPostfixstrict(parseInput, parseAns)) correctAns = true;
-      }
-    }
-
-    if (correctAns) {
+    let response = false;
+    if (b === c) {
       setIsCorrectvalue(true);
-      setCompleted(true);
+      response = true;
       setError(false);
     } else {
       setError(true);
     }
 
-    setAttempts(attempts + 1);
+    const nextAttempts = attempts + 1;
+    setAttempts(nextAttempts);
+
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
       contentID: exc.code,
       topicID: topic,
-      result: correctAns ? 1 : 0,
+      result: response ? 1 : 0,
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
-        response: [Values],
-        attempts: attempts,
-        hints: hints,
+        response: [valueA],
+        attempts: nextAttempts,
+        hints,
       },
     });
   }
 
-  function modify(latex, prompsValues) {
-    setLatex(latex);
-    setValues(prompsValues.a);
-  }
+  function modify(newLatex: string, prompsValues: any) {
+  setLatex(newLatex);
+  const a = prompsValues?.a;
+  setValueA(Array.isArray(a) ? a[0] ?? "" : a ?? "");
+}
 
   const mfe = useMemo(() => new MathfieldElement(), []);
 
@@ -100,7 +93,6 @@ const SingleAnswer = ({ exc, nStep, setCompleted, topic }) => {
     <>
       <Center>
         <Box maxW={{ base: "100%" }} p={2} borderWidth={1} borderRadius="lg" overflow="hidden">
-          <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
           <Text>
             Símbolos especiales en el teclado virtual{" "}
             <Image
@@ -113,17 +105,18 @@ const SingleAnswer = ({ exc, nStep, setCompleted, topic }) => {
             />{" "}
           </Text>
           <Mathfield
-            readOnly={true}
+            readOnly
             mfe={mfe}
-            value={`\\large $\\placeholder[a]{} \\quad`}
+            value={`\\large ${exc.steps[nStep].expression} \\quad`}
             onChange={modify}
-          ></Mathfield>
+          />
         </Box>
       </Center>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+
+      <Stack gap={4} m={2} direction="row" justifyContent="center">
         {!isCorrectValue && (
           <>
-            <Button colorScheme="blue" size="sm" onClick={() => evaluar(latex, Values)}>
+            <Button colorPalette="blue" size="sm" onClick={() => evaluar(latex, valueA)}>
               Enviar
             </Button>
             <Hint
@@ -137,27 +130,31 @@ const SingleAnswer = ({ exc, nStep, setCompleted, topic }) => {
               setError={setError}
               hintCount={hints}
               setHints={setHints}
-              setLastHint={() => {}}
-            ></Hint>
+              setLastHint={setLastHint}
+            />
           </>
         )}
       </Stack>
 
       {error && (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
+
       {isCorrectValue && (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-          {setCompleted(true)}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );
 };
 
-export default SingleAnswer;
+export default SinglePlaceholder;

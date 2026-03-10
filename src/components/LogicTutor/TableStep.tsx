@@ -3,18 +3,11 @@ import {
   Button,
   Box,
   Alert,
-  AlertIcon,
-  useColorModeValue,
   Table,
-  TableCaption,
-  Thead,
-  Th,
-  Tbody,
-  Tr,
-  Td,
   Center,
   Stack,
 } from "@chakra-ui/react";
+import { useColorModeValue } from "../ui/color-mode";
 
 import type { ExLog, textAlign } from "./Tools/ExcerciseType2";
 import Hint from "../Hint";
@@ -98,14 +91,15 @@ const TableStep = ({
       </Center>
       {exc.steps[nStep].table?.tableCaption && (
         <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
-          <Table variant="striped" size="sm" borderColor={textColor}>
-            <TableCaption>
+          <Table.Root striped size="sm" borderColor={textColor}>
+            <Table.Caption>
               <Latex>{exc.steps[nStep].table?.tableCaption}</Latex>
-            </TableCaption>
-            <Thead bgColor={bg}>
-              <Tr>
+            </Table.Caption>
+
+            <Table.Header bg={bg}>
+              <Table.Row>
                 {exc.steps[nStep].table?.header?.map((head, index) => (
-                  <Th
+                  <Table.ColumnHeader
                     key={index}
                     textAlign={head?.align as textAlign}
                     color="white"
@@ -113,57 +107,45 @@ const TableStep = ({
                     textTransform="none"
                   >
                     <Latex>{"$" + head?.value + "$"}</Latex>
-                  </Th>
+                  </Table.ColumnHeader>
                 ))}
-              </Tr>
-            </Thead>
-            <Tbody>
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
               {exc.steps[nStep].table?.rows?.map((row, index) => (
-                <Tr key={index}>
-                  {row?.data?.map((value, i) => {
-                    return (
-                      <Td key={i} textAlign={exc.steps[nStep].table?.alignRows}>
-                        {value === "a" ? (
-                          <Center>
-                            <BotonAlternar
-                              valores={exc.steps[nStep].button[0]}
-                              setValor={setValor}
-                            />
-                          </Center>
-                        ) : value === "b" ? (
-                          <Center>
-                            <BotonAlternar
-                              valores={exc.steps[nStep].button[1]}
-                              setValor={setValor1}
-                            />
-                          </Center>
-                        ) : value === "c" ? (
-                          <Center>
-                            <BotonAlternar
-                              valores={exc.steps[nStep].button[2]}
-                              setValor={setValor2}
-                            />
-                          </Center>
-                        ) : value === "d" ? (
-                          <Center>
-                            <BotonAlternar
-                              valores={exc.steps[nStep].button[3]}
-                              setValor={setValor3}
-                            />
-                          </Center>
-                        ) : (
-                          <Latex strict>{value}</Latex>
-                        )}
-                      </Td>
-                    );
-                  })}
-                </Tr>
+                <Table.Row key={index}>
+                  {row?.data?.map((value, i) => (
+                    <Table.Cell key={i} textAlign={exc.steps[nStep].table?.alignRows}>
+                      {value === "a" ? (
+                        <Center>
+                          <BotonAlternar valores={exc.steps[nStep].button[0]} setValor={setValor} />
+                        </Center>
+                      ) : value === "b" ? (
+                        <Center>
+                          <BotonAlternar valores={exc.steps[nStep].button[1]} setValor={setValor1} />
+                        </Center>
+                      ) : value === "c" ? (
+                        <Center>
+                          <BotonAlternar valores={exc.steps[nStep].button[2]} setValor={setValor2} />
+                        </Center>
+                      ) : value === "d" ? (
+                        <Center>
+                          <BotonAlternar valores={exc.steps[nStep].button[3]} setValor={setValor3} />
+                        </Center>
+                      ) : (
+                        <Latex strict>{value}</Latex>
+                      )}
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
               ))}
-            </Tbody>
-          </Table>
+            </Table.Body>
+          </Table.Root>
+
         </Box>
       )}
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         {!isCorrectValue && (
           <>
             <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
@@ -186,15 +168,21 @@ const TableStep = ({
         )}
       </Stack>
       {firstTime ? null : !isCorrectValue ? (
-        <Alert status="error">
-          <AlertIcon />
-          Tu respuesta no es la esperada intentalo denuevo.
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>
+              Tu respuesta no es la esperada, inténtalo de nuevo.
+            </Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       ) : (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

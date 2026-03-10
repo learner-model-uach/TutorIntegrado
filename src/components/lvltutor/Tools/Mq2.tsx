@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
+import { Alert, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
@@ -267,12 +267,12 @@ const Mq2 = ({
           }
         />
         <Box>
-          <Stack spacing={4} direction="row" align="center" pb={4}>
+          <Stack gap={4} direction="row" align="center" pb={4}>
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("(");
@@ -283,7 +283,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools(")");
@@ -294,7 +294,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("^");
@@ -312,7 +312,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\sqrt");
@@ -330,7 +330,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\nthroot");
@@ -346,13 +346,13 @@ const Mq2 = ({
               />
             </Button>
           </Stack>
-          <Stack spacing={4} direction="row" align="center" pb={4}>
+          <Stack gap={4} direction="row" align="center" pb={4}>
             {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
                            Ademas con mousedown se puede usar preventDefault*/}
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("+");
@@ -363,7 +363,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("-");
@@ -374,7 +374,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("*");
@@ -385,7 +385,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 MQtools("\\frac");
@@ -396,7 +396,7 @@ const Mq2 = ({
             <Button
               width={"40px"}
               height={"40px"}
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 clear();
@@ -405,9 +405,9 @@ const Mq2 = ({
               C
             </Button>
           </Stack>
-          <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
+          <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
             <Button
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 if (ta != undefined) ta.keystroke("Left");
@@ -433,7 +433,7 @@ const Mq2 = ({
               }}
             ></EditableMathField>
             <Button
-              colorScheme="teal"
+              colorPalette="teal"
               onMouseDown={e => {
                 e.preventDefault();
                 if (ta != undefined) ta.keystroke("Right");
@@ -445,10 +445,10 @@ const Mq2 = ({
           </HStack>
         </Box>
       </VStack>
-      <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"}>
+      <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
         <Box>
           <Button
-            colorScheme="teal"
+            colorPalette="teal"
             height={"32px"}
             width={"88px"}
             onClick={() => {
@@ -470,10 +470,19 @@ const Mq2 = ({
           setLastHint={setLastHint}
         />
       </HStack>
-      <Alert key={"Alert" + topicId + "i"} status={alertType} mt={2} hidden={alertHidden}>
-        <AlertIcon key={"AlertIcon" + topicId + "i"} />
-        {"¡Inténtalo nuevamente! (intentos: " + attempts + ") " + alertMsg}
-      </Alert>
+      <Alert.Root 
+        key={"Alert" + topicId + "i"} 
+        status={alertType} 
+        mt={2} 
+        hidden={alertHidden}
+      >
+        <Alert.Indicator key={`AlertIcon${topicId}i`} />
+        <Alert.Content>
+          <Alert.Description>
+            {"¡Inténtalo nuevamente! (intentos: " + attempts + ") " + alertMsg}
+          </Alert.Description>
+        </Alert.Content>
+      </Alert.Root>
     </>
   );
 };

@@ -83,7 +83,7 @@ export function Tutor({ exercise, topicId }) {
                               sm: "13px",
                               lg: "16px",
                             }}
-                            colorScheme="blue"
+                            colorPalette="blue"
                             onClick={handlerNextExercise}
                             style={{ float: "right" }}
                           >
@@ -112,7 +112,7 @@ export function Tutor({ exercise, topicId }) {
                           sm: "13px",
                           lg: "16px",
                         }}
-                        colorScheme="blue"
+                        colorPalette="blue"
                         onClick={() => setNextPhase(prev => !prev)}
                         style={{ float: "right" }}
                       >

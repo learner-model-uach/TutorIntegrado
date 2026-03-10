@@ -1,17 +1,10 @@
-import { Button } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
 import {
   Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
+  Button,
   Flex,
   ButtonGroup,
 } from "@chakra-ui/react";
@@ -37,14 +30,14 @@ export const Hint = ({
   setHintsShow, // number of times a hint has been shown
 }) => {
   const startAction = useAction({});
-  const initialFocusRef = useRef();
-
+  
   const [allHints, setAllHints] = useState([]); // all the hints of the step
   const [countHint, setCountHint] = useState(-1); // index of the element of hintsAvaliableList that the user can currently see
   const [countNotification, setCountNotication] = useState(0);
   const [disabledHint, setDisabledHint] = useState(firstTimeHint); // configure if the button is disabled or not
   const [hintsAvaliableList, setHintsAvaliableList] = useState([]); // accumulated hints displayed to the user
   const [shake, setShake] = useState(false);
+
   const hintIndex = useRef(-1); // this is used to keep the index of the possible answers that the user is seeing
   const newHintIndex = useRef(-1); // index of the new hint to add to the list of available hints
   const hintsAvaliable = useRef(false); // true if there is a new hint to show the user, otherwise false
@@ -62,7 +55,7 @@ export const Hint = ({
     hintsAvaliable.current = false;
     firtsHint.current = false;
     pressBoton.current = false;
-  }, [answerId, nStep]);
+  }, [answerId, nStep, hints]);
 
   // handles shaking the hint button
   useEffect(() => {
@@ -170,56 +163,65 @@ export const Hint = ({
   };
 
   return (
-    <Popover initialFocusRef={initialFocusRef} placement="left" closeOnBlur={false}>
-      <PopoverTrigger>
+    <Popover.Root 
+      placement="left" 
+      closeOnBlur={false}
+      closeOnInteractOutside={false}
+      >
+      <Popover.Trigger>
         <Button
           className={
             shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
           }
-          disabled={disabledHint}
+          isDisabled={disabledHint}
           onClick={handOnClickHint}
-          colorScheme={HINT_BUTTOM_COLOR}
+          colorPalette={HINT_BUTTOM_COLOR}
         >
           {HINT_BUTTOM_NAME}
           {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
         </Button>
-      </PopoverTrigger>
-      <PopoverContent color="white" bg="blue.800" borderColor="blue.800" width={230}>
-        <PopoverHeader pt={4} fontWeight="bold" border="0">
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+      <Popover.Content color="white" bg="blue.800" borderColor="blue.800" width={230}>
+        <Popover.Arrow /> 
+        <Popover.CloseTrigger />
+        <Popover.Header pt={4} fontWeight="bold" border="0">
           {HEADER_POPOVER_HINT}
-        </PopoverHeader>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverBody>
+        </Popover.Header>
+        
+        <Popover.Body>
           <Flex>
             <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>
           </Flex>
-        </PopoverBody>
-        <PopoverFooter
+        </Popover.Body>
+
+        <Popover.Footer
           border="0"
-          d="flex"
+          display="flex"
           alignItems="center"
           justifyContent="space-between"
           pb={4}
         >
           <ButtonGroup size="sm">
             {countHint != 0 && (
-              <Button colorScheme={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
+              <Button colorPalette={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
                 {HINT_BACK_BUTTOM}
               </Button>
             )}
             {countHint + 1 != hintsAvaliableList.length && (
               <Button
-                colorScheme={POPOVER_NEXT_BUTTOM_COLOR}
-                ref={initialFocusRef}
+                colorPalette={POPOVER_NEXT_BUTTOM_COLOR}
                 onClick={handOnClickNext}
+                autoFocus
               >
                 {HINT_NEXT_BUTTOM}
               </Button>
             )}
           </ButtonGroup>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+        </Popover.Footer>
+      </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
   );
 };

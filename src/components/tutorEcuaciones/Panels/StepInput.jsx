@@ -8,7 +8,6 @@ import {
   Input,
   VStack,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
@@ -227,7 +226,7 @@ export const StepInput = ({
                 templateColumns="repeat(2, 1fr)"
                 gap={6}
               >
-                <Button colorScheme="blue" onClick={checkAnswers}>
+                <Button colorPalette="blue" onClick={checkAnswers}>
                   {CORRECT_BUTTOM_NAME}
                 </Button>
 
@@ -246,7 +245,7 @@ export const StepInput = ({
               <Stack display={{ xl: "block", base: "none" }}>
                 <Flex>
                   <div style={{ paddingRight: "5px" }}>
-                    <Button colorScheme="blue" onClick={checkAnswers}>
+                    <Button colorPalette="blue" onClick={checkAnswers}>
                       {CORRECT_BUTTOM_NAME}
                     </Button>
                   </div>

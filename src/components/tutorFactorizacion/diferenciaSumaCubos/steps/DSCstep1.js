@@ -3,7 +3,7 @@ import Hint from "../../../Hint";
 import { Loading } from "../../tools/Spinner";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
+import { Alert, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
 export const DSCstep1 = ({
   step1,
@@ -17,10 +17,13 @@ export const DSCstep1 = ({
 }) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
+
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
+  
   const correctAlternatives = step1.answers.map(elemento => elemento.answer); //list of answers valid
   const action = useAction(); //send action to central system
+  
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
@@ -68,10 +71,12 @@ export const DSCstep1 = ({
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                Ingrese respuesta(s)
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -79,10 +84,12 @@ export const DSCstep1 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step1.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                {step1.incorrectMsg}
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -111,10 +118,11 @@ export const DSCstep1 = ({
               }}
               size="sm"
               w={125}
-              focusBorderColor="#9DECF9"
               placeholder="Primera Raiz³"
               ref={response1}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label htmlFor="label2">)³</label>
             <label>&nbsp;{sign} ( </label>
@@ -126,10 +134,11 @@ export const DSCstep1 = ({
               }}
               size="sm"
               w={125}
-              focusBorderColor="#9DECF9"
               placeholder="Segunda Raiz³"
               ref={response2}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label htmlFor="label3">)³</label>
           </Center>
@@ -141,7 +150,7 @@ export const DSCstep1 = ({
           {step1Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

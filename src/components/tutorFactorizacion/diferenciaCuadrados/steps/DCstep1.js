@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
+import { Alert, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
 export const DCstep1 = ({
   step1,
@@ -67,10 +67,10 @@ export const DCstep1 = ({
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Title> Ingrese respuesta(s) </Alert.Title>         
+            </Alert.Root>
           );
         }, 50);
       } else {
@@ -79,10 +79,10 @@ export const DCstep1 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step1.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Title> {step1.incorrectMsg} </Alert.Title>
+            </Alert.Root>
           );
         }, 50);
       }
@@ -140,7 +140,7 @@ export const DCstep1 = ({
           {step1Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="teal"
                 variant="outline"
                 onClick={() => {
                   compare();

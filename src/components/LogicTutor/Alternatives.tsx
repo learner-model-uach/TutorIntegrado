@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, AlertIcon, Button, Center, Stack } from "@chakra-ui/react";
+import { Alert, Button, Center, Stack } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -62,7 +62,7 @@ const Alternatives = ({
 
   return (
     <>
-      <Stack spacing={4} m={2} fontSize={{ base: "1rem" }} w={{ base: "100%" }}>
+      <Stack gap={4} m={2} fontSize={{ base: "1rem" }} w={{ base: "100%" }}>
         <Center>
           <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
         </Center>
@@ -72,7 +72,7 @@ const Alternatives = ({
             colorScheme="blue"
             size="md"
             onClick={() => evaluar(valor)}
-            isDisabled={isCorrectValue}
+            disabled={isCorrectValue}
           >
             {valor.text && valor.expression ? (
               <Stack>
@@ -88,15 +88,19 @@ const Alternatives = ({
         ))}
       </Stack>
       {firstTime ? null : !isCorrectValue ? (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+          <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+        </Alert.Content>
+        </Alert.Root>
       ) : (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
       <Center>
         {isCorrectValue ? null : (

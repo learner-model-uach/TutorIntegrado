@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Flex, Stack, Button, Text, VStack, Grid, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Stack, Button, Text, VStack, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
@@ -33,7 +33,7 @@ export const StepEquations = ({
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
   const [answerTwo, setAnswerTwo] = useState(true);
-  const inputRef = useRef();
+  
   const [alert, setAlert] = useState({});
   const [openAlert, setOpenAlert] = useState(false);
   const [testAlert, setTestAlert] = useState(false);
@@ -277,7 +277,7 @@ export const StepEquations = ({
                 templateColumns="repeat(2, 1fr)"
                 gap={6}
               >
-                <Button colorScheme="blue" onClick={checkAnswers}>
+                <Button colorPalette="blue" onClick={checkAnswers}>
                   {CORRECT_BUTTOM_NAME}
                 </Button>
 
@@ -296,7 +296,7 @@ export const StepEquations = ({
               <Stack display={{ xl: "block", base: "none" }}>
                 <Flex>
                   <div style={{ paddingRight: "5px" }}>
-                    <Button colorScheme="blue" onClick={checkAnswers}>
+                    <Button colorPalette="blue" onClick={checkAnswers}>
                       {CORRECT_BUTTOM_NAME}
                     </Button>
                   </div>

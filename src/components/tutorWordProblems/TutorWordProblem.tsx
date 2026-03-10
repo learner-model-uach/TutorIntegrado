@@ -4,30 +4,21 @@ import {
   Box,
   Image,
   Accordion,
-  AccordionItem,
-  AccordionPanel,
-  AccordionButton,
-  AccordionIcon,
   Table,
-  TableCaption,
-  Thead,
-  Th,
-  Tbody,
-  Tr,
-  Td,
-  useColorModeValue,
   useMediaQuery,
   ButtonGroup,
   Button,
+  Span,
 } from "@chakra-ui/react";
+import { useColorModeValue } from "../ui/color-mode";
 
 import type { wpExercise, GraphMeta, MathComponentMeta, SelectionMeta, textAlign } from "./types";
-import { components } from "./types.d";
+import { components } from "./types";
 import dynamic from "next/dynamic";
 import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import { CardInfo } from "./infCard/informationCard";
-//import JSXGraphComponent from "./Components/jsxGraphComponent";
+// import JSXGraphComponent from "./Components/jsxGraphComponent";
 import { useExerciseStore, useStore } from "./store/store";
 import { useEffect, useState } from "react";
 import { useAction } from "../../utils/action";
@@ -46,6 +37,7 @@ const MathComponent = dynamic(() => import("./Components/mathComponent"), {
 const JSXGraphComponent = dynamic(() => import("./Components/jsxGraphComponent"), {
   ssr: false,
 });
+
 export const TutorWordProblem = ({
   exercise,
   topicId,
@@ -53,7 +45,6 @@ export const TutorWordProblem = ({
   exercise: wpExercise;
   topicId: string;
 }) => {
-  //console.log("render tutorWordProblem")
   const textColor = useColorModeValue("dark", "white");
   const itemBgColor = useColorModeValue("#bde3f8", "#1A202C");
   const bgContentColor = useColorModeValue("white", "#2D3748");
@@ -62,12 +53,12 @@ export const TutorWordProblem = ({
   const bgQuestion = useColorModeValue("#F5F5F5", "gray.600");
   const currentButtonColor = "#2B4264";
   const currentStepColor = "#2B4264";
-  const rounded = 5;
-  const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
+  const [isScreenLarge] = useMediaQuery(["(min-width: 768px)"]);
   const [startTime, setStartTime] = useState<number>(null);
   const reportAction = useAction();
   const { user } = useAuth();
   const isTesting = user.tags.includes("wp-test-user");
+
   const {
     currentQuestionIndex,
     currentStepIndex,
@@ -92,11 +83,12 @@ export const TutorWordProblem = ({
     setExercise(exercise);
     setTopicId(topicId);
     setContentId(exercise.code);
-    setCurrentQues(0); // Reset currentQuestionIndex to 0 for the new exercise
-    setCurrentStep(0); // Reset currentStepIndex to 0 for the new exercise
+    setCurrentQues(0);
+    setCurrentStep(0);
     setCompleteContent(false);
     resetExpandedIndices();
     resetExpandedStepIndices();
+
     const initialQuestions = exercise.questions.map((ques, quesIndex) => ({
       ...ques,
       isBlocked: quesIndex !== 0,
@@ -107,47 +99,40 @@ export const TutorWordProblem = ({
     }));
     setQuestions(initialQuestions);
     setStartTime(Date.now());
+
     reportAction({
       verbName: "loadContent",
       contentID: exercise.code,
       topicID: topicId,
     });
-
-    //console.log("DATOS EJERCICIO topic, content", currentTopicId, currentContetId);
   }, [exercise]);
 
   useEffect(() => {
     if (completeContent) {
       const endTime = (Date.now() - startTime) / 1000;
-      const formattedEndTime = formatTime(endTime); // Formatear el tiempo en hh:mm:ss
+      const formattedEndTime = formatTime(endTime);
       reportAction({
         verbName: "completeContent",
         contentID: exercise.code,
         topicID: topicId,
         result: 1,
-        extra: {
-          time: formattedEndTime,
-        },
+        extra: { time: formattedEndTime },
       });
     }
   }, [completeContent]);
-  const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
 
+  const { nextExercise, currentExercise, exerciseIds } = useExerciseStore();
   const router = useRouter();
 
   const handleNextButtonClick = async () => {
     await nextExercise();
     router.replace("/showContent");
-    //await router.push("/showContent")
-    //router.push("/showContent");
   };
 
-  // Función para convertir segundos a formato hora-minutos-segundos
-  function formatTime(seconds) {
+  function formatTime(seconds: number) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
-
     const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
       .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
@@ -158,152 +143,160 @@ export const TutorWordProblem = ({
     <>
       <Box>
         <Flex flexDirection="column" alignItems="center">
-          <Heading size="lg" pb="12">
-            {" "}
+          <Heading fontSize={"3xl"} fontWeight={"bold"} textAlign={"center"} color="heading" pb="12">
             {exercise?.presentation.title}
           </Heading>
+
           {exercise.statement && (
             <Box overflowX="auto" whiteSpace="normal" textOverflow="ellipsis" maxW="100%">
               <Latex strict>{exercise.statement}</Latex>
             </Box>
           )}
+
           {exercise.table && (
-            <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
-              <Table variant="striped" size="sm" borderColor={textColor}>
-                <TableCaption>
-                  <Latex>{exercise.table.tableCaption}</Latex>
-                </TableCaption>
-                <Thead bgColor={bg}>
-                  <Tr>
-                    {exercise.table.header.map((head, index) => {
-                      return (
-                        <Th
-                          key={index}
-                          textAlign={head.align as textAlign}
-                          color="white"
-                          fontWeight="bold"
-                        >
-                          <Latex>{head.value}</Latex>
-                        </Th>
-                      );
-                    })}
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {exercise.table.rows.map((row, index) => {
+            <Table.Root variant={"outline"} size="sm" marginY={5} w="auto" shadow="sm" rounded="lg">
+              <Table.Caption marginTop={"5px"}>
+                <Latex>{exercise.table.tableCaption}</Latex>
+              </Table.Caption>
+              <Table.Header bg={bg}>
+                <Table.Row>
+                  {exercise.table.header.map((head, index) => {
                     return (
-                      <Tr key={index}>
-                        {row.data?.map((value, i) => {
-                          return (
-                            <Td key={i} textAlign={exercise.table.alignRows}>
-                              {<Latex strict>{value}</Latex>}
-                            </Td>
-                          );
-                        })}
-                      </Tr>
+                      <Table.ColumnHeader
+                        key={index}
+                        textAlign={head.align as textAlign}
+                        color="white"
+                        fontWeight="bold"
+                      >
+                        <Latex>{head.value}</Latex>
+                      </Table.ColumnHeader>
                     );
                   })}
-                </Tbody>
-              </Table>
-            </Box>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {exercise.table.rows.map((row, index) => {
+                  return (
+                    <Table.Row key={index} _odd={{ bg: "table_row_odd_wp" }}>
+                      {row.data?.map((value, i) => {
+                        return (
+                          <Table.Cell key={i} textAlign={exercise.table.alignRows}>
+                            {<Latex strict>{value}</Latex>}
+                          </Table.Cell>
+                        );
+                      })}
+                    </Table.Row>
+                  );
+                })}
+              </Table.Body>
+            </Table.Root>
           )}
+
           {exercise.img && (
-            //<Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio" /> // carga desde url
-            <Image src={`/img/${exercise.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" /> // carga local (public/img)
+            // <Image src={exercise.img} w="md" paddingY={5} alt="Imagen del ejercicio" />
+            <Image src={`/img/${exercise.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" /> // local
           )}
+
           {exercise.text && (
             <Box width="100%" textAlign="left">
               <Latex>{exercise.text}</Latex>
             </Box>
           )}
 
-          <Accordion
-            allowMultiple
-            allowToggle
-            pt="12px"
+          <Accordion.Root
+            multiple
+            collapsible
+            lazyMount
+            unmountOnExit={false}
+            marginTop={5}
             w="100%"
-            maxWidth="100%"
-            index={expandedIndices}
+            maxWidth="auto"
+            value={(expandedIndices ?? []).map(String)}
+            // value={questions ? questions.map((_, i) => String(i)) : []}
           >
-            {questions &&
-              questions.map((ques, quesIndex) => {
-                const isCurrentQuestion = quesIndex === currentQuestionIndex;
-                const stepExpandedIndices = expandedStepIndices[quesIndex] || [];
+            {questions?.map((ques, quesIndex) => {
+              const isCurrentQuestion = quesIndex === currentQuestionIndex;
+              const stepExpandedIndices = expandedStepIndices[quesIndex] || [];
+              const qKey = ques.questionId ?? quesIndex; // clave estable para la pregunta
 
-                return (
-                  <>
-                    <AccordionItem key={quesIndex} isDisabled={ques.isBlocked} marginBottom={2}>
-                      <h2>
-                        <AccordionButton
-                          bgColor={isCurrentQuestion && currentButtonColor}
-                          color={isCurrentQuestion ? "white" : textColor}
-                          _hover={{}}
-                          onClick={() => {
-                            toggleQuestionExpansion(quesIndex);
-                          }}
-                        >
-                          <Box as="span" flex="1" textAlign="left">
-                            <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel bgColor={bgQuestion} rounded={rounded}>
-                        <Accordion
-                          allowMultiple
-                          allowToggle
-                          marginLeft={isScreenLarge ? 10 : 0}
-                          marginRight={5}
-                          marginY={2}
-                          index={stepExpandedIndices}
-                        >
-                          {ques.steps.map((step, stepIndex) => {
-                            const isCurrent =
-                              stepIndex === currentStepIndex && quesIndex === currentQuestionIndex;
-                            //console.log("meta s",step.componentToAnswer.nameComponent,step.componentToAnswer.meta);
-                            //const arratIndex = expandedStepIndices[quesIndex]
-                            return (
-                              <Box key={stepIndex}>
-                                {step.stepExplanation && (
-                                  <CardInfo
-                                    text={step.stepExplanation.explanation}
-                                    srcImg={step.stepExplanation.srcImg}
-                                    bgColor={explanationBgColor}
-                                    hideCard={step.isBlocked}
-                                  ></CardInfo>
-                                )}
+              return (
+                <Accordion.Item key={qKey} value={String(quesIndex)} disabled={ques.isBlocked}>
+                  <h2>
+                    <Accordion.ItemTrigger
+                      cursor="pointer"
+                      bgColor={isCurrentQuestion && currentButtonColor}
+                      color={isCurrentQuestion ? "white" : textColor}
+                      onClick={() => {
+                        toggleQuestionExpansion(quesIndex);
+                      }}
+                    >
+                      <Span flex="1" marginLeft={"5"}>
+                        <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
+                      </Span>
+                      <Accordion.ItemIndicator marginEnd={5} />
+                    </Accordion.ItemTrigger>
+                  </h2>
 
-                                <AccordionItem
-                                  rounded={rounded}
-                                  bgColor={isCurrent ? currentStepColor : itemBgColor}
-                                  isDisabled={step.isBlocked}
-                                >
-                                  <h2>
-                                    <AccordionButton
-                                      rounded={rounded}
-                                      color={isCurrent ? "white" : textColor}
-                                      _expanded={
-                                        isCurrent ? { bg: currentStepColor } : { bg: itemBgColor }
-                                      }
-                                      onClick={() => {
-                                        toggleStepExpansion(quesIndex, stepIndex);
-                                        const isExpanded = stepExpandedIndices.includes(stepIndex);
-                                        reportAction({
-                                          verbName: isExpanded ? "closeStep" : "openStep",
-                                          stepID: "[" + ques.questionId + "," + step.stepId + "]",
-                                          contentID: exercise.code,
-                                          topicID: topicId,
-                                        });
-                                      }}
-                                    >
-                                      <Box as="span" flex="1" textAlign="left">
-                                        <Latex>{step.stepTitle}</Latex>
-                                      </Box>
-                                      <AccordionIcon />
-                                    </AccordionButton>
-                                  </h2>
-                                  <AccordionPanel bg={bgContentColor}>
-                                    <Box paddingTop={2}>
+                  <Accordion.ItemContent>
+                    <Accordion.ItemBody
+                      bgColor={bgQuestion}
+                      paddingX={isScreenLarge ? 10 : 2}
+                      overflow="visible"
+                    >
+                      {ques.steps.map((step, stepIndex) => {
+                        const sKey = `${qKey}-${stepIndex}`; // clave estable para el step
+                        const isCurrent =
+                          stepIndex === currentStepIndex && quesIndex === currentQuestionIndex;
+
+                        return (
+                          <Box key={sKey} marginTop={2}>
+                            {step.stepExplanation && (
+                              <CardInfo
+                                text={step.stepExplanation.explanation}
+                                srcImg={step.stepExplanation.srcImg}
+                                bgColor={explanationBgColor}
+                                hideCard={step.isBlocked}
+                              />
+                            )}
+
+                            <Accordion.Root
+                              key={`inner-${sKey}`}
+                              multiple
+                              collapsible
+                              unmountOnExit={false}
+                              lazyMount
+                              value={stepExpandedIndices.map((i) => `${quesIndex}-${i}`)}
+                            >
+                              <Accordion.Item
+                                value={`${quesIndex}-${stepIndex}`}
+                                bg={isCurrent ? currentStepColor : itemBgColor}
+                              >
+                                <h2>
+                                  <Accordion.ItemTrigger
+                                    color={isCurrent ? "white" : textColor}
+                                    cursor="pointer"
+                                    onClick={() => {
+                                      toggleStepExpansion(quesIndex, stepIndex);
+                                      const isExpanded = stepExpandedIndices.includes(stepIndex);
+                                      reportAction({
+                                        verbName: isExpanded ? "closeStep" : "openStep",
+                                        stepID: "[" + ques.questionId + "," + step.stepId + "]",
+                                        contentID: exercise.code,
+                                        topicID: topicId,
+                                      });
+                                    }}
+                                  >
+                                    <Span flex="1" marginLeft={"5"}>
+                                      <Latex>{step.stepTitle}</Latex>
+                                    </Span>
+                                    <Accordion.ItemIndicator marginEnd={5} />
+                                  </Accordion.ItemTrigger>
+                                </h2>
+
+                                <Accordion.ItemContent>
+                                  <Accordion.ItemBody bg={bgContentColor} overflow="visible">
+                                    <Box pt={2}>
                                       {step.componentToAnswer.nameComponent === components.SLC ? (
                                         <SelectionComponent
                                           correctMsg={step.correctMsg ?? "Muy bien!"}
@@ -315,31 +308,35 @@ export const TutorWordProblem = ({
                                         <MathComponent
                                           correctMsg={step.correctMsg ?? "Muy bien!"}
                                           hints={step.hints}
-                                          meta={step.componentToAnswer.meta as MathComponentMeta}
+                                          meta={
+                                            step.componentToAnswer.meta as MathComponentMeta
+                                          }
                                         />
                                       ) : step.componentToAnswer.nameComponent ===
                                         components.GHPC ? (
                                         <JSXGraphComponent
                                           hints={step.hints}
                                           meta={step.componentToAnswer.meta as GraphMeta}
-                                        ></JSXGraphComponent>
+                                        />
                                       ) : (
                                         <p>otro componente</p>
                                       )}
                                     </Box>
-                                  </AccordionPanel>
-                                </AccordionItem>
-                              </Box>
-                            );
-                          })}
-                        </Accordion>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </>
-                );
-              })}
-          </Accordion>
+                                  </Accordion.ItemBody>
+                                </Accordion.ItemContent>
+                              </Accordion.Item>
+                            </Accordion.Root>
+                          </Box>
+                        );
+                      })}
+                    </Accordion.ItemBody>
+                  </Accordion.ItemContent>
+                </Accordion.Item>
+              );
+            })}
+          </Accordion.Root>
         </Flex>
+
         {isTesting && (
           <Flex justifyContent="end" paddingY={10}>
             <ButtonGroup>
@@ -356,6 +353,7 @@ export const TutorWordProblem = ({
             </ButtonGroup>
           </Flex>
         )}
+
         {exerciseIds.length > 0 && <LoadContent code={exerciseIds[currentExercise]} />}
         {completeContent && <RatingQuestion />}
       </Box>

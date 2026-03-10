@@ -167,7 +167,7 @@ export const SortStepsTest = ({
         </Stack>
         <Stack>
           <Flex style={{ justifyContent: "center" }}>
-            <Button onClick={correctOrderHandler} colorScheme="blue">
+            <Button onClick={correctOrderHandler} colorPalette="blue">
               {CHECK_ORDER_BUTTOM_NAME}
             </Button>
           </Flex>
@@ -180,7 +180,7 @@ export const SortStepsTest = ({
                 {linkNext ? (
                   <Button
                     onClick={handlerNextExercise}
-                    colorScheme="twitter"
+                    colorPalette="blue"
                     marginRight="12px"
                     fontSize={{
                       base: "11px",
@@ -191,7 +191,7 @@ export const SortStepsTest = ({
                     {NEXT_EXERCISE_BUTTOM_NAME}
                   </Button>
                 ) : (
-                  <Button onClick={() => setNextPhase(false)} colorScheme="twitter">
+                  <Button onClick={() => setNextPhase(false)} colorPalette="blue">
                     {NEXT_STEP_BUTTOM_NAME}
                   </Button>
                 )}

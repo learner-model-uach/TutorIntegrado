@@ -93,7 +93,7 @@ export function TutorTesting({ id, setTabIndex, setColorTab, setShowFeedback }) 
                             sm: "13px",
                             lg: "16px",
                           }}
-                          colorScheme="blue"
+                          colorPalette="blue"
                           onClick={handlerNextExercise}
                           style={{ float: "right" }}
                         >
@@ -118,7 +118,7 @@ export function TutorTesting({ id, setTabIndex, setColorTab, setShowFeedback }) 
                           sm: "13px",
                           lg: "16px",
                         }}
-                        colorScheme="blue"
+                        colorPalette="blue"
                         onClick={() => setNextPhase(prev => !prev)}
                         style={{ float: "right" }}
                       >
@@ -153,7 +153,7 @@ export function TutorTesting({ id, setTabIndex, setColorTab, setShowFeedback }) 
                         sm: "13px",
                         lg: "16px",
                       }}
-                      colorScheme="blue"
+                      colorPalette="blue"
                       onClick={handlerNextExercise}
                       style={{ float: "right" }}
                     >

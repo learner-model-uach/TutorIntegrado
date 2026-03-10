@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Spacer, Input, WrapItem, Wrap } from "@chakra-ui/react";
+import { Alert, Button, Center, Spacer, Input, WrapItem, Wrap } from "@chakra-ui/react";
 
 export const DSCstep2 = ({
   step2,
@@ -65,19 +65,19 @@ export const DSCstep2 = ({
       setExtra(extra);
 
       setFeedbackMsg(
-        <Alert status="success">
-          <AlertIcon />
-          {step2.correctMsg}
-        </Alert>,
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>{step2.correctMsg}</Alert.Content>
+        </Alert.Root>
       );
     } else {
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
-          setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+          setFeedbackMsg( 
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Title> Ingrese respuesta(s) </Alert.Title>
+            </Alert.Root>
           );
         }, 50);
       } else {
@@ -85,10 +85,10 @@ export const DSCstep2 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step2.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>{step2.incorrectMsg}</Alert.Content>
+            </Alert.Root>
           );
         }, 50);
       }
@@ -117,10 +117,11 @@ export const DSCstep2 = ({
               }}
               size="sm"
               w={125}
-              focusBorderColor="#9DECF9"
               placeholder="Ingrese factor 1"
               ref={response1}
-              isReadOnly={step2Valid != null}
+              readOnly={step2Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label htmlFor="label2">)(</label>
             <Input
@@ -131,10 +132,11 @@ export const DSCstep2 = ({
               }}
               size="sm"
               w={125}
-              focusBorderColor="#9DECF9"
               placeholder="Ingrese factor 2"
               ref={response2}
-              isReadOnly={step2Valid != null}
+              readOnly={step2Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label htmlFor="label3">)</label>
           </Center>
@@ -146,7 +148,7 @@ export const DSCstep2 = ({
           {step2Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

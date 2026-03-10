@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Stack, VStack, Button, Text, Grid, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Stack, VStack, Button, Text, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
@@ -247,7 +247,7 @@ export const StepPanel = ({
                 templateColumns="repeat(2, 1fr)"
                 gap={6}
               >
-                <Button colorScheme="blue" onClick={checkAnswers}>
+                <Button colorPalette="blue" onClick={checkAnswers}>
                   {CORRECT_BUTTOM_NAME}
                 </Button>
 
@@ -266,7 +266,7 @@ export const StepPanel = ({
               <Stack display={{ xl: "block", base: "none" }}>
                 <Flex>
                   <div style={{ paddingRight: "5px" }}>
-                    <Button colorScheme="blue" onClick={checkAnswers}>
+                    <Button colorPalette="blue" onClick={checkAnswers}>
                       {CORRECT_BUTTOM_NAME}
                     </Button>
                   </div>
