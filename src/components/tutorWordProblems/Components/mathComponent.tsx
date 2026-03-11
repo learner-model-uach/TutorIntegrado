@@ -3,8 +3,7 @@
 import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react";
 import type { Hint, MathComponentMeta } from "../types";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { MathfieldElement } from "mathlive";
+import { useEffect, useRef, useState } from "react";
 import * as CEpkg from "@cortex-js/compute-engine";
 import ResAlert from "../Alert/responseAlert";
 import { useAlert } from "../hooks/useAlert";
@@ -27,10 +26,10 @@ interface Answer {
   value: string;
 }
 
-// Normaliza decimales con coma -> punto
+// normaliza decimales con coma -> punto
 const normalizeLatex = (latex: string) => latex.replace(/(\d+),(\d+)/g, "$1.$2");
 
-// Resolver universal de la clase ComputeEngine (named / default / nested)
+// resolver universal de la clase ComputeEngine (named / default / nested)
 function resolveComputeEngineCtor(mod: any) {
   if (!mod) return null;
   if (typeof mod.ComputeEngine === "function") return mod.ComputeEngine; // named export
@@ -46,13 +45,12 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
 
   // CE disponible para checkAnswer
   const ceRef = useRef<any>(null);
+  const mfeRef = useRef<any>(null);
 
-  // Mantén una sola instancia de MathfieldElement
-  const mfe = useMemo(() => new MathfieldElement(), []);
-
-  // Estado de respuestas del usuario (sin re-render por cada tecleo)
+  // estado de respuestas del usuario (sin re-render por cada tecleo)
   const answerStateRef = useRef<Answer[]>([]);
   const [disabledButton, setDisabledButton] = useState(false);
+  const [mathReady, setMathReady] = useState(false);
 
   const correctAnswers = answers.filter(a => idCorrectAnswers.includes(a.id));
   const otherAnswers = answers.filter(a => !idCorrectAnswers.includes(a.id));
@@ -89,36 +87,48 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
 
   const reportAction = useAction();
 
-  // Reinciar alertas y botón al cambiar de meta
+  // reinciar alertas y botón al cambiar de meta
   useEffect(() => {
     resetAlert();
     setDisabledButton(false);
   }, [meta]);
 
-  // Registrar/obtener ComputeEngine de forma soportada por MathLive
+  // registrar/obtener ComputeEngine de forma soportada por MathLive
   useEffect(() => {
-    // 1) Si ya hay una CE registrada globalmente por MathLive, úsala
-    let ce = (MathfieldElement as any).computeEngine ?? null;
+    let active = true;
 
-    // 2) Si no existe, intenta construirla y REGISTRARLA a nivel estático
-    if (!ce) {
-      const CEClass = resolveComputeEngineCtor(CEpkg);
-      if (CEClass) {
-        try {
-          ce = new CEClass();
-          (MathfieldElement as any).computeEngine = ce; // 👈 registro correcto
-        } catch (e) {
-          // Si por alguna razón no es construible, ce seguirá null.
-          // Evitamos romper el render; el botón quedará deshabilitado y verás el aviso.
-          // console.warn("No se pudo instanciar ComputeEngine:", e);
+    const initComputeEngine = async () => {
+      const { MathfieldElement } = await import("mathlive");
+      let ce = (MathfieldElement as any).computeEngine ?? null;
+
+      if (!ce) {
+        const CEClass = resolveComputeEngineCtor(CEpkg);
+        if (CEClass) {
+          try {
+            ce = new CEClass();
+            (MathfieldElement as any).computeEngine = ce;
+          } catch {
+            ce = null;
+          }
         }
       }
-    }
 
-    ceRef.current = ce || null;
+      if (!active) {
+        return;
+      }
+
+      ceRef.current = ce || null;
+      setMathReady(Boolean(ce));
+    };
+
+    void initComputeEngine();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
-  // Handler de cambios del MathField (placeholders/prompts)
+  // handler de cambios del MathField (placeholders/prompts)
   // @ts-ignore - firma del onChange en tu wrapper
   const handleMathFieldChange = (latex: string, promptsValues: Record<string, string>) => {
     const entries = Object.entries(promptsValues) as [string, string][];
@@ -128,8 +138,13 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
   const checkAnswer = () => {
     try {
       const ce = ceRef.current;
+      const mfe = mfeRef.current;
       if (!ce) {
         showAlert("", AlertStatus.info, "Inicializando motor matemático… inténtalo de nuevo.");
+        return;
+      }
+      if (!mfe) {
+        showAlert("", AlertStatus.info, "Cargando editor matemático… inténtalo de nuevo.");
         return;
       }
 
@@ -196,11 +211,18 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
   return (
     <Flex flexDirection="column">
       <Box width="100%" textAlign="center" mb={4}>
-        <MathField readOnly={readonly} mfe={mfe} value={expression} onChange={handleMathFieldChange} />
+        <MathField
+          readOnly={readonly}
+          value={expression}
+          onChange={handleMathFieldChange}
+          onMount={(instance) => {
+            mfeRef.current = instance;
+          }}
+        />
       </Box>
 
       {/* Aviso suave mientras la CE aún no está lista */}
-      {!((MathfieldElement as any).computeEngine) && (
+      {!mathReady && (
         <Box mt={2} color="orange.500" fontSize="sm">
           ⏳ Inicializando motor matemático…
         </Box>
@@ -212,7 +234,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
             colorScheme="teal"
             size="sm"
             onClick={checkAnswer}
-            disabled={disabledButton || !ceRef.current}
+            disabled={disabledButton || !ceRef.current || !mfeRef.current}
           >
             Aceptar
           </Button>

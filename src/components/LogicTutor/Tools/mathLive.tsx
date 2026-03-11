@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   MathfieldElement,
-  Selector,
   VirtualKeyboardInterface,
   VirtualKeyboardLayoutCore,
   NormalizedVirtualKeyboardLayer,
@@ -17,24 +16,23 @@ type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
 export type MathEditorProps = {
   readOnly?: boolean;
   value: string;
-  mfe?: MathfieldElement;
   onChange: (latex: string, prompts: Record<string, string>) => void;
   className?: string;
+  onMount?: (mfe: MathfieldElement) => void;
 };
 /**
  * @returns a styled math-editor as a non-controlled React component with placeholder support.
  */
 
 const Mathfield = (props: MathEditorProps) => {
-  //const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
-
   const containerRef = useRef<HTMLDivElement>(null);
-  //console.log("RENDER mathlive");
-  const mfe = useMemo(() => {
-    const mathfield = props.mfe ?? new MathfieldElement();
+  const mfeRef = useRef<MathfieldElement | null>(null);
+  if (!mfeRef.current) {
+    const mathfield = new MathfieldElement();
     mathfield.virtualKeyboardTargetOrigin = "off";
-    return mathfield;
-  }, []);
+    mfeRef.current = mathfield;
+  }
+  const mfe = mfeRef.current;
 
   //mfe.readOnly = props.readOnly ?? true;
   //mfe.disabled = false;
@@ -49,17 +47,22 @@ const Mathfield = (props: MathEditorProps) => {
     const container = containerRef.current!!;
     container.innerHTML = "";
     container.appendChild(mfe);
+    props.onMount?.(mfe);
     mfe.className = props.className || "";
     mfe.mathVirtualKeyboardPolicy = "auto";
     mfe.readOnly = true;
     mfe.environmentPopoverPolicy = "off";
     mfe.resetUndo();
 
-    // @ts-ignore
-    const keyboardLayout = (window.mathVirtualKeyboard as ExtendedVirtualKeyboard)
-      .normalizedLayouts[0]; // dejamos solo el teclado numerico
-    delete keyboardLayout.layers[0].rows[2][10].shift; // eliminamos el boton deleteAll del teclado (genera problemas)
-    window.mathVirtualKeyboard.layouts = keyboardLayout; // asignamos el teclado modificado como el nuevo teclado
+    const keyboardLayout = (window.mathVirtualKeyboard as ExtendedVirtualKeyboard | undefined)
+      ?.normalizedLayouts?.[0];
+    const keyboardKey = keyboardLayout?.layers?.[0]?.rows?.[2]?.[10] as
+      | { shift?: unknown }
+      | undefined;
+    if (keyboardLayout) {
+      delete keyboardKey?.shift;
+      window.mathVirtualKeyboard.layouts = keyboardLayout;
+    }
 
     mfe.addEventListener(
       "keydown",
@@ -85,22 +88,17 @@ const Mathfield = (props: MathEditorProps) => {
         props.onChange(value, promptValues);
       }
     });
-  }, []);
+  }, [mfe, props]);
 
   useEffect(() => {
-    // Este efecto se encarga de actualizar el valor del editor de matemáticas cuando props.value cambia.
+    // actualiza el valor del editor de matemáticas cuando props.value cambia.
     if (currentValue.current !== props.value) {
       const position = mfe.position;
       mfe.setValue(props.value, { focus: true, feedback: false });
       mfe.position = position;
       currentValue.current = props.value;
     }
-  }, [props.value]); //se ejecutará cada vez que el valor de props.value
-
-  // @ts-ignore
-  const showVirtualKeyboard = () => {
-    mfe.executeCommand("toggleVirtualKeyboard" as Selector);
-  };
+  }, [mfe, props.value]); //se ejecutará cada vez que el valor de props.value
 
   return (
     <>
@@ -113,26 +111,6 @@ const Mathfield = (props: MathEditorProps) => {
         marginX="auto"
         padding="2"
       />
-      {/**
-         <ButtonGroup>
-           <Button onClick={()=> {
-             mfe.focus()
-             mfe.executeCommand("moveToPreviousChar")
-           }}>
-             {'<'}
-           </Button>
-           <Button onClick={()=>{
-             mfe.focus()
-             mfe.executeCommand("moveToNextChar")
-           }}>
-             {'>'}
-           </Button>
-           <Button onClick={showVirtualKeyboard}>
-             {'Toggle Keyboard'}
-           </Button>
-         </ButtonGroup>
-         
-      */}
     </>
   );
 };

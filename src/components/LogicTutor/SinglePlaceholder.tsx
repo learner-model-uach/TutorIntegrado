@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Stack, Alert, Center, Text, Image, Box } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
-import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from "../../utils/MQPostfixSolver";
 import MQPostfixparser from "../../utils/MQPostfixparser";
@@ -41,8 +40,6 @@ const SinglePlaceholder = ({
     answer: { values: [] },
     values: [],
   };
-
-  // ✅ Marca como completado cuando sea correcto (sin efectos en el render)
   useEffect(() => {
     if (isCorrectValue) setCompleted(true);
   }, [isCorrectValue, setCompleted]);
@@ -87,8 +84,6 @@ const SinglePlaceholder = ({
   setValueA(Array.isArray(a) ? a[0] ?? "" : a ?? "");
 }
 
-  const mfe = useMemo(() => new MathfieldElement(), []);
-
   return (
     <>
       <Center>
@@ -106,7 +101,6 @@ const SinglePlaceholder = ({
           </Text>
           <Mathfield
             readOnly
-            mfe={mfe}
             value={`\\large ${exc.steps[nStep].expression} \\quad`}
             onChange={modify}
           />

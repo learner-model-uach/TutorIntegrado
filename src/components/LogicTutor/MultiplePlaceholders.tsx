@@ -1,6 +1,5 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Stack, Alert, Center, Box, Text, Image } from "@chakra-ui/react";
-import { MathfieldElement } from "mathlive";
 import dynamic from "next/dynamic";
 import MQPostfixSolver from "../../utils/MQPostfixSolver";
 import MQPostfixparser from "../../utils/MQPostfixparser";
@@ -36,7 +35,7 @@ const MultiplePlaceholders = ({
   }, [isCorrectValue, setCompleted]);
 
   const evaluar = () => {
-    setError(false); // Resetear el estado de error antes de la evaluación
+    setError(false); 
     interface values { values: Array<value>; }
 
     const answer = exc.steps[nStep].answers[0].answer;
@@ -92,8 +91,6 @@ const MultiplePlaceholders = ({
     setValuesArray(newValuesArray);
   }
 
-  const mfe = useMemo(() => new MathfieldElement(), []);
-
   return (
     <>
       <Center>
@@ -111,7 +108,6 @@ const MultiplePlaceholders = ({
           </Text>
           <Mathfield
             readOnly={true}
-            mfe={mfe}
             value={`\\large ${exc.steps[nStep].expression}\\;`}
             onChange={test}
           />
