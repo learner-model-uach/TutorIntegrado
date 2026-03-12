@@ -45,7 +45,7 @@ const SinglePlaceholder = ({
   }, [isCorrectValue, setCompleted]);
 
   function evaluar(_: unknown, val: string) {
-  const c = MQPostfixSolver(MQPostfixparser(convertirNotacion(val)), evaluation.answer);
+    const c = MQPostfixSolver(MQPostfixparser(convertirNotacion(val)), evaluation.answer);
     setFirstTime(!firstTime);
     const answer = exc.steps[nStep].answers[0].answer;
     const a = MQPostfixparser(answer[0]);
@@ -79,10 +79,10 @@ const SinglePlaceholder = ({
   }
 
   function modify(newLatex: string, prompsValues: any) {
-  setLatex(newLatex);
-  const a = prompsValues?.a;
-  setValueA(Array.isArray(a) ? a[0] ?? "" : a ?? "");
-}
+    setLatex(newLatex);
+    const a = prompsValues?.a;
+    setValueA(Array.isArray(a) ? (a[0] ?? "") : (a ?? ""));
+  }
 
   return (
     <>

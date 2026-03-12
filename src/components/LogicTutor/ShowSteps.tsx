@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Accordion,
-  Alert,
-} from "@chakra-ui/react";
+import { Box, Accordion, Alert } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import Latex from "react-latex-next";
 import type { ExLog } from "./Tools/ExcerciseType2";
@@ -97,7 +93,12 @@ const ShowSteps = ({
             <InputButtons exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
           )}
           {exc.steps[nStep].stepType === "MultiplePlaceholders" && (
-            <MultiplePlaceholders exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
+            <MultiplePlaceholders
+              exc={exc}
+              nStep={nStep}
+              setCompleted={setCompleted}
+              topic={topic}
+            />
           )}
           {exc.steps[nStep].stepType === "SinglePlaceholder" && (
             <SinglePlaceholder exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />

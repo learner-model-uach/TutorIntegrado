@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react";
 import type { Hint, MathComponentMeta } from "../types";
@@ -215,7 +215,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
           readOnly={readonly}
           value={expression}
           onChange={handleMathFieldChange}
-          onMount={(instance) => {
+          onMount={instance => {
             mfeRef.current = instance;
           }}
         />
@@ -253,7 +253,12 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
       </Flex>
 
       <Box width="100%">
-        <ResAlert title={alertTitle} status={alertStatus} text={alertMsg} alertHidden={alertHidden} />
+        <ResAlert
+          title={alertTitle}
+          status={alertStatus}
+          text={alertMsg}
+          alertHidden={alertHidden}
+        />
       </Box>
     </Flex>
   );

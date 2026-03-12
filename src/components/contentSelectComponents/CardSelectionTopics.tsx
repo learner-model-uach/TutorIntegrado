@@ -128,7 +128,7 @@ export const CardSelectionTopic = ({
       _hover={{
         color: "white",
         bg: "cardselection_hover",
-        cursor: "pointer"
+        cursor: "pointer",
       }}
       minH="100px"
       onClick={() => {
@@ -183,7 +183,7 @@ export const CardSelectionTopic = ({
           )
         ) : (
           <Center
-            fontSize={label?.toLowerCase().includes('polinomios') ? "lg" : "2xl"}
+            fontSize={label?.toLowerCase().includes("polinomios") ? "lg" : "2xl"}
             paddingBottom={"3"}
             paddingTop={"1"}
             overflow="visible"
@@ -193,34 +193,36 @@ export const CardSelectionTopic = ({
             display="flex"
             alignItems="center"
             justifyContent="center"
-
-            css={label?.toLowerCase().includes('polinomios') ? {
-              "& .MathJax": {
-                fontSize: "0.75em !important",
-                lineHeight: "1.4 !important",
-                maxWidth: "100% !important",
-                overflow: "visible !important",
-                whiteSpace: "normal !important",
-                wordWrap: "break-word !important"
-              },
-              "& mjx-container": {
-                maxWidth: "100% !important",
-                overflow: "visible !important",
-                display: "inline-block !important"
-              },
-              "& mjx-math": {
-                maxWidth: "100% !important",
-                overflow: "visible !important"
-              }
-            } : null
+            css={
+              label?.toLowerCase().includes("polinomios")
+                ? {
+                    "& .MathJax": {
+                      fontSize: "0.75em !important",
+                      lineHeight: "1.4 !important",
+                      maxWidth: "100% !important",
+                      overflow: "visible !important",
+                      whiteSpace: "normal !important",
+                      wordWrap: "break-word !important",
+                    },
+                    "& mjx-container": {
+                      maxWidth: "100% !important",
+                      overflow: "visible !important",
+                      display: "inline-block !important",
+                    },
+                    "& mjx-math": {
+                      maxWidth: "100% !important",
+                      overflow: "visible !important",
+                    },
+                  }
+                : null
             }
           >
             {selectedExcercise.ejercicio[index].img ? (
               <Image src={"img/" + selectedExcercise.ejercicio[index].img} />
             ) : null}
             {selectedExcercise.ejercicio[index].type == "ecc5s" ||
-              selectedExcercise.ejercicio[index].type == "secl5s" ||
-              selectedExcercise.ejercicio[index].type == "ecl2s" ? (
+            selectedExcercise.ejercicio[index].type == "secl5s" ||
+            selectedExcercise.ejercicio[index].type == "ecl2s" ? (
               <MathComponent
                 tex={String.raw`${selectedExcercise.ejercicio[index].eqc}`}
                 display={false}

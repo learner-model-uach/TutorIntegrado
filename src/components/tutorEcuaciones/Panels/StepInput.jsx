@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TeX from "@matejmazur/react-katex";
-import {
-  Flex,
-  Button,
-  Grid,
-  Stack,
-  Input,
-  VStack,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Button, Grid, Stack, Input, VStack, Text } from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
   CORRECT_BUTTOM_NAME,

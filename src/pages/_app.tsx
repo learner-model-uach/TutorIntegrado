@@ -1,8 +1,8 @@
-'use client';
-import '@cortex-js/compute-engine';
+"use client";
+import "@cortex-js/compute-engine";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider } from "@chakra-ui/react";
-import { system } from '../theme';
+import { system } from "../theme";
 import { ColorModeProvider } from "../components/ui/color-mode";
 import type { AppProps } from "next/app";
 import { CombinedRQGQLProvider } from "rq-gql";
@@ -16,7 +16,7 @@ import { Toaster } from "../components/ui/toaster";
 import "../app.css";
 import "mathquill/build/mathquill.css";
 import "katex/dist/katex.min.css";
-import 'mathlive/static.css';
+import "mathlive/static.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMobile = false;

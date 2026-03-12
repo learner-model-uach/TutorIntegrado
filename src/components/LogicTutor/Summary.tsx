@@ -37,7 +37,6 @@ const Summary = ({ exc }: { exc: ExLog }) => {
         </VStack>
       </Alert.Content>
     </Alert.Root>
-
   );
 };
 export default Summary;

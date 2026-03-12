@@ -33,7 +33,7 @@ export const StepEquations = ({
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
   const [answerTwo, setAnswerTwo] = useState(true);
-  
+
   const [alert, setAlert] = useState({});
   const [openAlert, setOpenAlert] = useState(false);
   const [testAlert, setTestAlert] = useState(false);

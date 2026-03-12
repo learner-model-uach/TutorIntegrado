@@ -28,7 +28,7 @@ export const AssigndUser = () => {
           Comienza escogiendo un tópico en el menú de la izquierda
         </Box>
       </Stack>
-      <Image src="/img/Mateo-izq.svg" alt="Robot" width="150px"/>
+      <Image src="/img/Mateo-izq.svg" alt="Robot" width="150px" />
     </Stack>
   );
 };

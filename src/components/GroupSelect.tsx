@@ -30,28 +30,27 @@ export const GroupSelect = () => {
     else gSelect.group = null;
   }, [user]);
 
-return gs ? (
-  <NativeSelect.Root size="sm" width="full">
-    <NativeSelect.Field
-      value={user.groups.findIndex(g => g.id === gSelect.group?.id) ?? ""}
-      onChange={(e) => {
-        const idx = Number(e.currentTarget.value);
-        const selectedGroup = user.groups[idx];
-        gSelect.group = {
-          ...selectedGroup,
-          tags: [...selectedGroup.tags],
-        };
-        gSelect.onChange = true;
-      }}
-    >
-      {user.groups.map((g, i) => (
-        <option key={i} value={i}>
-          Grupo: {g.label}
-        </option>
-      ))}
-    </NativeSelect.Field>
-    <NativeSelect.Indicator />
-  </NativeSelect.Root>
-) : null;
-
+  return gs ? (
+    <NativeSelect.Root size="sm" width="full">
+      <NativeSelect.Field
+        value={user.groups.findIndex(g => g.id === gSelect.group?.id) ?? ""}
+        onChange={e => {
+          const idx = Number(e.currentTarget.value);
+          const selectedGroup = user.groups[idx];
+          gSelect.group = {
+            ...selectedGroup,
+            tags: [...selectedGroup.tags],
+          };
+          gSelect.onChange = true;
+        }}
+      >
+        {user.groups.map((g, i) => (
+          <option key={i} value={i}>
+            Grupo: {g.label}
+          </option>
+        ))}
+      </NativeSelect.Field>
+      <NativeSelect.Indicator />
+    </NativeSelect.Root>
+  ) : null;
 };

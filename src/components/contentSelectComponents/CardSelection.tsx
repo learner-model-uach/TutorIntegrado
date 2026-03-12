@@ -69,7 +69,7 @@ export const CardSelection = ({
         _hover={{
           color: "white",
           bg: "cardselection_hover",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
         position="relative"
         as="article"
@@ -137,7 +137,11 @@ export const CardSelection = ({
         )}
 
         <LinkOverlay asChild>
-          <NextLink href={"showContent"} passHref aria-label={`Abrir contenido: ${selectionTitle || code || id}`}>
+          <NextLink
+            href={"showContent"}
+            passHref
+            aria-label={`Abrir contenido: ${selectionTitle || code || id}`}
+          >
             <Text paddingTop={"2"} fontSize={"sm"}>
               {json.text}
             </Text>

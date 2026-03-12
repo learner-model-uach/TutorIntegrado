@@ -356,22 +356,22 @@ export const TC = ({ exercise, topic }) => {
           <Accordion.Item value={STEP4} disabled={select4}>
             <Alert.Root status={step4Status}>
               <Accordion.ItemTrigger>
-                  <Box flex="1" textAlign="left">
-                    {!select4 && exercise.steps[3].stepTitle}
-                    {step4Valid != null && !select4 && "    ✔ "}
-                    {select4 && step3Valid != null && (
-                      <Wrap>
-                        Paso 4:
-                        <SelectStep
-                          correct={3}
-                          steps={steps}
-                          setSelect={setSelect4}
-                          contentID={exercise.code}
-                          topic={topic}
-                        ></SelectStep>
-                      </Wrap>
-                    )}
-                  </Box>
+                <Box flex="1" textAlign="left">
+                  {!select4 && exercise.steps[3].stepTitle}
+                  {step4Valid != null && !select4 && "    ✔ "}
+                  {select4 && step3Valid != null && (
+                    <Wrap>
+                      Paso 4:
+                      <SelectStep
+                        correct={3}
+                        steps={steps}
+                        setSelect={setSelect4}
+                        contentID={exercise.code}
+                        topic={topic}
+                      ></SelectStep>
+                    </Wrap>
+                  )}
+                </Box>
                 <Accordion.ItemIndicator />
               </Accordion.ItemTrigger>
             </Alert.Root>
@@ -394,9 +394,9 @@ export const TC = ({ exercise, topic }) => {
 
         {/* Paso 5(si hay más de 3 pasos) */}
         {exercise.steps.length > 3 && (
-        <Accordion.Item value={STEP5} disabled={select5}>
-          <Alert.Root status={step5Status}>
-            <Accordion.ItemTrigger>
+          <Accordion.Item value={STEP5} disabled={select5}>
+            <Alert.Root status={step5Status}>
+              <Accordion.ItemTrigger>
                 <Box flex="1" textAlign="left">
                   {!select5 && exercise.steps[4].stepTitle}
                   {step5Valid != null && !select5 && "    ✔ "}
@@ -413,38 +413,38 @@ export const TC = ({ exercise, topic }) => {
                     </Wrap>
                   )}
                 </Box>
-              <Accordion.ItemIndicator />
-            </Accordion.ItemTrigger>
-          </Alert.Root>
+                <Accordion.ItemIndicator />
+              </Accordion.ItemTrigger>
+            </Alert.Root>
 
-          <Accordion.ItemContent p="0">
-            {step4Valid != null && !select5 && (
-              <TCstep5
-                step5={exercise.steps[4]}
-                setStep5Valid={setStep5Valid}
-                step5Valid={step5Valid}
-                //a={exercise.steps[0].answers[0].answer[0]}
-                contentID={exercise.code}
-                topicID={topic}
-                extra={extra5}
-                setExtra={setExtra5}
-              />
-            )}
-          </Accordion.ItemContent>
-        </Accordion.Item>
+            <Accordion.ItemContent p="0">
+              {step4Valid != null && !select5 && (
+                <TCstep5
+                  step5={exercise.steps[4]}
+                  setStep5Valid={setStep5Valid}
+                  step5Valid={step5Valid}
+                  //a={exercise.steps[0].answers[0].answer[0]}
+                  contentID={exercise.code}
+                  topicID={topic}
+                  extra={extra5}
+                  setExtra={setExtra5}
+                />
+              )}
+            </Accordion.ItemContent>
+          </Accordion.Item>
         )}
       </Accordion.Root>
       {step3Valid != null && exercise.steps.length == 3 && (
         <TCsummary step1={exercise.steps[0]} step2={exercise.steps[1]} step3={exercise.steps[2]} />
       )}
-      {step5Valid != null && exercise.steps.length > 3 && (    
-          <TCsummary
-            step1={exercise.steps[0]}
-            step2={exercise.steps[1]}
-            step3={exercise.steps[2]}
-            step4={exercise.steps[3]}
-            step5={exercise.steps[4]}
-          />
+      {step5Valid != null && exercise.steps.length > 3 && (
+        <TCsummary
+          step1={exercise.steps[0]}
+          step2={exercise.steps[1]}
+          step3={exercise.steps[2]}
+          step4={exercise.steps[3]}
+          step5={exercise.steps[4]}
+        />
       )}
     </>
   );

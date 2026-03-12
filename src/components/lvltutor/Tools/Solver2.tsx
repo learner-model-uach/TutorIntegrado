@@ -77,7 +77,7 @@ const Steporans = ({
                 {MQProxy.spaghettimsg ? MQProxy.spaghettimsg : step.correctMsg}
               </Alert.Description>
             </Alert.Content>
-          </Alert.Root >
+          </Alert.Root>
         </>,
       );
     } else {
@@ -309,7 +309,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         {steps.img ? (
           <Image src={`/img/${steps.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
         ) : (
-            <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
+          <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
         )}
         <Accordion.Root
           variant={"plain"}
@@ -318,7 +318,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
           collapsible
           value={Array.isArray(MQProxy.defaultIndex) ? MQProxy.defaultIndex.map(String) : []}
           onValueChange={({ value }) => {
-            MQProxy.defaultIndex = (value ?? []).map((v) => Number(v));
+            MQProxy.defaultIndex = (value ?? []).map(v => Number(v));
           }}
         >
           {steps.steps.map((step, i) => (
@@ -333,7 +333,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                   <Alert.Content>
                     <Accordion.ItemTrigger
                       onClick={() => {
-                        const potstates = [ ...test ];
+                        const potstates = [...test];
                         const idx = parseInt(step.stepId);
                         const potstate = potstates[idx];
                         if (potstate) {
@@ -377,20 +377,20 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                     const idx = Number(step.stepId);
                     const isOpen = (MQProxy.defaultIndex ?? []).includes(Number(step.stepId));
                     const isDone = Boolean(test[idx]?.answer);
-                    
+
                     return (
                       <>
                         {isOpen && !isDone && step.expression ? (
                           <Center>
-                          <Box mb="3" overflow="visible">
-                            <MQStaticMathField
-                              key={`mq-enunciado-${step.stepId}-open`}
-                              exp={step.expression}
-                              currentExpIndex={true}   // ahora sí, visible
-                            />
-                          </Box>
+                            <Box mb="3" overflow="visible">
+                              <MQStaticMathField
+                                key={`mq-enunciado-${step.stepId}-open`}
+                                exp={step.expression}
+                                currentExpIndex={true} // ahora sí, visible
+                              />
+                            </Box>
                           </Center>
-                        ) : null}  
+                        ) : null}
                         <Steporans
                           key={`Steporans-${step.stepId}-${isOpen ? "open" : "closed"}`}
                           step={step}
@@ -402,7 +402,6 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                       </>
                     );
                   })()}
-
                 </Accordion.ItemBody>
               </Accordion.ItemContent>
             </Accordion.Item>

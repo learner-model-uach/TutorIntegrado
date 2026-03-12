@@ -18,21 +18,15 @@ const ResAlert = ({
   return (
     <Collapsible.Root open={!alertHidden} unmountOnExit>
       <Collapsible.Content>
-
         <Alert.Root margin={2} status={status}>
           <Alert.Indicator />
           <Alert.Content>
             {title ? <Alert.Title>{title}</Alert.Title> : null}
-            <Alert.Description
-              width="100%"
-              whiteSpace="normal"
-              maxW="100%"
-            >
+            <Alert.Description width="100%" whiteSpace="normal" maxW="100%">
               <Latex>{text}</Latex>
             </Alert.Description>
           </Alert.Content>
         </Alert.Root>
-
       </Collapsible.Content>
     </Collapsible.Root>
   );

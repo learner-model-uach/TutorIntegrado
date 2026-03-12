@@ -265,7 +265,6 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
   };
 
   return (
-
     <Accordion.Root collapsible w="100%">
       {data.map(item => (
         <Accordion.Item key={item.id} value={item.id}>
@@ -284,10 +283,7 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
                 >
                   <Checkbox.HiddenInput />
                   <Checkbox.Control />
-                  <Checkbox.Label>
-
-                    {item.label}
-                  </Checkbox.Label>
+                  <Checkbox.Label>{item.label}</Checkbox.Label>
                 </Checkbox.Root>
               </Box>
               {item.childrens?.length > 0 && <Accordion.ItemIndicator />}
@@ -295,7 +291,7 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
           </h2>
 
           {item.childrens?.length > 0 && (
-            <Accordion.ItemContent >
+            <Accordion.ItemContent>
               <Accordion.ItemBody pb={4}>
                 <Accordion.Root multiple>
                   <RecursiveAccordion
@@ -387,31 +383,31 @@ const MathRecursiveAccordion = ({
                   </h2>
                   <Accordion.ItemContent>
                     <Accordion.ItemBody pb={4}>
-                    {exercises.length > 0 ? (
-                      exercises.map(exercise => (
-                        <Checkbox.Root
-                          key={`${exercise.exerciseId}-checkbox`}
-                          mb={2}
-                          checked={isItemSelected(exercise)}
-                          onCheckedChange={() => handleItemChange(exercise)}
-                        >
-                          <Checkbox.HiddenInput />
-                          <Checkbox.Control />
-                          <Checkbox.Label>
-                            <MathDisplay
-                              key={`${exercise.exerciseId}-math`}
-                              description={exercise.description}
-                              mathExpression={exercise.mathExpression}
-                              image={exercise.image}
-                            />
-                          </Checkbox.Label>
-                        </Checkbox.Root>
-                      ))
-                    ) : (
-                      <Text fontSize="sm" color="gray.500">
-                        No hay ejercicios disponibles para este tópico
-                      </Text>
-                    )}
+                      {exercises.length > 0 ? (
+                        exercises.map(exercise => (
+                          <Checkbox.Root
+                            key={`${exercise.exerciseId}-checkbox`}
+                            mb={2}
+                            checked={isItemSelected(exercise)}
+                            onCheckedChange={() => handleItemChange(exercise)}
+                          >
+                            <Checkbox.HiddenInput />
+                            <Checkbox.Control />
+                            <Checkbox.Label>
+                              <MathDisplay
+                                key={`${exercise.exerciseId}-math`}
+                                description={exercise.description}
+                                mathExpression={exercise.mathExpression}
+                                image={exercise.image}
+                              />
+                            </Checkbox.Label>
+                          </Checkbox.Root>
+                        ))
+                      ) : (
+                        <Text fontSize="sm" color="gray.500">
+                          No hay ejercicios disponibles para este tópico
+                        </Text>
+                      )}
                     </Accordion.ItemBody>
                   </Accordion.ItemContent>
                 </Accordion.Item>
@@ -576,7 +572,7 @@ export default withAuth(function ChallengesForm() {
       console.log("challenge", challenge);
       setSelectedExercises(
         extractExercise([{ content: challenge.content, id: challenge.content[0].topics[0].id }]) ||
-        [],
+          [],
       );
       setStartDate(challenge.startDate !== null ? utcToLocalTime(challenge.startDate) : null);
     }
@@ -855,9 +851,7 @@ export default withAuth(function ChallengesForm() {
                     >
                       <Checkbox.HiddenInput />
                       <Checkbox.Control />
-                      <Checkbox.Label>
-                        {group.label}
-                      </Checkbox.Label>
+                      <Checkbox.Label>{group.label}</Checkbox.Label>
                     </Checkbox.Root>
                   </Box>
                 ))}
@@ -976,12 +970,12 @@ export default withAuth(function ChallengesForm() {
       <Drawer.Root
         open={isDrawerOpen}
         placement="end"
-        onOpenChange={(e) => {
+        onOpenChange={e => {
           if (!e.open) setDrawerOpen(false);
         }}
       >
         <Portal>
-          <Drawer.Backdrop/>
+          <Drawer.Backdrop />
           <Drawer.Positioner>
             <Drawer.Content>
               <Drawer.Header> Detalles sobre {detailItem?.title} </Drawer.Header>

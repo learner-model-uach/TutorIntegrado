@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Circle,
-  Popover,
-  Portal
-} from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Circle, Popover, Portal } from "@chakra-ui/react";
 import { useColorModeValue } from "../../ui/color-mode";
 //import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
@@ -78,8 +71,12 @@ const HintButton = ({
 
       <Portal>
         <Popover.Positioner>
-          <Popover.Content color={popoverColor} bg={bg} borderColor={borderColor} css={{ "--popover-bg": bg }}>
-            
+          <Popover.Content
+            color={popoverColor}
+            bg={bg}
+            borderColor={borderColor}
+            css={{ "--popover-bg": bg }}
+          >
             <Popover.Header pt={4} fontWeight="bold" border="0">
               {" "}
               Pista:

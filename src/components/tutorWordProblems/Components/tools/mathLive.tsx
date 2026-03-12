@@ -42,7 +42,7 @@ const Mathfield = (props: MathEditorProps) => {
 
     mfe.className = props.className || "";
     mfe.mathVirtualKeyboardPolicy = "auto";
-    mfe.readOnly = props.readOnly ?? false; 
+    mfe.readOnly = props.readOnly ?? false;
     mfe.environmentPopoverPolicy = "off";
     mfe.resetUndo();
 
@@ -62,7 +62,7 @@ const Mathfield = (props: MathEditorProps) => {
       const key = row?.[10];
       if (key && "shift" in (key as any)) {
         // @ts-ignore
-        delete (key as any).shift; 
+        delete (key as any).shift;
       }
       (window as any).mathVirtualKeyboard.layouts = layout;
     }
@@ -81,12 +81,13 @@ const Mathfield = (props: MathEditorProps) => {
 
     const onInput = (evt: Event) => {
       const value = (evt.target as HTMLInputElement).value || "";
-      const promptValues: Record<string, string> = mfe
-        .getPrompts()
-        .reduce((acc, id) => {
+      const promptValues: Record<string, string> = mfe.getPrompts().reduce(
+        (acc, id) => {
           acc[id] = mfe.getPromptValue(id);
           return acc;
-        }, {} as Record<string, string>);
+        },
+        {} as Record<string, string>,
+      );
 
       if (currentValue.current !== value) {
         currentValue.current = value;

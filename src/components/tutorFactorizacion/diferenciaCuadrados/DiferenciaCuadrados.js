@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MathComponent } from "../../../components/MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { DCstep1 } from "./steps/DCstep1";
@@ -6,15 +6,7 @@ import { DCstep2 } from "./steps/DCstep2";
 import { DCsummary } from "../tools/Summary";
 import { Loading } from "../tools/Spinner";
 import Link from "next/link";
-import {
-  Accordion,
-  Box,
-  Heading,
-  Alert,
-  Wrap,
-  Center,
-  Stack,
-} from "@chakra-ui/react";
+import { Accordion, Box, Heading, Alert, Wrap, Center, Stack } from "@chakra-ui/react";
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
@@ -22,11 +14,11 @@ import { sessionState } from "../../SessionState";
 
 export const DC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
-  
+
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
-  const STEP1="step-1";
-  const STEP2="step-2";
+  const STEP1 = "step-1";
+  const STEP2 = "step-2";
 
   // const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
   const [openItems, setOpenItems] = useState([STEP1]);
@@ -42,7 +34,6 @@ export const DC = ({ exercise, topic }) => {
   extras.steps[0] = extra1;
   extras.steps[1] = extra2;
 
-  
   // para detectar qué item se abrió/cerró cuando cambia el acordeón
   const prevOpenRef = useRef(openItems);
 
@@ -92,15 +83,15 @@ export const DC = ({ exercise, topic }) => {
         multiple
         collapsible
         value={openItems}
-        onValueChange={(e) => {
-          const prev=prevOpenRef.current;
+        onValueChange={e => {
+          const prev = prevOpenRef.current;
           const next = e.value ?? [];
           setOpenItems(next);
 
-          const closed = prev.filter((p)=> !next.includes(p));
-          const opened = next.filter((n)=> !prev.includes(n));
+          const closed = prev.filter(p => !next.includes(p));
+          const opened = next.filter(n => !prev.includes(n));
 
-          if (opened.includes(STEP1)){
+          if (opened.includes(STEP1)) {
             action({
               verbName: "openStep",
               stepID: "" + exercise.steps[0].stepId,
@@ -108,34 +99,34 @@ export const DC = ({ exercise, topic }) => {
               topicID: topic,
             });
           }
-          
-          if (closed.includes(STEP1)){
+
+          if (closed.includes(STEP1)) {
             action({
-              verbName:"closeStep",
+              verbName: "closeStep",
               stepID: "" + exercise.steps[0].stepId,
               contentID: exercise.code,
               topicID: topic,
             });
           }
 
-            if (opened.includes(STEP2) && step1Status != null){
-              action({
-                verbName:"openStep",
-                stepID: "" + exercise.steps[1].stepId,
-                contentID: exercise.code,
-                topicID: topic,
-              });
-            }
-            if (closed.includes(STEP2) && step1Status != null){
-              action({
-                verbName:"closeStep",
-                stepID: "" + exercise.steps[1].stepId,
-                contentID: exercise.code,
-                topicID: topic,
-              });
-            }
+          if (opened.includes(STEP2) && step1Status != null) {
+            action({
+              verbName: "openStep",
+              stepID: "" + exercise.steps[1].stepId,
+              contentID: exercise.code,
+              topicID: topic,
+            });
+          }
+          if (closed.includes(STEP2) && step1Status != null) {
+            action({
+              verbName: "closeStep",
+              stepID: "" + exercise.steps[1].stepId,
+              contentID: exercise.code,
+              topicID: topic,
+            });
+          }
 
-            prevOpenRef.current = next;
+          prevOpenRef.current = next;
         }}
         p="0"
       >
@@ -168,7 +159,7 @@ export const DC = ({ exercise, topic }) => {
                   </Center>
                 </Wrap>
               </Box>
-              <Accordion.ItemIndicator/>
+              <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
           </Alert.Root>
 
@@ -188,7 +179,6 @@ export const DC = ({ exercise, topic }) => {
             </Accordion.ItemBody>
           </Accordion.ItemContent>
         </Accordion.Item>
-
 
         {/* Stept 2 */}
         <Accordion.Item value={STEP2} disabled={select2}>
@@ -219,7 +209,7 @@ export const DC = ({ exercise, topic }) => {
                   </Center>
                 </Wrap>
               </Box>
-              <Accordion.ItemIndicator/>
+              <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
           </Alert.Root>
 

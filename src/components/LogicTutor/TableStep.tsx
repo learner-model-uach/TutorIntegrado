@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Box,
-  Alert,
-  Table,
-  Center,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Box, Alert, Table, Center, Stack } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
 
 import type { ExLog, textAlign } from "./Tools/ExcerciseType2";
@@ -123,15 +116,24 @@ const TableStep = ({
                         </Center>
                       ) : value === "b" ? (
                         <Center>
-                          <BotonAlternar valores={exc.steps[nStep].button[1]} setValor={setValor1} />
+                          <BotonAlternar
+                            valores={exc.steps[nStep].button[1]}
+                            setValor={setValor1}
+                          />
                         </Center>
                       ) : value === "c" ? (
                         <Center>
-                          <BotonAlternar valores={exc.steps[nStep].button[2]} setValor={setValor2} />
+                          <BotonAlternar
+                            valores={exc.steps[nStep].button[2]}
+                            setValor={setValor2}
+                          />
                         </Center>
                       ) : value === "d" ? (
                         <Center>
-                          <BotonAlternar valores={exc.steps[nStep].button[3]} setValor={setValor3} />
+                          <BotonAlternar
+                            valores={exc.steps[nStep].button[3]}
+                            setValor={setValor3}
+                          />
                         </Center>
                       ) : (
                         <Latex strict>{value}</Latex>
@@ -142,7 +144,6 @@ const TableStep = ({
               ))}
             </Table.Body>
           </Table.Root>
-
         </Box>
       )}
       <Stack gap={4} m={2} direction="row" justifyContent={"center"}>

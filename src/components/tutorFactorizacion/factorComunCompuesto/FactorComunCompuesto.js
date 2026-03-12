@@ -51,7 +51,7 @@ export const FCC = ({ exercise, topic }) => {
 
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
-    if (step1Valid != null) setOpenItems([STEP2])
+    if (step1Valid != null) setOpenItems([STEP2]);
   }, [step1Valid]);
 
   useEffect(() => {

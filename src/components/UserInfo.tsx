@@ -40,10 +40,9 @@ export const UserInfo = () => {
   if (!user || !auth0User)
     return (
       <Stack gap={3}>
-        <Button   //Boton de login
+        <Button //Boton de login
           // colorPalette="blue"
           bg={{ base: "loginButton", _hover: "stealblue.600" }}
-          
           color="white"
           fontSize="md"
           fontWeight="semibold"
@@ -97,11 +96,12 @@ export const UserInfo = () => {
           whiteSpace="normal"
         >
           <HStack display="inline-flex">
-            {picture ?
+            {picture ? (
               <Avatar.Root size="sm">
                 <Avatar.Fallback name={name || ""} />
                 <Avatar.Image src={picture} />
-              </Avatar.Root> : null}
+              </Avatar.Root>
+            ) : null}
 
             <Box lineHeight="1" textAlign="left">
               {name ? (
@@ -124,9 +124,7 @@ export const UserInfo = () => {
           <Popover.Content width="auto" position="relative">
             <Flex justify="flex-end" p="2" pb="0">
               <Popover.CloseTrigger asChild>
-                <CloseButton
-                  size="xs"
-                  variant="ghost" />
+                <CloseButton size="xs" variant="ghost" />
               </Popover.CloseTrigger>
             </Flex>
             <Popover.Body pt="1">

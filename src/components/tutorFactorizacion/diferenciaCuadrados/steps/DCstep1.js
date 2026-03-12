@@ -69,8 +69,8 @@ export const DCstep1 = ({
           setFeedbackMsg(
             <Alert.Root status="warning">
               <Alert.Indicator />
-              <Alert.Title> Ingrese respuesta(s) </Alert.Title>         
-            </Alert.Root>
+              <Alert.Title> Ingrese respuesta(s) </Alert.Title>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -82,7 +82,7 @@ export const DCstep1 = ({
             <Alert.Root status="error">
               <Alert.Indicator />
               <Alert.Title> {step1.incorrectMsg} </Alert.Title>
-            </Alert.Root>
+            </Alert.Root>,
           );
         }, 50);
       }

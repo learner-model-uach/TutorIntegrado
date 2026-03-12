@@ -20,10 +20,10 @@ export const DSCstep1 = ({
 
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
-  
+
   const correctAlternatives = step1.answers.map(elemento => elemento.answer); //list of answers valid
   const action = useAction(); //send action to central system
-  
+
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
@@ -73,9 +73,7 @@ export const DSCstep1 = ({
           setFeedbackMsg(
             <Alert.Root status="warning">
               <Alert.Indicator />
-              <Alert.Content>
-                Ingrese respuesta(s)
-              </Alert.Content>
+              <Alert.Content>Ingrese respuesta(s)</Alert.Content>
             </Alert.Root>,
           );
         }, 50);
@@ -86,9 +84,7 @@ export const DSCstep1 = ({
             //error cuando la entrada es incorrecta
             <Alert.Root status="error">
               <Alert.Indicator />
-              <Alert.Content>
-                {step1.incorrectMsg}
-              </Alert.Content>
+              <Alert.Content>{step1.incorrectMsg}</Alert.Content>
             </Alert.Root>,
           );
         }, 50);

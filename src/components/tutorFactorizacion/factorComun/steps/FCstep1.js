@@ -41,7 +41,7 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
       setFeedbackMsg(
         <>
           <Alert.Root status="success">
-            <Alert.Indicator/>
+            <Alert.Indicator />
             <Alert.Content>
               <Alert.Title>{step1.correctMsg}</Alert.Title>
             </Alert.Content>

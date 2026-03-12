@@ -1,9 +1,4 @@
-import {
-  Text,
-  Box,
-  Accordion,
-  Tabs,
-} from "@chakra-ui/react";
+import { Text, Box, Accordion, Tabs } from "@chakra-ui/react";
 import Carousel from "../components/Carrusel";
 
 export default function Tutorial() {
@@ -22,7 +17,9 @@ export default function Tutorial() {
   return (
     <Tabs.Root mt={10} fitted justify="start" variant="enclosed" defaultValue="about">
       <Tabs.List>
-        <Tabs.Trigger value="about" fontSize="lg">Sobre el Tutor</Tabs.Trigger>
+        <Tabs.Trigger value="about" fontSize="lg">
+          Sobre el Tutor
+        </Tabs.Trigger>
       </Tabs.List>
 
       <Tabs.Content value="about">
@@ -116,11 +113,11 @@ export default function Tutorial() {
                 </h2>
                 <Accordion.ItemContent>
                   <Accordion.ItemBody pb={4}>
-                    Cada vez que respondes correctamente un paso en un ejercicio sin ver hints, el Tutor
-                    lo considera como evidencia de que has incrementado tu nivel de aprendizaje. Si tu
-                    respuesta al paso es incorrecta puedes intentar nuevamente y ver hints, pero ya no
-                    contará como evidencia de aprendizaje, hasta que resuelvas correctamente el mismo
-                    paso en otro ejercicio.
+                    Cada vez que respondes correctamente un paso en un ejercicio sin ver hints, el
+                    Tutor lo considera como evidencia de que has incrementado tu nivel de
+                    aprendizaje. Si tu respuesta al paso es incorrecta puedes intentar nuevamente y
+                    ver hints, pero ya no contará como evidencia de aprendizaje, hasta que resuelvas
+                    correctamente el mismo paso en otro ejercicio.
                   </Accordion.ItemBody>
                 </Accordion.ItemContent>
               </Accordion.Item>

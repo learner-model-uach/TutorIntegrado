@@ -1,7 +1,4 @@
-import {
-  Slider,
-  Text,
-} from "@chakra-ui/react";
+import { Slider, Text } from "@chakra-ui/react";
 import { Answers } from "./Answers";
 import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
@@ -14,8 +11,7 @@ const marks = [
   { value: 60, label: <Text color="white">60%</Text> },
   { value: 80, label: <Text color="white">80%</Text> },
   { value: 100, label: <Text color="white">100%</Text> },
-]
-
+];
 
 const Ranked = ({
   index,
@@ -51,11 +47,12 @@ const Ranked = ({
         defaultValue={[50]}
         colorPalette="teal"
         w="80%"
-        style={{
-          // separa los marks por debajo de la pista
-          "--slider-marker-offset": "121px",
-          
-        } as React.CSSProperties}
+        style={
+          {
+            // separa los marks por debajo de la pista
+            "--slider-marker-offset": "121px",
+          } as React.CSSProperties
+        }
         value={[sliderValue]}
         onValueChange={({ value }) => {
           const v = value[0] ?? 0;
@@ -72,22 +69,16 @@ const Ranked = ({
         <Slider.Control>
           <Slider.Track cursor="pointer" bg="gray.400">
             <Slider.Range />
-          </Slider.Track >  
+          </Slider.Track>
           <Slider.Thumb index={0} cursor="button" bg="teal.700">
-            <Slider.DraggingIndicator
-              layerStyle="fill.solid"
-              bottom="6"
-              rounded="sm"
-              px="1.5"
-            >
+            <Slider.DraggingIndicator layerStyle="fill.solid" bottom="6" rounded="sm" px="1.5">
               <Slider.ValueText /> {/* mostrará 0–100 */}
             </Slider.DraggingIndicator>
             <Slider.HiddenInput />
           </Slider.Thumb>
-          <Slider.Marks marks={marks}/>
+          <Slider.Marks marks={marks} />
         </Slider.Control>
       </Slider.Root>
-
     </>
   );
 };

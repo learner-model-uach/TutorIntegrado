@@ -2,12 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
-import {
-  Popover,
-  Button,
-  Flex,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Popover, Button, Flex, ButtonGroup } from "@chakra-ui/react";
 import {
   HINT_NEXT_BUTTOM,
   HINT_BACK_BUTTOM,
@@ -30,7 +25,7 @@ export const Hint = ({
   setHintsShow, // number of times a hint has been shown
 }) => {
   const startAction = useAction({});
-  
+
   const [allHints, setAllHints] = useState([]); // all the hints of the step
   const [countHint, setCountHint] = useState(-1); // index of the element of hintsAvaliableList that the user can currently see
   const [countNotification, setCountNotication] = useState(0);
@@ -163,11 +158,7 @@ export const Hint = ({
   };
 
   return (
-    <Popover.Root 
-      placement="left" 
-      closeOnBlur={false}
-      closeOnInteractOutside={false}
-      >
+    <Popover.Root placement="left" closeOnBlur={false} closeOnInteractOutside={false}>
       <Popover.Trigger>
         <Button
           className={
@@ -183,44 +174,44 @@ export const Hint = ({
       </Popover.Trigger>
 
       <Popover.Positioner>
-      <Popover.Content color="white" bg="blue.800" borderColor="blue.800" width={230}>
-        <Popover.Arrow /> 
-        <Popover.CloseTrigger />
-        <Popover.Header pt={4} fontWeight="bold" border="0">
-          {HEADER_POPOVER_HINT}
-        </Popover.Header>
-        
-        <Popover.Body>
-          <Flex>
-            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>
-          </Flex>
-        </Popover.Body>
+        <Popover.Content color="white" bg="blue.800" borderColor="blue.800" width={230}>
+          <Popover.Arrow />
+          <Popover.CloseTrigger />
+          <Popover.Header pt={4} fontWeight="bold" border="0">
+            {HEADER_POPOVER_HINT}
+          </Popover.Header>
 
-        <Popover.Footer
-          border="0"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          pb={4}
-        >
-          <ButtonGroup size="sm">
-            {countHint != 0 && (
-              <Button colorPalette={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
-                {HINT_BACK_BUTTOM}
-              </Button>
-            )}
-            {countHint + 1 != hintsAvaliableList.length && (
-              <Button
-                colorPalette={POPOVER_NEXT_BUTTOM_COLOR}
-                onClick={handOnClickNext}
-                autoFocus
-              >
-                {HINT_NEXT_BUTTOM}
-              </Button>
-            )}
-          </ButtonGroup>
-        </Popover.Footer>
-      </Popover.Content>
+          <Popover.Body>
+            <Flex>
+              <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>
+            </Flex>
+          </Popover.Body>
+
+          <Popover.Footer
+            border="0"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            pb={4}
+          >
+            <ButtonGroup size="sm">
+              {countHint != 0 && (
+                <Button colorPalette={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
+                  {HINT_BACK_BUTTOM}
+                </Button>
+              )}
+              {countHint + 1 != hintsAvaliableList.length && (
+                <Button
+                  colorPalette={POPOVER_NEXT_BUTTOM_COLOR}
+                  onClick={handOnClickNext}
+                  autoFocus
+                >
+                  {HINT_NEXT_BUTTOM}
+                </Button>
+              )}
+            </ButtonGroup>
+          </Popover.Footer>
+        </Popover.Content>
       </Popover.Positioner>
     </Popover.Root>
   );

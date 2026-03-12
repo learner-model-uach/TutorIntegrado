@@ -15,9 +15,7 @@ export const AlertAnswer = ({ status, text, setOpenAlert, openAlert }) => {
         }}
       >
         <Alert.Indicator />
-        <Alert.Content>
-          {text}
-        </Alert.Content>
+        <Alert.Content>{text}</Alert.Content>
         <CloseButton onClick={() => setOpenAlert(false)} />
       </Alert.Root>
     )

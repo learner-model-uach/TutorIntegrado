@@ -17,9 +17,7 @@ export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) 
           <FaHandPointRight />
         </Box>
 
-        <Box fontSize={{ base: "10px", sm: "12px", md: "16px", xl: "18px" }}>
-          {text}
-        </Box>
+        <Box fontSize={{ base: "10px", sm: "12px", md: "16px", xl: "18px" }}>{text}</Box>
 
         <Text pl="5px">
           {inputLabels != null && answer && stepType === DRAG_FIXED_TWO && (

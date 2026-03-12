@@ -28,7 +28,7 @@ const FCCstep1 = ({
   const compare = () => {
     setFeedbackMsg(null);
     //contador de intentos
-    setAttempts((n) => n + 1);
+    setAttempts(n => n + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
     const responseStudent = [
       response1.current.value

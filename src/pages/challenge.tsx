@@ -11,7 +11,7 @@ import {
   Progress,
   HStack,
   Heading,
-  NativeSelect
+  NativeSelect,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAuth, withAuth } from "../components/Auth";
@@ -925,12 +925,15 @@ const StudentsList = ({ challenges, userByJsonById, allUsersJson, uniqueUsers, u
               <option value="published">Sin finalizar</option>
               <option value="finalized">Finalizado</option>
             </NativeSelect.Field>
-
           </NativeSelect.Root>
 
           {/* Ordenar por fecha */}
           <NativeSelect.Root>
-            <NativeSelect.Field mb={4} value={sortOrder} onChange={e => handleSortChange(e.target.value)}>
+            <NativeSelect.Field
+              mb={4}
+              value={sortOrder}
+              onChange={e => handleSortChange(e.target.value)}
+            >
               <option value="asc">Orden ascendente</option>
               <option value="desc">Orden descendente</option>
             </NativeSelect.Field>
@@ -1168,28 +1171,28 @@ function filterUsersInChallenges(challenges) {
 function updateDataWithEndDate(input: Challenge[] = []) {
   return Array.isArray(input)
     ? input.map(challenge => ({
-      id: challenge?.id,
-      code: challenge?.code,
-      projectId: challenge?.projectId,
-      title: challenge?.title,
-      description: challenge?.description,
-      endDate: new Date(challenge?.endDate).getTime(),
-      status: challenge?.status,
-      enabled: challenge?.enabled,
-      topics: challenge?.topics,
-      startDate: challenge.startDate !== null ? new Date(challenge.startDate).getTime() : null,
-      groups: challenge?.groups.map(group => ({
-        id: group.id,
-        name: group.code,
-        tags: group.tags,
-        students: group?.users?.map(user => ({
-          id: user.id,
-          name: user.email,
-          tags: user.tags,
-          progress: Math.floor(Math.random() * 101),
+        id: challenge?.id,
+        code: challenge?.code,
+        projectId: challenge?.projectId,
+        title: challenge?.title,
+        description: challenge?.description,
+        endDate: new Date(challenge?.endDate).getTime(),
+        status: challenge?.status,
+        enabled: challenge?.enabled,
+        topics: challenge?.topics,
+        startDate: challenge.startDate !== null ? new Date(challenge.startDate).getTime() : null,
+        groups: challenge?.groups.map(group => ({
+          id: group.id,
+          name: group.code,
+          tags: group.tags,
+          students: group?.users?.map(user => ({
+            id: user.id,
+            name: user.email,
+            tags: user.tags,
+            progress: Math.floor(Math.random() * 101),
+          })),
         })),
-      })),
-    }))
+      }))
     : [];
 }
 
@@ -1569,7 +1572,11 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
             <Flex mb={4} gap={4}>
               {/* Filtro por estado */}
               <NativeSelect.Root>
-                <NativeSelect.Field mb={4} value={statusFilter} onChange={e => handleFilterChange(e.target.value)}>
+                <NativeSelect.Field
+                  mb={4}
+                  value={statusFilter}
+                  onChange={e => handleFilterChange(e.target.value)}
+                >
                   <option value="all">Todos</option>
                   <option value="published">Publicado</option>
                   <option value="finalized">Finalizado</option>
@@ -1579,7 +1586,11 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
 
               {/* Ordenar por fecha */}
               <NativeSelect.Root>
-                <NativeSelect.Field mb={4} value={sortOrder} onChange={e => handleSortChange(e.target.value)}>
+                <NativeSelect.Field
+                  mb={4}
+                  value={sortOrder}
+                  onChange={e => handleSortChange(e.target.value)}
+                >
                   <option value="asc">Orden ascendente</option>
                   <option value="desc">Orden descendente</option>
                 </NativeSelect.Field>

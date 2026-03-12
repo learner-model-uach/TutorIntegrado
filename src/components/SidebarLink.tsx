@@ -40,10 +40,8 @@ export const SidebarLink = (props: SidebarLinkProps) => {
   const registerTopic = href
     .substring(href.indexOf("?") + 1)
     .split("&")
-    .map((x) =>
-      x.split("=")[0] === "registerTopic" ? x.split("=")[1] : undefined
-    )
-    .filter((x) => x !== undefined);
+    .map(x => (x.split("=")[0] === "registerTopic" ? x.split("=")[1] : undefined))
+    .filter(x => x !== undefined);
 
   return (
     <LinkBox
@@ -81,15 +79,14 @@ export const SidebarLink = (props: SidebarLinkProps) => {
             </Link>
           ) : (
             <LinkOverlay
-              onClick={(ev) => {
+              onClick={ev => {
                 ev.preventDefault();
                 pathname !== href && push(href);
                 registerTopic[0] &&
-                action({
-                  verbName: "selectTopic",
-                  topicID: registerTopic[0],
-                });
-
+                  action({
+                    verbName: "selectTopic",
+                    topicID: registerTopic[0],
+                  });
               }}
               onMouseOver={() => {
                 pathname !== href && prefetch(href);

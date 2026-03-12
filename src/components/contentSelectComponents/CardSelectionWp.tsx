@@ -1,11 +1,4 @@
-import {
-  LinkBox,
-  LinkOverlay,
-  Heading,
-  Text,
-  HStack,
-  Center,
-} from "@chakra-ui/react";
+import { LinkBox, LinkOverlay, Heading, Text, HStack, Center } from "@chakra-ui/react";
 //import Link from "next/link";
 import NextLink from "next/link";
 import { sessionState, sessionStateBD } from "../SessionState";

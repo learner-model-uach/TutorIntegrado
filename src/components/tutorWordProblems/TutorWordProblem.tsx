@@ -143,7 +143,13 @@ export const TutorWordProblem = ({
     <>
       <Box>
         <Flex flexDirection="column" alignItems="center">
-          <Heading fontSize={"3xl"} fontWeight={"bold"} textAlign={"center"} color="heading" pb="12">
+          <Heading
+            fontSize={"3xl"}
+            fontWeight={"bold"}
+            textAlign={"center"}
+            color="heading"
+            pb="12"
+          >
             {exercise?.presentation.title}
           </Heading>
 
@@ -266,7 +272,7 @@ export const TutorWordProblem = ({
                               collapsible
                               unmountOnExit={false}
                               lazyMount
-                              value={stepExpandedIndices.map((i) => `${quesIndex}-${i}`)}
+                              value={stepExpandedIndices.map(i => `${quesIndex}-${i}`)}
                             >
                               <Accordion.Item
                                 value={`${quesIndex}-${stepIndex}`}
@@ -308,9 +314,7 @@ export const TutorWordProblem = ({
                                         <MathComponent
                                           correctMsg={step.correctMsg ?? "Muy bien!"}
                                           hints={step.hints}
-                                          meta={
-                                            step.componentToAnswer.meta as MathComponentMeta
-                                          }
+                                          meta={step.componentToAnswer.meta as MathComponentMeta}
                                         />
                                       ) : step.componentToAnswer.nameComponent ===
                                         components.GHPC ? (

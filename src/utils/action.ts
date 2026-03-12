@@ -8,7 +8,6 @@ import { ActionInput, gql } from "../graphql";
 export type ActionArguments = Omit<ActionInput, "projectId" | "timestamp">;
 
 export const useAction = (baseAction?: Partial<ActionArguments>) => {
-
   const latestBaseAction = useLatestRef(baseAction);
 
   const mutation = useGQLMutation(

@@ -18,7 +18,7 @@ import { RiDragMove2Fill } from "react-icons/ri";
 
 export const CardsOrderSteps = memo(function Card({ id, text, moveCard, findCard, color }) {
   const originalIndex = findCard(id).index;
-  
+
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: BOX,

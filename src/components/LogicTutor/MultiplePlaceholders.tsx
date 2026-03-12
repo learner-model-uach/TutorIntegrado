@@ -35,8 +35,10 @@ const MultiplePlaceholders = ({
   }, [isCorrectValue, setCompleted]);
 
   const evaluar = () => {
-    setError(false); 
-    interface values { values: Array<value>; }
+    setError(false);
+    interface values {
+      values: Array<value>;
+    }
 
     const answer = exc.steps[nStep].answers[0].answer;
     let respuesta = false;
@@ -68,7 +70,7 @@ const MultiplePlaceholders = ({
       }
     }
 
-    setAttempts((a) => a + 1);
+    setAttempts(a => a + 1);
 
     action({
       verbName: "tryStep",

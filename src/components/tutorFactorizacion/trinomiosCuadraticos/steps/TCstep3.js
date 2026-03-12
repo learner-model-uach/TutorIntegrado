@@ -40,9 +40,7 @@ export const TCstep3 = ({
             <Alert.Root status="warning">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>
-                  Seleccione una alternativa
-                </Alert.Title>
+                <Alert.Title>Seleccione una alternativa</Alert.Title>
               </Alert.Content>
             </Alert.Root>,
           );
@@ -55,9 +53,7 @@ export const TCstep3 = ({
             <Alert.Root status="error">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>
-                  {step3.incorrectMsg}
-                </Alert.Title>
+                <Alert.Title>{step3.incorrectMsg}</Alert.Title>
               </Alert.Content>
             </Alert.Root>,
           );

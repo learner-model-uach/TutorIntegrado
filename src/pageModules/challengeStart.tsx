@@ -329,7 +329,13 @@ const ChallengeStartPage = withAuth(function ChallengesStart() {
       const averageLevelUser = calculateUserProgress(uniqueKcs, userByJsonById) * 100;
       setStudentProgress(averageLevelUser);
     }
-  }, [isKcsByTopicsLoading, dataKcsByTopics, isGroupUsersWithModelStatesLoading, dataGroupUsersWithModelStates, userByJsonById]);
+  }, [
+    isKcsByTopicsLoading,
+    dataKcsByTopics,
+    isGroupUsersWithModelStatesLoading,
+    dataGroupUsersWithModelStates,
+    userByJsonById,
+  ]);
 
   useEffect(() => {
     if (!isChallengeLoading && dataChallenge) {
@@ -764,7 +770,15 @@ const ChallengeStartPage = withAuth(function ChallengesStart() {
         );
       }
     }
-  }, [processedContentResult, processedBestExercise, processedExperimentGroup, isLoading, isError, parameters.CSMain.completeTopic, parameters.CSMain.controlTag]);
+  }, [
+    processedContentResult,
+    processedBestExercise,
+    processedExperimentGroup,
+    isLoading,
+    isError,
+    parameters.CSMain.completeTopic,
+    parameters.CSMain.controlTag,
+  ]);
 
   const createNextExerciseCallback = (exercises: any[], index: number) => {
     if (index >= exercises.length) {

@@ -24,11 +24,7 @@ function Choice({ index, options, itemText, itemId }: ChoiceProps) {
   }, [index, itemId, itemText]);
 
   return (
-    <VStack
-      align="stretch"
-      w="100%"
-      gap="2"
-    >
+    <VStack align="stretch" w="100%" gap="2">
       <Text hidden={sub.sumbmit ? change : true} color="red.500">
         Este campo es requerido
       </Text>
@@ -48,24 +44,14 @@ function Choice({ index, options, itemText, itemId }: ChoiceProps) {
           setChange(true);
         }}
       >
-        {options.map((value) => (
-          <RadioGroup.Item
-            key={value}
-            value={value}
-            w="90%"
-            px="1"
-            py="1"
-            justifyContent="center"
-          >
+        {options.map(value => (
+          <RadioGroup.Item key={value} value={value} w="90%" px="1" py="1" justifyContent="center">
             {/* input accesible */}
             <RadioGroup.ItemHiddenInput />
             {/* “punto” del radio; se muestra con la variante */}
             <RadioGroup.ItemIndicator />
             {/* etiqueta visible */}
-            <RadioGroup.ItemText
-              textAlign="center"
-              fontSize="sm"
-            >
+            <RadioGroup.ItemText textAlign="center" fontSize="sm">
               {value}
             </RadioGroup.ItemText>
           </RadioGroup.Item>

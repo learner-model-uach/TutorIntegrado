@@ -8,28 +8,29 @@ import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { Text, Box } from "@chakra-ui/react";
 import Info from "../utils/Info";
 import type { ExLog } from "../components/LogicTutor/Tools/ExcerciseType2";
-const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(() =>
-  import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
+const DynamicTutorFac = dynamic<{ exercise?: Object; topicId?: string }>(
+  () => import("../components/tutorFactorizacion/TutorFac").then(mod => mod.TutorFac),
   { ssr: false },
 );
 
-const DynamicPlain = dynamic<ComponentProps<typeof Plain>>(() =>
-  import("../components/lvltutor/Plain").then(mod => mod.Plain),
+const DynamicPlain = dynamic<ComponentProps<typeof Plain>>(
+  () => import("../components/lvltutor/Plain").then(mod => mod.Plain),
   { ssr: false },
 );
 
-const DynamicTutorEcu = dynamic<ComponentProps<typeof Tutor>>(() =>
-  import("../components/tutorEcuaciones/Tutor").then(mod => mod.Tutor),
+const DynamicTutorEcu = dynamic<ComponentProps<typeof Tutor>>(
+  () => import("../components/tutorEcuaciones/Tutor").then(mod => mod.Tutor),
   { ssr: false },
 );
 
-const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(() =>
-  import("../components/tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
+const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(
+  () => import("../components/tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
   { ssr: false },
 );
 
-const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(() =>
-  import("../components/tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
+const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(
+  () =>
+    import("../components/tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
   { ssr: false },
 );
 

@@ -148,9 +148,8 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
                         ) : (
                           <BsXLg style={{ color: "white" }} />
                         )
-                      ) : (
-                        null // Dejar vacío cuando no está seleccionado
-                      )}
+                      ) : null // Dejar vacío cuando no está seleccionado
+                      }
                     </Checkbox.Control>
                   </Checkbox.Root>
                   <Text marginY={2}>{answer.value}</Text>

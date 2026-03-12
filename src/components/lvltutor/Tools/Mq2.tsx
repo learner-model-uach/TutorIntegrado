@@ -470,12 +470,7 @@ const Mq2 = ({
           setLastHint={setLastHint}
         />
       </HStack>
-      <Alert.Root 
-        key={"Alert" + topicId + "i"} 
-        status={alertType} 
-        mt={2} 
-        hidden={alertHidden}
-      >
+      <Alert.Root key={"Alert" + topicId + "i"} status={alertType} mt={2} hidden={alertHidden}>
         <Alert.Indicator key={`AlertIcon${topicId}i`} />
         <Alert.Content>
           <Alert.Description>

@@ -68,16 +68,16 @@ export const DSCstep2 = ({
         <Alert.Root status="success">
           <Alert.Indicator />
           <Alert.Content>{step2.correctMsg}</Alert.Content>
-        </Alert.Root>
+        </Alert.Root>,
       );
     } else {
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
-          setFeedbackMsg( 
+          setFeedbackMsg(
             <Alert.Root status="warning">
               <Alert.Indicator />
               <Alert.Title> Ingrese respuesta(s) </Alert.Title>
-            </Alert.Root>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -88,7 +88,7 @@ export const DSCstep2 = ({
             <Alert.Root status="error">
               <Alert.Indicator />
               <Alert.Content>{step2.incorrectMsg}</Alert.Content>
-            </Alert.Root>
+            </Alert.Root>,
           );
         }, 50);
       }

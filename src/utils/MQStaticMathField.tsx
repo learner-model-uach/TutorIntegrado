@@ -2,7 +2,6 @@
 import { StaticMathField } from "react-mathquill";
 import { useState, useEffect } from "react";
 
-
 const mqo = {
   overflow: "visible",
 };

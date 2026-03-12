@@ -92,82 +92,82 @@ export const AccordionSteps = ({ exercise, setNextExercise, setIntro, intro }) =
             color[index] === ACCORDION_COLOR
               ? ACCORDION_COLOR
               : color[index] === CORRECT_ANSWER_COLOR
-              ? CORRECT_ANSWER_COLOR
-              : INCORRECT_ANSWER_COLOR;
-            return(
-              <Accordion.Item
-                isDisabled={!disableState[index]}
-                margin={{ sm: "auto" }}
-                key={index}
-                paddingRight={{ sm: "12px", base: 0 }}
-                style={{ display: "block", width: "100%" }}
-                className={styles["accordionPadding"]}
-              >
-            <Accordion.ItemTrigger bg={bg}>
-              <Box className={listBox[index]} flex="1" p={4} textAlign="left">
-                <AccordionAnswer
-                  nStep={step.n_step}
-                  text={step.left_text}
-                  stepType={step.type}
-                  inputLabels={step.input_labels}
-                  answer={stepCorrect[index]}
-                />
-              </Box>
-              <Accordion.ItemIndicator />
-            </Accordion.ItemTrigger>
-
-            <Accordion.ItemContent
-              pb={4}
-              id="panel"
-              className={listPanels[index]}
-              style={{
-                backgroundColor: BACKGROUND_COLOR_ACCORDION,
-                display: "flex",
-                alignContent: "center",
-                justifyContent: "center",
-              }}
+                ? CORRECT_ANSWER_COLOR
+                : INCORRECT_ANSWER_COLOR;
+          return (
+            <Accordion.Item
+              isDisabled={!disableState[index]}
+              margin={{ sm: "auto" }}
+              key={index}
+              paddingRight={{ sm: "12px", base: 0 }}
+              style={{ display: "block", width: "100%" }}
+              className={styles["accordionPadding"]}
             >
-              {step.type === DRAG_FIXED_TWO ? (
-                <StepEquations
-                  step={step}
-                  key={step.n_step}
-                  setNumStep={setNumStep}
-                  nStep={numStep}
-                  setDisableState={setDisableState}
-                  totalSteps={totalSteps}
-                  setStepCorrect={setStepCorrect}
-                  setColor={setColor}
-                  setNextExercise={setNextExercise}
-                />
-              ) : step.type === INPUT ? (
-                <StepInput
-                  step={step}
-                  key={step.n_step}
-                  setNumStep={setNumStep}
-                  nStep={numStep}
-                  setDisableState={setDisableState}
-                  totalSteps={totalSteps}
-                  setStepCorrect={setStepCorrect}
-                  setColor={setColor}
-                  setNextExercise={setNextExercise}
-                />
-              ) : (
-                <StepPanel
-                  step={step}
-                  key={step.n_step}
-                  setNumStep={setNumStep}
-                  nStep={numStep}
-                  setDisableState={setDisableState}
-                  totalSteps={totalSteps}
-                  setStepCorrect={setStepCorrect}
-                  setColor={setColor}
-                  setIntro={setIntro}
-                  setNextExercise={setNextExercise}
-                />
-              )}
-            </Accordion.ItemContent>
-          </Accordion.Item>
-          )
+              <Accordion.ItemTrigger bg={bg}>
+                <Box className={listBox[index]} flex="1" p={4} textAlign="left">
+                  <AccordionAnswer
+                    nStep={step.n_step}
+                    text={step.left_text}
+                    stepType={step.type}
+                    inputLabels={step.input_labels}
+                    answer={stepCorrect[index]}
+                  />
+                </Box>
+                <Accordion.ItemIndicator />
+              </Accordion.ItemTrigger>
+
+              <Accordion.ItemContent
+                pb={4}
+                id="panel"
+                className={listPanels[index]}
+                style={{
+                  backgroundColor: BACKGROUND_COLOR_ACCORDION,
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {step.type === DRAG_FIXED_TWO ? (
+                  <StepEquations
+                    step={step}
+                    key={step.n_step}
+                    setNumStep={setNumStep}
+                    nStep={numStep}
+                    setDisableState={setDisableState}
+                    totalSteps={totalSteps}
+                    setStepCorrect={setStepCorrect}
+                    setColor={setColor}
+                    setNextExercise={setNextExercise}
+                  />
+                ) : step.type === INPUT ? (
+                  <StepInput
+                    step={step}
+                    key={step.n_step}
+                    setNumStep={setNumStep}
+                    nStep={numStep}
+                    setDisableState={setDisableState}
+                    totalSteps={totalSteps}
+                    setStepCorrect={setStepCorrect}
+                    setColor={setColor}
+                    setNextExercise={setNextExercise}
+                  />
+                ) : (
+                  <StepPanel
+                    step={step}
+                    key={step.n_step}
+                    setNumStep={setNumStep}
+                    nStep={numStep}
+                    setDisableState={setDisableState}
+                    totalSteps={totalSteps}
+                    setStepCorrect={setStepCorrect}
+                    setColor={setColor}
+                    setIntro={setIntro}
+                    setNextExercise={setNextExercise}
+                  />
+                )}
+              </Accordion.ItemContent>
+            </Accordion.Item>
+          );
         })}
       </Accordion.Root>
     </Flex>

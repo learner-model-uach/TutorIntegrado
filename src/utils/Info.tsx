@@ -1,13 +1,5 @@
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import {
-  IconButton,
-  Popover,
-  Portal,
-  Box,
-  VStack,
-  Heading,
-  HStack,
-} from "@chakra-ui/react";
+import { IconButton, Popover, Portal, Box, VStack, Heading, HStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAction } from "../utils/action";
 import { sessionState } from "../components/SessionState";
@@ -124,7 +116,7 @@ const Info = ({ exType }: { exType?: string }) => {
             aria-label="Call Sage"
             variant="outline"
             colorPalette="teal"
-            _icon={{ fontSize: "20px" }}   // tamaño del ícono
+            _icon={{ fontSize: "20px" }} // tamaño del ícono
           >
             <BsFillInfoCircleFill />
           </IconButton>
@@ -138,9 +130,7 @@ const Info = ({ exType }: { exType?: string }) => {
               <Popover.Body>{exType ? <AyudaMQ exType={exType} /> : <AyudaMQ />}</Popover.Body>
             </Popover.Content>
           </Popover.Positioner>
-
         </Portal>
-
       </Popover.Root>
     </Box>
   );

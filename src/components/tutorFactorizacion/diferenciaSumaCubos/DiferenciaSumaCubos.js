@@ -76,18 +76,18 @@ export const DSC = ({ exercise, topic }) => {
         />
       </Wrap>
 
-      <Accordion.Root 
+      <Accordion.Root
         collapsible
         multiple
-        p="0" 
+        p="0"
         value={openItems}
-        onValueChange={(e)=>{
+        onValueChange={e => {
           const next = Array.isArray(e) ? e : (e?.value ?? []);
-          setOpenItems((prev)=>{
-            const closed = prev.filter((p)=> !next.includes(p));
-            const opened = next.filter((n) => !prev.includes(n));
+          setOpenItems(prev => {
+            const closed = prev.filter(p => !next.includes(p));
+            const opened = next.filter(n => !prev.includes(n));
 
-            if (opened.includes(STEP1)){
+            if (opened.includes(STEP1)) {
               action({
                 verbName: "openStep",
                 stepID: "" + exercise.steps[0].stepId,
@@ -96,7 +96,7 @@ export const DSC = ({ exercise, topic }) => {
               });
             }
 
-            if (closed.includes(STEP1)){
+            if (closed.includes(STEP1)) {
               action({
                 verbName: "closeStep",
                 stepID: "" + exercise.steps[0].stepId,
@@ -105,7 +105,7 @@ export const DSC = ({ exercise, topic }) => {
               });
             }
 
-            if (opened.includes(STEP2) && step1Valid != null){
+            if (opened.includes(STEP2) && step1Valid != null) {
               action({
                 verbName: "openStep",
                 stepID: "" + exercise.steps[1].stepId,
@@ -113,8 +113,8 @@ export const DSC = ({ exercise, topic }) => {
                 topicID: topic,
               });
             }
-  
-            if (closed.includes(STEP2) && step1Valid != null){
+
+            if (closed.includes(STEP2) && step1Valid != null) {
               action({
                 verbName: "closeStep",
                 stepID: "" + exercise.steps[1].stepId,
@@ -127,10 +127,7 @@ export const DSC = ({ exercise, topic }) => {
         }}
       >
         {/* Step 1 */}
-        <Accordion.Item 
-          value={STEP1} 
-          disabled={select}
-        >
+        <Accordion.Item value={STEP1} disabled={select}>
           <Alert.Root status={step1Status}>
             <Accordion.ItemTrigger>
               <Box flex="1" textAlign="left" w="full">
@@ -142,7 +139,7 @@ export const DSC = ({ exercise, topic }) => {
                         {step1Valid != null && "    ✔ "}
                       </>
                     )}
-                    {select && ( 
+                    {select && (
                       <Wrap>
                         Paso 1:
                         <SelectStep
@@ -157,7 +154,7 @@ export const DSC = ({ exercise, topic }) => {
                   </Center>
                 </Wrap>
               </Box>
-              <Accordion.ItemIndicator/>
+              <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
           </Alert.Root>
 
@@ -180,9 +177,7 @@ export const DSC = ({ exercise, topic }) => {
         {/* Step 2 */}
 
         <Accordion.Item value={STEP2} disabled={select2}>
-          <Alert.Root
-            status={step2Status}
-          >
+          <Alert.Root status={step2Status}>
             <Accordion.ItemTrigger>
               <Box flex="1" textAlign="left" w="full">
                 <Wrap>
@@ -208,7 +203,7 @@ export const DSC = ({ exercise, topic }) => {
                   </Center>
                 </Wrap>
               </Box>
-              <Accordion.ItemIndicator/>
+              <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
           </Alert.Root>
 

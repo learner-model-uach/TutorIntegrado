@@ -120,8 +120,6 @@ function handleAnswer(
   return output;
 }
 
-
-
 function ChoiceContent({ option, id }: { option: option; id: number }) {
   let text = option.text;
   let exp = option.expression;
@@ -169,11 +167,11 @@ function CChoice({
         colorPalette="teal"
       >
         <SimpleGrid columns={[1, 1, 1, 2]} columnGap="2" rowGap="2">
-          {options.map((v) => (
+          {options.map(v => (
             <RadioCard.Item key={v.id} value={String(v.id)}>
               <RadioCard.ItemHiddenInput />
               <RadioCard.ItemControl cursor={"pointer"}>
-                <RadioCard.ItemIndicator/>
+                <RadioCard.ItemIndicator />
                 <RadioCard.ItemText>
                   <ChoiceContent option={v} id={v.id} />
                 </RadioCard.ItemText>
@@ -191,12 +189,12 @@ function CChoice({
             onClick={() => {
               const selected = value ?? "";
               let ans = handleAnswer(
-                step.multipleChoice.find((e) => String(e.id) === selected)!,
+                step.multipleChoice.find(e => String(e.id) === selected)!,
                 step.multipleChoice,
                 selected,
                 attempts,
                 step.stepId,
-              )
+              );
 
               let ansv = "";
               for (let e of step.multipleChoice)
@@ -242,12 +240,7 @@ function CChoice({
           setLastHint={setLastHint}
         />
       </HStack>
-      <Alert.Root
-        key={`Alert${topicId}i`}
-        status={alertType}
-        mt={2}
-        hidden={alertHidden}
-      >
+      <Alert.Root key={`Alert${topicId}i`} status={alertType} mt={2} hidden={alertHidden}>
         <Alert.Content>
           <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(20, 1fr)">
             <GridItem rowSpan={1} colSpan={1}>

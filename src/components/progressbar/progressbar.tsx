@@ -1,14 +1,4 @@
-import {
-  HStack,
-  Box,
-  Image,
-  Text,
-  Grid,
-  GridItem,
-  Popover,     
-  Button,
-} from "@chakra-ui/react";
-
+import { HStack, Box, Image, Text, Grid, GridItem, Popover, Button } from "@chakra-ui/react";
 
 function Pbinfo(info?: string) {
   return (

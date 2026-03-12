@@ -10,7 +10,8 @@ import {
   Text,
   Separator,
   HStack,
-  VStack, defaultSystem,
+  VStack,
+  defaultSystem,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useGQLQuery } from "rq-gql";
@@ -137,9 +138,9 @@ const RecursiveAccordion = ({ data, setSelectedItems, selectedItems = [] }) => {
                     checked={isItemSelected(item.id)}
                     onCheckedChange={() => {
                       if (item.subtopics?.length) {
-                        handleParentChange(item)
+                        handleParentChange(item);
                       } else {
-                        handleChildChange(item.parent, item)
+                        handleChildChange(item.parent, item);
                       }
                     }}
                     value={item.id}
@@ -148,9 +149,7 @@ const RecursiveAccordion = ({ data, setSelectedItems, selectedItems = [] }) => {
                     <Checkbox.Control>
                       <Checkbox.Indicator />
                     </Checkbox.Control>
-                    <Checkbox.Label>
-                      {item.title}
-                    </Checkbox.Label>
+                    <Checkbox.Label>{item.title}</Checkbox.Label>
                   </Checkbox.Root>
                 </Box>
                 {item.subtopics?.length > 0 && <Accordion.ItemIndicator />}
@@ -159,16 +158,14 @@ const RecursiveAccordion = ({ data, setSelectedItems, selectedItems = [] }) => {
 
             <Accordion.ItemContent pb={4}>
               {item.subtopics?.length > 0 ? (
-
-                  <RecursiveAccordion
-                    data={item.subtopics.map(subtopic => ({
-                      ...subtopic,
-                      parent: item,
-                    }))}
-                    setSelectedItems={setSelectedItems}
-                    selectedItems={selectedItems}
-                  />
-
+                <RecursiveAccordion
+                  data={item.subtopics.map(subtopic => ({
+                    ...subtopic,
+                    parent: item,
+                  }))}
+                  setSelectedItems={setSelectedItems}
+                  selectedItems={selectedItems}
+                />
               ) : (
                 <Accordion.ItemBody>
                   <Button size="sm">Ver descripción</Button>
@@ -260,62 +257,65 @@ const MathRecursiveAccordion = ({ data }) => {
           <Box>
             {data.map(topic => {
               const exercises = extractExercise([topic]);
-            return (
-              <Accordion.Item  key={topic.id} value={topic.id}>
-                <h2>
-                  <Accordion.ItemTrigger>
-                    <Box flex="1" textAlign="left">
-                      <Text fontWeight="bold" mb={2}>
-                        {topic.title}
-                      </Text>
-                    </Box>
-                    {topic.content?.length > 0 && (
-                      <Accordion.ItemIndicator/>
-                    )}
-                  </Accordion.ItemTrigger>
-                </h2>
-                <Accordion.ItemContent>
-                  <Accordion.ItemBody>
-                    {exercises.length > 0 ? (
-                      <VStack gap={4} align="stretch">
-                        {exercises.map((exercise, index) => (
-                          <Box key={`${topic.id}-${index}`}>
-                            <HStack align="start" gap={4}>
-                              {/* Texto en el lado izquierdo */}
-                              <Box flex="1">
-                                <Text fontWeight="bold" fontSize="lg">
-                                  {exercise.exerciseId}
-                                </Text>
-                              </Box>
+              return (
+                <Accordion.Item key={topic.id} value={topic.id}>
+                  <h2>
+                    <Accordion.ItemTrigger>
+                      <Box flex="1" textAlign="left">
+                        <Text fontWeight="bold" mb={2}>
+                          {topic.title}
+                        </Text>
+                      </Box>
+                      {topic.content?.length > 0 && <Accordion.ItemIndicator />}
+                    </Accordion.ItemTrigger>
+                  </h2>
+                  <Accordion.ItemContent>
+                    <Accordion.ItemBody>
+                      {exercises.length > 0 ? (
+                        <VStack gap={4} align="stretch">
+                          {exercises.map((exercise, index) => (
+                            <Box key={`${topic.id}-${index}`}>
+                              <HStack align="start" gap={4}>
+                                {/* Texto en el lado izquierdo */}
+                                <Box flex="1">
+                                  <Text fontWeight="bold" fontSize="lg">
+                                    {exercise.exerciseId}
+                                  </Text>
+                                </Box>
 
-                              {/* MathDisplay a la derecha */}
-                              <Box flex="2">
-                                <MathDisplay
-                                  description={exercise.description}
-                                  mathExpression={exercise.mathExpression}
-                                  image={exercise.image}
+                                {/* MathDisplay a la derecha */}
+                                <Box flex="2">
+                                  <MathDisplay
+                                    description={exercise.description}
+                                    mathExpression={exercise.mathExpression}
+                                    image={exercise.image}
+                                  />
+                                </Box>
+                              </HStack>
+                              {/* Divider excepto en la última fila */}
+                              {index < exercises.length - 1 && (
+                                <Separator
+                                  my={4}
+                                  borderColor="gray.300"
+                                  borderWidth="2px"
+                                  opacity={1}
                                 />
-                              </Box>
-                            </HStack>
-                            {/* Divider excepto en la última fila */}
-                            {index < exercises.length - 1 && (
-                              <Separator my={4} borderColor="gray.300" borderWidth="2px" opacity={1} />
-                            )}
-                          </Box>
-                        ))}
-                      </VStack>
-                    ) : (
-                      <Text fontSize="sm" color="gray.500">
-                        No hay ejercicios disponibles para este tópico
-                      </Text>
-                    )}
-                  </Accordion.ItemBody>
-                </Accordion.ItemContent>
-              </Accordion.Item>
-            );
-          })}
-        </Box>
-      )}
+                              )}
+                            </Box>
+                          ))}
+                        </VStack>
+                      ) : (
+                        <Text fontSize="sm" color="gray.500">
+                          No hay ejercicios disponibles para este tópico
+                        </Text>
+                      )}
+                    </Accordion.ItemBody>
+                  </Accordion.ItemContent>
+                </Accordion.Item>
+              );
+            })}
+          </Box>
+        )}
       </Accordion.Root>
     </>
   );

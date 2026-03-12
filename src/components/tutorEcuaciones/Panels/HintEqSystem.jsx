@@ -197,11 +197,11 @@ export const HintEqSystem = ({
       <Popover.Positioner>
         <Popover.Content color="white" bg="blue.800" borderColor="blue.800" width={230}>
           <Popover.Arrow />
-          <Popover.CloseTrigger/>
+          <Popover.CloseTrigger />
           <Popover.Header pt={4} fontWeight="bold" border="0">
             {HEADER_POPOVER_HINT}
           </Popover.Header>
-        
+
           <Popover.Body>
             <Flex>
               <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>

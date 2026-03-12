@@ -11,16 +11,10 @@ export const FeedbackTutorial = ({ showFeedback }) => {
   }, [showFeedback]);
 
   return (
-    <Modal.Root 
-      open={showF} 
-      onOpenChange={({ open }) => setShowF(open)} 
-      size="xl"
-    >
+    <Modal.Root open={showF} onOpenChange={({ open }) => setShowF(open)} size="xl">
       <Modal.Overlay />
       <Modal.Content>
-        <Modal.Header m="auto">
-          Has completado correctamente el tutorial
-        </Modal.Header>
+        <Modal.Header m="auto">Has completado correctamente el tutorial</Modal.Header>
         <Modal.CloseTrigger />
 
         <Modal.Body fontSize="20px" m="auto">

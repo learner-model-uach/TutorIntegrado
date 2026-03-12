@@ -10,7 +10,6 @@ import { AlertStatus } from "../types";
 import type { Hint, linearFitMeta, slider } from "../types";
 import { useAction } from "../../../utils/action";
 
-
 interface Props {
   meta: linearFitMeta;
   hints: Hint[];

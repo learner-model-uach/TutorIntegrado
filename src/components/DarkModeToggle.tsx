@@ -1,4 +1,4 @@
-import { ColorModeButton} from "./ui/color-mode";
+import { ColorModeButton } from "./ui/color-mode";
 
 export const DarkModeToggle = () => {
   return (

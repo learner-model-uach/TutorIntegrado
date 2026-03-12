@@ -46,7 +46,13 @@ export default withAuth(function WpExercises() {
   return (
     <>
       <Center>
-        <Heading fontSize={"3xl"} fontWeight={"bold"} textAlign={"center"} color="heading" marginBottom="4">
+        <Heading
+          fontSize={"3xl"}
+          fontWeight={"bold"}
+          textAlign={"center"}
+          color="heading"
+          marginBottom="4"
+        >
           {parameters.CSMain.title}
           {parameters.CSMain.topic10.topic}
         </Heading>

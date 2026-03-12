@@ -91,8 +91,8 @@ const Alternatives = ({
         <Alert.Root status="error">
           <Alert.Indicator />
           <Alert.Content>
-          <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
-        </Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
         </Alert.Root>
       ) : (
         <Alert.Root status="success">

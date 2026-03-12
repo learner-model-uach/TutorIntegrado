@@ -105,67 +105,68 @@ export default withAuth(function TopicSelect() {
 
   return (
     <>
-      <Center as="section"py="8">
+      <Center as="section" py="8">
         <Container maxW="8xl" px="4">
-
-        
-        <Heading color="heading" fontSize={"3xl"} fontWeight={"bold"} mb="2" textAlign={"center"}>
-          {parameters.CSMain.title}
-          {registerTopic == parameters.CSMain.topic1.registerTopic
-            ? parameters.CSMain.topic1.topic
-            : registerTopic == parameters.CSMain.topic2.registerTopic
-              ? parameters.CSMain.topic2.topic
-              : registerTopic == parameters.CSMain.topic3.registerTopic
-                ? parameters.CSMain.topic3.topic
-                : registerTopic == parameters.CSMain.topic4.registerTopic
-                  ? parameters.CSMain.topic4.topic
-                  : registerTopic == parameters.CSMain.topic5.registerTopic
-                    ? parameters.CSMain.topic5.topic
-                    : registerTopic == parameters.CSMain.topic6.registerTopic
-                      ? parameters.CSMain.topic6.topic
-                      : registerTopic == parameters.CSMain.topic7.registerTopic
-                        ? parameters.CSMain.topic7.topic
-                        : registerTopic == parameters.CSMain.topic8.registerTopic
-                          ? parameters.CSMain.topic8.topic
-                          : registerTopic == parameters.CSMain.topic9.registerTopic
-                            ? parameters.CSMain.topic9.topic
-                            : registerTopic == parameters.CSMain.topic10.registerTopic
-                              ? parameters.CSMain.topic10.topic
-                              : registerTopic == parameters.CSMain.topic11.registerTopic
-                                ? parameters.CSMain.topic11.topic
-                                : parameters.CSMain.topic12.topic}
-        </Heading>
-        <Text textAlign="center"mb="5">Lista de subtópicos</Text>
-        <Box w="full" mx="auto" p={4}>
-          <SimpleGrid 
-            columns={{ base: 1, md: 2, xl: 3 }}
-            gap={10}
-            mt="4"
-            justifyContent="center"   // centra la cuadrícula dentro del ancho disponible
-            justifyItems="center"     //
-      >
-            {!Subtopic.isLoading &&
-              !selectedExcercise.isLoading &&
-              sortedChildrens
-                .filter((ejercicio) => {
-                  const hasExercises = selectedExcercise.kcXtopic[ejercicio.id] &&
-                    selectedExcercise.kcXtopic[ejercicio.id].length > 0;
-                  if (!hasExercises) {
-                    console.log("Tópico sin ejercicios", ejercicio.label);
-                  }
-                  return hasExercises;
-                })
-                .map((ejercicio, i) => (
-                  <CardSelectionTopic
-                    key={ejercicio.id}
-                    id={ejercicio.id}
-                    index={i}
-                    label={ejercicio.label}
-                    KCs={selectedExcercise.kcXtopic[ejercicio.id] || []}
-                  />
-                ))}
-          </SimpleGrid>
-        </Box>
+          <Heading color="heading" fontSize={"3xl"} fontWeight={"bold"} mb="2" textAlign={"center"}>
+            {parameters.CSMain.title}
+            {registerTopic == parameters.CSMain.topic1.registerTopic
+              ? parameters.CSMain.topic1.topic
+              : registerTopic == parameters.CSMain.topic2.registerTopic
+                ? parameters.CSMain.topic2.topic
+                : registerTopic == parameters.CSMain.topic3.registerTopic
+                  ? parameters.CSMain.topic3.topic
+                  : registerTopic == parameters.CSMain.topic4.registerTopic
+                    ? parameters.CSMain.topic4.topic
+                    : registerTopic == parameters.CSMain.topic5.registerTopic
+                      ? parameters.CSMain.topic5.topic
+                      : registerTopic == parameters.CSMain.topic6.registerTopic
+                        ? parameters.CSMain.topic6.topic
+                        : registerTopic == parameters.CSMain.topic7.registerTopic
+                          ? parameters.CSMain.topic7.topic
+                          : registerTopic == parameters.CSMain.topic8.registerTopic
+                            ? parameters.CSMain.topic8.topic
+                            : registerTopic == parameters.CSMain.topic9.registerTopic
+                              ? parameters.CSMain.topic9.topic
+                              : registerTopic == parameters.CSMain.topic10.registerTopic
+                                ? parameters.CSMain.topic10.topic
+                                : registerTopic == parameters.CSMain.topic11.registerTopic
+                                  ? parameters.CSMain.topic11.topic
+                                  : parameters.CSMain.topic12.topic}
+          </Heading>
+          <Text textAlign="center" mb="5">
+            Lista de subtópicos
+          </Text>
+          <Box w="full" mx="auto" p={4}>
+            <SimpleGrid
+              columns={{ base: 1, md: 2, xl: 3 }}
+              gap={10}
+              mt="4"
+              justifyContent="center" // centra la cuadrícula dentro del ancho disponible
+              justifyItems="center" //
+            >
+              {!Subtopic.isLoading &&
+                !selectedExcercise.isLoading &&
+                sortedChildrens
+                  .filter(ejercicio => {
+                    const hasExercises =
+                      selectedExcercise.kcXtopic[ejercicio.id] &&
+                      selectedExcercise.kcXtopic[ejercicio.id].length > 0;
+                    if (!hasExercises) {
+                      console.log("Tópico sin ejercicios", ejercicio.label);
+                    }
+                    return hasExercises;
+                  })
+                  .map((ejercicio, i) => (
+                    <CardSelectionTopic
+                      key={ejercicio.id}
+                      id={ejercicio.id}
+                      index={i}
+                      label={ejercicio.label}
+                      KCs={selectedExcercise.kcXtopic[ejercicio.id] || []}
+                    />
+                  ))}
+            </SimpleGrid>
+          </Box>
         </Container>
       </Center>
     </>

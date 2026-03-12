@@ -1,13 +1,7 @@
 import { useRef } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  Dialog,
-  Button,
-  Portal,
-  CloseButton, 
-  Text
-} from "@chakra-ui/react";
+import { Dialog, Button, Portal, CloseButton, Text } from "@chakra-ui/react";
 import { AuthState } from "./Auth";
 
 export function Logout() {
@@ -16,9 +10,7 @@ export function Logout() {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button colorPalette="red">
-          Logout
-        </Button>
+        <Button colorPalette="red">Logout</Button>
       </Dialog.Trigger>
       <Portal>
         <Dialog.Backdrop />
@@ -26,12 +18,12 @@ export function Logout() {
           <Dialog.Content>
             <Dialog.Header>
               <Dialog.Title>
-                <Text fontSize="lg" fontWeight="bold">Logout</Text>
+                <Text fontSize="lg" fontWeight="bold">
+                  Logout
+                </Text>
               </Dialog.Title>
             </Dialog.Header>
-            <Dialog.Body>
-              Are you sure you want to log out?
-            </Dialog.Body>
+            <Dialog.Body>Are you sure you want to log out?</Dialog.Body>
 
             <Dialog.Footer>
               <Dialog.ActionTrigger asChild>
@@ -56,7 +48,6 @@ export function Logout() {
             <Dialog.CloseTrigger asChild>
               <CloseButton size="sm" />
             </Dialog.CloseTrigger>
-
           </Dialog.Content>
         </Dialog.Positioner>
       </Portal>

@@ -1,5 +1,5 @@
 import { Heading, Text, HStack, Center, Separator, Box } from "@chakra-ui/react";
-import { useColorModeValue} from "../ui/color-mode";
+import { useColorModeValue } from "../ui/color-mode";
 //import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { selectionDataType, sessionState, sessionStateBD } from "../SessionState";

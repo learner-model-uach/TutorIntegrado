@@ -6,9 +6,9 @@ import {
   Wrap,
   WrapItem,
   Spinner,
-  Heading
+  Heading,
 } from "@chakra-ui/react";
-import { useColorModeValue} from "../ui/color-mode";
+import { useColorModeValue } from "../ui/color-mode";
 //import { MathComponent } from "mathjax-react";
 import dynamic from "next/dynamic";
 import type { ComponentProps } from "react";
@@ -47,9 +47,7 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
     <>
       <Center>
         <Wrap padding="15px 10px 10px 10px">
-          <Center>
-            {/* <WrapItem>{parameters.lastExercise.lastExerciseDone}</WrapItem> */}
-          </Center>
+          <Center>{/* <WrapItem>{parameters.lastExercise.lastExerciseDone}</WrapItem> */}</Center>
           <WrapItem>
             <LinkBox
               color="heading"
@@ -64,17 +62,19 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
               {!isLoading && !isError && lastExercise ? (
                 <>
                   <LinkOverlay fontSize=".8em">
-                  <Heading fontSize="md" fontWeight="bold">{parameters.lastExercise.lastExerciseDone}</Heading>
+                    <Heading fontSize="md" fontWeight="bold">
+                      {parameters.lastExercise.lastExerciseDone}
+                    </Heading>
                     <span>Ejercicio de </span>{" "}
                     <span style={{ fontWeight: "bold" }}>
                       {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type
-                      ? parameters.lastExercise.topic1.name
-                      : data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type
-                      ? parameters.lastExercise.topic2.name
-                      : data?.contentByCode.json?.type == parameters.lastExercise.topic3.type
-                      ? parameters.lastExercise.topic3.name
-                      : String(data?.contentByCode?.json?.title || '')}
-                      </span>
+                        ? parameters.lastExercise.topic1.name
+                        : data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type
+                          ? parameters.lastExercise.topic2.name
+                          : data?.contentByCode.json?.type == parameters.lastExercise.topic3.type
+                            ? parameters.lastExercise.topic3.name
+                            : String(data?.contentByCode?.json?.title || "")}
+                    </span>
                   </LinkOverlay>
 
                   <br />
@@ -82,9 +82,9 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                     {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type ||
                     data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type ||
                     data?.contentByCode?.json?.type == parameters.lastExercise.topic3.type ? (
-                      <TeX>{String(data?.contentByCode?.json?.title || '')}</TeX>
+                      <TeX>{String(data?.contentByCode?.json?.title || "")}</TeX>
                     ) : (
-                      String(data?.contentByCode?.json?.text || '')
+                      String(data?.contentByCode?.json?.text || "")
                     )}
                   </Text>
                   <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
@@ -112,10 +112,11 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                 <Spinner />
               ) : (
                 <>
-                  <Heading fontSize="md" fontWeight="bold">{parameters.lastExercise.lastExerciseDone}</Heading>
-                  
-                  
-                <Text>{parameters.lastExercise.noDataTarget}</Text>
+                  <Heading fontSize="md" fontWeight="bold">
+                    {parameters.lastExercise.lastExerciseDone}
+                  </Heading>
+
+                  <Text>{parameters.lastExercise.noDataTarget}</Text>
                 </>
               )}
             </LinkBox>
