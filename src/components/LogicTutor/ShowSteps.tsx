@@ -21,14 +21,12 @@ const extras = { steps: {} };
 const ShowSteps = ({
   exc,
   nStep,
-  Step,
   setStep,
   topic,
 }: {
   exc: ExLog;
   nStep: number;
-  Step: any;
-  setStep: any;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
   topic: string;
 }) => {
   const [completed, setCompleted] = useState(false);
@@ -36,11 +34,13 @@ const ShowSteps = ({
   const [changed, setChanged] = useState(false);
   const action = useAction();
   const [report, setReport] = useState(true);
-  const [color, setColor] = useState("#bee3f8");
+  const [ color, setColor] = useState("accordion_step");
+  const [textColor, setTexColor] = useState("accordion_step_text");
 
   useEffect(() => {
     if (completed && !changed) {
-      setColor("#C6F6D5");
+      setColor("accordion_success");
+      setTexColor("accordion_success_text")
       if (next !== -1) setStep(next);
       if (report) {
         action({
@@ -57,57 +57,55 @@ const ShowSteps = ({
   }, [completed, changed, next, setStep, report, action, exc.code, topic]);
 
   return (
-    <Accordion.Item value={String(nStep)}>
-      <Accordion.ItemTrigger
-        style={{ backgroundColor: color }}
-        onClick={() => {
-          setStep((prev: number) => (prev === nStep ? -1 : nStep));
-        }}
-      >
-        <Box
-          as="span"
-          flex="1"
-          textAlign="center"
-          fontSize={{ base: "12px", sm: "15px", lg: "20px" }}
-        >
-          <Box mr={1}>
+    <>
+      <Accordion.Item value={String(nStep)} w="100%" border="none">
+        <Accordion.ItemTrigger bg={color} color={textColor} px={4} >
+          
+          <Box p={3}>
             <FaHandPointRight />
+          </Box>
+          <Box as="span" flex="1">
             <Latex>{exc.steps[nStep].stepTitle}</Latex>
           </Box>
-        </Box>
-        <Accordion.ItemIndicator />
-      </Accordion.ItemTrigger>
+          <Accordion.ItemIndicator />
+        </Accordion.ItemTrigger>
 
-      <Accordion.ItemContent>
-        <Accordion.ItemBody pb={8} zIndex={nStep}>
-          {exc.steps[nStep].stepType === "TrueFalse" && (
-            <TrueFalse exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-          )}
-          {exc.steps[nStep].stepType === "Blank" && (
-            <Blank exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-          )}
-          {exc.steps[nStep].stepType === "Alternatives" && (
-            <Alternatives exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-          )}
-          {exc.steps[nStep].stepType === "InputButtons" && (
-            <InputButtons exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-          )}
-          {exc.steps[nStep].stepType === "MultiplePlaceholders" && (
-            <MultiplePlaceholders
-              exc={exc}
-              nStep={nStep}
-              setCompleted={setCompleted}
-              topic={topic}
-            />
-          )}
-          {exc.steps[nStep].stepType === "SinglePlaceholder" && (
-            <SinglePlaceholder exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-          )}
-          {exc.steps[nStep].stepType === "TableStep" && (
-            <TableStep exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-          )}
-        </Accordion.ItemBody>
-      </Accordion.ItemContent>
+        <Accordion.ItemContent>
+          <Accordion.ItemBody px={4} pb={8} zIndex={nStep}>
+            {exc.steps[nStep].stepType === "TrueFalse" && (
+              <TrueFalse exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
+            )}
+            {exc.steps[nStep].stepType === "Blank" && (
+              <Blank exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
+            )}
+            {exc.steps[nStep].stepType === "Alternatives" && (
+              <Alternatives exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
+            )}
+            {exc.steps[nStep].stepType === "InputButtons" && (
+              <InputButtons exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
+            )}
+            {exc.steps[nStep].stepType === "MultiplePlaceholders" && (
+              <MultiplePlaceholders
+                exc={exc}
+                nStep={nStep}
+                setCompleted={setCompleted}
+                topic={topic}
+              />
+            )}
+            {exc.steps[nStep].stepType === "SinglePlaceholder" && (
+              <SinglePlaceholder
+                exc={exc}
+                nStep={nStep}
+                setCompleted={setCompleted}
+                topic={topic}
+              />
+            )}
+            {exc.steps[nStep].stepType === "TableStep" && (
+              <TableStep exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
+            )}
+          </Accordion.ItemBody>
+        </Accordion.ItemContent>
+      </Accordion.Item>
 
       {completed && next === -1 ? (
         <>
@@ -121,9 +119,9 @@ const ShowSteps = ({
           <RatingQuestion />
         </>
       ) : completed && next !== -1 ? (
-        <ShowSteps exc={exc} nStep={next} Step={Step} setStep={setStep} topic={topic} />
+        <ShowSteps exc={exc} nStep={next} setStep={setStep} topic={topic} />
       ) : null}
-    </Accordion.Item>
+    </>
   );
 };
 

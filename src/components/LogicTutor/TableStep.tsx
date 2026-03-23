@@ -21,7 +21,7 @@ function BotonAlternar({ valores, setValor }) {
   };
 
   return (
-    <Button colorScheme="blue" size="sm" onClick={handleClick}>
+    <Button bg="#3b82f6" size="sm" onClick={handleClick}>
       {valores[indice]}
     </Button>
   );
@@ -47,8 +47,9 @@ const TableStep = ({
   const [error, setError] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
   const [isCorrectValue, setIsCorrectValue] = useState(false);
-  const textColor = useColorModeValue("dark", "white");
-  const bg = useColorModeValue("#2B4264", "#1A202C");
+  // const borderColor = useColorModeValue("gray.200", "gray.600");
+  const headerBg = useColorModeValue("#2B4264", "#1b202b");
+  const headerTextColor = useColorModeValue("gray.200", "gray.100");
   const [attempts, setAttempts] = useState(0);
   const action = useAction();
   const evaluar = () => {
@@ -82,20 +83,22 @@ const TableStep = ({
       <Center>
         <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
       </Center>
-      {exc.steps[nStep].table?.tableCaption && (
+      {exc.steps[nStep].table && (
         <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
-          <Table.Root striped size="sm" borderColor={textColor}>
-            <Table.Caption>
-              <Latex>{exc.steps[nStep].table?.tableCaption}</Latex>
-            </Table.Caption>
-
-            <Table.Header bg={bg}>
+          <Table.Root
+            size="sm"
+            variant="outline"
+            striped
+            // borderColor={borderColor}
+            
+          >
+            <Table.Header bg={headerBg}>
               <Table.Row>
                 {exc.steps[nStep].table?.header?.map((head, index) => (
                   <Table.ColumnHeader
                     key={index}
                     textAlign={head?.align as textAlign}
-                    color="white"
+                    color={headerTextColor}
                     fontWeight="bold"
                     textTransform="none"
                   >
@@ -109,7 +112,11 @@ const TableStep = ({
               {exc.steps[nStep].table?.rows?.map((row, index) => (
                 <Table.Row key={index}>
                   {row?.data?.map((value, i) => (
-                    <Table.Cell key={i} textAlign={exc.steps[nStep].table?.alignRows}>
+                    <Table.Cell
+                      key={i}
+                      textAlign={exc.steps[nStep].table?.alignRows}
+                      bg={index % 2 === 0 ? "table_row_odd_wp" : "transparent"}
+                    >
                       {value === "a" ? (
                         <Center>
                           <BotonAlternar valores={exc.steps[nStep].button[0]} setValor={setValor} />
@@ -149,7 +156,7 @@ const TableStep = ({
       <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         {!isCorrectValue && (
           <>
-            <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
+            <Button colorPalette="teal" h="2rem" onClick={() => evaluar()}>
               Enviar
             </Button>
             <Hint

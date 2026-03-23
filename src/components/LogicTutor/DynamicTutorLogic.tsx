@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Container, Center, Stack, Box } from "@chakra-ui/react";
+import { Image, Container, Center, Stack, Heading, Text } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Latex from "react-latex-next";
 import "katex/dist/katex.min.css";
@@ -7,7 +7,29 @@ import StepComponent from "./StepComponent";
 const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) => {
   return (
     <>
-      <Stack textAlign="center" fontSize={{ base: "12px", sm: "15px", lg: "20px" }}>
+      <Heading 
+        fontSize="3xl"
+        color="heading" 
+        textAlign="center"
+        pt= "0.8rem"
+      >
+        {exc.title} 
+      </Heading>
+      <Text 
+        pt= "1rem" 
+        fontSize={{ base: "md", sm: "md", lg: "lg" }}
+        color="text_exercise"
+        textAlign="center"
+      > 
+        {exc.text}
+      </Text>
+      
+      {/* <Stack 
+        textAlign="center" 
+        fontSize={{ base: "12px", sm: "15px", lg: "20px" }}
+        borderWidth="1px"
+        borderColor="red"
+      >
         <Center>Titulo: {exc.title}</Center>
         <Box
           as="span"
@@ -18,7 +40,7 @@ const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) =>
         >
           <Latex>{exc.text}</Latex>
         </Box>
-      </Stack>
+      </Stack> */}
       {exc.initialExpression ? (
         exc.initialExpression !== "" ? (
           <>
@@ -55,7 +77,11 @@ const DynamicTutorLogic = ({ exc, topicId }: { exc: ExLog; topicId: string }) =>
           </>
         ) : null}
       </Container>
-      <Stack style={{ justifyContent: "center", margin: "auto" }}>
+      <Stack
+        w={{ base: "90vw", lg: "40vw" }} mx="auto"
+        style={{ justifyContent: "center", margin: "auto" }}
+        pt={4}
+        >
         <StepComponent exc={exc} nStep={0} topicId={topicId} />
       </Stack>
     </>

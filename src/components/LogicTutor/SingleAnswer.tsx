@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Stack, Alert, Center, Text, Image, Box } from "@chakra-ui/react";
+import { Button, Stack, Alert, Center, Text, Box } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import dynamic from "next/dynamic";
@@ -8,6 +8,7 @@ import MQPostfixparser from "../../utils/MQPostfixparser";
 import { convertirNotacion } from "./convertirNotacion";
 import { useAction } from "../../utils/action";
 import type { value } from "../../components/lvltutor/Tools/ExcerciseType";
+import { FaRegKeyboard } from "react-icons/fa";
 
 const Mathfield = dynamic(() => import("./Tools/mathLive"), { ssr: false });
 
@@ -46,6 +47,27 @@ const SinglePlaceholder = ({
   }, [isCorrectValue, setCompleted]);
 
   function evaluar(_: unknown, val: string) {
+    if (typeof val !== "string" || val.trim() === "") {
+      setFirstTime(false);
+      setError(true);
+      const nextAttempts = attempts + 1;
+      setAttempts(nextAttempts);
+      action({
+        verbName: "tryStep",
+        stepID: "" + exc.steps[nStep].stepId,
+        contentID: exc.code,
+        topicID: topic,
+        result: 0,
+        kcsIDs: exc.steps[nStep].KCs,
+        extra: {
+          response: [valueA],
+          attempts: nextAttempts,
+          hints,
+        },
+      });
+      return;
+    }
+
     const c = MQPostfixSolver(MQPostfixparser(convertirNotacion(val)), evaluation.answer);
     setFirstTime(!firstTime);
     const answer = exc.steps[nStep].answers[0].answer;
@@ -88,17 +110,20 @@ const SinglePlaceholder = ({
   return (
     <>
       <Center>
-        <Box maxW={{ base: "100%" }} p={2} borderWidth={1} borderRadius="lg" overflow="hidden">
-          <Text>
+        <Box
+          maxW={{ base: "100%" }}
+          p={2}
+          // borderColor="red"
+          borderWidth={1}
+          borderRadius="lg"
+          overflowX="auto"
+          overflowY="hidden"
+          alignItems="center"
+        >
+          <Text as="span" display="inline-flex"  gap="2" color={"text_exercises"}>
             Símbolos especiales en el teclado virtual{" "}
-            <Image
-              src={`img/teclado.png`}
-              alt="Icono del teclado"
-              display="inline"
-              verticalAlign="middle"
-              boxSize="25px"
-              mx="2px"
-            />{" "}
+            {" "}
+            <FaRegKeyboard  style={{ marginBottom: "4px" }} />
           </Text>
           <Mathfield
             readOnly
@@ -111,7 +136,7 @@ const SinglePlaceholder = ({
       <Stack gap={4} m={2} direction="row" justifyContent="center">
         {!isCorrectValue && (
           <>
-            <Button colorPalette="blue" size="sm" onClick={() => evaluar(latex, valueA)}>
+            <Button colorPalette="teal" h="2rem"  onClick={() => evaluar(latex, valueA)}>
               Enviar
             </Button>
             <Hint

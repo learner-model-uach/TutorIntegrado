@@ -62,20 +62,31 @@ const Alternatives = ({
 
   return (
     <>
-      <Stack gap={4} m={2} fontSize={{ base: "1rem" }} w={{ base: "100%" }}>
+      <Stack gap={4} m={2} fontSize={{ base: "1rem" }} w={{ base: "100%" }} alignItems="center">
         <Center>
           <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
         </Center>
         {valoresBarajados.map((valor, index) => (
           <Button
             key={index}
-            colorScheme="blue"
+            w={{ base: "90%", md: "70%" }}
+            minH="4rem"
+            h="auto"
+            px={4}
+            py={3}
+            whiteSpace="normal"
+            wordBreak="break-word"
+            textAlign="center"
+            fontSize={{ base: "md", md: "lg" }}
+            color={{base: "gray.50", _dark: "slate.100" }}
+            bg="alternative_button"
+            _hover={{ bg: "#3B82F6" }}
             size="md"
             onClick={() => evaluar(valor)}
             disabled={isCorrectValue}
           >
             {valor.text && valor.expression ? (
-              <Stack>
+              <Stack gap={2} w="full">
                 <div>{valor.text}</div>
                 <Latex>{"$$" + valor.expression + "$$"}</Latex>
               </Stack>

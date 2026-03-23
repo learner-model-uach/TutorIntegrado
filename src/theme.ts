@@ -103,7 +103,7 @@ const config = defineConfig({
           value: { base: "{colors.indigo.900}", _dark: "{colors.gray.900}" },
         },
         progress_text: {
-          value: { base: "colors.gray.900", _dark: "colors.gray.50" },
+          value: { base: "{colors.gray.900}", _dark: "{colors.gray.50}" },
         },
         progress_user: {
           value: { base: "{colors.green.500}", _dark: "{colors.green.400}" },
@@ -127,11 +127,29 @@ const config = defineConfig({
           value: { base: "{colors.slate.100}", _dark: "{colors.indigo.900}" },
         },
         text_info: {
-          value: { base: "{colors.charcoal}", _dark: "{colors.indigo.200}" },
+          value: { base: "{colors.indigo.900}", _dark: "{colors.indigo.200}" },
+        },
+        text_exercises: {
+          value: { base: "{colors.charcoal}", _dark: "{colors.gray.50}" },
         },
         icon_table: {
           value: { base: "{colors.teal.600}", _dark: "{colors.teal.500}" },
         },
+        accordion_step: {
+          value: { base: "#dbeafe", _dark: "#14204A" },
+        },
+        accordion_step_text: {
+          value: { base: "#173da6", _dark:"#A3CFFF" },
+        },
+        accordion_success: {
+          value: { base: "#DCFCE7", _dark: "#042713" },
+        },
+        accordion_success_text: {
+          value: { base: "#116932", _dark: "#86EFAC" },
+        },
+        alternative_button: {
+          value: { base: "{colors.stealblue.400}", _dark: "{colors.indigo.900}" },
+        }
       },
     },
   },

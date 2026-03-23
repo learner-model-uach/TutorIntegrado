@@ -120,7 +120,7 @@ const InputButtons = ({
         </Button>
       </Stack>
       <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
-        <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
+        <Button colorScheme="teal" h="2rem" onClick={() => evaluar()}>
           {" "}
           Enviar
         </Button>

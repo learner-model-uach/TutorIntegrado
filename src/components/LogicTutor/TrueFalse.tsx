@@ -65,10 +65,10 @@ const TrueFalse = ({
           <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
         </Center>
         <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
-          <Button colorScheme="blue" size="sm" onClick={() => evaluar("V")}>
+          <Button colorPalette="teal" size="sm" onClick={() => evaluar("V")}>
             Verdadero
           </Button>
-          <Button colorScheme="blue" size="sm" onClick={() => evaluar("F")}>
+          <Button colorPalette="red" size="sm" onClick={() => evaluar("F")}>
             Falso
           </Button>
           <Hint

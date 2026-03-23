@@ -66,15 +66,15 @@ const Blank = ({
           value={inputText}
           onChange={e => setInputText(e.target.value)}
         />
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("[")}>
+        <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("[")}>
           {" "}
           [
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("]")}>
+        <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("]")}>
           {" "}
           ]
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("∞")}>
+        <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("∞")}>
           {" "}
           ∞
         </Button>
@@ -82,7 +82,7 @@ const Blank = ({
       <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
         {isCorrectValue ? null : (
           <>
-            <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
+            <Button colorPalette="teal" h="2rem" onClick={() => evaluar()}>
               {" "}
               Enviar
             </Button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Center } from "@chakra-ui/react";
+import { Accordion } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
@@ -23,20 +23,15 @@ const StepComponent = ({ exc, nStep, topicId }: { exc: ExLog; nStep: number; top
 
   return (
     <>
-      <Center>
         <Accordion.Root
           collapsible
           value={Step === -1 ? [] : [String(Step)]}
           onValueChange={({ value }) => {
-            // value siempre es string[]
             setStep(value.length ? parseInt(value[0], 10) : -1);
           }}
         >
-          <Center>
-            <ShowSteps exc={exc} nStep={nStep} Step={Step} setStep={setStep} topic={topicId} />
-          </Center>
+          <ShowSteps exc={exc} nStep={nStep} setStep={setStep} topic={topicId} />
         </Accordion.Root>
-      </Center>
     </>
   );
 };

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import {
+import { useEffect, useRef, useState } from "react";
+import type {
   MathfieldElement,
   VirtualKeyboardInterface,
   VirtualKeyboardLayoutCore,
@@ -26,79 +26,110 @@ export type MathEditorProps = {
 
 const Mathfield = (props: MathEditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const currentValue = useRef<string>("");
+  const lastPropValue = useRef<string | null>(null);
   const mfeRef = useRef<MathfieldElement | null>(null);
-  if (!mfeRef.current) {
-    const mathfield = new MathfieldElement();
-    mathfield.virtualKeyboardTargetOrigin = "off";
-    mfeRef.current = mathfield;
-  }
-  const mfe = mfeRef.current;
-
-  //mfe.readOnly = props.readOnly ?? true;
-  //mfe.disabled = false;
-  //const size = isScreenLarge ? 6 : 3;
-  //const size = 6 ;
-
-  //mfe.applyStyle({ fontSize: size as FontSize }, { operation: "set", range: [0, -1] });
-  const currentValue = useRef<string>(""); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
+  const [mfe, setMfe] = useState<MathfieldElement | null>(null);
+  const onChangeRef = useRef(props.onChange);
+  const onMountRef = useRef(props.onMount);
 
   useEffect(() => {
-    // ejecuta un efecto secundario cuando el componente se monta por primera vez
-    const container = containerRef.current!!;
-    container.innerHTML = "";
-    container.appendChild(mfe);
-    props.onMount?.(mfe);
-    mfe.className = props.className || "";
+    onChangeRef.current = props.onChange;
+    onMountRef.current = props.onMount;
+  }, [props.onChange, props.onMount]);
+
+  useEffect(() => {
+    let active = true;
+
+    void import("mathlive").then(() => {
+      if (!active || mfeRef.current) return;
+      const mathfield = document.createElement("math-field") as MathfieldElement & {
+        virtualKeyboardTargetOrigin?: string;
+      };
+      mathfield.virtualKeyboardTargetOrigin = "off";
+      mfeRef.current = mathfield;
+      setMfe(mathfield);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mfe) return;
+    const container = containerRef.current!;
+    container.replaceChildren(mfe);
+    onMountRef.current?.(mfe);
     mfe.mathVirtualKeyboardPolicy = "auto";
-    mfe.readOnly = true;
     mfe.environmentPopoverPolicy = "off";
     mfe.resetUndo();
+    mfe.setValue(props.value ?? "", { focus: false, feedback: false });
+    currentValue.current = props.value ?? "";
+    lastPropValue.current = props.value ?? "";
 
-    const keyboardLayout = (window.mathVirtualKeyboard as ExtendedVirtualKeyboard | undefined)
-      ?.normalizedLayouts?.[0];
-    const keyboardKey = keyboardLayout?.layers?.[0]?.rows?.[2]?.[10] as
-      | { shift?: unknown }
-      | undefined;
-    if (keyboardLayout) {
-      delete keyboardKey?.shift;
-      window.mathVirtualKeyboard.layouts = keyboardLayout;
+    const vk = window.mathVirtualKeyboard as ExtendedVirtualKeyboard | undefined;
+    if (vk?.normalizedLayouts?.[0]) {
+      const layout = vk.normalizedLayouts[0];
+      const row = layout.layers?.[0]?.rows?.[2];
+      const key = row?.[10] as { shift?: unknown } | undefined;
+      if (key && "shift" in key) delete key.shift;
+      window.mathVirtualKeyboard.layouts = layout;
     }
 
-    mfe.addEventListener(
-      "keydown",
-      ev => {
-        if (ev.key === "Tab") {
-          mfe.executeCommand("moveToNextPlaceholder");
-        } else if (ev.key === "\\") {
-          ev.preventDefault();
-          mfe.executeCommand(["insert", "\\backslash"]);
-        } else if (ev.key === "Escape") ev.preventDefault();
-      },
-      { capture: true },
-    );
+    const onKeyDown = (ev: KeyboardEvent) => {
+      if (ev.key === "Tab") {
+        ev.preventDefault();
+        mfe.executeCommand("moveToNextPlaceholder");
+      } else if (ev.key === "\\") {
+        ev.preventDefault();
+        mfe.executeCommand(["insert", "\\backslash"]);
+      } else if (ev.key === "Escape") {
+        ev.preventDefault();
+      }
+    };
 
-    mfe.addEventListener("input", evt => {
-      //evt.preventDefault()
+    const onInput = (evt: Event) => {
       const value = (evt.target as HTMLInputElement).value || "";
       const promptValues: Record<string, string> = mfe
         .getPrompts()
         .reduce((acc, id) => ({ ...acc, [id]: mfe.getPromptValue(id) }), {});
       if (currentValue.current !== value) {
         currentValue.current = value;
-        props.onChange(value, promptValues);
+        onChangeRef.current(value, promptValues);
       }
-    });
-  }, [mfe, props]);
+    };
+
+    mfe.addEventListener("keydown", onKeyDown, { capture: true });
+    mfe.addEventListener("input", onInput);
+
+    return () => {
+      mfe.removeEventListener("keydown", onKeyDown, { capture: true } as EventListenerOptions);
+      mfe.removeEventListener("input", onInput);
+    };
+  }, [mfe]);
 
   useEffect(() => {
-    // actualiza el valor del editor de matemáticas cuando props.value cambia.
-    if (currentValue.current !== props.value) {
+    if (!mfe) return;
+    mfe.className = props.className || "";
+    mfe.readOnly = props.readOnly ?? false;
+  }, [mfe, props.className, props.readOnly]);
+
+  useEffect(() => {
+    if (!mfe) return;
+    if (lastPropValue.current !== (props.value ?? "")) {
       const position = mfe.position;
-      mfe.setValue(props.value, { focus: true, feedback: false });
-      mfe.position = position;
-      currentValue.current = props.value;
+      mfe.setValue(props.value ?? "", { focus: false, feedback: false });
+      try {
+        mfe.position = position;
+      } catch {
+        // Ignore invalid cursor restoration when placeholders changed.
+      }
+      currentValue.current = props.value ?? "";
+      lastPropValue.current = props.value ?? "";
+      (mfe as MathfieldElement & { requestUpdate?: () => void }).requestUpdate?.();
     }
-  }, [mfe, props.value]); //se ejecutará cada vez que el valor de props.value
+  }, [mfe, props.value]);
 
   return (
     <>
@@ -107,9 +138,12 @@ const Mathfield = (props: MathEditorProps) => {
         border="1px"
         borderRadius="5"
         borderColor="black"
-        width="fit-content"
+        width="100%"
+        maxW="100%"
         marginX="auto"
         padding="2"
+        overflow="visible"
+        minH="48px"
       />
     </>
   );
