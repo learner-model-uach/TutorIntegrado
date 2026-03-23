@@ -3,7 +3,7 @@ import { Button, Popover, Portal, Center, Badge, Box } from "@chakra-ui/react";
 import { toaster } from "./ui/toaster";
 import { useAction } from "../utils/action";
 import { MathComponent } from "mathjax-react";
-
+import { FaQuestion } from "react-icons/fa";
 import MQStaticMathField from "../utils/MQStaticMathField";
 
 const Hint = ({
@@ -164,14 +164,43 @@ const Hint = ({
         }}
       >
         <Popover.Trigger asChild>
-          <Button onClick={ayuda} colorPalette="orange" variant="outline" size="sm">
-            Pista &nbsp;
-            {error && i < hints.length + count - 1 ? ( //en esta parte va la notificación de un nuevo hint
-              <Badge boxSize="1.25em" color="white" bg="tomato" borderRadius="lg">
+          <Button
+            onClick={ayuda}
+            colorPalette="cyan"
+            variant="outline"
+            // bg="yellow.400"
+            h="8"
+            size="sm"
+            gap="2"
+            alignItems="center"
+          >
+            Pista
+            {error && i < hints.length + count - 1 ? ( 
+              <Badge
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                boxSize="1.25rem"
+                color="white"
+                bg="tomato"
+                borderRadius="full"
+                lineHeight="1"
+                flexShrink={0}
+              >
                 1
               </Badge>
             ) : (
-              <Badge boxSize="1.25em" color="white" bg="gray" borderRadius="lg">
+              <Badge
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                boxSize="1.25rem"
+                color="white"
+                bg="gray"
+                borderRadius="full"
+                lineHeight="1"
+                flexShrink={0}
+              >
                 0
               </Badge>
             )}
