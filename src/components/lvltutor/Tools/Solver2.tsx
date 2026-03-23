@@ -380,7 +380,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
 
                     return (
                       <>
-                        {isOpen && !isDone && step.expression ? (
+                        {isOpen && !isDone && step.expression && step.multipleChoice != undefined ? (
                           <Center>
                             <Box mb="3" overflow="visible">
                               <MQStaticMathField
