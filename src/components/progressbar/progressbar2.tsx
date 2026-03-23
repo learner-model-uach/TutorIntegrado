@@ -3,7 +3,7 @@ import { HStack, Box, Image, Text, Grid, GridItem, Popover, Button } from "@chak
 function Pbinfo(info?: string) {
   return (
     <Popover.Root>
-      <Popover.Trigger>
+      <Popover.Trigger asChild>
         <Button
           size="xs"
           borderRadius="full"
