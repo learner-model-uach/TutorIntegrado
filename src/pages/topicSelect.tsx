@@ -133,16 +133,16 @@ export default withAuth(function TopicSelect() {
                                   ? parameters.CSMain.topic11.topic
                                   : parameters.CSMain.topic12.topic}
           </Heading>
-          <Text textAlign="center" mb="5">
-            Lista de subtópicos
+          <Text textAlign="center" mb="5" fontSize="xl" color="text_info">
+            Selecciona un subtópico
           </Text>
           <Box w="full" mx="auto" p={4}>
             <SimpleGrid
               columns={{ base: 1, md: 2, xl: 3 }}
               gap={10}
               mt="4"
-              justifyContent="center" // centra la cuadrícula dentro del ancho disponible
-              justifyItems="center" //
+              justifyContent="center" 
+              justifyItems="center" 
             >
               {!Subtopic.isLoading &&
                 !selectedExcercise.isLoading &&
