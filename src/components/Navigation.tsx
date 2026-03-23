@@ -1,14 +1,40 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
-import { DarkModeToggle } from "./DarkModeToggle";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
 
 export function Navigation() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
 
   const admin = (user?.role ?? "") == "ADMIN" ? true : false;
+  const isPreLogin = !isLoading && !user;
+
+  if (isPreLogin) {
+    return (
+      <ScrollArea
+        // pt="5"
+        // pb="6"
+        height="30vh"
+        display="flex"
+        flexDirection="column"
+      >
+        <Stack flex="1" justify="center">
+          <Stack>
+            <SidebarLink icon={<FaHome />} href="/">
+              Inicio
+            </SidebarLink>
+          </Stack>
+
+          <Stack fontWeight="black" pb="2">
+            <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
+              Tutorial
+            </SidebarLink>
+          </Stack>
+        </Stack>
+      </ScrollArea>
+    );
+  }
 
   return (
     <ScrollArea pt="5" pb="6">
@@ -24,9 +50,12 @@ export function Navigation() {
             </SidebarLink>
           </>
         )}
+        <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
+          Tutorial
+        </SidebarLink>
       </Stack>
 
-      <Stack pb="6">
+      <Stack>
         {user && !user.tags.includes("wp-test-user") && (
           <>
             <Text fontWeight="black">Tópicos</Text>
@@ -61,20 +90,14 @@ export function Navigation() {
               <SidebarLink icon={<FaBookOpen />} href="/challenge">
                 Desafíos
               </SidebarLink>
+
+              
             </Stack>
           </>
         )}
       </Stack>
 
-      <Stack fontWeight="black" pb="6">
-        <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
-          Tutorial
-        </SidebarLink>
-      </Stack>
 
-      <Stack alignItems="center">
-        <DarkModeToggle />
-      </Stack>
     </ScrollArea>
   );
 }

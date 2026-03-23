@@ -5,6 +5,7 @@ import { Navigation } from "./Navigation";
 import { SearchInput } from "./SearchInput";
 import { useMobileMenuState } from "./useMobileMenuState";
 import { UserInfo } from "./UserInfo";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 import type { ReactNode } from "react";
 import { GroupSelect } from "./GroupSelect";
@@ -24,8 +25,10 @@ export function MainLayout({ children }: { children: ReactNode }) {
     >
       <Box
         as="nav"
-        display="block"
+        display="flex"
+        flexDirection="column"
         flex="1"
+        height="100vh"
         width="var(--sidebar-width)"
         left="0"
         py="5"
@@ -35,10 +38,15 @@ export function MainLayout({ children }: { children: ReactNode }) {
       >
         {/* <Image src="/img/logo.svg" alt="Logo" ml="6"mb="4" /> */}
         <Image src="/img/logo.png" alt="Logo" w="220px" h="80px" mb="1" ml="6" />
-        <Box fontSize="sm" lineHeight="tall">
+        <Box fontSize="sm" lineHeight="tall" display="flex" flexDirection="column" flex="1" minH="0">
           <UserInfo />
           <GroupSelect />
-          <Navigation />
+          <Box flex="1" minH="0">
+            <Navigation />
+          </Box>
+          <Flex justify="center" pt="4" pb="2">
+            <DarkModeToggle />
+          </Flex>
         </Box>
       </Box>
       <Box
