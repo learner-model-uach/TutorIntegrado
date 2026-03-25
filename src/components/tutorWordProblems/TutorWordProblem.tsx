@@ -48,9 +48,7 @@ export const TutorWordProblem = ({
   const textColor = useColorModeValue("dark", "white");
   const itemBgColor = useColorModeValue("#bde3f8", "#1A202C");
   const bgContentColor = useColorModeValue("white", "#2D3748");
-  const explanationBgColor = useColorModeValue("#feebc8", "#080E1B");
   const bg = useColorModeValue("#2B4264", "#1A202C");
-  const bgQuestion = useColorModeValue("#F5F5F5", "gray.600");
   const currentButtonColor = "#2B4264";
   const currentStepColor = "#2B4264";
   const [isScreenLarge] = useMediaQuery(["(min-width: 768px)"]);
@@ -154,17 +152,31 @@ export const TutorWordProblem = ({
           </Heading>
 
           {exercise.statement && (
-            <Box overflowX="auto" whiteSpace="normal" textOverflow="ellipsis" maxW="100%">
+            <Box
+              overflowX="auto"
+              whiteSpace="normal"
+              textOverflow="ellipsis"
+              maxW="100%"
+              color="text_info"
+            >
               <Latex strict>{exercise.statement}</Latex>
             </Box>
           )}
 
           {exercise.table && (
-            <Table.Root variant={"outline"} size="sm" marginY={5} w="auto" shadow="sm" rounded="lg">
+            <Table.Root
+              variant="outline"
+              size="sm"
+              marginY={5}
+              w="auto"
+              shadow="sm"
+              rounded="lg"
+              overflow="hidden"
+            >
               <Table.Caption marginTop={"5px"}>
                 <Latex>{exercise.table.tableCaption}</Latex>
               </Table.Caption>
-              <Table.Header bg={bg}>
+              <Table.Header bg={bg} fontSize="sm">
                 <Table.Row>
                   {exercise.table.header.map((head, index) => {
                     return (
@@ -173,6 +185,7 @@ export const TutorWordProblem = ({
                         textAlign={head.align as textAlign}
                         color="white"
                         fontWeight="bold"
+                        py="0.5"
                       >
                         <Latex>{head.value}</Latex>
                       </Table.ColumnHeader>
@@ -205,7 +218,7 @@ export const TutorWordProblem = ({
           )}
 
           {exercise.text && (
-            <Box width="100%" textAlign="left">
+            <Box width="100%" textAlign="left" color="text_info">
               <Latex>{exercise.text}</Latex>
             </Box>
           )}
@@ -219,6 +232,7 @@ export const TutorWordProblem = ({
             w="100%"
             maxWidth="auto"
             value={(expandedIndices ?? []).map(String)}
+
             // value={questions ? questions.map((_, i) => String(i)) : []}
           >
             {questions?.map((ques, quesIndex) => {
@@ -227,26 +241,33 @@ export const TutorWordProblem = ({
               const qKey = ques.questionId ?? quesIndex; // clave estable para la pregunta
 
               return (
-                <Accordion.Item key={qKey} value={String(quesIndex)} disabled={ques.isBlocked}>
+                <Accordion.Item
+                  key={qKey}
+                  value={String(quesIndex)}
+                  disabled={ques.isBlocked}
+                  border="none"
+                >
                   <h2>
                     <Accordion.ItemTrigger
-                      cursor="pointer"
+                      disabled={ques.isBlocked}
+                      cursor={ques.isBlocked ? "not-allowed" : "pointer"}
                       bgColor={isCurrentQuestion && currentButtonColor}
                       color={isCurrentQuestion ? "white" : textColor}
                       onClick={() => {
+                        if (ques.isBlocked) return;
                         toggleQuestionExpansion(quesIndex);
                       }}
                     >
                       <Span flex="1" marginLeft={"5"}>
                         <Latex>{ques.questionId + 1 + ". " + ques.question}</Latex>
                       </Span>
-                      <Accordion.ItemIndicator marginEnd={5} />
+                      <Accordion.ItemIndicator marginEnd={5} color="textColor" />
                     </Accordion.ItemTrigger>
                   </h2>
 
                   <Accordion.ItemContent>
                     <Accordion.ItemBody
-                      bgColor={bgQuestion}
+                      // bgColor={bgQuestion}
                       paddingX={isScreenLarge ? 10 : 2}
                       overflow="visible"
                     >
@@ -261,7 +282,7 @@ export const TutorWordProblem = ({
                               <CardInfo
                                 text={step.stepExplanation.explanation}
                                 srcImg={step.stepExplanation.srcImg}
-                                bgColor={explanationBgColor}
+                                bgColor={"orange.subtle"}
                                 hideCard={step.isBlocked}
                               />
                             )}
@@ -273,16 +294,21 @@ export const TutorWordProblem = ({
                               unmountOnExit={false}
                               lazyMount
                               value={stepExpandedIndices.map(i => `${quesIndex}-${i}`)}
+                              overflow="hidden"
                             >
                               <Accordion.Item
                                 value={`${quesIndex}-${stepIndex}`}
-                                bg={isCurrent ? currentStepColor : itemBgColor}
+                                disabled={step.isBlocked}
+                                border="none"
                               >
                                 <h2>
                                   <Accordion.ItemTrigger
+                                    disabled={step.isBlocked}
+                                    bg={isCurrent ? currentStepColor : itemBgColor}
                                     color={isCurrent ? "white" : textColor}
-                                    cursor="pointer"
+                                    cursor={step.isBlocked ? "not-allowed" : "pointer"}
                                     onClick={() => {
+                                      if (step.isBlocked) return;
                                       toggleStepExpansion(quesIndex, stepIndex);
                                       const isExpanded = stepExpandedIndices.includes(stepIndex);
                                       reportAction({
@@ -296,13 +322,16 @@ export const TutorWordProblem = ({
                                     <Span flex="1" marginLeft={"5"}>
                                       <Latex>{step.stepTitle}</Latex>
                                     </Span>
-                                    <Accordion.ItemIndicator marginEnd={5} />
+                                    <Accordion.ItemIndicator
+                                      marginEnd={5}
+                                      color={"textColor"}
+                                    />
                                   </Accordion.ItemTrigger>
                                 </h2>
 
                                 <Accordion.ItemContent>
                                   <Accordion.ItemBody bg={bgContentColor} overflow="visible">
-                                    <Box pt={2}>
+                                    <Box px="3">
                                       {step.componentToAnswer.nameComponent === components.SLC ? (
                                         <SelectionComponent
                                           correctMsg={step.correctMsg ?? "Muy bien!"}
@@ -346,7 +375,8 @@ export const TutorWordProblem = ({
             <ButtonGroup>
               <Button
                 size="lg"
-                colorScheme="facebook"
+                // colorScheme="facebook"
+                colorPalette="teal"
                 onClick={() => {
                   handleNextButtonClick();
                   console.log("currentExercise:", currentExercise);

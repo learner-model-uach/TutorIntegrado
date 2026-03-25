@@ -42,6 +42,7 @@ function resolveComputeEngineCtor(mod: any) {
 
 const MathComponent = ({ meta, hints, correctMsg }: Props) => {
   const { expression, readonly, answers, idCorrectAnswers } = meta;
+  const expectedPlaceholderIds = [...new Set(answers.map(answer => answer.placeholderId))];
 
   // CE disponible para checkAnswer
   const ceRef = useRef<any>(null);
@@ -56,10 +57,10 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
   const otherAnswers = answers.filter(a => !idCorrectAnswers.includes(a.id));
 
   const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert } = useAlert(
-    "Titulo",
+    "",
     AlertStatus.info,
-    "mensaje de la alerta",
-    false,
+    "",
+    true,
     3000,
   );
 
@@ -91,6 +92,10 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
   useEffect(() => {
     resetAlert();
     setDisabledButton(false);
+    answerStateRef.current = expectedPlaceholderIds.map(placeholderId => ({
+      placeholderId,
+      value: "",
+    }));
   }, [meta]);
 
   // registrar/obtener ComputeEngine de forma soportada por MathLive
@@ -135,6 +140,24 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     answerStateRef.current = entries.map(([placeholderId, value]) => ({ placeholderId, value }));
   };
 
+  const syncAnswersFromMathField = () => {
+    const mfe = mfeRef.current;
+    if (!mfe) {
+      return answerStateRef.current;
+    }
+
+    const promptIds =
+      mfe.getPrompts?.().length > 0 ? (mfe.getPrompts() as string[]) : expectedPlaceholderIds;
+
+    const nextAnswers = promptIds.map(placeholderId => ({
+      placeholderId,
+      value: mfe.getPromptValue?.(placeholderId) ?? "",
+    }));
+
+    answerStateRef.current = nextAnswers;
+    return nextAnswers;
+  };
+
   const checkAnswer = () => {
     try {
       const ce = ceRef.current;
@@ -148,8 +171,17 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
         return;
       }
 
-      const isEmpty = answerStateRef.current.some(u => u.value === "");
-      if (isEmpty) {
+      const currentAnswers = syncAnswersFromMathField();
+      const hasAllAnswers =
+        currentAnswers.length === expectedPlaceholderIds.length &&
+        expectedPlaceholderIds.every(placeholderId =>
+          currentAnswers.some(
+            answer =>
+              answer.placeholderId === placeholderId && typeof answer.value === "string" && answer.value.trim() !== "",
+          ),
+        );
+
+      if (!hasAllAnswers) {
         showAlert("", AlertStatus.warning, "Debes completar todos los recuadros!");
         return;
       }
@@ -157,7 +189,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
       let allCorrect = true;
       let genericHint = true;
 
-      answerStateRef.current.forEach(userAnswer => {
+      currentAnswers.forEach(userAnswer => {
         const parUserAnswer = ce.parse(normalizeLatex(userAnswer.value));
 
         const isCorrect = correctAnswers.find(
@@ -191,7 +223,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
         topicID: currentTopicId,
         result: allCorrect ? 1 : 0,
         kcsIDs: exerciseData.questions[currentQuestionIndex].steps[currentStepIndex].kcs,
-        extra: { Response: answerStateRef.current },
+        extra: { Response: currentAnswers },
         detail: "MathComponent",
       });
 
@@ -231,7 +263,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
       <Flex justifyContent="flex-end">
         <ButtonGroup size="lg" display="flex" justifyContent="flex-end">
           <Button
-            colorScheme="teal"
+            colorPalette="teal"
             size="sm"
             onClick={checkAnswer}
             disabled={disabledButton || !ceRef.current || !mfeRef.current}

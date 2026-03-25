@@ -228,7 +228,7 @@ export const LinearFit = ({ meta, hints }: Props) => {
       </Box>
 
       <ButtonGroup size="lg" display="flex" justifyContent="flex-end" paddingTop={5}>
-        <Button onClick={checkAnswer} disabled={disabledButton} colorScheme="teal" size="sm">
+        <Button onClick={checkAnswer} disabled={disabledButton} colorPalette="teal" size="sm">
           Aceptar
         </Button>
         <HintButton

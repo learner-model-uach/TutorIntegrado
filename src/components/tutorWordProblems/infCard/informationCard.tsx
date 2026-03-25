@@ -12,7 +12,7 @@ export const CardInfo = ({ text, srcImg, bgColor, hideCard }: cardInfoProps) => 
   const [isDesktop] = useMediaQuery(["(min-width: 768px)"]);
 
   return (
-    <Box bgColor={bgColor} hidden={hideCard} mb={1} rounded={5}>
+    <Box bgColor={bgColor} hidden={hideCard} mb={4} rounded={5}>
       <Box overflow="hidden" width="100%" maxW="100%" whiteSpace="normal" padding="3">
         <Latex>{text}</Latex>
         {srcImg && (

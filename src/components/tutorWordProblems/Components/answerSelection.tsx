@@ -1,6 +1,4 @@
-//import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { BsCheckLg, BsXLg } from "react-icons/bs";
-import { Button, ButtonGroup, Checkbox, Flex, List, Text } from "@chakra-ui/react";
+import { ButtonGroup, CheckboxCard, Flex, List } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ResAlert from "../Alert/responseAlert";
 import HintButton from "../Hint/hint";
@@ -106,55 +104,44 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
 
     return "transparent";
   };
+
+  const getColorPalette = (index: number) => {
+    if (userSelectedAnswer !== index) return "gray";
+    return index === meta.idCorrectAnswers ? "green" : "red";
+  };
+
   return (
-    <Flex flexDirection="column" width="100%">
-      <List.Root>
+    <Flex 
+      flexDirection="column" 
+      width="100%"  
+    >
+      <List.Root listStyleType="none" ps="0">
         {meta.answers.map((answer, index) => {
           return (
             <List.Item paddingBottom={1} key={index}>
-              <Button
-                border="1px"
-                borderColor="gray.100"
-                bgColor={getBackgroundColor(index)}
+              <CheckboxCard.Root
+                checked={userSelectedAnswer === index}
+                colorPalette={getColorPalette(index)}
                 disabled={isCorrectUserAnswer}
-                onClick={() => {
-                  handleClick(index);
-                }}
-                justifyContent="left"
-                variant="ghost"
+                variant="outline"
                 width="100%"
-                height="auto"
-                whiteSpace="normal" // Permite que el texto se ajuste en varias líneas
-                overflow="hidden"
-                textOverflow="ellipsis" // comportamiento al desbordar el componente
-                textAlign="left" // Alinea el texto a la izquierda
-                display="block" // Asegura que el botón tenga el ancho completo del contenedor
-                minH="44px"
-                maxW="100%" // Evita que el botón se desborde de su contenedor
+                bg={getBackgroundColor(index)}
+                borderRadius="md"
+                cursor={isCorrectUserAnswer ? "not-allowed": "pointer"}
+                onCheckedChange={details => {
+                  if (details.checked) {
+                    handleClick(index);
+                  }
+                }}
               >
-                <Flex alignItems="center">
-                  <Checkbox.Root
-                    key={index}
-                    readOnly
-                    checked={userSelectedAnswer === index}
-                    colorPalette={meta.idCorrectAnswers === index ? "green" : "red"}
-                    pr={4}
-                  >
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control>
-                      {userSelectedAnswer === index ? ( // Mostrar íconos solo cuando se selecciona una alternativa
-                        meta.idCorrectAnswers === index ? (
-                          <BsCheckLg />
-                        ) : (
-                          <BsXLg style={{ color: "white" }} />
-                        )
-                      ) : null // Dejar vacío cuando no está seleccionado
-                      }
-                    </Checkbox.Control>
-                  </Checkbox.Root>
-                  <Text marginY={2}>{answer.value}</Text>
-                </Flex>
-              </Button>
+                <CheckboxCard.HiddenInput />
+                <CheckboxCard.Control width="100%">
+                  <CheckboxCard.Indicator />
+                  <CheckboxCard.Content flex="1">
+                    <CheckboxCard.Label fontWeight="bold">{answer.value}</CheckboxCard.Label>
+                  </CheckboxCard.Content>
+                </CheckboxCard.Control>
+              </CheckboxCard.Root>
             </List.Item>
           );
         })}

@@ -43,10 +43,10 @@ const ShowContentPage = withAuth(function ShowContent() {
   const content = sessionState.currentContent;
   const topic = sessionState.topic;
   const code = content?.code ?? "";
+  const contentJson = content?.json;
+  const contentType = contentJson?.type;
 
-  //console.log("Content --------->", content);
-  //console.log("topic --------->", topic);
-
+  
   return (
     <>
       <Box
@@ -65,12 +65,13 @@ const ShowContentPage = withAuth(function ShowContent() {
       </Box>
 
       <div>
-        {content && ["ftc5s", "fc1s", "fdc2s", "fdsc2", "fcc3s"].includes(content?.json?.type) ? (
-          <DynamicTutorFac key="1" exercise={content.json} topicId={topic} />
-        ) : content && content?.json?.type == "lvltutor" && !!content.json ? (
-          <DynamicPlain key="2" steps={content.json as ExType} topicId={topic} />
-        ) : content && ["ecc5s", "secl5s", "ecl2s", "mo"].includes(content?.json?.type) ? (
-          <DynamicTutorEcu key="3" exercise={content.json} topicId={topic} />
+        {content &&
+        ["ftc5s", "fc1s", "fdc2s", "fdsc2", "fcc3s"].includes(contentType) ? (
+          <DynamicTutorFac key="1" exercise={contentJson} topicId={topic} />
+        ) : contentType == "lvltutor" && contentJson ? (
+          <DynamicPlain key="2" steps={contentJson as ExType} topicId={topic} />
+        ) : content && ["ecc5s", "secl5s", "ecl2s", "mo"].includes(contentType) ? (
+          <DynamicTutorEcu key="3" exercise={contentJson} topicId={topic} />
         ) : content &&
           [
             "areaperimetro1",
@@ -79,12 +80,12 @@ const ShowContentPage = withAuth(function ShowContent() {
             "pitagoras2",
             "thales1",
             "thales2",
-          ].includes(content?.json?.type) ? (
-          <DynamicTutorGeom key="4" exercise={content.json} topicId={topic} />
-        ) : content && content?.json.type == "wordProblem" ? (
-          <DynamicTutorWP key="5" exercise={content.json} topicId={topic} />
-        ) : content && content?.json.type == "lvltutor2" ? (
-          <DynamicTutorLogic key="6" exc={content.json as ExLog} topicId={topic} />
+          ].includes(contentType) ? (
+          <DynamicTutorGeom key="4" exercise={contentJson} topicId={topic} />
+        ) : contentType == "wordProblem" ? (
+          <DynamicTutorWP key="5" exercise={contentJson} topicId={topic} />
+        ) : contentType == "lvltutor2" ? (
+          <DynamicTutorLogic key="6" exc={contentJson as ExLog} topicId={topic} />
         ) : (
           <Text>No existe el contenido que desea cargar</Text>
         )}

@@ -60,6 +60,7 @@ const HintButton = ({
           size="sm"
           variant="outline"
           onClick={handleClick}
+          fontWeight={"semibold"}
         >
           Ayuda &nbsp;
           <Circle bg={numEnabledHints !== 0 ? "red" : "gray"} color="white" size="15px">
