@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Text } from "@chakra-ui/react";
-import TeX from "@matejmazur/react-katex";
+import { Button, CloseButton, Dialog, Portal, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export const FeedbackTutorial = ({ showFeedback }) => {
   const [showF, setShowF] = useState(false);
@@ -11,21 +11,29 @@ export const FeedbackTutorial = ({ showFeedback }) => {
   }, [showFeedback]);
 
   return (
-    <Modal.Root open={showF} onOpenChange={({ open }) => setShowF(open)} size="xl">
-      <Modal.Overlay />
-      <Modal.Content>
-        <Modal.Header m="auto">Has completado correctamente el tutorial</Modal.Header>
-        <Modal.CloseTrigger />
+    <Dialog.Root open={showF} onOpenChange={({ open }) => setShowF(open)} size="xl">
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header m="auto">
+              <Dialog.Title>Has completado correctamente el tutorial</Dialog.Title>
+            </Dialog.Header>
 
-        <Modal.Body fontSize="20px" m="auto">
-          <Text> Ahora iremos a resolver más ejercicios</Text>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button colorPalette="red" mr={3} onClick={() => push(`/practice/`)}>
-            Siguiente
-          </Button>
-        </Modal.Footer>
-      </Modal.Content>
-    </Modal.Root>
+            <Dialog.Body fontSize="20px" m="auto">
+              <Text> Ahora iremos a resolver más ejercicios</Text>
+            </Dialog.Body>
+            <Dialog.Footer>
+              <Button colorPalette="red" mr={3} onClick={() => push(`/practice/`)}>
+                Siguiente
+              </Button>
+            </Dialog.Footer>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 };

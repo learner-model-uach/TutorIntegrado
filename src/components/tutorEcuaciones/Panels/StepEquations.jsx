@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Stack, Button, Text, VStack, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
 import { MovableItemEquation } from "../DragDrop/MovableItemEquation";
 import {
+  ACCORDION_COLOR,
   COLUMN1,
   COLUMN2,
   COLUMN3,
   CORRECT_BUTTOM_NAME,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
-  BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
 import { HintEqSystem } from "./HintEqSystem";
@@ -34,9 +34,6 @@ export const StepEquations = ({
   const [answer, setAnswer] = useState(true);
   const [answerTwo, setAnswerTwo] = useState(true);
 
-  const [alert, setAlert] = useState({});
-  const [openAlert, setOpenAlert] = useState(false);
-  const [testAlert, setTestAlert] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
@@ -48,13 +45,10 @@ export const StepEquations = ({
 
   useEffect(() => {
     setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
-    setAlert({});
-    setOpenAlert(false);
     setAnswer(true);
     setAnswerTwo(true);
-    setTestAlert(false);
     setIsCorrect(false);
-    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
+    setColor(prev => [...prev.slice(0, nStep), ACCORDION_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const checkValues = () => {
@@ -138,13 +132,9 @@ export const StepEquations = ({
 
     const answerLeft = checkCorrectAnswer(COLUMN2);
     const answerRigth = checkCorrectAnswer(COLUMN3);
-    setOpenAlert(true);
 
     if (answerLeft.length === 0 || answerRigth.length === 0) {
-      setAlert({
-        status: "info",
-        text: "Escoge una respuesta",
-      });
+      return;
     } else {
       updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
@@ -175,10 +165,6 @@ export const StepEquations = ({
           ]);
           setNumStep(prevState => prevState + 1);
           setDisableState(prevState => [...prevState, true]);
-          setAlert({
-            status: "success",
-            text: "Respuesta Correcta",
-          });
           setIsCorrect(true);
           checkLastStep();
           setFirstTimeHint(true);
@@ -201,10 +187,6 @@ export const StepEquations = ({
           setHints(getHints(answerLeft[0].id, answerRigth[0].id));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
-          setAlert({
-            status: "error",
-            text: "Respuesta Incorrecta",
-          });
         }
       } else {
       }

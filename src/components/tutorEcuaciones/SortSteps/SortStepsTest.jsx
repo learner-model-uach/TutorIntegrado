@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useCallback, useEffect } from "react";
 import update from "immutability-helper";
-import { Heading, Text, Button, Stack, Link } from "@chakra-ui/react";
+import { Heading, Text, Button, Stack } from "@chakra-ui/react";
 import { shuffleCard } from "../../../utilities";
 import { Flex } from "@chakra-ui/react";
 import { FeedbackOrderCards } from "../Feedbacks/FeedbackOrderCards";
@@ -17,14 +17,12 @@ import {
   BACKGROUND_COLOR_ORDER_STEPS,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import { useRouter } from "next/router";
 
 export const SortStepsTest = ({
   steps,
   setNextPhase,
   linkNext,
   idExercise,
-  setIdExercise,
   setTabIndex,
   setColorTab,
   content,
@@ -34,7 +32,6 @@ export const SortStepsTest = ({
   const [correctOrder, setCorrectOrder] = useState(false);
   const [cardColor, setCardColor] = useState([]);
   const startAction = useAction({});
-  const { push } = useRouter();
 
   useEffect(() => {
     if (steps) {

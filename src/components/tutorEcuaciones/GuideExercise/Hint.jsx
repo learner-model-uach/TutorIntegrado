@@ -10,6 +10,7 @@ import {
   HINT_BUTTOM_NAME,
   HINT_BUTTOM_COLOR,
   POPOVER_BACK_BUTTOM_COLOR,
+  POPOVER_NEXT_BUTTOM_COLOR,
 } from "../../../types";
 export const Hint = ({
   hints,
@@ -98,27 +99,32 @@ export const Hint = ({
   };
 
   return (
-    <Popover.Root placement="bottom" closeOnBlur={false} closeOnInteractOutside={false}>
-      <Popover.Trigger>
-        <div className="hint-guide">
-          <Button
-            className={
-              shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
-            }
-            isDisabled={disabledHint}
-            onClick={handOnClickHint}
-            colorPalette={HINT_BUTTOM_COLOR}
-          >
-            {HINT_BUTTOM_NAME}
-            {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
-          </Button>
-        </div>
+    <Popover.Root positioning={{ placement: "bottom" }} closeOnInteractOutside={false}>
+      <Popover.Trigger asChild>
+        <Button
+          className={
+            shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
+          }
+          disabled={disabledHint}
+          onClick={handOnClickHint}
+          colorPalette={HINT_BUTTOM_COLOR}
+        >
+          {HINT_BUTTOM_NAME}
+          {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
+        </Button>
       </Popover.Trigger>
 
       <Popover.Positioner>
-        <Popover.Content color="white" bg="blue.800" borderColor="blue.800">
-          <Popover.Arrow />
-          <Popover.CLoseTrigger />
+        <Popover.Content
+          color="white"
+          bg="blue.800"
+          borderColor="blue.800"
+          css={{ "--popover-bg": "var(--chakra-colors-blue-800)" }}
+        >
+          <Popover.Arrow>
+            <Popover.ArrowTip bg="blue.800" borderColor="blue.800" />
+          </Popover.Arrow>
+          <Popover.CloseTrigger />
 
           <Popover.Header pt={4} fontWeight="bold" border="0">
             {HEADER_POPOVER_HINT}
@@ -132,7 +138,7 @@ export const Hint = ({
 
           <Popover.Footer
             border="0"
-            d="flex"
+            display="flex"
             alignItems="center"
             justifyContent="space-between"
             pb={4}

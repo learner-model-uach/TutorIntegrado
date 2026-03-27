@@ -3,8 +3,8 @@ import TeX from "@matejmazur/react-katex";
 import { Flex, Button, Grid, Stack, Input, VStack, Text } from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
+  ACCORDION_COLOR,
   CORRECT_BUTTOM_NAME,
-  BACKGROUND_COLOR_PANEL,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
 } from "../types";
@@ -24,21 +24,18 @@ export const StepInput = ({
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
   completeContentSteps, // object used in the "steps" field of completeContent
 }) => {
-  const [alert, setAlert] = useState({});
   const [answer, setAnswer] = useState("");
-  const [answerInput, setAnswerInput] = useState("");
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState(-1); // id corresponding to the answer
   const [isCorrect, setIsCorrect] = useState(0);
   const [newHintAvaliable, setNewHintAvaliable] = useState(false); // hints that are displayed to the user
-  const [openAlert, setOpenAlert] = useState(false);
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
   const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   const startAction = useAction({});
   useEffect(() => {
-    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
+    setColor(prev => [...prev.slice(0, nStep), ACCORDION_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const onChange = e => {
@@ -101,13 +98,9 @@ export const StepInput = ({
     e.preventDefault();
 
     let idUserAnswer = getId(answer);
-    setOpenAlert(true);
 
     if (answer.length === 0) {
-      setAlert({
-        status: "info",
-        text: "Escribe alguna respuesta",
-      });
+      return;
     } else {
       updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
@@ -133,17 +126,11 @@ export const StepInput = ({
           ]);
           setNumStep(prevState => prevState + 1);
           setDisableState(prevState => [...prevState, true]);
-
-          setAlert({
-            status: "success",
-            text: "Respuesta Correcta",
-          });
           setIsCorrect(true);
           checkLastStep();
           setFirstTimeHint(true);
         } else {
           setAttempts(prev => prev + 1);
-          setAnswerInput(answer);
           setIdAnswer(idUserAnswer);
           setHints(getHints(idUserAnswer));
           setFirstTimeHint(false);
@@ -160,10 +147,6 @@ export const StepInput = ({
               attemps: attempts,
               hints: hintsShow,
             },
-          });
-          setAlert({
-            status: "error",
-            text: "Respuesta Incorrecta",
           });
         }
       } else {

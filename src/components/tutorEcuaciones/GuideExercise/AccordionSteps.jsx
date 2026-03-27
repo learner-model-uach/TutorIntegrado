@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from "./AccordionSteps.module.css";
 
 import { Accordion, Box, Flex } from "@chakra-ui/react";
@@ -10,7 +10,6 @@ import {
   ACCORDION_COLOR,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
-  BACKGROUND_COLOR_ACCORDION,
   INPUT,
   DRAG_FIXED_TWO,
 } from "../../../types";
@@ -27,7 +26,6 @@ export const AccordionSteps = ({ exercise, setNextExercise, setIntro, intro }) =
 
   const [firstPanelOpen, setFirstPanelOpen] = useState(true);
 
-  //v3 Accordion value string
   const itemValues = useMemo(
     () => (exercise?.steps ?? []).map((_, idx) => String(idx)),
     [exercise],
@@ -69,8 +67,8 @@ export const AccordionSteps = ({ exercise, setNextExercise, setIntro, intro }) =
     }
   }, [intro?.backStep, firstPanelOpen, setIntro]);
 
-  const handleExpanded = e => {
-    const next = Array.isArray(e) ? e : (e?.value ?? []);
+  const handleExpanded = details => {
+    const next = Array.isArray(details) ? details : (details?.value ?? []);
     setFirstPanelOpen(next.includes(itemValues[0]));
     setOpenItems(next);
   };
@@ -83,28 +81,35 @@ export const AccordionSteps = ({ exercise, setNextExercise, setIntro, intro }) =
         collapsible
         value={openItems}
         onValueChange={handleExpanded}
-        style={{ width: "100%" }}
+        w="100%"
       >
         {exercise?.steps.map((step, index) => {
           const value = itemValues[index];
           const disabled = !disableState[index];
           const bg =
             color[index] === ACCORDION_COLOR
-              ? ACCORDION_COLOR
+              ? "accordion_step"
               : color[index] === CORRECT_ANSWER_COLOR
                 ? CORRECT_ANSWER_COLOR
                 : INCORRECT_ANSWER_COLOR;
+          const textColor = color[index] === ACCORDION_COLOR ? "accordion_step_text" : undefined;
           return (
             <Accordion.Item
-              isDisabled={!disableState[index]}
+              value={value}
+              disabled={disabled}
               margin={{ sm: "auto" }}
               key={index}
               paddingRight={{ sm: "12px", base: 0 }}
               style={{ display: "block", width: "100%" }}
               className={styles["accordionPadding"]}
             >
-              <Accordion.ItemTrigger bg={bg}>
-                <Box className={listBox[index]} flex="1" p={4} textAlign="left">
+              <Accordion.ItemTrigger
+                bg={bg}
+                color={textColor}
+                minH={{ base: "60px", md: "72px" }}
+                py={{ base: 4, md: 5 }}
+              >
+                <Box className={listBox[index]} flex="1" textAlign="left" pl={4}>
                   <AccordionAnswer
                     nStep={step.n_step}
                     text={step.left_text}
@@ -116,17 +121,7 @@ export const AccordionSteps = ({ exercise, setNextExercise, setIntro, intro }) =
                 <Accordion.ItemIndicator />
               </Accordion.ItemTrigger>
 
-              <Accordion.ItemContent
-                pb={4}
-                id="panel"
-                className={listPanels[index]}
-                style={{
-                  backgroundColor: BACKGROUND_COLOR_ACCORDION,
-                  display: "flex",
-                  alignContent: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <Accordion.ItemContent pb={4} className={listPanels[index]} bg="accordion_step_text">
                 {step.type === DRAG_FIXED_TWO ? (
                   <StepEquations
                     step={step}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Text } from "@chakra-ui/react";
-import TeX from "@matejmazur/react-katex";
+import { Button, CloseButton, Dialog, Portal, Text } from "@chakra-ui/react";
 
 export const FeedbackTesting = ({ showFeedback }) => {
   const [showF, setShowF] = useState(false);
@@ -10,22 +9,30 @@ export const FeedbackTesting = ({ showFeedback }) => {
   }, [showFeedback]);
 
   return (
-    <Modal.Root open={showF} onOpenChange={({ open }) => setShowF(open)} size="xl">
-      <Modal.Overlay />
-      <Modal.Content>
-        <Modal.Header m="auto">Felicidades has completado todos los ejercicios</Modal.Header>
-        <Modal.CloseTrigger />
+    <Dialog.Root open={showF} onOpenChange={({ open }) => setShowF(open)} size="xl">
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header m="auto">
+              <Dialog.Title>Felicidades has completado todos los ejercicios</Dialog.Title>
+            </Dialog.Header>
 
-        <Modal.Body fontSize="20px" m="auto">
-          <Text> Gracias por participar de esta prueba general de usabilidad.</Text>
-          <Text>Tu feedback nos sera de gran ayuda.</Text>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button colorPalette="red" mr={3} onClick={() => setShowF(false)}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal.Content>
-    </Modal.Root>
+            <Dialog.Body fontSize="20px" m="auto">
+              <Text> Gracias por participar de esta prueba general de usabilidad.</Text>
+              <Text>Tu feedback nos sera de gran ayuda.</Text>
+            </Dialog.Body>
+            <Dialog.Footer>
+              <Button colorPalette="red" mr={3} onClick={() => setShowF(false)}>
+                Cerrar
+              </Button>
+            </Dialog.Footer>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 };

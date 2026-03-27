@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Button, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import problems from "../../../problems.json";
-import Link from "next/link";
 import { AccordionSteps } from "./AccordionSteps";
 import { FeedbackTutorial } from "../Feedbacks/FeedbackTutorial";
 
 export function Tutor({ id, setIntro, intro }) {
-  const [idExercise, setIdExercise] = useState(id % 14);
   const [exerciseSelected, setExerciseSelected] = useState(null);
-  const [totalSteps, setTotalSteps] = useState(0);
-  const [disableState, setDisableState] = useState([true]);
   const [nextExercise, setNextExercise] = useState(false);
-  const [orderFirst, setOrderFirst] = useState(null);
-  const [showOrder, setShowOrder] = useState(null);
-  const [nextPhase, setNextPhase] = useState(true);
+
   useEffect(() => {
-    setIdExercise(id % 14);
-    const selet = problems.filter(exercise => exercise.id === parseInt(idExercise));
-    setOrderFirst(selet[0].order_steps.position === "initial");
-    setShowOrder(selet[0].order_steps.show);
-    setNextPhase(true);
-    setExerciseSelected(selet[0]);
-    setTotalSteps(selet[0].steps.length);
-    setDisableState([true]);
+    const nextExerciseId = id % 14;
+    const selectedExercise = problems.find(exercise => exercise.id === nextExerciseId);
+    setExerciseSelected(selectedExercise ?? null);
     setNextExercise(false);
   }, [id]);
 
