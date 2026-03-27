@@ -1,4 +1,4 @@
-import { graphComponents, GraphMeta, Hint, linearFitMeta, selectPointerMeta } from "../types.d";
+import { graphComponents, GraphMeta, Hint, linearFitMeta, selectPointerMeta } from "../types";
 import { SelectPoint } from "./selectPoint";
 import { LinearFit } from "./linearFit";
 

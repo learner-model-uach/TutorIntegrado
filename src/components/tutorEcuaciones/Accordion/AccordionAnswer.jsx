@@ -7,65 +7,44 @@ import { FaHandPointRight } from "react-icons/fa";
 export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) => {
   let newValue = "";
   if (answer && stepType === DRAG_TEXT) {
-    newValue = answer.replace("\\text", "");
-    newValue = newValue.replace(/^(.)|(.)$/g, "");
+    newValue = answer.replace("\\text", "").replace(/^(.)|(.)$/g, "");
   }
 
   return (
-    <div>
+    <Box>
       <Flex>
-        <Box paddingRight={3} paddingTop={1}>
+        <Box pr={3} pt={1}>
           <FaHandPointRight />
         </Box>
-        <Box fontSize={{ sm: "12px", md: "16px", base: "10px", xl: "18px" }} style={{}}>
-          {text}
-        </Box>
 
-        <Text
-          style={{
-            paddingLeft: "5px",
-          }}
-        >
+        <Box fontSize={{ base: "10px", sm: "12px", md: "16px", xl: "18px" }}>{text}</Box>
+
+        <Text pl="5px">
           {inputLabels != null && answer && stepType === DRAG_FIXED_TWO && (
             <Box
-              fontSize={{ sm: "10px", md: "13px", base: "9px" }}
-              width={{
-                base: "110px",
-                md: "150px",
-                lg: "180px",
-                xl: "200px",
-              }}
+              fontSize={{ base: "9px", sm: "10px", md: "13px" }}
+              w={{ base: "110px", md: "150px", lg: "180px", xl: "200px" }}
             >
               <TeX
                 math={inputLabels.concat(answer[0]).concat("=").concat(answer[1])}
                 as="figcaption"
-                style={{
-                  alignItems: "center",
-                }}
+                style={{ alignItems: "center" }}
               />
             </Box>
           )}
+
           {inputLabels != null &&
             answer &&
             (stepType === DRAG_FIXED || stepType === INPUT || stepType === DRAG_TEXT) && (
               <Box
-                fontSize={{ sm: "12px", md: "15px", base: "9px" }}
-                width={{
-                  base: "100px",
-                  sm: "125px",
-                  md: "175px",
-                  lg: "200px",
-                  xl: "220px",
-                }}
+                fontSize={{ base: "9px", sm: "12px", md: "15px" }}
+                w={{ base: "100px", sm: "125px", md: "175px", lg: "200px", xl: "220px" }}
               >
                 {stepType !== DRAG_TEXT ? (
                   <TeX
-                    fontSize={{ base: "3px" }}
                     math={inputLabels.concat(answer)}
                     as="figcaption"
-                    style={{
-                      alignItems: "center",
-                    }}
+                    style={{ alignItems: "center" }}
                   />
                 ) : (
                   <Text>{inputLabels.concat(newValue)}</Text>
@@ -74,6 +53,6 @@ export const AccordionAnswer = ({ nStep, text, inputLabels, stepType, answer }) 
             )}
         </Text>
       </Flex>
-    </div>
+    </Box>
   );
 };

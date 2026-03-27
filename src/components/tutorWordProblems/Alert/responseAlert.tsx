@@ -1,6 +1,6 @@
-import { Alert, AlertIcon, AlertTitle, AlertDescription, Collapse } from "@chakra-ui/react";
+import { Alert, Collapsible } from "@chakra-ui/react";
 import Latex from "react-latex-next";
-import { AlertStatus } from "../types.d";
+import { AlertStatus } from "../types";
 
 interface AlertProps {
   title?: string;
@@ -16,19 +16,19 @@ const ResAlert = ({
   text,
 }: AlertProps) => {
   return (
-    <Collapse in={!alertHidden} animateOpacity>
-      <Alert margin={2} status={status}>
-        <AlertIcon />
-        <AlertTitle>{title}</AlertTitle>
-        <AlertDescription
-          width="100%"
-          whiteSpace="normal" // Permite que el texto se ajuste en varias líneas
-          maxW="100%" // Evita que el botón se desborde de su contenedor
-        >
-          <Latex>{text}</Latex>
-        </AlertDescription>
-      </Alert>
-    </Collapse>
+    <Collapsible.Root open={!alertHidden} unmountOnExit>
+      <Collapsible.Content>
+        <Alert.Root margin={2} status={status}>
+          <Alert.Indicator />
+          <Alert.Content>
+            {title ? <Alert.Title>{title}</Alert.Title> : null}
+            <Alert.Description width="100%" whiteSpace="normal" maxW="100%">
+              <Latex>{text}</Latex>
+            </Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
+      </Collapsible.Content>
+    </Collapsible.Root>
   );
 };
 export default ResAlert;

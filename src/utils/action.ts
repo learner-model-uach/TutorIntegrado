@@ -1,4 +1,5 @@
-import { useLatestRef, useToast } from "@chakra-ui/react";
+import { toaster } from "../components/ui/toaster";
+import { useLatestRef } from "../hooks/useLatestRef";
 import { useCallback } from "react";
 import { useGQLMutation } from "rq-gql";
 import { useAuth } from "../components/Auth";
@@ -7,8 +8,6 @@ import { ActionInput, gql } from "../graphql";
 export type ActionArguments = Omit<ActionInput, "projectId" | "timestamp">;
 
 export const useAction = (baseAction?: Partial<ActionArguments>) => {
-  const toast = useToast();
-
   const latestBaseAction = useLatestRef(baseAction);
 
   const mutation = useGQLMutation(
@@ -21,8 +20,8 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
       onError(err) {
         console.error(err);
         if (process.env.NODE_ENV === "development") {
-          toast({
-            status: "error",
+          toaster.create({
+            type: "error",
             title:
               "Error while sending Action to API (this message is only seen in Development Mode)",
             description: err.message,

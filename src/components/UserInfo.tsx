@@ -1,39 +1,22 @@
-import { useState } from "react";
-import { AiOutlineLogin } from "react-icons/ai";
-import { FaExternalLinkAlt } from "react-icons/fa";
-
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   Avatar,
   Box,
-  Button,
   Flex,
   HStack,
-  Link,
   Popover,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
   Spinner,
-  Stack,
   Text,
-  useColorModeValue,
+  CloseButton,
+  Portal,
 } from "@chakra-ui/react";
+import { useColorModeValue } from "./ui/color-mode";
 
 import { Logout } from "./Logout";
 import { useAuth } from "./Auth";
 
 export const UserInfo = () => {
-  const { isLoading, user, auth0User } = useAuth();
-  const { loginWithRedirect } = useAuth0();
+  const { isLoading, user } = useAuth();
   const emailTextColor = useColorModeValue("whiteAlpha.700", "gray.400");
-
-  const [isRedirecting, setIsRedirecting] = useState(false);
-
-  const loginVariant = useColorModeValue("solid", "outline");
-
-  const fontColor = useColorModeValue("black", "white");
 
   if (isLoading)
     return (
@@ -42,47 +25,13 @@ export const UserInfo = () => {
       </Flex>
     );
 
-  if (!user || !auth0User)
-    return (
-      <Stack spacing={3}>
-        <Button
-          colorScheme="blue"
-          onClick={() => {
-            setIsRedirecting(true);
-            loginWithRedirect();
-          }}
-          isLoading={isRedirecting}
-          isDisabled={isRedirecting}
-          variant={loginVariant}
-          width="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          leftIcon={<AiOutlineLogin />}
-        >
-          Login
-        </Button>
-        <Text textAlign="center" color={emailTextColor}>
-          o solicita tu cuenta{" "}
-          <Box display="inline-flex" alignItems="center">
-            <Link
-              color="blue.500"
-              href="https://forms.gle/dJgg9H53fTxm56mHA"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              aquí!{" "}
-            </Link>
-            <FaExternalLinkAlt size="0.8em" style={{ marginLeft: "0.3em", marginTop: "0.2em" }} />
-          </Box>
-        </Text>
-      </Stack>
-    );
-  const { name, email, picture } = user;
+  if (!user) return null;
 
+  const { name, email, picture } = user;
+  // @ts-ignore
   return (
-    <Popover>
-      <PopoverTrigger>
+    <Popover.Root>
+      <Popover.Trigger asChild>
         <Box
           p="3"
           cursor="pointer"
@@ -90,12 +39,17 @@ export const UserInfo = () => {
           transition="background 0.1s"
           rounded="xl"
           _hover={{ bg: "whiteAlpha.200" }}
-          whiteSpace="nowrap"
+          whiteSpace="normal"
         >
           <HStack display="inline-flex">
-            {picture ? <Avatar size="sm" name={name || undefined} src={picture} /> : null}
+            {picture ? (
+              <Avatar.Root size="sm">
+                <Avatar.Fallback name={name || ""} />
+                <Avatar.Image src={picture} />
+              </Avatar.Root>
+            ) : null}
 
-            <Box lineHeight="1">
+            <Box lineHeight="1" textAlign="left">
               {name ? (
                 <Text fontSize="2xl" fontWeight="semibold">
                   {name}
@@ -110,15 +64,21 @@ export const UserInfo = () => {
             </Box>
           </HStack>
         </Box>
-      </PopoverTrigger>
-      <PopoverContent width="100%">
-        <PopoverCloseButton color={fontColor} />
-        <PopoverBody>
-          <Stack alignItems="flex-start" paddingTop="2em" paddingBottom="1em">
-            <Logout />
-          </Stack>
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
+      </Popover.Trigger>
+      <Portal>
+        <Popover.Positioner>
+          <Popover.Content width="auto" position="relative">
+            <Flex justify="flex-end" p="2" pb="0">
+              <Popover.CloseTrigger asChild>
+                <CloseButton size="xs" variant="ghost" />
+              </Popover.CloseTrigger>
+            </Flex>
+            <Popover.Body pt="1">
+              <Logout />
+            </Popover.Body>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Portal>
+    </Popover.Root>
   );
 };

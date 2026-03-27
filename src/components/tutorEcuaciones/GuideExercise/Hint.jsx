@@ -1,20 +1,8 @@
-import { Button } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef } from "react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Hint.module.css";
 
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  Flex,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Popover, Button, Flex, ButtonGroup } from "@chakra-ui/react";
 import {
   HINT_NEXT_BUTTOM,
   HINT_BACK_BUTTOM,
@@ -22,6 +10,7 @@ import {
   HINT_BUTTOM_NAME,
   HINT_BUTTOM_COLOR,
   POPOVER_BACK_BUTTOM_COLOR,
+  POPOVER_NEXT_BUTTOM_COLOR,
 } from "../../../types";
 export const Hint = ({
   hints,
@@ -32,7 +21,7 @@ export const Hint = ({
   nStep,
   setIntro,
 }) => {
-  const initialFocusRef = useRef();
+  const initialFocusRef = useRef(null);
 
   const [disabledHint, setDisabledHint] = useState(firstTimeHint);
 
@@ -104,60 +93,76 @@ export const Hint = ({
       setNewHintAvaliable(false);
     }
   };
+  const nextButtonProps = {
+    ref: initialFocusRef,
+    autoFocus: true,
+  };
 
   return (
-    <Popover initialFocusRef={initialFocusRef} placement="bottom" closeOnBlur={false}>
-      <PopoverTrigger>
-        <div className="hint-guide">
-          <Button
-            className={
-              shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
-            }
-            disabled={disabledHint}
-            onClick={handOnClickHint}
-            colorScheme={HINT_BUTTOM_COLOR}
-          >
-            {HINT_BUTTOM_NAME}
-            {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
-          </Button>
-        </div>
-      </PopoverTrigger>
-      <PopoverContent color="white" bg="blue.800" borderColor="blue.800">
-        <PopoverHeader pt={4} fontWeight="bold" border="0">
-          {HEADER_POPOVER_HINT}
-        </PopoverHeader>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverBody>
-          <Flex>
-            <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[count].text}</TeX>
-          </Flex>
-        </PopoverBody>
-        <PopoverFooter
-          border="0"
-          d="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          pb={4}
+    <Popover.Root positioning={{ placement: "bottom" }} closeOnInteractOutside={false}>
+      <Popover.Trigger asChild>
+        <Button
+          className={
+            shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
+          }
+          disabled={disabledHint}
+          onClick={handOnClickHint}
+          colorPalette={HINT_BUTTOM_COLOR}
         >
-          <ButtonGroup size="sm">
-            {count != 0 && (
-              <Button colorScheme={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
-                {HINT_BACK_BUTTOM}
-              </Button>
-            )}
-            {count + 1 != hintsAvaliableList.length && (
-              <Button
-                colorScheme={POPOVER_NEXT_BUTTOM_COLOR}
-                ref={initialFocusRef}
-                onClick={handOnClickNext}
-              >
-                {HINT_NEXT_BUTTOM}
-              </Button>
-            )}
-          </ButtonGroup>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+          {HINT_BUTTOM_NAME}
+          {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}
+        </Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content
+          color="white"
+          bg="blue.800"
+          borderColor="blue.800"
+          css={{ "--popover-bg": "var(--chakra-colors-blue-800)" }}
+        >
+          <Popover.Arrow>
+            <Popover.ArrowTip bg="blue.800" borderColor="blue.800" />
+          </Popover.Arrow>
+          <Popover.CloseTrigger />
+
+          <Popover.Header pt={4} fontWeight="bold" border="0">
+            {HEADER_POPOVER_HINT}
+          </Popover.Header>
+
+          <Popover.Body>
+            <Flex>
+              <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[count].text}</TeX>
+            </Flex>
+          </Popover.Body>
+
+          <Popover.Footer
+            border="0"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            pb={4}
+          >
+            <ButtonGroup size="sm">
+              {count !== 0 && hintsAvaliableList.length > 0 && (
+                <Button colorPalette={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
+                  {HINT_BACK_BUTTOM}
+                </Button>
+              )}
+
+              {count + 1 !== hintsAvaliableList.length && hintsAvaliableList.length > 0 && (
+                <Button
+                  colorPalette={POPOVER_NEXT_BUTTOM_COLOR}
+                  onClick={handOnClickNext}
+                  {...nextButtonProps}
+                >
+                  {HINT_NEXT_BUTTOM}
+                </Button>
+              )}
+            </ButtonGroup>
+          </Popover.Footer>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
   );
 };

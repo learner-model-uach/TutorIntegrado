@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Button, Stack, Link } from "@chakra-ui/react";
-import { useAuth0 } from "@auth0/auth0-react";
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import { AccordionSteps } from "./Accordion/AccordionSteps";
@@ -8,6 +7,7 @@ import { Feedback } from "./Feedbacks/Feedback";
 import { SortSteps } from "./SortSteps/SortSteps";
 import { NEXT_STEP_BUTTOM_NAME, NEXT_EXERCISE_BUTTOM_NAME } from "./types";
 import { useAction } from "../../utils/action";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useAuth } from "../Auth";
 import RatingQuestion from "../RatingQuestion";
 
@@ -83,7 +83,7 @@ export function Tutor({ exercise, topicId }) {
                               sm: "13px",
                               lg: "16px",
                             }}
-                            colorScheme="blue"
+                            colorPalette="blue"
                             onClick={handlerNextExercise}
                             style={{ float: "right" }}
                           >
@@ -112,7 +112,7 @@ export function Tutor({ exercise, topicId }) {
                           sm: "13px",
                           lg: "16px",
                         }}
-                        colorScheme="blue"
+                        colorPalette="blue"
                         onClick={() => setNextPhase(prev => !prev)}
                         style={{ float: "right" }}
                       >

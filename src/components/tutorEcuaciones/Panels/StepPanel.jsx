@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Stack, VStack, Button, Text, Grid, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Stack, VStack, Button, Text, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
@@ -8,10 +8,10 @@ import { MovableItem } from "../DragDrop/MovableItem";
 import {
   COLUMN1, // bottom panel
   COLUMN2, // top panel
+  ACCORDION_COLOR,
   CORRECT_BUTTOM_NAME,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
-  BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
 
@@ -32,8 +32,6 @@ export const StepPanel = ({
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
-  const [alert, setAlert] = useState({}); // it is not being used
-  const [openAlert, setOpenAlert] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
@@ -45,11 +43,9 @@ export const StepPanel = ({
   const startAction = useAction({});
   useEffect(() => {
     setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
-    setAlert({});
-    setOpenAlert(false);
     setAnswer(true);
     setIsCorrect(false);
-    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
+    setColor(prev => [...prev.slice(0, nStep), ACCORDION_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const checkValues = () => {
@@ -128,13 +124,9 @@ export const StepPanel = ({
     e.preventDefault();
 
     const answer = checkCorrectAnswer();
-    setOpenAlert(true);
 
     if (answer.length === 0) {
-      setAlert({
-        status: "info",
-        text: "Escoge una respuesta",
-      });
+      return;
     } else {
       updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
@@ -160,10 +152,6 @@ export const StepPanel = ({
           ]);
           setNumStep(prevState => prevState + 1);
           setDisableState(prevState => [...prevState, true]);
-          setAlert({
-            status: "success",
-            text: "Respuesta Correcta",
-          });
           setIsCorrect(true);
           checkLastStep();
           setFirstTimeHint(true);
@@ -186,11 +174,6 @@ export const StepPanel = ({
           setHints(getHints(answer[0].id));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
-
-          setAlert({
-            status: "error",
-            text: "Respuesta Incorrecta",
-          });
         }
       } else {
       }
@@ -247,7 +230,7 @@ export const StepPanel = ({
                 templateColumns="repeat(2, 1fr)"
                 gap={6}
               >
-                <Button colorScheme="blue" onClick={checkAnswers}>
+                <Button colorPalette="blue" onClick={checkAnswers}>
                   {CORRECT_BUTTOM_NAME}
                 </Button>
 
@@ -266,7 +249,7 @@ export const StepPanel = ({
               <Stack display={{ xl: "block", base: "none" }}>
                 <Flex>
                   <div style={{ paddingRight: "5px" }}>
-                    <Button colorScheme="blue" onClick={checkAnswers}>
+                    <Button colorPalette="blue" onClick={checkAnswers}>
                       {CORRECT_BUTTOM_NAME}
                     </Button>
                   </div>

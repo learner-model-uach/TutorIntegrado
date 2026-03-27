@@ -1,64 +1,66 @@
+"use client";
+
 import { Box, Button, ButtonGroup, Flex } from "@chakra-ui/react";
 import type { Hint, MathComponentMeta } from "../types";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { MathfieldElement } from "mathlive";
+import { useEffect, useRef, useState } from "react";
+import * as CEpkg from "@cortex-js/compute-engine";
 import ResAlert from "../Alert/responseAlert";
 import { useAlert } from "../hooks/useAlert";
-import { AlertStatus } from "../types.d";
+import { AlertStatus } from "../types";
 import HintButton from "../Hint/hint";
 import { useHint } from "../hooks/useHint";
-import { ComputeEngine } from "@cortex-js/compute-engine";
 import { useStore } from "../store/store";
 import { useAction } from "../../../utils/action";
 
-const MathField = dynamic(() => import("./tools/mathLive"), {
-  ssr: false,
-});
+const MathField = dynamic(() => import("./tools/mathLive"), { ssr: false });
 
 interface Props {
   meta: MathComponentMeta;
   hints: Hint[];
   correctMsg?: string;
 }
+
 interface Answer {
   placeholderId: string;
   value: string;
 }
 
-// Función para normalizar expresiones LaTeX, incluyendo números decimales
-const normalizeLatex = (latex: string) => {
-  // Reemplazar todas las comas con puntos para tener notación decimal consistente
-  const normalizedLatex = latex.replace(/(\d+),(\d+)/g, "$1.$2");
-  return normalizedLatex;
-};
+// normaliza decimales con coma -> punto
+const normalizeLatex = (latex: string) => latex.replace(/(\d+),(\d+)/g, "$1.$2");
+
+// resolver universal de la clase ComputeEngine (named / default / nested)
+function resolveComputeEngineCtor(mod: any) {
+  if (!mod) return null;
+  if (typeof mod.ComputeEngine === "function") return mod.ComputeEngine; // named export
+  if (mod.default) {
+    if (typeof mod.default === "function") return mod.default; // default class
+    if (typeof mod.default.ComputeEngine === "function") return mod.default.ComputeEngine; // default: { ComputeEngine }
+  }
+  return null;
+}
 
 const MathComponent = ({ meta, hints, correctMsg }: Props) => {
-  //console.log("RE-RENDER MATHCOMPONENT")
-  const newComputerEngine = new ComputeEngine();
   const { expression, readonly, answers, idCorrectAnswers } = meta;
-  //const expr1 =  newComputerEngine.parse('\\frac{-1}  {40} ');
-  //const expr2 =  newComputerEngine.parse('-\\frac{1}{-40}');
-  //const expr3 = newComputerEngine.parse(normalizeLatex("3.5"))
+  const expectedPlaceholderIds = [...new Set(answers.map(answer => answer.placeholderId))];
 
-  //const [answerState,setAnswer] = useState<Answer[]>([]) // utilizar useState provoca que cuando cambie el valor de los placeholders el componente se vuelva a renderizar, provocando el re-renderizado de mathLive
-  const answerStateRef = useRef<Answer[]>([]); // Utilizamos useRef para mantener una referencia mutable a answerState
+  // CE disponible para checkAnswer
+  const ceRef = useRef<any>(null);
+  const mfeRef = useRef<any>(null);
+
+  // estado de respuestas del usuario (sin re-render por cada tecleo)
+  const answerStateRef = useRef<Answer[]>([]);
   const [disabledButton, setDisabledButton] = useState(false);
-  const mfe = useMemo(() => new MathfieldElement(), []);
+  const [mathReady, setMathReady] = useState(false);
 
-  const correctAnswers = answers.filter(answ => {
-    //return idCorrectAnswers.find((correctId) => correctId === answ.id);
-    return idCorrectAnswers.includes(answ.id);
-  });
-  const otherAnswers = answers.filter(answ => {
-    return !idCorrectAnswers.some(correctId => correctId === answ.id);
-  });
+  const correctAnswers = answers.filter(a => idCorrectAnswers.includes(a.id));
+  const otherAnswers = answers.filter(a => !idCorrectAnswers.includes(a.id));
 
   const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert } = useAlert(
-    "Titulo",
+    "",
     AlertStatus.info,
-    "mensaje de la alerta",
-    false,
+    "",
+    true,
     3000,
   );
 
@@ -83,35 +85,119 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     currentTopicId,
     exerciseData,
   } = useStore();
+
   const reportAction = useAction();
 
+  // reinciar alertas y botón al cambiar de meta
   useEffect(() => {
     resetAlert();
     setDisabledButton(false);
+    answerStateRef.current = expectedPlaceholderIds.map(placeholderId => ({
+      placeholderId,
+      value: "",
+    }));
   }, [meta]);
+
+  // registrar/obtener ComputeEngine de forma soportada por MathLive
+  useEffect(() => {
+    let active = true;
+
+    const initComputeEngine = async () => {
+      const { MathfieldElement } = await import("mathlive");
+      let ce = (MathfieldElement as any).computeEngine ?? null;
+
+      if (!ce) {
+        const CEClass = resolveComputeEngineCtor(CEpkg);
+        if (CEClass) {
+          try {
+            ce = new CEClass();
+            (MathfieldElement as any).computeEngine = ce;
+          } catch {
+            ce = null;
+          }
+        }
+      }
+
+      if (!active) {
+        return;
+      }
+
+      ceRef.current = ce || null;
+      setMathReady(Boolean(ce));
+    };
+
+    void initComputeEngine();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // handler de cambios del MathField (placeholders/prompts)
+  // @ts-ignore - firma del onChange en tu wrapper
+  const handleMathFieldChange = (latex: string, promptsValues: Record<string, string>) => {
+    const entries = Object.entries(promptsValues) as [string, string][];
+    answerStateRef.current = entries.map(([placeholderId, value]) => ({ placeholderId, value }));
+  };
+
+  const syncAnswersFromMathField = () => {
+    const mfe = mfeRef.current;
+    if (!mfe) {
+      return answerStateRef.current;
+    }
+
+    const promptIds =
+      mfe.getPrompts?.().length > 0 ? (mfe.getPrompts() as string[]) : expectedPlaceholderIds;
+
+    const nextAnswers = promptIds.map(placeholderId => ({
+      placeholderId,
+      value: mfe.getPromptValue?.(placeholderId) ?? "",
+    }));
+
+    answerStateRef.current = nextAnswers;
+    return nextAnswers;
+  };
+
   const checkAnswer = () => {
     try {
-      const isEmpty = answerStateRef.current.some(userAnswer => userAnswer.value === "");
-      if (isEmpty) {
+      const ce = ceRef.current;
+      const mfe = mfeRef.current;
+      if (!ce) {
+        showAlert("", AlertStatus.info, "Inicializando motor matemático… inténtalo de nuevo.");
+        return;
+      }
+      if (!mfe) {
+        showAlert("", AlertStatus.info, "Cargando editor matemático… inténtalo de nuevo.");
+        return;
+      }
+
+      const currentAnswers = syncAnswersFromMathField();
+      const hasAllAnswers =
+        currentAnswers.length === expectedPlaceholderIds.length &&
+        expectedPlaceholderIds.every(placeholderId =>
+          currentAnswers.some(
+            answer =>
+              answer.placeholderId === placeholderId &&
+              typeof answer.value === "string" &&
+              answer.value.trim() !== "",
+          ),
+        );
+
+      if (!hasAllAnswers) {
         showAlert("", AlertStatus.warning, "Debes completar todos los recuadros!");
         return;
       }
+
       let allCorrect = true;
       let genericHint = true;
-      //console.log("idsCorrects", idCorrectAnswers);
-      //console.log("corrAnswer-->", correctAnswers);
-      //console.log("otherAnswers-->", otherAnswers);
-      answerStateRef.current.forEach(userAnswer => {
-        // comprobar si userAnswer.value hace match con alguna respuesta en correctAnswers, si no, comprobar si hace match en otherAnswer
-        //const isCorrect = correctAnswers.some(corrAnswer => corrAnswer.value.replace(/ /g, '') === userAnswer.value)
-        const parUserAnswer = newComputerEngine.parse(normalizeLatex(userAnswer.value));
-        //console.log("parUserAnswer--->", parUserAnswer.latex);
 
-        //const isCorrect = correctAnswers.some(corrAnswer =>   parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))))
+      currentAnswers.forEach(userAnswer => {
+        const parUserAnswer = ce.parse(normalizeLatex(userAnswer.value));
+
         const isCorrect = correctAnswers.find(
-          corrAnswer =>
-            corrAnswer.placeholderId === userAnswer.placeholderId &&
-            parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(corrAnswer.value))),
+          corr =>
+            corr.placeholderId === userAnswer.placeholderId &&
+            parUserAnswer.isEqual(ce.parse(normalizeLatex(corr.value))),
         );
 
         if (isCorrect) {
@@ -119,18 +205,15 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
         } else {
           allCorrect = false;
           mfe.setPromptState(userAnswer.placeholderId, "incorrect", false);
-          //const isOther = otherAnswers.find((otherAnswer) => otherAnswer.value.replace(/ /g, '') === userAnswer.value)
+
           const isOther = otherAnswers.find(
-            otherAnswer =>
-              otherAnswer.placeholderId === userAnswer.placeholderId &&
-              parUserAnswer.isEqual(newComputerEngine.parse(normalizeLatex(otherAnswer.value))),
+            o =>
+              o.placeholderId === userAnswer.placeholderId &&
+              parUserAnswer.isEqual(ce.parse(normalizeLatex(o.value))),
           );
           if (isOther) {
-            //TODO aplicar logica de hint para una respuesta especifica
             genericHint = false;
             unlockHint(isOther.id);
-          } else {
-            // TODO activar hint generico
           }
         }
       });
@@ -142,14 +225,13 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
         topicID: currentTopicId,
         result: allCorrect ? 1 : 0,
         kcsIDs: exerciseData.questions[currentQuestionIndex].steps[currentStepIndex].kcs,
-        extra: {
-          Response: answerStateRef.current,
-        },
+        extra: { Response: currentAnswers },
         detail: "MathComponent",
       });
+
       if (allCorrect) {
         showAlert("😃", AlertStatus.success, correctMsg, null);
-        setDisabledButton(true); // set disabled status
+        setDisabledButton(true);
         unlockNextStep();
       } else {
         showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
@@ -160,29 +242,34 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     }
   };
 
-  // @ts-ignore
-  const handleMathFieldChange = (latex, promptsValues) => {
-    const entries = Object.entries(promptsValues) as [string, string][];
-    answerStateRef.current = entries.map(([placeholderId, value]) => ({
-      placeholderId,
-      value,
-    }));
-    //console.log(answerStateRef.current)
-  };
   return (
     <Flex flexDirection="column">
       <Box width="100%" textAlign="center" mb={4}>
         <MathField
           readOnly={readonly}
-          mfe={mfe}
           value={expression}
           onChange={handleMathFieldChange}
-        ></MathField>
+          onMount={instance => {
+            mfeRef.current = instance;
+          }}
+        />
       </Box>
+
+      {/* Aviso suave mientras la CE aún no está lista */}
+      {!mathReady && (
+        <Box mt={2} color="orange.500" fontSize="sm">
+          ⏳ Inicializando motor matemático…
+        </Box>
+      )}
 
       <Flex justifyContent="flex-end">
         <ButtonGroup size="lg" display="flex" justifyContent="flex-end">
-          <Button colorScheme="teal" size="sm" onClick={checkAnswer} disabled={disabledButton}>
+          <Button
+            colorPalette="teal"
+            size="sm"
+            onClick={checkAnswer}
+            disabled={disabledButton || !ceRef.current || !mfeRef.current}
+          >
             Aceptar
           </Button>
           <HintButton
@@ -195,7 +282,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
             disabledNextButton={disabledNextButton}
             numEnabledHints={numHintsActivated}
             resetNumHintsActivated={resetNumHintsActivated}
-          ></HintButton>
+          />
         </ButtonGroup>
       </Flex>
 

@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-
-import { useBoolean, useBreakpointValue } from "@chakra-ui/react";
+import { useDisclosure, useBreakpointValue } from "@chakra-ui/react";
 
 export const useMobileMenuState = () => {
-  const [isOpen, actions] = useBoolean();
+  const { open, onOpen, onClose, onToggle } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, lg: false });
 
   useEffect(() => {
-    if (isMobile == false) {
-      actions.off();
+    if (isMobile === false) {
+      onClose();
     }
-  }, [isMobile, actions]);
+  }, [isMobile, onClose]);
 
-  return { isOpen, ...actions };
+  return { open, onOpen, onClose, onToggle };
 };
