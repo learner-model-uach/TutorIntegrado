@@ -23,11 +23,6 @@ const DynamicTutorEcu = dynamic<ComponentProps<typeof Tutor>>(
   { ssr: false },
 );
 
-const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(
-  () => import("../components/tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
-  { ssr: false },
-);
-
 const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(
   () =>
     import("../components/tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
@@ -70,20 +65,10 @@ const ShowContentPage = withAuth(function ShowContent() {
           <DynamicPlain key="2" steps={contentJson as ExType} topicId={topic} />
         ) : content && ["ecc5s", "secl5s", "ecl2s", "mo"].includes(contentType) ? (
           <DynamicTutorEcu key="3" exercise={contentJson} topicId={topic} />
-        ) : content &&
-          [
-            "areaperimetro1",
-            "areaperimetro2",
-            "pitagoras1",
-            "pitagoras2",
-            "thales1",
-            "thales2",
-          ].includes(contentType) ? (
-          <DynamicTutorGeom key="4" exercise={contentJson} topicId={topic} />
         ) : contentType == "wordProblem" ? (
-          <DynamicTutorWP key="5" exercise={contentJson} topicId={topic} />
+          <DynamicTutorWP key="4" exercise={contentJson} topicId={topic} />
         ) : contentType == "lvltutor2" ? (
-          <DynamicTutorLogic key="6" exc={contentJson as ExLog} topicId={topic} />
+          <DynamicTutorLogic key="5" exc={contentJson as ExLog} topicId={topic} />
         ) : (
           <Text>No existe el contenido que desea cargar</Text>
         )}
