@@ -27,6 +27,8 @@ const config = defineConfig({
           300: { value: "#F9B362" },
           400: { value: "#f49e43" },
           500: { value: "#f28b30" },
+          600: { value: "#DB8446" },
+          700: { value: "rgb(173, 101, 57)" },
         },
         stealblue: {
           200: { value: "#90ccf5" },
@@ -96,6 +98,9 @@ const config = defineConfig({
         //sidebarlink
         sidebarselect_active: {
           value: { base: "{colors.stealblue.950}", _dark: "{colors.platinum.700}" },
+        },
+        sidebar_select_active_text: {
+          value: { base: "{colors.tangerine.500}", _dark: "{colors.tangerine.400}" },
         },
         sidebarselect_hover: {
           value: { base: "{colors.indigo.700}", _dark: "{colors.platinum.600}" },

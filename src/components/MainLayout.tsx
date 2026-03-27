@@ -15,6 +15,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
 
   const mainContainerBackground = "bg";
   const contentContainerBackground = "bg.secondary";
+  
 
   return (
     <Flex

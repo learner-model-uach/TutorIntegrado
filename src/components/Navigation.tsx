@@ -13,9 +13,7 @@ export function Navigation() {
   if (isPreLogin) {
     return (
       <ScrollArea
-        // pt="5"
-        // pb="6"
-        height="30vh"
+        height="10vh"
         display="flex"
         flexDirection="column"
       >

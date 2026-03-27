@@ -15,7 +15,7 @@ import { Logout } from "./Logout";
 import { useAuth } from "./Auth";
 
 export const UserInfo = () => {
-  const { isLoading, user, auth0User } = useAuth();
+  const { isLoading, user } = useAuth();
   const emailTextColor = useColorModeValue("whiteAlpha.700", "gray.400");
 
   if (isLoading)
@@ -25,7 +25,7 @@ export const UserInfo = () => {
       </Flex>
     );
 
-  if (!user || !auth0User) return null;
+  if (!user) return null;
 
   const { name, email, picture } = user;
   // @ts-ignore
