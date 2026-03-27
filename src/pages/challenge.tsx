@@ -489,7 +489,13 @@ const StudentCard = ({
         )}
         <Box display="flex" justifyContent="center" alignItems="center" w="100%">
           {status === "finalized" ? (
-            <Button colorPalette="green" onClick={handleContinueChallenge} flex="1" maxW="200px" fontWeight={"semibold"}>
+            <Button
+              colorPalette="green"
+              onClick={handleContinueChallenge}
+              flex="1"
+              maxW="200px"
+              fontWeight={"semibold"}
+            >
               Continuar desafío
             </Button>
           ) : (

@@ -15,7 +15,6 @@ export function MainLayout({ children }: { children: ReactNode }) {
 
   const mainContainerBackground = "bg";
   const contentContainerBackground = "bg.secondary";
-  
 
   return (
     <Flex
@@ -39,7 +38,14 @@ export function MainLayout({ children }: { children: ReactNode }) {
       >
         {/* <Image src="/img/logo.svg" alt="Logo" ml="6"mb="4" /> */}
         <Image src="/img/logo.png" alt="Logo" w="220px" h="80px" mb="1" ml="6" />
-        <Box fontSize="sm" lineHeight="tall" display="flex" flexDirection="column" flex="1" minH="0">
+        <Box
+          fontSize="sm"
+          lineHeight="tall"
+          display="flex"
+          flexDirection="column"
+          flex="1"
+          minH="0"
+        >
           <UserInfo />
           <GroupSelect />
           <Box flex="1" minH="0">

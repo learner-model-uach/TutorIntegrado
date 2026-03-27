@@ -7,5 +7,5 @@ export default function Start() {
   const proyecto = user?.projects?.some(x => x.code == "NivPreAlg");
   console.log(proyecto);
 
-  return ( proyecto ? <AssigndUser /> : <NewUser />);
+  return proyecto ? <AssigndUser /> : <NewUser />;
 }

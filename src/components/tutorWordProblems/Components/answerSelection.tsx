@@ -111,10 +111,7 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
   };
 
   return (
-    <Flex 
-      flexDirection="column" 
-      width="100%"  
-    >
+    <Flex flexDirection="column" width="100%">
       <List.Root listStyleType="none" ps="0">
         {meta.answers.map((answer, index) => {
           return (
@@ -127,7 +124,7 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
                 width="100%"
                 bg={getBackgroundColor(index)}
                 borderRadius="md"
-                cursor={isCorrectUserAnswer ? "not-allowed": "pointer"}
+                cursor={isCorrectUserAnswer ? "not-allowed" : "pointer"}
                 onCheckedChange={details => {
                   if (details.checked) {
                     handleClick(index);

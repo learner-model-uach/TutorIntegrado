@@ -46,7 +46,6 @@ const ShowContentPage = withAuth(function ShowContent() {
   const contentJson = content?.json;
   const contentType = contentJson?.type;
 
-  
   return (
     <>
       <Box
@@ -65,8 +64,7 @@ const ShowContentPage = withAuth(function ShowContent() {
       </Box>
 
       <div>
-        {content &&
-        ["ftc5s", "fc1s", "fdc2s", "fdsc2", "fcc3s"].includes(contentType) ? (
+        {content && ["ftc5s", "fc1s", "fdc2s", "fdsc2", "fcc3s"].includes(contentType) ? (
           <DynamicTutorFac key="1" exercise={contentJson} topicId={topic} />
         ) : contentType == "lvltutor" && contentJson ? (
           <DynamicPlain key="2" steps={contentJson as ExType} topicId={topic} />

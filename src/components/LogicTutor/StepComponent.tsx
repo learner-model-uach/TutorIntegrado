@@ -23,15 +23,15 @@ const StepComponent = ({ exc, nStep, topicId }: { exc: ExLog; nStep: number; top
 
   return (
     <>
-        <Accordion.Root
-          collapsible
-          value={Step === -1 ? [] : [String(Step)]}
-          onValueChange={({ value }) => {
-            setStep(value.length ? parseInt(value[0], 10) : -1);
-          }}
-        >
-          <ShowSteps exc={exc} nStep={nStep} setStep={setStep} topic={topicId} />
-        </Accordion.Root>
+      <Accordion.Root
+        collapsible
+        value={Step === -1 ? [] : [String(Step)]}
+        onValueChange={({ value }) => {
+          setStep(value.length ? parseInt(value[0], 10) : -1);
+        }}
+      >
+        <ShowSteps exc={exc} nStep={nStep} setStep={setStep} topic={topicId} />
+      </Accordion.Root>
     </>
   );
 };

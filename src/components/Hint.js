@@ -175,7 +175,7 @@ const Hint = ({
             alignItems="center"
           >
             Pista
-            {error && i < hints.length + count - 1 ? ( 
+            {error && i < hints.length + count - 1 ? (
               <Badge
                 display="inline-flex"
                 alignItems="center"

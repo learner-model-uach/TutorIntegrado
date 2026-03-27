@@ -12,11 +12,7 @@ export function Navigation() {
 
   if (isPreLogin) {
     return (
-      <ScrollArea
-        height="10vh"
-        display="flex"
-        flexDirection="column"
-      >
+      <ScrollArea height="10vh" display="flex" flexDirection="column">
         <Stack flex="1" justify="center">
           <Stack>
             <SidebarLink icon={<FaHome />} href="/">
@@ -88,14 +84,10 @@ export function Navigation() {
               <SidebarLink icon={<FaBookOpen />} href="/challenge">
                 Desafíos
               </SidebarLink>
-
-              
             </Stack>
           </>
         )}
       </Stack>
-
-
     </ScrollArea>
   );
 }

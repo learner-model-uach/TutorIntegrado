@@ -298,7 +298,6 @@ export const AssigndUser = () => {
               </Stack>
             </HStack>
 
-           
             <Text maxW="3xl" fontSize={{ base: "md", md: "lg" }} color="text_info">
               <Highlight
                 query="Tutor Inteligente"

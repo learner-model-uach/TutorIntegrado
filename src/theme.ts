@@ -149,7 +149,7 @@ const config = defineConfig({
           value: { base: "#dbeafe", _dark: "#14204A" },
         },
         accordion_step_text: {
-          value: { base: "#173da6", _dark:"#A3CFFF" },
+          value: { base: "#173da6", _dark: "#A3CFFF" },
         },
         accordion_success: {
           value: { base: "#DCFCE7", _dark: "#042713" },
@@ -159,7 +159,7 @@ const config = defineConfig({
         },
         alternative_button: {
           value: { base: "{colors.stealblue.400}", _dark: "{colors.indigo.900}" },
-        }
+        },
       },
     },
   },

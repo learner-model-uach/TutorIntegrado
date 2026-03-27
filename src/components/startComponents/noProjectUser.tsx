@@ -130,9 +130,9 @@ export function NewUser() {
         color="gray.500"
       >
         Esta plataforma está siendo desarrollada y mantenida gracias el proyecto Fondecyt Iniciación
-        11220709, titulado "Diseño motivacional de tutores cognitivos para apoyar el aprendizaje de
-        matemáticas en los estudiantes de primer año de ingeniería" Para más información contactarse
-        con el Investigador Principal: Julio Daniel Guerra Hollstein (
+        11220709, titulado &quot;Diseño motivacional de tutores cognitivos para apoyar el
+        aprendizaje de matemáticas en los estudiantes de primer año de ingeniería&quot; Para más
+        información contactarse con el Investigador Principal: Julio Daniel Guerra Hollstein (
         <Link color="gray.500" href="mailto:jguerra@inf.uach.cl?subject=Tutor%20Integrado">
           {" "}
           jguerra@inf.uach.cl

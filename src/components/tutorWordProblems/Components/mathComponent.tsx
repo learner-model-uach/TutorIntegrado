@@ -177,7 +177,9 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
         expectedPlaceholderIds.every(placeholderId =>
           currentAnswers.some(
             answer =>
-              answer.placeholderId === placeholderId && typeof answer.value === "string" && answer.value.trim() !== "",
+              answer.placeholderId === placeholderId &&
+              typeof answer.value === "string" &&
+              answer.value.trim() !== "",
           ),
         );
 

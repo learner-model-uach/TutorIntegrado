@@ -322,10 +322,7 @@ export const TutorWordProblem = ({
                                     <Span flex="1" marginLeft={"5"}>
                                       <Latex>{step.stepTitle}</Latex>
                                     </Span>
-                                    <Accordion.ItemIndicator
-                                      marginEnd={5}
-                                      color={"textColor"}
-                                    />
+                                    <Accordion.ItemIndicator marginEnd={5} color={"textColor"} />
                                   </Accordion.ItemTrigger>
                                 </h2>
 
