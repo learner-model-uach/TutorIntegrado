@@ -1,8 +1,7 @@
-import { Text, Box, Accordion, Tabs } from "@chakra-ui/react";
+import { Text, Box, Accordion, Heading } from "@chakra-ui/react";
 import Carousel from "../components/Carrusel";
 
 export default function Tutorial() {
-  const bgColor = "#2A4365";
   const imagesfac = ["imgfac1.jpg", "imgfac2.jpg", "imgfac3.jpg", "imgfac4.jpg", "imgfac5.jpg"];
   const imagesecu = [
     "imgecu1.jpg",
@@ -15,20 +14,14 @@ export default function Tutorial() {
   ];
   const imagesfrac = ["imgfrac1.jpg", "imgfrac2.jpg", "imgfrac3.jpg", "imgfrac4.jpg"];
   return (
-    <Tabs.Root mt={10} fitted justify="start" variant="enclosed" defaultValue="about">
-      <Tabs.List>
-        <Tabs.Trigger value="about" fontSize="lg">
-          Sobre el Tutor
-        </Tabs.Trigger>
-      </Tabs.List>
-
-      <Tabs.Content value="about">
-        <Accordion.Root defaultValue={["0", "4"]} multiple>
-          <Accordion.Item value="0">
-            <h2>
-              <Accordion.ItemTrigger>
+    <>
+      <Heading textAlign={"center"} size={"4xl"} mb="2"> Sobre el Tutor</Heading>
+      <Accordion.Root defaultValue={["0", "4"]} multiple>
+        <Accordion.Item value="0">
+          <h2>
+            <Accordion.ItemTrigger>
                 <Box as="span" flex="1" textAlign="left">
-                  <Text color={bgColor} fontWeight="extrabold">
+                  <Text fontWeight="extrabold">
                     ¿Cómo aprendo con el tutor?
                   </Text>
                 </Box>
@@ -50,7 +43,7 @@ export default function Tutorial() {
                 <h2>
                   <Accordion.ItemTrigger>
                     <Box as="span" flex="1" textAlign="left">
-                      <Text color={bgColor} fontWeight="extrabold">
+                      <Text fontWeight="extrabold">
                         Factorización
                       </Text>
                     </Box>
@@ -68,7 +61,7 @@ export default function Tutorial() {
                 <h2>
                   <Accordion.ItemTrigger>
                     <Box as="span" flex="1" textAlign="left">
-                      <Text color={bgColor} fontWeight="extrabold">
+                      <Text fontWeight="extrabold">
                         Ecuaciones Cuadráticas y Ecuaciones Lineales
                       </Text>
                     </Box>
@@ -86,7 +79,7 @@ export default function Tutorial() {
                 <h2>
                   <Accordion.ItemTrigger>
                     <Box as="span" flex="1" textAlign="left">
-                      <Text color={bgColor} fontWeight="extrabold">
+                      <Text fontWeight="extrabold">
                         Fracción Algebraica | Potencias y Raíces
                       </Text>
                     </Box>
@@ -104,7 +97,7 @@ export default function Tutorial() {
                 <h2>
                   <Accordion.ItemTrigger>
                     <Box as="span" flex="1" textAlign="left">
-                      <Text color={bgColor} fontWeight="extrabold">
+                      <Text fontWeight="extrabold">
                         ¿Cómo funciona el tutor?
                       </Text>
                     </Box>
@@ -124,7 +117,6 @@ export default function Tutorial() {
             </Accordion.ItemContent>
           </Accordion.Item>
         </Accordion.Root>
-      </Tabs.Content>
-    </Tabs.Root>
+        </>
   );
 }
