@@ -1,17 +1,10 @@
-import { useState } from "react";
-import { AiOutlineLogin } from "react-icons/ai";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   Avatar,
   Box,
-  Button,
   Flex,
   HStack,
-  Link,
   Popover,
   Spinner,
-  Stack,
   Text,
   CloseButton,
   Portal,
@@ -23,12 +16,7 @@ import { useAuth } from "./Auth";
 
 export const UserInfo = () => {
   const { isLoading, user, auth0User } = useAuth();
-  const { loginWithRedirect } = useAuth0();
   const emailTextColor = useColorModeValue("whiteAlpha.700", "gray.400");
-
-  const [isRedirecting, setIsRedirecting] = useState(false);
-
-  const loginVariant = useColorModeValue("solid", "outline");
 
   if (isLoading)
     return (
@@ -37,49 +25,7 @@ export const UserInfo = () => {
       </Flex>
     );
 
-  if (!user || !auth0User)
-    return (
-      <Stack gap={3}>
-        <Button //Boton de login
-          // colorPalette="blue"
-          bg={{ base: "loginButton", _hover: "stealblue.600" }}
-          color="white"
-          fontSize="md"
-          fontWeight="semibold"
-          onClick={() => {
-            setIsRedirecting(true);
-            loginWithRedirect();
-          }}
-          loading={isRedirecting}
-          disabled={isRedirecting}
-          variant={loginVariant}
-          width="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          rounded="md"
-        >
-          <HStack>
-            <AiOutlineLogin />
-            <span>Login</span>
-          </HStack>
-        </Button>
-        <Text textAlign="center" color={emailTextColor}>
-          o solicita tu cuenta{" "}
-          <Box display="inline-flex" alignItems="center">
-            <Link
-              color="blue.500"
-              href="https://forms.gle/dJgg9H53fTxm56mHA"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              aquí!{" "}
-            </Link>
-            <FaExternalLinkAlt size="0.8em" style={{ marginLeft: "0.3em", marginTop: "0.2em" }} />
-          </Box>
-        </Text>
-      </Stack>
-    );
+  if (!user || !auth0User) return null;
 
   const { name, email, picture } = user;
   // @ts-ignore

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Stack, Heading, Box, VStack, Text, Button, Image, Link } from "@chakra-ui/react";
+import { Stack, Heading, Box, VStack, Text, Icon, Link, Button, Image } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { FaEnvelope } from "react-icons/fa";
 import { MdAdsClick } from "react-icons/md";
 
-export function NewUser() {
+export default function StarAternative() {
   const { loginWithRedirect } = useAuth0();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
@@ -28,11 +29,7 @@ export function NewUser() {
             </Heading>
 
             <Text fontSize="lg" mt="1em" color="text_info">
-                Aprende y ejercita paso a paso tus habilidades de resolución de problemas. Resolviendo ejercicios de diversos tópicos que hemos identificado como importantes para prepararse para Álgebra para Ingeniería. 
-            </Text>
-            <Text fontSize="lg" mt="1em" color="text_info">
-
-            Para comenzar, inicia sesión con tu cuenta o solicita acceso si aún no la tienes.
+                Aprende y ejercita paso a paso tus habilidades de resolución de problemas. Resolviendo ejercicios de diversos tópicos que hemos identificado como importantes para prepararse para Álgebra para Ingeniería.
             </Text>
             <Box mt="3em">
               <Stack direction="row" gap="2em" justify="center">
@@ -106,14 +103,14 @@ export function NewUser() {
         </Box> */}
       </Stack>
 
-      <Text fontSize="sm" textAlign="center" color= "gray.500">
-        Esta plataforma está siendo desarrollada y mantenida gracias el proyecto Fondecyt Iniciación 11220709, titulado "Diseño motivacional de tutores cognitivos para apoyar el aprendizaje de matemáticas en los estudiantes de primer año de ingeniería"
+      <Text fontSize="xs" textAlign="center" color= "gray.500">
         Para más información contactarse con el Investigador Principal:
-            Julio Daniel Guerra Hollstein  {" "} (<Link color= "gray.500" href="mailto:jguerra@inf.uach.cl?subject=Tutor%20Integrado"> jguerra@inf.uach.cl</Link>)
-        {/* <Text as="span" whiteSpace="nowrap" color= "gray.500">
-     <Icon as={FaEnvelope} verticalAlign="middle" /> {" "} <Link href="mailto:jguerra@inf.uach.cl?subject=Tutor%20Integrado"> jguerra@inf.uach.cl</Link> */}
-  {/* </Text> */}
+            Julio Daniel Guerra Hollstein  {" "} 
+        <Text as="span" whiteSpace="nowrap" color= "gray.500">
+     <Icon as={FaEnvelope} verticalAlign="middle" /> {" "} <Link href="mailto:jguerra@inf.uach.cl?subject=Tutor%20Integrado"> jguerra@inf.uach.cl</Link>
+  </Text>
       </Text>
+
     </VStack>
   );
 }

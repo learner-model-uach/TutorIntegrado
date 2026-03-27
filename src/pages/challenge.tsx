@@ -489,11 +489,11 @@ const StudentCard = ({
         )}
         <Box display="flex" justifyContent="center" alignItems="center" w="100%">
           {status === "finalized" ? (
-            <Button colorScheme="green" onClick={handleContinueChallenge} flex="1" maxW="200px">
+            <Button colorPalette="green" onClick={handleContinueChallenge} flex="1" maxW="200px" fontWeight={"semibold"}>
               Continuar desafío
             </Button>
           ) : (
-            <Button colorScheme="green" onClick={handleStartChallenge} flex="1" maxW="200px">
+            <Button colorPalette="green" onClick={handleStartChallenge} flex="1" maxW="200px">
               Comenzar desafío
             </Button>
           )}
@@ -836,7 +836,7 @@ const ChallengeCard = ({
 
           <HStack justify="center" w="100%" mt={4}>
             <Button
-              colorScheme="teal" // Cambia el color para diferenciarlo
+              colorPalette="teal" // Cambia el color para diferenciarlo
               onClick={previewClick} // Función para manejar el clic
               flex="1"
               maxW="200px"
@@ -847,24 +847,24 @@ const ChallengeCard = ({
 
           <HStack gap={4} mt={4} justify="center" w="100%" wrap="wrap">
             {/* Botón para eliminar el desafío */}
-            <Button colorScheme="red" onClick={handleDelete} flex="1" maxW="200px">
+            <Button colorPalette="red" onClick={handleDelete} flex="1" maxW="200px">
               <FaTrashAlt size={16} />
               {/* Botón para modificar el desafío */}
             </Button>
             {(status == "unpublished" || status == "published") && (
-              <Button colorScheme="blue" onClick={() => handleModify(id)} flex="1" maxW="200px">
+              <Button colorPalette="blue" onClick={() => handleModify(id)} flex="1" maxW="200px">
                 <FaEdit size={24} />
               </Button>
             )}
             {/* Botón para publicar el desafío */}
             {status === "unpublished" ? (
               // Botón para publicar
-              <Button colorScheme="green" onClick={() => handlePublish()} flex="1" maxW="200px">
+              <Button colorPalette="green" onClick={() => handlePublish()} flex="1" maxW="200px">
                 <FaPaperPlane size={16} />
               </Button>
             ) : status === "published" ? (
               // Botón para despublicar
-              <Button colorScheme="red" onClick={() => handleUnpublish()} flex="1" maxW="200px">
+              <Button colorPalette="red" onClick={() => handleUnpublish()} flex="1" maxW="200px">
                 <FaTimes size={16} />
               </Button>
             ) : null}
@@ -1561,7 +1561,7 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
         <Box p={8}>
           {/* Botón para crear desafio */}
           <Flex justify="flex-end" mt={6}>
-            <Button colorScheme="blue" width="auto" onClick={handleClick} mt={6}>
+            <Button colorPalette="blue" width="auto" onClick={handleClick} mt={6}>
               Crear desafío
             </Button>
           </Flex>

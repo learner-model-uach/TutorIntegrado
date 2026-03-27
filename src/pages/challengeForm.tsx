@@ -959,10 +959,10 @@ export default withAuth(function ChallengesForm() {
         </Box>
 
         <Box mt={6} display="flex" justifyContent="space-between">
-          <Button colorScheme="red" onClick={handleCancel}>
+          <Button colorPalette="red" onClick={handleCancel}>
             Cancelar
           </Button>
-          <Button colorScheme="teal" onClick={handleSave}>
+          <Button colorPalette="teal" onClick={handleSave}>
             Guardar desafío
           </Button>
         </Box>

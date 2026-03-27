@@ -133,10 +133,15 @@ const MultiplePlaceholders = ({
           justifyContent="center"
           textAlign="center"
         >
-          <Text as="span" display="inline-flex" gap="2" color={"text_exercises"} alignItems="center">
+          <Text
+            as="span"
+            display="inline-flex"
+            gap="2"
+            color={"text_exercises"}
+            alignItems="center"
+          >
             Símbolos especiales en el teclado virtual{" "}
-            {" "}
-            <FaRegKeyboard  style={{ marginBottom: "4px" }} />
+            <FaRegKeyboard style={{ marginBottom: "4px" }} />
           </Text>
           <Box display="flex" justifyContent="center" w="100%">
             <Mathfield
@@ -148,7 +153,13 @@ const MultiplePlaceholders = ({
         </Box>
       </Center>
 
-      <Stack gap={4} m={2} direction={{ base: "row" }} justifyContent="center">
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         {!isCorrectValue && (
           <>
             {/* Button v3: usa colorPalette */}

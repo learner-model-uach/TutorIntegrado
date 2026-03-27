@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Input, Alert } from "@chakra-ui/react";
+import { Box, Button, Stack, Input, Alert } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -61,12 +61,19 @@ const InputButtons = ({
 
   return (
     <>
-      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         <span>&#123;</span>
         <Input
           htmlSize={4}
           size="sm"
-          width="xs"
+          w={{ base: "100%", sm: "xs" }}
+          maxW={{ base: "100%", sm: "xs" }}
           type="text"
           value={inputText}
           onChange={e => setInputText(e.target.value)}
@@ -74,54 +81,49 @@ const InputButtons = ({
         <span>&#125;</span>
       </Stack>
 
-      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+      <Box display="flex" flexWrap="wrap" gap={2} m={2} justifyContent="center">
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("√")}>
           √
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("∈")}>
-          {" "}
           ∈
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℂ")}>
-          {" "}
           ℂ
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℤ")}>
-          {" "}
           ℤ
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℝ")}>
-          {" "}
           ℝ
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℕ")}>
-          {" "}
           ℕ
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("∞")}>
-          {" "}
           ∞
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("≤")}>
-          {" "}
           ≤
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("≥")}>
-          {" "}
           ≥
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick(">")}>
-          {" "}
-          &lt;{" "}
+          &lt;
         </Button>
         <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("<")}>
-          {" "}
           &gt;
         </Button>
-      </Stack>
-      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+      </Box>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         <Button colorScheme="teal" h="2rem" onClick={() => evaluar()}>
-          {" "}
           Enviar
         </Button>
         <Hint

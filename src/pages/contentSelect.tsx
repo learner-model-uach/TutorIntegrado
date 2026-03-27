@@ -259,7 +259,7 @@ export default withAuth(function ContentSelect() {
         parameters.CSMain.completeMsgService ? (
         <CompleteTopic topicCodes={[topics]} />
       ) : !isLoading && !isFetching /*&& !queryLastExercise*/ ? (
-        <Box maxW="90%" padding="1" mx="auto">
+        <Box maxW={{ base: "100%", xl: "90%" }} px={{ base: 4, md: 6 }} py="1" mx="auto">
           <Center>
             <Heading
               fontSize={"3xl"}
@@ -271,7 +271,6 @@ export default withAuth(function ContentSelect() {
               {parameters.CSMain.title}
               {kcsyejercicio?.title}
             </Heading>
-            &nbsp;&nbsp;&nbsp;
           </Center>
 
           <br></br>
@@ -279,7 +278,8 @@ export default withAuth(function ContentSelect() {
             <Box
               borderWidth="1px"
               borderColor={"blue.info"}
-              w={["100%", "100%", "100%", "md"]}
+              w="full"
+              maxW={{ base: "100%", md: "lg" }}
               p="4"
               borderRadius="md"
               textAlign="center"
@@ -306,11 +306,15 @@ export default withAuth(function ContentSelect() {
           />
           <br></br>
           <Center>
-            <Text> {parameters.CSMain.text} </Text>
+            <Text textAlign="center" maxW={{ base: "100%", md: "2xl" }}>
+              {parameters.CSMain.text}
+            </Text>
           </Center>
 
           <SimpleGrid
             columns={{
+              base: 1,
+              md: 1,
               lg: 1,
               xl:
                 experimentGroup != parameters.CSMain.experimentalTag
@@ -318,9 +322,11 @@ export default withAuth(function ContentSelect() {
                   : (contentResult ?? []).length,
             }}
             gap="8"
-            p="10"
+            px={{ base: 0, md: 4 }}
+            py={{ base: 8, md: 10 }}
             textAlign="center"
             rounded="lg"
+            justifyItems="center"
           >
             {
               //agregar componente de tópico completado

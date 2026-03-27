@@ -1,4 +1,5 @@
 import {
+  Box,
   LinkBox,
   Heading,
   Center,
@@ -7,6 +8,7 @@ import {
   Text,
   Image,
   Stack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import PBLoad from "../progressbar/pbload";
@@ -69,6 +71,11 @@ export const CardSelectionTopic = ({
 }) => {
   const topicPath = `contentSelect?topic=${id}&registerTopic=${id}`;
   const action = useAction();
+  const currentExercise = selectedExcercise.ejercicio[index];
+  const mathContainerWidth = useBreakpointValue({ base: 240, sm: 280, md: 320, lg: 360 }) ?? 320;
+  const isPolynomialTopic = label?.toLowerCase().includes("polinomios") ?? false;
+  const currentExpression = currentExercise ? displayExp(currentExercise as ExType) : "";
+  const shouldStackMath = isPolynomialTopic || currentExpression.length > 40;
 
   interface pbi {
     uservalues: number;
@@ -162,85 +169,84 @@ export const CardSelectionTopic = ({
           </Heading>
         </HStack>
       </Center>
-      {selectedExcercise.ejercicio[index] ? (
-        selectedExcercise.ejercicio[index].type == "lvltutor2" ? (
-          selectedExcercise.ejercicio[index].img ? (
-            <Image src={"img/" + selectedExcercise.ejercicio[index].img} />
-          ) : selectedExcercise.ejercicio[index].initialExpression ? (
+      {currentExercise ? (
+        currentExercise.type == "lvltutor2" ? (
+          currentExercise.img ? (
+            <Image src={"img/" + currentExercise.img} />
+          ) : currentExercise.initialExpression ? (
             <Stack textAlign="center" fontSize="xs">
               <Center>
-                <Latex>{"$$" + selectedExcercise.ejercicio[index].initialExpression + "$$"}</Latex>
+                <Latex>{"$$" + currentExercise.initialExpression + "$$"}</Latex>
               </Center>
             </Stack>
           ) : (
             <Stack textAlign="center" fontSize="xs">
               <Center>
-                <Latex>
-                  {"$$" + selectedExcercise.ejercicio[index].steps[0].expression + "$$"}
-                </Latex>
+                <Latex>{"$$" + currentExercise.steps[0].expression + "$$"}</Latex>
               </Center>
             </Stack>
           )
         ) : (
-          <Center
-            fontSize={label?.toLowerCase().includes("polinomios") ? "lg" : "2xl"}
+          <Box
+            w="full"
+            px={{ base: 1, md: 2 }}
+            fontSize={isPolynomialTopic ? { base: "sm", md: "lg" } : { base: "lg", md: "2xl" }}
             paddingBottom={"3"}
             paddingTop={"1"}
             overflow="visible"
-            wordBreak="break-word"
-            whiteSpace="normal"
             maxWidth="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            css={
-              label?.toLowerCase().includes("polinomios")
-                ? {
-                    "& .MathJax": {
-                      fontSize: "0.75em !important",
-                      lineHeight: "1.4 !important",
-                      maxWidth: "100% !important",
-                      overflow: "visible !important",
-                      whiteSpace: "normal !important",
-                      wordWrap: "break-word !important",
-                    },
-                    "& mjx-container": {
-                      maxWidth: "100% !important",
-                      overflow: "visible !important",
-                      display: "inline-block !important",
-                    },
-                    "& mjx-math": {
-                      maxWidth: "100% !important",
-                      overflow: "visible !important",
-                    },
-                  }
-                : null
-            }
+            css={{
+              "& mjx-container": {
+                maxWidth: "100% !important",
+                overflow: "visible !important",
+                display: shouldStackMath ? "block !important" : "inline-block !important",
+                margin: "0 auto !important",
+              },
+              "& svg": {
+                maxWidth: "100% !important",
+                height: "auto !important",
+              },
+            }}
           >
-            {selectedExcercise.ejercicio[index].img ? (
-              <Image src={"img/" + selectedExcercise.ejercicio[index].img} />
-            ) : null}
-            {selectedExcercise.ejercicio[index].type == "ecc5s" ||
-            selectedExcercise.ejercicio[index].type == "secl5s" ||
-            selectedExcercise.ejercicio[index].type == "ecl2s" ? (
-              <MathComponent
-                tex={String.raw`${selectedExcercise.ejercicio[index].eqc}`}
-                display={false}
-              />
-            ) : selectedExcercise.ejercicio[index].type === "wordProblem" ? (
-              <MathComponent tex={String.raw`${""}`} display={false} />
-            ) : selectedExcercise.ejercicio[index].initialExpression ? (
-              <MathComponent
-                tex={String.raw`${selectedExcercise.ejercicio[index].initialExpression}`}
-                display={false}
-              />
-            ) : (
-              <MathComponent
-                tex={String.raw`${selectedExcercise.ejercicio[index].steps[0].expression}`}
-                display={false}
-              />
-            )}
-          </Center>
+            <Center>
+              {currentExercise.img ? <Image src={"img/" + currentExercise.img} /> : null}
+              {currentExercise.type == "ecc5s" ||
+              currentExercise.type == "secl5s" ||
+              currentExercise.type == "ecl2s" ? (
+                <MathComponent
+                  tex={String.raw`${currentExercise.eqc}`}
+                  display={shouldStackMath}
+                  settings={
+                    shouldStackMath
+                      ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                      : undefined
+                  }
+                />
+              ) : currentExercise.type === "wordProblem" ? (
+                <MathComponent tex={String.raw`${""}`} display={false} />
+              ) : currentExercise.initialExpression ? (
+                <MathComponent
+                  tex={String.raw`${currentExercise.initialExpression}`}
+                  display={shouldStackMath}
+                  settings={
+                    shouldStackMath
+                      ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                      : undefined
+                  }
+                />
+              ) : (
+                <MathComponent
+                  tex={String.raw`${currentExercise.steps[0].expression}`}
+                  display={shouldStackMath}
+                  settings={
+                    shouldStackMath
+                      ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                      : undefined
+                  }
+                />
+              )}
+            </Center>
+          </Box>
         )
       ) : (
         <></>

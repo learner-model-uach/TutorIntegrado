@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Alert, Center } from "@chakra-ui/react";
+import { Box, Button, Stack, Alert, Center } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import Latex from "react-latex-next";
@@ -61,10 +61,18 @@ const TrueFalse = ({
   return (
     <>
       <>
-        <Center>
-          <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
-        </Center>
-        <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+        <Box w="full" overflowX="auto">
+          <Center minW="fit-content" mx="auto">
+            <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
+          </Center>
+        </Box>
+        <Stack
+          gap={4}
+          m={2}
+          direction={{ base: "column", sm: "row" }}
+          align="center"
+          justifyContent="center"
+        >
           <Button colorPalette="teal" size="sm" onClick={() => evaluar("V")}>
             Verdadero
           </Button>

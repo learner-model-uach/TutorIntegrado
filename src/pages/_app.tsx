@@ -5,6 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { system } from "../theme";
 import { ColorModeProvider } from "../components/ui/color-mode";
 import type { AppProps } from "next/app";
+import Router from "next/router";
 import { CombinedRQGQLProvider } from "rq-gql";
 import { SyncAuth } from "../components/Auth";
 import { MainLayout } from "../components/MainLayout";
@@ -25,6 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <Auth0Provider
         domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
         clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
+        onRedirectCallback={appState => {
+          Router.replace(appState?.returnTo || "/start");
+        }}
         authorizationParams={{
           redirect_uri: typeof window !== "undefined" ? window.location.origin : undefined,
         }}

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Input, Alert } from "@chakra-ui/react";
+import { Box, Button, Stack, Input, Alert } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -58,32 +58,43 @@ const Blank = ({
   };
   return (
     <>
-      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         <Input
           htmlSize={4}
-          width="auto"
+          w={{ base: "100%", sm: "auto" }}
+          maxW={{ base: "100%", sm: "xs" }}
           type="text"
           value={inputText}
           onChange={e => setInputText(e.target.value)}
         />
-        <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("[")}>
-          {" "}
-          [
-        </Button>
-        <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("]")}>
-          {" "}
-          ]
-        </Button>
-        <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("∞")}>
-          {" "}
-          ∞
-        </Button>
+        <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center">
+          <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("[")}>
+            [
+          </Button>
+          <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("]")}>
+            ]
+          </Button>
+          <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("∞")}>
+            ∞
+          </Button>
+        </Box>
       </Stack>
-      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         {isCorrectValue ? null : (
           <>
             <Button colorPalette="teal" h="2rem" onClick={() => evaluar()}>
-              {" "}
               Enviar
             </Button>
             <Hint

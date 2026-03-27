@@ -34,13 +34,13 @@ const ShowSteps = ({
   const [changed, setChanged] = useState(false);
   const action = useAction();
   const [report, setReport] = useState(true);
-  const [ color, setColor] = useState("accordion_step");
+  const [color, setColor] = useState("accordion_step");
   const [textColor, setTexColor] = useState("accordion_step_text");
 
   useEffect(() => {
     if (completed && !changed) {
       setColor("accordion_success");
-      setTexColor("accordion_success_text")
+      setTexColor("accordion_success_text");
       if (next !== -1) setStep(next);
       if (report) {
         action({
@@ -59,19 +59,24 @@ const ShowSteps = ({
   return (
     <>
       <Accordion.Item value={String(nStep)} w="100%" border="none">
-        <Accordion.ItemTrigger bg={color} color={textColor} px={4} >
-          
+        <Accordion.ItemTrigger
+          bg={color}
+          color={textColor}
+          px={{ base: 3, md: 4 }}
+          py={{ base: 3, md: 2 }}
+          alignItems={{ base: "flex-start", md: "center" }}
+        >
           <Box p={3}>
             <FaHandPointRight />
           </Box>
-          <Box as="span" flex="1">
+          <Box as="span" flex="1" textAlign="left" whiteSpace="normal" wordBreak="break-word">
             <Latex>{exc.steps[nStep].stepTitle}</Latex>
           </Box>
           <Accordion.ItemIndicator />
         </Accordion.ItemTrigger>
 
         <Accordion.ItemContent>
-          <Accordion.ItemBody px={4} pb={8} zIndex={nStep}>
+          <Accordion.ItemBody px={{ base: 3, md: 4 }} pb={8} zIndex={nStep}>
             {exc.steps[nStep].stepType === "TrueFalse" && (
               <TrueFalse exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
             )}

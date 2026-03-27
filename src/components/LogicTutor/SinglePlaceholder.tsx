@@ -109,6 +109,7 @@ const SinglePlaceholder = ({
     <>
       <Center>
         <Box
+          w="full"
           maxW={{ base: "100%" }}
           p={2}
           borderWidth={1}
@@ -119,8 +120,7 @@ const SinglePlaceholder = ({
         >
           <Text as="span" display="inline-flex" gap="2" color={"text_exercises"}>
             Símbolos especiales en el teclado virtual{" "}
-            {" "}
-            <FaRegKeyboard  style={{ marginBottom: "4px" }} />
+            <FaRegKeyboard style={{ marginBottom: "4px" }} />
           </Text>
           <Mathfield
             readOnly
@@ -130,7 +130,13 @@ const SinglePlaceholder = ({
         </Box>
       </Center>
 
-      <Stack gap={4} m={2} direction="row" justifyContent="center">
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         {!isCorrectValue && (
           <>
             <Button colorPalette="blue" size="sm" onClick={() => evaluar(latex, valueA)}>

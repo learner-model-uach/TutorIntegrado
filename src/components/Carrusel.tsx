@@ -24,10 +24,10 @@ export const Carousel = ({ images }: { images: string[] }) => {
         objectPosition="center"
       />
       <Flex justifyContent="center" mt={10}>
-        <Button onClick={handlePrevious} marginRight={2} disabled={currentImageIndex === 0}>
+        <Button bg="stealblue.300" onClick={handlePrevious} marginRight={2} disabled={currentImageIndex === 0}>
           Anterior
         </Button>
-        <Button onClick={handleNext} disabled={currentImageIndex === images.length - 1}>
+        <Button bg="stealblue.300" onClick={handleNext} disabled={currentImageIndex === images.length - 1}>
           Siguiente{" "}
         </Button>
       </Flex>

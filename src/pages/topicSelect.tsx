@@ -1,4 +1,13 @@
-import { Box, Center, Container, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Container,
+  Heading,
+  SimpleGrid,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { withAuth, useAuth } from "../components/Auth";
 import { CardSelectionTopic } from "../components/contentSelectComponents/CardSelectionTopics";
 import { useRouter } from "next/router";
@@ -100,7 +109,14 @@ export default withAuth(function TopicSelect() {
   else uModel.pol2 = false;
 
   if (Subtopic.isLoading || selectedExcercise.isLoading || uModel.isLoading || gModel.isLoading) {
-    return <Box p={5}> Cargando...</Box>;
+    return (
+      <VStack pt="20rem">
+        <Spinner size={"xl"} borderWidth={"3px"} color="teal" />
+        <Text fontSize={"md"} fontWeight={"semibold"} color="teal">
+          Cargando...
+        </Text>
+      </VStack>
+    );
   }
 
   return (
@@ -138,11 +154,11 @@ export default withAuth(function TopicSelect() {
           </Text>
           <Box w="full" mx="auto" p={4}>
             <SimpleGrid
-              columns={{ base: 1, md: 2, xl: 3 }}
+              minChildWidth={{ base: "100%", md: "320px" }}
               gap={10}
               mt="4"
-              justifyContent="center" 
-              justifyItems="center" 
+              justifyContent="center"
+              justifyItems="center"
             >
               {!Subtopic.isLoading &&
                 !selectedExcercise.isLoading &&

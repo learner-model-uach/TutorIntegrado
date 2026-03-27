@@ -10,7 +10,7 @@ export default function SelectByCode() {
       </div>
       <div>
         <Link href="showContent">
-          <Button>Mostrar Ejercicio</Button>
+          <Button colorPalette={"blue"}>Mostrar Ejercicio</Button>
         </Link>
       </div>
     </>

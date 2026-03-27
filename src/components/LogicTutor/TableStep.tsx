@@ -80,17 +80,18 @@ const TableStep = ({
 
   return (
     <>
-      <Center>
-        <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
-      </Center>
+      <Box w="full" overflowX="auto">
+        <Center minW="fit-content" mx="auto">
+          <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
+        </Center>
+      </Box>
       {exc.steps[nStep].table && (
-        <Box marginY={5} shadow="sm" rounded="lg" w="auto" overflowX="auto">
+        <Box marginY={5} shadow="sm" rounded="lg" w="full" overflowX="auto">
           <Table.Root
             size="sm"
             variant="outline"
             striped
             // borderColor={borderColor}
-            
           >
             <Table.Header bg={headerBg}>
               <Table.Row>
@@ -153,7 +154,13 @@ const TableStep = ({
           </Table.Root>
         </Box>
       )}
-      <Stack gap={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         {!isCorrectValue && (
           <>
             <Button colorPalette="teal" h="2rem" onClick={() => evaluar()}>

@@ -1,4 +1,5 @@
 import {
+  Box,
   Center,
   LinkBox,
   LinkOverlay,
@@ -7,6 +8,7 @@ import {
   WrapItem,
   Spinner,
   Heading,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
 //import { MathComponent } from "mathjax-react";
@@ -43,17 +45,29 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
       refetchOnReconnect: false,
     },
   );
+  const exerciseJson = data?.contentByCode?.json;
+  const mathContainerWidth = useBreakpointValue({ base: 220, sm: 260, md: 300, lg: 340 }) ?? 300;
+  const exerciseExpression =
+    exerciseJson?.type == parameters.lastExercise.topic1.type ||
+    exerciseJson?.type == parameters.lastExercise.topic2.type ||
+    exerciseJson?.type == parameters.lastExercise.topic3.type
+      ? String(exerciseJson?.eqc || "")
+      : String(exerciseJson?.initialExpression || exerciseJson?.steps?.[0]?.expression || "");
+  const shouldStackMath = exerciseExpression.length > 40;
+
   return (
     <>
       <Center>
-        <Wrap padding="15px 10px 10px 10px">
+        <Wrap padding="15px 10px 10px 10px" justify="center" w="full">
           <Center>{/* <WrapItem>{parameters.lastExercise.lastExerciseDone}</WrapItem> */}</Center>
-          <WrapItem>
+          <WrapItem w="full" justifyContent="center">
             <LinkBox
               color="heading"
               bg={useColorModeValue("green.subtle", "green.600")}
               as="article"
-              //maxW="sm"
+              w="full"
+              maxW={{ base: "sm", md: "md" }}
+              mx="auto"
               p="3"
               borderWidth="1px"
               rounded="md"
@@ -87,24 +101,96 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                       String(data?.contentByCode?.json?.text || "")
                     )}
                   </Text>
-                  <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
+                  <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"} w="full">
                     {data?.contentByCode?.json?.type == parameters.lastExercise.topic1.type ||
                     data?.contentByCode?.json?.type == parameters.lastExercise.topic2.type ||
                     data?.contentByCode?.json?.type == parameters.lastExercise.topic3.type ? (
-                      <MathComponent
-                        tex={String.raw`${data?.contentByCode?.json?.eqc}`}
-                        display={false}
-                      />
+                      <Box
+                        w="full"
+                        px={{ base: 1, md: 2 }}
+                        css={{
+                          "& mjx-container": {
+                            maxWidth: "100% !important",
+                            overflow: "visible !important",
+                            display: shouldStackMath
+                              ? "block !important"
+                              : "inline-block !important",
+                            margin: "0 auto !important",
+                          },
+                          "& svg": {
+                            maxWidth: "100% !important",
+                            height: "auto !important",
+                          },
+                        }}
+                      >
+                        <MathComponent
+                          tex={String.raw`${data?.contentByCode?.json?.eqc}`}
+                          display={shouldStackMath}
+                          settings={
+                            shouldStackMath
+                              ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                              : undefined
+                          }
+                        />
+                      </Box>
                     ) : data?.contentByCode?.json.initialExpression ? (
-                      <MathComponent
-                        tex={String.raw`${data?.contentByCode?.json.initialExpression}`}
-                        display={false}
-                      />
+                      <Box
+                        w="full"
+                        px={{ base: 1, md: 2 }}
+                        css={{
+                          "& mjx-container": {
+                            maxWidth: "100% !important",
+                            overflow: "visible !important",
+                            display: shouldStackMath
+                              ? "block !important"
+                              : "inline-block !important",
+                            margin: "0 auto !important",
+                          },
+                          "& svg": {
+                            maxWidth: "100% !important",
+                            height: "auto !important",
+                          },
+                        }}
+                      >
+                        <MathComponent
+                          tex={String.raw`${data?.contentByCode?.json.initialExpression}`}
+                          display={shouldStackMath}
+                          settings={
+                            shouldStackMath
+                              ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                              : undefined
+                          }
+                        />
+                      </Box>
                     ) : (
-                      <MathComponent
-                        tex={String.raw`${data?.contentByCode?.json.steps[0].expression}`}
-                        display={false}
-                      />
+                      <Box
+                        w="full"
+                        px={{ base: 1, md: 2 }}
+                        css={{
+                          "& mjx-container": {
+                            maxWidth: "100% !important",
+                            overflow: "visible !important",
+                            display: shouldStackMath
+                              ? "block !important"
+                              : "inline-block !important",
+                            margin: "0 auto !important",
+                          },
+                          "& svg": {
+                            maxWidth: "100% !important",
+                            height: "auto !important",
+                          },
+                        }}
+                      >
+                        <MathComponent
+                          tex={String.raw`${data?.contentByCode?.json.steps[0].expression}`}
+                          display={shouldStackMath}
+                          settings={
+                            shouldStackMath
+                              ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                              : undefined
+                          }
+                        />
+                      </Box>
                     )}
                   </Center>
                 </>

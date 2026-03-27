@@ -1,34 +1,13 @@
-import { Stack, Box, Image } from "@chakra-ui/react";
-import { FaBars, FaArrowLeft } from "react-icons/fa";
+import { Stack, Heading, VStack, Spinner, Text } from "@chakra-ui/react";
+import { useAuth } from "../Auth";
 
 export const AssigndUser = () => {
+  const { user } = useAuth();
+  const userName = user?.name?.trim().split(/\s+/)[0] || "usuario";
+
   return (
-    <Stack width="100%" padding="1em" alignItems="center">
-      <Stack padding="2em">
-        <Box
-          display="flex"
-          alignItems="center"
-          position="relative"
-          bg="speechBubble2"
-          padding="4"
-          rounded="2xl"
-          _after={{
-            content: '""',
-            position: "absolute",
-            bottom: "-6px",
-            left: "45%",
-            width: "12px",
-            height: "12px",
-            bg: "speechBubble2",
-            transform: "rotate(45deg)",
-          }}
-        >
-          <FaBars size={20} color="gray" style={{ marginRight: "2px" }} />{" "}
-          <FaArrowLeft style={{ marginRight: "4px" }} />
-          Comienza escogiendo un tópico en el menú de la izquierda
-        </Box>
-      </Stack>
-      <Image src="/img/Mateo-izq.svg" alt="Robot" width="150px" />
+    <Stack width="100%" padding="1em" alignItems="flex-start">
+      <Heading size="5xl" color={"heading"} fontWeight="bold">Hola, {userName}</Heading>
     </Stack>
   );
 };

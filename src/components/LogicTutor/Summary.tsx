@@ -14,24 +14,30 @@ const Summary = ({ exc }: { exc: ExLog }) => {
           </Center>
 
           <VStack gap={4} align="center" justify="center" w="100%">
-            <Latex>{exc.text + "$$" + exc.initialExpression + "$$"}</Latex>
+            <Box w="full" overflowX="auto">
+              <Center minW="fit-content" mx="auto">
+                <Latex>{exc.text + "$$" + exc.initialExpression + "$$"}</Latex>
+              </Center>
+            </Box>
             {exc.img ? (
               <Center>
                 <Image
                   objectFit="cover"
                   src={`img/${exc.img}`}
                   alt="Imagen del ejercicio"
-                  maxW={{ base: "60%" }}
+                  maxW={{ base: "100%", md: "60%" }}
                 />
               </Center>
             ) : null}
           </VStack>
           {exc.steps.map((_, index) => (
-            <Box key={index}>
+            <Box key={index} w="100%" overflowX="auto">
               <Center>
                 <Latex>{exc.steps[index].summary}</Latex>
               </Center>
-              <Latex>{"$$" + exc.steps[index].displayResult[0] + "$$"}</Latex>
+              <Center minW="fit-content" mx="auto">
+                <Latex>{"$$" + exc.steps[index].displayResult[0] + "$$"}</Latex>
+              </Center>
             </Box>
           ))}
         </VStack>
