@@ -35,7 +35,6 @@ export const SidebarLink = (props: SidebarLinkProps) => {
   const { push, prefetch, pathname, query } = useRouter();
 
   const activeBg = "sidebarselect_active";
-  const activeColor = "sidebar_select_active_text";
   const hoverBg = "sidebarselect_hover";
   const action = useAction();
   const registerTopic = href
@@ -43,6 +42,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     .split("&")
     .map(x => (x.split("=")[0] === "registerTopic" ? x.split("=")[1] : undefined))
     .filter(x => x !== undefined);
+  const topicLabel = typeof children === "string" ? children : undefined;
 
   const isActive =
     pathname === href ||
@@ -59,7 +59,6 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       rounded="md"
       cursor="pointer"
       bg={isActive ? activeBg : undefined}
-      color={isActive ? activeColor : undefined}
       fontWeight={isActive ? "bold" : "medium"}
       _hover={{ color: "white", bg: hoverBg }}
       className="group"
@@ -85,6 +84,10 @@ export const SidebarLink = (props: SidebarLinkProps) => {
                   action({
                     verbName: "selectTopic",
                     topicID: registerTopic[0],
+                    localSummary: {
+                      parentTopicLabel: topicLabel,
+                      topicLabel: undefined,
+                    },
                   });
               }}
               onMouseOver={() => {

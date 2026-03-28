@@ -4,8 +4,15 @@ import { useCallback } from "react";
 import { useGQLMutation } from "rq-gql";
 import { useAuth } from "../components/Auth";
 import { ActionInput, gql } from "../graphql";
+import { queryClient } from "../rqClient";
+import { ProjectUserSummaryContext, recordProjectUserAction } from "./projectUserSummary";
 
 export type ActionArguments = Omit<ActionInput, "projectId" | "timestamp">;
+type ActionWithLocalSummary = Partial<ActionArguments> & {
+  localSummary?: ProjectUserSummaryContext;
+};
+
+const RECENT_PROJECT_USER_ACTIVITY_QUERY_KEY = "RecentProjectUserActivity";
 
 export const useAction = (baseAction?: Partial<ActionArguments>) => {
   const latestBaseAction = useLatestRef(baseAction);
@@ -17,6 +24,9 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
       }
     `),
     {
+      onSuccess() {
+        queryClient.invalidateQueries(RECENT_PROJECT_USER_ACTIVITY_QUERY_KEY);
+      },
       onError(err) {
         console.error(err);
         if (process.env.NODE_ENV === "development") {
@@ -34,28 +44,41 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
 
   const latestMutation = useLatestRef(mutation.mutate);
 
-  const { project } = useAuth();
+  const { project, user } = useAuth();
 
   const projectId = project?.id;
+  const userId = user?.id;
 
   return useCallback(
-    (data?: Partial<ActionArguments>) => {
+    (data?: ActionWithLocalSummary) => {
       if (!projectId) throw Error("Invalid projectId");
 
       const verbName = latestBaseAction.current?.verbName || data?.verbName;
 
       if (!verbName) throw Error("Invalid Action");
 
+      const timestamp = Date.now();
+
+      void recordProjectUserAction({
+        projectId,
+        userId,
+        verbName,
+        timestamp,
+        context: data?.localSummary,
+      });
+
+      const { localSummary, ...actionData } = data ?? {};
+
       latestMutation.current({
         data: {
           projectId,
-          timestamp: Date.now(),
+          timestamp,
           ...latestBaseAction.current,
-          ...data,
+          ...actionData,
           verbName,
         },
       });
     },
-    [projectId, latestMutation, latestBaseAction],
+    [projectId, userId, latestMutation, latestBaseAction],
   );
 };

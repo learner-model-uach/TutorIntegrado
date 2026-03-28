@@ -1,146 +1,17 @@
-import { Avatar, Box, Button, Heading, HStack, Highlight, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Highlight,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useGQLQuery } from "rq-gql";
-import { useRef } from "react";
 import { FaArrowRight, FaBookOpen, FaHistory, FaPencilAlt } from "react-icons/fa";
-import { gql } from "../../graphql";
 import { useAuth } from "../Auth";
-
-const RECENT_ACTIVITY_QUERY = gql(/* GraphQL */ `
-  query RecentProjectUserActivity($input: ActionsTopicInput!, $pagination: CursorConnectionArgs!) {
-    actionsTopic {
-      firstUsers: allActionsByUser(input: $input, pagination: $pagination) {
-        nodes {
-          id
-          email
-          actions {
-            id
-            timestamp
-            topic {
-              label
-              parent {
-                label
-              }
-            }
-            content {
-              label
-              code
-              topics {
-                label
-                parent {
-                  label
-                }
-              }
-            }
-          }
-        }
-      }
-      lastUsers: allActionsByUser(input: $input, pagination: { last: 50 }) {
-        nodes {
-          id
-          email
-          actions {
-            id
-            timestamp
-            topic {
-              label
-              parent {
-                label
-              }
-            }
-            content {
-              label
-              code
-              topics {
-                label
-                parent {
-                  label
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`);
-
-const ACTIVITY_VERBS = [
-  "displaySubTopics",
-  "displaySelection",
-  "selectTopic",
-  "selectSubtopic",
-  "selectContent",
-  "loadContent",
-  "tryStep",
-  "requestHint",
-  "openStep",
-  "closeStep",
-  "completeContent",
-  "nextContent",
-  "challengeLoad",
-  "challengeCompleted",
-  "challengeContentCompleted",
-  "pollResponse",
-  "selectionRating",
-  "DisplayHelp",
-];
-
-function formatRecentActivity(timestamp?: number | string, topicLabel?: string) {
-  if (!timestamp || !topicLabel) return "Sin actividad reciente";
-
-  const activityDate = new Date(Number(timestamp));
-  const currentDate = new Date();
-
-  const isToday =
-    activityDate.getFullYear() === currentDate.getFullYear() &&
-    activityDate.getMonth() === currentDate.getMonth() &&
-    activityDate.getDate() === currentDate.getDate();
-
-  if (isToday) {
-    return `Hoy en ${topicLabel}`;
-  }
-
-  const formattedDate = new Intl.DateTimeFormat("es-CL", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-  })
-    .format(activityDate)
-    .replace(/\//g, "-");
-
-  return `${formattedDate} en ${topicLabel}`;
-}
-
-function getActionTopicLabel(action?: {
-  topic?: {
-    label?: string | null;
-    parent?: { label?: string | null } | null;
-  } | null;
-  content?: {
-    topics?: Array<{
-      label?: string | null;
-      parent?: { label?: string | null } | null;
-    } | null> | null;
-  } | null;
-}) {
-  return (
-    action?.topic?.parent?.label ||
-    action?.topic?.label ||
-    action?.content?.topics?.[0]?.parent?.label ||
-    action?.content?.topics?.[0]?.label ||
-    undefined
-  );
-}
-
-function getActionContentLabel(action?: {
-  content?: {
-    label?: string | null;
-    code?: string | null;
-  } | null;
-}) {
-  return action?.content?.label || action?.content?.code || undefined;
-}
+import { useProjectUserSummary } from "./useProjectUserSummary";
 
 function InfoCard({
   label,
@@ -191,69 +62,13 @@ function InfoCard({
 
 export const AssigndUser = () => {
   const { user, project } = useAuth();
-  const recentActivityEndDate = useRef(new Date().toISOString());
-
   const userName = user?.name?.trim().split(/\s+/)[0] || "usuario";
-  const userEmail = user?.email || "Correo no disponible";
-  const groupIds = user?.groups?.map(group => Number(group.id)) ?? [];
-
-  const {
-    data: recentActivityData,
-    isLoading: isRecentActivityLoading,
-    isError: isRecentActivityError,
-  } = useGQLQuery(
-    RECENT_ACTIVITY_QUERY,
-    {
-      input: {
-        endDate: recentActivityEndDate.current,
-        groupIds: groupIds.length ? groupIds : undefined,
-        projectId: Number(project?.id),
-        startDate: "2025-01-01T00:00:00.000Z",
-        verbNames: ACTIVITY_VERBS,
-      },
-      pagination: { first: 50 },
-    },
-    {
-      enabled: Boolean(project?.id && user?.id),
-      refetchOnWindowFocus: false,
-    },
-  );
-
-  const actionNodes = [
-    ...(recentActivityData?.actionsTopic?.firstUsers?.nodes ?? []),
-    ...(recentActivityData?.actionsTopic?.lastUsers?.nodes ?? []),
-  ];
-
-  const currentUserActions = actionNodes
-    .filter(node => String(node.id) === String(user?.id) || node.email === userEmail)
-    .flatMap(node => node.actions ?? [])
-    .slice()
-    .sort((actionA, actionB) => Number(actionB.timestamp) - Number(actionA.timestamp));
-
-  const currentUserTopicActions = currentUserActions
-    .filter(action => Boolean(getActionTopicLabel(action)))
-    .slice()
-    .sort((actionA, actionB) => Number(actionB.timestamp) - Number(actionA.timestamp));
-
-  const currentUserContentActions = currentUserActions
-    .filter(action => Boolean(getActionContentLabel(action)))
-    .slice()
-    .sort((actionA, actionB) => Number(actionB.timestamp) - Number(actionA.timestamp));
-
-  const recentActivityValue = isRecentActivityLoading
-    ? "Buscando actividad..."
-    : isRecentActivityError
-      ? "Sin actividad reciente"
-      : formatRecentActivity(
-          currentUserTopicActions?.[0]?.timestamp,
-          getActionTopicLabel(currentUserTopicActions?.[0]),
-        );
-
-  const lastExerciseValue = isRecentActivityLoading
-    ? "Buscando ejercicio..."
-    : isRecentActivityError
-      ? "Sin ejercicios recientes"
-      : getActionContentLabel(currentUserContentActions?.[0]) || "Sin ejercicios recientes";
+  const { recentActivityValue, lastExerciseValue } = useProjectUserSummary({
+    projectId: project?.id,
+    userId: user?.id,
+    userEmail: user?.email,
+    groups: user?.groups,
+  });
 
   return (
     <Stack width="100%" px={{ base: 4, md: 6 }} py={{ base: 4, md: 6 }}>
@@ -262,6 +77,7 @@ export const AssigndUser = () => {
         borderRadius={{ base: "2xl", md: "3xl" }}
         overflow="hidden"
         bg={{ base: "gray.200", _dark: "indigo.950" }}
+        shadow={"xs"}
       >
         <Stack
           direction={{ base: "column", lg: "row" }}
@@ -313,7 +129,7 @@ export const AssigndUser = () => {
                 query="tópico"
                 styles={{ px: "0.5", color: "tangerine.600", fontWeight: "semibold" }}
               >
-                Para comenzar escoje un tópico en barra de navegación izquierda.
+                Comienza escogiendo un tópico en barra de navegación izquierda.
               </Highlight>
             </Text>
 
@@ -324,7 +140,7 @@ export const AssigndUser = () => {
                 icon={<FaHistory aria-hidden="true" />}
               />
               <InfoCard
-                label="Último Ejercicio Realizado"
+                label="Último ejercicio realizado en"
                 value={lastExerciseValue}
                 icon={<FaBookOpen aria-hidden="true" />}
               />
@@ -339,9 +155,10 @@ export const AssigndUser = () => {
           <Box
             w={{ base: "100%", lg: "360px" }}
             borderRadius="2xl"
-            bg="bg.secondary"
-            borderWidth="1px"
-            borderColor="border"
+            // bg="bg.secondary"
+            bg={{ base: "whiteAlpha.700", _dark: "gray.900" }}
+            // borderWidth="1px"
+            // borderColor="gray.300"
             // boxShadow="lg"
             p={{ base: 5, md: 6 }}
           >
@@ -349,23 +166,6 @@ export const AssigndUser = () => {
               <Text fontSize="sm" fontWeight="bold" color="tangerine.600" textTransform="uppercase">
                 Acceso rápido
               </Text>
-
-              {/* <Box>
-                <Text fontSize="sm" color="text_info" opacity={0.75}>
-                  Correo asociado
-                </Text>
-                <HStack gap="2" mt="1" color="heading" align="flex-start">
-                  <Box pt="1">
-                    <FaEnvelope aria-hidden="true" />
-                  </Box>
-                  <Text fontWeight="medium" wordBreak="break-word">
-                    {userEmail}
-                  </Text>
-                </HStack>
-              </Box>
-
-              <Separator /> */}
-
               <Stack gap="3">
                 <Button asChild bg="tangerine.500" color="white" borderRadius="2xl" size="lg">
                   <NextLink href="/challenge">

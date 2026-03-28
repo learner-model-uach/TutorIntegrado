@@ -35,6 +35,30 @@ export default withAuth(function TopicSelect() {
   //console.log(registerTopic);
   const topic = parseInt(registerTopic, 10).toString(); // Convertir a string
   //const nextContentPath = router.asPath + "";
+  const currentTopicLabel =
+    registerTopic == parameters.CSMain.topic1.registerTopic
+      ? parameters.CSMain.topic1.topic
+      : registerTopic == parameters.CSMain.topic2.registerTopic
+        ? parameters.CSMain.topic2.topic
+        : registerTopic == parameters.CSMain.topic3.registerTopic
+          ? parameters.CSMain.topic3.topic
+          : registerTopic == parameters.CSMain.topic4.registerTopic
+            ? parameters.CSMain.topic4.topic
+            : registerTopic == parameters.CSMain.topic5.registerTopic
+              ? parameters.CSMain.topic5.topic
+              : registerTopic == parameters.CSMain.topic6.registerTopic
+                ? parameters.CSMain.topic6.topic
+                : registerTopic == parameters.CSMain.topic7.registerTopic
+                  ? parameters.CSMain.topic7.topic
+                  : registerTopic == parameters.CSMain.topic8.registerTopic
+                    ? parameters.CSMain.topic8.topic
+                    : registerTopic == parameters.CSMain.topic9.registerTopic
+                      ? parameters.CSMain.topic9.topic
+                      : registerTopic == parameters.CSMain.topic10.registerTopic
+                        ? parameters.CSMain.topic10.topic
+                        : registerTopic == parameters.CSMain.topic11.registerTopic
+                          ? parameters.CSMain.topic11.topic
+                          : parameters.CSMain.topic12.topic;
 
   const [topicCodes, setTopicCodes] = useState<string[]>([]);
 
@@ -49,9 +73,13 @@ export default withAuth(function TopicSelect() {
     action({
       verbName: "displaySubTopics",
       topicID: registerTopic,
+      localSummary: {
+        parentTopicLabel: currentTopicLabel,
+        topicLabel: undefined,
+      },
       //extra: { selectionData },
     });
-  }, [registerTopic, action]);
+  }, [registerTopic, currentTopicLabel, action]);
 
   // Manejo de subtópicos
   useEffect(() => {
@@ -111,8 +139,8 @@ export default withAuth(function TopicSelect() {
   if (Subtopic.isLoading || selectedExcercise.isLoading || uModel.isLoading || gModel.isLoading) {
     return (
       <VStack pt="20rem">
-        <Spinner size={"xl"} borderWidth={"3px"} color="teal" />
-        <Text fontSize={"md"} fontWeight={"semibold"} color="teal">
+        <Spinner size={"xl"} borderWidth={"3px"} />
+        <Text fontSize={"md"} fontWeight={"semibold"}>
           Cargando...
         </Text>
       </VStack>
@@ -125,29 +153,7 @@ export default withAuth(function TopicSelect() {
         <Container maxW="8xl" px="4">
           <Heading color="heading" fontSize={"3xl"} fontWeight={"bold"} mb="2" textAlign={"center"}>
             {parameters.CSMain.title}
-            {registerTopic == parameters.CSMain.topic1.registerTopic
-              ? parameters.CSMain.topic1.topic
-              : registerTopic == parameters.CSMain.topic2.registerTopic
-                ? parameters.CSMain.topic2.topic
-                : registerTopic == parameters.CSMain.topic3.registerTopic
-                  ? parameters.CSMain.topic3.topic
-                  : registerTopic == parameters.CSMain.topic4.registerTopic
-                    ? parameters.CSMain.topic4.topic
-                    : registerTopic == parameters.CSMain.topic5.registerTopic
-                      ? parameters.CSMain.topic5.topic
-                      : registerTopic == parameters.CSMain.topic6.registerTopic
-                        ? parameters.CSMain.topic6.topic
-                        : registerTopic == parameters.CSMain.topic7.registerTopic
-                          ? parameters.CSMain.topic7.topic
-                          : registerTopic == parameters.CSMain.topic8.registerTopic
-                            ? parameters.CSMain.topic8.topic
-                            : registerTopic == parameters.CSMain.topic9.registerTopic
-                              ? parameters.CSMain.topic9.topic
-                              : registerTopic == parameters.CSMain.topic10.registerTopic
-                                ? parameters.CSMain.topic10.topic
-                                : registerTopic == parameters.CSMain.topic11.registerTopic
-                                  ? parameters.CSMain.topic11.topic
-                                  : parameters.CSMain.topic12.topic}
+            {currentTopicLabel}
           </Heading>
           <Text textAlign="center" mb="5" fontSize="xl" color="text_info">
             Selecciona un subtópico
@@ -178,6 +184,7 @@ export default withAuth(function TopicSelect() {
                       id={ejercicio.id}
                       index={i}
                       label={ejercicio.label}
+                      parentTopicLabel={currentTopicLabel}
                       KCs={selectedExcercise.kcXtopic[ejercicio.id] || []}
                     />
                   ))}
