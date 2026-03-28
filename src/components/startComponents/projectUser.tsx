@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Heading,
-  HStack,
-  Highlight,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Avatar, Box, Button, Heading, HStack, Highlight, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FaArrowRight, FaBookOpen, FaHistory, FaPencilAlt } from "react-icons/fa";
 import { useAuth } from "../Auth";
@@ -28,8 +19,6 @@ function InfoCard({
       minW={{ base: "100%", md: "180px" }}
       // bg="whiteAlpha.700"
       bg={{ base: "whiteAlpha.700", _dark: "gray.900" }}
-      borderWidth="1px"
-      borderColor="whiteAlpha.400"
       borderRadius="2xl"
       px={{ base: 4, md: 5 }}
       py={{ base: 4, md: 5 }}
