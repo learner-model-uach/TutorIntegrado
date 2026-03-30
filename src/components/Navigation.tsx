@@ -41,7 +41,7 @@ export function Navigation() {
         </SidebarLink>
         {user && !user.tags.includes("wp-test-user") && (
           <>
-            <SidebarLink icon={<FaChartLine/>} href="/progress">
+            <SidebarLink icon={<FaChartLine />} href="/progress">
               Mi progreso
             </SidebarLink>
           </>
