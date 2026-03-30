@@ -1,5 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
-import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
+import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch, FaChartLine } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
@@ -36,6 +36,16 @@ export function Navigation() {
         <SidebarLink icon={<FaHome />} href="/">
           Inicio
         </SidebarLink>
+        <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
+          Tutorial
+        </SidebarLink>
+        {user && !user.tags.includes("wp-test-user") && (
+          <>
+            <SidebarLink icon={<FaChartLine/>} href="/progress">
+              Mi progreso
+            </SidebarLink>
+          </>
+        )}
         {user && admin && (
           <>
             <Text fontWeight="black">Selección por Código</Text>
@@ -44,9 +54,6 @@ export function Navigation() {
             </SidebarLink>
           </>
         )}
-        <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
-          Tutorial
-        </SidebarLink>
       </Stack>
 
       <Stack>

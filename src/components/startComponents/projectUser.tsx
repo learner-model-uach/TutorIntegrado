@@ -124,12 +124,12 @@ export const AssigndUser = () => {
 
             <HStack flexWrap="wrap" gap="4" align="stretch">
               <InfoCard
-                label="Actividad Reciente"
+                label="Último tópico visitado"
                 value={recentActivityValue}
                 icon={<FaHistory aria-hidden="true" />}
               />
               <InfoCard
-                label="Último ejercicio realizado en"
+                label="Último ejercicio completado en"
                 value={lastExerciseValue}
                 icon={<FaBookOpen aria-hidden="true" />}
               />
@@ -170,7 +170,7 @@ export const AssigndUser = () => {
                   size="lg"
                   variant="outline"
                 >
-                  <NextLink href="/challenge">
+                  <NextLink href="/progress">
                     Ver Mi progreso
                     <FaArrowRight />
                   </NextLink>
