@@ -19,7 +19,6 @@
     "@chakra-ui/charts": "^3.30.0",
     "@chakra-ui/cli": "^3.30.0",
     "@chakra-ui/react": "3.30.0",
-    "@chakra-ui/theme": "^3.4.6",
     "@cortex-js/compute-engine": "^0.30.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -49,8 +48,6 @@
     "react-joyride": "2.9.3",
     "react-latex-next": "^3.0.0",
     "react-mathquill": "1.0.4",
-    "react-notification-badge": "1.5.1",
-    "react-star-rating-component": "^1.4.1",
     "react-super-responsive-table": "^6.0.2",
     "recharts": "^3.5.1",
     "rq-gql": "^0.5.0",
@@ -64,6 +61,8 @@
     "@types/node": "^22.19.1",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
+    "@typescript-eslint/eslint-plugin": "8.57.0",
+    "@typescript-eslint/parser": "8.57.0",
     "concurrently": "^9.2.0",
     "eslint": "9.39.1",
     "eslint-config-next": "15.5.3",
@@ -73,7 +72,7 @@
     "wait-on": "^8.0.3"
   },
   "engines": {
-    "pnpm": ">=10.24.0"
+    "pnpm": ">=9.x"
   },
   "pnpm": {
     "peerDependencyRules": {

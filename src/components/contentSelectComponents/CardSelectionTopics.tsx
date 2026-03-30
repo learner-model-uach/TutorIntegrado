@@ -59,12 +59,14 @@ function displayExp(e: ExType): string {
 export const CardSelectionTopic = ({
   id,
   label,
+  parentTopicLabel,
   //nextContentPath,
   index,
   KCs,
 }: {
   id: string;
   label: string | undefined;
+  parentTopicLabel?: string;
   //nextContentPath: string | undefined;
   KCs: { code: string }[];
   index: number;
@@ -152,6 +154,10 @@ export const CardSelectionTopic = ({
         action({
           verbName: "selectSubtopic",
           topicID: id,
+          localSummary: {
+            parentTopicLabel,
+            topicLabel: label,
+          },
           extra: {
             shownExpression: displayExp(kcsyejercicio.ejercicio as ExType),
             progressMe: pbValues.uservalues ? pbValues.uservalues : -1,

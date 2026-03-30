@@ -97,10 +97,7 @@ const config = defineConfig({
         },
         //sidebarlink
         sidebarselect_active: {
-          value: { base: "{colors.stealblue.950}", _dark: "{colors.platinum.700}" },
-        },
-        sidebar_select_active_text: {
-          value: { base: "{colors.tangerine.500}", _dark: "{colors.tangerine.400}" },
+          value: { base: "{colors.indigo.700}", _dark: "{colors.platinum.700}" },
         },
         sidebarselect_hover: {
           value: { base: "{colors.indigo.700}", _dark: "{colors.platinum.600}" },
