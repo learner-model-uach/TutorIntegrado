@@ -29,13 +29,7 @@ const summaryStore = localforage.createInstance({
 });
 const SUMMARY_STORAGE_PREFIX = "projectUserSummary";
 
-const LAST_EXERCISE_VERBS = new Set([
-  "selectContent",
-  "loadContent",
-  "completeContent",
-  "nextContent",
-  "challengeContentCompleted",
-]);
+const LAST_EXERCISE_VERBS = new Set(["completeContent"]);
 
 const IGNORED_VERBS = new Set(["OpenTemplateApplication"]);
 

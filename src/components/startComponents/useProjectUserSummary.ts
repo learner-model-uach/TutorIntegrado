@@ -17,6 +17,9 @@ const RECENT_ACTIVITY_QUERY = gql(/* GraphQL */ `
           actions {
             id
             timestamp
+            verb {
+              name
+            }
             topic {
               label
               parent {
@@ -43,6 +46,9 @@ const RECENT_ACTIVITY_QUERY = gql(/* GraphQL */ `
           actions {
             id
             timestamp
+            verb {
+              name
+            }
             topic {
               label
               parent {
@@ -247,7 +253,7 @@ export function useProjectUserSummary({
         Boolean(getActionParentTopicLabel(action)),
       ),
       currentUserContentActions: currentUserActions.filter(action =>
-        Boolean(getActionTopicLabel(action)),
+        action?.verb?.name === "completeContent" && Boolean(getActionTopicLabel(action)),
       ),
     };
   }, [recentActivityData, userEmail, userId]);
