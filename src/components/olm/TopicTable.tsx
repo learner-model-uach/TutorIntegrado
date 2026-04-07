@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Table, Spinner, Center } from "@chakra-ui/react";
+import { Table, Spinner, Center, Box, Text } from "@chakra-ui/react";
 import { ImUsers } from "react-icons/im";
 import { useAuth } from "../Auth";
 import { useGQLQuery } from "rq-gql";
@@ -181,71 +181,97 @@ export default function TopicTable() {
     .filter((topic): topic is Topic => Boolean(topic));
 
   return (
-    <Table.Root variant="line">
-      <Table.Header>
-        <Table.Row textStyle="xs" bg="bg.secondary">
-          <Table.ColumnHeader fontWeight="bold" color={"heading"} htmlWidth="30%">
-            TÓPICOS
-          </Table.ColumnHeader>
-          <Table.ColumnHeader
-            fontWeight="bold"
-            color={"heading"}
-            htmlWidth="20%"
-            textAlign="center"
-          >
-            PROGRESO
-          </Table.ColumnHeader>
-          <Table.ColumnHeader htmlWidth="10%"></Table.ColumnHeader>
-          <Table.ColumnHeader fontWeight="bold" color={"heading"} htmlWidth="5%" textAlign="center">
-            <Center w="100%">
-              <Tooltip
-                showArrow
-                content="Mostrar progreso de grupo"
-                positioning={{ placement: "top" }}
-                contentProps={{ css: { "--tooltip-bg": "colors.gray.700" } }}
-              >
-                <ImUsers size={18} />
-              </Tooltip>
-            </Center>
-          </Table.ColumnHeader>
-          <Table.ColumnHeader htmlWidth="30%" fontWeight="bold" color={"heading"} textAlign="end">
-            EJERCICIOS REALIZADOS
-          </Table.ColumnHeader>
-          <Table.ColumnHeader htmlWidth="5%"></Table.ColumnHeader>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {orderedTopics.map(topic => {
-          const childs = topic.childrens ?? [];
-          const kcs = childs.flatMap(child => (kcByTopic[child.id] ?? []).map(kc => kc.code));
-          const modelData = userModel;
-          const groupModelData = groupModel;
-          console.log("childs", childs);
-          // console.log("groupModel", groupModel);
-          const progress = Math.round(progresscalc(kcs, modelData) * 100);
-          const groupProgress = groupModelData?.length
-            ? Math.round(progresscalc(kcs, groupModelData) * 100)
-            : 0;
-          // const count1 = topicExerciseCounts[Number(topic.id)] ?? 0;
-          const count2 = getParentTotal(Number(topic.id));
-          return (
-            <TopicAccordionRow
-              key={topic.id}
-              topic={topic}
-              progress={progress}
-              groupProgress={groupProgress}
-              exerciseCount={count2}
-              model={modelData}
-              groupModel={groupModelData}
-              kcsByTopic={Object.fromEntries(
-                Object.entries(kcByTopic).map(([k, v]) => [k, v.map(kc => ({ ...kc }))]),
-              )}
-              exerciseCountsByChild={excerciseCountsByChild}
-              efficiencyByChild={efficiencyByChild}
-            />
-          );
-        })}
-      </Table.Body>
-    </Table.Root>
+    <Box w="full">
+      <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
+        Desliza horizontalmente para ver todas las columnas.
+      </Text>
+      <Box
+        w="full"
+        overflowX="auto"
+        overflowY="hidden"
+        pb="2"
+        css={{ WebkitOverflowScrolling: "touch" }}
+      >
+        <Box minW={{ base: "720px", md: "full" }}>
+          <Table.Root variant="line" size="sm">
+            <Table.Header>
+              <Table.Row textStyle="xs" bg="bg.secondary">
+                <Table.ColumnHeader fontWeight="bold" color={"heading"} htmlWidth="30%">
+                  TÓPICOS
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontWeight="bold"
+                  color={"heading"}
+                  htmlWidth="20%"
+                  textAlign="center"
+                >
+                  PROGRESO
+                </Table.ColumnHeader>
+                <Table.ColumnHeader htmlWidth="10%"></Table.ColumnHeader>
+                <Table.ColumnHeader
+                  fontWeight="bold"
+                  color={"heading"}
+                  htmlWidth="5%"
+                  textAlign="center"
+                >
+                  <Center w="100%">
+                    <Tooltip
+                      showArrow
+                      content="Mostrar progreso de grupo"
+                      positioning={{ placement: "top" }}
+                      contentProps={{ css: { "--tooltip-bg": "colors.gray.700" } }}
+                    >
+                      <ImUsers size={18} />
+                    </Tooltip>
+                  </Center>
+                </Table.ColumnHeader>
+                <Table.ColumnHeader
+                  htmlWidth="30%"
+                  fontWeight="bold"
+                  color={"heading"}
+                  textAlign="end"
+                >
+                  <Text display={{ base: "none", md: "inline" }}>EJERCICIOS REALIZADOS</Text>
+                  <Text display={{ base: "inline", md: "none" }}>EJERCICIOS</Text>
+                </Table.ColumnHeader>
+                <Table.ColumnHeader htmlWidth="5%"></Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {orderedTopics.map(topic => {
+                const childs = topic.childrens ?? [];
+                const kcs = childs.flatMap(child => (kcByTopic[child.id] ?? []).map(kc => kc.code));
+                const modelData = userModel;
+                const groupModelData = groupModel;
+                console.log("childs", childs);
+                // console.log("groupModel", groupModel);
+                const progress = Math.round(progresscalc(kcs, modelData) * 100);
+                const groupProgress = groupModelData?.length
+                  ? Math.round(progresscalc(kcs, groupModelData) * 100)
+                  : 0;
+                // const count1 = topicExerciseCounts[Number(topic.id)] ?? 0;
+                const count2 = getParentTotal(Number(topic.id));
+                return (
+                  <TopicAccordionRow
+                    key={topic.id}
+                    topic={topic}
+                    progress={progress}
+                    groupProgress={groupProgress}
+                    exerciseCount={count2}
+                    model={modelData}
+                    groupModel={groupModelData}
+                    kcsByTopic={Object.fromEntries(
+                      Object.entries(kcByTopic).map(([k, v]) => [k, v.map(kc => ({ ...kc }))]),
+                    )}
+                    exerciseCountsByChild={excerciseCountsByChild}
+                    efficiencyByChild={efficiencyByChild}
+                  />
+                );
+              })}
+            </Table.Body>
+          </Table.Root>
+        </Box>
+      </Box>
+    </Box>
   );
 }

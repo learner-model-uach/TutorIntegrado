@@ -43,7 +43,7 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
   return (
     <>
       <Table.Row bg={"bg.secondary"}>
-        <Table.Cell fontWeight={"semibold"} color={"heading"}>
+        <Table.Cell fontWeight={"semibold"} color={"heading"} fontSize={{ base: "sm", md: "md" }}>
           {topic.label}
         </Table.Cell>
 
@@ -73,15 +73,29 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
           </Box>
         </Table.Cell>
 
-        <Table.Cell textAlign={"end"} color={"heading"}>
+        <Table.Cell textAlign={"end"} color={"heading"} minW={{ base: "150px", md: "unset" }}>
           {exerciseCount === 0 ? (
-            <Text color="fg.warning" fontWeight={"semibold"}>
+            <Text color="fg.warning" fontWeight={"semibold"} fontSize={{ base: "sm", md: "md" }}>
               No has realizado ejercicios
             </Text>
           ) : exerciseCount === 1 ? (
-            <Text fontWeight={"normal"}>Has realizado 1 ejercicio</Text>
+            <>
+              <Text fontWeight={"normal"} display={{ base: "none", md: "block" }}>
+                Has realizado 1 ejercicio
+              </Text>
+              <Text fontWeight={"normal"} display={{ base: "block", md: "none" }} fontSize="sm">
+                1 ejercicio
+              </Text>
+            </>
           ) : (
-            <Text fontWeight={"normal"}>Has realizado {exerciseCount} ejercicios</Text>
+            <>
+              <Text fontWeight={"normal"} display={{ base: "none", md: "block" }}>
+                Has realizado {exerciseCount} ejercicios
+              </Text>
+              <Text fontWeight={"normal"} display={{ base: "block", md: "none" }} fontSize="sm">
+                {exerciseCount} ejercicios
+              </Text>
+            </>
           )}
         </Table.Cell>
 
@@ -94,207 +108,119 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
         <Table.Cell colSpan={6} p={0} border="none">
           <Collapsible.Root open={isOpen}>
             <Collapsible.Content>
-              <Box p={4}>
-                <Table.Root
-                  variant="outline"
-                  borderRadius="md"
-                  overflow="hidden"
-                  size="sm"
-                  interactive
+              <Box p={{ base: 2, md: 4 }}>
+                <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2">
+                  Desliza horizontalmente para ver el detalle del subtópico.
+                </Text>
+                <Box
+                  w="full"
+                  overflowX="auto"
+                  overflowY="hidden"
+                  pb="2"
+                  css={{ WebkitOverflowScrolling: "touch" }}
                 >
-                  <Table.Header>
-                    <Table.Row bg="cyan.900">
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        fontWeight="semibold"
-                        htmlWidth="30%"
-                        borderTopLeftRadius="md"
-                      >
-                        SUBTÓPICOS
-                      </Table.ColumnHeader>
-
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        fontWeight="semibold"
-                        htmlWidth="20%"
-                        textAlign={"center"}
-                      >
-                        PROGRESO
-                      </Table.ColumnHeader>
-                      <Table.ColumnHeader htmlWidth="10%"></Table.ColumnHeader>
-
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        fontWeight="semibold"
-                        htmlWidth="10%"
-                        textAlign="center"
-                      >
-                        <Center>
-                          <Tooltip
-                            showArrow
-                            content="Mostrar progreso de grupo"
-                            positioning={{ placement: "top" }}
-                            contentProps={{ css: { "--tooltip-bg": "colors.gray.700" } }}
+                  <Box minW={{ base: "760px", md: "full" }}>
+                    <Table.Root
+                      variant="outline"
+                      borderRadius="md"
+                      overflow="hidden"
+                      size="sm"
+                      interactive
+                    >
+                      <Table.Header>
+                        <Table.Row bg="cyan.900">
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            fontWeight="semibold"
+                            htmlWidth="30%"
+                            borderTopLeftRadius="md"
+                            whiteSpace="nowrap"
                           >
-                            <ImUsers />
-                          </Tooltip>
-                        </Center>
-                      </Table.ColumnHeader>
+                            SUBTÓPICOS
+                          </Table.ColumnHeader>
 
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        fontWeight="semibold"
-                        textAlign="end"
-                      >
-                        ESFUERZO
-                      </Table.ColumnHeader>
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        textAlign="center"
-                        htmlWidth="5%"
-                      ></Table.ColumnHeader>
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        fontWeight="semibold"
-                        textAlign="center"
-                        htmlWidth="10%"
-                      >
-                        <Box
-                          as="span"
-                          display="inline-flex"
-                          alignItems="center"
-                          gap="1"
-                          lineHeight="1"
-                        >
-                          <Text as="span" lineHeight="1">
-                            EFICIENCIA
-                          </Text>
-                          <Popover.Root>
-                            <Popover.Trigger asChild>
-                              <Box
-                                as="span"
-                                display="inline-flex"
-                                alignItems="center"
-                                cursor="pointer"
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            fontWeight="semibold"
+                            htmlWidth="20%"
+                            textAlign={"center"}
+                            whiteSpace="nowrap"
+                          >
+                            PROGRESO
+                          </Table.ColumnHeader>
+                          <Table.ColumnHeader htmlWidth="10%"></Table.ColumnHeader>
+
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            fontWeight="semibold"
+                            htmlWidth="10%"
+                            textAlign="center"
+                            whiteSpace="nowrap"
+                          >
+                            <Center>
+                              <Tooltip
+                                showArrow
+                                content="Mostrar progreso de grupo"
+                                positioning={{ placement: "top" }}
+                                contentProps={{ css: { "--tooltip-bg": "colors.gray.700" } }}
                               >
-                                <BsQuestionCircle
-                                  style={{ display: "block", position: "relative", top: "-1px" }}
-                                />
-                              </Box>
-                            </Popover.Trigger>
-                            <Popover.Positioner>
-                              <Popover.Content
-                                maxW="xs"
-                                p="3"
-                                bg="black"
-                                color="gray.200"
-                                css={{ "--popover-bg": "black" }}
-                              >
-                                <Popover.Arrow />
-                                <Popover.CloseTrigger />
-                                <Text fontWeight="normal" fontSize="sm">
-                                  Tasa de pasos realizados correctamente en el primer intento de un
-                                  ejercicio (sin errores ni ayuda).
-                                </Text>
-                              </Popover.Content>
-                            </Popover.Positioner>
-                          </Popover.Root>
-                        </Box>
-                      </Table.ColumnHeader>
-                      <Table.ColumnHeader
-                        fontSize="xs"
-                        color="gray.50"
-                        htmlWidth="5%"
-                        borderTopRightRadius="md"
-                      ></Table.ColumnHeader>
-                    </Table.Row>
-                  </Table.Header>
+                                <ImUsers />
+                              </Tooltip>
+                            </Center>
+                          </Table.ColumnHeader>
 
-                  <Table.Body>
-                    {topic.childrens
-                      .filter(child => kcsByTopic[child.id] && kcsByTopic[child.id].length > 0)
-                      .map(child => {
-                        const childIdNum = Number(child.id);
-                        // const n = exerciseCountsByChild[childIdNum] ?? 0;
-                        const userSubtopicPercent = getSubtopicPercent(child.id, kcsByTopic, model);
-                        const groupSubtopicPercent = getSubtopicGroupPercent(
-                          child.id,
-                          kcsByTopic,
-                          groupModel,
-                        );
-                        const showGroupChild = showGroupByChild[childIdNum] ?? false;
-                        const n: number = exerciseCountsByChild[childIdNum] ?? 0;
-                        const pPercent: number = userSubtopicPercent; // 0..100
-                        const E: number = estimateEffort(n, pPercent);
-                        const rawEfficiency = efficiencyByChild?.[childIdNum] ?? 0; // 0..1
-                        const efficiencyPercent = Math.round(rawEfficiency * 100); // 0..100
-                        const Eround0: number = roundTo(E, 0);
-                        const eLabel = pluralizeExercise(Eround0);
-                        const info = infoText(n, eLabel);
-                        const { char: moodEmoji, label: moodLabel } = getMoodEmoji(
-                          n,
-                          rawEfficiency,
-                        );
-
-                        return (
-                          <Table.Row key={child.id}>
-                            <Table.Cell>{child.label}</Table.Cell>
-                            <Table.Cell>
-                              <OlmProgress.Bar
-                                percent={userSubtopicPercent}
-                                groupPercent={groupSubtopicPercent}
-                                showGroupPercent={showGroupChild}
-                              />
-                            </Table.Cell>
-
-                            <Table.Cell>
-                              <OlmProgress.Value
-                                percent={userSubtopicPercent}
-                                groupPercent={groupSubtopicPercent}
-                                showGroupPercent={showGroupChild}
-                              />
-                            </Table.Cell>
-
-                            <Table.Cell
-                              onClick={() =>
-                                setShowGroupByChild(prev => ({
-                                  ...prev,
-                                  [childIdNum]: !(prev[childIdNum] ?? false),
-                                }))
-                              }
-                              cursor="pointer"
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            fontWeight="semibold"
+                            textAlign="end"
+                            whiteSpace="nowrap"
+                          >
+                            ESFUERZO
+                          </Table.ColumnHeader>
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            textAlign="center"
+                            htmlWidth="5%"
+                          ></Table.ColumnHeader>
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            fontWeight="semibold"
+                            textAlign="center"
+                            htmlWidth="10%"
+                            whiteSpace="nowrap"
+                          >
+                            <Box
+                              as="span"
+                              display="inline-flex"
+                              alignItems="center"
+                              gap="1"
+                              lineHeight="1"
                             >
-                              <Box display="grid" placeItems="center">
-                                {showGroupChild ? <FaEye size={18} /> : <FaRegEyeSlash size={18} />}
-                              </Box>
-                            </Table.Cell>
-
-                            <TableCell
-                              textAlign="end"
-                              title={`n=${n}, E=${Eround0}`}
-                              whiteSpace="nowrap"
-                            >
-                              <EffortDots n={n} estimated={Eround0} />
-                            </TableCell>
-
-                            <TableCell textAlign="center">
+                              <Text as="span" lineHeight="1">
+                                EFICIENCIA
+                              </Text>
                               <Popover.Root>
                                 <Popover.Trigger asChild>
-                                  <IconButton
-                                    aria-label="Información de ejercicios"
-                                    size="xs"
-                                    variant="ghost"
-                                    color={ICON_COLOR}
-                                    _icon={{ boxSize: 4 }}
+                                  <Box
+                                    as="span"
+                                    display="inline-flex"
+                                    alignItems="center"
+                                    cursor="pointer"
                                   >
-                                    <FaInfoCircle />
-                                  </IconButton>
+                                    <BsQuestionCircle
+                                      style={{
+                                        display: "block",
+                                        position: "relative",
+                                        top: "-1px",
+                                      }}
+                                    />
+                                  </Box>
                                 </Popover.Trigger>
                                 <Popover.Positioner>
                                   <Popover.Content
@@ -306,59 +232,177 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
                                   >
                                     <Popover.Arrow />
                                     <Popover.CloseTrigger />
-                                    <Text fontSize="sm">{info}</Text>
+                                    <Text fontWeight="normal" fontSize="sm">
+                                      Tasa de pasos realizados correctamente en el primer intento de
+                                      un ejercicio (sin errores ni ayuda).
+                                    </Text>
                                   </Popover.Content>
                                 </Popover.Positioner>
                               </Popover.Root>
-                            </TableCell>
+                            </Box>
+                          </Table.ColumnHeader>
+                          <Table.ColumnHeader
+                            fontSize="xs"
+                            color="gray.50"
+                            htmlWidth="5%"
+                            borderTopRightRadius="md"
+                          ></Table.ColumnHeader>
+                        </Table.Row>
+                      </Table.Header>
 
-                            <TableCell textAlign="center" title="Eficiencia = B / A">
-                              {Number.isFinite(efficiencyPercent) && efficiencyPercent > 0
-                                ? `${efficiencyPercent}%`
-                                : "—"}
-                            </TableCell>
-                            <TableCell textAlign="start">
-                              {moodEmoji ? (
-                                <Popover.Root>
-                                  <Popover.Trigger asChild>
-                                    <Box
-                                      as="span"
-                                      cursor="pointer"
-                                      display="inline-flex"
-                                      alignItems="center"
-                                    >
-                                      <span
-                                        role="img"
-                                        aria-label={moodLabel}
-                                        style={{ fontSize: 25 }}
+                      <Table.Body>
+                        {topic.childrens
+                          .filter(child => kcsByTopic[child.id] && kcsByTopic[child.id].length > 0)
+                          .map(child => {
+                            const childIdNum = Number(child.id);
+                            // const n = exerciseCountsByChild[childIdNum] ?? 0;
+                            const userSubtopicPercent = getSubtopicPercent(
+                              child.id,
+                              kcsByTopic,
+                              model,
+                            );
+                            const groupSubtopicPercent = getSubtopicGroupPercent(
+                              child.id,
+                              kcsByTopic,
+                              groupModel,
+                            );
+                            const showGroupChild = showGroupByChild[childIdNum] ?? false;
+                            const n: number = exerciseCountsByChild[childIdNum] ?? 0;
+                            const pPercent: number = userSubtopicPercent; // 0..100
+                            const E: number = estimateEffort(n, pPercent);
+                            const rawEfficiency = efficiencyByChild?.[childIdNum] ?? 0; // 0..1
+                            const efficiencyPercent = Math.round(rawEfficiency * 100); // 0..100
+                            const Eround0: number = roundTo(E, 0);
+                            const eLabel = pluralizeExercise(Eround0);
+                            const info = infoText(n, eLabel);
+                            const { char: moodEmoji, label: moodLabel } = getMoodEmoji(
+                              n,
+                              rawEfficiency,
+                            );
+
+                            return (
+                              <Table.Row key={child.id}>
+                                <Table.Cell whiteSpace="nowrap">{child.label}</Table.Cell>
+                                <Table.Cell>
+                                  <OlmProgress.Bar
+                                    percent={userSubtopicPercent}
+                                    groupPercent={groupSubtopicPercent}
+                                    showGroupPercent={showGroupChild}
+                                  />
+                                </Table.Cell>
+
+                                <Table.Cell whiteSpace="nowrap">
+                                  <OlmProgress.Value
+                                    percent={userSubtopicPercent}
+                                    groupPercent={groupSubtopicPercent}
+                                    showGroupPercent={showGroupChild}
+                                  />
+                                </Table.Cell>
+
+                                <Table.Cell
+                                  onClick={() =>
+                                    setShowGroupByChild(prev => ({
+                                      ...prev,
+                                      [childIdNum]: !(prev[childIdNum] ?? false),
+                                    }))
+                                  }
+                                  cursor="pointer"
+                                >
+                                  <Box display="grid" placeItems="center">
+                                    {showGroupChild ? (
+                                      <FaEye size={18} />
+                                    ) : (
+                                      <FaRegEyeSlash size={18} />
+                                    )}
+                                  </Box>
+                                </Table.Cell>
+
+                                <TableCell
+                                  textAlign="end"
+                                  title={`n=${n}, E=${Eround0}`}
+                                  whiteSpace="nowrap"
+                                >
+                                  <EffortDots n={n} estimated={Eround0} />
+                                </TableCell>
+
+                                <TableCell textAlign="center">
+                                  <Popover.Root>
+                                    <Popover.Trigger asChild>
+                                      <IconButton
+                                        aria-label="Información de ejercicios"
+                                        size="xs"
+                                        variant="ghost"
+                                        color={ICON_COLOR}
+                                        _icon={{ boxSize: 4 }}
                                       >
-                                        {moodEmoji}
-                                      </span>
-                                    </Box>
-                                  </Popover.Trigger>
-                                  <Popover.Positioner>
-                                    <Popover.Content
-                                      maxW="xs"
-                                      p="3"
-                                      bg="black"
-                                      color="gray.200"
-                                      css={{ "--popover-bg": "black" }}
-                                    >
-                                      <Popover.Arrow />
-                                      <Popover.CloseTrigger />
-                                      <Text fontSize="sm">{moodLabel}</Text>
-                                    </Popover.Content>
-                                  </Popover.Positioner>
-                                </Popover.Root>
-                              ) : (
-                                <span style={{ fontSize: 25 }}> </span>
-                              )}
-                            </TableCell>
-                          </Table.Row>
-                        );
-                      })}
-                  </Table.Body>
-                </Table.Root>
+                                        <FaInfoCircle />
+                                      </IconButton>
+                                    </Popover.Trigger>
+                                    <Popover.Positioner>
+                                      <Popover.Content
+                                        maxW="xs"
+                                        p="3"
+                                        bg="black"
+                                        color="gray.200"
+                                        css={{ "--popover-bg": "black" }}
+                                      >
+                                        <Popover.Arrow />
+                                        <Popover.CloseTrigger />
+                                        <Text fontSize="sm">{info}</Text>
+                                      </Popover.Content>
+                                    </Popover.Positioner>
+                                  </Popover.Root>
+                                </TableCell>
+
+                                <TableCell textAlign="center" title="Eficiencia = B / A">
+                                  {Number.isFinite(efficiencyPercent) && efficiencyPercent > 0
+                                    ? `${efficiencyPercent}%`
+                                    : "—"}
+                                </TableCell>
+                                <TableCell textAlign="start">
+                                  {moodEmoji ? (
+                                    <Popover.Root>
+                                      <Popover.Trigger asChild>
+                                        <Box
+                                          as="span"
+                                          cursor="pointer"
+                                          display="inline-flex"
+                                          alignItems="center"
+                                        >
+                                          <span
+                                            role="img"
+                                            aria-label={moodLabel}
+                                            style={{ fontSize: 25 }}
+                                          >
+                                            {moodEmoji}
+                                          </span>
+                                        </Box>
+                                      </Popover.Trigger>
+                                      <Popover.Positioner>
+                                        <Popover.Content
+                                          maxW="xs"
+                                          p="3"
+                                          bg="black"
+                                          color="gray.200"
+                                          css={{ "--popover-bg": "black" }}
+                                        >
+                                          <Popover.Arrow />
+                                          <Popover.CloseTrigger />
+                                          <Text fontSize="sm">{moodLabel}</Text>
+                                        </Popover.Content>
+                                      </Popover.Positioner>
+                                    </Popover.Root>
+                                  ) : (
+                                    <span style={{ fontSize: 25 }}> </span>
+                                  )}
+                                </TableCell>
+                              </Table.Row>
+                            );
+                          })}
+                      </Table.Body>
+                    </Table.Root>
+                  </Box>
+                </Box>
               </Box>
             </Collapsible.Content>
           </Collapsible.Root>

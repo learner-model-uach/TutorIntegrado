@@ -111,7 +111,7 @@ function Value({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgr
 export default function OlmProgress(props: OlmProgressBarProps) {
   return (
     <HStack maxWidth="sm" w="full" gap="2" align="center">
-      <Bar {...props} />
+      <Bar {...props} /> 
       <Value {...props} />
     </HStack>
   );
