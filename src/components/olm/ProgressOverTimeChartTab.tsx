@@ -105,16 +105,13 @@ export function ProgressOverTimeContainer() {
 
   const groupId = groups.length > 0 ? String(groups[0].id) : "";
 
-  // 1) subtopics (ids) -> topics
   const { topics, isLoading: topicsLoading } = useSubtopics(PARENT_IDS);
 
-  // 2) topics -> topicCodes (childrens.code)
   const topicCodes = useMemo(() => {
     const codes = topics.flatMap((t: any) => (t.childrens ?? []).map((c: any) => c.code)) ?? [];
     return Array.from(new Set(codes)).filter(Boolean);
   }, [topics]);
 
-  // 3) topicCodes -> kcCodes
   const { kcCodes, isLoading: kcsLoading } = useKcsByTopics(topicCodes);
 
   if (authLoading || topicsLoading || kcsLoading) return <div>Cargando…</div>;

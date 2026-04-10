@@ -181,19 +181,22 @@ export default function TopicTable() {
     .filter((topic): topic is Topic => Boolean(topic));
 
   return (
-    <Box w="full">
+    <Box w="full" minW={0}>
       <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
         Desliza horizontalmente para ver todas las columnas.
       </Text>
       <Box
         w="full"
+        minW={0}
         overflowX="auto"
         overflowY="hidden"
         pb="2"
+        touchAction="pan-x"
+        overscrollBehaviorX="contain"
         css={{ WebkitOverflowScrolling: "touch" }}
       >
-        <Box minW={{ base: "720px", md: "full" }}>
-          <Table.Root variant="line" size="sm">
+        <Box display="inline-block" minW={{ base: "720px", md: "100%" }} verticalAlign="top">
+          <Table.Root variant="line" size="sm" minW={{ base: "720px", md: "100%" }}>
             <Table.Header>
               <Table.Row textStyle="xs" bg="bg.secondary">
                 <Table.ColumnHeader fontWeight="bold" color={"heading"} htmlWidth="30%">

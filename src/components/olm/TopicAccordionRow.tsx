@@ -24,6 +24,7 @@ import type { TopicAccordionRowProps } from "./types";
 import OlmProgress from "./OlmProgress";
 import { Tooltip } from "../ui/tooltip";
 import { BsQuestionCircle } from "react-icons/bs";
+import { useAction } from "../../utils/action";
 const ICON_COLOR = { base: "#659a5f", _dark: "teal.500" } as const;
 
 const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
@@ -40,6 +41,61 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [showGroupParent, setShowGroupParent] = useState(false);
   const [showGroupByChild, setShowGroupByChild] = useState<Record<number, boolean>>({});
+  const action = useAction();
+
+  const handleParentGroupVisibility = () => {
+    if (!showGroupParent) {
+      action({
+        verbName: "showGroupProgress",
+        topicID: topic.id,
+        extra: {
+          progressGroup: groupProgress,
+          progressUser: progress,
+        },
+      });
+    }
+
+    setShowGroupParent(prev => !prev);
+  };
+
+  const handleChildGroupVisibility = (
+    childId: number,
+    showGroupChild: boolean,
+    groupSubtopicPercent: number,
+    userSubtopicPercent: number,
+  ) => {
+    if (!showGroupChild) {
+      action({
+        verbName: "showGroupProgress",
+        topicID: String(childId),
+        extra: {
+          progressGroup: groupSubtopicPercent,
+          progressUser: userSubtopicPercent,
+        },
+      });
+    }
+
+    setShowGroupByChild(prev => ({
+      ...prev,
+      [childId]: !showGroupChild,
+    }));
+  };
+
+  const handleSubtopicDisplay = () => {
+    if (!isOpen) {
+      action({
+        verbName: "displayOLMsubtopic",
+        topicID: topic.id,
+        extra: {
+          userProgress: progress,
+          groupProgress,
+        },
+      });
+    }
+
+    setIsOpen(prev => !prev);
+  };
+
   return (
     <>
       <Table.Row bg={"bg.secondary"}>
@@ -64,7 +120,7 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
         </Table.Cell>
 
         <Table.Cell
-          onClick={() => setShowGroupParent(!showGroupParent)}
+          onClick={handleParentGroupVisibility}
           cursor="pointer"
           color={"heading"}
         >
@@ -99,7 +155,7 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
           )}
         </Table.Cell>
 
-        <Table.Cell textAlign={"center"} onClick={() => setIsOpen(!isOpen)} color={ICON_COLOR}>
+        <Table.Cell textAlign={"center"} onClick={handleSubtopicDisplay} color={ICON_COLOR}>
           {isOpen ? <FaChevronDown cursor={"pointer"} /> : <FaChevronRight cursor={"pointer"} />}
         </Table.Cell>
       </Table.Row>
@@ -108,24 +164,32 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
         <Table.Cell colSpan={6} p={0} border="none">
           <Collapsible.Root open={isOpen}>
             <Collapsible.Content>
-              <Box p={{ base: 2, md: 4 }}>
+              <Box p={{ base: 2, md: 4 }} minW={0}>
                 <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2">
                   Desliza horizontalmente para ver el detalle del subtópico.
                 </Text>
                 <Box
                   w="full"
+                  minW={0}
                   overflowX="auto"
                   overflowY="hidden"
                   pb="2"
+                  touchAction="pan-x"
+                  overscrollBehaviorX="contain"
                   css={{ WebkitOverflowScrolling: "touch" }}
                 >
-                  <Box minW={{ base: "760px", md: "full" }}>
+                  <Box
+                    display="inline-block"
+                    minW={{ base: "760px", md: "100%" }}
+                    verticalAlign="top"
+                  >
                     <Table.Root
                       variant="outline"
                       borderRadius="md"
                       overflow="hidden"
                       size="sm"
                       interactive
+                      minW={{ base: "760px", md: "100%" }}
                     >
                       <Table.Header>
                         <Table.Row bg="cyan.900">
@@ -301,10 +365,12 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
 
                                 <Table.Cell
                                   onClick={() =>
-                                    setShowGroupByChild(prev => ({
-                                      ...prev,
-                                      [childIdNum]: !(prev[childIdNum] ?? false),
-                                    }))
+                                    handleChildGroupVisibility(
+                                      childIdNum,
+                                      showGroupChild,
+                                      groupSubtopicPercent,
+                                      userSubtopicPercent,
+                                    )
                                   }
                                   cursor="pointer"
                                 >
@@ -334,6 +400,12 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
                                         variant="ghost"
                                         color={ICON_COLOR}
                                         _icon={{ boxSize: 4 }}
+                                        onClick={() => {
+                                          action({
+                                            verbName: "showEffortInfo",
+                                            topicID: String(child.id),
+                                          });
+                                        }}
                                       >
                                         <FaInfoCircle />
                                       </IconButton>
@@ -368,6 +440,15 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
                                           cursor="pointer"
                                           display="inline-flex"
                                           alignItems="center"
+                                          onClick={() => {
+                                            action({
+                                              verbName: "showEfficiencyInfo",
+                                              topicID: String(child.id),
+                                              extra: {
+                                                efficiency: efficiencyPercent,
+                                              },
+                                            });
+                                          }}
                                         >
                                           <span
                                             role="img"

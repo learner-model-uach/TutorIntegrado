@@ -1,11 +1,25 @@
 import { Heading, Highlight, Stack, Text, Tabs } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { withAuth, useAuth } from "../components/Auth";
 import TopicTable from "../components/olm/TopicTable";
 import ProgressOverTime from "../components/olm/ProgressOverTime";
 import { ProgressOverTimeContainer } from "../components/olm/ProgressOverTimeChartTab";
 import { FaBarsProgress } from "react-icons/fa6";
 import { GiProgression } from "react-icons/gi";
+import { useAction } from "../utils/action";
 
-export default function olmDashboard() {
+function OlmDashboard() {
+  const { project } = useAuth();
+  const action = useAction();
+
+  useEffect(() => {
+    if (!project?.id) return;
+
+    action({
+      verbName: "displayOLMPage",
+    });
+  }, [action, project?.id]);
+
   return (
     <>
       <Stack width="100%" padding="1rem" alignItems="center">
@@ -29,8 +43,30 @@ export default function olmDashboard() {
         </Text>
       </Stack>
       {/*'line' | 'subtle' | 'enclosed' | 'outline' | 'plain'*/}
-      <Tabs.Root lazyMount unmountOnExit variant="outline" defaultValue="totalprogress" size="md">
-        <Tabs.List>
+      <Tabs.Root
+        lazyMount
+        unmountOnExit
+        variant="outline"
+        defaultValue="totalprogress"
+        size="md"
+        minW={0}
+        onValueChange={({ value }) => {
+          if (!project?.id) return;
+
+          if (value === "totalprogress") {
+            action({
+              verbName: "displayProgressTab",
+            });
+          }
+
+          if (value === "progressovertime") {
+            action({
+              verbName: "displayEvolutionTab",
+            });
+          }
+        }}
+      >
+        <Tabs.List overflowX="auto" overflowY="hidden" minW={0} maxW="100%" flexWrap="nowrap">
           <Tabs.Trigger value="totalprogress">
             <FaBarsProgress />
             <Text fontWeight="bold" color={"heading"}>
@@ -43,10 +79,10 @@ export default function olmDashboard() {
             <Text fontWeight="bold">Evolución de mi progreso</Text>
           </Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content value="totalprogress">
+        <Tabs.Content value="totalprogress" minW={0}>
           <TopicTable />
         </Tabs.Content>
-        <Tabs.Content value="progressovertime">
+        <Tabs.Content value="progressovertime" minW={0}>
           <ProgressOverTimeContainer />
           <ProgressOverTime endDate={new Date().toISOString()} />
         </Tabs.Content>
@@ -54,3 +90,5 @@ export default function olmDashboard() {
     </>
   );
 }
+
+export default withAuth(OlmDashboard);
