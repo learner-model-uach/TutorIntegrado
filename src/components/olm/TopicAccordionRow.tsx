@@ -44,16 +44,16 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
   const action = useAction();
 
   const handleParentGroupVisibility = () => {
-    if (!showGroupParent) {
-      action({
-        verbName: "showGroupProgress",
-        topicID: topic.id,
-        extra: {
-          progressGroup: groupProgress,
-          progressUser: progress,
-        },
-      });
-    }
+    // if (!showGroupParent) {
+    //   action({
+    //     verbName: "showGroupProgress",
+    //     topicID: topic.id,
+    //     extra: {
+    //       progressGroup: groupProgress,
+    //       progressUser: progress,
+    //     },
+    //   });
+    // }
 
     setShowGroupParent(prev => !prev);
   };
@@ -64,16 +64,16 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
     groupSubtopicPercent: number,
     userSubtopicPercent: number,
   ) => {
-    if (!showGroupChild) {
-      action({
-        verbName: "showGroupProgress",
-        topicID: String(childId),
-        extra: {
-          progressGroup: groupSubtopicPercent,
-          progressUser: userSubtopicPercent,
-        },
-      });
-    }
+    // if (!showGroupChild) {
+    //   action({
+    //     verbName: "showGroupProgress",
+    //     topicID: String(childId),
+    //     extra: {
+    //       progressGroup: groupSubtopicPercent,
+    //       progressUser: userSubtopicPercent,
+    //     },
+    //   });
+    // }
 
     setShowGroupByChild(prev => ({
       ...prev,
@@ -82,16 +82,16 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
   };
 
   const handleSubtopicDisplay = () => {
-    if (!isOpen) {
-      action({
-        verbName: "displayOLMsubtopic",
-        topicID: topic.id,
-        extra: {
-          userProgress: progress,
-          groupProgress,
-        },
-      });
-    }
+    // if (!isOpen) {
+    //   action({
+    //     verbName: "displayOLMsubtopic",
+    //     topicID: topic.id,
+    //     extra: {
+    //       userProgress: progress,
+    //       groupProgress,
+    //     },
+    //   });
+    // }
 
     setIsOpen(prev => !prev);
   };
@@ -400,12 +400,12 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
                                         variant="ghost"
                                         color={ICON_COLOR}
                                         _icon={{ boxSize: 4 }}
-                                        onClick={() => {
-                                          action({
-                                            verbName: "showEffortInfo",
-                                            topicID: String(child.id),
-                                          });
-                                        }}
+                                        // onClick={() => {
+                                        //   action({
+                                        //     verbName: "showEffortInfo",
+                                        //     topicID: String(child.id),
+                                        //   });
+                                        // }}
                                       >
                                         <FaInfoCircle />
                                       </IconButton>
@@ -440,15 +440,15 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
                                           cursor="pointer"
                                           display="inline-flex"
                                           alignItems="center"
-                                          onClick={() => {
-                                            action({
-                                              verbName: "showEfficiencyInfo",
-                                              topicID: String(child.id),
-                                              extra: {
-                                                efficiency: efficiencyPercent,
-                                              },
-                                            });
-                                          }}
+                                          // onClick={() => {
+                                          //   action({
+                                          //     verbName: "showEfficiencyInfo",
+                                          //     topicID: String(child.id),
+                                          //     extra: {
+                                          //       efficiency: efficiencyPercent,
+                                          //     },
+                                          //   });
+                                          // }}
                                         >
                                           <span
                                             role="img"
