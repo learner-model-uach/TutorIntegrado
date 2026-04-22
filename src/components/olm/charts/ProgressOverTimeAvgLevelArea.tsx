@@ -1,5 +1,6 @@
 // import * as React from "react";
 import { useMemo } from "react";
+import { Text } from "@chakra-ui/react";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   Area,
@@ -109,70 +110,75 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
   );
 
   return (
-    <Chart.Root maxH="sm" chart={chart}>
-      <AreaChart data={chart.data} responsive>
-        <CartesianGrid stroke="teal" strokeDasharray="3 3" opacity={0.5} />
-        <XAxis
-          dataKey="date"
-          ticks={xAxisTicks}
-          tickFormatter={formatShortDate}
-          tickMargin={8}
-          minTickGap={24}
-        />
+    <>
+      <Text color="heading" pt="1.5rem" textStyle="xl" textAlign="center" fontWeight="semibold">
+        PROGRESO EN EL TIEMPO
+      </Text>
+      <Chart.Root maxH="sm" chart={chart}>
+        <AreaChart data={chart.data} responsive>
+          <CartesianGrid stroke="teal" strokeDasharray="3 3" opacity={0.5} />
+          <XAxis
+            dataKey="date"
+            ticks={xAxisTicks}
+            tickFormatter={formatShortDate}
+            tickMargin={8}
+            minTickGap={24}
+          />
 
-        <YAxis tickFormatter={(v: number) => percentFmt.format(v)} domain={[0, 1]} />
+          <YAxis tickFormatter={(v: number) => percentFmt.format(v)} domain={[0, 1]} />
 
-        <Tooltip
-          formatter={(value, name, payload) => {
-            const point = (
-              payload as TooltipPayloadEntry<TooltipValueType, string> & {
-                payload?: ProgressAreaDatum;
+          <Tooltip
+            formatter={(value, name, payload) => {
+              const point = (
+                payload as TooltipPayloadEntry<TooltipValueType, string> & {
+                  payload?: ProgressAreaDatum;
+                }
+              ).payload;
+              const v = typeof value === "number" ? percentFmt.format(value) : value;
+
+              if (name === "groupAvg") {
+                const nUsers = point?.nUsers;
+                if (typeof nUsers === "number") return [`${v} (${nUsers} users)`, "groupAvg"];
               }
-            ).payload;
-            const v = typeof value === "number" ? percentFmt.format(value) : value;
 
-            if (name === "groupAvg") {
-              const nUsers = point?.nUsers;
-              if (typeof nUsers === "number") return [`${v} (${nUsers} users)`, "groupAvg"];
-            }
+              return [v, name];
+            }}
+            labelFormatter={label => `Fecha: ${formatFullDate(String(label))}`}
+          />
 
-            return [v, name];
-          }}
-          labelFormatter={label => `Fecha: ${formatFullDate(String(label))}`}
-        />
+          <Legend />
 
-        <Legend />
+          <defs>
+            <linearGradient id="colorUser" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={"#75B06F"} stopOpacity={0.7} />
+              <stop offset="95%" stopColor={"#75B06F"} stopOpacity={0} />
+            </linearGradient>
 
-        <defs>
-          <linearGradient id="colorUser" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={"#75B06F"} stopOpacity={0.7} />
-            <stop offset="95%" stopColor={"#75B06F"} stopOpacity={0} />
-          </linearGradient>
+            <linearGradient id="colorGroup" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={"#ff8c73"} stopOpacity={0.6} />
+              <stop offset="95%" stopColor={"#ff8c73"} stopOpacity={0} />
+            </linearGradient>
+          </defs>
 
-          <linearGradient id="colorGroup" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor={"#ff8c73"} stopOpacity={0.6} />
-            <stop offset="95%" stopColor={"#ff8c73"} stopOpacity={0} />
-          </linearGradient>
-        </defs>
+          <Area
+            type="monotone"
+            dataKey={chart.key("groupAvg")}
+            stroke={"#ff8c73"}
+            fill="url(#colorGroup)"
+            connectNulls
+            name="Progreso Grupo"
+          />
 
-        <Area
-          type="monotone"
-          dataKey={chart.key("groupAvg")}
-          stroke={"#ff8c73"}
-          fill="url(#colorGroup)"
-          connectNulls
-          name="Progreso Grupo"
-        />
-
-        <Area
-          type="monotone"
-          dataKey={chart.key("userAvg")}
-          stroke={"#75B06F"}
-          fill="url(#colorUser)"
-          connectNulls
-          name="Mi progreso"
-        />
-      </AreaChart>
-    </Chart.Root>
+          <Area
+            type="monotone"
+            dataKey={chart.key("userAvg")}
+            stroke={"#75B06F"}
+            fill="url(#colorUser)"
+            connectNulls
+            name="Mi progreso"
+          />
+        </AreaChart>
+      </Chart.Root>
+    </>
   );
 }

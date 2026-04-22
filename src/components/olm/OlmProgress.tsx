@@ -49,14 +49,14 @@ function Bar({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgres
         borderRadius="full"
         height="16px"
         borderWidth="1px"
-        borderColor={"#659a5f"}
+        borderColor={"#129a8c"}
         p="2px"
       >
         <Box
           position="relative"
           w="full"
           h="full"
-          bg={{ base: "indigo.50", _dark: "teal.100" }}
+          bg={{ base: "#e1f8f5", _dark: "teal.100" }}
           borderRadius="full"
           overflow="hidden"
         >
@@ -66,7 +66,7 @@ function Bar({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgres
             left={0}
             h="100%"
             w={showGroupPercent ? `${g}%` : "0%"}
-            bg="progressbar_group"
+            bg="#d8d8d8d5"
             borderRadius="full"
             zIndex={groupOnTop ? 1 : 0}
             transition="width 500ms ease"
@@ -77,7 +77,7 @@ function Bar({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgres
             left={0}
             h="100%"
             w={`${p}%`}
-            bg={{ base: "#659a5f", _dark: "teal.500" }}
+            bg={{ base: "#129a8c", _dark: "teal.500" }}
             borderRadius="full"
             zIndex={groupOnTop ? 0 : 1}
           />
@@ -94,13 +94,16 @@ function Value({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgr
 
   return (
     <Text fontSize="sm" fontWeight="bold" whiteSpace="nowrap">
-      <Box as="span" color={{ base: "#659a5f", _dark: "teal.500" }}>
+      <Box as="span" color={{ base: "#129a8c", _dark: "teal.500" }}>
         {p}%
       </Box>
       {showGroupPercent && (
         <>
+          <Box as="span" color={{ base: "gray.200", _dark: "gray.400" }}>
+            {" | "}
+          </Box>
           <Box as="span" color={{ base: "gray.500", _dark: "gray.200" }}>
-            {" | "} {animatedGroupPercent}%
+            {animatedGroupPercent}%
           </Box>
         </>
       )}
@@ -111,7 +114,7 @@ function Value({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgr
 export default function OlmProgress(props: OlmProgressBarProps) {
   return (
     <HStack maxWidth="sm" w="full" gap="2" align="center">
-      <Bar {...props} /> 
+      <Bar {...props} />
       <Value {...props} />
     </HStack>
   );

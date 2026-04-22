@@ -51,7 +51,7 @@ function OlmDashboard() {
         size="md"
         minW={0}
         onValueChange={({ value }) => {
-          if (!project?.id) return;
+          if (!project?.id || !value) return;
 
           // if (value === "totalprogress") {
           //   action({

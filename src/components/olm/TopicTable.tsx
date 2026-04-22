@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Table, Spinner, Center, Box, Text } from "@chakra-ui/react";
 import { ImUsers } from "react-icons/im";
+import { useSnapshot } from "valtio";
 import { useAuth } from "../Auth";
+import { gSelect } from "../GroupSelect";
 import { useGQLQuery } from "rq-gql";
 import { progresscalc } from "../progressbar/progresscalc";
 import TopicAccordionRow from "./TopicAccordionRow";
@@ -15,11 +17,13 @@ import { aggregateCompleteContentActions } from "./helpers/actionAggregates";
 
 export default function TopicTable() {
   const { user, isLoading: authLoading, project } = useAuth();
+  const groupSelection = useSnapshot(gSelect);
   const parentIds = PARENT_IDS;
   const { topics: subtopics, isLoading: subtopicLoading } = useSubtopics(parentIds);
   const { modelData: userModel, isLoading: userModelLoading } = useUserModel(user?.id);
+  const selectedGroup = groupSelection.group ?? user?.groups?.[0];
   const { modelData: groupModel, isLoading: groupModelLoading } = useGroupModel(
-    user?.groups?.[0]?.id,
+    selectedGroup?.id,
     project?.code,
   );
   const [topicCodes, setTopicCodes] = useState<string[]>([]);
@@ -47,25 +51,6 @@ export default function TopicTable() {
 
   const [completeContentIds, setCompleteContentIds] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    if (tryStepLoading || tryStepError || !tryStepData?.actionsTopic) return;
-    console.log("RAW tryStepData:", tryStepData);
-    const nodes = tryStepData.actionsTopic.allActionsByUser.nodes;
-    console.log("NODES tryStep:", nodes);
-    const tryStepActions = nodes.flatMap(node =>
-      node.actions.map(a => ({
-        verb: a.verb.name,
-        result: a.result,
-        extra: a.extra,
-        contentId: a.content?.id,
-        contentCode: a.content?.code,
-        topicIds: a.content?.topics?.map(t => t.id),
-        topicCodes: a.content?.topics?.map(t => t.code),
-        topicLabels: a.content?.topics?.map(t => t.label),
-      })),
-    );
-    console.log("TRYSTEP ACTIONS FLATTENED:", tryStepActions);
-  }, [tryStepLoading, tryStepError, tryStepData]);
   // Complete Actions by subtopics
   const [excerciseCountsByChild, setExcerciseCountsByChild] = useState<Record<number, number>>({});
   const childIdSet = useMemo(() => {
@@ -135,9 +120,16 @@ export default function TopicTable() {
     setTryStepResult1ByChild(byChildResult1);
     setTryStepResult1NoHelpByChild(byChildResult1NoHelp);
 
-    console.log("tryStep result=1 por subtópico:", byChildResult1);
-    console.log("tryStep result=1, attempts=0, hints=0 por subrópico:", byChildResult1NoHelp);
-  }, [authLoading, tryStepLoading, tryStepError, tryStepData?.actionsTopic, childIdSet]);
+    // console.log("tryStep result=1 por subtópico:", byChildResult1);
+    // console.log("tryStep result=1, attempts=0, hints=0 por subrópico:", byChildResult1NoHelp);
+  }, [
+    authLoading,
+    tryStepLoading,
+    tryStepError,
+    tryStepData?.actionsTopic,
+    childIdSet,
+    completeContentIds,
+  ]);
 
   const efficiencyByChild = useMemo(() => {
     const result: Record<number, number> = {};
@@ -168,6 +160,7 @@ export default function TopicTable() {
     exerciseLoading ||
     userModelLoading ||
     groupModelLoading ||
+    actionsLoading ||
     tryStepLoading
   ) {
     return (
@@ -199,6 +192,7 @@ export default function TopicTable() {
           <Table.Root variant="line" size="sm" minW={{ base: "720px", md: "100%" }}>
             <Table.Header>
               <Table.Row textStyle="xs" bg="bg.secondary">
+                <Table.ColumnHeader></Table.ColumnHeader>
                 <Table.ColumnHeader fontWeight="bold" color={"heading"} htmlWidth="30%">
                   TÓPICOS
                 </Table.ColumnHeader>
@@ -246,7 +240,7 @@ export default function TopicTable() {
                 const kcs = childs.flatMap(child => (kcByTopic[child.id] ?? []).map(kc => kc.code));
                 const modelData = userModel;
                 const groupModelData = groupModel;
-                console.log("childs", childs);
+                // console.log("childs", childs);
                 // console.log("groupModel", groupModel);
                 const progress = Math.round(progresscalc(kcs, modelData) * 100);
                 const groupProgress = groupModelData?.length

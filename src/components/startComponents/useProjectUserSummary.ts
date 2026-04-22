@@ -252,8 +252,8 @@ export function useProjectUserSummary({
       currentUserTopicActions: currentUserActions.filter(action =>
         Boolean(getActionParentTopicLabel(action)),
       ),
-      currentUserContentActions: currentUserActions.filter(action =>
-        action?.verb?.name === "completeContent" && Boolean(getActionTopicLabel(action)),
+      currentUserContentActions: currentUserActions.filter(
+        action => action?.verb?.name === "completeContent" && Boolean(getActionTopicLabel(action)),
       ),
     };
   }, [recentActivityData, userEmail, userId]);

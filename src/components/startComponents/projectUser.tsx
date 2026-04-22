@@ -157,7 +157,6 @@ export const AssigndUser = () => {
             w={{ base: "100%", lg: "360px" }}
             borderRadius="2xl"
             bg={{ base: "whiteAlpha.700", _dark: "gray.900" }}
-         
             p={{ base: 5, md: 6 }}
           >
             <Stack gap="4">
