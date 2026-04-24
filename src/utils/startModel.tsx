@@ -13,13 +13,14 @@ export interface model {
 type TopicKc = GetKcsByTopicsQuery["kcsByContentByTopics"][number]["kcs"][number];
 
 function isExerciseJson(json: Record<string, unknown> | null | undefined): json is ExType {
-  return (
-    typeof json?.code === "string" &&
-    typeof json?.title === "string" &&
-    typeof json?.text === "string" &&
-    typeof json?.type === "string" &&
-    Array.isArray(json?.steps)
-  );
+  const hasPreviewExpression =
+    typeof json?.eqc === "string" ||
+    typeof json?.initialExpression === "string" ||
+    typeof json?.img === "string" ||
+    (Array.isArray(json?.steps) &&
+      typeof (json.steps[0] as { expression?: unknown } | undefined)?.expression === "string");
+
+  return typeof json?.type === "string" && hasPreviewExpression;
 }
 
 export const InitialModel = proxy<{
