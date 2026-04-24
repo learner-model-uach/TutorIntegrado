@@ -9,6 +9,7 @@ import { useUserActions } from "./hooks/useOlmActions";
 import { PARENT_IDS, useSubtopics } from "./hooks/useOlmTopics";
 import { ProgressBarSegment } from "./charts/ProgressBarSegment";
 import { aggregateCompleteContentActions } from "./helpers/actionAggregates";
+import ProgressOverTimeBoxInfo from "./ProgressOverTimeBoxInfo";
 
 type Props = {
   endDate: string; // e.g. new Date().toISOString()
@@ -95,38 +96,51 @@ export default function ProgressOverTime({ endDate }: Props) {
 
   return (
     <>
-      <Heading color="heading" pt="2rem" fontSize={"xl"} textAlign="center" fontWeight="semibold">
-        EJERCICIOS COMPLETADOS POR FECHA
-      </Heading>
-      <Chart.Root maxH="sm" chart={chart}>
-        <BarChart data={chart.data} responsive>
-          <CartesianGrid stroke={chart.color("border")} vertical={false} />
-          <XAxis
-            axisLine={false}
-            dataKey={chart.key("date")}
-            stroke={chart.color("border")}
-            tickMargin={10}
-            label={{ value: "Fecha", position: "bottom" }}
-          />
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            tickMargin={10}
-            stroke={chart.color("border")}
-            label={{ value: "Ejercicios", position: "left", angle: -90 }}
-          />
-          <Tooltip animationDuration={100} cursor={false} content={<CustomTooltip />} />
-          {chart.series.map(item => (
-            <Bar
-              key={item.name}
-              dataKey={chart.key(item.name)}
-              fill={chart.color(item.color)}
-              radius={[4, 4, 0, 0]}
+      <Box pt="2rem">
+        <ProgressOverTimeBoxInfo
+          message="Aquí podrás revisar cuántos ejercicios has completado en Mateo, organizados por fecha desde que comenzaste a usar la plataforma."
+          highlightQuery={["ejercicios has completado"]}
+        />
+        <Heading
+          color="heading"
+          pt="1.5rem"
+          pb=".8rem"
+          fontSize={"xl"}
+          textAlign="center"
+          fontWeight="semibold"
+        >
+          EJERCICIOS COMPLETADOS POR FECHA
+        </Heading>
+        <Chart.Root maxH="sm" chart={chart}>
+          <BarChart data={chart.data} responsive>
+            <CartesianGrid stroke={chart.color("border")} vertical={false} />
+            <XAxis
+              axisLine={false}
+              dataKey={chart.key("date")}
+              stroke={chart.color("border")}
+              tickMargin={10}
+              label={{ value: "Fecha", position: "bottom" }}
             />
-          ))}
-        </BarChart>
-      </Chart.Root>
-      <ProgressBarSegment dataActions={data} />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tickMargin={10}
+              stroke={chart.color("border")}
+              label={{ value: "Ejercicios", position: "left", angle: -90 }}
+            />
+            <Tooltip animationDuration={100} cursor={false} content={<CustomTooltip />} />
+            {chart.series.map(item => (
+              <Bar
+                key={item.name}
+                dataKey={chart.key(item.name)}
+                fill={chart.color(item.color)}
+                radius={[4, 4, 0, 0]}
+              />
+            ))}
+          </BarChart>
+        </Chart.Root>
+        <ProgressBarSegment dataActions={data} />
+      </Box>
     </>
   );
 }

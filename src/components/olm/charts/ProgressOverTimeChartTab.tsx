@@ -1,15 +1,14 @@
 import * as React from "react";
 import { useMemo } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { useSnapshot } from "valtio";
-import { useAuth } from "../Auth";
-import { gSelect } from "../GroupSelect";
-import { PROGRESS_OVER_TIME_USER_AND_GROUP } from "./graphql/progressOverTime";
-import { useSubtopics, useKcsByTopics, PARENT_IDS } from "./hooks/useOlmTopics";
-import { ProgressOverTimeAvgLevelArea } from "./charts/ProgressOverTimeAvgLevelArea";
-import ProgressOverTimeInfoBox from "./ProgressOverTimeInfoBox";
-import type { ProgressOverTimeGroupPoint, ProgressOverTimeUserPoint } from "./types";
+import { useAuth } from "../../Auth";
+import { gSelect } from "../../GroupSelect";
+import { PROGRESS_OVER_TIME_USER_AND_GROUP } from "../graphql/progressOverTime";
+import { useSubtopics, useKcsByTopics, PARENT_IDS } from "../hooks/useOlmTopics";
+import { ProgressOverTimeAvgLevelArea } from "./ProgressOverTimeAvgLevelArea";
+import type { ProgressOverTimeGroupPoint, ProgressOverTimeUserPoint } from "../types";
 
 type MergedPoint = {
   at: string;
@@ -149,7 +148,7 @@ function ProgressOverTimeQuery({
     return fullRange.filter(point => getDateKey(point.at) >= visibleStartKey);
   }, [dateKeys, userMap, groupMap, visibleStartDate]);
 
-  if (isLoading) return <div>Cargando progreso…</div>;
+  if (isLoading) return <Text textAlign="center">Cargando evolución de progreso…</Text>;
 
   if (error) {
     console.error(error);
@@ -187,7 +186,6 @@ export function ProgressOverTimeContainer() {
   }, [groupId, groupLabel]);
 
   if (authLoading || topicsLoading || kcsLoading) return <div>Cargando…</div>;
-
   if (!user) return <div>No autenticado</div>;
   if (!userId) return <div>No autenticado</div>;
   if (!projectId) return <div>Proyecto no disponible</div>;
@@ -196,15 +194,11 @@ export function ProgressOverTimeContainer() {
   if (kcCodes.length === 0) return <div>No hay KCs para graficar</div>;
 
   return (
-    <Box>
-      <ProgressOverTimeInfoBox />
-
-      <ProgressOverTimeQuery
-        projectsIds={[projectId]}
-        userId={userId}
-        groupId={groupId}
-        kcCodes={kcCodes}
-      />
-    </Box>
+    <ProgressOverTimeQuery
+      projectsIds={[projectId]}
+      userId={userId}
+      groupId={groupId}
+      kcCodes={kcCodes}
+    />
   );
 }

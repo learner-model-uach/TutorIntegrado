@@ -1,6 +1,6 @@
 // import * as React from "react";
 import { useMemo } from "react";
-import { Text } from "@chakra-ui/react";
+import { Box, HStack, Stack, Text } from "@chakra-ui/react";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   Area,
@@ -10,10 +10,10 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  type TooltipPayloadEntry,
-  type TooltipValueType,
+  type TooltipContentProps,
 } from "recharts";
 import type { MergedProgressPoint, ProgressAreaDatum } from "../types";
+import ProgressOverTimeBoxInfo from "../ProgressOverTimeBoxInfo";
 
 const MONTH_LABELS = [
   "ene",
@@ -79,6 +79,45 @@ function buildXAxisTicks(dates: string[]) {
   return dates.filter(date => selected.has(date));
 }
 
+type CustomProgressTooltipProps = Partial<TooltipContentProps<number, string>> & {
+  percentFmt: Intl.NumberFormat;
+};
+
+function CustomProgressTooltip({ active, payload, label, percentFmt }: CustomProgressTooltipProps) {
+  if (!active || !payload || payload.length === 0) return null;
+
+  return (
+    <Box
+      minW="xs"
+      rounded="md"
+      borderWidth="1px"
+      borderColor="border"
+      bg="bg.secondary"
+      color="text_info"
+      boxShadow="md"
+      p="3"
+    >
+      <Text fontWeight="bold" mb="2">
+        Fecha: {formatFullDate(String(label))}
+      </Text>
+      <Stack gap="1.5">
+        {payload.map(item => {
+          const value = typeof item.value === "number" ? percentFmt.format(item.value) : item.value;
+
+          return (
+            <HStack key={`${item.name}-${item.dataKey}`} align="start">
+              <Box boxSize="2" bg={item.color} rounded="full" mt="1.5" />
+              <Text>
+                {item.name}: {value}
+              </Text>
+            </HStack>
+          );
+        })}
+      </Stack>
+    </Box>
+  );
+}
+
 export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgressPoint[] }) {
   const data: ProgressAreaDatum[] = useMemo(
     () =>
@@ -111,12 +150,23 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
 
   return (
     <>
-      <Text color="heading" pt="1.5rem" textStyle="xl" textAlign="center" fontWeight="semibold">
+      <ProgressOverTimeBoxInfo
+        message="Aquí podrás revisar la evolución de tu progreso y el progreso de tu grupo durante los últimos 4 meses. Si notas una caída drástica en el progreso del grupal, se debe a que se han registrados nuevos usuarios dentro de  tu grupo que han empezado a resolver ejercicios."
+        highlightQuery={["últimos 4 meses", "tu progreso", "progreso de tu grupo"]}
+      />
+      <Text
+        color="heading"
+        pt="1.5rem"
+        pb=".8rem"
+        textStyle="xl"
+        textAlign="center"
+        fontWeight="semibold"
+      >
         PROGRESO EN EL TIEMPO
       </Text>
       <Chart.Root maxH="sm" chart={chart}>
         <AreaChart data={chart.data} responsive>
-          <CartesianGrid stroke="teal" strokeDasharray="3 3" opacity={0.5} />
+          <CartesianGrid stroke="gray" strokeDasharray="3 3" opacity={0.5} />
           <XAxis
             dataKey="date"
             ticks={xAxisTicks}
@@ -127,43 +177,26 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
 
           <YAxis tickFormatter={(v: number) => percentFmt.format(v)} domain={[0, 1]} />
 
-          <Tooltip
-            formatter={(value, name, payload) => {
-              const point = (
-                payload as TooltipPayloadEntry<TooltipValueType, string> & {
-                  payload?: ProgressAreaDatum;
-                }
-              ).payload;
-              const v = typeof value === "number" ? percentFmt.format(value) : value;
-
-              if (name === "groupAvg") {
-                const nUsers = point?.nUsers;
-                if (typeof nUsers === "number") return [`${v} (${nUsers} users)`, "groupAvg"];
-              }
-
-              return [v, name];
-            }}
-            labelFormatter={label => `Fecha: ${formatFullDate(String(label))}`}
-          />
+          <Tooltip content={<CustomProgressTooltip percentFmt={percentFmt} />} />
 
           <Legend />
 
           <defs>
             <linearGradient id="colorUser" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={"#75B06F"} stopOpacity={0.7} />
-              <stop offset="95%" stopColor={"#75B06F"} stopOpacity={0} />
+              <stop offset="15%" stopColor={"#75B06F"} stopOpacity={0.7} />
+              <stop offset="95%" stopColor={"#75B06F"} stopOpacity={0.1} />
             </linearGradient>
 
             <linearGradient id="colorGroup" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={"#ff8c73"} stopOpacity={0.6} />
-              <stop offset="95%" stopColor={"#ff8c73"} stopOpacity={0} />
+              <stop offset="15%" stopColor={"#d8881e"} stopOpacity={0.6} />
+              <stop offset="95%" stopColor={"#d8881e"} stopOpacity={0.1} />
             </linearGradient>
           </defs>
 
           <Area
             type="monotone"
             dataKey={chart.key("groupAvg")}
-            stroke={"#ff8c73"}
+            stroke={"#d8881e"}
             fill="url(#colorGroup)"
             connectNulls
             name="Progreso Grupo"

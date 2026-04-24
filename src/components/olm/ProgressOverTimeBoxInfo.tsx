@@ -1,13 +1,21 @@
 import { Box, Highlight, Image, Text } from "@chakra-ui/react";
 
-export default function ProgressOverTimeInfoBox() {
+type ProgressOverTimeBoxInfoProps = {
+  message: string;
+  highlightQuery?: string[];
+};
+
+export default function ProgressOverTimeBoxInfo({
+  message,
+  highlightQuery = [],
+}: ProgressOverTimeBoxInfoProps) {
   return (
     <Box
       mb={4}
       w="80%"
       mx="auto"
-      px={4}
-      py={3}
+      px="4"
+      py="3"
       borderRadius="md"
       // bg={{ base: "teal.100", _dark: "teal.900" }}
       bg={{ base: "orange.50", _dark: "teal.900" }}
@@ -24,9 +32,9 @@ export default function ProgressOverTimeInfoBox() {
         <Box display="flex" justifyContent="center">
           <Image src="/img/head.svg" alt="Mateo" maxW="70px" h="auto" />
         </Box>
-        <Text color="text_info" fontWeight="medium">
+        <Text color={{ base: "{indigo.900}", _dark: "white" }} fontWeight="medium">
           <Highlight
-            query={["últimos 4 meses", "tu progreso", "promedio de tu grupo"]}
+            query={highlightQuery}
             styles={{
               px: "0.5",
               borderRadius: "sm",
@@ -35,9 +43,7 @@ export default function ProgressOverTimeInfoBox() {
               fontWeight: "semibold",
             }}
           >
-            Aquí podrás revisar tu progreso y el promedio de tu grupo durante los últimos 4 meses.
-            Si notas una caída drástica en el progreso del grupo, se debe a que nuevos usuarios
-            dentro de tu grupo se han empezado a resolver ejercicios.
+            {message}
           </Highlight>
         </Text>
       </Box>

@@ -3,7 +3,7 @@ import { Heading, Highlight, Stack, Text, Tabs } from "@chakra-ui/react";
 import { withAuth, useAuth } from "../components/Auth";
 import TopicTable from "../components/olm/TopicTable";
 import ProgressOverTime from "../components/olm/ProgressOverTime";
-import { ProgressOverTimeContainer } from "../components/olm/ProgressOverTimeChartTab";
+import { ProgressOverTimeContainer } from "../components/olm/charts/ProgressOverTimeChartTab";
 import { FaBarsProgress } from "react-icons/fa6";
 import { GiProgression } from "react-icons/gi";
 // import { useAction } from "../utils/action";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Table, Spinner, Center, Box, Text } from "@chakra-ui/react";
+import { Table, Center, Box, Text } from "@chakra-ui/react";
 import { ImUsers } from "react-icons/im";
 import { useSnapshot } from "valtio";
 import { useAuth } from "../Auth";
@@ -14,6 +14,7 @@ import { Tooltip } from "../ui/tooltip";
 import type { Topic } from "./types";
 import { isTryStepActionExtra } from "./types";
 import { aggregateCompleteContentActions } from "./helpers/actionAggregates";
+import TopicAccordionRowSkeleton from "./TopicAccordionRowSkeleton";
 
 export default function TopicTable() {
   const { user, isLoading: authLoading, project } = useAuth();
@@ -164,9 +165,39 @@ export default function TopicTable() {
     tryStepLoading
   ) {
     return (
-      <Center>
-        <Spinner />
-      </Center>
+      <Box w="full" minW={0}>
+        <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
+          Desliza horizontalmente para ver todas las columnas.
+        </Text>
+        <Box
+          w="full"
+          minW={0}
+          overflowX="auto"
+          overflowY="hidden"
+          pb="2"
+          touchAction="pan-x"
+          overscrollBehaviorX="contain"
+          css={{ WebkitOverflowScrolling: "touch" }}
+        >
+          <Box w="full" minW={{ base: "720px", md: "100%" }} verticalAlign="top">
+            <Table.Root
+              variant="line"
+              size="sm"
+              width="100%"
+              minW={{ base: "720px", md: "100%" }}
+              css={{
+                background: "transparent",
+              }}
+            >
+              <Table.Body bg="transparent">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <TopicAccordionRowSkeleton key={index} />
+                ))}
+              </Table.Body>
+            </Table.Root>
+          </Box>
+        </Box>
+      </Box>
     );
   }
   const orderedTopics = parentIds
@@ -188,8 +219,8 @@ export default function TopicTable() {
         overscrollBehaviorX="contain"
         css={{ WebkitOverflowScrolling: "touch" }}
       >
-        <Box display="inline-block" minW={{ base: "720px", md: "100%" }} verticalAlign="top">
-          <Table.Root variant="line" size="sm" minW={{ base: "720px", md: "100%" }}>
+        <Box w="full" minW={{ base: "720px", md: "100%" }} verticalAlign="top">
+          <Table.Root variant="line" size="sm" width="100%" minW={{ base: "720px", md: "100%" }}>
             <Table.Header>
               <Table.Row textStyle="xs" bg="bg.secondary">
                 <Table.ColumnHeader></Table.ColumnHeader>
