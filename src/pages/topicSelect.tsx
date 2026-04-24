@@ -100,7 +100,7 @@ export default withAuth(function TopicSelect() {
 
   GroupModel(gs.group ? gs.group.id : "-1", user.projects[0].code);
 
-  console.log("aa", selectedExcercise.kcXtopic, selectedExcercise.ejercicio);
+  // console.log("aa", selectedExcercise.kcXtopic, selectedExcercise.ejercicio);
 
   useEffect(() => {
     reset2();

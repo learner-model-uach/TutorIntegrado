@@ -66,7 +66,7 @@ function Bar({ percent, groupPercent = 0, showGroupPercent = false }: OlmProgres
             left={0}
             h="100%"
             w={showGroupPercent ? `${g}%` : "0%"}
-            bg={{ base: "gray.400", _dark:"gray.300"}}
+            bg={{ base: "gray.400", _dark: "gray.300" }}
             borderRadius="full"
             zIndex={groupOnTop ? 1 : 0}
             transition="width 500ms ease"

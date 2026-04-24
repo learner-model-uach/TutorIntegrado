@@ -182,7 +182,7 @@ export function ProgressOverTimeContainer() {
   React.useEffect(() => {
     if (!groupId || !groupLabel) return;
 
-    console.log("Progress group:", { id: groupId, label: groupLabel });
+    // console.log("Progress group:", { id: groupId, label: groupLabel });
   }, [groupId, groupLabel]);
 
   if (authLoading || topicsLoading || kcsLoading) return <div>Cargando…</div>;

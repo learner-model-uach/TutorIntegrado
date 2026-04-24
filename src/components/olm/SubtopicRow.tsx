@@ -12,7 +12,6 @@ import OlmProgress from "./OlmProgress";
 import type { KcByTopicMap, OlmModelState, TopicChild } from "./types";
 import { useAction } from "../../utils/action";
 
-
 interface SubtopicRowProps {
   child: TopicChild;
   model: OlmModelState[];
