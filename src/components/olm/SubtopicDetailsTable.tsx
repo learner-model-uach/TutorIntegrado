@@ -42,7 +42,14 @@ export default function SubtopicDetailsTable({
           opacity={isOpen ? 1 : 0}
           transition="grid-template-rows 260ms ease, opacity 180ms ease"
         >
-          <Box overflow="hidden" minH={0}>
+          <Box
+            overflow="hidden"
+            minH={0}
+            position={{ base: "sticky", md: "static" }}
+            left={{ base: 0, md: "auto" }}
+            w={{ base: "calc(100vw - 24px)", md: "full" }}
+            maxW={{ base: "calc(100vw - 24px)", md: "none" }}
+          >
             <Box p={{ base: 2, md: 4 }} minW={0}>
               <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2">
                 Desliza horizontalmente para ver el detalle del subtópico.
@@ -53,7 +60,7 @@ export default function SubtopicDetailsTable({
                 overflowX="auto"
                 overflowY="hidden"
                 pb="2"
-                touchAction="pan-x"
+                touchAction="auto"
                 overscrollBehaviorX="contain"
                 css={{ WebkitOverflowScrolling: "touch" }}
               >

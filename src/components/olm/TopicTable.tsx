@@ -186,7 +186,7 @@ export default function TopicTable() {
     return (
       <Box w="full" minW={0}>
         <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
-          Desliza horizontalmente para ver todas las columnas.
+          Desliza horizontalmente para ver todos los detalles de la tabla.
         </Text>
         <Box
           w="full"
@@ -194,7 +194,7 @@ export default function TopicTable() {
           overflowX="auto"
           overflowY="hidden"
           pb="2"
-          touchAction="pan-x"
+          touchAction="auto"
           overscrollBehaviorX="contain"
           css={{ WebkitOverflowScrolling: "touch" }}
         >
@@ -226,7 +226,7 @@ export default function TopicTable() {
   return (
     <Box w="full" minW={0}>
       <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
-        Desliza horizontalmente para ver todas las columnas.
+        Desliza horizontalmente para ver todos los detalles de la tabla.
       </Text>
       <Box
         w="full"
@@ -234,7 +234,7 @@ export default function TopicTable() {
         overflowX="auto"
         overflowY="hidden"
         pb="2"
-        touchAction="pan-x"
+        touchAction="auto"
         overscrollBehaviorX="contain"
         css={{ WebkitOverflowScrolling: "touch" }}
       >

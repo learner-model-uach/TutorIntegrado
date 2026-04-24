@@ -29,7 +29,7 @@ export default function ProgressOverTimeBoxInfo({
         alignItems="center"
         gap={4}
       >
-        <Box display="flex" justifyContent="center">
+        <Box display={{ base: "none", md: "flex" }} justifyContent="center">
           <Image src="/img/head.svg" alt="Mateo" maxW="70px" h="auto" />
         </Box>
         <Text color={{ base: "{indigo.900}", _dark: "white" }} fontWeight="medium">
