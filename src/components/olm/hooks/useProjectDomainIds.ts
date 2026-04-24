@@ -1,6 +1,8 @@
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../../graphql";
 
+const OLM_STALE_TIME = 5 * 60 * 1000;
+
 function toInt(v: unknown): number | undefined {
   if (typeof v === "number" && Number.isFinite(v)) return v;
   if (typeof v === "string" && v.trim() !== "") {
@@ -27,6 +29,7 @@ export function useProjectDomainIds(projectCode?: string, domainCode?: string) {
     { projectCode: projectCode ?? "" },
     {
       enabled: Boolean(projectCode),
+      staleTime: OLM_STALE_TIME,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },

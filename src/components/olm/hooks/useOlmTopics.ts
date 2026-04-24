@@ -4,6 +4,7 @@ import { gql } from "../../../graphql";
 import type { KcByTopicMap, Topic } from "../types";
 
 export const PARENT_IDS = ["44", "4", "19", "68", "31", "24", "52", "37"];
+const OLM_STALE_TIME = 5 * 60 * 1000;
 
 export const useSubtopics = (parentIds: string[] = []) => {
   const { data, isLoading } = useGQLQuery(
@@ -24,6 +25,7 @@ export const useSubtopics = (parentIds: string[] = []) => {
     { parentIds },
     {
       enabled: parentIds.length > 0,
+      staleTime: OLM_STALE_TIME,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },
@@ -47,6 +49,7 @@ export const useKcsByTopics = (topicCodes?: string[]) => {
     { topicsCodes: safeTopicCodes },
     {
       enabled: safeTopicCodes.length > 0,
+      staleTime: OLM_STALE_TIME,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },

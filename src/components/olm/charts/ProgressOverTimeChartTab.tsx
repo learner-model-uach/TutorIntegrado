@@ -7,6 +7,7 @@ import { useAuth } from "../../Auth";
 import { gSelect } from "../../GroupSelect";
 import { PROGRESS_OVER_TIME_USER_AND_GROUP } from "../graphql/progressOverTime";
 import { useSubtopics, useKcsByTopics, PARENT_IDS } from "../hooks/useOlmTopics";
+import { getStableProgressEndDate, subtractMonths } from "../utils/progressQueryDates";
 import { ProgressOverTimeAvgLevelArea } from "./ProgressOverTimeAvgLevelArea";
 import type { ProgressOverTimeGroupPoint, ProgressOverTimeUserPoint } from "../types";
 
@@ -19,6 +20,7 @@ type MergedPoint = {
 
 const QUERY_MONTHS = 12;
 const VISIBLE_MONTHS = 4;
+const OLM_STALE_TIME = 5 * 60 * 1000;
 
 function getDateKey(iso: string) {
   return iso.slice(0, 10);
@@ -47,12 +49,6 @@ function carryProgress(value: number | null | undefined, previous: number | null
   return previous ?? 0;
 }
 
-function subtractMonths(date: Date, months: number) {
-  const nextDate = new Date(date);
-  nextDate.setMonth(nextDate.getMonth() - months);
-  return nextDate;
-}
-
 function ProgressOverTimeQuery({
   projectsIds,
   userId,
@@ -65,14 +61,12 @@ function ProgressOverTimeQuery({
   kcCodes: string[];
 }) {
   const { queryStartDate, visibleStartDate, endDate } = useMemo(() => {
-    const end = new Date();
-    const queryStart = subtractMonths(end, QUERY_MONTHS);
-    const visibleStart = subtractMonths(end, VISIBLE_MONTHS);
+    const stableEndDate = getStableProgressEndDate();
 
     return {
-      queryStartDate: queryStart.toISOString(),
-      visibleStartDate: visibleStart.toISOString(),
-      endDate: end.toISOString(),
+      queryStartDate: subtractMonths(stableEndDate, QUERY_MONTHS),
+      visibleStartDate: subtractMonths(stableEndDate, VISIBLE_MONTHS),
+      endDate: stableEndDate,
     };
   }, []);
 
@@ -100,6 +94,7 @@ function ProgressOverTimeQuery({
       },
     },
     {
+      staleTime: OLM_STALE_TIME,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },

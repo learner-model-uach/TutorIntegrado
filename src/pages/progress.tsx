@@ -1,9 +1,10 @@
 import { Heading, Highlight, Stack, Text, Tabs } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { withAuth, useAuth } from "../components/Auth";
 import TopicTable from "../components/olm/TopicTable";
 import ProgressOverTime from "../components/olm/ProgressOverTime";
 import { ProgressOverTimeContainer } from "../components/olm/charts/ProgressOverTimeChartTab";
+import { getStableProgressEndDate } from "../components/olm/utils/progressQueryDates";
 import { FaBarsProgress } from "react-icons/fa6";
 import { GiProgression } from "react-icons/gi";
 import { useAction } from "../utils/action";
@@ -11,6 +12,7 @@ import { useAction } from "../utils/action";
 function OlmDashboard() {
   const { project } = useAuth();
   const action = useAction();
+  const progressEndDate = useMemo(() => getStableProgressEndDate(), []);
 
   useEffect(() => {
     if (!project?.id) return;
@@ -45,7 +47,6 @@ function OlmDashboard() {
       {/*'line' | 'subtle' | 'enclosed' | 'outline' | 'plain'*/}
       <Tabs.Root
         lazyMount
-        unmountOnExit
         variant="outline"
         defaultValue="totalprogress"
         size="md"
@@ -84,7 +85,7 @@ function OlmDashboard() {
         </Tabs.Content>
         <Tabs.Content value="progressovertime" minW={0}>
           <ProgressOverTimeContainer />
-          <ProgressOverTime endDate={new Date().toISOString()} />
+          <ProgressOverTime endDate={progressEndDate} />
         </Tabs.Content>
       </Tabs.Root>
     </>

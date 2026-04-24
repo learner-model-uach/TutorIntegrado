@@ -15,6 +15,8 @@ type Props = {
   endDate: string; // e.g. new Date().toISOString()
 };
 
+const OLM_STALE_TIME = 5 * 60 * 1000;
+
 function CustomTooltip(props: Partial<TooltipContentProps<string, string>>) {
   const { active, payload, label } = props;
   if (!active || !payload || payload.length === 0) return null;
@@ -38,10 +40,18 @@ function CustomTooltip(props: Partial<TooltipContentProps<string, string>>) {
 
 export default function ProgressOverTime({ endDate }: Props) {
   const { topics: parentTopics, isLoading: subtopicsLoading } = useSubtopics(PARENT_IDS);
-  const { data, isLoading, error } = useGQLQuery(useUserActions, {
-    endDate,
-    verbNames: ["completeContent"],
-  });
+  const { data, isLoading, error } = useGQLQuery(
+    useUserActions,
+    {
+      endDate,
+      verbNames: ["completeContent"],
+    },
+    {
+      staleTime: OLM_STALE_TIME,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
 
   const childIdSet = useMemo(() => {
     const set = new Set<number>();

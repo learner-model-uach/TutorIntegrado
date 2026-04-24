@@ -4,6 +4,8 @@ import { gql } from "../../../graphql";
 import type { model } from "../../../utils/startModel";
 import type { OlmModelState } from "../types";
 
+const OLM_STALE_TIME = 5 * 60 * 1000;
+
 export const useUserModel = (userId: string | undefined) => {
   const { data, isLoading } = useGQLQuery(
     gql(`
@@ -20,7 +22,12 @@ export const useUserModel = (userId: string | undefined) => {
       }
     `),
     { userId },
-    { enabled: !!userId, refetchOnWindowFocus: false, refetchOnReconnect: false },
+    {
+      enabled: !!userId,
+      staleTime: OLM_STALE_TIME,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
   );
 
   const modelData: OlmModelState[] =
@@ -44,6 +51,7 @@ export const useGroupModel = (groupId?: string, projectCode?: string) => {
     { groupId, projectCode },
     {
       enabled: !!groupId && !!projectCode,
+      staleTime: OLM_STALE_TIME,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },

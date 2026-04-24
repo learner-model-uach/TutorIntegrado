@@ -15,6 +15,9 @@ import type { Topic } from "./types";
 import { isTryStepActionExtra } from "./types";
 import { aggregateCompleteContentActions } from "./helpers/actionAggregates";
 import TopicAccordionRowSkeleton from "./TopicAccordionRowSkeleton";
+import { getStableProgressEndDate } from "./utils/progressQueryDates";
+
+const OLM_STALE_TIME = 5 * 60 * 1000;
 
 export default function TopicTable() {
   const { user, isLoading: authLoading, project } = useAuth();
@@ -37,18 +40,34 @@ export default function TopicTable() {
   }, [subtopics]);
 
   const { kcByTopic, isLoading: exerciseLoading } = useKcsByTopics(topicCodes);
-  const endDate = useMemo(() => new Date().toISOString(), []);
+  const endDate = useMemo(() => getStableProgressEndDate(), []);
   const {
     data: dataActions,
     isLoading: actionsLoading,
     error: actionsError,
-  } = useGQLQuery(useUserActions, { endDate, verbNames: ["completeContent"] });
+  } = useGQLQuery(
+    useUserActions,
+    { endDate, verbNames: ["completeContent"] },
+    {
+      staleTime: OLM_STALE_TIME,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
 
   const {
     data: tryStepData,
     isLoading: tryStepLoading,
     error: tryStepError,
-  } = useGQLQuery(useUserActions, { endDate, verbNames: ["tryStep"] });
+  } = useGQLQuery(
+    useUserActions,
+    { endDate, verbNames: ["tryStep"] },
+    {
+      staleTime: OLM_STALE_TIME,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+  );
 
   const [completeContentIds, setCompleteContentIds] = useState<Set<string>>(new Set());
 
