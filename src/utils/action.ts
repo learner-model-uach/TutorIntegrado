@@ -5,6 +5,7 @@ import { useGQLMutation } from "rq-gql";
 import { useAuth } from "../components/Auth";
 import { ActionInput, gql } from "../graphql";
 import { queryClient } from "../rqClient";
+import { invalidateOlmProgressQueries } from "./olmQueryInvalidation";
 import { ProjectUserSummaryContext, recordProjectUserAction } from "./projectUserSummary";
 
 export type ActionArguments = Omit<ActionInput, "projectId" | "timestamp">;
@@ -13,6 +14,7 @@ type ActionWithLocalSummary = Partial<ActionArguments> & {
 };
 
 const RECENT_PROJECT_USER_ACTIVITY_QUERY_KEY = "RecentProjectUserActivity";
+const OLM_PROGRESS_VERBS = new Set(["completeContent", "tryStep"]);
 
 export const useAction = (baseAction?: Partial<ActionArguments>) => {
   const latestBaseAction = useLatestRef(baseAction);
@@ -24,8 +26,11 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
       }
     `),
     {
-      onSuccess() {
+      onSuccess(_data, variables) {
         queryClient.invalidateQueries(RECENT_PROJECT_USER_ACTIVITY_QUERY_KEY);
+        if (OLM_PROGRESS_VERBS.has(variables.data.verbName)) {
+          invalidateOlmProgressQueries();
+        }
       },
       onError(err) {
         console.error(err);
