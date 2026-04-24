@@ -266,7 +266,7 @@ export default function TopicTable() {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {orderedTopics.map(topic => {
+              {orderedTopics.map((topic, index) => {
                 const childs = topic.childrens ?? [];
                 const kcs = childs.flatMap(child => (kcByTopic[child.id] ?? []).map(kc => kc.code));
                 const modelData = userModel;
@@ -286,6 +286,7 @@ export default function TopicTable() {
                     progress={progress}
                     groupProgress={groupProgress}
                     exerciseCount={count2}
+                    defaultOpen={index === 0}
                     model={modelData}
                     groupModel={groupModelData}
                     kcsByTopic={Object.fromEntries(

@@ -56,6 +56,7 @@ export interface TopicAccordionRowProps {
   progress: number;
   groupProgress?: number;
   exerciseCount: number;
+  defaultOpen?: boolean;
   model: OlmModelState[];
   groupModel?: OlmModelState[];
   kcsByTopic: KcByTopicMap;

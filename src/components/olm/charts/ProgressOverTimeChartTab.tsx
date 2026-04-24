@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useMemo } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { useGQLQuery } from "rq-gql";
 import { useSnapshot } from "valtio";
 import { useAuth } from "../../Auth";

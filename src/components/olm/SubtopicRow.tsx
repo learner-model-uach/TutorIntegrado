@@ -10,6 +10,8 @@ import {
 import { getSubtopicGroupPercent, getSubtopicPercent } from "./helpers/topicHelpers";
 import OlmProgress from "./OlmProgress";
 import type { KcByTopicMap, OlmModelState, TopicChild } from "./types";
+import { useAction } from "../../utils/action";
+
 
 interface SubtopicRowProps {
   child: TopicChild;
@@ -45,6 +47,7 @@ export default function SubtopicRow({
   const effortInfo = infoText(exerciseCount, estimatedEffort, effortLabel, child.label);
   const efficiencyPercent = Math.round(rawEfficiency * 100);
   const { char: moodEmoji, label: moodLabel } = getMoodEmoji(exerciseCount, rawEfficiency);
+  const action = useAction();
 
   return (
     <Table.Row bg="bg.secondary">
@@ -93,11 +96,7 @@ export default function SubtopicRow({
         </Box>
       </Table.Cell>
 
-      <TableCell
-        textAlign="end"
-        title={`n=${exerciseCount}, E=${estimatedEffort}`}
-        whiteSpace="nowrap"
-      >
+      <TableCell textAlign="end" whiteSpace="nowrap">
         <EffortDots n={exerciseCount} estimated={estimatedEffort} />
       </TableCell>
 
@@ -110,13 +109,12 @@ export default function SubtopicRow({
               variant="ghost"
               color={{ base: "bg/90", _dark: "gray.200" }}
               _icon={{ boxSize: 4 }}
-              // Tracking intentionally kept disabled until OLM action schema is finalized.
-              // onClick={() => {
-              //   action({
-              //     verbName: "showEffortInfo",
-              //     topicID: String(child.id),
-              //   });
-              // }}
+              onClick={() => {
+                action({
+                  verbName: "dshbShowEffortInfo",
+                  topicID: String(child.id),
+                });
+              }}
             >
               <FaInfoCircle />
             </IconButton>
@@ -152,16 +150,15 @@ export default function SubtopicRow({
                   cursor="pointer"
                   display="inline-flex"
                   alignItems="center"
-                  // Tracking intentionally kept disabled until OLM action schema is finalized.
-                  // onClick={() => {
-                  //   action({
-                  //     verbName: "showEfficiencyInfo",
-                  //     topicID: String(child.id),
-                  //     extra: {
-                  //       efficiency: efficiencyPercent,
-                  //     },
-                  //   });
-                  // }}
+                  onClick={() => {
+                    action({
+                      verbName: "dshbShowEfficiencyInfo",
+                      topicID: String(child.id),
+                      extra: {
+                        efficiency: efficiencyPercent,
+                      },
+                    });
+                  }}
                 >
                   <span role="img" aria-label={moodLabel} style={{ fontSize: 25 }}>
                     {moodEmoji}

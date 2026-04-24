@@ -1,24 +1,24 @@
 import { Heading, Highlight, Stack, Text, Tabs } from "@chakra-ui/react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { withAuth, useAuth } from "../components/Auth";
 import TopicTable from "../components/olm/TopicTable";
 import ProgressOverTime from "../components/olm/ProgressOverTime";
 import { ProgressOverTimeContainer } from "../components/olm/charts/ProgressOverTimeChartTab";
 import { FaBarsProgress } from "react-icons/fa6";
 import { GiProgression } from "react-icons/gi";
-// import { useAction } from "../utils/action";
+import { useAction } from "../utils/action";
 
 function OlmDashboard() {
   const { project } = useAuth();
-  // const action = useAction();
+  const action = useAction();
 
-  // useEffect(() => {
-  //   if (!project?.id) return;
+  useEffect(() => {
+    if (!project?.id) return;
 
-  //   action({
-  //     verbName: "displayOLMPage",
-  //   });
-  // }, [action, project?.id]);
+    action({
+      verbName: "dshbDisplayPage",
+    });
+  }, [action, project?.id]);
 
   return (
     <>
@@ -53,17 +53,17 @@ function OlmDashboard() {
         onValueChange={({ value }) => {
           if (!project?.id || !value) return;
 
-          // if (value === "totalprogress") {
-          //   action({
-          //     verbName: "displayProgressTab",
-          //   });
-          // }
+          if (value === "totalprogress") {
+            action({
+              verbName: "dshbDisplayProgressTab",
+            });
+          }
 
-          // if (value === "progressovertime") {
-          //   action({
-          //     verbName: "displayEvolutionTab",
-          //   });
-          // }
+          if (value === "progressovertime") {
+            action({
+              verbName: "dshbDisplayEvolutionTab",
+            });
+          }
         }}
       >
         <Tabs.List overflowX="auto" overflowY="hidden" minW={0} maxW="100%" flexWrap="nowrap">
