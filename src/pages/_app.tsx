@@ -18,7 +18,7 @@ import "../app.css";
 import "mathquill/build/mathquill.css";
 import "katex/dist/katex.min.css";
 import "mathlive/static.css";
-
+import { Analytics } from "@vercel/analytics/next";
 export default function App({ Component, pageProps }: AppProps) {
   const isMobile = false;
   return (
@@ -48,6 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </ChakraProvider>
         </CombinedRQGQLProvider>
       </Auth0Provider>
+      <Analytics />
     </>
   );
 }
