@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
+import { Alert, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
 export const DCstep2 = ({
   step2,
@@ -67,19 +67,19 @@ export const DCstep2 = ({
       setExtra(extra);
 
       setFeedbackMsg(
-        <Alert status="success">
-          <AlertIcon />
-          {step2.correctMsg}
-        </Alert>,
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Title>{step2.correctMsg}</Alert.Title>
+        </Alert.Root>,
       );
     } else {
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Title> Ingrese respuesta(s) </Alert.Title>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -87,10 +87,10 @@ export const DCstep2 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step2.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Title>{step2.incorrectMsg}</Alert.Title>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -147,7 +147,7 @@ export const DCstep2 = ({
           {step2Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="teal"
                 variant="outline"
                 onClick={() => {
                   compare();

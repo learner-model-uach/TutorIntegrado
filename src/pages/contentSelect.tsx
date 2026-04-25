@@ -10,7 +10,7 @@ import { useAction } from "../utils/action";
 import { CompleteTopic } from "../components/contentSelectComponents/CompleteTopic";
 import { CardLastExercise } from "../components/contentSelectComponents/CardLastExercise";
 import parameters from "../components/contentSelectComponents/parameters.json";
-import PBLoad from "../components/progressbar/pbload";
+import PBLoad2 from "../components/progressbar/pbload2";
 import {
   kcsyejercicio,
   uModel,
@@ -217,6 +217,10 @@ export default withAuth(function ContentSelect() {
   }
 
   const [pageload, setPL] = useState(false);
+  const pollSrl1Index = Surveys.tagXindex["poll-srl1"];
+  const pollSrl2Index = Surveys.tagXindex["poll-srl2"];
+  const pollSrl1Survey = pollSrl1Index != undefined ? Surveys.data[pollSrl1Index] : undefined;
+  const pollSrl2Survey = pollSrl2Index != undefined ? Surveys.data[pollSrl2Index] : undefined;
 
   useEffect(() => {
     reset();
@@ -231,15 +235,15 @@ export default withAuth(function ContentSelect() {
   return (
     <>
       {pageload ? (
-        SVP.topicselect && uModel.pol1 ? (
+        SVP.topicselect && uModel.pol1 && pollSrl1Survey ? (
           <SurveyViewer
-            data={Surveys.data[Surveys.tagXindex["poll-srl1"]]}
+            data={pollSrl1Survey}
             topicId={registerTopic}
             iExp={kcsyejercicio.ejercicio as ExType}
           />
-        ) : SVP.count % 3 == 2 && uModel.pol2 ? (
+        ) : SVP.count % 3 == 2 && uModel.pol2 && pollSrl2Survey ? (
           <SurveyViewer
-            data={Surveys.data[Surveys.tagXindex["poll-srl2"]]}
+            data={pollSrl2Survey}
             topicId={registerTopic}
             iExp={kcsyejercicio.ejercicio as ExType}
           />
@@ -255,31 +259,39 @@ export default withAuth(function ContentSelect() {
         parameters.CSMain.completeMsgService ? (
         <CompleteTopic topicCodes={[topics]} />
       ) : !isLoading && !isFetching /*&& !queryLastExercise*/ ? (
-        <Box maxW="90%" padding="1">
+        <Box maxW={{ base: "100%", xl: "90%" }} px={{ base: 4, md: 6 }} py="1" mx="auto">
           <Center>
-            <Heading>
+            <Heading
+              fontSize={"3xl"}
+              fontWeight={"bold"}
+              mb="2"
+              textAlign={"center"}
+              color="heading"
+            >
               {parameters.CSMain.title}
               {kcsyejercicio?.title}
             </Heading>
-            &nbsp;&nbsp;&nbsp;
           </Center>
 
           <br></br>
           <Center paddingTop={"4"}>
             <Box
-              w={["100%", "100%", "100%", "md"]}
+              borderWidth="1px"
+              borderColor={"blue.info"}
+              w="full"
+              maxW={{ base: "100%", md: "lg" }}
               p="4"
               borderRadius="md"
               textAlign="center"
               color="white"
-              bg="blue.700"
-              _hover={{
-                color: "white",
-                bg: "blue.900",
-              }}
+              // bg="stealblue.500"
+              // boxShadow={"xs"}
+              // border={"blue.700"}
             >
-              <Heading size="sm">Progreso</Heading>
-              <PBLoad
+              <Heading size="sm" color="heading">
+                Progreso
+              </Heading>
+              <PBLoad2
                 uservalues={pbValues.uservalues}
                 groupvalues={pbValues.groupvalues}
                 msg={pbValues.msg}
@@ -294,21 +306,27 @@ export default withAuth(function ContentSelect() {
           />
           <br></br>
           <Center>
-            <Text> {parameters.CSMain.text} </Text>
+            <Text textAlign="center" maxW={{ base: "100%", md: "2xl" }}>
+              {parameters.CSMain.text}
+            </Text>
           </Center>
 
           <SimpleGrid
             columns={{
+              base: 1,
+              md: 1,
               lg: 1,
               xl:
                 experimentGroup != parameters.CSMain.experimentalTag
                   ? 1
                   : (contentResult ?? []).length,
             }}
-            spacing="8"
-            p="10"
+            gap="8"
+            px={{ base: 0, md: 4 }}
+            py={{ base: 8, md: 10 }}
             textAlign="center"
             rounded="lg"
+            justifyItems="center"
           >
             {
               //agregar componente de tópico completado
@@ -395,7 +413,11 @@ export default withAuth(function ContentSelect() {
             </Heading>
           </Center>
           <Center padding="5px 0px 10px 0px">
-            <Spinner size="xl" emptyColor="gray.200" color="blue.500" />
+            <Spinner
+              size="xl"
+              css={{ "--spinner-track-color": "colors.gray.200" }}
+              color="blue.500"
+            />
           </Center>
         </>
       )}

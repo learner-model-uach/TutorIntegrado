@@ -84,11 +84,13 @@ const DQ2 = () => {
           setText(e.target.value);
         }}
         placeholder="Escribe el codigo del ejercicio"
+        mb="2"
       />
       <Button
         onClick={() => {
           setSubmit(true);
         }}
+        colorPalette={"blue"}
       >
         Cargar Ejercicio
       </Button>

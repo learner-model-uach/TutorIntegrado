@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  PopoverBody,
-  PopoverArrow,
-  PopoverCloseButton,
-  Center,
-  Badge,
-  useToast,
-  Box,
-} from "@chakra-ui/react";
+import { Button, Popover, Portal, Center, Badge, Box } from "@chakra-ui/react";
+import { toaster } from "./ui/toaster";
 import { useAction } from "../utils/action";
 import { MathComponent } from "mathjax-react";
-
+import { FaQuestion } from "react-icons/fa";
 import MQStaticMathField from "../utils/MQStaticMathField";
 
 const Hint = ({
@@ -36,7 +25,6 @@ const Hint = ({
   const [firstError, setFirstError] = useState(false);
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
-  const toast = useToast();
 
   useEffect(() => {
     if (hints.length + count == list.length) {
@@ -168,60 +156,89 @@ const Hint = ({
   };
   return (
     <div>
-      <Popover
-        onOpen={() => {
-          setHints(++hintCount); /*cuenta hint cada vez que se despliege la ayuda */
+      <Popover.Root
+        onOpenChange={({ open }) => {
+          if (open) {
+            setHints(h => h + 1);
+          }
         }}
       >
-        <PopoverTrigger>
+        <Popover.Trigger asChild>
           <Button
-            onClick={() => {
-              ayuda();
-            }}
-            colorScheme="cyan"
+            onClick={ayuda}
+            colorPalette="cyan"
             variant="outline"
+            // bg="yellow.400"
+            h="8"
             size="sm"
+            gap="2"
+            alignItems="center"
           >
-            Pista &nbsp;
-            {error && i < hints.length + count - 1 ? ( //en esta parte va la notificación de un nuevo hint
-              <Badge boxSize="1.25em" color="white" bg="tomato" borderRadius="lg">
+            Pista
+            {error && i < hints.length + count - 1 ? (
+              <Badge
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                boxSize="1.25rem"
+                color="white"
+                bg="tomato"
+                borderRadius="full"
+                lineHeight="1"
+                flexShrink={0}
+              >
                 1
               </Badge>
             ) : (
-              <Badge boxSize="1.25em" color="white" bg="gray" borderRadius="lg">
+              <Badge
+                display="inline-flex"
+                alignItems="center"
+                justifyContent="center"
+                boxSize="1.25rem"
+                color="white"
+                bg="gray"
+                borderRadius="full"
+                lineHeight="1"
+                flexShrink={0}
+              >
                 0
               </Badge>
             )}
           </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverBody>
-            <br />
-            {list[j].hint}
-            <Center>
-              {list[j].expression ? (
-                <MQStaticMathField exp={list[j].expression} currentExpIndex={true} />
-              ) : null}
-            </Center>
-            <br />
-            <Center>
-              {list[j - 1] && (
-                <Button onClick={atras} colorScheme="cyan" variant="outline" size="sm">
-                  atrás
-                </Button>
-              )}
-              &nbsp;&nbsp;&nbsp;
-              {list[j + 1] && (
-                <Button onClick={siguiente} colorScheme="cyan" variant="outline" size="sm">
-                  siguiente
-                </Button>
-              )}
-            </Center>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+        </Popover.Trigger>
+
+        <Portal>
+          <Popover.Positioner>
+            <Popover.Content>
+              <Popover.Arrow />
+              <Popover.CloseTrigger />
+              <Popover.Body>
+                <br />
+                {list[j].hint}
+                <Center>
+                  {list[j].expression ? (
+                    <MQStaticMathField exp={list[j].expression} currentExpIndex={true} />
+                  ) : null}
+                </Center>
+                <br />
+                <Center>
+                  {list[j - 1] && (
+                    <Button onClick={atras} colorScheme="cyan" variant="outline" size="sm">
+                      atrás
+                    </Button>
+                  )}
+                  &nbsp;&nbsp;&nbsp;
+                  {list[j + 1] && (
+                    <Button onClick={siguiente} colorScheme="cyan" variant="outline" size="sm">
+                      siguiente
+                    </Button>
+                  )}
+                </Center>
+              </Popover.Body>
+            </Popover.Content>
+          </Popover.Positioner>
+        </Portal>
+      </Popover.Root>
     </div>
   );
 };

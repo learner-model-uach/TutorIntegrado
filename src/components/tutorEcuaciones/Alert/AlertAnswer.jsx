@@ -1,23 +1,23 @@
-import { React, useState, useEffect, useContext } from "react";
-import { Alert, AlertIcon, CloseButton } from "@chakra-ui/react";
+import React from "react";
+import { Alert, CloseButton } from "@chakra-ui/react";
 
 export const AlertAnswer = ({ status, text, setOpenAlert, openAlert }) => {
-  const [alert, setAlert] = useState(openAlert);
+  if (!openAlert) return null;
 
   return (
-    alert != null && (
-      <Alert
-        status={status}
-        variant="subtle"
-        style={{
-          fontSize: "12px",
-          width: "150px",
-        }}
-      >
-        <AlertIcon />
-        {text}
-        <CloseButton onClick={() => setOpenAlert(false)} />
-      </Alert>
-    )
+    <Alert.Root
+      status={status}
+      variant="subtle"
+      fontSize="12px"
+      w="150px"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      gap={2}
+    >
+      <Alert.Indicator />
+      <Alert.Content>{text}</Alert.Content>
+      <CloseButton onClick={() => setOpenAlert(false)} />
+    </Alert.Root>
   );
 };

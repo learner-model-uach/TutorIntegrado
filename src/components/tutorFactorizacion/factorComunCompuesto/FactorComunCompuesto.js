@@ -8,17 +8,7 @@ import { FCCsummary } from "../tools/Summary";
 import { Loading } from "../tools/Spinner";
 import { SelectStep } from "../tools/SelectStep";
 import Link from "next/link";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Heading,
-  Box,
-  Alert,
-  Wrap,
-} from "@chakra-ui/react";
+import { Accordion, Heading, Box, Alert, Wrap } from "@chakra-ui/react";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
 import { sessionState } from "../../SessionState";
@@ -28,7 +18,13 @@ export const FCC = ({ exercise, topic }) => {
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
   const [step3Valid, setStep3Valid] = useState(null); //change the value "null" when step 3 is completed
-  const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
+
+  //v3: Accordion se controla por value (strings)
+  const STEP1 = "step-1";
+  const STEP2 = "step-2";
+  const STEP3 = "step-3";
+  const [openItems, setOpenItems] = useState([STEP1]);
+
   const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const [select3, setSelect3] = useState(exercise.selectSteps); //select is false when the student select the step 3 correct
@@ -55,17 +51,18 @@ export const FCC = ({ exercise, topic }) => {
 
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
-    if (step1Valid != null) {
-      setIndex([1]);
-    }
+    if (step1Valid != null) setOpenItems([STEP2]);
   }, [step1Valid]);
 
   useEffect(() => {
     //when step 2 is completed, open new tab of step 3
-    if (step2Valid != null) {
-      setIndex([2]);
-    }
+    if (step2Valid != null) setOpenItems([STEP3]);
   }, [step2Valid]);
+
+  //v3 map de status para Alert
+  const step1Status = step1Valid == null ? "info" : "success";
+  const step2Status = step2Valid == null ? (step1Valid == null ? "neutral" : "info") : "success";
+  const step3Status = step3Valid == null ? (step2Valid == null ? "neutral" : "info") : "success";
 
   return (
     <>
@@ -85,31 +82,76 @@ export const FCC = ({ exercise, topic }) => {
         />
       </Wrap>
 
-      <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
-        <AccordionItem isDisabled={select}>
-          <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
-            <AccordionButton
-              onClick={() => {
-                if (index.some(element => element === 0)) {
-                  setIndex(index.filter(e => e !== 0));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[0].stepId,
-                    contentID: exercise.code, //cambiar para leer del json
-                    topicID: topic,
-                  });
-                } else {
-                  setIndex(index.concat(0));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[0].stepId,
-                    contentID: exercise.code, //leer del json
-                    topicID: topic,
-                  });
-                }
-              }}
-            >
-              <Box flex="1" textAlign="left">
+      <Accordion.Root
+        multiple
+        collapsible
+        value={openItems}
+        p="0"
+        onValueChange={e => {
+          const next = Array.isArray(e) ? e : (e?.value ?? []);
+          setOpenItems(prev => {
+            const closed = prev.filter(p => !next.includes(p));
+            const opened = next.filter(n => !prev.includes(n));
+
+            if (opened.includes(STEP1) && !select) {
+              action({
+                verbName: "openStep",
+                stepID: "" + exercise.steps[0].stepId,
+                contentID: exercise.code, //leer del json
+                topicID: topic,
+              });
+            }
+            if (closed.includes(STEP1) && !select) {
+              action({
+                verbName: "closeStep",
+                stepID: "" + exercise.steps[0].stepId,
+                contentID: exercise.code,
+                topicID: topic,
+              });
+            }
+
+            if (opened.includes(STEP2) && step1Valid != null && !select2) {
+              action({
+                verbName: "openStep",
+                stepID: "" + exercise.steps[1].stepId,
+                contentID: exercise.code,
+                topicID: topic,
+              });
+            }
+            if (closed.includes(STEP2) && step1Valid != null && !select2) {
+              action({
+                verbName: "closeStep",
+                stepID: "" + exercise.steps[1].stepId,
+                contentID: exercise.code,
+                topicID: topic,
+              });
+            }
+
+            if (opened.includes(STEP3) && step2Valid != null && !select3) {
+              action({
+                verbName: "openStep",
+                stepID: "" + exercise.steps[2].stepId,
+                contentID: exercise.code,
+                topicID: topic,
+              });
+            }
+            if (closed.includes(STEP3) && step2Valid != null && !select3) {
+              action({
+                verbName: "closeStep",
+                stepID: "" + exercise.steps[2].stepId,
+                contentID: exercise.code,
+                topicID: topic,
+              });
+            }
+            return next;
+          });
+        }}
+      >
+        {/* Paso 1 */}
+        <Accordion.Item value={STEP1} disabled={select}>
+          <Alert.Root status={step1Status}>
+            <Accordion.ItemTrigger>
+              <Box flex="1" textAlign="left" w="100">
                 {!select && exercise.steps[0].stepTitle}
                 {step1Valid != null && !select && "    ✔ "}
                 {select && (
@@ -121,14 +163,15 @@ export const FCC = ({ exercise, topic }) => {
                       setSelect={setSelect}
                       contentID={exercise.code}
                       topic={topic}
-                    ></SelectStep>
+                    />
                   </Wrap>
                 )}
               </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </Alert>
-          <AccordionPanel style={{ padding: 0 }}>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+          </Alert.Root>
+
+          <Accordion.ItemContent p="0">
             {!select && (
               <FCCstep1
                 step1={exercise.steps[0]}
@@ -139,39 +182,16 @@ export const FCC = ({ exercise, topic }) => {
                 topicID={topic}
                 extra={extra1}
                 setExtra={setExtra1}
-              ></FCCstep1>
+              />
             )}
-          </AccordionPanel>
-        </AccordionItem>
+          </Accordion.ItemContent>
+        </Accordion.Item>
 
-        <AccordionItem isDisabled={select2}>
-          <Alert
-            colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}
-          >
-            <AccordionButton
-              onClick={() => {
-                if (index.some(element => element === 1)) {
-                  setIndex(index.filter(e => e !== 1));
-                  step1Valid &&
-                    action({
-                      verbName: "closeStep",
-                      stepID: "" + exercise.steps[1].stepId,
-                      contentID: exercise.code, //cambiar para leer del json
-                      topicID: topic,
-                    });
-                } else {
-                  setIndex(index.concat(1));
-                  step1Valid &&
-                    action({
-                      verbName: "openStep",
-                      stepID: "" + exercise.steps[1].stepId,
-                      contentID: exercise.code, //leer del json
-                      topicID: topic,
-                    });
-                }
-              }}
-            >
-              <Box flex="1" textAlign="left">
+        {/* Paso 2: */}
+        <Accordion.Item disabled={select2} value={STEP2}>
+          <Alert.Root status={step2Status}>
+            <Accordion.ItemTrigger>
+              <Box flex="1" textAlign="left" w="full">
                 {!select2 && exercise.steps[1].stepTitle}
                 {step2Valid != null && !select2 && "    ✔ "}
                 {select2 && step1Valid != null && (
@@ -183,14 +203,15 @@ export const FCC = ({ exercise, topic }) => {
                       setSelect={setSelect2}
                       contentID={exercise.code}
                       topic={topic}
-                    ></SelectStep>
+                    />
                   </Wrap>
                 )}
               </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </Alert>
-          <AccordionPanel style={{ padding: 0 }}>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+          </Alert.Root>
+
+          <Accordion.ItemContent p="0">
             {step1Valid != null && !select2 && (
               <FCCstep2
                 step2={exercise.steps[step1Valid]}
@@ -200,39 +221,16 @@ export const FCC = ({ exercise, topic }) => {
                 topicID={topic}
                 extra={extra2}
                 setExtra={setExtra2}
-              ></FCCstep2>
+              />
             )}
-          </AccordionPanel>
-        </AccordionItem>
+          </Accordion.ItemContent>
+        </Accordion.Item>
 
-        <AccordionItem isDisabled={select3}>
-          <Alert
-            colorScheme={step3Valid == null ? (step2Valid == null ? "gray" : "blue") : "green"}
-          >
-            <AccordionButton
-              onClick={() => {
-                if (index.some(element => element === 2)) {
-                  setIndex(index.filter(e => e !== 2));
-                  step2Valid &&
-                    action({
-                      verbName: "closeStep",
-                      stepID: "" + exercise.steps[2].stepId,
-                      contentID: exercise.code, //cambiar para leer del json
-                      topicID: topic,
-                    });
-                } else {
-                  setIndex(index.concat(2));
-                  step2Valid &&
-                    action({
-                      verbName: "openStep",
-                      stepID: "" + exercise.steps[2].stepId,
-                      contentID: exercise.code, //leer del json
-                      topicID: topic,
-                    });
-                }
-              }}
-            >
-              <Box flex="1" textAlign="left">
+        {/* Paso 3 */}
+        <Accordion.Item disabled={select3} value={STEP3}>
+          <Alert.Root status={step3Status}>
+            <Accordion.ItemTrigger>
+              <Box flex="1" textAlign="left" w="full">
                 {!select3 && exercise.steps[exercise.steps[1].answers[0].nextStep].stepTitle}
                 {step3Valid != null && !select3 && "    ✔ "}
                 {select3 && step2Valid != null && (
@@ -244,14 +242,15 @@ export const FCC = ({ exercise, topic }) => {
                       setSelect={setSelect3}
                       contentID={exercise.code}
                       topic={topic}
-                    ></SelectStep>
+                    />
                   </Wrap>
                 )}
               </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </Alert>
-          <AccordionPanel style={{ padding: 0 }}>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+          </Alert.Root>
+
+          <Accordion.ItemContent p="0">
             {step2Valid != null && !select3 && (
               <FCstep1
                 step1={exercise.steps[step2Valid]}
@@ -261,11 +260,11 @@ export const FCC = ({ exercise, topic }) => {
                 topicID={topic}
                 extra={extra3}
                 setExtra={setExtra3}
-              ></FCstep1>
+              />
             )}
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+          </Accordion.ItemContent>
+        </Accordion.Item>
+      </Accordion.Root>
 
       {step3Valid != null && (
         <>

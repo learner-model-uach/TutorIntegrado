@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
+import { Alert, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
 export const TCstep5 = ({
   step5,
@@ -43,12 +43,14 @@ export const TCstep5 = ({
         element[2] === responseStudent[1]);
     if (correctAlternatives.some(validate)) {
       setFeedbackMsg(
-        <Alert status="success">
-          <AlertIcon />
-          {step5.correctMsg}
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Title>{step5.correctMsg}</Alert.Title>
+          </Alert.Content>
           &nbsp;
           <MathComponent tex={step5.displayResult} display={false} />
-        </Alert>,
+        </Alert.Root>,
       );
       setStep5Valid((step5Valid = "Terminado"));
       extra.att = attempts;
@@ -64,10 +66,12 @@ export const TCstep5 = ({
       ) {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta(s)</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -75,10 +79,12 @@ export const TCstep5 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step5.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step5.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -105,10 +111,11 @@ export const TCstep5 = ({
               }}
               size="sm"
               w={50}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="a"
               ref={response1}
-              isReadOnly={step5Valid != null}
+              readOnly={step5Valid != null}
             />
             <label>(</label>
             <Input
@@ -119,10 +126,11 @@ export const TCstep5 = ({
               }}
               size="sm"
               w={120}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="x - x₁"
               ref={response2}
-              isReadOnly={step5Valid != null}
+              readOnly={step5Valid != null}
             />
             <label>)(</label>
             <Input
@@ -133,10 +141,11 @@ export const TCstep5 = ({
               }}
               size="sm"
               w={120}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="x - x₂"
               ref={response3}
-              isReadOnly={step5Valid != null}
+              readOnly={step5Valid != null}
             />
             <label>)</label>
           </Center>
@@ -148,7 +157,7 @@ export const TCstep5 = ({
           {step5Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

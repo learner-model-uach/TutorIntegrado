@@ -1,7 +1,8 @@
 import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
-import { Spinner, useLatestRef } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
+import { useLatestRef } from "../hooks/useLatestRef";
 import Router from "next/router";
-import { FC, memo, useEffect } from "react";
+import React, { FC, memo, useEffect } from "react";
 import { useGQLQuery } from "rq-gql";
 import { proxy, useSnapshot } from "valtio";
 import { CurrentUserQuery, gql } from "../graphql";
@@ -125,7 +126,7 @@ export const useAuth = () => useSnapshot(AuthState);
 
 export function withAuth<Props extends Record<string, unknown>>(Cmp: FC<Props>) {
   const WithAuth: {
-    (props: Props): JSX.Element;
+    (props: Props): React.ReactElement;
     displayName: string;
   } = function WithAuth(props: Props) {
     const { isLoading, user } = useAuth();

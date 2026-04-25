@@ -1,18 +1,5 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Circle,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Circle, Popover, Portal } from "@chakra-ui/react";
+import { useColorModeValue } from "../../ui/color-mode";
 //import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import type { Hint } from "../types";
@@ -65,14 +52,15 @@ const HintButton = ({
     resetNumHintsActivated();
   };
   return (
-    <Popover placement="bottom" closeOnBlur={true}>
-      <PopoverTrigger>
+    <Popover.Root positioning={{ placement: "bottom" }}>
+      <Popover.Trigger asChild>
         <Button
           color={numEnabledHints !== 0 ? "red" : undefined}
-          colorScheme="teal"
+          colorPalette="teal"
           size="sm"
           variant="outline"
           onClick={handleClick}
+          fontWeight={"semibold"}
         >
           Ayuda &nbsp;
           <Circle bg={numEnabledHints !== 0 ? "red" : "gray"} color="white" size="15px">
@@ -80,42 +68,54 @@ const HintButton = ({
             {numEnabledHints}
           </Circle>
         </Button>
-      </PopoverTrigger>
-      <PopoverContent color={popoverColor} bg={bg} borderColor={borderColor}>
-        <PopoverHeader pt={4} fontWeight="bold" border="0">
-          {" "}
-          Pista:
-        </PopoverHeader>
-        <PopoverArrow bg={bg} />
-        <PopoverCloseButton />
-        <PopoverBody>
-          {hints[currentHint] && (
-            <Box width="auto" overflow="auto">
-              <Latex>{hints[currentHint]?.hint}</Latex>
-            </Box>
-          )}
-        </PopoverBody>
-        <PopoverFooter
-          border="0"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          pb={4}
-        >
-          <Box fontSize="sm">
-            Pista {currentHint + 1} de {totalHints}
-          </Box>
-          <ButtonGroup size="sm">
-            <Button variant="outline" onClick={prevHint} isDisabled={disabledPrevButton}>
-              <BsCaretLeftFill color={popoverColor} />
-            </Button>
-            <Button variant="outline" onClick={nextHint} isDisabled={disabledNextButton}>
-              <BsCaretRightFill color={popoverColor} />
-            </Button>
-          </ButtonGroup>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+      </Popover.Trigger>
+
+      <Portal>
+        <Popover.Positioner>
+          <Popover.Content
+            color={popoverColor}
+            bg={bg}
+            borderColor={borderColor}
+            css={{ "--popover-bg": bg }}
+          >
+            <Popover.Header pt={4} fontWeight="bold" border="0">
+              {" "}
+              Pista:
+            </Popover.Header>
+            <Popover.Arrow />
+            <Popover.CloseTrigger />
+
+            <Popover.Body>
+              {hints[currentHint] && (
+                <Box width="auto" overflow="auto">
+                  <Latex>{hints[currentHint]?.hint}</Latex>
+                </Box>
+              )}
+            </Popover.Body>
+
+            <Popover.Footer
+              border="0"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              pb={4}
+            >
+              <Box fontSize="sm">
+                Pista {currentHint + 1} de {totalHints}
+              </Box>
+              <ButtonGroup size="sm">
+                <Button variant="outline" onClick={prevHint} disabled={disabledPrevButton}>
+                  <BsCaretLeftFill color={popoverColor} />
+                </Button>
+                <Button variant="outline" onClick={nextHint} disabled={disabledNextButton}>
+                  <BsCaretRightFill color={popoverColor} />
+                </Button>
+              </ButtonGroup>
+            </Popover.Footer>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Portal>
+    </Popover.Root>
   );
 };
 

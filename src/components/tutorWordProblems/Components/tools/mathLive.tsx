@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef } from "react";
-import {
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import type {
   MathfieldElement,
-  Selector,
   VirtualKeyboardInterface,
   VirtualKeyboardLayoutCore,
   NormalizedVirtualKeyboardLayer,
 } from "mathlive";
+import "mathlive/static.css";
 import { Box } from "@chakra-ui/react";
 
 type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
@@ -17,123 +17,187 @@ type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
 export type MathEditorProps = {
   readOnly?: boolean;
   value: string;
-  mfe?: MathfieldElement;
   onChange: (latex: string, prompts: Record<string, string>) => void;
   className?: string;
+  onMount?: (mfe: MathfieldElement) => void;
 };
-/**
- * @returns a styled math-editor as a non-controlled React component with placeholder support.
- */
 
 const Mathfield = (props: MathEditorProps) => {
-  //const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
-
   const containerRef = useRef<HTMLDivElement>(null);
-  //console.log("RENDER mathlive");
-  const mfe = useMemo(() => {
-    const mathfield = props.mfe ?? new MathfieldElement();
-    mathfield.virtualKeyboardTargetOrigin = "off";
-    return mathfield;
-  }, []);
-
-  //mfe.readOnly = props.readOnly ?? true;
-  //mfe.disabled = false;
-  //const size = isScreenLarge ? 6 : 3;
-  //const size = 6 ;
-
-  //mfe.applyStyle({ fontSize: size as FontSize }, { operation: "set", range: [0, -1] });
-  const currentValue = useRef<string>(""); // Esta variable se utilizará para realizar un seguimiento del valor actual del editor de matemáticas.
+  const currentValue = useRef<string>("");
+  const lastPropValue = useRef<string | null>(null);
+  const mfeRef = useRef<MathfieldElement | null>(null);
+  const [mfe, setMfe] = useState<MathfieldElement | null>(null);
+  const onChangeRef = useRef(props.onChange);
+  const onMountRef = useRef(props.onMount);
 
   useEffect(() => {
-    // ejecuta un efecto secundario cuando el componente se monta por primera vez
-    const container = containerRef.current!!;
-    container.innerHTML = "";
-    container.appendChild(mfe);
-    mfe.className = props.className || "";
+    onChangeRef.current = props.onChange;
+    onMountRef.current = props.onMount;
+  }, [props.onChange, props.onMount]);
+
+  useEffect(() => {
+    let active = true;
+
+    void import("mathlive").then(() => {
+      if (!active || mfeRef.current) return;
+      const mathfield = document.createElement("math-field") as MathfieldElement & {
+        virtualKeyboardTargetOrigin?: string;
+      };
+      mathfield.virtualKeyboardTargetOrigin = "off";
+      mfeRef.current = mathfield;
+      setMfe(mathfield);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mfe) return;
+    const container = containerRef.current!;
+    container.replaceChildren(mfe);
+    onMountRef.current?.(mfe);
+
     mfe.mathVirtualKeyboardPolicy = "auto";
-    mfe.readOnly = true;
     mfe.environmentPopoverPolicy = "off";
     mfe.resetUndo();
+    mfe.setValue(props.value ?? "", { focus: false, feedback: false });
+    currentValue.current = props.value ?? "";
+    lastPropValue.current = props.value ?? "";
 
-    // @ts-ignore
-    const keyboardLayout = (window.mathVirtualKeyboard as ExtendedVirtualKeyboard)
-      .normalizedLayouts[0]; // dejamos solo el teclado numerico
-    delete keyboardLayout.layers[0].rows[2][10].shift; // eliminamos el boton deleteAll del teclado (genera problemas)
-    window.mathVirtualKeyboard.layouts = keyboardLayout; // asignamos el teclado modificado como el nuevo teclado
+    // teclado virtual: proteger contra cambios de índices entre versiones
+    const vk = (window as any).mathVirtualKeyboard as ExtendedVirtualKeyboard | undefined;
+    if (vk?.normalizedLayouts?.[0]) {
+      const layout = vk.normalizedLayouts[0];
+      const row = layout.layers?.[0]?.rows?.[2];
+      const key = row?.[10];
+      if (key && "shift" in (key as any)) {
+        // @ts-ignore
+        delete (key as any).shift;
+      }
+      (window as any).mathVirtualKeyboard.layouts = layout;
+    }
 
-    mfe.addEventListener(
-      "keydown",
-      ev => {
-        if (ev.key === "Tab") {
-          mfe.executeCommand("moveToNextPlaceholder");
-        } else if (ev.key === "\\") {
-          ev.preventDefault();
-          mfe.executeCommand(["insert", "\\backslash"]);
-        } else if (ev.key === "Escape") ev.preventDefault();
-      },
-      { capture: true },
-    );
+    // handlers
+    const onKey = (ev: KeyboardEvent) => {
+      if (ev.key === "Tab") {
+        mfe.executeCommand("moveToNextPlaceholder");
+      } else if (ev.key === "\\") {
+        ev.preventDefault();
+        mfe.executeCommand(["insert", "\\backslash"]);
+      } else if (ev.key === "Escape") {
+        ev.preventDefault();
+      }
+    };
 
-    mfe.addEventListener("input", evt => {
-      //evt.preventDefault()
+    const onInput = (evt: Event) => {
       const value = (evt.target as HTMLInputElement).value || "";
-      const promptValues: Record<string, string> = mfe
-        .getPrompts()
-        .reduce((acc, id) => ({ ...acc, [id]: mfe.getPromptValue(id) }), {});
+      const promptValues: Record<string, string> = mfe.getPrompts().reduce(
+        (acc, id) => {
+          acc[id] = mfe.getPromptValue(id);
+          return acc;
+        },
+        {} as Record<string, string>,
+      );
+
       if (currentValue.current !== value) {
         currentValue.current = value;
-        props.onChange(value, promptValues);
+        onChangeRef.current(value, promptValues);
       }
-    });
-  }, []);
+    };
+
+    const focusFirstPlaceholder = () => {
+      mfe.focus();
+
+      const promptIds = mfe.getPrompts();
+      if (promptIds.length === 0) return;
+
+      try {
+        mfe.position = 0;
+      } catch {
+        // Ignore if the cursor cannot be repositioned safely.
+      }
+
+      try {
+        mfe.executeCommand("moveToNextPlaceholder");
+      } catch {
+        // Ignore if MathLive rejects the command in the current state.
+      }
+    };
+
+    const onPointerDown = () => {
+      requestAnimationFrame(focusFirstPlaceholder);
+    };
+
+    mfe.addEventListener("keydown", onKey, { capture: true });
+    mfe.addEventListener("input", onInput);
+    mfe.addEventListener("pointerdown", onPointerDown, { capture: true });
+
+    onChangeRef.current(
+      props.value ?? "",
+      mfe.getPrompts().reduce(
+        (acc, id) => {
+          acc[id] = mfe.getPromptValue(id);
+          return acc;
+        },
+        {} as Record<string, string>,
+      ),
+    );
+
+    return () => {
+      // limpieza
+      mfe.removeEventListener("keydown", onKey, { capture: true } as any);
+      mfe.removeEventListener("input", onInput);
+      mfe.removeEventListener("pointerdown", onPointerDown, { capture: true } as any);
+    };
+  }, [mfe, props.value]);
 
   useEffect(() => {
-    // Este efecto se encarga de actualizar el valor del editor de matemáticas cuando props.value cambia.
-    if (currentValue.current !== props.value) {
-      const position = mfe.position;
-      mfe.setValue(props.value, { focus: true, feedback: false });
-      mfe.position = position;
-      currentValue.current = props.value;
-    }
-  }, [props.value]); //se ejecutará cada vez que el valor de props.value
+    if (!mfe) return;
+    mfe.className = props.className || "";
+    mfe.readOnly = props.readOnly ?? false;
+  }, [mfe, props.className, props.readOnly]);
 
-  // @ts-ignore
-  const showVirtualKeyboard = () => {
-    mfe.executeCommand("toggleVirtualKeyboard" as Selector);
+  // actualiza cuando cambie props.value
+  useEffect(() => {
+    if (!mfe) return;
+    if (lastPropValue.current !== (props.value ?? "")) {
+      const pos = mfe.position;
+      mfe.setValue(props.value ?? "", { focus: false, feedback: false });
+      try {
+        mfe.position = pos;
+      } catch {
+        // Ignore invalid cursor restoration when placeholders changed.
+      }
+      currentValue.current = props.value ?? "";
+      lastPropValue.current = props.value ?? "";
+      (mfe as any).requestUpdate?.();
+    }
+  }, [mfe, props.value]);
+
+  const handleContainerMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+    if (!mfe) return;
+    event.preventDefault();
+    mfe.focus();
   };
 
   return (
-    <>
-      <Box
-        ref={containerRef}
-        border="1px"
-        borderRadius="5"
-        borderColor="black"
-        width="fit-content"
-        marginX="auto"
-        padding="2"
-      />
-      {/**
-         <ButtonGroup>
-           <Button onClick={()=> {
-             mfe.focus()
-             mfe.executeCommand("moveToPreviousChar")
-           }}>
-             {'<'}
-           </Button>
-           <Button onClick={()=>{
-             mfe.focus()
-             mfe.executeCommand("moveToNextChar")
-           }}>
-             {'>'}
-           </Button>
-           <Button onClick={showVirtualKeyboard}>
-             {'Toggle Keyboard'}
-           </Button>
-         </ButtonGroup>
-         
-      */}
-    </>
+    <Box
+      ref={containerRef}
+      onMouseDown={handleContainerMouseDown}
+      borderWidth="1px"
+      borderRadius="md"
+      borderColor="black"
+      width="fit-content"
+      maxW="100%"
+      marginX="auto"
+      padding="2"
+      overflow="visible"
+      minH="48px"
+      cursor="text"
+    />
   );
 };
 

@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   Image,
   Accordion,
-  AccordionIcon,
-  AccordionPanel,
-  AccordionItem,
-  AccordionButton,
   Box,
   Text,
   Button,
@@ -15,7 +11,7 @@ import {
   Progress,
   HStack,
   Heading,
-  Select,
+  NativeSelect,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAuth, withAuth } from "../components/Auth";
@@ -364,7 +360,7 @@ const StudentCard = ({
     };
 
     return (
-      <HStack p={0} spacing={0} maxW={maxWidth}>
+      <HStack p={0} gap={0} maxW={maxWidth}>
         <Image src="/img/mateo.png" alt="Logo" w="28px" h="28px" align="left" />
 
         {/* Cola del globo */}
@@ -373,7 +369,7 @@ const StudentCard = ({
         {/* Globo de diálogo */}
         <Box bg="white" borderRadius="md" p={1} w="80%" borderWidth="2px" borderColor="gray.300">
           {/* Texto dentro del globo */}
-          <Text noOfLines={[1, 2]}>{message}</Text>
+          <Text lineClamp={[1, 2]}>{message}</Text>
         </Box>
       </HStack>
     );
@@ -397,11 +393,11 @@ const StudentCard = ({
       {/*Muestra spinner mientras se carga studentProgress */}
       {isKcsByTopicsLoading && <LoadingOverlay />}
 
-      <VStack align="start" spacing={4}>
+      <VStack align="start" gap={4}>
         <HStack w="100%" justify="space-between" align="center">
           <Stack
             w={{ lg: "95%", sm: "90%" }}
-            spacing={4}
+            gap={4}
             direction={{ base: "column", md: "row" }}
             align={{ base: "flex-start", md: "center" }}
           >
@@ -426,7 +422,7 @@ const StudentCard = ({
             </Text>
           </Stack>
 
-          <HStack spacing={4}>{status === "finalized" && <FaFlagCheckered size={24} />}</HStack>
+          <HStack gap={4}>{status === "finalized" && <FaFlagCheckered size={24} />}</HStack>
         </HStack>
 
         <Box w="100%" textAlign="center">
@@ -444,19 +440,11 @@ const StudentCard = ({
                 borderWidth="1px"
                 borderColor="gray.300"
               >
-                <Progress
-                  value={studentProgress}
-                  size="lg"
-                  colorScheme="gray"
-                  sx={{
-                    "&&": {
-                      backgroundColor: "white",
-                    },
-                    "& > div": {
-                      background: "green",
-                    },
-                  }}
-                />
+                <Progress.Root value={studentProgress} size="lg">
+                  <Progress.Track bg="white">
+                    <Progress.Range bg={getColorScheme(studentProgress)} />
+                  </Progress.Track>
+                </Progress.Root>
               </Box>
               <Text fontWeight="bold" color={getColorScheme(studentProgress)}>
                 {Math.round(studentProgress) + " %"}
@@ -479,19 +467,11 @@ const StudentCard = ({
                     borderWidth="1px"
                     borderColor="gray.300"
                   >
-                    <Progress
-                      value={groupProgress}
-                      size="lg"
-                      colorScheme="gray"
-                      sx={{
-                        "&&": {
-                          backgroundColor: "white",
-                        },
-                        "& > div": {
-                          background: getColorScheme(groupProgress),
-                        },
-                      }}
-                    />
+                    <Progress.Root value={groupProgress} size="lg">
+                      <Progress.Track bg="white">
+                        <Progress.Range bg={getColorScheme(groupProgress)} />
+                      </Progress.Track>
+                    </Progress.Root>
                   </Box>
                   <Text fontWeight="bold" color={getColorScheme(groupProgress)}>
                     {Math.round(groupProgress) + " %"}
@@ -509,11 +489,17 @@ const StudentCard = ({
         )}
         <Box display="flex" justifyContent="center" alignItems="center" w="100%">
           {status === "finalized" ? (
-            <Button colorScheme="green" onClick={handleContinueChallenge} flex="1" maxW="200px">
+            <Button
+              colorPalette="green"
+              onClick={handleContinueChallenge}
+              flex="1"
+              maxW="200px"
+              fontWeight={"semibold"}
+            >
               Continuar desafío
             </Button>
           ) : (
-            <Button colorScheme="green" onClick={handleStartChallenge} flex="1" maxW="200px">
+            <Button colorPalette="green" onClick={handleStartChallenge} flex="1" maxW="200px">
               Comenzar desafío
             </Button>
           )}
@@ -712,11 +698,11 @@ const ChallengeCard = ({
       {isKcsByTopicsLoading ? (
         <LoadingOverlay />
       ) : (
-        <VStack align="start" spacing={4}>
+        <VStack align="start" gap={4}>
           <HStack w="100%" justify="space-between" align="center">
             <Stack
               w={{ lg: "95%", sm: "90%" }}
-              spacing={4}
+              gap={4}
               direction={{ base: "column", md: "row" }}
               align={{ base: "flex-start", md: "center" }}
             >
@@ -741,7 +727,7 @@ const ChallengeCard = ({
               </Text>
             </Stack>
 
-            <HStack spacing={4}>
+            <HStack gap={4}>
               {status === "finalized" && <FaFlagCheckered size={24} />}
               {status === "published" && <FaEye size={24} />}
               {status === "unpublished" && <FaEyeSlash size={24} />}
@@ -752,7 +738,7 @@ const ChallengeCard = ({
           </Box>
 
           {/* Accordion for groups */}
-          <Accordion allowToggle w="100%">
+          <Accordion.Root collapsible w="100%">
             {groups.map((group, index) => {
               const groupsWithModelStates = usersWithModelStates?.groups?.find(
                 item => item.id === group.id,
@@ -776,8 +762,8 @@ const ChallengeCard = ({
                 }, 0) / group.students.length;
 
               return (
-                <AccordionItem key={index} w="100%">
-                  <AccordionButton>
+                <Accordion.Item key={index} value={String(group.id ?? index)} w="100%">
+                  <Accordion.ItemTrigger>
                     <HStack justify="space-between" w="100%">
                       <Text fontSize="sm">{group.name}</Text>
                       <HStack w="70%" justify="space-between">
@@ -788,89 +774,75 @@ const ChallengeCard = ({
                           borderWidth="1px"
                           borderColor="gray.300"
                         >
-                          <Progress
-                            value={groupAverage}
-                            size="lg"
-                            colorScheme="gray"
-                            sx={{
-                              "&&": {
-                                backgroundColor: "white", // Set the progress track color to white
-                              },
-                              "& > div": {
-                                /*https://v2.chakra-ui.com/docs/styled-system/theme#red */
-                                background: getColorScheme(groupAverage),
-                                //background: "linear-gradient(to right, #E53E3E, #F6AD55)"//red.500 = #E53E3E, orange.300 = #F6AD55
-                              },
-                            }}
-                          />
+                          <Progress.Root value={groupAverage} size="lg">
+                            <Progress.Track bg="white">
+                              <Progress.Range bg={getColorScheme(groupAverage)} />
+                              {/* background: "linear-gradient(to right, #E53E3E, #F6AD55)"//red.500 = #E53E3E, orange.300 = #F6AD55 */}
+                            </Progress.Track>
+                          </Progress.Root>
                         </Box>
                         <Text fontWeight="bold" color={getColorScheme(groupAverage)}>
                           {Math.round(groupAverage) + " %"}
                         </Text>
                       </HStack>
                     </HStack>
-                    <AccordionIcon display="none" />
-                  </AccordionButton>
-                  <AccordionPanel pb={4}>
-                    {/* List of students */}
-                    {group?.students?.map((student, idx) => {
-                      const studentsWithModelStates = groupsWithModelStates?.users?.find(
-                        item => item.id === student.id,
-                      );
-                      const averageLevelStudent =
-                        calculateUserProgress(
-                          uniqueKcs,
-                          studentsWithModelStates?.modelStates?.nodes[0]?.json,
-                        ) * 100;
-                      return (
-                        <HStack key={idx} justify="space-between" w="100%">
-                          <Text>{student.name}</Text>
-                          <HStack w="70%" justify="space-between">
-                            <Box
-                              w={{ base: "70%", sm: "85%" }}
-                              bg="white"
-                              p={1}
-                              borderWidth="1px"
-                              borderColor="gray.300"
-                            >
-                              {/*
+                    <Accordion.ItemIndicator display="none" />
+                  </Accordion.ItemTrigger>
+                  <Accordion.ItemContent pb={4}>
+                    <Accordion.ItemBody pb={4}>
+                      {/* List of students */}
+                      {group?.students?.map((student, idx) => {
+                        const studentsWithModelStates = groupsWithModelStates?.users?.find(
+                          item => item.id === student.id,
+                        );
+                        const averageLevelStudent =
+                          calculateUserProgress(
+                            uniqueKcs,
+                            studentsWithModelStates?.modelStates?.nodes[0]?.json,
+                          ) * 100;
+                        return (
+                          <HStack key={idx} justify="space-between" w="100%">
+                            <Text>{student.name}</Text>
+                            <HStack w="70%" justify="space-between">
+                              <Box
+                                w={{ base: "70%", sm: "85%" }}
+                                bg="white"
+                                p={1}
+                                borderWidth="1px"
+                                borderColor="gray.300"
+                              >
+                                {/*
   https://v2.chakra-ui.com/docs/styled-system/the-sx-prop
   https://v2.chakra-ui.com/docs/styled-system/style-props
   https://v2.chakra-ui.com/docs/styled-system/gradient
   https://www.w3schools.com/cssref/css3_pr_color-scheme.php
   https://stackoverflow.com/questions/65590038/how-to-add-the-gradient-to-chakra-ui-progress
   //  */}
-                              <Progress
-                                value={averageLevelStudent}
-                                size="sm"
-                                colorScheme="gray"
-                                sx={{
-                                  "&&": {
-                                    backgroundColor: "white", // Set the progress track color to white
-                                  },
-                                  "& > div": {
-                                    background: getColorScheme(averageLevelStudent), // Set the progress color
-                                  },
-                                }}
-                              />
-                            </Box>
-                            <Text fontWeight="bold" color={getColorScheme(averageLevelStudent)}>
-                              {Math.round(averageLevelStudent) + " %"}
-                            </Text>
+
+                                <Progress.Root value={averageLevelStudent} size="lg">
+                                  <Progress.Track bg="white">
+                                    <Progress.Range bg={getColorScheme(averageLevelStudent)} />
+                                  </Progress.Track>
+                                </Progress.Root>
+                              </Box>
+                              <Text fontWeight="bold" color={getColorScheme(averageLevelStudent)}>
+                                {Math.round(averageLevelStudent) + " %"}
+                              </Text>
+                            </HStack>
                           </HStack>
-                        </HStack>
-                      );
-                    })}
-                  </AccordionPanel>
-                </AccordionItem>
+                        );
+                      })}
+                    </Accordion.ItemBody>
+                  </Accordion.ItemContent>
+                </Accordion.Item>
               );
             })}
-          </Accordion>
+          </Accordion.Root>
           {/* Botón Preview */}
 
           <HStack justify="center" w="100%" mt={4}>
             <Button
-              colorScheme="teal" // Cambia el color para diferenciarlo
+              colorPalette="teal" // Cambia el color para diferenciarlo
               onClick={previewClick} // Función para manejar el clic
               flex="1"
               maxW="200px"
@@ -879,26 +851,26 @@ const ChallengeCard = ({
             </Button>
           </HStack>
 
-          <HStack spacing={4} mt={4} justify="center" w="100%" wrap="wrap">
+          <HStack gap={4} mt={4} justify="center" w="100%" wrap="wrap">
             {/* Botón para eliminar el desafío */}
-            <Button colorScheme="red" onClick={handleDelete} flex="1" maxW="200px">
+            <Button colorPalette="red" onClick={handleDelete} flex="1" maxW="200px">
               <FaTrashAlt size={16} />
               {/* Botón para modificar el desafío */}
             </Button>
             {(status == "unpublished" || status == "published") && (
-              <Button colorScheme="blue" onClick={() => handleModify(id)} flex="1" maxW="200px">
+              <Button colorPalette="blue" onClick={() => handleModify(id)} flex="1" maxW="200px">
                 <FaEdit size={24} />
               </Button>
             )}
             {/* Botón para publicar el desafío */}
             {status === "unpublished" ? (
               // Botón para publicar
-              <Button colorScheme="green" onClick={() => handlePublish()} flex="1" maxW="200px">
+              <Button colorPalette="green" onClick={() => handlePublish()} flex="1" maxW="200px">
                 <FaPaperPlane size={16} />
               </Button>
             ) : status === "published" ? (
               // Botón para despublicar
-              <Button colorScheme="red" onClick={() => handleUnpublish()} flex="1" maxW="200px">
+              <Button colorPalette="red" onClick={() => handleUnpublish()} flex="1" maxW="200px">
                 <FaTimes size={16} />
               </Button>
             ) : null}
@@ -953,17 +925,25 @@ const StudentsList = ({ challenges, userByJsonById, allUsersJson, uniqueUsers, u
         </Text>
         <Flex mb={4} gap={4}>
           {/* Filtro por estado */}
-          <Select mb={4} value={statusFilter} onChange={e => handleFilterChange(e.target.value)}>
-            <option value="all">Todos</option>
-            <option value="published">Sin finalizar</option>
-            <option value="finalized">Finalizado</option>
-          </Select>
+          <NativeSelect.Root>
+            <NativeSelect.Field mb={4} value={statusFilter} onChange={handleFilterChange}>
+              <option value="all">Todos</option>
+              <option value="published">Sin finalizar</option>
+              <option value="finalized">Finalizado</option>
+            </NativeSelect.Field>
+          </NativeSelect.Root>
 
           {/* Ordenar por fecha */}
-          <Select mb={4} value={sortOrder} onChange={e => handleSortChange(e.target.value)}>
-            <option value="asc">Orden ascendente</option>
-            <option value="desc">Orden descendente</option>
-          </Select>
+          <NativeSelect.Root>
+            <NativeSelect.Field
+              mb={4}
+              value={sortOrder}
+              onChange={e => handleSortChange(e.target.value)}
+            >
+              <option value="asc">Orden ascendente</option>
+              <option value="desc">Orden descendente</option>
+            </NativeSelect.Field>
+          </NativeSelect.Root>
         </Flex>
       </Box>
       {filteredChallenges?.map(challenge => (
@@ -1587,7 +1567,7 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
         <Box p={8}>
           {/* Botón para crear desafio */}
           <Flex justify="flex-end" mt={6}>
-            <Button colorScheme="blue" width="auto" onClick={handleClick} mt={6}>
+            <Button colorPalette="blue" width="auto" onClick={handleClick} mt={6}>
               Crear desafío
             </Button>
           </Flex>
@@ -1597,29 +1577,37 @@ session-progress: habilita mostrar el delta de progreso dentro de la sesión
             </Text>
             <Flex mb={4} gap={4}>
               {/* Filtro por estado */}
-              <Select
-                mb={4}
-                value={statusFilter}
-                onChange={e => handleFilterChange(e.target.value)}
-              >
-                <option value="all">Todos</option>
-                <option value="published">Publicado</option>
-                <option value="finalized">Finalizado</option>
-                <option value="unpublished">No publicado</option>
-              </Select>
+              <NativeSelect.Root>
+                <NativeSelect.Field
+                  mb={4}
+                  value={statusFilter}
+                  onChange={e => handleFilterChange(e.target.value)}
+                >
+                  <option value="all">Todos</option>
+                  <option value="published">Publicado</option>
+                  <option value="finalized">Finalizado</option>
+                  <option value="unpublished">No publicado</option>
+                </NativeSelect.Field>
+              </NativeSelect.Root>
 
               {/* Ordenar por fecha */}
-              <Select mb={4} value={sortOrder} onChange={e => handleSortChange(e.target.value)}>
-                <option value="asc">Orden ascendente</option>
-                <option value="desc">Orden descendente</option>
-              </Select>
+              <NativeSelect.Root>
+                <NativeSelect.Field
+                  mb={4}
+                  value={sortOrder}
+                  onChange={e => handleSortChange(e.target.value)}
+                >
+                  <option value="asc">Orden ascendente</option>
+                  <option value="desc">Orden descendente</option>
+                </NativeSelect.Field>
+              </NativeSelect.Root>
             </Flex>
           </Box>
           <Heading mb={6} textAlign="center">
             Desafíos
           </Heading>
           {filteredChallenges.length > 0 ? (
-            <VStack spacing={6}>
+            <VStack gap={6}>
               {filteredChallenges.map((challenge, index) => (
                 <ChallengeCard
                   key={index}

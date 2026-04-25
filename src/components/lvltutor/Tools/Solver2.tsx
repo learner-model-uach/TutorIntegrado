@@ -6,14 +6,9 @@ import {
   Flex,
   Box,
   Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Heading,
   Alert,
   Text,
-  AlertIcon,
   HStack,
   VStack,
   Center,
@@ -75,10 +70,14 @@ const Steporans = ({
       setCC(
         <>
           <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
-          <Alert key={"Alert" + topicId + "i"} status={"success"} mt={2}>
-            <AlertIcon key={"AlertIcon" + topicId + "i"} />
-            {MQProxy.spaghettimsg ? MQProxy.spaghettimsg : step.correctMsg}
-          </Alert>
+          <Alert.Root key={"Alert" + topicId + "i"} status={"success"} mt={2}>
+            <Alert.Indicator key={"AlertIcon" + topicId + "i"} />
+            <Alert.Content>
+              <Alert.Description>
+                {MQProxy.spaghettimsg ? MQProxy.spaghettimsg : step.correctMsg}
+              </Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
         </>,
       );
     } else {
@@ -301,10 +300,10 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         justifyContent="center"
         margin={"auto"}
       >
-        <Heading as="h1" size="lg" noOfLines={3}>
+        <Heading as="h1" size="3xl" lineClamp={3} color={"heading"} mb={"1rem"}>
           {steps.title}
         </Heading>
-        <Heading as="h5" size="sm" mt={2}>
+        <Heading as="h5" size="md" mb={"0.5rem"}>
           {steps.text}
         </Heading>
         {steps.img ? (
@@ -312,102 +311,135 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         ) : (
           <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
         )}
-        <Accordion
-          onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
-          index={MQProxy.defaultIndex}
-          allowToggle={true}
-          allowMultiple={true}
+        <Accordion.Root
+          variant={"plain"}
+          mt={"1rem"}
+          multiple
+          collapsible
+          value={Array.isArray(MQProxy.defaultIndex) ? MQProxy.defaultIndex.map(String) : []}
+          onValueChange={({ value }) => {
+            MQProxy.defaultIndex = (value ?? []).map(v => Number(v));
+          }}
         >
           {steps.steps.map((step, i) => (
-            <AccordionItem
-              key={"AccordionItem" + i}
-              isDisabled={test[parseInt(step.stepId)]?.disabled}
-              hidden={test[parseInt(step.stepId)]?.hidden}
+            <Accordion.Item
+              key={`AccordionItem${i}`}
+              value={String(step.stepId)}
+              disabled={Boolean(test[parseInt(step.stepId)]?.disabled)}
+              hidden={Boolean(test[parseInt(step.stepId)]?.hidden)}
             >
               <h2 key={"AIh2" + i}>
-                <Alert
-                  key={"AIAlert" + i}
-                  status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}
-                >
-                  <AccordionButton
-                    key={"AIAccordionButton" + i}
-                    onClick={() => {
-                      let potstates = test;
-                      let potstate = potstates[parseInt(step.stepId)];
-                      if (potstate) {
-                        if (!potstate.open) {
-                          action({
-                            verbName: "openStep",
-                            stepID: "" + i,
-                            contentID: steps?.code,
-                            topicID: topicId,
-                          });
-                          potstate.open = true;
-                          potstates[parseInt(step.stepId)] = potstate;
-                          setTest(potstates);
-                        } else {
-                          action({
-                            verbName: "closeStep",
-                            stepID: "" + i,
-                            contentID: steps?.code,
-                            topicID: topicId,
-                          });
-                          potstate.open = false;
-                          potstates[parseInt(step.stepId)] = potstate;
+                <Alert.Root status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}>
+                  <Alert.Content>
+                    <Accordion.ItemTrigger
+                      onClick={() => {
+                        const potstates = [...test];
+                        const idx = parseInt(step.stepId);
+                        const potstate = potstates[idx];
+                        if (potstate) {
+                          if (!potstate.open) {
+                            action({
+                              verbName: "openStep",
+                              stepID: "" + i,
+                              contentID: steps?.code,
+                              topicID: topicId,
+                            });
+                            potstate.open = true;
+                          } else {
+                            action({
+                              verbName: "closeStep",
+                              stepID: "" + i,
+                              contentID: steps?.code,
+                              topicID: topicId,
+                            });
+                            potstate.open = false;
+                          }
+                          potstates[idx] = potstate;
                           setTest(potstates);
                         }
-                      }
-                    }}
-                  >
-                    <Box paddingRight={3}>
-                      <FaHandPointRight />
-                    </Box>
-                    <Box key={"AIBox" + i} flex="1" textAlign="left">
-                      {step.stepTitle}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </Alert>
+                      }}
+                    >
+                      <Box pr={3}>
+                        <FaHandPointRight />
+                      </Box>
+                      <Box flex="1" textAlign="left">
+                        {step.stepTitle}
+                      </Box>
+                      <Accordion.ItemIndicator />
+                    </Accordion.ItemTrigger>
+                  </Alert.Content>
+                </Alert.Root>
               </h2>
-              <AccordionPanel key={"AIAccordionPanel" + i} pb={4}>
-                <Steporans
-                  step={step}
-                  topicId={topicId}
-                  content={steps.code}
-                  i={i}
-                  answer={test[parseInt(step.stepId)]?.value?.ans}
-                />
-              </AccordionPanel>
-            </AccordionItem>
+
+              <Accordion.ItemContent>
+                <Accordion.ItemBody pb={4}>
+                  {(() => {
+                    const idx = Number(step.stepId);
+                    const isOpen = (MQProxy.defaultIndex ?? []).includes(Number(step.stepId));
+                    const isDone = Boolean(test[idx]?.answer);
+
+                    return (
+                      <>
+                        {isOpen &&
+                        !isDone &&
+                        step.expression &&
+                        step.multipleChoice != undefined ? (
+                          <Center>
+                            <Box mb="3" overflow="visible">
+                              <MQStaticMathField
+                                key={`mq-enunciado-${step.stepId}-open`}
+                                exp={step.expression}
+                                currentExpIndex={true} // ahora sí, visible
+                              />
+                            </Box>
+                          </Center>
+                        ) : null}
+                        <Steporans
+                          key={`Steporans-${step.stepId}-${isOpen ? "open" : "closed"}`}
+                          step={step}
+                          topicId={topicId}
+                          content={steps.code}
+                          i={i}
+                          answer={test[parseInt(step.stepId)]?.value?.ans}
+                        />
+                      </>
+                    );
+                  })()}
+                </Accordion.ItemBody>
+              </Accordion.ItemContent>
+            </Accordion.Item>
           ))}
-        </Accordion>
+        </Accordion.Root>
         <Box>
-          <Alert status="info" hidden={resumen} alignItems="top">
-            <AlertIcon />
-            <VStack w="100%" align="left">
-              <Center>
-                <Heading fontSize="xl">Resumen</Heading>
-              </Center>
-              <HStack>
-                <Text>Expresión:</Text>
-                <MQStaticMathField exp={initialExp || ""} currentExpIndex={!resumen} />
-              </HStack>
-              {steps.steps.map((step, i) => (
-                <Box key={"ResumenBox" + i}>
-                  <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
-                    {step.summary}
-                  </Text>
-                  <Box key={"ResumenMCContainer" + i} display="flex" justifyContent="center">
-                    <MQStaticMathField
-                      key={"ResumenMC" + i}
-                      exp={step.displayResult[0]!}
-                      currentExpIndex={!resumen}
-                    />
+          <Alert.Root status="info" hidden={resumen} alignItems="flex-start">
+            <Alert.Indicator />
+
+            <Alert.Content>
+              <VStack w="100%" align="start">
+                <Center>
+                  <Heading fontSize="xl">Resumen</Heading>
+                </Center>
+                <HStack>
+                  <Text>Expresión:</Text>
+                  <MQStaticMathField exp={initialExp || ""} currentExpIndex={!resumen} />
+                </HStack>
+                {steps.steps.map((step, i) => (
+                  <Box key={"ResumenBox" + i}>
+                    <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
+                      {step.summary}
+                    </Text>
+                    <Box key={"ResumenMCContainer" + i} display="flex" justifyContent="center">
+                      <MQStaticMathField
+                        key={"ResumenMC" + i}
+                        exp={step.displayResult[0]!}
+                        currentExpIndex={!resumen}
+                      />
+                    </Box>
                   </Box>
-                </Box>
-              ))}
-            </VStack>
-          </Alert>
+                ))}
+              </VStack>
+            </Alert.Content>
+          </Alert.Root>
         </Box>
         {!resumen && <RatingQuestion />}
       </Flex>

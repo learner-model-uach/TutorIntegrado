@@ -1,11 +1,9 @@
 import {
   Box,
-  useRadio,
-  useRadioGroup,
+  RadioCard,
   HStack,
   Button,
   Alert,
-  AlertIcon,
   VStack,
   Text,
   Grid,
@@ -17,7 +15,7 @@ import Hint from "../../Hint";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
 import { useSnapshot } from "valtio";
 import type { option, Step } from "./ExcerciseType";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import MQProxy from "./MQProxy";
 import { useAction } from "../../../utils/action";
 
@@ -65,7 +63,7 @@ const Enabledhint = ({
         hintCount={hints}
         setHints={setHints}
         setLastHint={setLastHint}
-      ></Hint>
+      />
     );
   }
 };
@@ -122,47 +120,12 @@ function handleAnswer(
   return output;
 }
 
-// 1. Create a component that consumes the `useRadio` hook
-function RadioCard(props) {
-  const { getInputProps, getCheckboxProps } = useRadio(props);
-
-  const input = getInputProps();
-  const checkbox = getCheckboxProps();
-
-  return (
-    <Box as="label">
-      <input {...input} />
-      <Box
-        {...checkbox}
-        cursor="pointer"
-        borderWidth="1px"
-        borderRadius="md"
-        boxShadow="md"
-        _checked={{
-          bg: "teal.600",
-          color: "white",
-          borderColor: "teal.600",
-        }}
-        _focus={{
-          boxShadow: "outline",
-        }}
-        px={1}
-        py={1}
-        w={"100%"}
-        h={"100%"}
-      >
-        {props.children}
-      </Box>
-    </Box>
-  );
-}
-
 function ChoiceContent({ option, id }: { option: option; id: number }) {
   let text = option.text;
   let exp = option.expression;
   return (
     <VStack key={"CCVS" + id} alignItems={"center"} alignContent={"center"}>
-      {text ? <Text key={"CCT" + id}>{text}</Text> : null}
+      {text ? <Text key={"CCT" + id}>{text} </Text> : null}
       {exp ? <MQStaticMathField key={"CCL" + id} exp={exp} currentExpIndex={true} /> : null}
     </VStack>
   );
@@ -182,7 +145,8 @@ function CChoice({
   disablehint: boolean;
   options: Array<option>;
 }) {
-  const answer = useRef("react");
+  // const answer = useRef("react");
+  const [value, setValue] = useState<string | null>(null);
   const [attempts, setAttempts] = useState(0);
   const [alertType, setAlertType] = useState<
     "info" | "warning" | "success" | "error" | undefined
@@ -190,60 +154,51 @@ function CChoice({
   const [alertMsg, setAlertMsg] = useState("");
   const [alertHidden, setAlertHidden] = useState(true);
   const [lastHint, setLastHint] = useState(false);
-
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "mathchoice",
-    //defaultValue:"1",
-    value: undefined,
-    onChange: val => {
-      answer.current = val;
-    },
-  });
-
-  const group = getRootProps();
   const action = useAction();
 
   return (
     <>
-      <Center>
-        <MQStaticMathField exp={step.expression} currentExpIndex={true} />
-      </Center>
-      <SimpleGrid columns={[1, 1, 1, 2]} spacing={2} {...group}>
-        {options.map(v => {
-          const radio = getRadioProps({ value: String(v.id) });
-          return (
-            <RadioCard key={v.id} {...radio}>
-              <Grid key={"SGG" + v.id} templateColumns="repeat(20, 1fr)">
-                <GridItem key={"SGI1" + v.id} colSpan={2} alignContent={"center"}>
-                  <Box key={"SGB" + v.id} borderRadius={"full"} bg="black" h={"2"} w={"2"} />
-                </GridItem>
-                <GridItem key={"SGI2" + v.id} colSpan={16}>
-                  <Center key={"SGC" + v.id}>
-                    <ChoiceContent key={"SGCC" + v.id} option={v} id={v.id} />
-                  </Center>
-                </GridItem>
-              </Grid>
-            </RadioCard>
-          );
-        })}
-      </SimpleGrid>
-      <HStack spacing="4px" alignItems="center" justifyContent="center" margin={"auto"} padding="4">
+      <RadioCard.Root
+        name="mathchoice"
+        size={"md"}
+        value={value ?? undefined}
+        onValueChange={({ value }) => setValue(value)}
+        variant="surface"
+        colorPalette="teal"
+      >
+        <SimpleGrid columns={[1, 1, 1, 2]} columnGap="2" rowGap="2">
+          {options.map(v => (
+            <RadioCard.Item key={v.id} value={String(v.id)}>
+              <RadioCard.ItemHiddenInput />
+              <RadioCard.ItemControl cursor={"pointer"}>
+                <RadioCard.ItemIndicator />
+                <RadioCard.ItemText>
+                  <ChoiceContent option={v} id={v.id} />
+                </RadioCard.ItemText>
+              </RadioCard.ItemControl>
+            </RadioCard.Item>
+          ))}
+        </SimpleGrid>
+      </RadioCard.Root>
+      <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"} padding="4">
         <Box>
           <Button
-            colorScheme="teal"
+            colorPalette="teal"
             height={"32px"}
             width={"88px"}
             onClick={() => {
+              const selected = value ?? "";
               let ans = handleAnswer(
-                step.multipleChoice[Number(answer.current)],
+                step.multipleChoice.find(e => String(e.id) === selected)!,
                 step.multipleChoice,
-                answer.current,
+                selected,
                 attempts,
                 step.stepId,
               );
+
               let ansv = "";
               for (let e of step.multipleChoice)
-                if (("" + e.id).localeCompare(answer.current) == 0) {
+                if (("" + e.id).localeCompare(selected) == 0) {
                   if (e.expression) ansv = e.expression;
                   else ansv = e.text;
                 }
@@ -281,29 +236,31 @@ function CChoice({
         <Enabledhint
           disablehint={disablehint}
           step={step}
-          latex={answer.current}
+          latex={value ?? ""}
           setLastHint={setLastHint}
         />
       </HStack>
-      <Alert key={"Alert" + topicId + "i"} status={alertType} mt={2} hidden={alertHidden}>
-        <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(20, 1fr)">
-          <GridItem rowSpan={1} colSpan={1}>
-            <AlertIcon key={"AlertIcon" + topicId + "i"} />
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={19}>
-            <Text alignSelf={"left"} alignItems="start">
-              {"¡Inténtalo nuevamente! (intentos: " + attempts + ") " + alertMsg}
-            </Text>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={20}>
-            {MQProxy.spaghettimsgexp ? (
-              <Center>
-                <MQStaticMathField exp={MQProxy.spaghettimsgexp} currentExpIndex={true} />
-              </Center>
-            ) : null}
-          </GridItem>
-        </Grid>
-      </Alert>
+      <Alert.Root key={`Alert${topicId}i`} status={alertType} mt={2} hidden={alertHidden}>
+        <Alert.Content>
+          <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(20, 1fr)">
+            <GridItem rowSpan={1} colSpan={1}>
+              <Alert.Indicator key={`AlertIcon${topicId}i`} />
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={19}>
+              <Text alignSelf={"left"} alignItems="start">
+                {"¡Inténtalo nuevamente! (intentos: " + attempts + ") " + alertMsg}
+              </Text>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={20}>
+              {MQProxy.spaghettimsgexp ? (
+                <Center>
+                  <MQStaticMathField exp={MQProxy.spaghettimsgexp} currentExpIndex={true} />
+                </Center>
+              ) : null}
+            </GridItem>
+          </Grid>
+        </Alert.Content>
+      </Alert.Root>
     </>
   );
 }

@@ -1,13 +1,4 @@
-import {
-  LinkBox,
-  LinkOverlay,
-  Heading,
-  Text,
-  useColorModeValue,
-  HStack,
-  Center,
-} from "@chakra-ui/react";
-
+import { LinkBox, LinkOverlay, Heading, Text, HStack, Center } from "@chakra-ui/react";
 //import Link from "next/link";
 import NextLink from "next/link";
 import { sessionState, sessionStateBD } from "../SessionState";
@@ -37,14 +28,18 @@ export const CardSelectionwp = ({
   nextContentPath: string | undefined;
 }) => {
   const action = useAction();
+  const presentationTitle = String(ej.presentation?.title ?? "");
+  const presentationDescription = String(ej.presentation?.description ?? "");
+
   return (
     <>
       <LinkBox
         color="white"
-        bg={useColorModeValue("blue.700", "gray.800")}
+        cursor={"pointer"}
+        bg={"cardselection_bg"}
         _hover={{
           color: "white",
-          bg: useColorModeValue("blue.900", "gray.600"),
+          bg: "cardselection_hover",
         }}
         as="article"
         maxW="sm"
@@ -96,18 +91,21 @@ export const CardSelectionwp = ({
 
         {
           <Text fontSize=".8em">
-            {parameters.card.text}{" "}
-            <span style={{ fontWeight: "bold" }}>{ej.presentation.title}</span>
+            {parameters.card.text} <span style={{ fontWeight: "bold" }}>{presentationTitle}</span>
           </Text>
         }
 
-        <NextLink href={"showContent"} passHref>
-          <LinkOverlay>
+        <LinkOverlay asChild>
+          <NextLink
+            href={"showContent"}
+            passHref
+            aria-label={`Abrir contenido: ${presentationTitle || id}`}
+          >
             <Text paddingTop={"2"} fontSize={"sm"}>
-              {ej.presentation.description}
+              {presentationDescription}
             </Text>
-          </LinkOverlay>
-        </NextLink>
+          </NextLink>
+        </LinkOverlay>
       </LinkBox>
     </>
   );

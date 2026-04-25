@@ -13,3 +13,13 @@
 .mq-paren {
   vertical-align: middle !important;
 }
+
+.chakra-theme.light {
+  --colors-bg: #2b4264; /* indigo.900 */
+  --colors-bg-secondary: #ffffff; /* white */
+}
+
+.chakra-theme.dark {
+  --colors-bg: #1b202b; /* indigo.950 */
+  --colors-bg-secondary: #2c3648; /* charcoal */
+}

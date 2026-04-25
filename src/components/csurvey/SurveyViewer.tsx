@@ -4,14 +4,11 @@ import {
   Text,
   useDisclosure,
   Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalOverlay,
-  ModalHeader,
+  Dialog,
   Grid,
   GridItem,
   Image,
+  Portal,
 } from "@chakra-ui/react";
 import Choice from "./Choice";
 import Ranked from "./Ranked";
@@ -26,7 +23,7 @@ export interface SD {
   code: string;
   description?: string;
   items: Array<{
-    id: string;
+    id: string | number;
     index: number;
     content: {
       type: string;
@@ -40,7 +37,27 @@ export interface SD {
   tags: Array<string>;
 }
 
-export function handleInitialexpresion(e: ExType, svd: SD) {
+function cloneSurveyData(svd: SD): SD {
+  return {
+    title: svd.title,
+    code: svd.code,
+    description: svd.description,
+    tags: [...svd.tags],
+    items: svd.items.map(item => ({
+      id: item.id,
+      index: item.index,
+      content: {
+        ...item.content,
+        rankedLabel: item.content.rankedLabel ? [...item.content.rankedLabel] : undefined,
+        options: item.content.options ? [...item.content.options] : undefined,
+      },
+    })),
+  };
+}
+
+export function handleInitialexpresion(e: ExType, svd?: SD) {
+  if (!svd) return undefined;
+
   let ejercicio = e;
   let exp = "";
   if (
@@ -53,9 +70,7 @@ export function handleInitialexpresion(e: ExType, svd: SD) {
   else if (ejercicio.initialExpression) exp = ejercicio.initialExpression;
   else exp = ejercicio.steps[0].expression;
 
-  //deep copy needed
-  var d = JSON.stringify(svd);
-  var dd = JSON.parse(d);
+  const dd = cloneSurveyData(svd);
   if (e.img) dd.items.unshift({ id: -1, index: -1, content: { type: "img", img: e.img } });
   else dd.items.unshift({ id: -1, index: -1, content: { type: "expression", expression: exp } });
   dd.items.unshift({ id: -1, index: -1, content: { type: "text", text: ejercicio.text } });
@@ -80,7 +95,7 @@ const SurveyContent = ({ data }: { data: SD }) => {
                 <VStack
                   key={"VSSV" + i}
                   borderRadius={"md"}
-                  bg={"blue.700"}
+                  bg={"bg"}
                   px={2}
                   py={2}
                   align={"center"}
@@ -93,13 +108,18 @@ const SurveyContent = ({ data }: { data: SD }) => {
                       color={"white"}
                       fontSize={["xs", "xs", "xs", "md"]}
                       w={"90%"}
-                      noOfLines={3}
+                      lineClamp={3}
                     >
                       {e.content.text}
                     </Text>
                   </>
                   <>
-                    <Ranked index={i} key={"sbq" + i} itemText={e.content.text} itemId={e.id} />
+                    <Ranked
+                      index={i}
+                      key={"sbq" + i}
+                      itemText={e.content.text!}
+                      itemId={String(e.id)}
+                    />
                   </>
                   <Grid
                     key={"GSV" + i}
@@ -139,7 +159,7 @@ const SurveyContent = ({ data }: { data: SD }) => {
                       color={"white"}
                       fontSize={["xs", "xs", "xs", "md"]}
                       w={"90%"}
-                      noOfLines={3}
+                      lineClamp={3}
                     >
                       {e.content.text}
                     </Text>
@@ -148,8 +168,8 @@ const SurveyContent = ({ data }: { data: SD }) => {
                     index={i}
                     key={"sbq" + i}
                     options={e.content.options ? e.content.options : ["no options"]}
-                    itemText={e.content.text}
-                    itemId={e.id}
+                    itemText={e.content.text!}
+                    itemId={String(e.id)}
                   />
                 </VStack>
               );
@@ -173,18 +193,18 @@ const SurveyContent = ({ data }: { data: SD }) => {
                 </Text>
               );
             if (e.content.type.localeCompare("img") == 0)
-              return <Image key={"ISV1" + i} src={"img/" + e.content.img} />;
-            return 0;
+              return <Image key={"ISV1" + i} src={"img/" + e.content.img} alt="" />;
+            return null;
           })
-        : 0}
+        : null}
     </VStack>
   );
 };
 
 function handleAnswer() {
-  var close = false;
-  var required = true;
-  for (var e in Answers.ans) {
+  let close = false;
+  let required = true;
+  for (const e in Answers.ans) {
     if (!close) close = true;
     required = Answers.ans[e].didreply && required;
   }
@@ -192,56 +212,65 @@ function handleAnswer() {
 }
 
 function BasicUsage({ data, topicId }: { data: SD; topicId: string }) {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { open, onClose } = useDisclosure({ defaultOpen: true });
   const action = useAction();
 
   return (
-    <>
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={onClose}
-        //scrollBehavior="inside"
-        size={"full"}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader alignSelf={"center"}>{data.title}</ModalHeader>
-          <ModalBody>
-            <SurveyContent data={data} />
-            <Center pt="4">
-              <Button
-                colorScheme="blue"
-                mr={3}
-                onClick={() => {
-                  if (handleAnswer()) {
-                    let ak = [];
-                    console.log(Answers.ans);
-                    for (var e in Answers.ans) ak.push(JSON.parse(JSON.stringify(Answers.ans[e])));
-                    action({
-                      verbName: "pollResponse",
-                      topicID: topicId,
-                      extra: {
-                        pollCode: data.code,
-                        context: data.items[1].content.expression
-                          ? data.items[1].content.expression
-                          : "-1",
-                        responses: ak,
-                      },
-                    });
-                    onClose();
-                    SVP.topicselect = false;
-                  }
-                  Answers.sumbmit = true;
-                }}
-              >
-                Enviar
-              </Button>
-            </Center>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+    <Dialog.Root
+      open={open}
+      onOpenChange={e => {
+        if (!e.open) onClose();
+      }}
+      size="full"
+      closeOnInteractOutside={false}
+      // scrollBehavior="inside" // si quieres el mismo comportamiento de scroll
+    >
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header alignSelf="center">
+              <Dialog.Title>{data.title}</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Body>
+              <SurveyContent data={data} />
+              <Center pt="4">
+                <Button
+                  colorPalette="teal"
+                  fontWeight={"semibold"}
+                  mr={3}
+                  onClick={() => {
+                    if (handleAnswer()) {
+                      const ak: any[] = [];
+                      // console.log(Answers.ans);
+                      for (const e in Answers.ans) {
+                        const answer = Answers.ans[e];
+                        if (answer) ak.push({ ...answer });
+                      }
+                      action({
+                        verbName: "pollResponse",
+                        topicID: topicId,
+                        extra: {
+                          pollCode: data.code,
+                          context: data.items[1]?.content.expression ?? "-1",
+                          responses: ak,
+                        },
+                      });
+                      onClose();
+                      SVP.topicselect = false;
+                    }
+                    Answers.sumbmit = true;
+                  }}
+                >
+                  Enviar
+                </Button>
+              </Center>
+            </Dialog.Body>
+            <Dialog.CloseTrigger />
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 }
 
@@ -250,15 +279,20 @@ export const SurveyViewer = ({
   topicId,
   iExp,
 }: {
-  data: SD;
+  data?: SD;
   topicId: string;
   iExp?: ExType;
 }) => {
   const [d, setD] = useState<SD>();
   useEffect(() => {
     reset();
+    if (!data) {
+      setD(undefined);
+      return;
+    }
+
     if (iExp != undefined) setD(handleInitialexpresion(iExp, data));
     else setD(data);
-  }, []);
-  return <>{d != undefined ? <BasicUsage data={d} topicId={topicId} /> : null}</>;
+  }, [iExp, data]);
+  return <>{d ? <BasicUsage data={d} topicId={topicId} /> : null}</>;
 };
