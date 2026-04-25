@@ -166,19 +166,23 @@ const MultiplePlaceholders = ({
             <Button colorPalette="teal" h="2rem" onClick={evaluar}>
               Enviar
             </Button>
-            <Hint
-              hints={exc.steps[nStep].hints}
-              contentId={exc.code}
-              topicId={topic}
-              stepId={exc.steps[nStep].stepId}
-              matchingError={exc.steps[nStep].matchingError}
-              response={ValuesArray}
-              error={error}
-              setError={setError}
-              hintCount={hints}
-              setHints={setHints}
-              setLastHint={setLastHint}
-            />
+            {isCorrectValue ? null : (
+              <>
+                <Hint
+                  hints={exc.steps[nStep].hints}
+                  contentId={exc.code}
+                  topicId={topic}
+                  stepId={exc.steps[nStep].stepId}
+                  matchingError={exc.steps[nStep].matchingError}
+                  response={ValuesArray}
+                  error={error}
+                  setError={setError}
+                  hintCount={hints}
+                  setHints={setHints}
+                  setLastHint={setLastHint}
+                />
+              </>
+            )}
           </>
         )}
       </Stack>
