@@ -242,7 +242,7 @@ function BasicUsage({ data, topicId }: { data: SD; topicId: string }) {
                   onClick={() => {
                     if (handleAnswer()) {
                       const ak: any[] = [];
-                      console.log(Answers.ans);
+                      // console.log(Answers.ans);
                       for (const e in Answers.ans) {
                         const answer = Answers.ans[e];
                         if (answer) ak.push({ ...answer });

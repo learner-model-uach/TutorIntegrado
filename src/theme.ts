@@ -157,6 +157,30 @@ const config = defineConfig({
         alternative_button: {
           value: { base: "{colors.stealblue.400}", _dark: "{colors.indigo.900}" },
         },
+        factorizacion_4: {
+          value: { base: "#452262" },
+        },
+        logica_y_conjuntos_37: {
+          value: { base: "#E74365" },
+        },
+        productos_notables_44: {
+          value: { base: "#A92F60" },
+        },
+        potencias_19: {
+          value: { base: "#FD9560" },
+        },
+        raices_68: {
+          value: { base: "#F0B74C" },
+        },
+        fracciones_31: {
+          value: { base: "#465b7d" },
+        },
+        ecuacuaciones_24: {
+          value: { base: "#00a2c7" },
+        },
+        algebra_pol_52: {
+          value: { base: "#338052" },
+        },
       },
     },
   },

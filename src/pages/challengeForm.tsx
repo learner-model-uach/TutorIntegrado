@@ -17,7 +17,6 @@ import {
 import { useRouter } from "next/router";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
-import "katex/dist/katex.min.css";
 import MathDisplay from "../components/challenge/MathDisplay";
 import LatexPreview from "../components/challenge/LatexPreview";
 import { extractExercise, formatDate } from "../components/challenge/tools";

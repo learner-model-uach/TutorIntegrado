@@ -2,6 +2,7 @@ import { Avatar, Box, Button, Heading, HStack, Highlight, Stack, Text } from "@c
 import NextLink from "next/link";
 import { FaArrowRight, FaBookOpen, FaHistory, FaPencilAlt } from "react-icons/fa";
 import { useAuth } from "../Auth";
+import { useCompletedExercisesTotal } from "../olm/hooks/useCompletedExercisesTotal";
 import { useProjectUserSummary } from "./useProjectUserSummary";
 
 function InfoCard({
@@ -52,6 +53,11 @@ function InfoCard({
 export const AssigndUser = () => {
   const { user, project } = useAuth();
   const userName = user?.name?.trim().split(/\s+/)[0] || "usuario";
+  const {
+    totalCompletedExercises,
+    isLoading: isExercisesLoading,
+    isError: isExercisesError,
+  } = useCompletedExercisesTotal();
   const { recentActivityValue, lastExerciseValue } = useProjectUserSummary({
     projectId: project?.id,
     userId: user?.id,
@@ -124,18 +130,24 @@ export const AssigndUser = () => {
 
             <HStack flexWrap="wrap" gap="4" align="stretch">
               <InfoCard
-                label="Actividad Reciente"
+                label="Último tópico visitado"
                 value={recentActivityValue}
                 icon={<FaHistory aria-hidden="true" />}
               />
               <InfoCard
-                label="Último ejercicio realizado en"
+                label="Último ejercicio completado en"
                 value={lastExerciseValue}
                 icon={<FaBookOpen aria-hidden="true" />}
               />
               <InfoCard
                 label="Ejercicios Completados"
-                value={"-"}
+                value={
+                  isExercisesLoading
+                    ? "Buscando..."
+                    : isExercisesError
+                      ? "Sin datos"
+                      : String(totalCompletedExercises)
+                }
                 icon={<FaPencilAlt aria-hidden="true" />}
               />
             </HStack>
@@ -144,11 +156,7 @@ export const AssigndUser = () => {
           <Box
             w={{ base: "100%", lg: "360px" }}
             borderRadius="2xl"
-            // bg="bg.secondary"
             bg={{ base: "whiteAlpha.700", _dark: "gray.900" }}
-            // borderWidth="1px"
-            // borderColor="gray.300"
-            // boxShadow="lg"
             p={{ base: 5, md: 6 }}
           >
             <Stack gap="4">
@@ -156,12 +164,6 @@ export const AssigndUser = () => {
                 Acceso rápido
               </Text>
               <Stack gap="3">
-                <Button asChild bg="tangerine.500" color="white" borderRadius="2xl" size="lg">
-                  <NextLink href="/challenge">
-                    Ir a desafíos <FaArrowRight />
-                  </NextLink>
-                </Button>
-
                 <Button
                   asChild
                   bg="tangerine.500"
@@ -170,7 +172,7 @@ export const AssigndUser = () => {
                   size="lg"
                   variant="outline"
                 >
-                  <NextLink href="/challenge">
+                  <NextLink href="/progress">
                     Ver Mi progreso
                     <FaArrowRight />
                   </NextLink>

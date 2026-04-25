@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { useGQLMutation } from "rq-gql";
 import { useAuth } from "../components/Auth";
 import { gql, UpdateModelStateInput } from "../graphql";
+import { invalidateOlmProgressQueries } from "./olmQueryInvalidation";
 export type StateArguments = Omit<UpdateModelStateInput, "userID">;
 export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
   const latestBaseState = useLatestRef(baseState);
@@ -15,6 +16,11 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
       # fetchPolicy: "no-cache" # Agregamos la política de caché utilizando un comentario GraphQL
     `),
     {
+      onSuccess(_data, variables) {
+        if (variables.input.typeModel === "BKT") {
+          invalidateOlmProgressQueries();
+        }
+      },
       onError(err) {
         console.error(err);
         if (process.env.NODE_ENV === "development") {

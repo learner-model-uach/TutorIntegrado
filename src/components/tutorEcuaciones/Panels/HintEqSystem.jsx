@@ -42,11 +42,12 @@ export const HintEqSystem = ({
 
   const startAction = useAction({});
 
-  const [allHints, setAllHints] = useState(hints);
+  const [allHints, setAllHints] = useState(Array.isArray(hints) ? hints : []);
   const [countHint, setCountHint] = useState(-1); // counts the number of accumulated hints displayed to the user
   const [countNotification, setCountNotication] = useState(0);
   const [isDisabledHint, setIsDisabledHint] = useState(firstTimeHint);
   const [hintsAvaliableList, setHintsAvaliableList] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const [shake, setShake] = useState(false);
 
   const hintIndex = useRef(-1); // this is used to keep the index of the possible answers that the user is seeing
@@ -57,7 +58,8 @@ export const HintEqSystem = ({
   const pressBoton = useRef(false); // true if the hint button is pressed, otherwise false
 
   useEffect(() => {
-    setAllHints(hints);
+    setAllHints(Array.isArray(hints) ? hints : []);
+    setIsOpen(false);
     setCountHint(-1);
     setHintsAvaliableList([]);
     hintIndex.current = -1;
@@ -118,27 +120,36 @@ export const HintEqSystem = ({
   // button when the user has completed the step
   useEffect(() => {
     setIsDisabledHint(firstTimeHint);
+    if (firstTimeHint) {
+      setIsOpen(false);
+    }
   }, [firstTimeHint]);
 
   const handOnClickNext = e => {
+    const nextHint = allHints[hintIndex.current + 1];
+    if (!nextHint) return;
+
     hintIndex.current += 1;
     startAction({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,
-      hintID: allHints[hintIndex.current].id,
+      hintID: nextHint.id,
       extra: { open: "next" },
     });
     setCountHint(prev => prev + 1);
   };
 
   const handOnClickBack = e => {
+    const previousHint = allHints[hintIndex.current - 1];
+    if (!previousHint) return;
+
     hintIndex.current -= 1;
     startAction({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,
-      hintID: allHints[hintIndex.current].id,
+      hintID: previousHint.id,
       extra: { open: "prev" },
     });
     setCountHint(prev => prev - 1);
@@ -148,6 +159,10 @@ export const HintEqSystem = ({
     setCountNotication(0);
 
     let newHint = allHints[newHintIndex.current];
+    if (!newHint) {
+      setIsOpen(false);
+      return;
+    }
 
     if (!hintsAvaliableList.includes(newHint)) {
       if (newHintAvaliable) {
@@ -173,19 +188,30 @@ export const HintEqSystem = ({
       verbName: "requestHint",
       stepID: nStep,
       contentID: code,
-      hintID: allHints[hintIndex.current].id,
+      hintID: newHint.id,
       extra: { open: "new" },
     });
   };
 
+  const currentHint = countHint >= 0 ? hintsAvaliableList[countHint] : undefined;
+  const currentHintText = typeof currentHint?.text === "string" ? currentHint.text : "";
+  const hasPreviousHint = countHint !== 0 && hintsAvaliableList.length > 0;
+  const hasNextHint = countHint + 1 !== hintsAvaliableList.length && hintsAvaliableList.length > 0;
+
   return (
-    <Popover.Root placement="left" closeOnBlur={false} closeOnInteractOutside={false}>
-      <Popover.Trigger>
+    <Popover.Root
+      open={isOpen}
+      onOpenChange={({ open }) => setIsOpen(open && !isDisabledHint)}
+      positioning={{ placement: "bottom" }}
+      closeOnBlur={false}
+      closeOnInteractOutside={false}
+    >
+      <Popover.Trigger asChild>
         <Button
           className={
             shake ? `${styles["notification"]} ${styles["shake"]}` : styles["notification"]
           }
-          isDisabled={isDisabledHint}
+          disabled={isDisabledHint || allHints.length === 0}
           onClick={handOnClickHint}
           colorPalette={HINT_BUTTOM_COLOR}
         >
@@ -195,8 +221,17 @@ export const HintEqSystem = ({
       </Popover.Trigger>
 
       <Popover.Positioner>
-        <Popover.Content color="white" bg="blue.800" borderColor="blue.800" width={230}>
-          <Popover.Arrow />
+        <Popover.Content
+          color="white"
+          bg="blue.800"
+          borderColor="blue.800"
+          width={230}
+          boxShadow="lg"
+          css={{ "--popover-bg": "var(--chakra-colors-blue-800)" }}
+        >
+          <Popover.Arrow>
+            <Popover.ArrowTip bg="blue.800" borderColor="blue.800" />
+          </Popover.Arrow>
           <Popover.CloseTrigger />
           <Popover.Header pt={4} fontWeight="bold" border="0">
             {HEADER_POPOVER_HINT}
@@ -204,34 +239,36 @@ export const HintEqSystem = ({
 
           <Popover.Body>
             <Flex>
-              <TeX>{hintsAvaliableList.length > 0 && hintsAvaliableList[countHint].text}</TeX>
+              <TeX>{currentHintText}</TeX>
             </Flex>
           </Popover.Body>
 
-          <Popover.Footer
-            border="0"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            pb={4}
-          >
-            <ButtonGroup size="sm">
-              {countHint != 0 && (
-                <Button colorPalette={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
-                  {HINT_BACK_BUTTOM}
-                </Button>
-              )}
-              {countHint + 1 != hintsAvaliableList.length && (
-                <Button
-                  colorPalette={POPOVER_NEXT_BUTTOM_COLOR}
-                  onClick={handOnClickNext}
-                  autoFocus
-                >
-                  {HINT_NEXT_BUTTOM}
-                </Button>
-              )}
-            </ButtonGroup>
-          </Popover.Footer>
+          {(hasPreviousHint || hasNextHint) && (
+            <Popover.Footer
+              border="0"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              pb={4}
+            >
+              <ButtonGroup size="sm">
+                {hasPreviousHint && (
+                  <Button colorPalette={POPOVER_BACK_BUTTOM_COLOR} onClick={handOnClickBack}>
+                    {HINT_BACK_BUTTOM}
+                  </Button>
+                )}
+                {hasNextHint && (
+                  <Button
+                    colorPalette={POPOVER_NEXT_BUTTOM_COLOR}
+                    onClick={handOnClickNext}
+                    autoFocus
+                  >
+                    {HINT_NEXT_BUTTOM}
+                  </Button>
+                )}
+              </ButtonGroup>
+            </Popover.Footer>
+          )}
         </Popover.Content>
       </Popover.Positioner>
     </Popover.Root>

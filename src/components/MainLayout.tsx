@@ -21,6 +21,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
       height="100vh"
       bg={mainContainerBackground}
       overflow="clip"
+      minW={0}
       style={{ "--sidebar-width": "16rem" } as React.CSSProperties}
     >
       <Box
@@ -58,6 +59,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
       </Box>
       <Box
         flex="1"
+        minW={0}
         p={{ base: "0", md: "6" }}
         marginStart={{ md: "var(--sidebar-width)" }}
         position="relative"
@@ -65,7 +67,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
         transition="left 0.2s"
       >
         <Box bg={contentContainerBackground} height="100%" pb="6" rounded={{ md: "lg" }}>
-          <Flex direction="column" height="full">
+          <Flex direction="column" height="full" minW={0}>
             <Flex
               w="full"
               py="4"
@@ -83,6 +85,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
               overflowY="auto"
               direction="column"
               flex="1"
+              minW={0}
               overflow="auto"
               padding="12px"
               px={{
