@@ -1,6 +1,7 @@
 import { Alert, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
+import { FaPencilAlt } from "react-icons/fa";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -13,6 +14,7 @@ import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
+import { MathPixBoard } from "../../whiteboard/MathPixBoard";
 
 addStyles();
 
@@ -134,6 +136,7 @@ const Mq2 = ({
   const [placeholder, setPlaceholder] = useState(true);
   const [ta, setTa] = useState<MathField | null>(null);
   const [attempts, setAttempts] = useState(0);
+  const [isBoardOpen, setIsBoardOpen] = useState(false);
   const [alertType, setAlertType] = useState<
     "info" | "warning" | "success" | "error" | undefined
   >();
@@ -255,6 +258,13 @@ const Mq2 = ({
     if (ta != undefined) setLatex("");
   };
 
+  const handleBoardCapture = (capturedLatex: string) => {
+    setLatex(capturedLatex);
+    if (ta) {
+      ta.latex(capturedLatex);
+    }
+  };
+
   return (
     <>
       <VStack alignItems="center" justifyContent="center" margin={"auto"}>
@@ -266,145 +276,164 @@ const Mq2 = ({
               : false
           }
         />
-        <Box>
-          <Stack gap={4} direction="row" align="center" pb={4}>
-            {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("(");
-              }}
-            >
-              {"("}
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools(")");
-              }}
-            >
-              {")"}
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("^");
-              }}
-            >
-              <MQStaticMathField
-                exp={"x^y"}
-                currentExpIndex={
-                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-                    ? true
-                    : false
-                }
-              />
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("\\sqrt");
-              }}
-            >
-              <MQStaticMathField
-                exp={"\\sqrt{x}"}
-                currentExpIndex={
-                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-                    ? true
-                    : false
-                }
-              />
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("\\nthroot");
-              }}
-            >
-              <MQStaticMathField
-                exp={"\\sqrt[y]{x}"}
-                currentExpIndex={
-                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-                    ? true
-                    : false
-                }
-              />
-            </Button>
-          </Stack>
-          <Stack gap={4} direction="row" align="center" pb={4}>
-            {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
-                           Ademas con mousedown se puede usar preventDefault*/}
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("+");
-              }}
-            >
-              +
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("-");
-              }}
-            >
-              -
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("*");
-              }}
-            >
-              *
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("\\frac");
-              }}
-            >
-              /
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                clear();
-              }}
-            >
-              C
-            </Button>
-          </Stack>
+        <Box position="relative">
+          <HStack gap={6} alignItems="center" justifyContent="center" pb={4}>
+            <VStack gap={4} alignItems="center">
+              <Stack gap={4} direction="row" align="center">
+                {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("(");
+                  }}
+                >
+                  {"("}
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools(")");
+                  }}
+                >
+                  {")"}
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("^");
+                  }}
+                >
+                  <MQStaticMathField
+                    exp={"x^y"}
+                    currentExpIndex={
+                      parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                        ? true
+                        : false
+                    }
+                  />
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("\\sqrt");
+                  }}
+                >
+                  <MQStaticMathField
+                    exp={"\\sqrt{x}"}
+                    currentExpIndex={
+                      parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                        ? true
+                        : false
+                    }
+                  />
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("\\nthroot");
+                  }}
+                >
+                  <MQStaticMathField
+                    exp={"\\sqrt[y]{x}"}
+                    currentExpIndex={
+                      parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                        ? true
+                        : false
+                    }
+                  />
+                </Button>
+              </Stack>
+              <Stack gap={4} direction="row" align="center">
+                {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
+                               Ademas con mousedown se puede usar preventDefault*/}
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("+");
+                  }}
+                >
+                  +
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("-");
+                  }}
+                >
+                  -
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("*");
+                  }}
+                >
+                  *
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    MQtools("\\frac");
+                  }}
+                >
+                  /
+                </Button>
+                <Button
+                  width={"40px"}
+                  height={"40px"}
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    clear();
+                  }}
+                >
+                  C
+                </Button>
+              </Stack>
+            </VStack>
+          </HStack>
+          <Button
+            width={"40px"}
+            height={"40px"}
+            bg="gray.900"
+            color="white"
+            borderRadius="md"
+            aria-label="Abrir pizarra"
+            position="absolute"
+            right="-52px"
+            top="8px"
+            zIndex={1}
+            onClick={() => setIsBoardOpen(true)}
+          >
+            <FaPencilAlt />
+          </Button>
           <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
             <Button
               colorPalette="teal"
@@ -445,6 +474,13 @@ const Mq2 = ({
           </HStack>
         </Box>
       </VStack>
+      <MathPixBoard
+        isOpen={isBoardOpen}
+        onClose={() => setIsBoardOpen(false)}
+        onCapture={handleBoardCapture}
+        stepTitle={step.stepTitle}
+        stepExpression={step.expression}
+      />
       <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
         <Box>
           <Button
