@@ -1,12 +1,39 @@
 import { useRef } from "react";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import { Dialog, Button, Portal, CloseButton, Text } from "@chakra-ui/react";
+import { Browser } from "@capacitor/browser";
 import { AuthState } from "./Auth";
+import { getNativeRedirectUri, isWrapper } from "../utils/auth0Platform";
 
 export function Logout() {
   const { logout } = useAuth0();
   const cancelRef = useRef<HTMLButtonElement>(null);
+
+  const doLogout = async () => {
+    AuthState.isLoading = true;
+
+    if (isWrapper()) {
+      await logout({
+        logoutParams: {
+          returnTo: getNativeRedirectUri(),
+        },
+        async openUrl(url) {
+          await Browser.open({
+            url,
+            windowName: "_self",
+          });
+        },
+      });
+      return;
+    }
+
+    await logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+  };
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -31,17 +58,7 @@ export function Logout() {
                   Cancel
                 </Button>
               </Dialog.ActionTrigger>
-              <Button
-                colorPalette="red"
-                onClick={() => {
-                  AuthState.isLoading = true;
-                  logout({
-                    logoutParams: {
-                      returnTo: window.location.origin,
-                    },
-                  });
-                }}
-              >
+              <Button colorPalette="red" onClick={doLogout}>
                 Confirm
               </Button>
             </Dialog.Footer>
