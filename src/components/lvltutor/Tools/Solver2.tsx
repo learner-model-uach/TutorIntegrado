@@ -9,7 +9,6 @@ import {
   Heading,
   Alert,
   Text,
-  HStack,
   VStack,
   Center,
   Image,
@@ -33,6 +32,26 @@ const Mq2 = dynamic(
     return import("./Mq2");
   },
   { ssr: false },
+);
+
+const SummaryText = ({ children }: { children: React.ReactNode }) => (
+  <Text w="100%" maxW="100%" minW={0} lineHeight="1.6" overflowWrap="anywhere">
+    {children}
+  </Text>
+);
+
+const ScrollableMathField = ({
+  exp,
+  currentExpIndex,
+}: {
+  exp: string;
+  currentExpIndex: boolean;
+}) => (
+  <Box w="100%" maxW="100%" minW={0} overflowX="auto" overflowY="hidden" py="1">
+    <Box w="max-content" maxW="none" mx="auto">
+      <MQStaticMathField exp={exp} currentExpIndex={currentExpIndex} />
+    </Box>
+  </Box>
 );
 
 interface value {
@@ -289,13 +308,24 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
   let initialExp = steps.initialExpression ? steps.initialExpression : steps.steps[0]?.expression;
 
   return (
-    <Flex key={steps.code} alignItems="center" justifyContent="center" margin={"auto"}>
+    <Flex
+      key={steps.code}
+      alignItems="center"
+      justifyContent="center"
+      margin={"auto"}
+      w="100%"
+      maxW="100%"
+      minW={0}
+      overflowX="hidden"
+    >
       <Flex
         direction="column"
         p={1}
         rounded={6}
         w="100%"
         maxW="3xl"
+        minW={0}
+        overflowX="hidden"
         alignItems="center"
         justifyContent="center"
         margin={"auto"}
@@ -309,11 +339,14 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
         {steps.img ? (
           <Image src={`/img/${steps.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
         ) : (
-          <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
+          <ScrollableMathField exp={initialExp || ""} currentExpIndex={true} />
         )}
         <Accordion.Root
           variant={"plain"}
           mt={"1rem"}
+          w="100%"
+          maxW="100%"
+          minW={0}
           multiple
           collapsible
           value={Array.isArray(MQProxy.defaultIndex) ? MQProxy.defaultIndex.map(String) : []}
@@ -384,8 +417,8 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                         !isDone &&
                         step.expression &&
                         step.multipleChoice != undefined ? (
-                          <Center>
-                            <Box mb="3" overflow="visible">
+                          <Center w="100%" maxW="100%" minW={0}>
+                            <Box mb="3" w="100%" maxW="100%" minW={0} overflowX="auto">
                               <MQStaticMathField
                                 key={`mq-enunciado-${step.stepId}-open`}
                                 exp={step.expression}
@@ -410,26 +443,33 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
             </Accordion.Item>
           ))}
         </Accordion.Root>
-        <Box>
-          <Alert.Root status="info" hidden={resumen} alignItems="flex-start">
-            <Alert.Indicator />
-
-            <Alert.Content>
-              <VStack w="100%" align="start">
-                <Center>
+        <Box w="100%" maxW="100%" minW={0}>
+          <Alert.Root
+            status="info"
+            hidden={resumen}
+            alignItems="stretch"
+            w="100%"
+            maxW="100%"
+            minW={0}
+            overflow="hidden"
+            px={{ base: "4", md: "5" }}
+            py="4"
+            className="lvltutor-summary"
+          >
+            <Alert.Content w="100%" maxW="100%" minW={0}>
+              <VStack w="100%" maxW="100%" minW={0} align="stretch" gap="3">
+                <Center w="100%">
                   <Heading fontSize="xl">Resumen</Heading>
                 </Center>
-                <HStack>
+                <Box w="100%" maxW="100%" minW={0}>
                   <Text>Expresión:</Text>
-                  <MQStaticMathField exp={initialExp || ""} currentExpIndex={!resumen} />
-                </HStack>
+                  <ScrollableMathField exp={initialExp || ""} currentExpIndex={!resumen} />
+                </Box>
                 {steps.steps.map((step, i) => (
-                  <Box key={"ResumenBox" + i}>
-                    <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
-                      {step.summary}
-                    </Text>
-                    <Box key={"ResumenMCContainer" + i} display="flex" justifyContent="center">
-                      <MQStaticMathField
+                  <Box key={"ResumenBox" + i} w="100%" maxW="100%" minW={0}>
+                    <SummaryText key={"ResumenText" + i}>{step.summary}</SummaryText>
+                    <Box key={"ResumenMCContainer" + i} w="100%" maxW="100%" minW={0}>
+                      <ScrollableMathField
                         key={"ResumenMC" + i}
                         exp={step.displayResult[0]!}
                         currentExpIndex={!resumen}

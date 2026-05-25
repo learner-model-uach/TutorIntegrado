@@ -14,6 +14,48 @@
   vertical-align: middle !important;
 }
 
+.factorization-summary,
+.factorization-summary *,
+.lvltutor-summary,
+.lvltutor-summary *,
+.logic-summary,
+.logic-summary * {
+  box-sizing: border-box;
+}
+
+.factorization-summary .MathJax,
+.factorization-summary .MathJax_Display,
+.factorization-summary mjx-container,
+.lvltutor-summary .mq-math-mode,
+.lvltutor-summary .mq-root-block,
+.logic-summary .katex,
+.logic-summary .katex-display {
+  max-width: 100%;
+}
+
+.factorization-summary .MathJax_Display,
+.factorization-summary mjx-container,
+.lvltutor-summary .mq-math-mode {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.logic-summary .katex-display {
+  margin: 0.45rem 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding-bottom: 0.1rem;
+}
+
+.logic-summary-text {
+  text-align: left;
+  max-width: 100%;
+}
+
+.logic-summary-text .katex {
+  white-space: normal;
+}
+
 .chakra-theme.light {
   --colors-bg: #2b4264; /* indigo.900 */
   --colors-bg-secondary: #ffffff; /* white */
