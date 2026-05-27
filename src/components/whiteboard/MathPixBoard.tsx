@@ -2,6 +2,7 @@ import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaEraser, FaPencilAlt, FaRegCircle, FaTimes } from "react-icons/fa";
 import MQStaticMathField from "../../utils/MQStaticMathField";
+import { requestMathpixStrokes } from "./mathpixClient";
 
 export interface MathPixBoardProps {
   isOpen: boolean;
@@ -19,7 +20,6 @@ export const MathPixBoard = ({
   isOpen,
   onClose,
   onCapture,
-  title = "Pizarra MathPix",
   strokeColor = "#000",
   strokeWidth = 2,
   backgroundColor = "white",
@@ -38,6 +38,22 @@ export const MathPixBoard = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  const drawGuidelines = useCallback(
+    (width: number, height: number) => {
+      if (!contextRef.current) return;
+      const spacing =65;
+      contextRef.current.strokeStyle = "rgba(0, 0, 0, 0.20)";
+      contextRef.current.lineWidth = 1;
+      for (let y = spacing; y < height; y += spacing) {
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(0, y);
+        contextRef.current.lineTo(width, y);
+        contextRef.current.stroke();
+      }
+    },
+    []
+  );
+
   const resizeCanvas = useCallback(() => {
     if (!canvasRef.current || !contextRef.current) return;
     const canvas = canvasRef.current;
@@ -52,6 +68,7 @@ export const MathPixBoard = ({
     contextRef.current.clearRect(0, 0, rect.width, rect.height);
     contextRef.current.fillStyle = backgroundColor;
     contextRef.current.fillRect(0, 0, rect.width, rect.height);
+    drawGuidelines(rect.width, rect.height);
 
     if (prevImage) {
       const image = new Image();
@@ -60,7 +77,7 @@ export const MathPixBoard = ({
       };
       image.src = prevImage;
     }
-  }, [backgroundColor]);
+  }, [backgroundColor, drawGuidelines]);
 
   useEffect(() => {
     if (!isOpen || !canvasRef.current) return;
@@ -158,6 +175,7 @@ export const MathPixBoard = ({
     contextRef.current.clearRect(0, 0, rect.width, rect.height);
     contextRef.current.fillStyle = backgroundColor;
     contextRef.current.fillRect(0, 0, rect.width, rect.height);
+    drawGuidelines(rect.width, rect.height);
     hasDrawingRef.current = false;
     strokesRef.current = { x: [], y: [] };
     currentStrokeRef.current = null;
@@ -165,13 +183,6 @@ export const MathPixBoard = ({
 
   const handleCapture = async () => {
     if (!canvasRef.current || isSubmitting) return;
-
-    const appId = process.env.NEXT_PUBLIC_MATHPIX_APP_ID;
-    const appKey = process.env.NEXT_PUBLIC_MATHPIX_APP_KEY;
-    if (!appId || !appKey) {
-      setSubmitError("Faltan credenciales de Mathpix en .env.");
-      return;
-    }
 
     if (!strokesRef.current.x.length || !strokesRef.current.y.length) {
       setSubmitError("No hay trazos para enviar.");
@@ -191,23 +202,7 @@ export const MathPixBoard = ({
     try {
       setIsSubmitting(true);
       setSubmitError(null);
-      const response = await fetch("https://api.mathpix.com/v3/strokes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "app_id": appId,
-          "app_key": appKey,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || "Error al procesar Mathpix.");
-      }
-
-      const result = await response.json();
-      console.log("Mathpix result:", result);
+      const result = await requestMathpixStrokes(payload);
       const latex = result?.latex_styled || result?.latex || "";
       if (!latex) {
         throw new Error("Mathpix no devolvio latex.");
@@ -272,9 +267,19 @@ export const MathPixBoard = ({
                 </Text>
               ) : null}
               {stepExpression ? (
-                <Box mt={2} overflow="visible">
-                  <MQStaticMathField exp={stepExpression} currentExpIndex={true} />
-                </Box>
+                <>
+                  <style>{
+                    ".mathpix-step-expression .mq-root-block, .mathpix-step-expression .mq-math-mode { color: #000 !important; }"
+                  }</style>
+                  <Box
+                    mt={2}
+                    overflow="visible"
+                    color="black"
+                    className="mathpix-step-expression"
+                  >
+                    <MQStaticMathField exp={stepExpression} currentExpIndex={true} />
+                  </Box>
+                </>
               ) : (
                 <Text fontSize="sm" color="gray.600" fontWeight="semibold">
                   Ingresa el factor comun:
@@ -333,6 +338,8 @@ export const MathPixBoard = ({
                   size="sm"
                   variant={tool === "draw" ? "solid" : "ghost"}
                   colorPalette={tool === "draw" ? "blue" : undefined}
+                  color="white"
+                  _hover={{ color: "white" }}
                   aria-label="Lapiz"
                   onClick={() => setTool("draw")}
                 >
@@ -342,6 +349,8 @@ export const MathPixBoard = ({
                   size="sm"
                   variant={tool === "erase" ? "solid" : "ghost"}
                   colorPalette={tool === "erase" ? "blue" : undefined}
+                  color="white"
+                  _hover={{ color: "white" }}
                   aria-label="Borrador"
                   onClick={() => setTool("erase")}
                 >
@@ -350,6 +359,8 @@ export const MathPixBoard = ({
                 <Button
                   size="sm"
                   variant="ghost"
+                  color="white"
+                  _hover={{ color: "white" }}
                   aria-label="Limpiar"
                   onClick={clearCanvas}
                 >
@@ -364,7 +375,13 @@ export const MathPixBoard = ({
               pb={{ base: 3, md: 4 }}
               gap={3}
             >
-              <Button variant="outline" colorPalette="gray" onClick={onClose}>
+              <Button
+                variant="outline"
+                colorPalette="gray"
+                color="black"
+                _hover={{ color: "black" }}
+                onClick={onClose}
+              >
                 Cancelar
               </Button>
               <Button colorPalette="blue" onClick={handleCapture} loading={isSubmitting}>
