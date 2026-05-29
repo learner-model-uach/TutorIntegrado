@@ -1,7 +1,10 @@
 .movable-item {
   border-radius: 10px;
   height: 50px;
-  width: 180px;
+  width: min(180px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   cursor: pointer;
   margin: 15px auto;
   display: flex;
@@ -12,7 +15,7 @@
 
 @media screen and (max-width: 768px) {
   .movable-item {
-    width: 120px;
+    width: min(120px, 100%);
     font-size: 10px;
     margin: 0 auto;
   }
