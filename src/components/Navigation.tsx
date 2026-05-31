@@ -1,5 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
-import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
+import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch, FaPencilAlt } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
@@ -85,6 +85,13 @@ export function Navigation() {
                 Desafíos
               </SidebarLink>
             </Stack>
+                    {user && admin && (
+          <>
+            <SidebarLink icon={<FaPencilAlt/>} href={"/showExercises"}>
+              Edición de Ejercicios
+            </SidebarLink>
+          </>
+        )}
           </>
         )}
       </Stack>

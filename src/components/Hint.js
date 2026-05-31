@@ -2,9 +2,54 @@ import React, { useState, useEffect } from "react";
 import { Button, Popover, Portal, Center, Badge, Box } from "@chakra-ui/react";
 import { toaster } from "./ui/toaster";
 import { useAction } from "../utils/action";
-import { MathComponent } from "mathjax-react";
+import { MathComponent } from "./MathJax";
 import { FaQuestion } from "react-icons/fa";
 import MQStaticMathField from "../utils/MQStaticMathField";
+
+// Componente de navegación extraído (Sintaxis Chakra UI v3)
+export const HintNavigation = ({ list, currentIndex, onPrev, onNext }) => {
+  const currentItem = list[currentIndex];
+
+  if (!currentItem) {
+    return <Popover.Body>Error: Índice no válido</Popover.Body>;
+  }
+
+  return (
+    <Popover.Body>
+      <br />
+      {currentItem.hint}
+      <Center>
+        {currentItem.expression ? (
+          <MQStaticMathField exp={currentItem.expression} currentExpIndex={true} />
+        ) : null}
+      </Center>
+      <br />
+      <Center>
+        {list[currentIndex - 1] && (
+          <Button 
+            onClick={onPrev} 
+            colorPalette="cyan" 
+            variant="outline" 
+            size="sm"
+            mr={2} // Reemplaza el espacio en blanco con margen nativo de Chakra
+          >
+            atrás
+          </Button>
+        )}
+        {list[currentIndex + 1] && (
+          <Button 
+            onClick={onNext} 
+            colorPalette="cyan" 
+            variant="outline" 
+            size="sm"
+          >
+            siguiente
+          </Button>
+        )}
+      </Center>
+    </Popover.Body>
+  );
+};
 
 const Hint = ({
   hints, //all hints
@@ -154,6 +199,7 @@ const Hint = ({
       });
     }
   };
+
   return (
     <div>
       <Popover.Root
@@ -168,7 +214,6 @@ const Hint = ({
             onClick={ayuda}
             colorPalette="cyan"
             variant="outline"
-            // bg="yellow.400"
             h="8"
             size="sm"
             gap="2"
@@ -212,29 +257,13 @@ const Hint = ({
             <Popover.Content>
               <Popover.Arrow />
               <Popover.CloseTrigger />
-              <Popover.Body>
-                <br />
-                {list[j].hint}
-                <Center>
-                  {list[j].expression ? (
-                    <MQStaticMathField exp={list[j].expression} currentExpIndex={true} />
-                  ) : null}
-                </Center>
-                <br />
-                <Center>
-                  {list[j - 1] && (
-                    <Button onClick={atras} colorScheme="cyan" variant="outline" size="sm">
-                      atrás
-                    </Button>
-                  )}
-                  &nbsp;&nbsp;&nbsp;
-                  {list[j + 1] && (
-                    <Button onClick={siguiente} colorScheme="cyan" variant="outline" size="sm">
-                      siguiente
-                    </Button>
-                  )}
-                </Center>
-              </Popover.Body>
+              {/* Aquí renderizamos el subcomponente limpio */}
+              <HintNavigation 
+                list={list} 
+                currentIndex={j} 
+                onPrev={atras} 
+                onNext={siguiente} 
+              />
             </Popover.Content>
           </Popover.Positioner>
         </Portal>

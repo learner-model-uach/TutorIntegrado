@@ -1,6 +1,11 @@
 "use client";
-import { StaticMathField } from "react-mathquill";
+import dynamic from "next/dynamic"
 import { useState, useEffect } from "react";
+
+const StaticMathField = dynamic(
+  () => import("react-mathquill").then((mod) => mod.StaticMathField),
+  { ssr: false, loading: () => <span /> }
+);
 
 const mqo = {
   overflow: "visible",

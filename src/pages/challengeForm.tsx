@@ -7,7 +7,6 @@ import {
   Textarea,
   Accordion,
   Heading,
-  Checkbox,
   Button,
   Drawer,
   Portal,
@@ -25,6 +24,7 @@ import { withAuth } from "../components/Auth";
 import { useAction } from "../utils/action";
 import { sessionState } from "../components/SessionState";
 import { LoadingOverlay } from "../components/challenge/LoadingOverlay";
+import NativeCheckbox from "../components/challenge/NativeCheckbox";
 
 const mutationUpdateChallenge = gql(`
   mutation UpdateChallenge($challengeId: IntID!, $challenge: ChallengeInput!) {
@@ -192,15 +192,14 @@ const queryGetChallenge = gql(/* GraphQL */ `
     }
   }
 `);
+
 //--------------------------------------------------
 
 const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTopics = [] }) => {
-  // Función auxiliar para verificar si un item está seleccionado
   const isItemSelected = itemId => {
     return selectedTopics.some(item => item.id === itemId);
   };
 
-  // Obtiene todos los items descendientes de un item dado
   const getAllDescendants = item => {
     let descendants = [];
     if (item.childrens?.length) {
@@ -214,18 +213,14 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
 
   const handleParentChange = item => {
     const isSelected = isItemSelected(item.id);
-
     setSelectedTopics(prev => {
       if (isSelected) {
-        // Deseleccionar padre e hijos
         const descendantIds = getAllDescendants(item).map(d => d.id);
         return prev.filter(
-          selectedItem => selectedItem.id !== item.id && !descendantIds.includes(selectedItem.id),
+          selectedItem =>
+            selectedItem.id !== item.id && !descendantIds.includes(selectedItem.id),
         );
       } else {
-        // Seleccionar padre e hijos
-
-        // Al usar set, la operación de filtrado es más rapida que con la funcion filter
         const uniqueItems = new Set(prev.map(existingItem => existingItem.id));
         const descendants = getAllDescendants(item);
         return [
@@ -240,70 +235,57 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
 
   const handleChildChange = (parentItem, childItem) => {
     const isChildSelected = isItemSelected(childItem.id);
-
     setSelectedTopics(prev => {
       if (isChildSelected) {
-        // Deseleccionar hijo y padre
         return prev.filter(item => item.id !== childItem.id && item.id !== parentItem.id);
       } else {
-        // Seleccionar hijo
         let newItems = [...prev, childItem];
-
-        // Verificar si todos los hermanos están seleccionados
         const allSiblingsSelected = parentItem.childrens.every(
           children => children.id === childItem.id || isItemSelected(children.id),
         );
-
-        // Si todos los hermanos están seleccionados, incluir al padre
         if (allSiblingsSelected) {
           newItems = [...newItems, parentItem];
         }
-
         return newItems;
       }
     });
   };
 
+  // ✅ Cada nivel tiene su propio Accordion.Root aislado
   return (
-    <Accordion.Root collapsible w="100%">
+    <Accordion.Root collapsible multiple w="100%">
       {data.map(item => (
-        <Accordion.Item key={item.id} value={item.id}>
-          <h2>
-            <Accordion.ItemTrigger>
-              <Box flex="1" textAlign="left">
-                <Checkbox.Root
-                  checked={isItemSelected(item.id)}
-                  onCheckedChange={() => {
-                    if (item.childrens?.length > 0) {
-                      handleParentChange(item);
-                    } else {
-                      handleChildChange(item.parent, item);
-                    }
-                  }}
-                >
-                  <Checkbox.HiddenInput />
-                  <Checkbox.Control />
-                  <Checkbox.Label>{item.label}</Checkbox.Label>
-                </Checkbox.Root>
-              </Box>
-              {item.childrens?.length > 0 && <Accordion.ItemIndicator />}
-            </Accordion.ItemTrigger>
-          </h2>
+        <Accordion.Item key={item.id} value={String(item.id)}>
+          <Accordion.ItemTrigger>
+            <Box flex="1" textAlign="left">
+              <NativeCheckbox
+  checked={isItemSelected(item.id)}
+  onChange={() => {
+    if (item.childrens?.length > 0) {
+      handleParentChange(item);
+    } else {
+      handleChildChange(item.parent, item);
+    }
+  }}
+>
+  {item.label}
+</NativeCheckbox>
+            </Box>
+            {item.childrens?.length > 0 && <Accordion.ItemIndicator />}
+          </Accordion.ItemTrigger>
 
           {item.childrens?.length > 0 && (
             <Accordion.ItemContent>
-              <Accordion.ItemBody pb={4}>
-                <Accordion.Root multiple>
-                  <RecursiveAccordion
-                    data={item.childrens.map(children => ({
-                      ...children,
-                      parent: item,
-                    }))}
-                    onShowDetails={onShowDetails}
-                    setSelectedTopics={setSelectedTopics}
-                    selectedTopics={selectedTopics}
-                  />
-                </Accordion.Root>
+              <Accordion.ItemBody pb={4} pl={4}>
+                <RecursiveAccordion
+                  data={item.childrens.map(children => ({
+                    ...children,
+                    parent: item,
+                  }))}
+                  onShowDetails={onShowDetails}
+                  setSelectedTopics={setSelectedTopics}
+                  selectedTopics={selectedTopics}
+                />
               </Accordion.ItemBody>
             </Accordion.ItemContent>
           )}
@@ -315,11 +297,9 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
 
 const MathRecursiveAccordion = ({
   selectedTopics,
-  //onShowDetails,
   setSelectedExercises,
   selectedExercises = [],
 }) => {
-  // Verifica si un item está seleccionado
   const isItemSelected = exercise => {
     return selectedExercises.some(
       selected =>
@@ -328,10 +308,8 @@ const MathRecursiveAccordion = ({
     );
   };
 
-  // Maneja el cambio en la selección de cualquier item
   const handleItemChange = exercise => {
     if (isItemSelected(exercise)) {
-      // Si ya está seleccionado, lo removemos
       const newSelected = selectedExercises.filter(
         selected =>
           !(
@@ -341,159 +319,91 @@ const MathRecursiveAccordion = ({
       );
       setSelectedExercises(newSelected);
     } else {
-      // Si no está seleccionado, lo agregamos
       setSelectedExercises([...selectedExercises, exercise]);
     }
   };
 
   useEffect(() => {
-    // Obtén los IDs de los tópicos seleccionados actualmente
     const currentTopicIds = selectedTopics.map(topic => topic.id);
-
-    // Filtra los ejercicios seleccionados para mantener solo aquellos asociados a tópicos existentes
-    const filteredExercises = selectedExercises.filter(
-      exercise => currentTopicIds.includes(exercise.topicId), // Asegúrate de que cada ejercicio tenga un `topicId`
+    const filteredExercises = selectedExercises.filter(exercise =>
+      currentTopicIds.includes(exercise.topicId),
     );
-
-    // Si hay cambios, actualiza `selectedExercises`
     if (filteredExercises.length !== selectedExercises.length) {
       setSelectedExercises(filteredExercises);
     }
-  }, [selectedTopics]); // Ejecuta este efecto cada vez que `selectedTopics` cambie
+  }, [selectedTopics]);
 
+  // ✅ MathRecursiveAccordion también tiene su propio Accordion.Root
   return (
-    <>
-      {selectedTopics && selectedTopics.length > 0 && (
-        <Box>
-          {selectedTopics.map(topic => {
-            const exercises = extractExercise([topic]);
-
-            return (
-              exercises.length > 0 && (
-                <Accordion.Item key={topic.id} value={topic.id}>
-                  <h2>
-                    <Accordion.ItemTrigger>
-                      <Box flex="1" textAlign="left">
-                        <Text fontWeight="bold" mb={2}>
-                          {topic.label}
-                        </Text>
-                      </Box>
-                      {topic.content?.length > 0 && <Accordion.ItemIndicator />}
-                    </Accordion.ItemTrigger>
-                  </h2>
-                  <Accordion.ItemContent>
-                    <Accordion.ItemBody pb={4}>
-                      {exercises.length > 0 ? (
-                        exercises.map(exercise => (
-                          <Checkbox.Root
-                            key={`${exercise.exerciseId}-checkbox`}
-                            mb={2}
-                            checked={isItemSelected(exercise)}
-                            onCheckedChange={() => handleItemChange(exercise)}
-                          >
-                            <Checkbox.HiddenInput />
-                            <Checkbox.Control />
-                            <Checkbox.Label>
-                              <MathDisplay
-                                key={`${exercise.exerciseId}-math`}
-                                description={exercise.description}
-                                mathExpression={exercise.mathExpression}
-                                image={exercise.image}
-                              />
-                            </Checkbox.Label>
-                          </Checkbox.Root>
-                        ))
-                      ) : (
-                        <Text fontSize="sm" color="gray.500">
-                          No hay ejercicios disponibles para este tópico
-                        </Text>
-                      )}
-                    </Accordion.ItemBody>
-                  </Accordion.ItemContent>
-                </Accordion.Item>
-              )
-            );
-          })}
-        </Box>
-      )}
-    </>
+    <Accordion.Root multiple collapsible w="100%">
+      {selectedTopics && selectedTopics.length > 0 &&
+        selectedTopics.map(topic => {
+          const exercises = extractExercise([topic]);
+          if (!exercises.length) return null;
+          return (
+            <Accordion.Item key={topic.id} value={String(topic.id)}>
+              <Accordion.ItemTrigger>
+                <Box flex="1" textAlign="left">
+                  <Text fontWeight="bold" mb={2}>
+                    {topic.label}
+                  </Text>
+                </Box>
+                {topic.content?.length > 0 && <Accordion.ItemIndicator />}
+              </Accordion.ItemTrigger>
+              <Accordion.ItemContent>
+<Accordion.ItemBody pb={4}>
+  <Box
+    display="grid"
+    gridTemplateColumns="repeat(auto-fill, minmax(280px, 1fr))"
+    gap={3}
+  >
+    {exercises.map(exercise => (
+      <NativeCheckbox
+        key={`${exercise.exerciseId}-label`}
+        checked={isItemSelected(exercise)}
+        onChange={() => handleItemChange(exercise)}
+        style={{ alignItems: "flex-start" }}
+      >
+        <MathDisplay
+          key={`${exercise.exerciseId}-math`}
+          description={exercise.description}
+          mathExpression={exercise.mathExpression}
+          image={exercise.image}
+        />
+      </NativeCheckbox>
+    ))}
+  </Box>
+</Accordion.ItemBody>
+              </Accordion.ItemContent>
+            </Accordion.Item>
+          );
+        })}
+    </Accordion.Root>
   );
 };
 
-//---------------------------------------------
-/*
-function formatDateToRequiredFormat(dateString) {
-  // Crear un objeto Date a partir de la cadena de fecha
-  const date = new Date(dateString);
 
-  // Verificar si la fecha es válida
-  if (isNaN(date.getTime())) {
-    throw new Error("Invalid date string");
-  }
+//--------------------------------------------------
 
-  // Extraer los componentes de la fecha
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Los meses van de 0 a 11
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const hours = String(date.getUTCHours()).padStart(2, "0");
-  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-  const seconds = String(date.getUTCSeconds()).padStart(2, "0");
-  const milliseconds = String(date.getUTCMilliseconds()).padStart(3, "0");
-
-  // Formatear la fecha en el formato requerido
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
-}
-*/
-//-------------------------------
-/*
-function formatDateToUTC(dateString) {
-  console.log("Input dateString:", dateString)
-  if (!dateString || typeof dateString !== "string") {
-    throw new Error("Invalid input: dateString must be a string");
-  }
-
-  // Parse the input date string
-  const date = new Date(dateString);
-
-  // Check if the date is valid
-  if (isNaN(date.getTime())) {
-    throw new Error("Invalid date string");
-  }
-
-  // Convert the date to ISO string (UTC)
-  return date.toISOString();
-}*/
-
-//----------------------------
 const localTimeToUTC = localDateTime => {
-  // Create a Date object from the local date-time string
   const date = new Date(localDateTime);
-
-  // Convert to UTC and format as ISO string without the 'Z'
-  return date.toISOString(); //.replace(/Z$/, '');
+  return date.toISOString();
 };
 
-//------------------------------
 const utcToLocalTime = utcDateTime => {
-  // Create a Date object from the UTC date-time string
   const date = new Date(utcDateTime);
-
-  // Extract local date and time components
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
-
-  // Format as "yyyy-MM-ddThh:mm" (with optional ":ss" or ":ss.SSS")
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 };
 
 //---------------------------------
 
 export default withAuth(function ChallengesForm() {
-  //const ChallengeForm = () => {
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [detailItem, setDetailItem] = useState(null);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -519,7 +429,6 @@ export default withAuth(function ChallengesForm() {
   const isEditMode = mode === "edit";
   const challengeId = id ? id : "default-id";
   const action = useAction();
-  //const { user } = useAuth();
   const userId = sessionState.currentUser.id;
 
   const { data: TopicsData, isLoading: isTopicsLoading } = useGQLQuery(queryTopics);
@@ -527,52 +436,32 @@ export default withAuth(function ChallengesForm() {
 
   const { data: dataChallenge, isLoading: isChallengeLoading } = useGQLQuery(
     queryGetChallenge,
-    {
-      challengeId: challengeId,
-    },
-    {
-      enabled: isEditMode && !!challengeId, // Solo ejecuta la consulta si isEditMode es true y challengeId existe
-    },
+    { challengeId: challengeId },
+    { enabled: isEditMode && !!challengeId },
   );
 
-  const {
-    //data: dataUpdateChallenge,
-    error: errorUpdateChallenge,
-    //isLoading: isUpdateChallengeLoading,
-  } = useGQLQuery(
+  const { error: errorUpdateChallenge } = useGQLQuery(
     mutationUpdateChallenge,
-    {
-      challengeId: challengeId,
-      challenge: challenge,
-    },
+    { challengeId: challengeId, challenge: challenge },
     { enabled: isEditMode && isUpdated },
   );
 
-  const {
-    //data: dataCreateChallenge,
-    error: errorCreateChallenge,
-    //isLoading: isCreateChallengeLoading,
-  } = useGQLQuery(
+  const { error: errorCreateChallenge } = useGQLQuery(
     mutationCreateChallenge,
-    {
-      challenge: challenge,
-    },
+    { challenge: challenge },
     { enabled: !isEditMode && isCreated },
   );
 
   useEffect(() => {
     if (!isChallengeLoading && dataChallenge) {
       const challenge = dataChallenge.challenge;
-
       setTitle(challenge.title || "");
       setDescription(challenge.description || "");
       setEndDate(utcToLocalTime(challenge.endDate));
       setSelectedGroups(challenge.groups || []);
       setSelectedTopics(challenge.topics || []);
-      console.log("challenge", challenge);
       setSelectedExercises(
-        extractExercise([{ content: challenge.content, id: challenge.content[0].topics[0].id }]) ||
-          [],
+        extractExercise([{ content: challenge.content, id: challenge.content[0].topics[0].id }]) || [],
       );
       setStartDate(challenge.startDate !== null ? utcToLocalTime(challenge.startDate) : null);
     }
@@ -586,40 +475,6 @@ export default withAuth(function ChallengesForm() {
   const topics = TopicsData?.topics || [];
   const groups = GroupsData?.currentUser?.groups || [];
 
-  // Función para obtener el ejercicio con más KCs para cada 'code'
-  /*function getMaxKCsForEachCode(topics) {
-    const results = {};
-
-    // Función recursiva para explorar el JSON
-    function exploreTopic(topic) {
-      // Si el tema tiene subtemas, se recorren
-      if (topic.childrens && topic.childrens.length > 0) {
-        for (let child of topic.childrens) {
-          exploreTopic(child);
-        }
-      }
-
-      // Si el tema tiene ejercicios, se busca el que tiene más KCs
-      if (topic.content && topic.content.length > 0) {
-        // Si no existe una entrada en 'results' o el ejercicio tiene más KCs
-        if (!results[topic.code] || topic.content.length > results[topic.code].content.length) {
-          results[topic.code] = {
-            code: topic.code,
-            expression: topic.label,
-            description: `${topic.content.length} KCs`,
-          };
-        }
-      }
-    }
-
-    // Recorremos todos los temas principales
-    for (let topic of topics) {
-      exploreTopic(topic);
-    }
-
-    return results;
-  }
-*/
   const handleSelectGroup = group => {
     setSelectedGroups(prev =>
       prev.some(g => g.id === group.id) ? prev.filter(g => g.id !== group.id) : [...prev, group],
@@ -633,70 +488,36 @@ export default withAuth(function ChallengesForm() {
 
   const handleSave = () => {
     const challengeData = {
-      code: `${title.slice(0, 25)}_${Date.now()}`, //_${user.id}`, //unique key
+      code: `${title.slice(0, 25)}_${Date.now()}`,
       contentIds: selectedExercises.map(exercise => exercise.exerciseId),
       description: description,
       enabled: true,
       endDate: localTimeToUTC(endDate),
       groupsIds: selectedGroups.map(group => group.id),
-      projectId: 4, // 	NivPreAlg
+      projectId: 4,
       startDate: startDate ? localTimeToUTC(startDate) : null,
       tags: [],
       title: title,
       topicsIds: selectedTopics.map(topic => topic.id),
     };
 
-    // Validación de campos obligatorios
     const requiredFields = [
-      {
-        field: "code",
-        value: challengeData.code,
-        message: "El código del desafío es obligatorio.",
-      },
-      {
-        field: "title",
-        value: challengeData.title,
-        message: "El título del desafío es obligatorio.",
-      },
-      {
-        field: "description",
-        value: challengeData.description,
-        message: "La descripción del desafío es obligatoria.",
-      },
-      {
-        field: "endDate",
-        value: challengeData.endDate,
-        message: "La fecha de finalización es obligatoria.",
-      },
-      {
-        field: "groups",
-        value: challengeData.groupsIds,
-        message: "Debes seleccionar al menos un grupo.",
-      },
-      {
-        field: "topics",
-        value: challengeData.topicsIds,
-        message: "Debes seleccionar al menos un tópico.",
-      },
-      {
-        field: "content",
-        value: challengeData.contentIds,
-        message: "Debes seleccionar al menos un ejercicio.",
-      },
+      { field: "code", value: challengeData.code, message: "El código del desafío es obligatorio." },
+      { field: "title", value: challengeData.title, message: "El título del desafío es obligatorio." },
+      { field: "description", value: challengeData.description, message: "La descripción del desafío es obligatoria." },
+      { field: "endDate", value: challengeData.endDate, message: "La fecha de finalización es obligatoria." },
+      { field: "groups", value: challengeData.groupsIds, message: "Debes seleccionar al menos un grupo." },
+      { field: "topics", value: challengeData.topicsIds, message: "Debes seleccionar al menos un tópico." },
+      { field: "content", value: challengeData.contentIds, message: "Debes seleccionar al menos un ejercicio." },
     ];
 
-    // Verifica si falta algún campo obligatorio
-    const missingField = requiredFields.find(field => {
-      // Si el valor es undefined, null, o una lista vacía, se considera faltante
-      return (
-        field.value === undefined ||
-        field.value === null ||
-        field.value === "" ||
-        (Array.isArray(field.value) && field.value.length === 0)
-      );
-    });
+    const missingField = requiredFields.find(field =>
+      field.value === undefined ||
+      field.value === null ||
+      field.value === "" ||
+      (Array.isArray(field.value) && field.value.length === 0),
+    );
 
-    // Si falta algún campo, muestra una alerta y se detiene el proceso
     if (missingField) {
       alert(`Error: ${missingField.message}`);
       return;
@@ -706,7 +527,6 @@ export default withAuth(function ChallengesForm() {
 
     if (isEditMode) {
       setIsUpdated(true);
-
       action({
         verbName: "challengeUpdate",
         extra: {
@@ -717,11 +537,9 @@ export default withAuth(function ChallengesForm() {
           groupIDs: challengeData.groupsIds,
         },
       });
-
       alert("Desafío actualizado exitosamente!");
     } else {
       setIsCreated(true);
-
       action({
         verbName: "challengeCreate",
         extra: {
@@ -732,11 +550,8 @@ export default withAuth(function ChallengesForm() {
           groupIDs: challengeData.groupsIds,
         },
       });
-
       alert("Desafío guardado exitosamente");
     }
-
-    // limpia todo para evitar que el usuario cree ejercicios duplicados
 
     setTitle("");
     setDescription("");
@@ -745,9 +560,7 @@ export default withAuth(function ChallengesForm() {
     setSelectedTopics([]);
     setSelectedExercises([]);
 
-    router.push({
-      pathname: "/challenge",
-    });
+    router.push({ pathname: "/challenge" });
   };
 
   const handleCancel = () => {
@@ -759,27 +572,20 @@ export default withAuth(function ChallengesForm() {
     setSelectedExercises([]);
     setIsUpdated(false);
     setIsCreated(false);
-
-    router.push({
-      pathname: "/challenge",
-    });
+    router.push({ pathname: "/challenge" });
   };
 
   const isLoading =
     mode === "edit"
-      ? isTopicsLoading || isGroupsLoading || isChallengeLoading // En modo edición, carga todo
-      : isTopicsLoading || isGroupsLoading; // Fuera del modo edición, carga solo topics y groups
+      ? isTopicsLoading || isGroupsLoading || isChallengeLoading
+      : isTopicsLoading || isGroupsLoading;
 
-  // Si está cargando, muestra un Spinner
-  if (isLoading) {
-    return <LoadingOverlay />;
-  }
+  if (isLoading) return <LoadingOverlay />;
 
   if (errorUpdateChallenge) {
     return (
       <p className="error-message">
-        Error: {errorUpdateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de
-        desarrollo.
+        Error: {errorUpdateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de desarrollo.
       </p>
     );
   }
@@ -787,8 +593,7 @@ export default withAuth(function ChallengesForm() {
   if (errorCreateChallenge) {
     return (
       <p className="error-message">
-        Error: {errorCreateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de
-        desarrollo.
+        Error: {errorCreateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de desarrollo.
       </p>
     );
   }
@@ -833,69 +638,60 @@ export default withAuth(function ChallengesForm() {
           </Field.Root>
         </Box>
 
-        <ChakraProvider value={defaultSystem}>
-          <Box bg={formBackgroundColor}>
-            <Field.Root mb={4} borderRadius="md" p={4}>
-              <Field.Label>
-                Grupos
-                <Text as="span" display="block" fontSize="sm" color="gray.500">
-                  Selecciona los grupos que participarán en este desafío
-                </Text>
-              </Field.Label>
-              <Box>
-                {groups.map(group => (
-                  <Box key={group.id} mb={2}>
-                    <Checkbox.Root
-                      checked={selectedGroups.some(g => g.id === group.id)}
-                      onCheckedChange={() => handleSelectGroup(group)}
-                    >
-                      <Checkbox.HiddenInput />
-                      <Checkbox.Control />
-                      <Checkbox.Label>{group.label}</Checkbox.Label>
-                    </Checkbox.Root>
-                  </Box>
-                ))}
-              </Box>
-            </Field.Root>
-          </Box>
-        </ChakraProvider>
-
         <Box bg={formBackgroundColor}>
           <Field.Root mb={4} borderRadius="md" p={4}>
-            <Field.Label htmlFor="topicsAccordion">
-              Tópicos y subtópicos
+            <Field.Label>
+              Grupos
               <Text as="span" display="block" fontSize="sm" color="gray.500">
-                Selecciona los tópicos para el desafío
+                Selecciona los grupos que participarán en este desafío
               </Text>
             </Field.Label>
-            <Accordion.Root id="topicsAccordion" multiple>
-              <RecursiveAccordion
-                data={topics}
-                onShowDetails={handleShowDetails}
-                setSelectedTopics={setSelectedTopics}
-                selectedTopics={selectedTopics}
-              />
-            </Accordion.Root>
+            <Box>
+              {groups.map(group => (
+                // ✅ Checkbox nativo también para grupos
+<NativeCheckbox
+  checked={selectedGroups.some(g => g.id === group.id)}
+  onChange={() => handleSelectGroup(group)}
+>
+  {group.label}
+</NativeCheckbox>
+              ))}
+            </Box>
           </Field.Root>
         </Box>
 
         <Box bg={formBackgroundColor}>
           <Field.Root mb={4} borderRadius="md" p={4}>
-            <Field.Label htmlFor="exercisesAccordion" mt={4}>
-              Ejercicios iniciales
+            <Field.Label>
+              Tópicos y subtópicos
               <Text as="span" display="block" fontSize="sm" color="gray.500">
-                Selecciona los ejercicios con los que comenzará este desafío, considerando los
-                tópicos seleccionados
+                Selecciona los tópicos para el desafío
               </Text>
             </Field.Label>
-            <Accordion.Root id="exercisesAccordion" multiple>
-              <MathRecursiveAccordion
-                selectedTopics={selectedTopics}
-                //onShowDetails={[]}
-                setSelectedExercises={setSelectedExercises}
-                selectedExercises={selectedExercises}
-              />
-            </Accordion.Root>
+            {/* ✅ Sin Accordion.Root externo — RecursiveAccordion ya lo incluye */}
+            <RecursiveAccordion
+              data={topics}
+              onShowDetails={handleShowDetails}
+              setSelectedTopics={setSelectedTopics}
+              selectedTopics={selectedTopics}
+            />
+          </Field.Root>
+        </Box>
+
+        <Box bg={formBackgroundColor}>
+          <Field.Root mb={4} borderRadius="md" p={4}>
+            <Field.Label mt={4}>
+              Ejercicios iniciales
+              <Text as="span" display="block" fontSize="sm" color="gray.500">
+                Selecciona los ejercicios con los que comenzará este desafío, considerando los tópicos seleccionados
+              </Text>
+            </Field.Label>
+            {/* ✅ Sin Accordion.Root externo — MathRecursiveAccordion ya lo incluye */}
+            <MathRecursiveAccordion
+              selectedTopics={selectedTopics}
+              setSelectedExercises={setSelectedExercises}
+              selectedExercises={selectedExercises}
+            />
           </Field.Root>
         </Box>
 
@@ -905,46 +701,35 @@ export default withAuth(function ChallengesForm() {
               Nombre del desafío: {title}
             </Text>
           </Box>
-
           <Box mt={4}>
             <Text as="strong" fontWeight="bold">
               Descripción del desafío:
               <LatexPreview content={description} />
             </Text>
           </Box>
-
           <Box mt={4}>
-            <Text as="strong" fontWeight="bold">
-              Grupos Seleccionados:
-            </Text>
+            <Text as="strong" fontWeight="bold">Grupos Seleccionados:</Text>
             <ul style={{ paddingLeft: "20px" }}>
               {selectedGroups.map(group => (
                 <li key={group.id}>{group.label}</li>
               ))}
             </ul>
           </Box>
-
           <Box mt={4}>
             <Text as="strong" fontWeight="bold">
               Fecha de término: {formatDate(endDate)}
             </Text>
           </Box>
-
           <Box mt={4}>
-            <Text as="strong" fontWeight="bold">
-              Tópicos y subtópicos seleccionados:
-            </Text>
+            <Text as="strong" fontWeight="bold">Tópicos y subtópicos seleccionados:</Text>
             <ul style={{ paddingLeft: "20px" }}>
               {selectedTopics.map((topic, index) => (
                 <li key={index - topic.id}>{topic.label}</li>
               ))}
             </ul>
           </Box>
-
           <Box mt={4}>
-            <Text as="strong" fontWeight="bold">
-              Ejercicios seleccionados:
-            </Text>
+            <Text as="strong" fontWeight="bold">Ejercicios seleccionados:</Text>
             <Box>
               {selectedExercises.map(exercise => (
                 <MathDisplay
@@ -959,26 +744,21 @@ export default withAuth(function ChallengesForm() {
         </Box>
 
         <Box mt={6} display="flex" justifyContent="space-between">
-          <Button colorPalette="red" onClick={handleCancel}>
-            Cancelar
-          </Button>
-          <Button colorPalette="teal" onClick={handleSave}>
-            Guardar desafío
-          </Button>
+          <Button colorPalette="red" onClick={handleCancel}>Cancelar</Button>
+          <Button colorPalette="teal" onClick={handleSave}>Guardar desafío</Button>
         </Box>
       </Box>
+
       <Drawer.Root
         open={isDrawerOpen}
         placement="end"
-        onOpenChange={e => {
-          if (!e.open) setDrawerOpen(false);
-        }}
+        onOpenChange={e => { if (!e.open) setDrawerOpen(false); }}
       >
         <Portal>
           <Drawer.Backdrop />
           <Drawer.Positioner>
             <Drawer.Content>
-              <Drawer.Header> Detalles sobre {detailItem?.title} </Drawer.Header>
+              <Drawer.Header>Detalles sobre {detailItem?.title}</Drawer.Header>
               <Drawer.Body>
                 <p>Detalles sobre {detailItem?.title}...</p>
               </Drawer.Body>
@@ -990,5 +770,3 @@ export default withAuth(function ChallengesForm() {
     </ChakraProvider>
   );
 });
-
-//export default ChallengeForm;
