@@ -29,8 +29,11 @@ import "mathlive/static.css";
 import { Analytics } from "@vercel/analytics/next";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const isMobile = false;
   const wrapper = typeof window !== "undefined" ? isWrapper() : false;
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || window.navigator.maxTouchPoints > 0);
+  const useTouchDrag = wrapper || isTouchDevice;
 
   const redirectUri =
     typeof window !== "undefined"
@@ -60,7 +63,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <ChakraProvider value={system}>
             <ColorModeProvider>
               <Toaster />
-              <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
+              <DndProvider
+                backend={useTouchDrag ? TouchBackend : HTML5Backend}
+                options={useTouchDrag ? { enableMouseEvents: true } : undefined}
+              >
                 <AuthCallbackHandler />
                 <SyncAuth />
                 <ErrorToast />

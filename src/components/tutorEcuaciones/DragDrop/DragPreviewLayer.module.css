@@ -1,0 +1,23 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.preview {
+  align-items: center;
+  background: #2f3b54;
+  border: 1px solid rgba(185, 201, 226, 0.14);
+  border-radius: 10px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: var(--chakra-colors-text-exercises, white);
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  opacity: 0.98;
+  padding: 0 12px;
+  width: min(120px, 34vw);
+}

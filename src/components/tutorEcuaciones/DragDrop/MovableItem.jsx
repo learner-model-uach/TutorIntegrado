@@ -56,7 +56,7 @@ export const MovableItem = ({
 
   const [{ isDragging }, drag] = useDrag({
     canDrag: () => isCorrecto,
-    item: { value },
+    item: { previewType: type, value },
     type: BOX,
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
