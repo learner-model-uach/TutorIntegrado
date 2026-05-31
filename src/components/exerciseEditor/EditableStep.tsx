@@ -40,7 +40,6 @@ export default function EditableStep({
   topic,
   availableKCs,
 }) {
-  // Estado para controlar si estamos en modo de edición
   const [isEditingStep, setIsEditingStep] = useState(false);
   const [isEditingKcs, setIsEditingKcs] = useState(false);
   const [isEditingHint, setIsEditingHint] = useState(false);
@@ -49,23 +48,25 @@ export default function EditableStep({
   const [isEditingIncorrectMessage, setIsEditingIncorrectMessage] = useState(false);
   const [isEditingAnswers, setIsEditingAnswers] = useState(false);
 
-  // Estado local para mantener la visualización actualizada
-  const [localStep, setLocalStep] = useState({ ...step });
-  const [localStepCopy, setLocalStepCopy] = useState({ ...step });
+  // ✅ Guard: si step es undefined/null inicializar con objeto vacío
+  const safeStep = step ?? {};
+
+  const [localStep, setLocalStep] = useState({ ...safeStep });
+  const [localStepCopy, setLocalStepCopy] = useState({ ...safeStep });
   const [test, setTest] = useState<potatolvltutor[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
 
   const formBackgroundColor = "gray.300";
-
   const action = useAction();
 
   const handlePrev = () => setCurrentStep(prev => prev - 1);
   const handleNext = () => setCurrentStep(prev => prev + 1);
 
-  // Sincronizar el estado local cuando cambia el step desde props
+  // ✅ Sincronizar cuando cambia step desde props, con guard
   useEffect(() => {
-    setLocalStep({ ...step });
-    setLocalStepCopy({ ...step });
+    const safe = step ?? {};
+    setLocalStep({ ...safe });
+    setLocalStepCopy({ ...safe });
   }, [step]);
 
   const handleUpdateKCs = newKCs => {
@@ -75,14 +76,12 @@ export default function EditableStep({
     }));
   };
 
-  // Función para aplicar los cambios, tanto al estado local como al global
   const applyChanges = updatedStep => {
-    setLocalStep(updatedStep); // Actualizar el estado local
-    setSteps(updatedStep); // Actualizar el estado global
+    setLocalStep(updatedStep);
+    setSteps(updatedStep);
   };
 
   const handleStepUpdateCopy = (field, value) => {
-    // Crear el objeto actualizado
     const updatedStepCopy = {
       ...localStepCopy,
       [field]: value,
@@ -90,10 +89,8 @@ export default function EditableStep({
     setLocalStepCopy(updatedStepCopy);
   };
 
-  // Manejar la actualización de opciones múltiples
   const handleMultipleChoiceUpdateCopy = (choiceIndex, field, value) => {
     if (localStepCopy.multipleChoice) {
-      // Crear un nuevo objeto actualizado
       const updatedStepCopy = {
         ...localStep,
         multipleChoice: localStepCopy.multipleChoice.map((choice, i) =>
@@ -105,34 +102,28 @@ export default function EditableStep({
   };
 
   const handleHintUpdateCopy = (hintIndex, field, value) => {
-    const updatedHints = [...localStepCopy.hints]; // Copia el array de hints
+    const updatedHints = [...localStepCopy.hints];
     updatedHints[hintIndex] = {
-      ...updatedHints[hintIndex], // Mantiene los demás campos del hint
-      [field]: value, // Actualiza el campo específico
+      ...updatedHints[hintIndex],
+      [field]: value,
     };
-
-    // Actualiza el paso con los nuevos hints
     const updatedStepCopy = {
       ...localStepCopy,
       hints: updatedHints,
     };
-
     setLocalStepCopy(updatedStepCopy);
   };
 
   const handleAnswerUpdateCopy = (answerIndex, field, value) => {
-    const updatedAnswers = [...localStepCopy.answers]; // Copia el array de answers
+    const updatedAnswers = [...localStepCopy.answers];
     updatedAnswers[answerIndex] = {
-      ...updatedAnswers[answerIndex], // Mantiene los demás campos del answer
-      [field]: value, // Actualiza el campo específico
+      ...updatedAnswers[answerIndex],
+      [field]: value,
     };
-
-    // Actualiza el paso con los nuevos answers
     const updatedStepCopy = {
       ...localStepCopy,
       answers: updatedAnswers,
     };
-
     setLocalStepCopy(updatedStepCopy);
   };
 
@@ -142,13 +133,12 @@ export default function EditableStep({
         {stepName}
       </Heading>
 
-      {/* Edición de paso*/}
+      {/* Edición de paso */}
       <EditButton
         width="full"
         isEditing={isEditingStep}
         onClick={() => {
           if (isEditingStep) {
-            // Al cancelar, restaurar la copia desde el estado original
             setLocalStepCopy({ ...localStep });
           }
           setIsEditingStep(!isEditingStep);
@@ -219,7 +209,7 @@ export default function EditableStep({
         </Box>
       )}
 
-      {/* Vista del paso*/}
+      {/* Vista del paso */}
       <Box>
         <Accordion.Root collapsible multiple>
           {localStepCopy && (
@@ -251,7 +241,8 @@ export default function EditableStep({
         mt={4}
       />
 
-      {isEditingAnswers && (
+      {/* ✅ Guard: solo renderiza si hay answers */}
+      {isEditingAnswers && localStepCopy?.answers?.length > 0 && (
         <Box>
           <SaveButton
             width="full"
@@ -260,29 +251,28 @@ export default function EditableStep({
               setIsEditingAnswers(false);
             }}
           />
-          {localStepCopy?.answers.map(answer => (
-            <Field.Root key={`Answer-${index}`} mb={3} p={4}>
-              <Field.Label>{`Respuesta ${index + 1}`}</Field.Label>
-
+          {localStepCopy.answers.map((answer, answerIndex) => (
+            <Field.Root key={`Answer-${answerIndex}`} mb={3} p={4}>
+              <Field.Label>{`Respuesta ${answerIndex + 1}`}</Field.Label>
               <Input
                 value={answer.answer || ""}
-                onChange={e => handleAnswerUpdateCopy(index, "answer", e.target.value)}
-                placeholder={`Respuesta ${index + 1}`}
+                onChange={e => handleAnswerUpdateCopy(answerIndex, "answer", e.target.value)}
+                placeholder={`Respuesta ${answerIndex + 1}`}
               />
-              <Field.Label mt={2}>{`Siguiente paso`}</Field.Label>
+              <Field.Label mt={2}>Siguiente paso</Field.Label>
               <Input
                 value={parseInt(answer.nextStep) + 1 || ""}
                 onChange={e =>
-                  handleAnswerUpdateCopy(index, "nextStep", String(parseInt(e.target.value) - 1))
+                  handleAnswerUpdateCopy(answerIndex, "nextStep", String(parseInt(e.target.value) - 1))
                 }
-                placeholder={`Siguiente paso ${index + 1}`}
+                placeholder={`Siguiente paso ${answerIndex + 1}`}
               />
             </Field.Root>
-          ))}{" "}
+          ))}
         </Box>
       )}
 
-      {/* Edición de pistas*/}
+      {/* Edición de pistas */}
       <EditButton
         width="full"
         isEditing={isEditingHint}
@@ -296,7 +286,8 @@ export default function EditableStep({
         mt={4}
       />
 
-      {isEditingHint && (
+      {/* ✅ Guard: solo renderiza si hay hints */}
+      {isEditingHint && localStepCopy?.hints?.length > 0 && (
         <Box>
           <SaveButton
             width="full"
@@ -305,7 +296,7 @@ export default function EditableStep({
               setIsEditingHint(false);
             }}
           />
-          {localStepCopy?.hints.map(hint => (
+          {localStepCopy.hints.map(hint => (
             <Field.Root key={`Hint-${hint.hintId}`} mb={3} p={4}>
               <Field.Label>{`Pista ${hint.hintId + 1}`}</Field.Label>
               <Stack direction="row" gap={4} width="full">
@@ -321,20 +312,21 @@ export default function EditableStep({
                 />
               </Stack>
             </Field.Root>
-          ))}{" "}
+          ))}
         </Box>
       )}
 
       <Popover.Root>
+        {/* ✅ Guard: solo renderiza si hay hints */}
         <HintNavigation
-          list={localStepCopy.hints}
+          list={localStepCopy?.hints ?? []}
           currentIndex={currentStep}
           onPrev={handlePrev}
           onNext={handleNext}
         />
       </Popover.Root>
 
-      {/* Editar mensaje de respuesta correcta*/}
+      {/* Editar mensaje de respuesta correcta */}
       <EditButton
         width="full"
         isEditing={isEditingCorrectMessage}
@@ -357,7 +349,7 @@ export default function EditableStep({
             }}
           />
           <Field.Root key={`CorrectMessage-${index + 1}`} mb={3} p={4}>
-            <Field.Label>{`Mensaje de respuesta correcta`}</Field.Label>
+            <Field.Label>Mensaje de respuesta correcta</Field.Label>
             <Input
               value={localStepCopy.correctMsg || ""}
               onChange={e => handleStepUpdateCopy("correctMsg", e.target.value)}
@@ -367,16 +359,15 @@ export default function EditableStep({
         </Box>
       )}
 
-      {
-        <FeedbackAlertlvltutor
-          topicId={""}
-          mqMsg={localStepCopy.correctMsg}
-          fallbackMsg={step.correctMsg}
-          status={"success"}
-        />
-      }
+      {/* ✅ Ambos fallbackMsg usan optional chaining */}
+      <FeedbackAlertlvltutor
+        topicId={""}
+        mqMsg={localStepCopy.correctMsg}
+        fallbackMsg={step?.correctMsg}
+        status={"success"}
+      />
 
-      {/* Editar mensaje de respuesta incorrecta*/}
+      {/* Editar mensaje de respuesta incorrecta */}
       <EditButton
         width="full"
         isEditing={isEditingIncorrectMessage}
@@ -399,7 +390,7 @@ export default function EditableStep({
             }}
           />
           <Field.Root key={`IncorrectMessage-${index + 1}`} mb={3} p={4}>
-            <Field.Label>{`Mensaje de respuesta incorrecta`}</Field.Label>
+            <Field.Label>Mensaje de respuesta incorrecta</Field.Label>
             <Input
               value={localStepCopy.incorrectMsg || ""}
               onChange={e => handleStepUpdateCopy("incorrectMsg", e.target.value)}
@@ -409,14 +400,13 @@ export default function EditableStep({
         </Box>
       )}
 
-      {
-        <FeedbackAlertlvltutor
-          topicId={""}
-          mqMsg={localStepCopy.incorrectMsg}
-          fallbackMsg={step.incorrectMsg}
-          status={"error"}
-        />
-      }
+      {/* ✅ Ambos fallbackMsg usan optional chaining */}
+      <FeedbackAlertlvltutor
+        topicId={""}
+        mqMsg={localStepCopy.incorrectMsg}
+        fallbackMsg={step?.incorrectMsg}
+        status={"error"}
+      />
 
       <Stack>
         {/* Edición de resumen */}
@@ -442,23 +432,23 @@ export default function EditableStep({
               }}
             />
             <Field.Root key={`Summary-${index + 1}`} mb={3} p={4}>
-              <Field.Label>{`Resumen`}</Field.Label>
+              <Field.Label>Resumen</Field.Label>
               <Input
                 value={localStepCopy.summary || ""}
                 onChange={e => handleStepUpdateCopy("summary", e.target.value)}
                 placeholder={`Resumen ${index + 1}`}
                 mb={2}
               />
+              {/* ✅ Guard: solo accede a displayResult si existe */}
               <Input
-                value={localStepCopy.displayResult[0] || ""}
+                value={localStepCopy.displayResult?.[0] || ""}
                 onChange={e => handleStepUpdateCopy("displayResult", [e.target.value])}
-                placeholder={`Resumen ${index + 1}`}
+                placeholder={`Resultado a mostrar ${index + 1}`}
               />
             </Field.Root>
           </Box>
         )}
 
-        {/* Summary */}
         <SummarySteplvltutor
           key={`step-${index + 1}`}
           summary={localStepCopy.summary}
@@ -467,7 +457,7 @@ export default function EditableStep({
           stepIndex={index + 1}
         />
 
-        {/* Edición de KCs*/}
+        {/* Edición de KCs */}
         <EditButton
           isEditing={isEditingKcs}
           onClick={() => {
@@ -479,6 +469,7 @@ export default function EditableStep({
           editText="Editar KCs del paso"
           mt={4}
         />
+        {/* ✅ Guard: solo renderiza si hay KCs disponibles */}
         {isEditingKcs && (
           <Box>
             <SaveButton
@@ -489,7 +480,9 @@ export default function EditableStep({
               }}
             />
             <SearchableSelect
-              selectedItems={availableKCs.filter(kc => localStepCopy.KCs.includes(kc.code))}
+              selectedItems={availableKCs.filter(kc =>
+                (localStepCopy.KCs ?? []).includes(kc.code)
+              )}
               onChange={handleUpdateKCs}
               availableKCs={availableKCs}
             />

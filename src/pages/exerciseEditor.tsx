@@ -7,13 +7,13 @@ import {
   Heading,
   Button,
   Field,
+  Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../graphql";
 import "katex/dist/katex.min.css";
 import { withAuth } from "../components/Auth";
-//import { sessionState } from "../components/SessionState";
 import { LoadingOverlay } from "../components/challenge/LoadingOverlay";
 import { Header as Headerlvltutor } from "../components/lvltutor/Tools/Solver2";
 import EditableStep from "../components/exerciseEditor/EditableStep";
@@ -32,9 +32,9 @@ const mutationUpdateChallenge = gql(`
         groups{id},
         projectId,
         startDate,
-      tags,
-      title,
-      topics{id},
+        tags,
+        title,
+        topics{id},
       }
     }
   }`);
@@ -51,9 +51,9 @@ const mutationCreateChallenge = gql(`
         groups{id},
         projectId,
         startDate,
-      tags,
-      title,
-      topics{id},
+        tags,
+        title,
+        topics{id},
       }
     }
   }`);
@@ -106,19 +106,48 @@ const queryGetKCs = gql(`
       label
     }
   }
-  `);
+`);
+
+// Tipos con editor disponible
+const SUPPORTED_TYPES = ["fdsc2", "fc1s", "fcc3s", "fdc2s", "ftc5s", "lvltutor"];
+
+// Tipos sin editor aún
+const UNSUPPORTED_TYPES = [
+  "ecl2s", "ecc5s", "secl5s",
+  "thales1", "thales2",
+  "pitagoras1", "pitagoras2",
+  "areaperimetro1", "areaperimetro2",
+  "geom",
+];
 
 interface ExerciseJSONDynamic {
-  [key: string]: any; // permite cualquier propiedad nueva en el futuro
+  [key: string]: any;
   steps?: Array<any>;
   finalAnswer?: any;
 }
+
+// Busca recursivamente en todos los topics/childrens el content cuyo code === exerciseId
+const findExerciseById = (topics: any[], exerciseId: string): { exercise: any; topic: any } | null => {
+  for (const topic of topics) {
+    for (const content of topic.content ?? []) {
+      if (content?.json?.code === exerciseId) {
+        return { exercise: content.json, topic };
+      }
+    }
+    if (topic.childrens?.length) {
+      const found = findExerciseById(topic.childrens, exerciseId);
+      if (found) return found;
+    }
+  }
+  return null;
+};
 
 export default withAuth(function ExerciseEditor() {
   const [isUpdated, setIsUpdated] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
   const [challenge, setChallenge] = useState({});
   const [isLoadingExercise, setIsLoadingExercise] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   const [topic, setTopic] = useState({});
   const [title, setTitle] = useState("");
@@ -135,19 +164,15 @@ export default withAuth(function ExerciseEditor() {
   const [isEditingHeader, setIsEditingHeader] = useState(false);
 
   const router = useRouter();
-  const { mode, challengeId: id } = router.query;
+  const { mode, id } = router.query;
 
-  if (Array.isArray(id)) {
-    throw new Error("challengeId no puede ser un array en este contexto");
-  }
+  // id puede ser array si hay varios query params con el mismo nombre
+  const exerciseId = Array.isArray(id) ? id[0] : id;
 
   const isEditMode = mode === "edit";
-  const challengeId = id ? id : "default-id";
+  const challengeId = exerciseId ?? "default-id";
 
-  // Generar array con números del 1 al 147
   const ids = Array.from({ length: 147 }, (_, i) => (i + 1).toString());
-
-  //----------------------------------------
 
   const { data: TopicsData, isLoading: isTopicsLoading } = useGQLQuery(queryTopics);
 
@@ -155,24 +180,15 @@ export default withAuth(function ExerciseEditor() {
     ids: ids,
   });
 
-  const {
-    error: errorUpdateChallenge,
-  } = useGQLQuery(
+  const { error: errorUpdateChallenge } = useGQLQuery(
     mutationUpdateChallenge,
-    {
-      challengeId: challengeId,
-      challenge: challenge,
-    },
+    { challengeId: challengeId, challenge: challenge },
     { enabled: isEditMode && isUpdated },
   );
 
-  const {
-    error: errorCreateChallenge,
-  } = useGQLQuery(
+  const { error: errorCreateChallenge } = useGQLQuery(
     mutationCreateChallenge,
-    {
-      challenge: challenge,
-    },
+    { challenge: challenge },
     { enabled: !isEditMode && isCreated },
   );
 
@@ -181,20 +197,31 @@ export default withAuth(function ExerciseEditor() {
     setIsUpdated(false);
   }, []);
 
+  // Cuando lleguen los topics Y tengamos el exerciseId, buscamos el ejercicio
   useEffect(() => {
-    if (!isTopicsLoading) {
-      const topics = TopicsData?.topics || [];
-      const pot = topics[3]?.childrens[0]?.content[0]?.json;
+    if (!isTopicsLoading && exerciseId) {
+      const topics = TopicsData?.topics ?? [];
+      const result = findExerciseById(topics, exerciseId);
 
-      const initExp = pot?.initialExpression ? pot?.initialExpression : pot?.steps[0]?.expression;
+      if (!result) {
+        setNotFound(true);
+        setIsLoadingExercise(false);
+        return;
+      }
 
-      console.log("pot", pot);
-      setTopic(topics[3]);
+      const { exercise: pot, topic: foundTopic } = result;
+      const initExp = pot?.initialExpression?.trim()
+        ? pot.initialExpression
+        : pot?.steps?.[0]?.expression ?? "";
+
+      setTopic(foundTopic);
       setExerciseJSON(pot);
       setSteps((pot?.steps as any[]) ?? []);
       setInitialExp(initExp);
+      setTitle(pot?.title ?? "");
+      setText(pot?.text ?? "");
 
-      // Copy
+      // Copias para edición
       setExerciseJSONCopy(pot);
       setTitleCopy(String(pot?.title ?? ""));
       setTextCopy(String(pot?.text ?? ""));
@@ -202,38 +229,28 @@ export default withAuth(function ExerciseEditor() {
 
       setIsLoadingExercise(false);
     }
-  }, [isTopicsLoading]);
+  }, [isTopicsLoading, exerciseId]);
 
   const handleSave = () => {
     const challengeData = {
-      code: `${title.slice(0, 25)}_${Date.now()}`, 
+      code: `${title.slice(0, 25)}_${Date.now()}`,
       enabled: true,
-      projectId: 4, 
+      projectId: 4,
       tags: [],
       title: title,
     };
 
     const requiredFields = [
-      {
-        field: "code",
-        value: challengeData.code,
-        message: "El código del desafío es obligatorio.",
-      },
-      {
-        field: "title",
-        value: challengeData.title,
-        message: "El título del desafío es obligatorio.",
-      },
+      { field: "code", value: challengeData.code, message: "El código del desafío es obligatorio." },
+      { field: "title", value: challengeData.title, message: "El título del desafío es obligatorio." },
     ];
 
-    const missingField = requiredFields.find(field => {
-      return (
-        field.value === undefined ||
-        field.value === null ||
-        field.value === "" ||
-        (Array.isArray(field.value) && field.value.length === 0)
-      );
-    });
+    const missingField = requiredFields.find(field =>
+      field.value === undefined ||
+      field.value === null ||
+      field.value === "" ||
+      (Array.isArray(field.value) && field.value.length === 0),
+    );
 
     if (missingField) {
       alert(`Error: ${missingField.message}`);
@@ -244,28 +261,23 @@ export default withAuth(function ExerciseEditor() {
 
     if (isEditMode) {
       setIsUpdated(true);
-      alert("Desafío actualizado exitosamente!");
+      alert("Ejercicio actualizado exitosamente!");
     } else {
       setIsCreated(true);
-      alert("Desafío guardado exitosamente");
+      alert("Ejercicio guardado exitosamente");
     }
 
-    router.push({
-      pathname: "/",
-    });
+    router.push({ pathname: "/" });
   };
 
   const handleCancel = () => {
-    router.push({
-      pathname: "/",
-    });
+    router.back();
   };
 
   if (errorUpdateChallenge) {
     return (
       <p className="error-message">
-        Error: {errorUpdateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de
-        desarrollo.
+        Error: {errorUpdateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de desarrollo.
       </p>
     );
   }
@@ -273,24 +285,41 @@ export default withAuth(function ExerciseEditor() {
   if (errorCreateChallenge) {
     return (
       <p className="error-message">
-        Error: {errorCreateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de
-        desarrollo.
+        Error: {errorCreateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de desarrollo.
       </p>
     );
   }
-
-  const formBackgroundColor = "gray.300";
 
   if (isTopicsLoading || isLoadingExercise || isGetKCsLoading) {
     return <LoadingOverlay />;
   }
 
-  // Agrega esto:
   if (!KCsData || !KCsData.kcs) {
     return <LoadingOverlay />;
   }
+
+  // Ejercicio no encontrado
+  if (notFound) {
+    return (
+      <ChakraProvider value={defaultSystem}>
+        <Box p={5} textAlign="center">
+          <Heading mb={4}>Ejercicio no encontrado</Heading>
+          <Text mb={4} color="gray.500">
+            No se encontró ningún ejercicio con el id "{exerciseId}".
+          </Text>
+          <Button onClick={() => router.back()}>Volver</Button>
+        </Box>
+      </ChakraProvider>
+    );
+  }
+
   const exerciseAny = exerciseJSON as any;
   const code = exerciseAny?.code ?? "sin código";
+  const exerciseType = exerciseAny?.type;
+  const isSupported = SUPPORTED_TYPES.includes(exerciseType);
+  const isKnownUnsupported = UNSUPPORTED_TYPES.includes(exerciseType);
+
+  const formBackgroundColor = "gray.300";
 
   return (
     <ChakraProvider value={defaultSystem}>
@@ -299,6 +328,30 @@ export default withAuth(function ExerciseEditor() {
           <Heading mb={6} textAlign="center" as="h1">
             {"Editar ejercicio " + code}
           </Heading>
+
+          {/* Mensaje de tipo no soportado */}
+          {!isSupported && (
+            <Box
+              mt={4}
+              mb={6}
+              p={4}
+              border="2px"
+              borderColor="orange.400"
+              borderRadius="md"
+              bg="orange.50"
+            >
+              <Text color="orange.700" fontWeight="bold">
+                Editor no disponible para el tipo "{exerciseType}"
+                {!isKnownUnsupported && " (tipo desconocido)"}
+              </Text>
+              <Text color="orange.600" fontSize="sm" mt={1}>
+                Este tipo de ejercicio aún no tiene un componente de edición.
+                Estará disponible próximamente.
+              </Text>
+            </Box>
+          )}
+
+          {/* Encabezado — siempre visible */}
           <Box border="2px" borderColor={formBackgroundColor} borderRadius="lg" p={4} mb={4}>
             <Heading as="h2" textAlign="center" mb={6}>
               Encabezado
@@ -326,33 +379,32 @@ export default withAuth(function ExerciseEditor() {
                     setTitle(titleCopy);
                     setText(textCopy);
                     setInitialExp(initialExpCopy);
-                    setIsEditingHeader(!isEditingHeader);
+                    setIsEditingHeader(false);
                   }}
                 />
-
                 <Box bg={formBackgroundColor}>
                   <Field.Root borderRadius="md" p={4}>
-                    <Field.Label>Encabezado</Field.Label>
+                    <Field.Label>Título</Field.Label>
                     <Input
                       value={titleCopy}
                       onChange={e => setTitleCopy(e.target.value)}
                       placeholder="Título del ejercicio"
                     />
                   </Field.Root>
-
                   <Field.Root borderRadius="md" p={4}>
+                    <Field.Label>Texto</Field.Label>
                     <Input
                       value={textCopy}
                       onChange={e => setTextCopy(e.target.value)}
-                      placeholder=""
+                      placeholder="Texto del ejercicio"
                     />
                   </Field.Root>
-
                   <Field.Root borderRadius="md" p={4}>
+                    <Field.Label>Expresión inicial</Field.Label>
                     <Input
                       value={initialExpCopy}
                       onChange={e => setInitialExpCopy(e.target.value)}
-                      placeholder="title"
+                      placeholder="Expresión inicial"
                     />
                   </Field.Root>
                 </Box>
@@ -367,7 +419,8 @@ export default withAuth(function ExerciseEditor() {
             />
           </Box>
 
-          {steps.map((step, i) => (
+          {/* Pasos — solo si el tipo está soportado */}
+          {isSupported && steps.map((step, i) => (
             <EditableStep
               key={i}
               index={i}
@@ -380,17 +433,19 @@ export default withAuth(function ExerciseEditor() {
             />
           ))}
 
-          {/*Final answer*/}
-          <EditableStep
-            key={exerciseJSON?.steps?.length ?? 0}
-            index={exerciseJSON?.steps?.length ?? 0}
-            stepName={"Paso final (opcional)"}
-            step={exerciseJSON?.finalAnswer}
-            setSteps={setFinalAnswer}
-            exerciseJSON={exerciseJSON}
-            topic={topic}
-            availableKCs={KCsData.kcs}
-          />
+          {/* Paso final — solo si el tipo está soportado */}
+          {isSupported && (
+            <EditableStep
+              key={exerciseJSON?.steps?.length ?? 0}
+              index={exerciseJSON?.steps?.length ?? 0}
+              stepName={"Paso final (opcional)"}
+              step={exerciseJSON?.finalAnswer}
+              setSteps={setFinalAnswer}
+              exerciseJSON={exerciseJSON}
+              topic={topic}
+              availableKCs={KCsData.kcs}
+            />
+          )}
 
           <Box mt={6} display="flex" justifyContent="space-between">
             <Button colorPalette="red" onClick={handleCancel}>

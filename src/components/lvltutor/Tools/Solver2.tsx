@@ -258,30 +258,41 @@ export const CustomAccordionItem = ({
   );
 };
 
+// DESPUÉS
 export const SummaryStep = ({
   summary,
   displayResult,
   currentExpIndex,
   stepIndex,
 }: {
-  summary: string;
-  displayResult: string[];
+  summary?: string;           // ✅ opcional
+  displayResult?: string[];   // ✅ opcional
   currentExpIndex: boolean;
   stepIndex: number;
-}) => (
-  <Box key={"ResumenBox" + stepIndex}>
-    <Text key={"ResumenText" + stepIndex} w="100%" justifyContent={"space-between"}>
-      {summary}
-    </Text>
-    <Box key={"ResumenMCContainer" + stepIndex} display="flex" justifyContent="center">
-      <MQStaticMathField
-        key={"ResumenMC" + stepIndex}
-        exp={displayResult[0]!}
-        currentExpIndex={currentExpIndex}
-      />
+}) => {
+  // ✅ Si no hay summary ni displayResult, no renderiza nada
+  if (!summary && (!displayResult || displayResult.length === 0)) return null;
+
+  return (
+    <Box key={"ResumenBox" + stepIndex}>
+      {summary && (
+        <Text key={"ResumenText" + stepIndex} w="100%" justifyContent={"space-between"}>
+          {summary}
+        </Text>
+      )}
+      {/* ✅ Solo renderiza si hay displayResult con contenido */}
+      {displayResult?.[0] && (
+        <Box key={"ResumenMCContainer" + stepIndex} display="flex" justifyContent="center">
+          <MQStaticMathField
+            key={"ResumenMC" + stepIndex}
+            exp={displayResult[0]}         // ✅ ya garantizado por el guard de arriba
+            currentExpIndex={currentExpIndex}
+          />
+        </Box>
+      )}
     </Box>
-  </Box>
-);
+  );
+};
 
 export const Summary = ({
   initialExp,

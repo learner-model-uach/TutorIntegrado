@@ -8,11 +8,10 @@ import MQStaticMathField from "../utils/MQStaticMathField";
 
 // Componente de navegación extraído (Sintaxis Chakra UI v3)
 export const HintNavigation = ({ list, currentIndex, onPrev, onNext }) => {
-  const currentItem = list[currentIndex];
+  if (!list?.length) return null;
 
-  if (!currentItem) {
-    return <Popover.Body>Error: Índice no válido</Popover.Body>;
-  }
+  const currentItem = list[currentIndex];
+  if (!currentItem) return null;
 
   return (
     <Popover.Body>
@@ -65,17 +64,17 @@ const Hint = ({
   setLastHint,
 }) => {
   const [i, setI] = useState(0); //i es el último hint desbloqueado
-  const [list] = useState([hints[0]]);
+  const [list] = useState(hints?.length ? [hints[0]] : []);
   const [j, setJ] = useState(0); //j es el hint que se despliega con los botones
   const [firstError, setFirstError] = useState(false);
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
 
-  useEffect(() => {
-    if (hints.length + count == list.length) {
-      setLastHint(true);
-    }
-  }, [hints.length + count == list.length, setLastHint]);
+useEffect(() => {
+  if ((hints?.length ?? 0) + count === list.length && list.length > 0) {
+    setLastHint(true);
+  }
+}, [(hints?.length ?? 0) + count === list.length, setLastHint]);
 
   const ayuda = () => {
     const responseStudent =

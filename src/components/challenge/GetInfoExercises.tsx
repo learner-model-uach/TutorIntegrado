@@ -159,6 +159,7 @@ const RecursiveAccordion = ({ data, setSelectedItems, selectedItems = [] }) => {
 };
 
 const MathRecursiveAccordion = ({ data }) => {
+  const router = useRouter();
   const extractExercise = data => {
     const exercises = [];
     const contentArray = data[0]?.content;
@@ -215,9 +216,7 @@ const MathRecursiveAccordion = ({ data }) => {
     });
     return exercises;
   };
-
   return (
-    // ✅ MathRecursiveAccordion también tiene su propio Accordion.Root
     <Accordion.Root multiple collapsible width="100%">
       {data && data.length > 0 &&
         data.map(topic => {
@@ -226,9 +225,7 @@ const MathRecursiveAccordion = ({ data }) => {
             <Accordion.Item key={topic.id} value={String(topic.id)}>
               <Accordion.ItemTrigger>
                 <Box flex="1" textAlign="left">
-                  <Text fontWeight="bold" mb={2}>
-                    {topic.title}
-                  </Text>
+                  <Text fontWeight="bold" mb={2}>{topic.title}</Text>
                 </Box>
                 {topic.content?.length > 0 && <Accordion.ItemIndicator />}
               </Accordion.ItemTrigger>
@@ -252,14 +249,24 @@ const MathRecursiveAccordion = ({ data }) => {
                                 image={exercise.image}
                               />
                             </Box>
+                            {/* ← Agrega esta columna */}
+                            <Box>
+                              <Button
+                                size="sm"
+                                colorPalette="blue"
+                                onClick={() =>
+                                  router.push({
+                                    pathname: "/exerciseEditor",
+                                    query: { id: exercise.exerciseId },
+                                  })
+                                }
+                              >
+                                Editar
+                              </Button>
+                            </Box>
                           </HStack>
                           {index < exercises.length - 1 && (
-                            <Separator
-                              my={4}
-                              borderColor="gray.300"
-                              borderWidth="2px"
-                              opacity={1}
-                            />
+                            <Separator my={4} borderColor="gray.300" borderWidth="2px" opacity={1} />
                           )}
                         </Box>
                       ))}
@@ -323,7 +330,6 @@ const GetInfoExercises = () => {
           <Field.Label mt={4}>
             Ejercicios de los tópicos y subtópicos seleccionados
           </Field.Label>
-          {/* ✅ Sin Accordion.Root aquí — MathRecursiveAccordion ya lo incluye */}
           <MathRecursiveAccordion data={selectedItems} />
         </Field.Root>
       </Box>
