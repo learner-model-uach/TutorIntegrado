@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import type {
   MathfieldElement,
   VirtualKeyboardInterface,
@@ -7,6 +7,15 @@ import type {
 } from "mathlive";
 import "mathlive/static.css";
 import { Box } from "@chakra-ui/react";
+import {
+  activatePromptInput,
+  applyPromptOnlyMode,
+  collectPromptValues,
+  isSelectionInsidePrompt,
+  keepSelectionInsidePrompt,
+  revealActivePrompt,
+  setSafeMathFieldClassName,
+} from "../../../../utils/mathLivePromptGuard";
 
 type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
   readonly normalizedLayouts: (VirtualKeyboardLayoutCore & {
@@ -27,6 +36,7 @@ const Mathfield = (props: MathEditorProps) => {
   const currentValue = useRef<string>("");
   const lastPropValue = useRef<string | null>(null);
   const mfeRef = useRef<MathfieldElement | null>(null);
+  const restoringPromptSelection = useRef(false);
   const [mfe, setMfe] = useState<MathfieldElement | null>(null);
   const onChangeRef = useRef(props.onChange);
   const onMountRef = useRef(props.onMount);
@@ -62,8 +72,10 @@ const Mathfield = (props: MathEditorProps) => {
 
     mfe.mathVirtualKeyboardPolicy = "auto";
     mfe.environmentPopoverPolicy = "off";
+    mfe.menuItems = [];
     mfe.resetUndo();
     mfe.setValue(props.value ?? "", { focus: false, feedback: false });
+    applyPromptOnlyMode(mfe, props.readOnly);
     currentValue.current = props.value ?? "";
     lastPropValue.current = props.value ?? "";
 
@@ -80,10 +92,23 @@ const Mathfield = (props: MathEditorProps) => {
       (window as any).mathVirtualKeyboard.layouts = layout;
     }
 
-    // handlers
+    const schedulePromptSelectionGuard = () => {
+      if (restoringPromptSelection.current) return;
+      restoringPromptSelection.current = true;
+
+      requestAnimationFrame(() => {
+        keepSelectionInsidePrompt(mfe);
+        restoringPromptSelection.current = false;
+      });
+    };
+
     const onKey = (ev: KeyboardEvent) => {
-      if (ev.key === "Tab") {
+      if (ev.key === "Tab" || ev.key === "Enter") {
+        if (mfe.getPrompts().length === 0) return;
+        ev.preventDefault();
         mfe.executeCommand("moveToNextPlaceholder");
+        schedulePromptSelectionGuard();
+        revealActivePrompt(mfe);
       } else if (ev.key === "\\") {
         ev.preventDefault();
         mfe.executeCommand(["insert", "\\backslash"]);
@@ -94,70 +119,64 @@ const Mathfield = (props: MathEditorProps) => {
 
     const onInput = (evt: Event) => {
       const value = (evt.target as HTMLInputElement).value || "";
-      const promptValues: Record<string, string> = mfe.getPrompts().reduce(
-        (acc, id) => {
-          acc[id] = mfe.getPromptValue(id);
-          return acc;
-        },
-        {} as Record<string, string>,
-      );
+      const promptValues = collectPromptValues(mfe);
 
       if (currentValue.current !== value) {
         currentValue.current = value;
         onChangeRef.current(value, promptValues);
+        revealActivePrompt(mfe);
       }
     };
 
-    const focusFirstPlaceholder = () => {
-      mfe.focus();
-
-      const promptIds = mfe.getPrompts();
-      if (promptIds.length === 0) return;
-
-      try {
-        mfe.position = 0;
-      } catch {
-        // Ignore if the cursor cannot be repositioned safely.
-      }
-
-      try {
-        mfe.executeCommand("moveToNextPlaceholder");
-      } catch {
-        // Ignore if MathLive rejects the command in the current state.
+    const onBeforeInput = (ev: Event) => {
+      if (mfe.getPrompts().length === 0) return;
+      if (keepSelectionInsidePrompt(mfe)) {
+        ev.preventDefault();
       }
     };
 
     const onPointerDown = () => {
-      requestAnimationFrame(focusFirstPlaceholder);
+      requestAnimationFrame(() => {
+        activatePromptInput(mfe);
+      });
+    };
+
+    const onSelectionChange = () => {
+      schedulePromptSelectionGuard();
+      revealActivePrompt(mfe);
+    };
+
+    const onFocus = () => {
+      schedulePromptSelectionGuard();
+      requestAnimationFrame(() => {
+        activatePromptInput(mfe);
+      });
     };
 
     mfe.addEventListener("keydown", onKey, { capture: true });
+    mfe.addEventListener("beforeinput", onBeforeInput);
     mfe.addEventListener("input", onInput);
     mfe.addEventListener("pointerdown", onPointerDown, { capture: true });
+    mfe.addEventListener("selection-change", onSelectionChange);
+    mfe.addEventListener("focus", onFocus);
 
-    onChangeRef.current(
-      props.value ?? "",
-      mfe.getPrompts().reduce(
-        (acc, id) => {
-          acc[id] = mfe.getPromptValue(id);
-          return acc;
-        },
-        {} as Record<string, string>,
-      ),
-    );
+    onChangeRef.current(props.value ?? "", collectPromptValues(mfe));
 
     return () => {
       // limpieza
       mfe.removeEventListener("keydown", onKey, { capture: true } as any);
+      mfe.removeEventListener("beforeinput", onBeforeInput);
       mfe.removeEventListener("input", onInput);
       mfe.removeEventListener("pointerdown", onPointerDown, { capture: true } as any);
+      mfe.removeEventListener("selection-change", onSelectionChange);
+      mfe.removeEventListener("focus", onFocus);
     };
-  }, [mfe, props.value]);
+  }, [mfe]);
 
   useEffect(() => {
     if (!mfe) return;
-    mfe.className = props.className || "";
-    mfe.readOnly = props.readOnly ?? false;
+    setSafeMathFieldClassName(mfe, props.className);
+    applyPromptOnlyMode(mfe, props.readOnly);
   }, [mfe, props.className, props.readOnly]);
 
   // actualiza cuando cambie props.value
@@ -166,37 +185,45 @@ const Mathfield = (props: MathEditorProps) => {
     if (lastPropValue.current !== (props.value ?? "")) {
       const pos = mfe.position;
       mfe.setValue(props.value ?? "", { focus: false, feedback: false });
+      applyPromptOnlyMode(mfe, props.readOnly);
       try {
         mfe.position = pos;
       } catch {
         // Ignore invalid cursor restoration when placeholders changed.
       }
+      if (document.activeElement === mfe && !isSelectionInsidePrompt(mfe)) {
+        activatePromptInput(mfe);
+      }
       currentValue.current = props.value ?? "";
       lastPropValue.current = props.value ?? "";
       (mfe as any).requestUpdate?.();
     }
-  }, [mfe, props.value]);
+  }, [mfe, props.readOnly, props.value]);
 
-  const handleContainerMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+  const handleContainerPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (!mfe) return;
-    event.preventDefault();
-    mfe.focus();
+    if (event.target === containerRef.current) {
+      event.preventDefault();
+      activatePromptInput(mfe);
+    }
   };
 
   return (
     <Box
       ref={containerRef}
-      onMouseDown={handleContainerMouseDown}
+      onPointerDown={handleContainerPointerDown}
       borderWidth="1px"
       borderRadius="md"
       borderColor="black"
-      width="fit-content"
+      width="100%"
       maxW="100%"
       marginX="auto"
       padding="2"
-      overflow="visible"
+      overflowX="auto"
+      overflowY="hidden"
       minH="48px"
       cursor="text"
+      style={{ WebkitOverflowScrolling: "touch" }}
     />
   );
 };

@@ -56,6 +56,97 @@
   white-space: normal;
 }
 
+.safe-math-field {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  vertical-align: middle;
+}
+
+.safe-math-field::part(container) {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.safe-math-field::part(content) {
+  min-width: max-content;
+}
+
+.safe-math-field::part(menu-toggle) {
+  display: none;
+}
+
+.safe-math-field::part(virtual-keyboard-toggle) {
+  color: #9fd8ff;
+  min-width: 2.25rem;
+}
+
+.safe-math-field::part(prompt) {
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(94, 234, 212, 0.65);
+  background: rgba(94, 234, 212, 0.08);
+}
+
+.logic-math-field {
+  font-size: clamp(17px, 4.2vw, 22px);
+}
+
+.logic-math-field::part(container) {
+  align-items: center;
+  background: rgba(22, 30, 42, 0.42);
+  border: 1px solid rgba(170, 194, 224, 0.22);
+  border-radius: 8px;
+  padding: 0.75rem 0.8rem;
+}
+
+.logic-math-field::part(content) {
+  padding: 0.05rem 0.35rem;
+}
+
+.logic-math-field::part(prompt) {
+  align-items: center;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(191, 219, 254, 0.62);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 1px 6px rgba(0, 0, 0, 0.22);
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1.15;
+  min-height: 1.45em;
+  min-width: 2.9em;
+  padding: 0.05em 0.35em;
+}
+
+.logic-math-field::part(virtual-keyboard-toggle) {
+  align-items: center;
+  border: 1px solid rgba(147, 197, 253, 0.5);
+  border-radius: 6px;
+  color: #9fd8ff;
+  display: inline-flex;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .logic-math-field {
+    font-size: 20px;
+  }
+
+  .logic-math-field::part(container) {
+    padding: 0.8rem 0.7rem;
+  }
+
+  .logic-math-field::part(virtual-keyboard-toggle) {
+    min-height: 2rem;
+    min-width: 2rem;
+  }
+}
+
 .chakra-theme.light {
   --colors-bg: #2b4264; /* indigo.900 */
   --colors-bg-secondary: #ffffff; /* white */

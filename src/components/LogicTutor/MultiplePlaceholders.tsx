@@ -126,7 +126,8 @@ const MultiplePlaceholders = ({
           // borderColor="red"
           borderWidth={1}
           borderRadius="lg"
-          overflow="visible"
+          overflowX="auto"
+          overflowY="hidden"
           display="flex"
           flexDirection="column"
           alignItems="center"
@@ -146,7 +147,7 @@ const MultiplePlaceholders = ({
           <Box display="flex" justifyContent="center" w="100%">
             <Mathfield
               readOnly={true}
-              value={`\\large ${exc.steps[nStep].expression}\\;`}
+              value={`${exc.steps[nStep].expression}\\;`}
               onChange={test}
             />
           </Box>
