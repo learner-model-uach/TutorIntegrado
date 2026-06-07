@@ -2,12 +2,12 @@ import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaEraser, FaPencilAlt, FaRegCircle, FaTimes } from "react-icons/fa";
 import MQStaticMathField from "../../utils/MQStaticMathField";
-import { requestMathpixStrokes } from "./mathpixClient";
+import { normalizeMathpixResponse, requestMathpixStrokes, NormalizedMathpixResponse } from "./mathpixClient";
 
 export interface MathPixBoardProps {
   isOpen: boolean;
   onClose: () => void;
-  onCapture?: (latex: string) => void;
+  onCapture?: (response: NormalizedMathpixResponse) => void;
   title?: string;
   strokeColor?: string;
   strokeWidth?: number;
@@ -203,11 +203,12 @@ export const MathPixBoard = ({
       setIsSubmitting(true);
       setSubmitError(null);
       const result = await requestMathpixStrokes(payload);
-      const latex = result?.latex_styled || result?.latex || "";
-      if (!latex) {
+      const normalizedResult = normalizeMathpixResponse(result);
+      if (!normalizedResult.expressions.length) {
         throw new Error("Mathpix no devolvio latex.");
       }
-      onCapture?.(latex);
+      console.log(normalizedResult);
+      onCapture?.(normalizedResult);
       onClose();
     } catch (error) {
       const message = error instanceof Error ? error.message : "Error desconocido.";

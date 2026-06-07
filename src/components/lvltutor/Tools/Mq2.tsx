@@ -14,6 +14,7 @@ import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
+import type { NormalizedMathpixResponse } from "../../whiteboard/mathpixClient";
 import { MathPixBoard } from "../../whiteboard/MathPixBoard";
 
 addStyles();
@@ -267,11 +268,55 @@ const Mq2 = ({
     if (ta != undefined) setLatex("");
   };
 
-  const handleBoardCapture = (capturedLatex: string) => {
+  const handleBoardCapture = (capturedMathpix: NormalizedMathpixResponse) => {
+    let capturedLatex = capturedMathpix.text || capturedMathpix.latex_styled || capturedMathpix.latex || "";
+
+    try {
+      const lastExpression = capturedMathpix.expressions?.[capturedMathpix.expressions.length - 1];
+      if (lastExpression) {
+        capturedLatex = lastExpression;
+      }
+    } catch {
+      capturedLatex = capturedMathpix.text || "";
+    }
+
     setLatex(capturedLatex);
     if (ta) {
       ta.latex(capturedLatex);
     }
+
+    action({
+      verbName: "mathpixRequest",
+      stepID: "" + step.stepId,
+      contentID: content,
+      topicID: topicId,
+      result: 1,
+      kcsIDs: step.KCs,
+      extra: {
+        response: [capturedLatex],
+        attempts: attempts,
+        hints: mqSnap.hints,
+        mathpixResponse: capturedMathpix,
+      },
+    });
+  };
+
+  const handleOpenBoard = () => {
+    action({
+      verbName: "mathpixBoardOpen",
+      stepID: "" + step.stepId,
+      contentID: content,
+      topicID: topicId,
+      result: 1,
+      kcsIDs: step.KCs,
+      extra: {
+        response: [latex],
+        attempts: attempts,
+        hints: mqSnap.hints,
+      },
+    });
+    setShowBoardTip(false);
+    setIsBoardOpen(true);
   };
 
   return (
@@ -443,10 +488,7 @@ const Mq2 = ({
               right="-52px"
               top="8px"
               zIndex={1}
-              onClick={() => {
-                setShowBoardTip(false);
-                setIsBoardOpen(true);
-              }}
+              onClick={handleOpenBoard}
             >
               <FaPencilAlt />
             </Button>
