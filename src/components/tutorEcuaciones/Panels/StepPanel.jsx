@@ -206,14 +206,14 @@ export const StepPanel = ({
             minW={0}
           >
             <Flex
-              flex="1"
+              flex={{ base: "1", xl: "0 1 auto" }}
               minW={0}
               maxW="100%"
               align="center"
-              justify={{ base: "center", xl: "flex-start" }}
+              justify="center"
               overflow="hidden"
             >
-              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
+              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto", xl: 0 }}>
                 {step.left_text}
               </Text>
 

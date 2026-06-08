@@ -6,14 +6,6 @@ import { Flex, Text } from "@chakra-ui/react";
 import { BOX, COLUMN1, COLUMN2, DRAG_TEXT } from "../types";
 import { useAction } from "../../../utils/action";
 
-const style = {
-  border: "1px dashed gray",
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
-  cursor: "move",
-};
-
 export const MovableItem = ({
   value,
   column,
@@ -157,11 +149,13 @@ export const MovableItem = ({
     }
   };
 
+  const isAnswerSlotItem = column === COLUMN2;
+
   return (
     <Flex
       ref={drag}
       onDoubleClick={onDoubleClick}
-      className={styles["movable-item"]}
+      className={`${styles["movable-item"]} ${isAnswerSlotItem ? styles["answer-slot-item"] : ""}`}
       fontSize={{ base: "10px" }}
       style={{ textAlign: "center", opacity: opacity }}
     >

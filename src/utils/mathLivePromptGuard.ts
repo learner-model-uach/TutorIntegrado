@@ -17,6 +17,22 @@ const rangeIsInside = (range: Range, parentRange: Range) => {
   return start >= parentStart && end <= parentEnd;
 };
 
+const offsetIsInsideRange = (offset: number, range: Range) => {
+  const start = Math.min(range[0], range[1]);
+  const end = Math.max(range[0], range[1]);
+
+  return offset >= start && offset <= end;
+};
+
+const offsetDistanceToRange = (offset: number, range: Range) => {
+  const start = Math.min(range[0], range[1]);
+  const end = Math.max(range[0], range[1]);
+
+  if (offset < start) return start - offset;
+  if (offset > end) return offset - end;
+  return 0;
+};
+
 export const collectPromptValues = (mfe: MathfieldElement) =>
   mfe.getPrompts().reduce(
     (acc, id) => {
@@ -60,6 +76,29 @@ export const focusEditablePrompt = (mfe: MathfieldElement, preferredId?: string)
   return true;
 };
 
+export const getPromptIdFromPoint = (mfe: MathfieldElement, x: number, y: number) => {
+  const prompts = getPromptEntries(mfe);
+  if (prompts.length === 0) return undefined;
+
+  try {
+    const offset = Number(mfe.getOffsetFromPoint(x, y, { bias: 0 }));
+    const exactPrompt = prompts.find(prompt => offsetIsInsideRange(offset, prompt.range));
+
+    if (exactPrompt) return exactPrompt.id;
+
+    const nearestPrompt = prompts
+      .map(prompt => ({
+        id: prompt.id,
+        distance: offsetDistanceToRange(offset, prompt.range),
+      }))
+      .sort((a, b) => a.distance - b.distance)[0];
+
+    return nearestPrompt?.distance <= 1 ? nearestPrompt.id : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 export const keepSelectionInsidePrompt = (mfe: MathfieldElement) => {
   if (mfe.getPrompts().length === 0 || isSelectionInsidePrompt(mfe)) return false;
   return focusEditablePrompt(mfe);
@@ -86,8 +125,10 @@ export const revealActivePrompt = (mfe: MathfieldElement) => {
 };
 
 export const activatePromptInput = (mfe: MathfieldElement, preferredId?: string) => {
-  if (!isSelectionInsidePrompt(mfe)) {
+  if (preferredId) {
     focusEditablePrompt(mfe, preferredId);
+  } else if (!isSelectionInsidePrompt(mfe)) {
+    focusEditablePrompt(mfe);
   } else {
     mfe.focus();
   }

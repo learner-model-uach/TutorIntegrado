@@ -170,11 +170,13 @@ export const MovableItem = ({
     }
   };
 
+  const isAnswerSlotItem = column === COLUMN2;
+
   return (
     <Flex
       ref={drag}
       onDoubleClick={onDoubleClick}
-      className={styles["movable-item"]}
+      className={`${styles["movable-item"]} ${isAnswerSlotItem ? styles["answer-slot-item"] : ""}`}
       fontSize={{ base: "10px" }}
       textAlign="center"
       opacity={opacity}

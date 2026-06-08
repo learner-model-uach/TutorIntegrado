@@ -91,6 +91,68 @@
   background: rgba(94, 234, 212, 0.08);
 }
 
+.word-problem-math-field {
+  font-size: clamp(20px, 4.4vw, 25px);
+  line-height: 1.35;
+}
+
+.word-problem-math-field::part(container) {
+  align-items: center;
+  min-height: 58px;
+  padding: 0.35rem 0.45rem;
+}
+
+.word-problem-math-field::part(content) {
+  padding: 0.2rem 0.25rem;
+}
+
+.word-problem-math-field::part(prompt) {
+  align-items: center;
+  cursor: text;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 1.45em;
+  min-width: 1.45em;
+  padding: 0.05em 0.28em;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.word-problem-math-field::part(virtual-keyboard-toggle) {
+  display: none;
+}
+
+.word-problem-keyboard-toggle {
+  align-items: center;
+  background: rgba(15, 23, 42, 0.36);
+  border: 1px solid rgba(159, 216, 255, 0.7);
+  border-radius: 6px;
+  color: #9fd8ff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.15rem;
+  height: 2.4rem;
+  justify-content: center;
+  line-height: 1;
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.6rem;
+  z-index: 1;
+}
+
+.word-problem-keyboard-toggle:active {
+  background: rgba(15, 23, 42, 0.58);
+}
+
+body.word-problem-keyboard-active > .ML__keyboard {
+  --keycap-font-size: clamp(18px, 4.8vw, 26px);
+  --keycap-gap: 7px;
+  --keycap-height: 64px;
+  --keyboard-toolbar-font-size: 150%;
+}
+
 .logic-math-field {
   font-size: clamp(17px, 4.2vw, 22px);
 }
@@ -124,15 +186,73 @@
 }
 
 .logic-math-field::part(virtual-keyboard-toggle) {
+  display: none;
+}
+
+.logic-keyboard-toggle {
   align-items: center;
+  background: rgba(15, 23, 42, 0.36);
   border: 1px solid rgba(147, 197, 253, 0.5);
   border-radius: 6px;
   color: #9fd8ff;
+  cursor: pointer;
   display: inline-flex;
+  font-size: 1.1rem;
+  height: 2.25rem;
   justify-content: center;
+  line-height: 1;
+  position: absolute;
+  right: 0.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.45rem;
+  z-index: 1;
+}
+
+.logic-keyboard-toggle:active {
+  background: rgba(15, 23, 42, 0.58);
+}
+
+body.logic-keyboard-active > .ML__keyboard {
+  --keycap-font-size: clamp(18px, 4.8vw, 26px);
+  --keycap-gap: 7px;
+  --keycap-height: 64px;
+  --keyboard-toolbar-font-size: 150%;
 }
 
 @media (max-width: 640px) {
+  .word-problem-math-field {
+    font-size: 22px;
+  }
+
+  .word-problem-math-field::part(container) {
+    min-height: 66px;
+    padding: 0.45rem 0.35rem;
+  }
+
+  .word-problem-math-field::part(prompt) {
+    min-height: 1.6em;
+    min-width: 1.6em;
+    padding: 0.08em 0.32em;
+  }
+
+  .word-problem-math-field::part(virtual-keyboard-toggle) {
+    display: none;
+  }
+
+  .word-problem-keyboard-toggle {
+    font-size: 1.22rem;
+    height: 2.65rem;
+    right: 0.55rem;
+    width: 2.75rem;
+  }
+
+  body.word-problem-keyboard-active > .ML__keyboard {
+    --keycap-font-size: clamp(19px, 5.6vw, 27px);
+    --keycap-gap: 5px;
+    --keycap-height: 62px;
+  }
+
   .logic-math-field {
     font-size: 20px;
   }
@@ -142,8 +262,20 @@
   }
 
   .logic-math-field::part(virtual-keyboard-toggle) {
-    min-height: 2rem;
-    min-width: 2rem;
+    display: none;
+  }
+
+  .logic-keyboard-toggle {
+    font-size: 1.18rem;
+    height: 2.5rem;
+    right: 0.5rem;
+    width: 2.6rem;
+  }
+
+  body.logic-keyboard-active > .ML__keyboard {
+    --keycap-font-size: clamp(19px, 5.6vw, 27px);
+    --keycap-gap: 5px;
+    --keycap-height: 62px;
   }
 }
 

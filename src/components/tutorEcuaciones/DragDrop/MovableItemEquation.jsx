@@ -4,14 +4,6 @@ import { useDrag } from "react-dnd";
 import TeX from "@matejmazur/react-katex";
 import { BOX, COLUMN1, COLUMN2, COLUMN3 } from "../types";
 
-const style = {
-  border: "1px dashed gray",
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
-  cursor: "move",
-};
-
 export const MovableItemEquation = ({
   value,
   setItems,
@@ -137,12 +129,14 @@ export const MovableItemEquation = ({
 
   const opacity = isDragging ? 0.2 : 1;
 
+  const isAnswerSlotItem = column === COLUMN2 || column === COLUMN3;
+
   return (
     <div
       ref={drag}
       onDoubleClick={onDoubleClick}
-      className={styles["movable-item"]}
-      style={{ style }}
+      className={`${styles["movable-item"]} ${isAnswerSlotItem ? styles["answer-slot-item"] : ""}`}
+      style={{ opacity }}
     >
       <TeX math={value} as="figcaption" style={{ alignItems: "center", fontSize: "12px" }} />
     </div>
