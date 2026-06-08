@@ -91,13 +91,78 @@
   background: rgba(94, 234, 212, 0.08);
 }
 
+:root,
+html.light,
+.chakra-theme.light {
+  --mathlive-field-surface: rgba(248, 250, 252, 0.9);
+  --mathlive-field-border: rgba(37, 99, 235, 0.24);
+  --mathlive-field-content: #0f172a;
+  --mathlive-field-prompt-bg: rgba(219, 234, 254, 0.86);
+  --mathlive-field-prompt-border: rgba(37, 99, 235, 0.7);
+  --mathlive-field-prompt-shadow: rgba(30, 64, 175, 0.16);
+  --mathlive-field-toggle-bg: rgba(226, 232, 240, 0.95);
+  --mathlive-field-toggle-bg-active: rgba(203, 213, 225, 0.98);
+  --mathlive-field-toggle-border: rgba(37, 99, 235, 0.42);
+  --mathlive-field-toggle-color: #1d4ed8;
+  --mathlive-selection-bg: rgba(37, 99, 235, 0.2);
+  --mathlive-selection-color: #0f172a;
+  --mathlive-keyboard-bg: #e2e8f0;
+  --mathlive-keyboard-border: rgba(148, 163, 184, 0.7);
+  --mathlive-keycap-bg: #f8fafc;
+  --mathlive-keycap-bg-hover: #eff6ff;
+  --mathlive-keycap-bg-active: #dbeafe;
+  --mathlive-keycap-border: rgba(148, 163, 184, 0.75);
+  --mathlive-keycap-text: #0f172a;
+  --mathlive-keycap-primary-bg: #2563eb;
+  --mathlive-keycap-primary-text: #ffffff;
+  --mathlive-keycap-secondary-bg: #cbd5e1;
+  --mathlive-keycap-secondary-text: #0f172a;
+  --mathlive-keyboard-toolbar-bg: #dbeafe;
+  --mathlive-keyboard-toolbar-text: #1d4ed8;
+}
+
+html.dark,
+.chakra-theme.dark {
+  --mathlive-field-surface: rgba(22, 30, 42, 0.58);
+  --mathlive-field-border: rgba(170, 194, 224, 0.24);
+  --mathlive-field-content: #f8fafc;
+  --mathlive-field-prompt-bg: rgba(15, 23, 42, 0.72);
+  --mathlive-field-prompt-border: rgba(191, 219, 254, 0.72);
+  --mathlive-field-prompt-shadow: rgba(0, 0, 0, 0.24);
+  --mathlive-field-toggle-bg: rgba(15, 23, 42, 0.44);
+  --mathlive-field-toggle-bg-active: rgba(15, 23, 42, 0.68);
+  --mathlive-field-toggle-border: rgba(147, 197, 253, 0.55);
+  --mathlive-field-toggle-color: #9fd8ff;
+  --mathlive-selection-bg: rgba(45, 212, 191, 0.22);
+  --mathlive-selection-color: #f8fafc;
+  --mathlive-keyboard-bg: #1e293b;
+  --mathlive-keyboard-border: rgba(71, 85, 105, 0.9);
+  --mathlive-keycap-bg: #f8fafc;
+  --mathlive-keycap-bg-hover: #e2e8f0;
+  --mathlive-keycap-bg-active: #cbd5e1;
+  --mathlive-keycap-border: rgba(15, 23, 42, 0.25);
+  --mathlive-keycap-text: #0f172a;
+  --mathlive-keycap-primary-bg: #0f766e;
+  --mathlive-keycap-primary-text: #ffffff;
+  --mathlive-keycap-secondary-bg: #94a3b8;
+  --mathlive-keycap-secondary-text: #0f172a;
+  --mathlive-keyboard-toolbar-bg: #0f172a;
+  --mathlive-keyboard-toolbar-text: #e0f2fe;
+}
+
 .word-problem-math-field {
+  --selection-background-color: var(--mathlive-selection-bg);
+  --selection-color: var(--mathlive-selection-color);
+  color: var(--mathlive-field-content);
   font-size: clamp(20px, 4.4vw, 25px);
   line-height: 1.35;
 }
 
 .word-problem-math-field::part(container) {
   align-items: center;
+  background: var(--mathlive-field-surface);
+  border: 1px solid var(--mathlive-field-border);
+  border-radius: 8px;
   min-height: 58px;
   padding: 0.35rem 0.45rem;
 }
@@ -108,14 +173,25 @@
 
 .word-problem-math-field::part(prompt) {
   align-items: center;
+  background: var(--mathlive-field-prompt-bg);
+  border: 1px solid var(--mathlive-field-prompt-border);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 1px 5px var(--mathlive-field-prompt-shadow);
+  box-sizing: border-box;
+  color: var(--mathlive-field-content);
   cursor: text;
   display: inline-flex;
   justify-content: center;
-  min-height: 1.45em;
-  min-width: 1.45em;
-  padding: 0.05em 0.28em;
+  line-height: 1;
+  min-height: 1.65em;
+  min-width: 1.65em;
+  overflow: hidden;
+  padding: 0.08em 0.34em;
   pointer-events: auto;
   touch-action: manipulation;
+  white-space: nowrap;
 }
 
 .word-problem-math-field::part(virtual-keyboard-toggle) {
@@ -124,10 +200,10 @@
 
 .word-problem-keyboard-toggle {
   align-items: center;
-  background: rgba(15, 23, 42, 0.36);
-  border: 1px solid rgba(159, 216, 255, 0.7);
+  background: var(--mathlive-field-toggle-bg);
+  border: 1px solid var(--mathlive-field-toggle-border);
   border-radius: 6px;
-  color: #9fd8ff;
+  color: var(--mathlive-field-toggle-color);
   cursor: pointer;
   display: inline-flex;
   font-size: 1.15rem;
@@ -143,7 +219,34 @@
 }
 
 .word-problem-keyboard-toggle:active {
-  background: rgba(15, 23, 42, 0.58);
+  background: var(--mathlive-field-toggle-bg-active);
+}
+
+body.word-problem-keyboard-active > .ML__keyboard,
+body.logic-keyboard-active > .ML__keyboard {
+  --keyboard-background: var(--mathlive-keyboard-bg);
+  --keyboard-border: 1px solid var(--mathlive-keyboard-border);
+  --keyboard-toolbar-background: var(--mathlive-keyboard-toolbar-bg);
+  --keyboard-toolbar-background-hover: var(--mathlive-keycap-bg-hover);
+  --keyboard-toolbar-background-selected: var(--mathlive-keycap-bg-active);
+  --keyboard-toolbar-text: var(--mathlive-keyboard-toolbar-text);
+  --keyboard-toolbar-text-active: var(--mathlive-keycap-text);
+  --keycap-background: var(--mathlive-keycap-bg);
+  --keycap-background-hover: var(--mathlive-keycap-bg-hover);
+  --keycap-background-active: var(--mathlive-keycap-bg-active);
+  --keycap-background-pressed: var(--mathlive-keycap-bg-active);
+  --keycap-border: 1px solid var(--mathlive-keycap-border);
+  --keycap-border-bottom: 2px solid var(--mathlive-keycap-border);
+  --keycap-primary-background: var(--mathlive-keycap-primary-bg);
+  --keycap-primary-background-hover: var(--mathlive-keycap-primary-bg);
+  --keycap-primary-text: var(--mathlive-keycap-primary-text);
+  --keycap-secondary-background: var(--mathlive-keycap-secondary-bg);
+  --keycap-secondary-background-hover: var(--mathlive-keycap-bg-active);
+  --keycap-secondary-text: var(--mathlive-keycap-secondary-text);
+  --keycap-text: var(--mathlive-keycap-text);
+  --keycap-text-active: var(--mathlive-keycap-text);
+  --keycap-text-hover: var(--mathlive-keycap-text);
+  --keycap-text-pressed: var(--mathlive-keycap-text);
 }
 
 body.word-problem-keyboard-active > .ML__keyboard {
@@ -154,13 +257,16 @@ body.word-problem-keyboard-active > .ML__keyboard {
 }
 
 .logic-math-field {
+  --selection-background-color: var(--mathlive-selection-bg);
+  --selection-color: var(--mathlive-selection-color);
+  color: var(--mathlive-field-content);
   font-size: clamp(17px, 4.2vw, 22px);
 }
 
 .logic-math-field::part(container) {
   align-items: center;
-  background: rgba(22, 30, 42, 0.42);
-  border: 1px solid rgba(170, 194, 224, 0.22);
+  background: var(--mathlive-field-surface);
+  border: 1px solid var(--mathlive-field-border);
   border-radius: 8px;
   padding: 0.75rem 0.8rem;
 }
@@ -171,18 +277,24 @@ body.word-problem-keyboard-active > .ML__keyboard {
 
 .logic-math-field::part(prompt) {
   align-items: center;
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px solid rgba(191, 219, 254, 0.62);
+  background: var(--mathlive-field-prompt-bg);
+  border: 1px solid var(--mathlive-field-prompt-border);
   border-radius: 6px;
+  box-sizing: border-box;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 1px 6px rgba(0, 0, 0, 0.22);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 1px 6px var(--mathlive-field-prompt-shadow);
+  color: var(--mathlive-field-content);
   display: inline-flex;
   justify-content: center;
-  line-height: 1.15;
-  min-height: 1.45em;
-  min-width: 2.9em;
-  padding: 0.05em 0.35em;
+  line-height: 1;
+  margin: 0 0.12em;
+  min-height: 1.95em;
+  min-width: 3.65em;
+  overflow: hidden;
+  padding: 0.24em 0.56em;
+  vertical-align: -0.33em;
+  white-space: nowrap;
 }
 
 .logic-math-field::part(virtual-keyboard-toggle) {
@@ -191,10 +303,10 @@ body.word-problem-keyboard-active > .ML__keyboard {
 
 .logic-keyboard-toggle {
   align-items: center;
-  background: rgba(15, 23, 42, 0.36);
-  border: 1px solid rgba(147, 197, 253, 0.5);
+  background: var(--mathlive-field-toggle-bg);
+  border: 1px solid var(--mathlive-field-toggle-border);
   border-radius: 6px;
-  color: #9fd8ff;
+  color: var(--mathlive-field-toggle-color);
   cursor: pointer;
   display: inline-flex;
   font-size: 1.1rem;
@@ -210,7 +322,7 @@ body.word-problem-keyboard-active > .ML__keyboard {
 }
 
 .logic-keyboard-toggle:active {
-  background: rgba(15, 23, 42, 0.58);
+  background: var(--mathlive-field-toggle-bg-active);
 }
 
 body.logic-keyboard-active > .ML__keyboard {
@@ -231,9 +343,9 @@ body.logic-keyboard-active > .ML__keyboard {
   }
 
   .word-problem-math-field::part(prompt) {
-    min-height: 1.6em;
-    min-width: 1.6em;
-    padding: 0.08em 0.32em;
+    min-height: 1.8em;
+    min-width: 1.8em;
+    padding: 0.1em 0.36em;
   }
 
   .word-problem-math-field::part(virtual-keyboard-toggle) {
