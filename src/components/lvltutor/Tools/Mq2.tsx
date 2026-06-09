@@ -1,6 +1,7 @@
 import { Alert, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
-import { useState, memo, useEffect, useRef } from "react";
+import { useState, memo, useEffect, useRef, type ChangeEvent } from "react";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
+import { FaCamera } from "react-icons/fa";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -13,6 +14,7 @@ import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
+import { isWrapper } from "../../../utils/auth0Platform";
 
 addStyles();
 
@@ -139,8 +141,14 @@ const Mq2 = ({
   >();
   const [alertMsg, setAlertMsg] = useState("");
   const [alertHidden, setAlertHidden] = useState(true);
+  const [showCameraButton, setShowCameraButton] = useState(false);
 
   const result = useRef(false);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setShowCameraButton(isWrapper());
+  }, []);
 
   //la siguiente funcion maneja la respuesta ingresada, la respuesta se compara con el valor correspondiente almacenado en el ejercicio.json
   //Ademas, se manejan los componentes de alerta utilizado en el componente padre(solver2) y el componente hijo(Mq2)
@@ -253,6 +261,15 @@ const Mq2 = ({
 
   const clear = () => {
     if (ta != undefined) setLatex("");
+  };
+
+  const openCameraCapture = () => {
+    cameraInputRef.current?.click();
+  };
+
+  const handleCameraCapture = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files?.length) return;
+    event.target.value = "";
   };
 
   return (
@@ -442,6 +459,29 @@ const Mq2 = ({
             >
               R
             </Button>
+            {showCameraButton && (
+              <>
+                <input
+                  ref={cameraInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  hidden
+                  onChange={handleCameraCapture}
+                />
+                <Button
+                  aria-label="Tomar foto de la respuesta"
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                  }}
+                  onClick={openCameraCapture}
+                  size="xs"
+                >
+                  <FaCamera />
+                </Button>
+              </>
+            )}
           </HStack>
         </Box>
       </VStack>
