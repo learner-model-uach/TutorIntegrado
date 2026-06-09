@@ -48,9 +48,11 @@ const formatMobileIntervalExpression = (value: string) => {
 };
 
 const getMathVirtualKeyboard = () =>
-  (window as Window & {
-    mathVirtualKeyboard?: VirtualKeyboardInterface;
-  }).mathVirtualKeyboard;
+  (
+    window as Window & {
+      mathVirtualKeyboard?: VirtualKeyboardInterface;
+    }
+  ).mathVirtualKeyboard;
 
 const isMathVirtualKeyboardVisible = () =>
   Boolean(
