@@ -1,5 +1,6 @@
 import { Alert, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
-import { useState, memo, useEffect, useRef, type ChangeEvent } from "react";
+import { useState, memo, useEffect, useRef } from "react";
+import { Camera, CameraResultType, CameraSource, type Photo } from "@capacitor/camera";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
 import { FaCamera } from "react-icons/fa";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
@@ -144,7 +145,7 @@ const Mq2 = ({
   const [showCameraButton, setShowCameraButton] = useState(false);
 
   const result = useRef(false);
-  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const capturedPhotoRef = useRef<Photo | null>(null);
 
   useEffect(() => {
     setShowCameraButton(isWrapper());
@@ -263,13 +264,24 @@ const Mq2 = ({
     if (ta != undefined) setLatex("");
   };
 
-  const openCameraCapture = () => {
-    cameraInputRef.current?.click();
-  };
+  const openCameraCapture = async () => {
+    if (!isWrapper()) return;
 
-  const handleCameraCapture = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files?.length) return;
-    event.target.value = "";
+    try {
+      capturedPhotoRef.current = await Camera.getPhoto({
+        allowEditing: false,
+        correctOrientation: true,
+        quality: 85,
+        resultType: CameraResultType.Uri,
+        saveToGallery: false,
+        source: CameraSource.Camera,
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message.toLowerCase() : "";
+      if (message.includes("cancel")) return;
+
+      console.error("[Mq2] No se pudo abrir la camara:", error);
+    }
   };
 
   return (
@@ -460,27 +472,19 @@ const Mq2 = ({
               R
             </Button>
             {showCameraButton && (
-              <>
-                <input
-                  ref={cameraInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  hidden
-                  onChange={handleCameraCapture}
-                />
-                <Button
-                  aria-label="Tomar foto de la respuesta"
-                  colorPalette="teal"
-                  onMouseDown={e => {
-                    e.preventDefault();
-                  }}
-                  onClick={openCameraCapture}
-                  size="xs"
-                >
-                  <FaCamera />
-                </Button>
-              </>
+              <Button
+                aria-label="Tomar foto de la respuesta"
+                colorPalette="teal"
+                onMouseDown={e => {
+                  e.preventDefault();
+                }}
+                onClick={() => {
+                  void openCameraCapture();
+                }}
+                size="xs"
+              >
+                <FaCamera />
+              </Button>
             )}
           </HStack>
         </Box>

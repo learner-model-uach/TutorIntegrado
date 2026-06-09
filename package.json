@@ -18,6 +18,7 @@
     "@auth0/auth0-react": "^2.4.0",
     "@capacitor/app": "^8.1.0",
     "@capacitor/browser": "^8.0.3",
+    "@capacitor/camera": "8.0.0",
     "@capacitor/core": "^8.3.1",
     "@chakra-ui/charts": "^3.30.0",
     "@chakra-ui/cli": "^3.30.0",
