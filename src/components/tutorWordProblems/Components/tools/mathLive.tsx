@@ -336,7 +336,10 @@ const Mathfield = (props: MathEditorProps) => {
   return (
     <Box
       ref={wrapperRef}
-      position="relative"
+      display="grid"
+      gridTemplateColumns="minmax(0, 1fr) auto"
+      alignItems="center"
+      gap="2"
       borderWidth="1px"
       borderRadius="md"
       borderColor="black"
@@ -344,7 +347,6 @@ const Mathfield = (props: MathEditorProps) => {
       maxW="100%"
       marginX="auto"
       padding="2"
-      paddingRight="3.25rem"
       overflow="hidden"
       minH="58px"
       cursor="text"
@@ -354,10 +356,10 @@ const Mathfield = (props: MathEditorProps) => {
         onPointerDown={handleContainerPointerDown}
         width="100%"
         maxW="100%"
+        minW="0"
         overflowX="auto"
         overflowY="hidden"
         minH="48px"
-        paddingRight="0.35rem"
         style={{ WebkitOverflowScrolling: "touch" }}
       />
       <button

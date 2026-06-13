@@ -200,6 +200,7 @@ html.dark,
 
 .word-problem-keyboard-toggle {
   align-items: center;
+  align-self: center;
   background: var(--mathlive-field-toggle-bg);
   border: 1px solid var(--mathlive-field-toggle-border);
   border-radius: 6px;
@@ -210,10 +211,8 @@ html.dark,
   height: 2.4rem;
   justify-content: center;
   line-height: 1;
-  position: absolute;
-  right: 0.6rem;
-  top: 50%;
-  transform: translateY(-50%);
+  position: static;
+  transform: none;
   width: 2.6rem;
   z-index: 1;
 }
@@ -355,7 +354,6 @@ body.logic-keyboard-active > .ML__keyboard {
   .word-problem-keyboard-toggle {
     font-size: 1.22rem;
     height: 2.65rem;
-    right: 0.55rem;
     width: 2.75rem;
   }
 
