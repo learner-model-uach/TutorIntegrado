@@ -30,6 +30,70 @@ type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
   })[];
 };
 
+const PROMPT_GEOMETRY_STYLE_ID = "word-problem-prompt-geometry";
+
+const stabilizePromptGeometry = (mfe: MathfieldElement) => {
+  const shadowRoot = mfe.shadowRoot;
+  if (!shadowRoot || shadowRoot.getElementById(PROMPT_GEOMETRY_STYLE_ID)) return;
+
+  const style = document.createElement("style");
+  style.id = PROMPT_GEOMETRY_STYLE_ID;
+  style.textContent = `
+    .ML__prompt-atom {
+      align-items: center !important;
+      background: var(--mathlive-field-prompt-bg) !important;
+      border: 1px solid var(--mathlive-field-prompt-border) !important;
+      border-radius: 4px !important;
+      box-shadow: 0 1px 4px var(--mathlive-field-prompt-shadow) !important;
+      box-sizing: border-box !important;
+      display: inline-flex !important;
+      height: auto !important;
+      justify-content: center !important;
+      line-height: 1 !important;
+      margin-left: 0.12em !important;
+      margin-right: 0.12em !important;
+      min-height: 1.45em !important;
+      min-width: 1.25em !important;
+      overflow: visible !important;
+      padding: 0.04em 0.2em !important;
+      position: relative !important;
+      top: 0 !important;
+      vertical-align: middle !important;
+    }
+
+    .ML__prompt-atom > :not(.ML__prompt) {
+      height: auto !important;
+      line-height: 1 !important;
+      vertical-align: middle !important;
+    }
+
+    .ML__prompt-atom:has(.ML__mfrac) {
+      height: 2.05em !important;
+      min-height: 2.05em !important;
+      min-width: 1.55em !important;
+      padding: 0.12em 0.26em !important;
+    }
+
+    .ML__prompt-atom:has(.ML__mfrac) > :not(.ML__prompt) {
+      font-size: 0.78em !important;
+      line-height: 1 !important;
+      transform: none !important;
+    }
+
+    .ML__prompt-atom .ML__prompt {
+      display: none !important;
+    }
+
+    .ML__prompt-atom:has(.ML__focusedPromptBox) {
+      border-color: var(--mathlive-field-prompt-border) !important;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 1px 4px var(--mathlive-field-prompt-shadow) !important;
+    }
+  `;
+  shadowRoot.append(style);
+};
+
 const getMathVirtualKeyboard = () =>
   (
     window as Window & {
@@ -80,6 +144,21 @@ const Mathfield = (props: MathEditorProps) => {
   const [mfe, setMfe] = useState<MathfieldElement | null>(null);
   const onChangeRef = useRef(props.onChange);
   const onMountRef = useRef(props.onMount);
+  const mathFieldClassName = [
+    props.className,
+    (props.value?.length ?? 0) > 42 ? "word-problem-math-field-long" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const revealCurrentPrompt = () => {
+    const activeMfe = mfeRef.current;
+    if (!activeMfe) return;
+
+    revealActivePrompt(activeMfe);
+    window.setTimeout(() => revealActivePrompt(activeMfe), 180);
+    window.setTimeout(() => revealActivePrompt(activeMfe), 420);
+  };
 
   const hideKeyboard = () => {
     suppressKeyboardOpenUntil.current = Date.now() + 900;
@@ -105,6 +184,7 @@ const Mathfield = (props: MathEditorProps) => {
     suppressKeyboardOpenUntil.current = Date.now() + 120;
     document.body.classList.add("word-problem-keyboard-active");
     activatePromptInput(activeMfe, promptId);
+    revealCurrentPrompt();
   };
 
   const handleKeyboardButtonPointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
@@ -150,6 +230,7 @@ const Mathfield = (props: MathEditorProps) => {
     if (!mfe) return;
     const container = containerRef.current!;
     container.replaceChildren(mfe);
+    stabilizePromptGeometry(mfe);
     onMountRef.current?.(mfe);
 
     mfe.mathVirtualKeyboardPolicy = "manual";
@@ -299,9 +380,9 @@ const Mathfield = (props: MathEditorProps) => {
 
   useEffect(() => {
     if (!mfe) return;
-    setSafeMathFieldClassName(mfe, props.className);
+    setSafeMathFieldClassName(mfe, mathFieldClassName);
     applyPromptOnlyMode(mfe, props.readOnly);
-  }, [mfe, props.className, props.readOnly]);
+  }, [mathFieldClassName, mfe, props.readOnly]);
 
   // actualiza cuando cambie props.value
   useEffect(() => {
@@ -336,6 +417,7 @@ const Mathfield = (props: MathEditorProps) => {
   return (
     <Box
       ref={wrapperRef}
+      className="word-problem-math-editor"
       display="grid"
       gridTemplateColumns="minmax(0, 1fr) auto"
       alignItems="center"
