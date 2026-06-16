@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
 import TeX from "@matejmazur/react-katex";
 import { Flex, Text } from "@chakra-ui/react";
 import { BOX, COLUMN1, COLUMN2, DRAG_TEXT } from "../types";
@@ -19,6 +20,7 @@ export const MovableItem = ({
 }) => {
   const [isCorrecto, setIsCorrect] = useState(true);
   const startAction = useAction({});
+  const elementRef = useRef(null);
 
   useEffect(() => {
     setIsCorrect(!isCorrect);
@@ -46,9 +48,19 @@ export const MovableItem = ({
     return itemAnswer;
   };
 
-  const [{ isDragging }, drag] = useDrag({
+  const getPreviewSize = () => {
+    const rect = elementRef.current?.getBoundingClientRect();
+    if (!rect) return undefined;
+
+    return {
+      height: rect.height,
+      width: rect.width,
+    };
+  };
+
+  const [{ isDragging }, drag, preview] = useDrag({
     canDrag: () => isCorrecto,
-    item: { previewType: type, value },
+    item: () => ({ previewSize: getPreviewSize(), previewType: type, value }),
     type: BOX,
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
@@ -101,7 +113,11 @@ export const MovableItem = ({
     }),
   });
 
-  const opacity = isDragging ? 0.2 : 1;
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true });
+  }, [preview]);
+
+  const opacity = isDragging ? 0 : 1;
 
   const onDoubleClick = () => {
     let existsAnswer = findItem();
@@ -153,7 +169,10 @@ export const MovableItem = ({
 
   return (
     <Flex
-      ref={drag}
+      ref={node => {
+        elementRef.current = node;
+        drag(node);
+      }}
       onDoubleClick={onDoubleClick}
       className={`${styles["movable-item"]} ${isAnswerSlotItem ? styles["answer-slot-item"] : ""}`}
       fontSize={{ base: "10px" }}

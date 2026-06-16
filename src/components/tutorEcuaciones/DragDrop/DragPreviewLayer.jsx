@@ -5,14 +5,21 @@ import { Text } from "@chakra-ui/react";
 import { BOX, DRAG_TEXT } from "../types";
 import styles from "./DragPreviewLayer.module.css";
 
-const getItemStyles = currentOffset => {
+const getItemStyles = (currentOffset, previewSize) => {
   if (!currentOffset) {
     return { display: "none" };
   }
 
   const { x, y } = currentOffset;
+  const sizeStyles = previewSize
+    ? {
+        height: `${previewSize.height}px`,
+        width: `${previewSize.width}px`,
+      }
+    : undefined;
 
   return {
+    ...sizeStyles,
     transform: `translate(${x}px, ${y}px)`,
   };
 };
@@ -35,7 +42,7 @@ export const DragPreviewLayer = () => {
 
   return (
     <div className={styles.layer}>
-      <div className={styles.preview} style={getItemStyles(currentOffset)}>
+      <div className={styles.preview} style={getItemStyles(currentOffset, item.previewSize)}>
         {isText ? (
           <Text>{cleanTextValue(item.value)}</Text>
         ) : (
