@@ -29,6 +29,7 @@ export const StepEquations = ({
   topicId, // "id" field in the system
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
   completeContentSteps, // object used in the "steps" field of completeContent
+  isEditorMode = false, // ✅ no-op en editor
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -38,7 +39,8 @@ export const StepEquations = ({
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState({});
-  const startAction = useAction({});
+  const _startAction = useAction({});
+  const startAction = isEditorMode ? () => {} : _startAction; // ✅ no-op en editor
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
   const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
@@ -91,7 +93,7 @@ export const StepEquations = ({
   const checkLastStep = () => {
     if (nStep == totalSteps - 1) {
       // it is executed when all the steps are completed
-      setNextExercise(true);
+      if (!isEditorMode) setNextExercise(true);
       startAction({
         verbName: "completeContent",
         contentID: code, // it is "code" field of the exercise

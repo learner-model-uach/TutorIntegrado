@@ -10,11 +10,13 @@ const InputButtons = ({
   nStep,
   setCompleted,
   topic,
+  isEditorMode = false,
 }: {
   exc: ExLog;
   nStep: number;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   topic: string;
+  isEditorMode?: boolean;
 }) => {
   const [isCorrectValue, setIsCorrectvalue] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
@@ -23,7 +25,8 @@ const InputButtons = ({
   const [error, setError] = useState(false);
   const [hints, setHints] = useState(0);
   const [_, setLastHint] = useState(0);
-  const action = useAction();
+  const _action = useAction();
+  const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
   const [attempts, setAttempts] = useState(0);
   const evaluar = () => {
     //console.log('Input:', inputText);

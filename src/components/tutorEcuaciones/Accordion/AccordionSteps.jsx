@@ -14,14 +14,15 @@ import {
 } from "../types";
 import { useAction } from "../../../utils/action";
 
-export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
+export const AccordionSteps = ({ exercise, topicId, setNextExercise, isEditorMode = false }) => {
   const [totalSteps, setTotalSteps] = useState(0);
   const [disableState, setDisableState] = useState([true]);
   const [numStep, setNumStep] = useState(0);
   const [stepCorrect, setStepCorrect] = useState([]);
   const [color, setColor] = useState([]);
   const [completeContentSteps, setCompleteContentSteps] = useState({}); // object used in the "steps" field for the completeContent action
-  const startAction = useAction({});
+  const _startAction = useAction({});
+  const startAction = isEditorMode ? () => {} : _startAction; // ✅ no-op en editor
 
   const itemValues = useMemo(() => (exercise?.steps ?? []).map(s => String(s.stepId)), [exercise]);
   const [openItems, setOpenItems] = useState([]);

@@ -19,6 +19,7 @@ interface Props {
   meta: MathComponentMeta;
   hints: Hint[];
   correctMsg?: string;
+  isEditorMode?: boolean;
 }
 
 interface Answer {
@@ -40,7 +41,7 @@ function resolveComputeEngineCtor(mod: any) {
   return null;
 }
 
-const MathComponent = ({ meta, hints, correctMsg }: Props) => {
+const MathComponent = ({ meta, hints, correctMsg, isEditorMode = false }: Props) => {
   const { expression, readonly, answers, idCorrectAnswers } = meta;
   const expectedPlaceholderIds = [...new Set(answers.map(answer => answer.placeholderId))];
 
@@ -86,7 +87,8 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     exerciseData,
   } = useStore();
 
-  const reportAction = useAction();
+  const _reportAction = useAction();
+  const reportAction = isEditorMode ? () => {} : _reportAction; // ✅
 
   // reinciar alertas y botón al cambiar de meta
   useEffect(() => {
@@ -232,7 +234,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
       if (allCorrect) {
         showAlert("😃", AlertStatus.success, correctMsg, null);
         setDisabledButton(true);
-        unlockNextStep();
+        if (!isEditorMode) unlockNextStep(); // ✅
       } else {
         showAlert("😕", AlertStatus.error, "Respuesta Incorrecta");
         genericHint && unlockHint();

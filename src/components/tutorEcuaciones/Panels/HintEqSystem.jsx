@@ -24,6 +24,7 @@ export const HintEqSystem = ({
   nStep, // "stepId" field defined in the exercises
   code, // "code" field defined in the exercises
   setHintsShow, // number of times a hint has been shown
+  isEditorMode = false, // ✅ no-op en editor
 }) => {
   /*
     The following answers are considered different A = B, A = C, C = B,
@@ -40,7 +41,8 @@ export const HintEqSystem = ({
     with answer B and finally the generic hints.
   */
 
-  const startAction = useAction({});
+  const _startAction = useAction({});
+  const startAction = isEditorMode ? () => {} : _startAction; // ✅
 
   const [allHints, setAllHints] = useState(hints);
   const [countHint, setCountHint] = useState(-1); // counts the number of accumulated hints displayed to the user

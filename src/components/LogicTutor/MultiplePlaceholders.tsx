@@ -17,13 +17,16 @@ const MultiplePlaceholders = ({
   nStep,
   setCompleted,
   topic,
+  isEditorMode = false,
 }: {
   exc: ExLog;
   nStep: number;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   topic: string;
+  isEditorMode?: boolean;
 }) => {
-  const action = useAction();
+  const _action = useAction();
+  const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
   const [isCorrectValue, setIsCorrectValue] = useState(false);
   const [ValuesArray, setValuesArray] = useState<Array<any>>([]);
   const [error, setError] = useState(false);

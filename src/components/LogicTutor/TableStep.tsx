@@ -31,11 +31,13 @@ const TableStep = ({
   nStep,
   setCompleted,
   topic,
+  isEditorMode = false,
 }: {
   exc: ExLog;
   nStep: number;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   topic: string;
+  isEditorMode?: boolean;
 }) => {
   const [valor, setValor] = useState(exc.steps[nStep].button[0][0]);
   const [valor1, setValor1] = useState(exc.steps[nStep].button[1][0]);
@@ -51,7 +53,8 @@ const TableStep = ({
   const headerBg = useColorModeValue("#2B4264", "#1b202b");
   const headerTextColor = useColorModeValue("gray.200", "gray.100");
   const [attempts, setAttempts] = useState(0);
-  const action = useAction();
+  const _action = useAction();
+  const action = isEditorMode ? () => {} : _action; // ✅
   const evaluar = () => {
     let respuesta = false;
     const isCorrect = userAnswers.every(

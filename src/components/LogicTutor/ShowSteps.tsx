@@ -8,12 +8,12 @@ import { useAction } from "../../utils/action";
 import Summary from "./Summary";
 import RatingQuestion from "../RatingQuestion";
 
-const TrueFalse = dynamic(() => import("./TrueFalse"), { ssr: false });
-const Blank = dynamic(() => import("./Blank"), { ssr: false });
-const InputButtons = dynamic(() => import("./InputButtons"), { ssr: false });
-const Alternatives = dynamic(() => import("./Alternatives"), { ssr: false });
+const TrueFalse         = dynamic(() => import("./TrueFalse"), { ssr: false });
+const Blank             = dynamic(() => import("./Blank"), { ssr: false });
+const InputButtons      = dynamic(() => import("./InputButtons"), { ssr: false });
+const Alternatives      = dynamic(() => import("./Alternatives"), { ssr: false });
 const MultiplePlaceholders = dynamic(() => import("./MultiplePlaceholders"), { ssr: false });
-const TableStep = dynamic(() => import("./TableStep"), { ssr: false });
+const TableStep         = dynamic(() => import("./TableStep"), { ssr: false });
 const SinglePlaceholder = dynamic(() => import("./SinglePlaceholder"), { ssr: false });
 
 const extras = { steps: {} };
@@ -23,16 +23,19 @@ const ShowSteps = ({
   nStep,
   setStep,
   topic,
+  isEditorMode = false,
 }: {
   exc: ExLog;
   nStep: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   topic: string;
+  isEditorMode?: boolean;
 }) => {
   const [completed, setCompleted] = useState(false);
   const next = parseInt(exc.steps[nStep].answers[0].nextStep);
   const [changed, setChanged] = useState(false);
-  const action = useAction();
+  const _action = useAction();
+  const action = isEditorMode ? () => {} : _action; // ✅
   const [report, setReport] = useState(true);
   const [color, setColor] = useState("accordion_step");
   const [textColor, setTexColor] = useState("accordion_step_text");
@@ -56,19 +59,18 @@ const ShowSteps = ({
     }
   }, [completed, changed, next, setStep, report, action, exc.code, topic]);
 
+  // prop común para todos los step components
+  const stepProps = { exc, nStep, setCompleted, topic, isEditorMode };
+
   return (
     <>
       <Accordion.Item value={String(nStep)} w="100%" border="none">
         <Accordion.ItemTrigger
-          bg={color}
-          color={textColor}
-          px={{ base: 3, md: 4 }}
-          py={{ base: 3, md: 2 }}
+          bg={color} color={textColor}
+          px={{ base: 3, md: 4 }} py={{ base: 3, md: 2 }}
           alignItems={{ base: "flex-start", md: "center" }}
         >
-          <Box p={3}>
-            <FaHandPointRight />
-          </Box>
+          <Box p={3}><FaHandPointRight /></Box>
           <Box as="span" flex="1" textAlign="left" whiteSpace="normal" wordBreak="break-word">
             <Latex>{exc.steps[nStep].stepTitle}</Latex>
           </Box>
@@ -77,37 +79,14 @@ const ShowSteps = ({
 
         <Accordion.ItemContent>
           <Accordion.ItemBody px={{ base: 3, md: 4 }} pb={8} zIndex={nStep}>
-            {exc.steps[nStep].stepType === "TrueFalse" && (
-              <TrueFalse exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-            )}
-            {exc.steps[nStep].stepType === "Blank" && (
-              <Blank exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-            )}
-            {exc.steps[nStep].stepType === "Alternatives" && (
-              <Alternatives exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-            )}
-            {exc.steps[nStep].stepType === "InputButtons" && (
-              <InputButtons exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-            )}
-            {exc.steps[nStep].stepType === "MultiplePlaceholders" && (
-              <MultiplePlaceholders
-                exc={exc}
-                nStep={nStep}
-                setCompleted={setCompleted}
-                topic={topic}
-              />
-            )}
-            {exc.steps[nStep].stepType === "SinglePlaceholder" && (
-              <SinglePlaceholder
-                exc={exc}
-                nStep={nStep}
-                setCompleted={setCompleted}
-                topic={topic}
-              />
-            )}
-            {exc.steps[nStep].stepType === "TableStep" && (
-              <TableStep exc={exc} nStep={nStep} setCompleted={setCompleted} topic={topic} />
-            )}
+            {/* isEditorMode propagado a todos los stepTypes */}
+            {exc.steps[nStep].stepType === "TrueFalse"            && <TrueFalse            {...stepProps} />}
+            {exc.steps[nStep].stepType === "Blank"                && <Blank                {...stepProps} />}
+            {exc.steps[nStep].stepType === "Alternatives"         && <Alternatives         {...stepProps} />}
+            {exc.steps[nStep].stepType === "InputButtons"         && <InputButtons         {...stepProps} />}
+            {exc.steps[nStep].stepType === "MultiplePlaceholders" && <MultiplePlaceholders {...stepProps} />}
+            {exc.steps[nStep].stepType === "SinglePlaceholder"    && <SinglePlaceholder    {...stepProps} />}
+            {exc.steps[nStep].stepType === "TableStep"            && <TableStep            {...stepProps} />}
           </Accordion.ItemBody>
         </Accordion.ItemContent>
       </Accordion.Item>
@@ -116,15 +95,14 @@ const ShowSteps = ({
         <>
           <Alert.Root status="success">
             <Alert.Indicator />
-            <Alert.Content>
-              <Alert.Description>Ejercicio Terminado</Alert.Description>
-            </Alert.Content>
+            <Alert.Content><Alert.Description>Ejercicio Terminado</Alert.Description></Alert.Content>
           </Alert.Root>
           <Summary exc={exc} />
           <RatingQuestion />
         </>
       ) : completed && next !== -1 ? (
-        <ShowSteps exc={exc} nStep={next} setStep={setStep} topic={topic} />
+        // isEditorMode propagado a la llamada recursiva
+        <ShowSteps exc={exc} nStep={next} setStep={setStep} topic={topic} isEditorMode={isEditorMode} />
       ) : null}
     </>
   );

@@ -29,6 +29,7 @@ export const StepPanel = ({
   topicId, // "id" field in the system
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
   completeContentSteps, // object used in the "steps" field of completeContent
+  isEditorMode = false, // ✅ no-op en editor
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
@@ -40,7 +41,8 @@ export const StepPanel = ({
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
   const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
-  const startAction = useAction({});
+  const _startAction = useAction({});
+  const startAction = isEditorMode ? () => {} : _startAction; // ✅ no-op en editor
   useEffect(() => {
     setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
     setAnswer(true);
@@ -95,7 +97,7 @@ export const StepPanel = ({
           steps: completeContentSteps, // object defined in updateObjectSteps
         },
       });
-      setNextExercise(true);
+      if (!isEditorMode) setNextExercise(true);
     }
   };
 

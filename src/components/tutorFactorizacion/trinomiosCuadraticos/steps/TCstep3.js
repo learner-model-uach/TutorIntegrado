@@ -11,11 +11,13 @@ export const TCstep3 = ({
   topicID,
   extra,
   setExtra,
+  isEditorMode = false,
 }) => {
   const [feedbackMsg, setFeedbackMsg] = useState(null); // feedback message
   const [value, setValue] = React.useState(); //checked radio
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
-  const action = useAction(); //send action to central system
+  const _action = useAction(); //send action to central system
+  const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
   const hintUnique = ["*"];
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
@@ -28,11 +30,19 @@ export const TCstep3 = ({
     setAttempts(attempts + 1);
     if (step3.answers[0].answer === value) {
       setStep3Valid((step3Valid = step3.answers[0].nextStep ?? 0));
-      extra.att = attempts;
-      extra.hints = hints;
-      extra.duration = (Date.now() - dateInitial) / 1000;
-      extra.lastHint = lastHint;
-      setExtra(extra);
+      if (!isEditorMode) {
+
+        extra.att = attempts;
+
+        extra.hints = hints;
+
+        extra.duration = (Date.now() - dateInitial) / 1000;
+
+        extra.lastHint = lastHint;
+
+        setExtra(extra);
+
+      }
     } else {
       if (value == undefined) {
         setTimeout(() => {

@@ -13,9 +13,10 @@ interface Props {
   meta: SelectionMeta;
   hints: Hint[];
   correctMsg: string;
+  isEditorMode?: boolean;
 }
 // Alternative selection component
-const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
+const SelectionComponent = ({ meta, hints, correctMsg, isEditorMode = false }: Props) => {
   //console.log("meta-->", meta)
   //const [selectionMeta, setSelectionMeta] = useState(meta) // State containing the meta info
   const [userSelectedAnswer, setUserSelectedAnswer] = useState<number | null>(null); // State to track user-selected answer
@@ -29,7 +30,8 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
     currentTopicId,
     exerciseData,
   } = useStore();
-  const reportAction = useAction();
+  const _reportAction = useAction();
+  const reportAction = isEditorMode ? () => {} : _reportAction; // ✅
 
   const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert, resetAlert } = useAlert(
     "",
@@ -81,7 +83,7 @@ const SelectionComponent = ({ meta, hints, correctMsg }: Props) => {
       setIsCorrectUserAnswer(true);
 
       showAlert("😃", AlertStatus.success, correctMsg, null);
-      unlockNextStep();
+      if (!isEditorMode) unlockNextStep(); // ✅
     } else {
       setIsCorrectUserAnswer(false);
       showAlert("😕 ", AlertStatus.error, "Respuesta incorrecta!!");

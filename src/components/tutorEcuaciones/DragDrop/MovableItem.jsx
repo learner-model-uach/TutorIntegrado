@@ -24,9 +24,11 @@ export const MovableItem = ({
   content,
   isCorrect,
   nStep,
+  isEditorMode = false, // ✅
 }) => {
   const [isCorrecto, setIsCorrect] = useState(true);
-  const startAction = useAction({});
+  const _startAction = useAction({});
+  const startAction = isEditorMode ? () => {} : _startAction; // ✅ no-op en editor
 
   useEffect(() => {
     setIsCorrect(!isCorrect);

@@ -6,16 +6,17 @@ import { useAction } from "../../utils/action";
 import Latex from "react-latex-next";
 
 const Alternatives = ({
-  exc,
-  nStep,
-  setCompleted,
-  topic,
+  exc, nStep, setCompleted, topic,
+  isEditorMode = false, // ✅ nuevo prop
 }: {
-  exc: ExLog;
-  nStep: number;
+  exc: ExLog; nStep: number;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   topic: string;
+  isEditorMode?: boolean;
 }) => {
+  const _action = useAction();
+  const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
+
   const [firstTime, setFirstTime] = useState(true);
   const valores_a_elegir = exc.steps[nStep]?.multipleChoice;
   const [isCorrectValue, setIsCorrectValue] = useState(false);
@@ -24,19 +25,24 @@ const Alternatives = ({
   const [hints, setHints] = useState(0);
   const [_, setLastHint] = useState(false);
   const [valoresBarajados, setValoresBarajados] = useState<Array<any>>([]);
-  const action = useAction();
   const [attempts, setAttempts] = useState(0);
+
+  // ✅ En editor mode no barajar para que el preview sea predecible
   useEffect(() => {
-    if (valores_a_elegir && firstTime) {
-      const shuffledValues = [...valores_a_elegir].sort(() => Math.random() - 0.5);
-      setValoresBarajados(shuffledValues);
+    if (valores_a_elegir) {
+      const shuffled = isEditorMode
+        ? [...valores_a_elegir]
+        : [...valores_a_elegir].sort(() => Math.random() - 0.5);
+      setValoresBarajados(shuffled);
+      setFirstTime(true);
+      setIsCorrectValue(false);
+      setShowError(false);
     }
-  }, [valores_a_elegir, firstTime]);
+  }, [valores_a_elegir, isEditorMode]);
 
   const evaluar = (valor: { id: number; text: string; correct: boolean }) => {
     setResponse(valor.id);
     setFirstTime(false);
-
     if (valor.correct) {
       setIsCorrectValue(true);
       setCompleted(true);
@@ -48,15 +54,10 @@ const Alternatives = ({
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
-      contentID: exc.code,
-      topicID: topic,
+      contentID: exc.code, topicID: topic,
       result: valor.correct ? 1 : 0,
       kcsIDs: exc.steps[nStep].KCs,
-      extra: {
-        response: [valor.id],
-        attempts: attempts + 1,
-        hints: hints,
-      },
+      extra: { response: [valor.id], attempts: attempts + 1, hints },
     });
   };
 
@@ -67,21 +68,12 @@ const Alternatives = ({
           <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
         </Center>
         {valoresBarajados.map((valor, index) => (
-          <Button
-            key={index}
-            w={{ base: "90%", md: "70%" }}
-            minH="4rem"
-            h="auto"
-            px={4}
-            py={3}
-            whiteSpace="normal"
-            wordBreak="break-word"
-            textAlign="center"
+          <Button key={index}
+            w={{ base: "90%", md: "70%" }} minH="4rem" h="auto" px={4} py={3}
+            whiteSpace="normal" wordBreak="break-word" textAlign="center"
             fontSize={{ base: "md", md: "lg" }}
             color={{ base: "gray.50", _dark: "slate.100" }}
-            bg="alternative_button"
-            _hover={{ bg: "#3B82F6" }}
-            size="md"
+            bg="alternative_button" _hover={{ bg: "#3B82F6" }} size="md"
             onClick={() => evaluar(valor)}
             disabled={isCorrectValue}
           >
@@ -90,9 +82,7 @@ const Alternatives = ({
                 <div>{valor.text}</div>
                 <Latex>{"$$" + valor.expression + "$$"}</Latex>
               </Stack>
-            ) : valor.text ? (
-              <>{valor.text}</>
-            ) : valor.expression ? (
+            ) : valor.text ? <>{valor.text}</> : valor.expression ? (
               <Latex>{"$$" + valor.expression + "$$"}</Latex>
             ) : null}
           </Button>
@@ -101,39 +91,23 @@ const Alternatives = ({
       {firstTime ? null : !isCorrectValue ? (
         <Alert.Root status="error">
           <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
-          </Alert.Content>
+          <Alert.Content><Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description></Alert.Content>
         </Alert.Root>
       ) : (
         <Alert.Root status="success">
           <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
-          </Alert.Content>
+          <Alert.Content><Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description></Alert.Content>
         </Alert.Root>
       )}
       <Center>
         {isCorrectValue ? null : (
-          <>
-            <Hint
-              hints={exc.steps[nStep].hints}
-              contentId={exc.code}
-              topicId={topic}
-              stepId={exc.steps[nStep].stepId}
-              matchingError={exc.steps[nStep].matchingError}
-              response={[response]}
-              error={showError}
-              setError={setShowError}
-              hintCount={hints}
-              setHints={setHints}
-              setLastHint={setLastHint}
-            />
-          </>
+          <Hint hints={exc.steps[nStep].hints} contentId={exc.code} topicId={topic}
+            stepId={exc.steps[nStep].stepId} matchingError={exc.steps[nStep].matchingError}
+            response={[response]} error={showError} setError={setShowError}
+            hintCount={hints} setHints={setHints} setLastHint={setLastHint} />
         )}
       </Center>
     </>
   );
 };
-
 export default Alternatives;

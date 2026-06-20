@@ -12,12 +12,14 @@ export const TCstep2 = ({
   topicID,
   extra,
   setExtra,
+  isEditorMode = false,
 }) => {
   const response = useRef(null); //input response
   const [feedbackMsg, setFeedbackMsg] = useState(null); //feedback message
   const [error, setError] = useState(false); //true when the student enters an incorrect answers
   const correctAlternatives = step2.answers[0].answer; //list of answers valid
-  const action = useAction(); //send action to central system
+  const _action = useAction(); //send action to central system
+  const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
   const [attempts, setAttempts] = useState(0);
   const [hints, setHints] = useState(0); //hint counts
   const dateInitial = Date.now();
@@ -35,11 +37,19 @@ export const TCstep2 = ({
     if (correctAlternatives === responseStudent) {
       //valida que la entrada es correcta
       setStep2Valid((step2Valid = step2.answers[0].nextStep));
-      extra.att = attempts;
-      extra.hints = hints;
-      extra.duration = (Date.now() - dateInitial) / 1000;
-      extra.lastHint = lastHint;
-      setExtra(extra);
+      if (!isEditorMode) {
+
+        extra.att = attempts;
+
+        extra.hints = hints;
+
+        extra.duration = (Date.now() - dateInitial) / 1000;
+
+        extra.lastHint = lastHint;
+
+        setExtra(extra);
+
+      }
     } else {
       if (response.current.value == "") {
         setTimeout(() => {

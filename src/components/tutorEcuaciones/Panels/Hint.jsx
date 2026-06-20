@@ -23,8 +23,10 @@ export const Hint = ({
   nStep, // "stepId" field defined in the exercise
   code, // "code" field defined in the exercise
   setHintsShow, // number of times a hint has been shown
+  isEditorMode = false, // ✅ no-op en editor
 }) => {
-  const startAction = useAction({});
+  const _startAction = useAction({});
+  const startAction = isEditorMode ? () => {} : _startAction; // ✅
 
   const [allHints, setAllHints] = useState([]); // all the hints of the step
   const [countHint, setCountHint] = useState(-1); // index of the element of hintsAvaliableList that the user can currently see

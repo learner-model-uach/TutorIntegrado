@@ -16,11 +16,13 @@ const SinglePlaceholder = ({
   nStep,
   setCompleted,
   topic,
+  isEditorMode = false,
 }: {
   exc: ExLog;
   nStep: number;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   topic: string;
+  isEditorMode?: boolean;
 }) => {
   const [latex, setLatex] = useState("");
   const [error, setError] = useState(false);
@@ -29,7 +31,8 @@ const SinglePlaceholder = ({
   const [valueA, setValueA] = useState<string>("");
   const [hints, setHints] = useState(0);
   const [attempts, setAttempts] = useState(0);
-  const action = useAction();
+  const _action = useAction();
+  const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
   const [_, setLastHint] = useState(false);
 
   interface values {
