@@ -2,6 +2,146 @@ import type { MathfieldElement, Range, Selection, VirtualKeyboardInterface } fro
 
 export const SAFE_MATHFIELD_CLASS = "safe-math-field";
 
+const KEYBOARD_SELECTOR = "body > .ML__keyboard";
+const KEYBOARD_BODY_CLASSES = ["logic-keyboard-active", "word-problem-keyboard-active"];
+
+type MathVirtualKeyboardEventTarget = VirtualKeyboardInterface & EventTarget;
+
+let activeKeyboardAnchor: HTMLElement | null = null;
+let activeKeyboardBodyClass: string | null = null;
+let observedKeyboard: MathVirtualKeyboardEventTarget | null = null;
+
+const getMathVirtualKeyboard = () =>
+  (
+    window as Window & {
+      mathVirtualKeyboard?: VirtualKeyboardInterface;
+    }
+  ).mathVirtualKeyboard as MathVirtualKeyboardEventTarget | undefined;
+
+const getKeyboardBackdrop = () =>
+  document.querySelector<HTMLElement>(`${KEYBOARD_SELECTOR} > .MLK__backdrop`);
+
+const clearKeyboardViewportSpace = () => {
+  if (typeof document === "undefined") return;
+  if (KEYBOARD_BODY_CLASSES.some(className => document.body.classList.contains(className))) return;
+  document.documentElement.style.removeProperty("--mathlive-keyboard-height");
+};
+
+const updateKeyboardViewport = () => {
+  if (!activeKeyboardAnchor?.isConnected || typeof window === "undefined") return;
+
+  const keyboard = getMathVirtualKeyboard();
+  const keyboardRect = keyboard?.boundingRect;
+  const backdropRect = getKeyboardBackdrop()?.getBoundingClientRect();
+  const keyboardHeight = Math.ceil(Math.max(keyboardRect?.height ?? 0, backdropRect?.height ?? 0));
+
+  if (keyboardHeight <= 0) return;
+
+  document.documentElement.style.setProperty("--mathlive-keyboard-height", `${keyboardHeight}px`);
+
+  const scrollContainer = activeKeyboardAnchor.closest<HTMLElement>(".app-scroll-container");
+  if (!scrollContainer) return;
+
+  const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+  const keyboardTop =
+    backdropRect && backdropRect.top > 0 && backdropRect.top < viewportHeight
+      ? backdropRect.top
+      : viewportHeight - keyboardHeight;
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const anchorRect = activeKeyboardAnchor.getBoundingClientRect();
+  const visibleBottom = Math.min(containerRect.bottom, keyboardTop) - 16;
+  const hiddenAmount = anchorRect.bottom - visibleBottom;
+
+  if (hiddenAmount > 0) {
+    scrollContainer.scrollBy({ top: hiddenAmount + 12, behavior: "smooth" });
+  }
+};
+
+const scheduleKeyboardViewportUpdate = () => {
+  requestAnimationFrame(updateKeyboardViewport);
+  window.setTimeout(updateKeyboardViewport, 120);
+  window.setTimeout(updateKeyboardViewport, 300);
+  window.setTimeout(updateKeyboardViewport, 520);
+};
+
+const handleKeyboardGeometryChange = () => {
+  if (!activeKeyboardBodyClass) return;
+
+  const keyboard = getMathVirtualKeyboard();
+  if (keyboard?.visible) {
+    document.body.classList.add(activeKeyboardBodyClass);
+    scheduleKeyboardViewportUpdate();
+    return;
+  }
+
+  document.body.classList.remove(activeKeyboardBodyClass);
+  clearKeyboardViewportSpace();
+};
+
+const observeMathVirtualKeyboard = () => {
+  const keyboard = getMathVirtualKeyboard();
+  if (!keyboard || observedKeyboard === keyboard) return;
+
+  observedKeyboard?.removeEventListener("geometrychange", handleKeyboardGeometryChange);
+  observedKeyboard?.removeEventListener("virtual-keyboard-toggle", handleKeyboardGeometryChange);
+  keyboard.addEventListener("geometrychange", handleKeyboardGeometryChange);
+  keyboard.addEventListener("virtual-keyboard-toggle", handleKeyboardGeometryChange);
+  observedKeyboard = keyboard;
+};
+
+export const isMathVirtualKeyboardOpen = (bodyClass: string) => {
+  if (typeof document === "undefined") return false;
+
+  return Boolean(
+    document.body.classList.contains(bodyClass) ||
+    getMathVirtualKeyboard()?.visible ||
+    document.querySelector(`${KEYBOARD_SELECTOR}.is-visible`),
+  );
+};
+
+export const isActiveMathVirtualKeyboardViewport = (
+  bodyClass: string,
+  anchor: HTMLElement | null,
+) => Boolean(anchor && activeKeyboardBodyClass === bodyClass && activeKeyboardAnchor === anchor);
+
+export const isInteractiveControlEvent = (event: Event) =>
+  event
+    .composedPath()
+    .some(
+      target =>
+        target instanceof Element &&
+        target.matches('button, a[href], input, select, textarea, [role="button"], [role="link"]'),
+    );
+
+export const activateMathVirtualKeyboardViewport = (bodyClass: string, anchor: HTMLElement) => {
+  if (typeof document === "undefined") return;
+
+  if (activeKeyboardBodyClass && activeKeyboardBodyClass !== bodyClass) {
+    document.body.classList.remove(activeKeyboardBodyClass);
+  }
+
+  activeKeyboardAnchor = anchor;
+  activeKeyboardBodyClass = bodyClass;
+  document.body.classList.add(bodyClass);
+  observeMathVirtualKeyboard();
+  scheduleKeyboardViewportUpdate();
+};
+
+export const deactivateMathVirtualKeyboardViewport = (
+  bodyClass: string,
+  anchor?: HTMLElement | null,
+) => {
+  if (typeof document === "undefined") return;
+  if (activeKeyboardAnchor && anchor !== activeKeyboardAnchor) return;
+
+  document.body.classList.remove(bodyClass);
+  if (activeKeyboardBodyClass === bodyClass) {
+    activeKeyboardAnchor = null;
+    activeKeyboardBodyClass = null;
+  }
+  clearKeyboardViewportSpace();
+};
+
 const getPromptEntries = (mfe: MathfieldElement) =>
   mfe
     .getPrompts()
@@ -62,6 +202,18 @@ export const isSelectionInsidePrompt = (mfe: MathfieldElement) => {
   return ranges.every(range => prompts.some(prompt => rangeIsInside(range, prompt.range)));
 };
 
+export const getSelectedPromptId = (mfe: MathfieldElement) => {
+  const prompts = getPromptEntries(mfe);
+  if (prompts.length === 0) return undefined;
+
+  const selection = mfe.selection as Selection | undefined;
+  const ranges = selection?.ranges?.length
+    ? selection.ranges
+    : ([[mfe.position, mfe.position]] as Range[]);
+
+  return prompts.find(prompt => ranges.every(range => rangeIsInside(range, prompt.range)))?.id;
+};
+
 export const focusEditablePrompt = (mfe: MathfieldElement, preferredId?: string) => {
   const prompts = getPromptEntries(mfe);
   if (prompts.length === 0) return false;
@@ -71,8 +223,10 @@ export const focusEditablePrompt = (mfe: MathfieldElement, preferredId?: string)
     prompts.find(entry => mfe.getPromptValue(entry.id).trim() === "") ||
     prompts[0];
 
+  const caretPosition = Math.max(prompt.range[0], prompt.range[1]);
+
   mfe.focus();
-  mfe.selection = { ranges: [prompt.range], direction: "none" };
+  mfe.selection = { ranges: [[caretPosition, caretPosition]], direction: "none" };
   return true;
 };
 
@@ -99,9 +253,51 @@ export const getPromptIdFromPoint = (mfe: MathfieldElement, x: number, y: number
   }
 };
 
-export const keepSelectionInsidePrompt = (mfe: MathfieldElement) => {
+export const getPromptIdFromPointerEvent = (mfe: MathfieldElement, event: PointerEvent) => {
+  if (!mfe.shadowRoot) return undefined;
+
+  const promptIds = mfe.getPrompts();
+  const renderedPrompts = Array.from(
+    mfe.shadowRoot.querySelectorAll<HTMLElement>(".ML__prompt-atom"),
+  );
+  if (promptIds.length === 0 || renderedPrompts.length !== promptIds.length) return undefined;
+
+  const x = event.clientX;
+  const y = event.clientY;
+  const candidates = renderedPrompts.map((element, index) => {
+    const rect = element.getBoundingClientRect();
+    const horizontalDistance = x < rect.left ? rect.left - x : x > rect.right ? x - rect.right : 0;
+    const verticalDistance = y < rect.top ? rect.top - y : y > rect.bottom ? y - rect.bottom : 0;
+    const centerDistance = Math.hypot(
+      x - (rect.left + rect.right) / 2,
+      y - (rect.top + rect.bottom) / 2,
+    );
+
+    return {
+      id: promptIds[index],
+      distance: Math.hypot(horizontalDistance, verticalDistance),
+      centerDistance,
+    };
+  });
+
+  const nearestPrompt = candidates.sort(
+    (left, right) => left.distance - right.distance || left.centerDistance - right.centerDistance,
+  )[0];
+
+  if (nearestPrompt?.distance <= 18) return nearestPrompt.id;
+
+  const clickedPrompt = event.composedPath().find((target): target is HTMLElement => {
+    if (!(target instanceof HTMLElement)) return false;
+    return target.classList.contains("ML__prompt-atom");
+  });
+  const clickedIndex = clickedPrompt ? renderedPrompts.indexOf(clickedPrompt) : -1;
+
+  return clickedIndex >= 0 ? promptIds[clickedIndex] : undefined;
+};
+
+export const keepSelectionInsidePrompt = (mfe: MathfieldElement, preferredId?: string) => {
   if (mfe.getPrompts().length === 0 || isSelectionInsidePrompt(mfe)) return false;
-  return focusEditablePrompt(mfe);
+  return focusEditablePrompt(mfe, preferredId);
 };
 
 export const openMathVirtualKeyboard = (mfe: MathfieldElement) => {

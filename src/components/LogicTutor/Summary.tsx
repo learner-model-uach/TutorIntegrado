@@ -1,14 +1,8 @@
 import { Image, Alert, Box, Center, Heading, VStack } from "@chakra-ui/react";
 import React from "react";
 import Latex from "react-latex-next";
+import { normalizeLatexForRender } from "../../utils/latexRendering";
 import type { ExLog } from "./Tools/ExcerciseType2";
-
-const unwrapLatexText = (value: string) => {
-  const textCommand = /^\\text\{([\s\S]*)\}$/;
-  const match = value.trim().match(textCommand);
-
-  return match ? match[1] : value;
-};
 
 const LatexText = ({ children }: { children: string }) => (
   <Box
@@ -21,7 +15,7 @@ const LatexText = ({ children }: { children: string }) => (
     whiteSpace="normal"
     className="logic-summary-text"
   >
-    <Latex>{children}</Latex>
+    <Latex>{normalizeLatexForRender(children)}</Latex>
   </Box>
 );
 
@@ -37,7 +31,7 @@ const LatexResult = ({ children }: { children: string }) => (
     fontWeight="semibold"
     className="logic-summary-text"
   >
-    <Latex>{unwrapLatexText(children)}</Latex>
+    <Latex>{normalizeLatexForRender(children, true)}</Latex>
   </Box>
 );
 

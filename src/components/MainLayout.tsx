@@ -82,6 +82,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
               {false && <SearchInput />}
             </Flex>
             <Flex
+              className="app-scroll-container"
               direction="column"
               flex="1"
               minW={0}
