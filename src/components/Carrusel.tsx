@@ -13,17 +13,20 @@ export const Carousel = ({ images }: { images: string[] }) => {
   };
 
   return (
-    <Box>
-      <Image
-        src={`/img/${images[currentImageIndex]}`}
-        alt={`Image ${currentImageIndex}`}
-        loading="lazy"
-        width="1440px"
-        height="500px"
-        objectFit="contain"
-        objectPosition="center"
-      />
-      <Flex justifyContent="center" mt={10}>
+    <Box width="full">
+      <Flex width="full" justifyContent="center">
+        <Image
+          src={`/img/${images[currentImageIndex]}`}
+          alt={`Image ${currentImageIndex}`}
+          loading="lazy"
+          width="auto"
+          height="auto"
+          maxWidth="full"
+          maxHeight={{ base: "none", md: "65vh" }}
+          objectFit="contain"
+        />
+      </Flex>
+      <Flex justifyContent="center" mt={{ base: 4, md: 6 }}>
         <Button
           bg="stealblue.300"
           onClick={handlePrevious}
