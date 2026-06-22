@@ -50,6 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Auth0Provider
         domain={AUTH0_DOMAIN}
         clientId={clientId}
+        cacheLocation={wrapper ? "localstorage" : "memory"}
         useRefreshTokens={wrapper}
         useRefreshTokensFallback={wrapper ? false : true}
         onRedirectCallback={appState => {
