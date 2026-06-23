@@ -160,24 +160,6 @@ const intervalExtremesPattern = new RegExp(
   "i",
 );
 
-const normalizePromptIds = (value: string) => {
-  const usedIds = new Set<string>();
-  let generatedId = 1;
-
-  const nextGeneratedId = () => {
-    let id = `logic_prompt_${generatedId++}`;
-    while (usedIds.has(id)) id = `logic_prompt_${generatedId++}`;
-    return id;
-  };
-
-  return value.replace(/\\placeholder(?:\[([^\]]+)\])?\{/g, (_match, currentId?: string) => {
-    const trimmedId = currentId?.trim();
-    const id = trimmedId && !usedIds.has(trimmedId) ? trimmedId : nextGeneratedId();
-    usedIds.add(id);
-    return `\\placeholder[${id}]{`;
-  });
-};
-
 const formatMobileIntervalExpression = (value: string) => {
   if (typeof window === "undefined" || !window.matchMedia("(max-width: 640px)").matches) {
     return value;
@@ -368,7 +350,7 @@ const Mathfield = (props: MathEditorProps) => {
     mfe.environmentPopoverPolicy = "off";
     mfe.menuItems = [];
     mfe.resetUndo();
-    const initialValue = normalizePromptIds(formatMobileIntervalExpression(props.value ?? ""));
+    const initialValue = formatMobileIntervalExpression(props.value ?? "");
     mfe.setValue(initialValue, { focus: false, feedback: false });
     applyPromptOnlyMode(mfe, props.readOnly);
     currentValue.current = initialValue;
@@ -591,7 +573,7 @@ const Mathfield = (props: MathEditorProps) => {
     if (!mfe) return;
     if (lastPropValue.current !== (props.value ?? "")) {
       const position = mfe.position;
-      const nextValue = normalizePromptIds(formatMobileIntervalExpression(props.value ?? ""));
+      const nextValue = formatMobileIntervalExpression(props.value ?? "");
       mfe.setValue(nextValue, { focus: false, feedback: false });
       applyPromptOnlyMode(mfe, props.readOnly);
       try {
