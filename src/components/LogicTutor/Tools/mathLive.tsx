@@ -5,18 +5,14 @@ import {
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import type {
-  MathfieldElement,
-  VirtualKeyboardInterface,
-  VirtualKeyboardLayoutCore,
-  NormalizedVirtualKeyboardLayer,
-} from "mathlive";
+import type { MathfieldElement, VirtualKeyboardInterface } from "mathlive";
 import { Box } from "@chakra-ui/react";
 import {
   activateMathVirtualKeyboardViewport,
   activatePromptInput,
   applyPromptOnlyMode,
   collectPromptValues,
+  configureMateoMathKeyboard,
   deactivateMathVirtualKeyboardViewport,
   getPromptIdFromPointerEvent,
   getPromptIdFromPoint,
@@ -145,12 +141,6 @@ const stabilizePromptGeometry = (mfe: MathfieldElement) => {
     }
   `;
   shadowRoot.append(style);
-};
-
-type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
-  readonly normalizedLayouts: (VirtualKeyboardLayoutCore & {
-    layers: NormalizedVirtualKeyboardLayer[];
-  })[];
 };
 
 const promptPattern = String.raw`\\placeholder(?:\[[^\]]+\])?\{[^{}]*\}`;
@@ -366,14 +356,7 @@ const Mathfield = (props: MathEditorProps) => {
     });
     resizeObserver.observe(container);
 
-    const vk = window.mathVirtualKeyboard as ExtendedVirtualKeyboard | undefined;
-    if (vk?.normalizedLayouts?.[0]) {
-      const layout = vk.normalizedLayouts[0];
-      const row = layout.layers?.[0]?.rows?.[2];
-      const key = row?.[10] as { shift?: unknown } | undefined;
-      if (key && "shift" in key) delete key.shift;
-      window.mathVirtualKeyboard.layouts = layout;
-    }
+    configureMateoMathKeyboard();
 
     const schedulePromptSelectionGuard = () => {
       if (restoringPromptSelection.current) return;

@@ -5,12 +5,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import type {
-  MathfieldElement,
-  VirtualKeyboardInterface,
-  VirtualKeyboardLayoutCore,
-  NormalizedVirtualKeyboardLayer,
-} from "mathlive";
+import type { MathfieldElement, VirtualKeyboardInterface } from "mathlive";
 import "mathlive/static.css";
 import { Box } from "@chakra-ui/react";
 import {
@@ -18,6 +13,7 @@ import {
   activatePromptInput,
   applyPromptOnlyMode,
   collectPromptValues,
+  configureMateoMathKeyboard,
   deactivateMathVirtualKeyboardViewport,
   getPromptIdFromPoint,
   getPromptIdFromPointerEvent,
@@ -31,12 +27,6 @@ import {
 } from "../../../../utils/mathLivePromptGuard";
 
 const ACTIVE_KEYBOARD_CLASS = "word-problem-keyboard-active";
-
-type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
-  readonly normalizedLayouts: (VirtualKeyboardLayoutCore & {
-    layers: NormalizedVirtualKeyboardLayer[];
-  })[];
-};
 
 const PROMPT_GEOMETRY_STYLE_ID = "word-problem-prompt-geometry";
 
@@ -309,18 +299,7 @@ const Mathfield = (props: MathEditorProps) => {
     currentValue.current = props.value ?? "";
     lastPropValue.current = props.value ?? "";
 
-    // teclado virtual: proteger contra cambios de índices entre versiones
-    const vk = (window as any).mathVirtualKeyboard as ExtendedVirtualKeyboard | undefined;
-    if (vk?.normalizedLayouts?.[0]) {
-      const layout = vk.normalizedLayouts[0];
-      const row = layout.layers?.[0]?.rows?.[2];
-      const key = row?.[10];
-      if (key && "shift" in (key as any)) {
-        // @ts-ignore
-        delete (key as any).shift;
-      }
-      (window as any).mathVirtualKeyboard.layouts = layout;
-    }
+    configureMateoMathKeyboard();
 
     const schedulePromptSelectionGuard = () => {
       if (restoringPromptSelection.current) return;

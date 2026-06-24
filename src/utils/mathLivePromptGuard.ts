@@ -1,4 +1,12 @@
-import type { MathfieldElement, Range, Selection, VirtualKeyboardInterface } from "mathlive";
+import type {
+  MathfieldElement,
+  NormalizedVirtualKeyboardLayer,
+  Range,
+  Selection,
+  VirtualKeyboardInterface,
+  VirtualKeyboardKeycap,
+  VirtualKeyboardLayoutCore,
+} from "mathlive";
 
 export const SAFE_MATHFIELD_CLASS = "safe-math-field";
 
@@ -6,6 +14,22 @@ const KEYBOARD_SELECTOR = "body > .ML__keyboard";
 const KEYBOARD_BODY_CLASSES = ["logic-keyboard-active", "word-problem-keyboard-active"];
 
 type MathVirtualKeyboardEventTarget = VirtualKeyboardInterface & EventTarget;
+type ExtendedVirtualKeyboard = VirtualKeyboardInterface & {
+  readonly normalizedLayouts: (VirtualKeyboardLayoutCore & {
+    layers: NormalizedVirtualKeyboardLayer[];
+  })[];
+};
+
+const SET_SYMBOL_KEYS: Partial<VirtualKeyboardKeycap>[] = [
+  { label: "ℝ", insert: "R", tooltip: "Reales", class: "MLK__tex" },
+  { label: "ℕ", insert: "N", tooltip: "Naturales", class: "MLK__tex" },
+  { label: "ℤ", insert: "Z", tooltip: "Enteros", class: "MLK__tex" },
+  { label: "ℚ", insert: "Q", tooltip: "Racionales", class: "MLK__tex" },
+];
+const keyboardSpacer = (width: number): Partial<VirtualKeyboardKeycap> => ({
+  class: "separator",
+  width: width as VirtualKeyboardKeycap["width"],
+});
 
 let activeKeyboardAnchor: HTMLElement | null = null;
 let activeKeyboardBodyClass: string | null = null;
@@ -17,6 +41,37 @@ const getMathVirtualKeyboard = () =>
       mathVirtualKeyboard?: VirtualKeyboardInterface;
     }
   ).mathVirtualKeyboard as MathVirtualKeyboardEventTarget | undefined;
+
+export const configureMateoMathKeyboard = () => {
+  const keyboard = getMathVirtualKeyboard() as ExtendedVirtualKeyboard | undefined;
+  const layout = keyboard?.normalizedLayouts?.[0];
+  const rows = layout?.layers?.[0]?.rows;
+  if (!keyboard || !layout || !rows) return;
+
+  const setSymbolsRowIndex = rows.findIndex(row =>
+    row.some(key => SET_SYMBOL_KEYS.some(symbol => symbol.insert === key.insert)),
+  );
+  const hasSetSymbols = setSymbolsRowIndex >= 0;
+  const originalThirdRowIndex = hasSetSymbols && setSymbolsRowIndex <= 2 ? 3 : 2;
+  const shiftKey = rows[originalThirdRowIndex]?.[10] as { shift?: unknown } | undefined;
+  if (shiftKey && "shift" in shiftKey) delete shiftKey.shift;
+
+  const alignedSetSymbolsRow = [
+    keyboardSpacer(1),
+    keyboardSpacer(1),
+    keyboardSpacer(0.5),
+    ...SET_SYMBOL_KEYS.map(key => ({ ...key })),
+    keyboardSpacer(0.5),
+    keyboardSpacer(1),
+    keyboardSpacer(1),
+    keyboardSpacer(1),
+  ];
+
+  if (hasSetSymbols) rows.splice(setSymbolsRowIndex, 1);
+  rows.splice(0, 0, alignedSetSymbolsRow);
+
+  keyboard.layouts = layout;
+};
 
 const getKeyboardBackdrop = () =>
   document.querySelector<HTMLElement>(`${KEYBOARD_SELECTOR} > .MLK__backdrop`);
