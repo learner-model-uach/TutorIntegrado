@@ -335,6 +335,57 @@ body.logic-keyboard-active > .ML__keyboard {
     font-size: 0.82em;
   }
 
+  .tc-step3-options {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 15px 0 10px !important;
+    width: 100%;
+  }
+
+  .tc-step3-choice-section,
+  .tc-step3-choice-center,
+  .tc-step3-choice-root,
+  .tc-step3-choice-list {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .tc-step3-choice-list {
+    gap: 0.75rem;
+  }
+
+  .tc-step3-choice-item {
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .tc-step3-choice-indicator {
+    flex: 0 0 auto;
+    margin-top: 0.2rem;
+  }
+
+  .tc-step3-choice-item [data-part="item-text"],
+  .tc-step3-choice-item > span:last-child,
+  .tc-step3-choice-text {
+    display: block;
+    flex: 1 1 auto;
+    line-height: 1.35;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    word-break: normal;
+  }
+
+  .tc-step3-actions {
+    justify-content: center;
+    padding: 1rem 0 0 !important;
+    width: 100%;
+  }
+
   body.word-problem-keyboard-active .app-scroll-container,
   body.logic-keyboard-active .app-scroll-container {
     padding-bottom: calc(
