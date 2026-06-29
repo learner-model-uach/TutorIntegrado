@@ -335,55 +335,42 @@ body.logic-keyboard-active > .ML__keyboard {
     font-size: 0.82em;
   }
 
-  .tc-step3-options {
-    align-items: stretch;
-    flex-direction: column;
-    padding: 15px 0 10px !important;
-    width: 100%;
-  }
-
-  .tc-step3-choice-section,
-  .tc-step3-choice-center,
-  .tc-step3-choice-root,
-  .tc-step3-choice-list {
+  .lvltutor-choice-root,
+  .lvltutor-choice-list {
     max-width: 100%;
     min-width: 0;
     width: 100%;
   }
 
-  .tc-step3-choice-list {
-    gap: 0.75rem;
-  }
-
-  .tc-step3-choice-item {
+  .lvltutor-choice-control {
     align-items: flex-start;
+    display: flex;
     gap: 0.75rem;
+    min-height: 5rem;
+    min-width: 0;
+    padding: 0.9rem 1rem;
+    width: 100%;
+  }
+
+  .lvltutor-choice-indicator {
+    flex: 0 0 auto;
+    margin-top: 0.25rem;
+  }
+
+  .lvltutor-choice-label,
+  .lvltutor-choice-content,
+  .lvltutor-choice-text {
     max-width: 100%;
     min-width: 0;
     width: 100%;
   }
 
-  .tc-step3-choice-indicator {
-    flex: 0 0 auto;
-    margin-top: 0.2rem;
-  }
-
-  .tc-step3-choice-item [data-part="item-text"],
-  .tc-step3-choice-item > span:last-child,
-  .tc-step3-choice-text {
-    display: block;
-    flex: 1 1 auto;
+  .lvltutor-choice-text {
     line-height: 1.35;
-    min-width: 0;
     overflow-wrap: anywhere;
+    text-align: left;
     white-space: normal;
     word-break: normal;
-  }
-
-  .tc-step3-actions {
-    justify-content: center;
-    padding: 1rem 0 0 !important;
-    width: 100%;
   }
 
   body.word-problem-keyboard-active .app-scroll-container,

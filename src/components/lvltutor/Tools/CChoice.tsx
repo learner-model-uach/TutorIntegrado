@@ -124,8 +124,17 @@ function ChoiceContent({ option, id }: { option: option; id: number }) {
   let text = option.text;
   let exp = option.expression;
   return (
-    <VStack key={"CCVS" + id} alignItems={"center"} alignContent={"center"}>
-      {text ? <Text key={"CCT" + id}>{text} </Text> : null}
+    <VStack
+      key={"CCVS" + id}
+      alignItems="center"
+      alignContent="center"
+      className="lvltutor-choice-content"
+    >
+      {text ? (
+        <Text key={"CCT" + id} className="lvltutor-choice-text">
+          {text}{" "}
+        </Text>
+      ) : null}
       {exp ? <MQStaticMathField key={"CCL" + id} exp={exp} currentExpIndex={true} /> : null}
     </VStack>
   );
@@ -165,14 +174,20 @@ function CChoice({
         onValueChange={({ value }) => setValue(value)}
         variant="surface"
         colorPalette="teal"
+        className="lvltutor-choice-root"
       >
-        <SimpleGrid columns={[1, 1, 1, 2]} columnGap="2" rowGap="2">
+        <SimpleGrid
+          columns={[1, 1, 1, 2]}
+          columnGap="2"
+          rowGap="2"
+          className="lvltutor-choice-list"
+        >
           {options.map(v => (
-            <RadioCard.Item key={v.id} value={String(v.id)}>
+            <RadioCard.Item key={v.id} value={String(v.id)} className="lvltutor-choice-item">
               <RadioCard.ItemHiddenInput />
-              <RadioCard.ItemControl cursor={"pointer"}>
-                <RadioCard.ItemIndicator />
-                <RadioCard.ItemText>
+              <RadioCard.ItemControl cursor={"pointer"} className="lvltutor-choice-control">
+                <RadioCard.ItemIndicator className="lvltutor-choice-indicator" />
+                <RadioCard.ItemText className="lvltutor-choice-label">
                   <ChoiceContent option={v} id={v.id} />
                 </RadioCard.ItemText>
               </RadioCard.ItemControl>
