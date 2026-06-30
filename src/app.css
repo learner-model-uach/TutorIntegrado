@@ -344,11 +344,12 @@ body.logic-keyboard-active > .ML__keyboard {
 
   .lvltutor-choice-control {
     align-items: flex-start;
-    display: flex;
+    display: grid;
     gap: 0.75rem;
+    grid-template-columns: auto minmax(0, 1fr);
     min-height: 5rem;
-    min-width: 0;
-    padding: 0.9rem 1rem;
+    min-width: 0 !important;
+    padding: 0.9rem 0.85rem;
     width: 100%;
   }
 
@@ -357,7 +358,17 @@ body.logic-keyboard-active > .ML__keyboard {
     margin-top: 0.25rem;
   }
 
-  .lvltutor-choice-label,
+  .lvltutor-choice-label {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .lvltutor-choice-label > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .lvltutor-choice-content,
   .lvltutor-choice-text {
     max-width: 100%;
@@ -365,11 +376,17 @@ body.logic-keyboard-active > .ML__keyboard {
     width: 100%;
   }
 
+  .lvltutor-choice-content {
+    align-items: flex-start !important;
+  }
+
   .lvltutor-choice-text {
+    display: block;
+    font-size: clamp(1rem, 4.45vw, 1.35rem);
     line-height: 1.35;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     text-align: left;
-    white-space: normal;
+    white-space: normal !important;
     word-break: normal;
   }
 
