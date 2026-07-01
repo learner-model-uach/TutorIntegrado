@@ -1,6 +1,5 @@
 import { Box, Button, ButtonGroup, Circle, Popover, Portal } from "@chakra-ui/react";
 import { useColorModeValue } from "../../ui/color-mode";
-//import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import type { Hint } from "../types";
 import Latex from "react-latex-next";
@@ -18,6 +17,7 @@ interface Props {
   numEnabledHints: number;
   resetNumHintsActivated: () => void;
 }
+
 const HintButton = ({
   hints,
   currentHint,
@@ -36,21 +36,26 @@ const HintButton = ({
   const reportAction = useAction();
   const { currentQuestionIndex, currentStepIndex, currentTopicId, currentContetId } = useStore();
 
+  const activeHint = hints[currentHint];
+
   const handleClick = () => {
-    numEnabledHints !== 0 &&
+    if (numEnabledHints !== 0 && activeHint) {
       reportAction({
         verbName: "requestHint",
         stepID: "[" + currentQuestionIndex + "," + currentStepIndex + "]",
         contentID: currentContetId,
         topicID: currentTopicId,
-        hintID: "" + hints[currentHint].hintId,
+        hintID: "" + activeHint.hintId,
         extra: {
           source: "open",
-          hint: hints[currentHint].hint,
+          hint: activeHint.hint,
         },
       });
+    }
+
     resetNumHintsActivated();
   };
+
   return (
     <Popover.Root positioning={{ placement: "bottom" }}>
       <Popover.Trigger asChild>
@@ -60,11 +65,10 @@ const HintButton = ({
           size="sm"
           variant="outline"
           onClick={handleClick}
-          fontWeight={"semibold"}
+          fontWeight="semibold"
         >
           Ayuda &nbsp;
           <Circle bg={numEnabledHints !== 0 ? "red" : "gray"} color="white" size="15px">
-            {" "}
             {numEnabledHints}
           </Circle>
         </Button>
@@ -76,19 +80,45 @@ const HintButton = ({
             color={popoverColor}
             bg={bg}
             borderColor={borderColor}
-            css={{ "--popover-bg": bg }}
+            css={{
+              "--popover-bg": bg,
+
+              "@media (max-width: 767px)": {
+                width: "calc(100vw - 32px)",
+                maxWidth: "calc(100vw - 32px)",
+              },
+            }}
           >
             <Popover.Header pt={4} fontWeight="bold" border="0">
-              {" "}
               Pista:
             </Popover.Header>
+
             <Popover.Arrow />
             <Popover.CloseTrigger />
 
             <Popover.Body>
-              {hints[currentHint] && (
-                <Box width="auto" overflow="auto">
-                  <Latex>{hints[currentHint]?.hint}</Latex>
+              {activeHint && (
+                <Box
+                  w="100%"
+                  maxW="100%"
+                  minW={0}
+                  whiteSpace="normal"
+                  overflowWrap="break-word"
+                  wordBreak="break-word"
+                  overflowX="auto"
+                  css={{
+                    "& .katex-display": {
+                      maxWidth: "100%",
+                      overflowX: "auto",
+                      overflowY: "hidden",
+                    },
+
+                    "& .katex": {
+                      whiteSpace: "normal",
+                    },
+                  }}
+                >
+                  <Latex>{activeHint.hint}</Latex>
                 </Box>
               )}
             </Popover.Body>
@@ -99,14 +129,18 @@ const HintButton = ({
               alignItems="center"
               justifyContent="space-between"
               pb={4}
+              gap={2}
+              flexWrap="wrap"
             >
               <Box fontSize="sm">
                 Pista {currentHint + 1} de {totalHints}
               </Box>
+
               <ButtonGroup size="sm">
                 <Button variant="outline" onClick={prevHint} disabled={disabledPrevButton}>
                   <BsCaretLeftFill color={popoverColor} />
                 </Button>
+
                 <Button variant="outline" onClick={nextHint} disabled={disabledNextButton}>
                   <BsCaretRightFill color={popoverColor} />
                 </Button>
