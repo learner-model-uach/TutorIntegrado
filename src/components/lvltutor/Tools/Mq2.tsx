@@ -16,6 +16,8 @@ import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
 import { isWrapper } from "../../../utils/auth0Platform";
+import { useAuth } from "../../Auth";
+import { gSelect } from "../../GroupSelect";
 
 addStyles();
 
@@ -127,6 +129,8 @@ const Mq2 = ({
 }) => {
   const mqSnap = useSnapshot(MQProxy);
   const action = useAction();
+  const { user, isLoading } = useAuth();
+  const groupSelection = useSnapshot(gSelect);
 
   let entero = parseInt(step.stepId);
 
@@ -148,8 +152,18 @@ const Mq2 = ({
   const capturedPhotoRef = useRef<Photo | null>(null);
 
   useEffect(() => {
-    setShowCameraButton(isWrapper());
-  }, []);
+    const CAMERA_TAG = "hw-photo";
+
+    if (isLoading || !user) {
+      setShowCameraButton(false);
+      return;
+    }
+
+    const userHasCameraTag = user.tags?.includes(CAMERA_TAG) ?? false;
+    const activeGroupHasCameraTag = groupSelection.group?.tags?.includes(CAMERA_TAG) ?? false;
+
+    setShowCameraButton(isWrapper() && (userHasCameraTag || activeGroupHasCameraTag));
+  }, [isLoading, user, groupSelection.group]);
 
   //la siguiente funcion maneja la respuesta ingresada, la respuesta se compara con el valor correspondiente almacenado en el ejercicio.json
   //Ademas, se manejan los componentes de alerta utilizado en el componente padre(solver2) y el componente hijo(Mq2)
