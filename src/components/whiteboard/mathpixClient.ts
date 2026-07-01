@@ -8,6 +8,15 @@ export interface MathpixStrokesPayload {
   formats?: string[];
 }
 
+export interface MathpixImagePayload {
+  src: string;
+  formats?: string[];
+  data_options?: Record<string, unknown>;
+  include_line_data?: boolean;
+  include_word_data?: boolean;
+  auto_rotate_confidence_threshold?: number;
+}
+
 export interface MathpixStrokesResponse {
   text?: string;
   expressions?: string[];
@@ -52,8 +61,8 @@ const extractExpressions = (value: string) => {
       .map(match => unwrapLatex(match[1].replace(/\\n/g, "\n")))
       .filter(Boolean);
   }
-
-  const arrayMatch = value.match(/\\begin\{array\}\{l\}([\s\S]*?)\\end\{array\}/);
+  
+  const arrayMatch = value.match(/\\begin\{array\}\{[lcr]\}([\s\S]*?)\\end\{array\}/);
   if (arrayMatch?.[1]) {
     return arrayMatch[1]
       .split(/\\\\/)
@@ -84,12 +93,13 @@ export const requestMathpixStrokes = async (
 ): Promise<MathpixStrokesResponse> => {
   const appId = options?.appId ?? process.env.NEXT_PUBLIC_MATHPIX_APP_ID;
   const appKey = options?.appKey ?? process.env.NEXT_PUBLIC_MATHPIX_APP_KEY;
+  const apiUrl = process.env.NEXT_PUBLIC_MATHPIX_STROKES_API_URL ?? "https://api.mathpix.com/v3/strokes";
 
   if (!appId || !appKey) {
     throw new Error("Faltan credenciales de Mathpix en .env.");
   }
 
-  const response = await fetch("https://api.mathpix.com/v3/strokes", {
+  const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -105,4 +115,35 @@ export const requestMathpixStrokes = async (
   }
 
   return response.json() as Promise<MathpixStrokesResponse>;
+};
+
+export const requestMathpixImage = async (
+  payload: MathpixImagePayload,
+  options?: { appId?: string; appKey?: string }
+): Promise<NormalizedMathpixResponse> => {
+  const appId = options?.appId ?? process.env.NEXT_PUBLIC_MATHPIX_APP_ID;
+  const appKey = options?.appKey ?? process.env.NEXT_PUBLIC_MATHPIX_APP_KEY;
+  const apiUrl = process.env.NEXT_PUBLIC_MATHPIX_IMAGE_API_URL ?? "https://api.mathpix.com/v3/text";
+
+  if (!appId || !appKey) {
+    throw new Error("Faltan credenciales de Mathpix en .env.");
+  }
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "app_id": appId,
+      "app_key": appKey,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || "Error al procesar la imagen con Mathpix.");
+  }
+
+  const result = (await response.json()) as MathpixStrokesResponse;
+  return normalizeMathpixResponse(result);
 };

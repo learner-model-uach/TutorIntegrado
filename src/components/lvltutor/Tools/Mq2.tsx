@@ -19,6 +19,13 @@ import { MathPixBoard } from "../../whiteboard/MathPixBoard";
 
 addStyles();
 
+/*
+  TAGS
+  Definiciones de tags que controlan aspectos de interface
+
+  hw-board: habilita el acceso a la pizarra interactiva (MathPixBoard) para escritura a mano
+*/
+
 const Enabledhint = ({
   disablehint,
   step,
@@ -119,11 +126,13 @@ const Mq2 = ({
   content,
   topicId,
   disablehint,
+  canUseHwBoard = false,
 }: {
   step: Step;
   content: string;
   topicId: string;
   disablehint: boolean;
+  canUseHwBoard?: boolean;
 }) => {
   const mqSnap = useSnapshot(MQProxy);
   const action = useAction();
@@ -489,6 +498,8 @@ const Mq2 = ({
               top="8px"
               zIndex={1}
               onClick={handleOpenBoard}
+              disabled={!canUseHwBoard}
+              title={!canUseHwBoard ? "Permiso de pizarra no disponible" : "Abrir pizarra"}
             >
               <FaPencilAlt />
             </Button>

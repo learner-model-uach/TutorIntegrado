@@ -57,12 +57,14 @@ const Steporans = ({
   content,
   i,
   answer,
+  canUseHwBoard = false,
 }: {
   step: Step;
   topicId: string;
   content: string;
   i: number;
   answer?: string;
+  canUseHwBoard?: boolean;
 }) => {
   const [currentComponent, setCC] = useState(<></>);
   useEffect(() => {
@@ -99,15 +101,16 @@ const Steporans = ({
             content={content}
             topicId={topicId}
             disablehint={false}
+            canUseHwBoard={canUseHwBoard}
           />,
         );
     }
-  }, [answer, step, content, topicId, i]);
+  }, [answer, step, content, topicId, i, canUseHwBoard]);
 
   return currentComponent;
 };
 
-const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
+const Solver2 = ({ topicId, steps, canUseHwBoard = false }: { topicId: string; steps: ExType; canUseHwBoard?: boolean }) => {
   const mqSnap = useSnapshot(MQProxy);
 
   const action = useAction();
@@ -401,6 +404,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                           content={steps.code}
                           i={i}
                           answer={test[parseInt(step.stepId)]?.value?.ans}
+                          canUseHwBoard={canUseHwBoard}
                         />
                       </>
                     );
