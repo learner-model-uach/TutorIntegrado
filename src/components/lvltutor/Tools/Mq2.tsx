@@ -486,24 +486,24 @@ const Mq2 = ({
                 </Stack>
               </VStack>
             </HStack>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              bg="gray.900"
-              color="white"
-              borderRadius="md"
-              aria-label="Abrir pizarra"
-              position="absolute"
-              right="-52px"
-              top="8px"
-              zIndex={1}
-              onClick={handleOpenBoard}
-              disabled={!canUseHwBoard}
-              title={!canUseHwBoard ? "Permiso de pizarra no disponible" : "Abrir pizarra"}
-            >
-              <FaPencilAlt />
-            </Button>
-            {showBoardTip && !isBoardOpen ? (
+            {canUseHwBoard ? (
+              <Button
+                width={"40px"}
+                height={"40px"}
+                bg="gray.900"
+                color="white"
+                borderRadius="md"
+                aria-label="Abrir pizarra"
+                position="absolute"
+                right="-52px"
+                top="8px"
+                zIndex={1}
+                onClick={handleOpenBoard}
+              >
+                <FaPencilAlt />
+              </Button>
+            ) : null}
+            {canUseHwBoard && showBoardTip && !isBoardOpen ? (
               <Box
                 position="absolute"
                 right="-240px"
