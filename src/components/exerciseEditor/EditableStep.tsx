@@ -1,12 +1,4 @@
-import {
-  Box,
-  Input,
-  Stack,
-  Accordion,
-  Popover,
-  Heading,
-  Field,
-} from "@chakra-ui/react";
+import { Box, Input, Stack, Accordion, Popover, Heading, Field } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { EditButton } from "./EditButton";
 import { SaveButton } from "./SaveButton";
@@ -18,15 +10,15 @@ import dynamic from "next/dynamic";
 
 const CustomAccordionItemlvltutor = dynamic(
   () => import("../../components/lvltutor/Tools/Solver2").then(m => m.CustomAccordionItem),
-  { ssr: false }
+  { ssr: false },
 );
 const SummarySteplvltutor = dynamic(
   () => import("../../components/lvltutor/Tools/Solver2").then(m => m.SummaryStep),
-  { ssr: false }
+  { ssr: false },
 );
 const FeedbackAlertlvltutor = dynamic(
   () => import("../../components/lvltutor/Tools/Solver2").then(m => m.FeedbackAlert),
-  { ssr: false }
+  { ssr: false },
 );
 
 import type { potato as potatolvltutor } from "../../components/lvltutor/Tools/Solver2";
@@ -195,7 +187,9 @@ export default function EditableStep({
                     }
                     placeholder={`Mensaje feedback ${choiceIndex + 1}`}
                   />
-                  <Field.Label mt={2}>{`Expresión del mensaje feedback ${choiceIndex + 1}`}</Field.Label>
+                  <Field.Label
+                    mt={2}
+                  >{`Expresión del mensaje feedback ${choiceIndex + 1}`}</Field.Label>
                   <Input
                     value={choice.feedbackMsgExp || ""}
                     onChange={e =>
@@ -263,7 +257,11 @@ export default function EditableStep({
               <Input
                 value={parseInt(answer.nextStep) + 1 || ""}
                 onChange={e =>
-                  handleAnswerUpdateCopy(answerIndex, "nextStep", String(parseInt(e.target.value) - 1))
+                  handleAnswerUpdateCopy(
+                    answerIndex,
+                    "nextStep",
+                    String(parseInt(e.target.value) - 1),
+                  )
                 }
                 placeholder={`Siguiente paso ${answerIndex + 1}`}
               />
@@ -480,9 +478,7 @@ export default function EditableStep({
               }}
             />
             <SearchableSelect
-              selectedItems={availableKCs.filter(kc =>
-                (localStepCopy.KCs ?? []).includes(kc.code)
-              )}
+              selectedItems={availableKCs.filter(kc => (localStepCopy.KCs ?? []).includes(kc.code))}
               onChange={handleUpdateKCs}
               availableKCs={availableKCs}
             />

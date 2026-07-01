@@ -52,12 +52,7 @@ const NativeCheckbox = ({ checked, onChange, children, style = {} }: NativeCheck
         </svg>
       )}
     </span>
-    <input
-      type="checkbox"
-      checked={checked}
-      onChange={onChange}
-      style={{ display: "none" }}
-    />
+    <input type="checkbox" checked={checked} onChange={onChange} style={{ display: "none" }} />
     {children && <span style={{ fontSize: "14px" }}>{children}</span>}
   </label>
 );

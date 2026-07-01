@@ -61,7 +61,6 @@ export const DSCstep2 = ({
     if (correctAlternatives.some(validate)) {
       setStep2Valid((step2Valid = "Terminado"));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -71,7 +70,6 @@ export const DSCstep2 = ({
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
 
       setFeedbackMsg(

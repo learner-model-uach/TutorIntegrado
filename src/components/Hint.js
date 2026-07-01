@@ -25,10 +25,10 @@ export const HintNavigation = ({ list, currentIndex, onPrev, onNext }) => {
       <br />
       <Center>
         {list[currentIndex - 1] && (
-          <Button 
-            onClick={onPrev} 
-            colorPalette="cyan" 
-            variant="outline" 
+          <Button
+            onClick={onPrev}
+            colorPalette="cyan"
+            variant="outline"
             size="sm"
             mr={2} // Reemplaza el espacio en blanco con margen nativo de Chakra
           >
@@ -36,12 +36,7 @@ export const HintNavigation = ({ list, currentIndex, onPrev, onNext }) => {
           </Button>
         )}
         {list[currentIndex + 1] && (
-          <Button 
-            onClick={onNext} 
-            colorPalette="cyan" 
-            variant="outline" 
-            size="sm"
-          >
+          <Button onClick={onNext} colorPalette="cyan" variant="outline" size="sm">
             siguiente
           </Button>
         )}
@@ -70,11 +65,11 @@ const Hint = ({
   const [count, setCount] = useState(0); // count for matchingError
   const action = useAction();
 
-useEffect(() => {
-  if ((hints?.length ?? 0) + count === list.length && list.length > 0) {
-    setLastHint(true);
-  }
-}, [(hints?.length ?? 0) + count === list.length, setLastHint]);
+  useEffect(() => {
+    if ((hints?.length ?? 0) + count === list.length && list.length > 0) {
+      setLastHint(true);
+    }
+  }, [(hints?.length ?? 0) + count === list.length, setLastHint]);
 
   const ayuda = () => {
     const responseStudent =
@@ -257,12 +252,7 @@ useEffect(() => {
               <Popover.Arrow />
               <Popover.CloseTrigger />
               {/* Aquí renderizamos el subcomponente limpio */}
-              <HintNavigation 
-                list={list} 
-                currentIndex={j} 
-                onPrev={atras} 
-                onNext={siguiente} 
-              />
+              <HintNavigation list={list} currentIndex={j} onPrev={atras} onNext={siguiente} />
             </Popover.Content>
           </Popover.Positioner>
         </Portal>

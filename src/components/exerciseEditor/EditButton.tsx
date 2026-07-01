@@ -10,12 +10,7 @@ export const EditButton = ({
   ...props
 }) => {
   return (
-    <Button 
-      onClick={onClick} 
-      colorPalette={isEditing ? cancelColor : editColor} 
-      mb={4} 
-      {...props}
-    >
+    <Button onClick={onClick} colorPalette={isEditing ? cancelColor : editColor} mb={4} {...props}>
       {isEditing ? cancelText : editText}
     </Button>
   );

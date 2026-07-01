@@ -64,7 +64,6 @@ const FCCstep1 = ({
     if (correctAlternatives.some(validate)) {
       setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -74,7 +73,6 @@ const FCCstep1 = ({
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
     } else {
       if (response1.current.value == "" || response2.current.value == "") {

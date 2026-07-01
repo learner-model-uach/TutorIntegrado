@@ -38,7 +38,6 @@ export const TCstep2 = ({
       //valida que la entrada es correcta
       setStep2Valid((step2Valid = step2.answers[0].nextStep));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -48,7 +47,6 @@ export const TCstep2 = ({
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
     } else {
       if (response.current.value == "") {

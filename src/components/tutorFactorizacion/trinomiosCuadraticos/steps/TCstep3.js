@@ -31,7 +31,6 @@ export const TCstep3 = ({
     if (step3.answers[0].answer === value) {
       setStep3Valid((step3Valid = step3.answers[0].nextStep ?? 0));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -41,7 +40,6 @@ export const TCstep3 = ({
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
     } else {
       if (value == undefined) {

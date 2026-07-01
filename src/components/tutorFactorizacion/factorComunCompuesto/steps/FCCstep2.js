@@ -4,7 +4,16 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
-const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra, setExtra, isEditorMode = false }) => {
+const FCCstep2 = ({
+  step2,
+  setStep2Valid,
+  step2Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+  isEditorMode = false,
+}) => {
   const response1 = useRef(null); //first input response
   const response2 = useRef(null); //second input response
   const correctAlternatives = step2.answers.map(elemento => elemento.answer); //list of answers valid
@@ -54,7 +63,6 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
     if (correctAlternatives.some(validate)) {
       setStep2Valid((step2Valid = step2.answers[correctAlternatives.findIndex(validate)].nextStep));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -64,7 +72,6 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
     } else {
       if (response1.current.value == "" || response2.current.value == "") {

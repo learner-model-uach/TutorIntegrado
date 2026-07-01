@@ -56,7 +56,6 @@ export const TCstep5 = ({
       );
       setStep5Valid((step5Valid = "Terminado"));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -66,7 +65,6 @@ export const TCstep5 = ({
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
     } else {
       if (

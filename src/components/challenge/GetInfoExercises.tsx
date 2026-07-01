@@ -78,8 +78,7 @@ const RecursiveAccordion = ({ data, setSelectedItems, selectedItems = [] }) => {
       if (isSelected) {
         const descendantIds = getAllDescendants(item).map(d => d.id);
         return prev.filter(
-          selectedItem =>
-            selectedItem.id !== item.id && !descendantIds.includes(selectedItem.id),
+          selectedItem => selectedItem.id !== item.id && !descendantIds.includes(selectedItem.id),
         );
       } else {
         const uniqueItems = new Set(prev.map(existingItem => existingItem.id));
@@ -117,23 +116,23 @@ const RecursiveAccordion = ({ data, setSelectedItems, selectedItems = [] }) => {
     <Accordion.Root multiple collapsible width="100%">
       {data.map(item => (
         <Accordion.Item key={item.id} value={String(item.id)}>
-<Accordion.ItemTrigger>
-  <Box flex="1" textAlign="left">
-    <NativeCheckbox
-      checked={isItemSelected(item.id)}
-      onChange={() => {
-        if (item.subtopics?.length > 0) {
-          handleParentChange(item);
-        } else {
-          handleChildChange(item.parent, item);
-        }
-      }}
-    >
-      {item.title}
-    </NativeCheckbox>
-  </Box>
-  {item.subtopics?.length > 0 && <Accordion.ItemIndicator />}
-</Accordion.ItemTrigger>
+          <Accordion.ItemTrigger>
+            <Box flex="1" textAlign="left">
+              <NativeCheckbox
+                checked={isItemSelected(item.id)}
+                onChange={() => {
+                  if (item.subtopics?.length > 0) {
+                    handleParentChange(item);
+                  } else {
+                    handleChildChange(item.parent, item);
+                  }
+                }}
+              >
+                {item.title}
+              </NativeCheckbox>
+            </Box>
+            {item.subtopics?.length > 0 && <Accordion.ItemIndicator />}
+          </Accordion.ItemTrigger>
 
           <Accordion.ItemContent pb={4} pl={4}>
             {item.subtopics?.length > 0 ? (
@@ -218,14 +217,17 @@ const MathRecursiveAccordion = ({ data }) => {
   };
   return (
     <Accordion.Root multiple collapsible width="100%">
-      {data && data.length > 0 &&
+      {data &&
+        data.length > 0 &&
         data.map(topic => {
           const exercises = extractExercise([topic]);
           return (
             <Accordion.Item key={topic.id} value={String(topic.id)}>
               <Accordion.ItemTrigger>
                 <Box flex="1" textAlign="left">
-                  <Text fontWeight="bold" mb={2}>{topic.title}</Text>
+                  <Text fontWeight="bold" mb={2}>
+                    {topic.title}
+                  </Text>
                 </Box>
                 {topic.content?.length > 0 && <Accordion.ItemIndicator />}
               </Accordion.ItemTrigger>
@@ -266,7 +268,12 @@ const MathRecursiveAccordion = ({ data }) => {
                             </Box>
                           </HStack>
                           {index < exercises.length - 1 && (
-                            <Separator my={4} borderColor="gray.300" borderWidth="2px" opacity={1} />
+                            <Separator
+                              my={4}
+                              borderColor="gray.300"
+                              borderWidth="2px"
+                              opacity={1}
+                            />
                           )}
                         </Box>
                       ))}
@@ -289,9 +296,6 @@ const GetInfoExercises = () => {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const { data: TopicsData, isLoading: isTopicsLoading } = useGQLQuery(queryTopics);
-
-  const router = useRouter();
-  const { mode } = router.query;
 
   const topics = TopicsData?.topics || [];
 
@@ -327,9 +331,7 @@ const GetInfoExercises = () => {
         </Field.Root>
 
         <Field.Root mb={4} border="2px" borderColor="gray.600" borderRadius="md" p={4}>
-          <Field.Label mt={4}>
-            Ejercicios de los tópicos y subtópicos seleccionados
-          </Field.Label>
+          <Field.Label mt={4}>Ejercicios de los tópicos y subtópicos seleccionados</Field.Label>
           <MathRecursiveAccordion data={selectedItems} />
         </Field.Root>
       </Box>

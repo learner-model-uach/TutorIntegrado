@@ -1,13 +1,4 @@
-import {
-  Box,
-  Input,
-  Heading,
-  Field,
-  Text,
-  Badge,
-  Textarea,
-  Accordion,
-} from "@chakra-ui/react";
+import { Box, Input, Heading, Field, Text, Badge, Textarea } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { EditButton } from "./EditButton";
 import { SaveButton } from "./SaveButton";
@@ -64,7 +55,9 @@ function EditableWPStep({ step, stepIndex, onSave }) {
     <Box borderWidth="1px" borderColor="gray.200" borderRadius="md" p={3} mb={3}>
       <Text fontWeight="bold" fontSize="sm" mb={2}>
         Paso {stepIndex + 1}
-        <Badge ml={2} colorPalette="teal" fontSize="xs">{componentType}</Badge>
+        <Badge ml={2} colorPalette="teal" fontSize="xs">
+          {componentType}
+        </Badge>
       </Text>
 
       {/* Editar campos base */}
@@ -79,7 +72,13 @@ function EditableWPStep({ step, stepIndex, onSave }) {
       />
       {isEditingBase && (
         <Box>
-          <SaveButton width="full" onSave={() => { onSave(localCopy); setIsEditingBase(false); }} />
+          <SaveButton
+            width="full"
+            onSave={() => {
+              onSave(localCopy);
+              setIsEditingBase(false);
+            }}
+          />
           <Box bg={formBg} borderRadius="md" p={3} mt={2}>
             <Field.Root mb={3}>
               <Field.Label>Título del paso</Field.Label>
@@ -129,9 +128,14 @@ function EditableWPStep({ step, stepIndex, onSave }) {
       />
       {isEditingComponent && (
         <Box>
-          <SaveButton width="full" onSave={() => { onSave(localCopy); setIsEditingComponent(false); }} />
+          <SaveButton
+            width="full"
+            onSave={() => {
+              onSave(localCopy);
+              setIsEditingComponent(false);
+            }}
+          />
           <Box bg={formBg} borderRadius="md" p={3} mt={2}>
-
             {/* mathComponent: expression + answers[] */}
             {componentType === "mathComponent" && (
               <>
@@ -144,22 +148,30 @@ function EditableWPStep({ step, stepIndex, onSave }) {
                   />
                 </Field.Root>
                 <Text fontSize="sm" color="gray.600" mb={2}>
-                  idCorrectAnswers: {JSON.stringify(localCopy.componentToAnswer?.meta?.idCorrectAnswers)}
+                  idCorrectAnswers:{" "}
+                  {JSON.stringify(localCopy.componentToAnswer?.meta?.idCorrectAnswers)}
                 </Text>
                 <Field.Root mb={3}>
                   <Field.Label>idCorrectAnswers (JSON)</Field.Label>
                   <Input
-                    value={JSON.stringify(localCopy.componentToAnswer?.meta?.idCorrectAnswers ?? [])}
+                    value={JSON.stringify(
+                      localCopy.componentToAnswer?.meta?.idCorrectAnswers ?? [],
+                    )}
                     onChange={e => {
-                      try { handleMeta("idCorrectAnswers", JSON.parse(e.target.value)); }
-                      catch { handleMeta("idCorrectAnswers", e.target.value); }
+                      try {
+                        handleMeta("idCorrectAnswers", JSON.parse(e.target.value));
+                      } catch {
+                        handleMeta("idCorrectAnswers", e.target.value);
+                      }
                     }}
                     placeholder="[0] o [0, 1]"
                   />
                 </Field.Root>
                 {(localCopy.componentToAnswer?.meta?.answers ?? []).map((ans, i) => (
                   <Box key={i} mb={3} p={2} bg="white" borderRadius="md">
-                    <Text fontSize="xs" color="gray.500" mb={1}>Respuesta {i + 1} — id: {ans.id}</Text>
+                    <Text fontSize="xs" color="gray.500" mb={1}>
+                      Respuesta {i + 1} — id: {ans.id}
+                    </Text>
                     <Field.Root mb={2}>
                       <Field.Label>placeholderId</Field.Label>
                       <Input
@@ -185,7 +197,8 @@ function EditableWPStep({ step, stepIndex, onSave }) {
             {componentType === "selectionComponent" && (
               <>
                 <Text fontSize="sm" color="gray.600" mb={2}>
-                  idCorrectAnswers: {JSON.stringify(localCopy.componentToAnswer?.meta?.idCorrectAnswers)}
+                  idCorrectAnswers:{" "}
+                  {JSON.stringify(localCopy.componentToAnswer?.meta?.idCorrectAnswers)}
                 </Text>
                 <Field.Root mb={3}>
                   <Field.Label>idCorrectAnswers</Field.Label>
@@ -200,7 +213,9 @@ function EditableWPStep({ step, stepIndex, onSave }) {
                 </Field.Root>
                 {(localCopy.componentToAnswer?.meta?.answers ?? []).map((ans, i) => (
                   <Box key={i} mb={3} p={2} bg="white" borderRadius="md">
-                    <Text fontSize="xs" color="gray.500" mb={1}>Opción {i + 1} — id: {ans.id}</Text>
+                    <Text fontSize="xs" color="gray.500" mb={1}>
+                      Opción {i + 1} — id: {ans.id}
+                    </Text>
                     <Field.Root>
                       <Field.Label>value</Field.Label>
                       <Input
@@ -242,7 +257,13 @@ function EditableWPStep({ step, stepIndex, onSave }) {
       />
       {isEditingHints && localCopy?.hints?.length > 0 && (
         <Box>
-          <SaveButton width="full" onSave={() => { onSave(localCopy); setIsEditingHints(false); }} />
+          <SaveButton
+            width="full"
+            onSave={() => {
+              onSave(localCopy);
+              setIsEditingHints(false);
+            }}
+          />
           <Box bg={formBg} borderRadius="md" p={3} mt={2}>
             {localCopy.hints.map((hint, i) => (
               <Field.Root key={i} mb={3}>
@@ -261,11 +282,7 @@ function EditableWPStep({ step, stepIndex, onSave }) {
   );
 }
 
-export default function EditableWPQuestion({
-  question,
-  questionIndex,
-  setQuestions,
-}) {
+export default function EditableWPQuestion({ question, questionIndex, setQuestions }) {
   const safeQ = question ?? {};
   const [localQ, setLocalQ] = useState({ ...safeQ });
   const [localQCopy, setLocalQCopy] = useState({ ...safeQ });
@@ -300,7 +317,9 @@ export default function EditableWPQuestion({
 
       {/* Vista previa */}
       <Box mb={4} p={3} bg="gray.50" borderRadius="md">
-        <Text fontSize="sm" color="gray.500" mb={1}>Pregunta actual:</Text>
+        <Text fontSize="sm" color="gray.500" mb={1}>
+          Pregunta actual:
+        </Text>
         <Text fontWeight="bold">{localQ.question || "—"}</Text>
       </Box>
 

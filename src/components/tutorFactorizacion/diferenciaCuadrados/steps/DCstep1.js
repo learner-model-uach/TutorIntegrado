@@ -4,7 +4,16 @@ import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
 import { Alert, Button, Center, Input, Wrap, WrapItem, Spacer } from "@chakra-ui/react";
 
-export const DCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, setExtra, isEditorMode = false }) => {
+export const DCstep1 = ({
+  step1,
+  setStep1Valid,
+  step1Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+  isEditorMode = false,
+}) => {
   const _action = useAction();
   const action = isEditorMode ? () => {} : _action; // ✅ no-op en editor
 
@@ -18,22 +27,31 @@ export const DCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, 
   const dateInitial = Date.now();
   const [lastHint, setLastHint] = useState(false);
 
-  const clean = val => val
-    .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
-    .replace(/[²]| /g, "^2").replace(/[³]| /g, "^3").replace(/[⁴]| /g, "^4")
-    .replace(/[⁵]| /g, "^5").replace(/[⁶]| /g, "^6").replace(/[⁷]| /g, "^7")
-    .replace(/[⁸]| /g, "^8").replace(/[⁹]| /g, "^9").toLowerCase();
+  const clean = val =>
+    val
+      .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
+      .replace(/[²]| /g, "^2")
+      .replace(/[³]| /g, "^3")
+      .replace(/[⁴]| /g, "^4")
+      .replace(/[⁵]| /g, "^5")
+      .replace(/[⁶]| /g, "^6")
+      .replace(/[⁷]| /g, "^7")
+      .replace(/[⁸]| /g, "^8")
+      .replace(/[⁹]| /g, "^9")
+      .toLowerCase();
 
   const compare = () => {
     setFeedbackMsg(null);
     setAttempts(attempts + 1);
     const responseStudent = [clean(response1.current.value), clean(response2.current.value)];
-    const validate = element => element[0] === responseStudent[0] && element[1] === responseStudent[1];
+    const validate = element =>
+      element[0] === responseStudent[0] && element[1] === responseStudent[1];
 
     if (correctAlternatives.some(validate)) {
       setStep1Valid((step1Valid = step1.answers[correctAlternatives.findIndex(validate)].nextStep));
       if (!isEditorMode) {
-        extra.att = attempts; extra.hints = hints;
+        extra.att = attempts;
+        extra.hints = hints;
         extra.duration = (Date.now() - dateInitial) / 1000;
         extra.lastHint = lastHint;
         setExtra(extra);
@@ -42,14 +60,20 @@ export const DCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, 
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert.Root status="warning"><Alert.Indicator /><Alert.Title>Ingrese respuesta(s)</Alert.Title></Alert.Root>
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Title>Ingrese respuesta(s)</Alert.Title>
+            </Alert.Root>,
           );
         }, 50);
       } else {
         setError(true);
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert.Root status="error"><Alert.Indicator /><Alert.Title>{step1.incorrectMsg}</Alert.Title></Alert.Root>
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Title>{step1.incorrectMsg}</Alert.Title>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -60,20 +84,34 @@ export const DCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, 
     <>
       <Wrap padding="15px 10px 10px 10px">
         <WrapItem padding="5px 0px 10px 0px">
-          <Center><MathComponent tex={String.raw`${step1.expression}`} display={false} /></Center>
+          <Center>
+            <MathComponent tex={String.raw`${step1.expression}`} display={false} />
+          </Center>
         </WrapItem>
         <Spacer />
         <WrapItem>
           <Center>
             <label>( </label>
-            <Input style={{ textAlign: "center", fontStyle: "italic", fontWeight: "600" }}
-              size="sm" w={100} focusBorderColor="#9DECF9" placeholder="Cuadrado 1"
-              ref={response1} isReadOnly={step1Valid != null} />
+            <Input
+              style={{ textAlign: "center", fontStyle: "italic", fontWeight: "600" }}
+              size="sm"
+              w={100}
+              focusBorderColor="#9DECF9"
+              placeholder="Cuadrado 1"
+              ref={response1}
+              isReadOnly={step1Valid != null}
+            />
             <label>)²</label>
             <label>&nbsp;- ( </label>
-            <Input style={{ textAlign: "center", fontStyle: "italic", fontWeight: "600" }}
-              size="sm" w={100} focusBorderColor="#9DECF9" placeholder="Cuadrado 2"
-              ref={response2} isReadOnly={step1Valid != null} />
+            <Input
+              style={{ textAlign: "center", fontStyle: "italic", fontWeight: "600" }}
+              size="sm"
+              w={100}
+              focusBorderColor="#9DECF9"
+              placeholder="Cuadrado 2"
+              ref={response2}
+              isReadOnly={step1Valid != null}
+            />
             <label>)²</label>
           </Center>
         </WrapItem>
@@ -81,20 +119,45 @@ export const DCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, 
         <WrapItem>
           {step1Valid == null && (
             <>
-              <Button colorPalette="teal" variant="outline" size="sm"
+              <Button
+                colorPalette="teal"
+                variant="outline"
+                size="sm"
                 onClick={() => {
                   compare();
-                  response1.current.value != "" && response2.current.value != "" &&
-                    action({ verbName: "tryStep", stepID: "" + step1.stepId, contentID, topicID,
-                      result: step1Valid === null ? 0 : 1, kcsIDs: step1.KCs,
-                      extra: { response: [response1.current.value, response2.current.value], attempts, hints } });
+                  response1.current.value != "" &&
+                    response2.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step1.stepId,
+                      contentID,
+                      topicID,
+                      result: step1Valid === null ? 0 : 1,
+                      kcsIDs: step1.KCs,
+                      extra: {
+                        response: [response1.current.value, response2.current.value],
+                        attempts,
+                        hints,
+                      },
+                    });
                 }}
-              >Aceptar</Button>
+              >
+                Aceptar
+              </Button>
               &nbsp;&nbsp;
-              <Hint hints={step1.hints} contentId={contentID} topicId={topicID}
-                stepId={step1.stepId} matchingError={step1.matchingError}
-                response={[response1, response2]} error={error} setError={setError}
-                hintCount={hints} setHints={setHints} setLastHint={setLastHint} />
+              <Hint
+                hints={step1.hints}
+                contentId={contentID}
+                topicId={topicID}
+                stepId={step1.stepId}
+                matchingError={step1.matchingError}
+                response={[response1, response2]}
+                error={error}
+                setError={setError}
+                hintCount={hints}
+                setHints={setHints}
+                setLastHint={setLastHint}
+              />
             </>
           )}
         </WrapItem>

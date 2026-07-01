@@ -5,7 +5,16 @@ import { Alert, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui
 import Hint from "../../../Hint";
 
 // isEditorMode: desactiva actions, permite uso en editor sin registrar eventos
-const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, setExtra, isEditorMode = false }) => {
+const FCstep1 = ({
+  step1,
+  setStep1Valid,
+  step1Valid,
+  contentID,
+  topicID,
+  extra,
+  setExtra,
+  isEditorMode = false,
+}) => {
   const _action = useAction();
   const action = isEditorMode ? () => {} : _action; // no-op en editor
 
@@ -23,16 +32,24 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
     setAttempts(attempts + 1);
     const responseStudent = response.current.value
       .replace(/[*]|[(]|[)]|[{]|[}]| /g, "")
-      .replace(/[²]| /g, "^2").replace(/[³]| /g, "^3").replace(/[⁴]| /g, "^4")
-      .replace(/[⁵]| /g, "^5").replace(/[⁶]| /g, "^6").replace(/[⁷]| /g, "^7")
-      .replace(/[⁸]| /g, "^8").replace(/[⁹]| /g, "^9").toLowerCase();
+      .replace(/[²]| /g, "^2")
+      .replace(/[³]| /g, "^3")
+      .replace(/[⁴]| /g, "^4")
+      .replace(/[⁵]| /g, "^5")
+      .replace(/[⁶]| /g, "^6")
+      .replace(/[⁷]| /g, "^7")
+      .replace(/[⁸]| /g, "^8")
+      .replace(/[⁹]| /g, "^9")
+      .toLowerCase();
     const validate = element => element === responseStudent;
 
     if (correctAlternatives.some(validate)) {
       setFeedbackMsg(
         <Alert.Root status="success">
           <Alert.Indicator />
-          <Alert.Content><Alert.Title>{step1.correctMsg}</Alert.Title></Alert.Content>
+          <Alert.Content>
+            <Alert.Title>{step1.correctMsg}</Alert.Title>
+          </Alert.Content>
         </Alert.Root>,
       );
       setStep1Valid((step1Valid = "Terminado"));
@@ -49,7 +66,9 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
           setFeedbackMsg(
             <Alert.Root status="warning">
               <Alert.Indicator />
-              <Alert.Content><Alert.Title>Ingrese respuesta</Alert.Title></Alert.Content>
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta</Alert.Title>
+              </Alert.Content>
             </Alert.Root>,
           );
         }, 50);
@@ -59,7 +78,9 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
           setFeedbackMsg(
             <Alert.Root status="error">
               <Alert.Indicator />
-              <Alert.Content><Alert.Title>{step1.incorrectMsg}</Alert.Title></Alert.Content>
+              <Alert.Content>
+                <Alert.Title>{step1.incorrectMsg}</Alert.Title>
+              </Alert.Content>
             </Alert.Root>,
           );
         }, 50);
@@ -79,11 +100,13 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
             <label>(</label>
             <Input
               style={{ textAlign: "center", fontStyle: "italic", fontWeight: "600" }}
-              size="sm" w={160}
+              size="sm"
+              w={160}
               placeholder="Ingrese factor común"
               ref={response}
               readOnly={step1Valid != null}
-              focusRingColor="cyan.200" focusRingWidth="2px"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label>)</label>
             {step1Valid === null ? (
@@ -97,17 +120,22 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
         <WrapItem>
           {step1Valid === null && (
             <>
-              <Button colorScheme="cyan" size="sm" variant="outline"
+              <Button
+                colorScheme="cyan"
+                size="sm"
+                variant="outline"
                 onClick={() => {
                   compare();
-                  response.current.value != "" && action({
-                    verbName: "tryStep",
-                    stepID: "" + step1.stepId,
-                    contentID, topicID,
-                    result: step1Valid === null ? 0 : 1,
-                    kcsIDs: step1.KCs,
-                    extra: { response: [response.current.value], attempts, hints },
-                  });
+                  response.current.value != "" &&
+                    action({
+                      verbName: "tryStep",
+                      stepID: "" + step1.stepId,
+                      contentID,
+                      topicID,
+                      result: step1Valid === null ? 0 : 1,
+                      kcsIDs: step1.KCs,
+                      extra: { response: [response.current.value], attempts, hints },
+                    });
                 }}
               >
                 Aceptar
@@ -115,10 +143,17 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
               &nbsp;&nbsp;
               {/* En editor mode, hints siguen funcionando visualmente pero sin action */}
               <Hint
-                hints={step1.hints} contentId={contentID} topicId={topicID}
-                stepId={step1.stepId} matchingError={step1.matchingError}
-                response={[response]} error={error} setError={setError}
-                hintCount={hints} setHints={setHints} setLastHint={setLastHint}
+                hints={step1.hints}
+                contentId={contentID}
+                topicId={topicID}
+                stepId={step1.stepId}
+                matchingError={step1.matchingError}
+                response={[response]}
+                error={error}
+                setError={setError}
+                hintCount={hints}
+                setHints={setHints}
+                setLastHint={setLastHint}
               />
             </>
           )}

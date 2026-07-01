@@ -11,10 +11,12 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useGQLQuery } from "rq-gql";
+import { useGQLQuery, useGQLMutation } from "rq-gql";
 import { gql } from "../graphql";
 import "katex/dist/katex.min.css";
 import { withAuth } from "../components/Auth";
+import { sessionState } from "../components/SessionState";
+import { useAction } from "../utils/action";
 import { LoadingOverlay } from "../components/challenge/LoadingOverlay";
 import { Header as Headerlvltutor } from "../components/lvltutor/Tools/Solver2";
 import EditableStep from "../components/exerciseEditor/EditableStep";
@@ -25,39 +27,106 @@ import EditableWPQuestion from "../components/exerciseEditor/EditableWPQuestion"
 import { EditButton } from "../components/exerciseEditor/EditButton";
 import { SaveButton } from "../components/exerciseEditor/SaveButton";
 
-const mutationUpdateChallenge = gql(`
-  mutation UpdateChallenge($challengeId: IntID!, $challenge: ChallengeInput!) {
-    adminContent {
-      updateChallenge (id: $challengeId, data: $challenge){
-        code, content {id}, description, enabled, endDate,
-        groups{id}, projectId, startDate, tags, title, topics{id},
-      }
-    }
-  }`);
-
-const mutationCreateChallenge = gql(`
-  mutation CreateChallenge($challenge: ChallengeInput!) {
-    adminContent {
-      createChallenge (data : $challenge){
-        code, content {id}, description, enabled, endDate,
-        groups{id}, projectId, startDate, tags, title, topics{id},
-      }
-    }
-  }`);
-
 const queryTopics = gql(/* GraphQL */ `
-  query GetTopics {
+  query GetTopicsForExerciseEditor {
     topics(ids: [44, 4, 31, 19, 68, 24, 52]) {
-      id code label
-      content { id json }
-      childrens {
-        id code label
-        content { id json }
-        childrens {
-          id code label
-          content { id json }
-          childrens { id code label content { id json } }
+      id
+      code
+      label
+      content {
+        id
+        json
+        code
+        description
+        label
+        kcs {
+          id
         }
+        tags
+        topics {
+          id
+        }
+        project {
+          id
+        }
+      }
+      childrens {
+        id
+        code
+        label
+        content {
+          id
+          json
+          code
+          description
+          label
+          kcs {
+            id
+          }
+          tags
+          topics {
+            id
+          }
+          project {
+            id
+          }
+        }
+        childrens {
+          id
+          code
+          label
+          content {
+            id
+            json
+            code
+            description
+            label
+            kcs {
+              id
+            }
+            tags
+            topics {
+              id
+            }
+            project {
+              id
+            }
+          }
+          childrens {
+            id
+            code
+            label
+            content {
+              id
+              json
+              code
+              description
+              label
+              kcs {
+                id
+              }
+              tags
+              topics {
+                id
+              }
+              project {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+const mutationUpdateContent = gql(/* GraphQL */ `
+  mutation UpdateContent($data: UpdateContent!) {
+    adminContent {
+      updateContent(data: $data) {
+        id
+        code
+        json
       }
     }
   }
@@ -71,17 +140,17 @@ const queryGetKCs = gql(`
 
 // ─── Tipo → grupo de editor ──────────────────────────────────────────────────
 const TYPE_GROUPS = {
-  lvltutor:   "lvltutor",
-  fdsc2:      "fac",
-  fc1s:       "fac",
-  fcc3s:      "fac",
-  fdc2s:      "fac",
-  ftc5s:      "fac",
-  ecl2s:      "ecu",
-  ecc5s:      "ecu",
-  secl5s:     "ecu",
-  lvltutor2:  "logic",
-  wordProblem:"wp",
+  lvltutor: "lvltutor",
+  fdsc2: "fac",
+  fc1s: "fac",
+  fcc3s: "fac",
+  fdc2s: "fac",
+  ftc5s: "fac",
+  ecl2s: "ecu",
+  ecc5s: "ecu",
+  secl5s: "ecu",
+  lvltutor2: "logic",
+  wordProblem: "wp",
 };
 
 interface ExerciseJSONDynamic {
@@ -91,15 +160,16 @@ interface ExerciseJSONDynamic {
   questions?: Array<any>;
 }
 
-// Busca recursivamente el ejercicio por code en todos los topics
+// Busca recursivamente el ejercicio por code (json.code) en todos los topics
+// y devuelve también todos los campos que requiere UpdateContent
 const findExerciseById = (
   topics: any[],
   exerciseId: string,
-): { exercise: any; topic: any } | null => {
+): { exercise: any; topic: any; content: any } | null => {
   for (const topic of topics) {
     for (const content of topic.content ?? []) {
       if (content?.json?.code === exerciseId) {
-        return { exercise: content.json, topic };
+        return { exercise: content.json, topic, content };
       }
     }
     if (topic.childrens?.length) {
@@ -111,14 +181,22 @@ const findExerciseById = (
 };
 
 export default withAuth(function ExerciseEditor() {
-  const [isUpdated, setIsUpdated] = useState(false);
-  const [isCreated, setIsCreated] = useState(false);
-  const [challenge, setChallenge] = useState({});
   const [isLoadingExercise, setIsLoadingExercise] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   // Encabezado común
-  const [topic, setTopic] = useState({});
+  const [topic, setTopic] = useState<{ id?: string | number; [key: string]: any }>({});
+  // ✅ Metadata completa del content de GraphQL, necesaria para UpdateContent
+  const [contentMeta, setContentMeta] = useState<{
+    id?: string | number;
+    code?: string;
+    description?: string;
+    label?: string;
+    kcs?: Array<{ id: string | number }>;
+    tags?: string[];
+    topics?: Array<{ id: string | number }>;
+    project?: { id: string | number };
+  }>({});
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [initialExp, setInitialExp] = useState("");
@@ -132,7 +210,7 @@ export default withAuth(function ExerciseEditor() {
   // Pasos / preguntas editables
   const [steps, setSteps] = useState<any[]>([]);
   const [finalAnswer, setFinalAnswer] = useState<any>(null);
-  const [questions, setQuestions] = useState<any[]>([]);   // wordProblem
+  const [questions, setQuestions] = useState<any[]>([]); // wordProblem
 
   // Campos extra de TutorFac / TutorEcu / wordProblem
   const [eqc, setEqc] = useState("");
@@ -145,27 +223,22 @@ export default withAuth(function ExerciseEditor() {
   const { mode, id } = router.query;
   const exerciseId = Array.isArray(id) ? id[0] : id;
   const isEditMode = mode === "edit";
-  const challengeId = exerciseId ?? "default-id";
+
+  // ✅ Acción para reportar guardado de contenido
+  const saveContentAction = useAction();
+  const userId = sessionState.currentUser?.id;
+
+  // ✅ Mutación real que persiste content.json
+  const updateContentMutation = useGQLMutation(mutationUpdateContent, {
+    onError(err) {
+      console.error("Error al guardar el ejercicio:", err);
+      alert(`Error al guardar el ejercicio: ${err.message}`);
+    },
+  });
 
   const ids = Array.from({ length: 147 }, (_, i) => (i + 1).toString());
   const { data: TopicsData, isLoading: isTopicsLoading } = useGQLQuery(queryTopics);
   const { data: KCsData, isLoading: isGetKCsLoading } = useGQLQuery(queryGetKCs, { ids });
-
-  const { error: errorUpdateChallenge } = useGQLQuery(
-    mutationUpdateChallenge,
-    { challengeId, challenge },
-    { enabled: isEditMode && isUpdated },
-  );
-  const { error: errorCreateChallenge } = useGQLQuery(
-    mutationCreateChallenge,
-    { challenge },
-    { enabled: !isEditMode && isCreated },
-  );
-
-  useEffect(() => {
-    setIsCreated(false);
-    setIsUpdated(false);
-  }, []);
 
   useEffect(() => {
     if (!isTopicsLoading && exerciseId) {
@@ -178,12 +251,22 @@ export default withAuth(function ExerciseEditor() {
         return;
       }
 
-      const { exercise: pot, topic: foundTopic } = result;
+      const { exercise: pot, topic: foundTopic, content: foundContent } = result;
       const initExp = pot?.initialExpression?.trim()
         ? pot.initialExpression
-        : pot?.steps?.[0]?.expression ?? "";
+        : (pot?.steps?.[0]?.expression ?? "");
 
       setTopic(foundTopic);
+      setContentMeta({
+        id: foundContent.id,
+        code: foundContent.code,
+        description: foundContent.description,
+        label: foundContent.label,
+        kcs: foundContent.kcs ?? [],
+        tags: foundContent.tags ?? [],
+        topics: foundContent.topics ?? [],
+        project: foundContent.project,
+      }); // ✅
       setExerciseJSON(pot);
       setTitle(pot?.title ?? "");
       setText(pot?.text ?? "");
@@ -207,45 +290,80 @@ export default withAuth(function ExerciseEditor() {
   }, [isTopicsLoading, exerciseId]);
 
   const handleSave = () => {
-    const challengeData = {
-      code: `${title.slice(0, 25)}_${Date.now()}`,
-      enabled: true,
-      projectId: 4,
-      tags: [],
-      title,
-    };
-
-    if (!challengeData.title) {
+    if (!title) {
       alert("El título del ejercicio es obligatorio.");
       return;
     }
 
-    setChallenge(challengeData);
-
-    if (isEditMode) {
-      setIsUpdated(true);
-      alert("Ejercicio actualizado exitosamente!");
-    } else {
-      setIsCreated(true);
-      alert("Ejercicio guardado exitosamente");
+    if (!contentMeta.id) {
+      alert("No se pudo determinar el id del contenido a guardar.");
+      return;
     }
 
-    router.push({ pathname: "/" });
+    // ✅ Construye el JSON final del ejercicio con todos los cambios hechos en el editor
+    const updatedExerciseJSON = {
+      ...exerciseJSON,
+      title,
+      text,
+      initialExpression: initialExp,
+      ...(editorGroup === "fac" || editorGroup === "ecu" ? { eqc } : {}),
+      ...(editorGroup === "wp" ? { statement } : {}),
+      ...(editorGroup === "lvltutor" ? { steps, finalAnswer } : {}),
+      ...(editorGroup === "fac" || editorGroup === "ecu" || editorGroup === "logic"
+        ? { steps }
+        : {}),
+      ...(editorGroup === "wp" ? { questions } : {}),
+    };
+
+    setExerciseJSON(updatedExerciseJSON);
+
+    updateContentMutation.mutate(
+      {
+        data: {
+          id: String(contentMeta.id),
+          code: contentMeta.code ?? exerciseJSON?.code ?? "",
+          description: contentMeta.description ?? "",
+          label: contentMeta.label ?? title,
+          kcs: (contentMeta.kcs ?? []).map(kc => String(kc.id)),
+          tags: contentMeta.tags ?? [],
+          topics: (contentMeta.topics ?? []).map(t => String(t.id)),
+          projectId: String(contentMeta.project?.id ?? 4),
+          json: updatedExerciseJSON,
+        },
+      },
+      {
+        onSuccess: () => {
+          saveContentAction({
+            verbName: "AT_SaveContent",
+            extra: {
+              userId,
+              exerciseId: contentMeta.id,
+            },
+          });
+
+          alert(
+            isEditMode ? "Ejercicio actualizado exitosamente!" : "Ejercicio guardado exitosamente",
+          );
+
+          router.push({ pathname: "/" });
+        },
+      },
+    );
   };
 
   const handleCancel = () => router.back();
 
   if (isTopicsLoading || isLoadingExercise || isGetKCsLoading) return <LoadingOverlay />;
   if (!KCsData?.kcs) return <LoadingOverlay />;
-  if (errorUpdateChallenge) return <p className="error-message">Error: {errorUpdateChallenge.message}</p>;
-  if (errorCreateChallenge) return <p className="error-message">Error: {errorCreateChallenge.message}</p>;
 
   if (notFound) {
     return (
       <ChakraProvider value={defaultSystem}>
         <Box p={5} textAlign="center">
           <Heading mb={4}>Ejercicio no encontrado</Heading>
-          <Text mb={4} color="gray.500">No se encontró ningún ejercicio con el id "{exerciseId}".</Text>
+          <Text mb={4} color="gray.500">
+            No se encontró ningún ejercicio con el id &quot;{exerciseId}&quot;.
+          </Text>
           <Button onClick={() => router.back()}>Volver</Button>
         </Box>
       </ChakraProvider>
@@ -280,9 +398,17 @@ export default withAuth(function ExerciseEditor() {
 
         {/* Tipo no soportado */}
         {!editorGroup && (
-          <Box mt={4} mb={6} p={4} border="2px" borderColor="orange.400" borderRadius="md" bg="orange.50">
+          <Box
+            mt={4}
+            mb={6}
+            p={4}
+            border="2px"
+            borderColor="orange.400"
+            borderRadius="md"
+            bg="orange.50"
+          >
             <Text color="orange.700" fontWeight="bold">
-              Editor no disponible para el tipo "{exerciseType}"
+              Editor no disponible para el tipo &quot;{exerciseType}&quot;
             </Text>
             <Text color="orange.600" fontSize="sm" mt={1}>
               Este tipo de ejercicio aún no tiene un componente de edición.
@@ -292,7 +418,9 @@ export default withAuth(function ExerciseEditor() {
 
         {/* ── Encabezado común (todos los tipos) ─────────────────────────── */}
         <Box border="2px" borderColor={formBackgroundColor} borderRadius="lg" p={4} mb={4}>
-          <Heading as="h2" textAlign="center" mb={6}>Encabezado</Heading>
+          <Heading as="h2" textAlign="center" mb={6}>
+            Encabezado
+          </Heading>
 
           <EditButton
             width="full"
@@ -322,17 +450,29 @@ export default withAuth(function ExerciseEditor() {
               <Box bg={formBackgroundColor}>
                 <Field.Root borderRadius="md" p={4}>
                   <Field.Label>Título</Field.Label>
-                  <Input value={titleCopy} onChange={e => setTitleCopy(e.target.value)} placeholder="Título" />
+                  <Input
+                    value={titleCopy}
+                    onChange={e => setTitleCopy(e.target.value)}
+                    placeholder="Título"
+                  />
                 </Field.Root>
                 <Field.Root borderRadius="md" p={4}>
                   <Field.Label>Texto / subtítulo</Field.Label>
-                  <Input value={textCopy} onChange={e => setTextCopy(e.target.value)} placeholder="Texto" />
+                  <Input
+                    value={textCopy}
+                    onChange={e => setTextCopy(e.target.value)}
+                    placeholder="Texto"
+                  />
                 </Field.Root>
                 {/* Expresión inicial solo para tipos que la usan */}
                 {editorGroup !== "wp" && (
                   <Field.Root borderRadius="md" p={4}>
                     <Field.Label>Expresión inicial</Field.Label>
-                    <Input value={initialExpCopy} onChange={e => setInitialExpCopy(e.target.value)} placeholder="Expresión inicial" />
+                    <Input
+                      value={initialExpCopy}
+                      onChange={e => setInitialExpCopy(e.target.value)}
+                      placeholder="Expresión inicial"
+                    />
                   </Field.Root>
                 )}
               </Box>
@@ -407,18 +547,19 @@ export default withAuth(function ExerciseEditor() {
         )}
 
         {/* ── Pasos: lvltutor ────────────────────────────────────────────── */}
-        {editorGroup === "lvltutor" && steps.map((step, i) => (
-          <EditableStep
-            key={i}
-            index={i}
-            stepName={`Paso ${i + 1}`}
-            step={step}
-            setSteps={updated => updateStep(i, updated)}
-            exerciseJSON={exerciseJSON}
-            topic={topic}
-            availableKCs={KCsData.kcs}
-          />
-        ))}
+        {editorGroup === "lvltutor" &&
+          steps.map((step, i) => (
+            <EditableStep
+              key={i}
+              index={i}
+              stepName={`Paso ${i + 1}`}
+              step={step}
+              setSteps={updated => updateStep(i, updated)}
+              exerciseJSON={exerciseJSON}
+              topic={topic}
+              availableKCs={KCsData.kcs}
+            />
+          ))}
         {editorGroup === "lvltutor" && (
           <EditableStep
             key={steps.length}
@@ -433,52 +574,70 @@ export default withAuth(function ExerciseEditor() {
         )}
 
         {/* ── Pasos: fac (fc1s, fcc3s, fdc2s, fdsc2, ftc5s) ─────────────── */}
-        {editorGroup === "fac" && steps.map((step, i) => (
-          <EditableFacStep
-            key={i}
-            index={i}
-            stepName={`Paso ${i + 1}`}
-            step={step}
-            setSteps={updated => updateStep(i, updated)}
-          />
-        ))}
+        {editorGroup === "fac" &&
+          steps.map((step, i) => (
+            <EditableFacStep
+              key={i}
+              index={i}
+              stepName={`Paso ${i + 1}`}
+              step={step}
+              setSteps={updated => updateStep(i, updated)}
+              exerciseType={exerciseType}
+              exerciseCode={code}
+              topicId={topic?.id}
+            />
+          ))}
 
         {/* ── Pasos: ecu (ecl2s, ecc5s, secl5s) ─────────────────────────── */}
-        {editorGroup === "ecu" && steps.map((step, i) => (
-          <EditableEcuStep
-            key={i}
-            index={i}
-            stepName={`Paso ${i + 1}`}
-            step={step}
-            setSteps={updated => updateStep(i, updated)}
-          />
-        ))}
+        {editorGroup === "ecu" &&
+          steps.map((step, i) => (
+            <EditableEcuStep
+              key={i}
+              index={i}
+              stepName={`Paso ${i + 1}`}
+              step={step}
+              setSteps={updated => updateStep(i, updated)}
+              exerciseCode={code}
+              topicId={topic?.id}
+            />
+          ))}
 
         {/* ── Pasos: logic (lvltutor2) ────────────────────────────────────── */}
-        {editorGroup === "logic" && steps.map((step, i) => (
-          <EditableLogicStep
-            key={i}
-            index={i}
-            stepName={`Paso ${i + 1}`}
-            step={step}
-            setSteps={updated => updateStep(i, updated)}
-          />
-        ))}
+        {editorGroup === "logic" &&
+          steps.map((step, i) => (
+            <EditableLogicStep
+              key={i}
+              stepName={`Paso ${i + 1}`}
+              step={step}
+              setSteps={updated => updateStep(i, updated)}
+              exerciseCode={code}
+            />
+          ))}
 
         {/* ── Preguntas: wordProblem ──────────────────────────────────────── */}
-        {editorGroup === "wp" && questions.map((question, i) => (
-          <EditableWPQuestion
-            key={i}
-            questionIndex={i}
-            question={question}
-            setQuestions={updated => updateQuestion(i, updated)}
-          />
-        ))}
+        {editorGroup === "wp" &&
+          questions.map((question, i) => (
+            <EditableWPQuestion
+              key={i}
+              questionIndex={i}
+              question={question}
+              setQuestions={updated => updateQuestion(i, updated)}
+            />
+          ))}
 
         {/* Botones */}
         <Box mt={6} display="flex" justifyContent="space-between">
-          <Button colorPalette="red" onClick={handleCancel}>Cancelar</Button>
-          <Button colorPalette="teal" onClick={handleSave}>Guardar ejercicio</Button>
+          <Button colorPalette="red" onClick={handleCancel}>
+            Cancelar
+          </Button>
+          <Button
+            colorPalette="teal"
+            onClick={handleSave}
+            loading={updateContentMutation.isLoading}
+            disabled={updateContentMutation.isLoading}
+          >
+            Guardar ejercicio
+          </Button>
         </Box>
       </Box>
     </ChakraProvider>

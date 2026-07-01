@@ -40,7 +40,6 @@ export const TCstep4 = ({
     if (correctAlternatives.some(validate)) {
       setStep4Valid((step4Valid = step4.answers[correctAlternatives.findIndex(validate)].nextStep));
       if (!isEditorMode) {
-
         extra.att = attempts;
 
         extra.hints = hints;
@@ -50,7 +49,6 @@ export const TCstep4 = ({
         extra.lastHint = lastHint;
 
         setExtra(extra);
-
       }
     } else {
       if (response1.current.value == "" || response2.current.value == "") {

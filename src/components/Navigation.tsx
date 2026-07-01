@@ -85,13 +85,13 @@ export function Navigation() {
                 Desafíos
               </SidebarLink>
             </Stack>
-                    {user && admin && (
-          <>
-            <SidebarLink icon={<FaPencilAlt/>} href={"/showExercises"}>
-              Edición de Ejercicios
-            </SidebarLink>
-          </>
-        )}
+            {user && admin && (
+              <>
+                <SidebarLink icon={<FaPencilAlt />} href={"/showExercises"}>
+                  Edición de Ejercicios
+                </SidebarLink>
+              </>
+            )}
           </>
         )}
       </Stack>

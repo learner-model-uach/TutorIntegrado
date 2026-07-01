@@ -5,11 +5,11 @@ import dynamic from "next/dynamic";
 import { Box, type BoxProps } from "@chakra-ui/react";
 
 const BaseStaticMathField = dynamic(
-  () => import("react-mathquill").then((mod) => mod.StaticMathField),
+  () => import("react-mathquill").then(mod => mod.StaticMathField),
   {
     ssr: false,
     loading: () => <span aria-hidden="true" />,
-  }
+  },
 );
 
 interface StaticMathFieldProps extends BoxProps {
@@ -21,7 +21,7 @@ export const StaticMathField = ({ latex, ...props }: StaticMathFieldProps) => {
 
   useEffect(() => {
     setIsMounted(true);
-    import("react-mathquill").then((mq) => {
+    import("react-mathquill").then(mq => {
       if (mq.addStyles) mq.addStyles();
     });
   }, []);

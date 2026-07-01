@@ -39,14 +39,14 @@ export default function SearchableSelect({ selectedItems, onChange, availableKCs
           </Tag.Root>
         ))}
       </Flex>
-      
+
       {/* Input de búsqueda */}
       <Input
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
         placeholder="Buscar y seleccionar..."
       />
-      
+
       {/* Lista de opciones filtradas */}
       <List.Root
         maxH="120px" // 40px por item

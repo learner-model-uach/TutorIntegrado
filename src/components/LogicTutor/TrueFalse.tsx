@@ -66,9 +66,19 @@ const TrueFalse = ({
           <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
         </Center>
       </Box>
-      <Stack gap={4} m={2} direction={{ base: "column", sm: "row" }} align="center" justifyContent="center">
-        <Button colorPalette="teal" size="sm" onClick={() => evaluar("V")}>Verdadero</Button>
-        <Button colorPalette="red" size="sm" onClick={() => evaluar("F")}>Falso</Button>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
+        <Button colorPalette="teal" size="sm" onClick={() => evaluar("V")}>
+          Verdadero
+        </Button>
+        <Button colorPalette="red" size="sm" onClick={() => evaluar("F")}>
+          Falso
+        </Button>
         <Hint
           hints={exc.steps[nStep].hints}
           contentId={exc.code}
@@ -87,7 +97,9 @@ const TrueFalse = ({
         <Alert.Root status="error">
           <Alert.Indicator />
           <Alert.Content>
-            <Alert.Description>Tu respuesta no es la esperada, inténtalo de nuevo.</Alert.Description>
+            <Alert.Description>
+              Tu respuesta no es la esperada, inténtalo de nuevo.
+            </Alert.Description>
           </Alert.Content>
         </Alert.Root>
       ) : (

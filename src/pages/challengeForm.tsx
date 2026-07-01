@@ -217,8 +217,7 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
       if (isSelected) {
         const descendantIds = getAllDescendants(item).map(d => d.id);
         return prev.filter(
-          selectedItem =>
-            selectedItem.id !== item.id && !descendantIds.includes(selectedItem.id),
+          selectedItem => selectedItem.id !== item.id && !descendantIds.includes(selectedItem.id),
         );
       } else {
         const uniqueItems = new Set(prev.map(existingItem => existingItem.id));
@@ -259,17 +258,17 @@ const RecursiveAccordion = ({ data, onShowDetails, setSelectedTopics, selectedTo
           <Accordion.ItemTrigger>
             <Box flex="1" textAlign="left">
               <NativeCheckbox
-  checked={isItemSelected(item.id)}
-  onChange={() => {
-    if (item.childrens?.length > 0) {
-      handleParentChange(item);
-    } else {
-      handleChildChange(item.parent, item);
-    }
-  }}
->
-  {item.label}
-</NativeCheckbox>
+                checked={isItemSelected(item.id)}
+                onChange={() => {
+                  if (item.childrens?.length > 0) {
+                    handleParentChange(item);
+                  } else {
+                    handleChildChange(item.parent, item);
+                  }
+                }}
+              >
+                {item.label}
+              </NativeCheckbox>
             </Box>
             {item.childrens?.length > 0 && <Accordion.ItemIndicator />}
           </Accordion.ItemTrigger>
@@ -336,7 +335,8 @@ const MathRecursiveAccordion = ({
   // ✅ MathRecursiveAccordion también tiene su propio Accordion.Root
   return (
     <Accordion.Root multiple collapsible w="100%">
-      {selectedTopics && selectedTopics.length > 0 &&
+      {selectedTopics &&
+        selectedTopics.length > 0 &&
         selectedTopics.map(topic => {
           const exercises = extractExercise([topic]);
           if (!exercises.length) return null;
@@ -351,29 +351,29 @@ const MathRecursiveAccordion = ({
                 {topic.content?.length > 0 && <Accordion.ItemIndicator />}
               </Accordion.ItemTrigger>
               <Accordion.ItemContent>
-<Accordion.ItemBody pb={4}>
-  <Box
-    display="grid"
-    gridTemplateColumns="repeat(auto-fill, minmax(280px, 1fr))"
-    gap={3}
-  >
-    {exercises.map(exercise => (
-      <NativeCheckbox
-        key={`${exercise.exerciseId}-label`}
-        checked={isItemSelected(exercise)}
-        onChange={() => handleItemChange(exercise)}
-        style={{ alignItems: "flex-start" }}
-      >
-        <MathDisplay
-          key={`${exercise.exerciseId}-math`}
-          description={exercise.description}
-          mathExpression={exercise.mathExpression}
-          image={exercise.image}
-        />
-      </NativeCheckbox>
-    ))}
-  </Box>
-</Accordion.ItemBody>
+                <Accordion.ItemBody pb={4}>
+                  <Box
+                    display="grid"
+                    gridTemplateColumns="repeat(auto-fill, minmax(280px, 1fr))"
+                    gap={3}
+                  >
+                    {exercises.map(exercise => (
+                      <NativeCheckbox
+                        key={`${exercise.exerciseId}-label`}
+                        checked={isItemSelected(exercise)}
+                        onChange={() => handleItemChange(exercise)}
+                        style={{ alignItems: "flex-start" }}
+                      >
+                        <MathDisplay
+                          key={`${exercise.exerciseId}-math`}
+                          description={exercise.description}
+                          mathExpression={exercise.mathExpression}
+                          image={exercise.image}
+                        />
+                      </NativeCheckbox>
+                    ))}
+                  </Box>
+                </Accordion.ItemBody>
               </Accordion.ItemContent>
             </Accordion.Item>
           );
@@ -381,7 +381,6 @@ const MathRecursiveAccordion = ({
     </Accordion.Root>
   );
 };
-
 
 //--------------------------------------------------
 
@@ -461,7 +460,8 @@ export default withAuth(function ChallengesForm() {
       setSelectedGroups(challenge.groups || []);
       setSelectedTopics(challenge.topics || []);
       setSelectedExercises(
-        extractExercise([{ content: challenge.content, id: challenge.content[0].topics[0].id }]) || [],
+        extractExercise([{ content: challenge.content, id: challenge.content[0].topics[0].id }]) ||
+          [],
       );
       setStartDate(challenge.startDate !== null ? utcToLocalTime(challenge.startDate) : null);
     }
@@ -502,20 +502,49 @@ export default withAuth(function ChallengesForm() {
     };
 
     const requiredFields = [
-      { field: "code", value: challengeData.code, message: "El código del desafío es obligatorio." },
-      { field: "title", value: challengeData.title, message: "El título del desafío es obligatorio." },
-      { field: "description", value: challengeData.description, message: "La descripción del desafío es obligatoria." },
-      { field: "endDate", value: challengeData.endDate, message: "La fecha de finalización es obligatoria." },
-      { field: "groups", value: challengeData.groupsIds, message: "Debes seleccionar al menos un grupo." },
-      { field: "topics", value: challengeData.topicsIds, message: "Debes seleccionar al menos un tópico." },
-      { field: "content", value: challengeData.contentIds, message: "Debes seleccionar al menos un ejercicio." },
+      {
+        field: "code",
+        value: challengeData.code,
+        message: "El código del desafío es obligatorio.",
+      },
+      {
+        field: "title",
+        value: challengeData.title,
+        message: "El título del desafío es obligatorio.",
+      },
+      {
+        field: "description",
+        value: challengeData.description,
+        message: "La descripción del desafío es obligatoria.",
+      },
+      {
+        field: "endDate",
+        value: challengeData.endDate,
+        message: "La fecha de finalización es obligatoria.",
+      },
+      {
+        field: "groups",
+        value: challengeData.groupsIds,
+        message: "Debes seleccionar al menos un grupo.",
+      },
+      {
+        field: "topics",
+        value: challengeData.topicsIds,
+        message: "Debes seleccionar al menos un tópico.",
+      },
+      {
+        field: "content",
+        value: challengeData.contentIds,
+        message: "Debes seleccionar al menos un ejercicio.",
+      },
     ];
 
-    const missingField = requiredFields.find(field =>
-      field.value === undefined ||
-      field.value === null ||
-      field.value === "" ||
-      (Array.isArray(field.value) && field.value.length === 0),
+    const missingField = requiredFields.find(
+      field =>
+        field.value === undefined ||
+        field.value === null ||
+        field.value === "" ||
+        (Array.isArray(field.value) && field.value.length === 0),
     );
 
     if (missingField) {
@@ -585,7 +614,8 @@ export default withAuth(function ChallengesForm() {
   if (errorUpdateChallenge) {
     return (
       <p className="error-message">
-        Error: {errorUpdateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de desarrollo.
+        Error: {errorUpdateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de
+        desarrollo.
       </p>
     );
   }
@@ -593,7 +623,8 @@ export default withAuth(function ChallengesForm() {
   if (errorCreateChallenge) {
     return (
       <p className="error-message">
-        Error: {errorCreateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de desarrollo.
+        Error: {errorCreateChallenge.message}. Por favor, inténtalo de nuevo o contacta al equipo de
+        desarrollo.
       </p>
     );
   }
@@ -649,12 +680,13 @@ export default withAuth(function ChallengesForm() {
             <Box>
               {groups.map(group => (
                 // ✅ Checkbox nativo también para grupos
-<NativeCheckbox
-  checked={selectedGroups.some(g => g.id === group.id)}
-  onChange={() => handleSelectGroup(group)}
->
-  {group.label}
-</NativeCheckbox>
+                <NativeCheckbox
+                  key={group.id}
+                  checked={selectedGroups.some(g => g.id === group.id)}
+                  onChange={() => handleSelectGroup(group)}
+                >
+                  {group.label}
+                </NativeCheckbox>
               ))}
             </Box>
           </Field.Root>
@@ -683,7 +715,8 @@ export default withAuth(function ChallengesForm() {
             <Field.Label mt={4}>
               Ejercicios iniciales
               <Text as="span" display="block" fontSize="sm" color="gray.500">
-                Selecciona los ejercicios con los que comenzará este desafío, considerando los tópicos seleccionados
+                Selecciona los ejercicios con los que comenzará este desafío, considerando los
+                tópicos seleccionados
               </Text>
             </Field.Label>
             {/* ✅ Sin Accordion.Root externo — MathRecursiveAccordion ya lo incluye */}
@@ -708,7 +741,9 @@ export default withAuth(function ChallengesForm() {
             </Text>
           </Box>
           <Box mt={4}>
-            <Text as="strong" fontWeight="bold">Grupos Seleccionados:</Text>
+            <Text as="strong" fontWeight="bold">
+              Grupos Seleccionados:
+            </Text>
             <ul style={{ paddingLeft: "20px" }}>
               {selectedGroups.map(group => (
                 <li key={group.id}>{group.label}</li>
@@ -721,7 +756,9 @@ export default withAuth(function ChallengesForm() {
             </Text>
           </Box>
           <Box mt={4}>
-            <Text as="strong" fontWeight="bold">Tópicos y subtópicos seleccionados:</Text>
+            <Text as="strong" fontWeight="bold">
+              Tópicos y subtópicos seleccionados:
+            </Text>
             <ul style={{ paddingLeft: "20px" }}>
               {selectedTopics.map((topic, index) => (
                 <li key={index - topic.id}>{topic.label}</li>
@@ -729,7 +766,9 @@ export default withAuth(function ChallengesForm() {
             </ul>
           </Box>
           <Box mt={4}>
-            <Text as="strong" fontWeight="bold">Ejercicios seleccionados:</Text>
+            <Text as="strong" fontWeight="bold">
+              Ejercicios seleccionados:
+            </Text>
             <Box>
               {selectedExercises.map(exercise => (
                 <MathDisplay
@@ -744,15 +783,21 @@ export default withAuth(function ChallengesForm() {
         </Box>
 
         <Box mt={6} display="flex" justifyContent="space-between">
-          <Button colorPalette="red" onClick={handleCancel}>Cancelar</Button>
-          <Button colorPalette="teal" onClick={handleSave}>Guardar desafío</Button>
+          <Button colorPalette="red" onClick={handleCancel}>
+            Cancelar
+          </Button>
+          <Button colorPalette="teal" onClick={handleSave}>
+            Guardar desafío
+          </Button>
         </Box>
       </Box>
 
       <Drawer.Root
         open={isDrawerOpen}
         placement="end"
-        onOpenChange={e => { if (!e.open) setDrawerOpen(false); }}
+        onOpenChange={e => {
+          if (!e.open) setDrawerOpen(false);
+        }}
       >
         <Portal>
           <Drawer.Backdrop />

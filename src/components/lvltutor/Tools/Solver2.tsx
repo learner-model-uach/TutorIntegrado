@@ -2,7 +2,16 @@ import React, { useState, memo, useEffect, useRef } from "react";
 import RatingQuestion from "../../RatingQuestion";
 import { FaHandPointRight } from "react-icons/fa";
 import {
-  Flex, Box, Accordion, Heading, Alert, Text, HStack, VStack, Center, Image,
+  Flex,
+  Box,
+  Accordion,
+  Heading,
+  Alert,
+  Text,
+  HStack,
+  VStack,
+  Center,
+  Image,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { useAction } from "../../../utils/action";
@@ -15,23 +24,39 @@ import ShuffledLoad from "./CChoice";
 const Mq2 = dynamic(() => import("./Mq2"), { ssr: false });
 
 interface value {
-  ans: string; att: number; hints: number;
-  lasthint: boolean; fail: boolean; duration: number;
+  ans: string;
+  att: number;
+  hints: number;
+  lasthint: boolean;
+  fail: boolean;
+  duration: number;
 }
 
 export interface potato {
-  disabled: boolean; hidden: boolean; answer: boolean;
-  value: value; open: boolean;
+  disabled: boolean;
+  hidden: boolean;
+  answer: boolean;
+  value: value;
+  open: boolean;
 }
 
 type AlertStatus = "error" | "info" | "warning" | "success";
 
 interface FeedbackAlertProps {
-  topicId: string; status?: AlertStatus;
-  mqMsg?: string; fallbackMsg?: string; mt?: number;
+  topicId: string;
+  status?: AlertStatus;
+  mqMsg?: string;
+  fallbackMsg?: string;
+  mt?: number;
 }
 
-export const FeedbackAlert = ({ topicId, status = "success", mqMsg, fallbackMsg, mt = 2 }: FeedbackAlertProps) => (
+export const FeedbackAlert = ({
+  topicId,
+  status = "success",
+  mqMsg,
+  fallbackMsg,
+  mt = 2,
+}: FeedbackAlertProps) => (
   <Alert.Root key={`Alert-${topicId}`} status={status} mt={mt}>
     <Alert.Indicator key={`AlertIcon-${topicId}`} />
     <Alert.Content>
@@ -42,10 +67,19 @@ export const FeedbackAlert = ({ topicId, status = "success", mqMsg, fallbackMsg,
 
 // ✅ isEditorMode añadido a Steporans
 export const Steporans = ({
-  step, topicId, content, i, answer, isEditorMode = false,
+  step,
+  topicId,
+  content,
+  i,
+  answer,
+  isEditorMode = false,
 }: {
-  step: Step; topicId: string; content: string;
-  i: number; answer?: string; isEditorMode?: boolean; // ✅
+  step: Step;
+  topicId: string;
+  content: string;
+  i: number;
+  answer?: string;
+  isEditorMode?: boolean; // ✅
 }) => {
   const [currentComponent, setCC] = useState(<></>);
   useEffect(() => {
@@ -53,20 +87,36 @@ export const Steporans = ({
       setCC(
         <>
           <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
-          <FeedbackAlert topicId={topicId + "i"} mqMsg={MQProxy.spaghettimsg}
-            fallbackMsg={step.correctMsg} status="success" />
+          <FeedbackAlert
+            topicId={topicId + "i"}
+            mqMsg={MQProxy.spaghettimsg}
+            fallbackMsg={step.correctMsg}
+            status="success"
+          />
         </>,
       );
     } else {
       if (step.multipleChoice != undefined) {
         setCC(
-          <ShuffledLoad key={"Mq2" + i} step={step} content={content} topicId={topicId} disablehint={false} />,
+          <ShuffledLoad
+            key={"Mq2" + i}
+            step={step}
+            content={content}
+            topicId={topicId}
+            disablehint={false}
+          />,
         );
       } else {
         setCC(
           // ✅ isEditorMode propagado a Mq2
-          <Mq2 key={"Mq2" + i} step={step} content={content}
-            topicId={topicId} disablehint={false} isEditorMode={isEditorMode} />,
+          <Mq2
+            key={"Mq2" + i}
+            step={step}
+            content={content}
+            topicId={topicId}
+            disablehint={false}
+            isEditorMode={isEditorMode}
+          />,
         );
       }
     }
@@ -75,12 +125,24 @@ export const Steporans = ({
   return currentComponent;
 };
 
-export const Header = ({ title, subtitle, img, mathExp }: {
-  title: string; subtitle: string; img?: string; mathExp?: string;
+export const Header = ({
+  title,
+  subtitle,
+  img,
+  mathExp,
+}: {
+  title: string;
+  subtitle: string;
+  img?: string;
+  mathExp?: string;
 }) => (
   <>
-    <Heading as="h1" size="3xl" lineClamp={3} color={"heading"} mb={"1rem"}>{title}</Heading>
-    <Heading as="h5" size="md" mb={"0.5rem"}>{subtitle}</Heading>
+    <Heading as="h1" size="3xl" lineClamp={3} color={"heading"} mb={"1rem"}>
+      {title}
+    </Heading>
+    <Heading as="h5" size="md" mb={"0.5rem"}>
+      {subtitle}
+    </Heading>
     {img ? (
       <Image src={`/img/${img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
     ) : (
@@ -91,10 +153,21 @@ export const Header = ({ title, subtitle, img, mathExp }: {
 
 // ✅ isEditorMode añadido a CustomAccordionItem
 export const CustomAccordionItem = ({
-  index, step, test, stepsCode, topicId, action, setTest, isEditorMode = false,
+  index,
+  step,
+  test,
+  stepsCode,
+  topicId,
+  action,
+  setTest,
+  isEditorMode = false,
 }: {
-  index: number; step: Step; test: Array<potato>;
-  stepsCode: string; topicId: string; action: any;
+  index: number;
+  step: Step;
+  test: Array<potato>;
+  stepsCode: string;
+  topicId: string;
+  action: any;
   setTest: React.Dispatch<React.SetStateAction<Array<potato>>>;
   isEditorMode?: boolean; // ✅
 }) => {
@@ -106,10 +179,20 @@ export const CustomAccordionItem = ({
     const potstate = potstates[stepId];
     if (potstate) {
       if (!potstate.open) {
-        action({ verbName: "openStep", stepID: "" + index, contentID: stepsCode, topicID: topicId });
+        action({
+          verbName: "openStep",
+          stepID: "" + index,
+          contentID: stepsCode,
+          topicID: topicId,
+        });
         potstate.open = true;
       } else {
-        action({ verbName: "closeStep", stepID: "" + index, contentID: stepsCode, topicID: topicId });
+        action({
+          verbName: "closeStep",
+          stepID: "" + index,
+          contentID: stepsCode,
+          topicID: topicId,
+        });
         potstate.open = false;
       }
       potstates[stepId] = potstate;
@@ -122,14 +205,22 @@ export const CustomAccordionItem = ({
   const isDone = Boolean(test[idx]?.answer);
 
   return (
-    <Accordion.Item key={`AccordionItem${index}`} value={String(step.stepId)}
-      disabled={Boolean(stepData?.disabled)} hidden={Boolean(stepData?.hidden)}>
+    <Accordion.Item
+      key={`AccordionItem${index}`}
+      value={String(step.stepId)}
+      disabled={Boolean(stepData?.disabled)}
+      hidden={Boolean(stepData?.hidden)}
+    >
       <h2 key={"AIh2" + index}>
         <Alert.Root status={stepData?.answer ? "success" : "info"}>
           <Alert.Content>
             <Accordion.ItemTrigger onClick={handleAccordionClick}>
-              <Box pr={3}><FaHandPointRight /></Box>
-              <Box flex="1" textAlign="left">{step.stepTitle}</Box>
+              <Box pr={3}>
+                <FaHandPointRight />
+              </Box>
+              <Box flex="1" textAlign="left">
+                {step.stepTitle}
+              </Box>
               <Accordion.ItemIndicator />
             </Accordion.ItemTrigger>
           </Alert.Content>
@@ -140,16 +231,22 @@ export const CustomAccordionItem = ({
           {isOpen && !isDone && step.expression && step.multipleChoice != undefined ? (
             <Center>
               <Box mb="3" overflow="visible">
-                <MQStaticMathField key={`mq-enunciado-${step.stepId}-open`}
-                  exp={step.expression} currentExpIndex={true} />
+                <MQStaticMathField
+                  key={`mq-enunciado-${step.stepId}-open`}
+                  exp={step.expression}
+                  currentExpIndex={true}
+                />
               </Box>
             </Center>
           ) : null}
           {/* ✅ isEditorMode propagado a Steporans */}
           <Steporans
             key={`Steporans-${step.stepId}-${isOpen ? "open" : "closed"}`}
-            step={step} topicId={topicId} content={stepsCode}
-            i={index} answer={stepData?.value?.ans}
+            step={step}
+            topicId={topicId}
+            content={stepsCode}
+            i={index}
+            answer={stepData?.value?.ans}
             isEditorMode={isEditorMode} // ✅
           />
         </Accordion.ItemBody>
@@ -159,45 +256,75 @@ export const CustomAccordionItem = ({
 };
 
 export const SummaryStep = ({
-  summary, displayResult, currentExpIndex, stepIndex,
+  summary,
+  displayResult,
+  currentExpIndex,
+  stepIndex,
 }: {
-  summary?: string; displayResult?: string[];
-  currentExpIndex: boolean; stepIndex: number;
+  summary?: string;
+  displayResult?: string[];
+  currentExpIndex: boolean;
+  stepIndex: number;
 }) => {
   if (!summary && (!displayResult || displayResult.length === 0)) return null;
   return (
     <Box key={"ResumenBox" + stepIndex}>
-      {summary && <Text key={"ResumenText" + stepIndex} w="100%" justifyContent={"space-between"}>{summary}</Text>}
+      {summary && (
+        <Text key={"ResumenText" + stepIndex} w="100%" justifyContent={"space-between"}>
+          {summary}
+        </Text>
+      )}
       {displayResult?.[0] && (
         <Box key={"ResumenMCContainer" + stepIndex} display="flex" justifyContent="center">
-          <MQStaticMathField key={"ResumenMC" + stepIndex} exp={displayResult[0]} currentExpIndex={currentExpIndex} />
+          <MQStaticMathField
+            key={"ResumenMC" + stepIndex}
+            exp={displayResult[0]}
+            currentExpIndex={currentExpIndex}
+          />
         </Box>
       )}
     </Box>
   );
 };
 
-export const Summary = ({ initialExp, steps, resumen }: {
-  initialExp: string; steps: ExType; resumen: boolean;
+export const Summary = ({
+  initialExp,
+  steps,
+  resumen,
+}: {
+  initialExp: string;
+  steps: ExType;
+  resumen: boolean;
 }) => (
   <VStack w="100%" align="start">
-    <Center><Heading fontSize="xl">Resumen</Heading></Center>
+    <Center>
+      <Heading fontSize="xl">Resumen</Heading>
+    </Center>
     <HStack>
       <Text>Expresión:</Text>
       <MQStaticMathField exp={initialExp || ""} currentExpIndex={!resumen} />
     </HStack>
     {steps.steps.map((step, i) => (
-      <SummaryStep key={`step-${i}`} summary={step.summary}
-        displayResult={step.displayResult} currentExpIndex={!resumen} stepIndex={i} />
+      <SummaryStep
+        key={`step-${i}`}
+        summary={step.summary}
+        displayResult={step.displayResult}
+        currentExpIndex={!resumen}
+        stepIndex={i}
+      />
     ))}
   </VStack>
 );
 
 // ✅ isEditorMode en Solver2
 const Solver2 = ({
-  topicId, steps, isEditorMode = false,
+  topicId,
+  steps,
+  isEditorMode = false,
 }: {
-  topicId: string; steps: ExType; isEditorMode?: boolean; // ✅
+  topicId: string;
+  steps: ExType;
+  isEditorMode?: boolean; // ✅
 }) => {
   const mqSnap = useSnapshot(MQProxy);
   const _action = useAction();
@@ -225,7 +352,9 @@ const Solver2 = ({
     const cantidadDePasos = steps.steps.length;
     setStepsCount(cantidadDePasos);
     const firstState: potato = {
-      disabled: false, hidden: false, answer: false,
+      disabled: false,
+      hidden: false,
+      answer: false,
       value: { ans: "", att: 0, hints: 0, lasthint: false, fail: false, duration: 0 },
       open: true,
     };
@@ -233,7 +362,8 @@ const Solver2 = ({
     for (let i = 1; i < cantidadDePasos; i++) {
       potatoStates.push({
         disabled: isEditorMode ? false : true, // ✅ en editor todos los pasos abiertos
-        hidden: false, answer: false,
+        hidden: false,
+        answer: false,
         value: { ans: "", att: 0, hints: 0, lasthint: false, fail: false, duration: 0 },
         open: true,
       });
@@ -262,11 +392,17 @@ const Solver2 = ({
         sv.duration = duration;
         MQProxy.startDate = Date.now();
         currentStepValue[mqSnap.defaultIndex[0]] = {
-          disabled: false, hidden: false, answer: true, value: sv, open: false,
+          disabled: false,
+          hidden: false,
+          answer: true,
+          value: sv,
+          open: false,
         };
         if (mqSnap.defaultIndex[1]! < stepsCount) {
           currentStepValue[mqSnap.defaultIndex[1]] = {
-            disabled: false, hidden: false, answer: false,
+            disabled: false,
+            hidden: false,
+            answer: false,
             value: { ans: "", att: 0, hints: 0, lasthint: false, fail: false, duration: 0 },
             open: true,
           };
@@ -278,8 +414,10 @@ const Solver2 = ({
             completecontent.push(value.value);
           }
           action({
-            verbName: "completeContent", result: 1,
-            contentID: steps?.code, topicID: topicId,
+            verbName: "completeContent",
+            result: 1,
+            contentID: steps?.code,
+            topicID: topicId,
             extra: { steps: Object.assign({}, completecontent) },
           });
           setResumen(false);
@@ -294,10 +432,22 @@ const Solver2 = ({
 
   return (
     <Flex key={steps.code} alignItems="center" justifyContent="center" margin={"auto"}>
-      <Flex direction="column" p={1} rounded={6} w="100%" maxW="3xl"
-        alignItems="center" justifyContent="center" margin={"auto"}>
+      <Flex
+        direction="column"
+        p={1}
+        rounded={6}
+        w="100%"
+        maxW="3xl"
+        alignItems="center"
+        justifyContent="center"
+        margin={"auto"}
+      >
         <Header title={steps.title} subtitle={steps.text} img={steps?.img} mathExp={initialExp} />
-        <Accordion.Root variant={"plain"} mt={"1rem"} multiple collapsible
+        <Accordion.Root
+          variant={"plain"}
+          mt={"1rem"}
+          multiple
+          collapsible
           value={Array.isArray(MQProxy.defaultIndex) ? MQProxy.defaultIndex.map(String) : []}
           onValueChange={({ value }) => {
             MQProxy.defaultIndex = (value ?? []).map(v => Number(v));
@@ -306,9 +456,15 @@ const Solver2 = ({
           {steps.steps.map((step, i) => (
             // ✅ isEditorMode propagado a CustomAccordionItem
             <CustomAccordionItem
-              key={`AccordionItem-${i}`} index={i} step={step} test={test}
-              stepsCode={steps.code} topicId={topicId} action={action}
-              setTest={setTest} isEditorMode={isEditorMode} // ✅
+              key={`AccordionItem-${i}`}
+              index={i}
+              step={step}
+              test={test}
+              stepsCode={steps.code}
+              topicId={topicId}
+              action={action}
+              setTest={setTest}
+              isEditorMode={isEditorMode} // ✅
             />
           ))}
         </Accordion.Root>
