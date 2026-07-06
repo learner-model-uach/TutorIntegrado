@@ -16,8 +16,6 @@ import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
 import { isWrapper } from "../../../utils/auth0Platform";
-import { useAuth } from "../../Auth";
-import { gSelect } from "../../GroupSelect";
 
 addStyles();
 
@@ -121,16 +119,16 @@ const Mq2 = ({
   content,
   topicId,
   disablehint,
+  canUseCamera = false,
 }: {
   step: Step;
   content: string;
   topicId: string;
   disablehint: boolean;
+  canUseCamera?: boolean;
 }) => {
   const mqSnap = useSnapshot(MQProxy);
   const action = useAction();
-  const { user, isLoading } = useAuth();
-  const groupSelection = useSnapshot(gSelect);
 
   let entero = parseInt(step.stepId);
 
@@ -146,24 +144,9 @@ const Mq2 = ({
   >();
   const [alertMsg, setAlertMsg] = useState("");
   const [alertHidden, setAlertHidden] = useState(true);
-  const [showCameraButton, setShowCameraButton] = useState(false);
 
   const result = useRef(false);
   const capturedPhotoRef = useRef<Photo | null>(null);
-
-  useEffect(() => {
-    const CAMERA_TAG = "hw-photo";
-
-    if (isLoading || !user) {
-      setShowCameraButton(false);
-      return;
-    }
-
-    const userHasCameraTag = user.tags?.includes(CAMERA_TAG) ?? false;
-    const activeGroupHasCameraTag = groupSelection.group?.tags?.includes(CAMERA_TAG) ?? false;
-
-    setShowCameraButton(isWrapper() && (userHasCameraTag || activeGroupHasCameraTag));
-  }, [isLoading, user, groupSelection.group]);
 
   //la siguiente funcion maneja la respuesta ingresada, la respuesta se compara con el valor correspondiente almacenado en el ejercicio.json
   //Ademas, se manejan los componentes de alerta utilizado en el componente padre(solver2) y el componente hijo(Mq2)
@@ -485,7 +468,7 @@ const Mq2 = ({
             >
               R
             </Button>
-            {showCameraButton && (
+            {canUseCamera && (
               <Button
                 aria-label="Tomar foto de la respuesta"
                 colorPalette="teal"

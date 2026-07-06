@@ -76,12 +76,14 @@ const Steporans = ({
   content,
   i,
   answer,
+  canUseCamera,
 }: {
   step: Step;
   topicId: string;
   content: string;
   i: number;
   answer?: string;
+  canUseCamera?: boolean;
 }) => {
   const [currentComponent, setCC] = useState(<></>);
   useEffect(() => {
@@ -118,15 +120,24 @@ const Steporans = ({
             content={content}
             topicId={topicId}
             disablehint={false}
+            canUseCamera={canUseCamera}
           />,
         );
     }
-  }, [answer, step, content, topicId, i]);
+  }, [answer, step, content, topicId, i, canUseCamera]);
 
   return currentComponent;
 };
 
-const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
+const Solver2 = ({
+  topicId,
+  steps,
+  canUseCamera = false,
+}: {
+  topicId: string;
+  steps: ExType;
+  canUseCamera?: boolean;
+}) => {
   const mqSnap = useSnapshot(MQProxy);
 
   const action = useAction();
@@ -434,6 +445,7 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
                           content={steps.code}
                           i={i}
                           answer={test[parseInt(step.stepId)]?.value?.ans}
+                          canUseCamera={canUseCamera}
                         />
                       </>
                     );
