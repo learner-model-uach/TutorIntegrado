@@ -20,8 +20,5 @@ export function getNativeRedirectUri() {
 }
 
 export function getAuth0ClientId() {
-  const webClientId = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!;
-  const nativeClientId = process.env.NEXT_PUBLIC_AUTH0_NATIVE_CLIENT_ID || webClientId;
-
-  return isWrapper() ? nativeClientId : webClientId;
+  return process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!;
 }
