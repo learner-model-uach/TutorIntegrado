@@ -16,6 +16,10 @@ import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
 import { isWrapper } from "../../../utils/auth0Platform";
+import {
+  requestMathpixImage,
+  type NormalizedMathpixResponse,
+} from "../../whiteboard/mathpixClient";
 
 addStyles();
 
@@ -144,6 +148,7 @@ const Mq2 = ({
   >();
   const [alertMsg, setAlertMsg] = useState("");
   const [alertHidden, setAlertHidden] = useState(true);
+  const [isCameraProcessing, setIsCameraProcessing] = useState(false);
 
   const result = useRef(false);
   const capturedPhotoRef = useRef<Photo | null>(null);
@@ -261,23 +266,99 @@ const Mq2 = ({
     if (ta != undefined) setLatex("");
   };
 
+  const getRecognizedLatex = (mathpixResponse: NormalizedMathpixResponse) => {
+    const lastExpression = mathpixResponse.expressions?.[mathpixResponse.expressions.length - 1];
+    return (
+      lastExpression ||
+      mathpixResponse.text ||
+      mathpixResponse.latex_styled ||
+      mathpixResponse.latex ||
+      ""
+    ).trim();
+  };
+
+  const writeRecognizedLatex = (recognizedLatex: string) => {
+    setPlaceholder(false);
+    setLatex(recognizedLatex);
+    ta?.latex(recognizedLatex);
+  };
+
   const openCameraCapture = async () => {
-    if (!isWrapper()) return;
+    if (!isWrapper() || isCameraProcessing) return;
 
     try {
+      setIsCameraProcessing(true);
+      setAlertHidden(true);
       capturedPhotoRef.current = await Camera.getPhoto({
         allowEditing: false,
         correctOrientation: true,
         quality: 85,
-        resultType: CameraResultType.Uri,
+        resultType: CameraResultType.DataUrl,
         saveToGallery: false,
         source: CameraSource.Camera,
+      });
+
+      const photoSrc =
+        capturedPhotoRef.current.dataUrl ||
+        (capturedPhotoRef.current.base64String
+          ? `data:image/${capturedPhotoRef.current.format || "jpeg"};base64,${
+              capturedPhotoRef.current.base64String
+            }`
+          : "");
+
+      if (!photoSrc) {
+        throw new Error("No se pudo obtener la imagen capturada.");
+      }
+
+      const mathpixResponse = await requestMathpixImage({
+        src: photoSrc,
+        formats: ["latex_styled"],
+      });
+      const recognizedLatex = getRecognizedLatex(mathpixResponse);
+
+      if (!recognizedLatex) {
+        throw new Error("Mathpix no devolvio una expresion reconocible.");
+      }
+
+      writeRecognizedLatex(recognizedLatex);
+      action({
+        verbName: "mathpixPhotoRequest",
+        stepID: "" + step.stepId,
+        contentID: content,
+        topicID: topicId,
+        result: 1,
+        kcsIDs: step.KCs,
+        extra: {
+          response: [recognizedLatex],
+          attempts: attempts,
+          hints: mqSnap.hints,
+          mathpixResponse,
+        },
       });
     } catch (error) {
       const message = error instanceof Error ? error.message.toLowerCase() : "";
       if (message.includes("cancel")) return;
 
       console.error("[Mq2] No se pudo abrir la camara:", error);
+      setAlertType("error");
+      setAlertMsg("No se pudo reconocer la expresion desde la foto.");
+      setAlertHidden(false);
+      action({
+        verbName: "mathpixPhotoRequest",
+        stepID: "" + step.stepId,
+        contentID: content,
+        topicID: topicId,
+        result: 0,
+        kcsIDs: step.KCs,
+        extra: {
+          response: [latex],
+          attempts: attempts,
+          hints: mqSnap.hints,
+          error: error instanceof Error ? error.message : "Error desconocido.",
+        },
+      });
+    } finally {
+      setIsCameraProcessing(false);
     }
   };
 
@@ -478,6 +559,7 @@ const Mq2 = ({
                 onClick={() => {
                   void openCameraCapture();
                 }}
+                loading={isCameraProcessing}
                 size="xs"
               >
                 <FaCamera />
