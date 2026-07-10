@@ -14,6 +14,453 @@
   vertical-align: middle !important;
 }
 
+.factorization-summary,
+.factorization-summary *,
+.lvltutor-summary,
+.lvltutor-summary *,
+.logic-summary,
+.logic-summary * {
+  box-sizing: border-box;
+}
+
+.factorization-summary .MathJax,
+.factorization-summary .MathJax_Display,
+.factorization-summary mjx-container,
+.lvltutor-summary .mq-math-mode,
+.lvltutor-summary .mq-root-block,
+.logic-summary .katex,
+.logic-summary .katex-display {
+  max-width: 100%;
+}
+
+.factorization-summary .MathJax_Display,
+.factorization-summary mjx-container,
+.lvltutor-summary .mq-math-mode {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.logic-summary .katex-display {
+  margin: 0.45rem 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.logic-summary .katex-display > .katex {
+  font-size: 0.95em;
+}
+
+.logic-summary-text {
+  text-align: left;
+  max-width: 100%;
+}
+
+.logic-summary-text .katex {
+  white-space: normal;
+}
+
+.safe-math-field {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  vertical-align: middle;
+}
+
+.safe-math-field::part(container) {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.safe-math-field::part(content) {
+  min-width: max-content;
+}
+
+.safe-math-field::part(menu-toggle) {
+  display: none;
+}
+
+.safe-math-field::part(virtual-keyboard-toggle) {
+  color: #9fd8ff;
+  min-width: 2.25rem;
+}
+
+.safe-math-field::part(prompt) {
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(94, 234, 212, 0.65);
+  background: rgba(94, 234, 212, 0.08);
+}
+
+:root,
+html.light,
+.chakra-theme.light {
+  --mathlive-field-surface: rgba(248, 250, 252, 0.9);
+  --mathlive-field-border: rgba(37, 99, 235, 0.24);
+  --mathlive-field-content: #0f172a;
+  --mathlive-field-prompt-bg: rgba(219, 234, 254, 0.86);
+  --mathlive-field-prompt-border: rgba(37, 99, 235, 0.7);
+  --mathlive-field-prompt-shadow: rgba(30, 64, 175, 0.16);
+  --mathlive-field-toggle-bg: rgba(226, 232, 240, 0.95);
+  --mathlive-field-toggle-bg-active: rgba(203, 213, 225, 0.98);
+  --mathlive-field-toggle-border: rgba(37, 99, 235, 0.42);
+  --mathlive-field-toggle-color: #1d4ed8;
+  --mathlive-selection-bg: rgba(37, 99, 235, 0.2);
+  --mathlive-selection-color: #0f172a;
+  --mathlive-keyboard-bg: #e2e8f0;
+  --mathlive-keyboard-border: rgba(148, 163, 184, 0.7);
+  --mathlive-keycap-bg: #f8fafc;
+  --mathlive-keycap-bg-hover: #eff6ff;
+  --mathlive-keycap-bg-active: #dbeafe;
+  --mathlive-keycap-border: rgba(148, 163, 184, 0.75);
+  --mathlive-keycap-text: #0f172a;
+  --mathlive-keycap-primary-bg: #2563eb;
+  --mathlive-keycap-primary-text: #ffffff;
+  --mathlive-keycap-secondary-bg: #cbd5e1;
+  --mathlive-keycap-secondary-text: #0f172a;
+  --mathlive-keyboard-toolbar-bg: #dbeafe;
+  --mathlive-keyboard-toolbar-text: #1d4ed8;
+}
+
+html.dark,
+.chakra-theme.dark {
+  --mathlive-field-surface: rgba(22, 30, 42, 0.58);
+  --mathlive-field-border: rgba(170, 194, 224, 0.24);
+  --mathlive-field-content: #f8fafc;
+  --mathlive-field-prompt-bg: rgba(15, 23, 42, 0.72);
+  --mathlive-field-prompt-border: rgba(191, 219, 254, 0.72);
+  --mathlive-field-prompt-shadow: rgba(0, 0, 0, 0.24);
+  --mathlive-field-toggle-bg: rgba(15, 23, 42, 0.44);
+  --mathlive-field-toggle-bg-active: rgba(15, 23, 42, 0.68);
+  --mathlive-field-toggle-border: rgba(147, 197, 253, 0.55);
+  --mathlive-field-toggle-color: #9fd8ff;
+  --mathlive-selection-bg: rgba(45, 212, 191, 0.22);
+  --mathlive-selection-color: #f8fafc;
+  --mathlive-keyboard-bg: #1e293b;
+  --mathlive-keyboard-border: rgba(71, 85, 105, 0.9);
+  --mathlive-keycap-bg: #f8fafc;
+  --mathlive-keycap-bg-hover: #e2e8f0;
+  --mathlive-keycap-bg-active: #cbd5e1;
+  --mathlive-keycap-border: rgba(15, 23, 42, 0.25);
+  --mathlive-keycap-text: #0f172a;
+  --mathlive-keycap-primary-bg: #0f766e;
+  --mathlive-keycap-primary-text: #ffffff;
+  --mathlive-keycap-secondary-bg: #94a3b8;
+  --mathlive-keycap-secondary-text: #0f172a;
+  --mathlive-keyboard-toolbar-bg: #0f172a;
+  --mathlive-keyboard-toolbar-text: #e0f2fe;
+}
+
+.word-problem-math-field {
+  --selection-background-color: var(--mathlive-selection-bg);
+  --selection-color: var(--mathlive-selection-color);
+  color: var(--mathlive-field-content);
+  font-size: clamp(20px, 4.4vw, 25px);
+  line-height: 1.35;
+}
+
+.word-problem-math-field-long {
+  font-size: clamp(17px, 3.7vw, 21px);
+}
+
+.word-problem-math-field::part(container) {
+  align-items: center;
+  background: var(--mathlive-field-surface);
+  border: 1px solid var(--mathlive-field-border);
+  border-radius: 8px;
+  min-height: 68px;
+  padding: 0.55rem 0.45rem;
+}
+
+.word-problem-math-field::part(content) {
+  padding: 0.5rem 0.25rem;
+}
+
+.word-problem-math-field::part(prompt) {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: inherit;
+  overflow: visible;
+  padding: 0;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.word-problem-math-field::part(virtual-keyboard-toggle) {
+  display: none;
+}
+
+.word-problem-keyboard-toggle {
+  align-items: center;
+  align-self: center;
+  background: var(--mathlive-field-toggle-bg);
+  border: 1px solid var(--mathlive-field-toggle-border);
+  border-radius: 6px;
+  color: var(--mathlive-field-toggle-color);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.15rem;
+  height: 2.4rem;
+  justify-content: center;
+  line-height: 1;
+  position: static;
+  transform: none;
+  width: 2.6rem;
+  z-index: 1;
+}
+
+.word-problem-keyboard-toggle:active {
+  background: var(--mathlive-field-toggle-bg-active);
+}
+
+body.word-problem-keyboard-active > .ML__keyboard,
+body.logic-keyboard-active > .ML__keyboard {
+  --keyboard-background: var(--mathlive-keyboard-bg);
+  --keyboard-border: 1px solid var(--mathlive-keyboard-border);
+  --keyboard-toolbar-background: var(--mathlive-keyboard-toolbar-bg);
+  --keyboard-toolbar-background-hover: var(--mathlive-keycap-bg-hover);
+  --keyboard-toolbar-background-selected: var(--mathlive-keycap-bg-active);
+  --keyboard-toolbar-text: var(--mathlive-keyboard-toolbar-text);
+  --keyboard-toolbar-text-active: var(--mathlive-keycap-text);
+  --keycap-background: var(--mathlive-keycap-bg);
+  --keycap-background-hover: var(--mathlive-keycap-bg-hover);
+  --keycap-background-active: var(--mathlive-keycap-bg-active);
+  --keycap-background-pressed: var(--mathlive-keycap-bg-active);
+  --keycap-border: 1px solid var(--mathlive-keycap-border);
+  --keycap-border-bottom: 2px solid var(--mathlive-keycap-border);
+  --keycap-primary-background: var(--mathlive-keycap-primary-bg);
+  --keycap-primary-background-hover: var(--mathlive-keycap-primary-bg);
+  --keycap-primary-text: var(--mathlive-keycap-primary-text);
+  --keycap-secondary-background: var(--mathlive-keycap-secondary-bg);
+  --keycap-secondary-background-hover: var(--mathlive-keycap-bg-active);
+  --keycap-secondary-text: var(--mathlive-keycap-secondary-text);
+  --keycap-text: var(--mathlive-keycap-text);
+  --keycap-text-active: var(--mathlive-keycap-text);
+  --keycap-text-hover: var(--mathlive-keycap-text);
+  --keycap-text-pressed: var(--mathlive-keycap-text);
+}
+
+body.word-problem-keyboard-active > .ML__keyboard {
+  --keycap-font-size: clamp(18px, 4.8vw, 26px);
+  --keycap-gap: 7px;
+  --keycap-height: 64px;
+  --keyboard-toolbar-font-size: 150%;
+}
+
+.logic-math-field {
+  --selection-background-color: var(--mathlive-selection-bg);
+  --selection-color: var(--mathlive-selection-color);
+  color: var(--mathlive-field-content);
+  font-size: clamp(17px, 4.2vw, 22px);
+}
+
+.logic-math-field::part(container) {
+  align-items: center;
+  background: var(--mathlive-field-surface);
+  border: 1px solid var(--mathlive-field-border);
+  border-radius: 8px;
+  min-height: 68px;
+  padding: 0.9rem 0.8rem;
+}
+
+.logic-math-field::part(content) {
+  padding: 0.45rem 0.35rem;
+}
+
+.logic-math-field::part(prompt) {
+  align-items: center;
+  background: var(--mathlive-field-prompt-bg);
+  border: 1px solid var(--mathlive-field-prompt-border);
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 1px 6px var(--mathlive-field-prompt-shadow);
+  color: var(--mathlive-field-content);
+  display: inline-flex;
+  justify-content: center;
+  line-height: 1;
+  margin: 0 0.12em;
+  min-height: 1.95em;
+  min-width: 3.65em;
+  overflow: visible;
+  padding: 0.24em 0.56em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.logic-math-field::part(virtual-keyboard-toggle) {
+  display: none;
+}
+
+.logic-keyboard-toggle {
+  align-items: center;
+  background: var(--mathlive-field-toggle-bg);
+  border: 1px solid var(--mathlive-field-toggle-border);
+  border-radius: 6px;
+  color: var(--mathlive-field-toggle-color);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.1rem;
+  height: 2.25rem;
+  justify-content: center;
+  line-height: 1;
+  position: absolute;
+  right: 0.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.45rem;
+  z-index: 1;
+}
+
+.logic-keyboard-toggle:active {
+  background: var(--mathlive-field-toggle-bg-active);
+}
+
+body.logic-keyboard-active > .ML__keyboard {
+  --keycap-font-size: clamp(18px, 4.8vw, 26px);
+  --keycap-gap: 7px;
+  --keycap-height: 64px;
+  --keyboard-toolbar-font-size: 150%;
+}
+
+@media (max-width: 640px) {
+  .logic-summary .katex-display > .katex {
+    font-size: 0.82em;
+  }
+
+  .lvltutor-choice-root,
+  .lvltutor-choice-list {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .lvltutor-choice-control {
+    align-items: flex-start;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    min-height: 5rem;
+    min-width: 0 !important;
+    padding: 0.9rem 0.85rem;
+    width: 100%;
+  }
+
+  .lvltutor-choice-indicator {
+    flex: 0 0 auto;
+    margin-top: 0.25rem;
+  }
+
+  .lvltutor-choice-label {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .lvltutor-choice-label > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .lvltutor-choice-content,
+  .lvltutor-choice-text {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .lvltutor-choice-content {
+    align-items: flex-start !important;
+  }
+
+  .lvltutor-choice-text {
+    display: block;
+    font-size: clamp(1rem, 4.45vw, 1.35rem);
+    line-height: 1.35;
+    overflow-wrap: break-word;
+    text-align: left;
+    white-space: normal !important;
+    word-break: normal;
+  }
+
+  body.word-problem-keyboard-active .app-scroll-container,
+  body.logic-keyboard-active .app-scroll-container {
+    padding-bottom: calc(
+      var(--mathlive-keyboard-height, 45vh) + env(safe-area-inset-bottom, 0px) + 1rem
+    ) !important;
+    scroll-padding-bottom: calc(
+      var(--mathlive-keyboard-height, 45vh) + env(safe-area-inset-bottom, 0px) + 1rem
+    );
+  }
+
+  .word-problem-math-editor {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .word-problem-math-field {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  .word-problem-math-field-long {
+    font-size: clamp(16px, 4.35vw, 19px);
+  }
+
+  .word-problem-math-field::part(container) {
+    min-height: 74px;
+    padding: 0.65rem 0.35rem;
+  }
+
+  .word-problem-math-field::part(virtual-keyboard-toggle) {
+    display: none;
+  }
+
+  .word-problem-keyboard-toggle {
+    font-size: 1.22rem;
+    height: 2.65rem;
+    justify-self: end;
+    width: 2.75rem;
+  }
+
+  body.word-problem-keyboard-active > .ML__keyboard {
+    --keycap-font-size: clamp(19px, 5.6vw, 27px);
+    --keycap-gap: 5px;
+    --keycap-height: 62px;
+  }
+
+  .logic-math-field {
+    font-size: 20px;
+  }
+
+  .logic-math-field::part(container) {
+    min-height: 74px;
+    padding: 1rem 0.7rem;
+  }
+
+  .logic-math-field::part(virtual-keyboard-toggle) {
+    display: none;
+  }
+
+  .logic-keyboard-toggle {
+    font-size: 1.18rem;
+    height: 2.5rem;
+    right: 0.5rem;
+    width: 2.6rem;
+  }
+
+  body.logic-keyboard-active > .ML__keyboard {
+    --keycap-font-size: clamp(19px, 5.6vw, 27px);
+    --keycap-gap: 5px;
+    --keycap-height: 62px;
+  }
+}
+
 .chakra-theme.light {
   --colors-bg: #2b4264; /* indigo.900 */
   --colors-bg-secondary: #ffffff; /* white */

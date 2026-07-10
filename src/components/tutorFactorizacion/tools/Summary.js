@@ -1,260 +1,208 @@
 import React from "react";
-import { Alert, Wrap, Heading, Spacer, Text, Box } from "@chakra-ui/react";
+import { Alert, Box, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { MathComponent } from "../../MathJax";
 import RatingQuestion from "../../RatingQuestion";
 
-export const FCsummary = ({ exercise }) => {
-  return (
-    <Box>
-      <Alert.Root status="info">
-        <Wrap>
+const texValue = value => String.raw`${value ?? ""}`;
+
+const SummaryText = ({ children, ...props }) => (
+  <Text
+    w="100%"
+    maxW="100%"
+    minW={0}
+    lineHeight="1.6"
+    whiteSpace="normal"
+    overflowWrap="anywhere"
+    wordBreak="normal"
+    {...props}
+  >
+    {children}
+  </Text>
+);
+
+const MathLine = ({ tex }) => (
+  <Box w="100%" maxW="100%" minW={0} overflowX="auto" overflowY="hidden" py="1">
+    <Box w="max-content" mx="auto">
+      <MathComponent tex={texValue(tex)} display={false} />
+    </Box>
+  </Box>
+);
+
+const LabeledMathLine = ({ label, tex }) => (
+  <Box w="100%" maxW="100%" minW={0}>
+    <SummaryText fontWeight="semibold">{label}</SummaryText>
+    <MathLine tex={tex} />
+  </Box>
+);
+
+const FormGrid = ({ children }) => (
+  <SimpleGrid columns={{ base: 1, md: 2 }} gap="3" w="100%" maxW="100%" minW={0}>
+    {children}
+  </SimpleGrid>
+);
+
+const SummaryShell = ({ children }) => (
+  <Box w="100%" maxW="100%" minW={0}>
+    <Alert.Root
+      status="info"
+      alignItems="stretch"
+      w="100%"
+      maxW="100%"
+      minW={0}
+      overflow="hidden"
+      px={{ base: "4", md: "5" }}
+      py="4"
+      className="factorization-summary"
+    >
+      <Alert.Content w="100%" maxW="100%" minW={0}>
+        <VStack align="stretch" gap="3" w="100%" maxW="100%" minW={0}>
           <Heading w="100%" fontSize="xl" textAlign="center">
             Resumen
           </Heading>
-          <Text w="100%" />
-          &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent tex={String.raw`${exercise.expression}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{exercise.summary}</Text>
-          <MathComponent
-            tex={String.raw`(${exercise.answers[0].answer})${exercise.displayResult}`}
-            display={false}
-          />
-        </Wrap>
-      </Alert.Root>
-      <RatingQuestion />
-    </Box>
+          {children}
+        </VStack>
+      </Alert.Content>
+    </Alert.Root>
+    <RatingQuestion />
+  </Box>
+);
+
+const ExpressionLine = ({ tex }) => (
+  <Box w="100%" maxW="100%" minW={0}>
+    <SummaryText fontWeight="semibold">{"Expresi\u00f3n:"}</SummaryText>
+    <MathLine tex={tex} />
+  </Box>
+);
+
+export const FCsummary = ({ exercise }) => {
+  return (
+    <SummaryShell>
+      <ExpressionLine tex={exercise.expression} />
+      <SummaryText>{exercise.summary}</SummaryText>
+      <MathLine tex={`(${exercise.answers[0].answer})${exercise.displayResult}`} />
+    </SummaryShell>
   );
 };
 
 export const FCCsummary = ({ exercise }) => {
   return (
-    <Box>
-      <Alert.Root status="info">
-        <Wrap>
-          <Heading w="100%" fontSize="xl" textAlign="center">
-            {" "}
-            Resumen
-          </Heading>
-          <Text w="100%" />
-          &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent tex={String.raw`${exercise.steps[0].expression}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{exercise.steps[0].summary}</Text>
-          {exercise.steps.length > 3 ? (
-            <>
-              <Text>
-                {" "}
-                Forma 1:{" "}
-                <MathComponent tex={String.raw`${exercise.steps[1].expression}`} display={false} />
-              </Text>
-              <Spacer />
-              <Text>
-                {" "}
-                Forma 2:
-                <MathComponent tex={String.raw`${exercise.steps[2].expression}`} display={false} />
-              </Text>
-              <Spacer />
-            </> //si no
-          ) : (
-            <MathComponent tex={String.raw`${exercise.steps[1].expression}`} display={false} />
-          )}
-          <Text w="100%" />
-          <Text w="100%">{exercise.steps[1].summary}</Text>
-          {exercise.steps.length > 3 ? (
-            <>
-              <Text>
-                {" "}
-                Forma 1:{" "}
-                <MathComponent tex={String.raw`${exercise.steps[3].expression}`} display={false} />
-              </Text>
-              <Spacer />
-              <Text>
-                {" "}
-                Forma 2:
-                <MathComponent tex={String.raw`${exercise.steps[4].expression}`} display={false} />
-              </Text>
-              <Spacer />
-            </> //si no
-          ) : (
-            <MathComponent tex={String.raw`${exercise.steps[2].expression}`} display={false} />
-          )}
-          <Text w="100%" />
-          {exercise.steps.length > 3 ? (
-            <>
-              <Text w="100%">{exercise.steps[4].summary}</Text>
-              <Text>
-                {" "}
-                Forma 1:{" "}
-                <MathComponent
-                  tex={String.raw`(${exercise.steps[3].answers[0].answer})${exercise.steps[3].displayResult}`}
-                  display={false}
-                />
-              </Text>
-              <Spacer />
-              <Text>
-                {" "}
-                Forma 2:
-                <MathComponent
-                  tex={String.raw`(${exercise.steps[4].answers[0].answer})${exercise.steps[4].displayResult}`}
-                  display={false}
-                />
-              </Text>
-              <Spacer />
-            </> //si no
-          ) : (
-            <>
-              <Text w="100%">{exercise.steps[2].summary}</Text>
-              <MathComponent
-                tex={String.raw`(${exercise.steps[2].answers[0].answer})${exercise.steps[2].displayResult}`}
-                display={false}
-              />
-            </>
-          )}
-        </Wrap>
-      </Alert.Root>
-      <RatingQuestion />
-    </Box>
+    <SummaryShell>
+      <ExpressionLine tex={exercise.steps[0].expression} />
+      <SummaryText>{exercise.steps[0].summary}</SummaryText>
+
+      {exercise.steps.length > 3 ? (
+        <FormGrid>
+          <LabeledMathLine label="Forma 1:" tex={exercise.steps[1].expression} />
+          <LabeledMathLine label="Forma 2:" tex={exercise.steps[2].expression} />
+        </FormGrid>
+      ) : (
+        <MathLine tex={exercise.steps[1].expression} />
+      )}
+
+      <SummaryText>{exercise.steps[1].summary}</SummaryText>
+
+      {exercise.steps.length > 3 ? (
+        <FormGrid>
+          <LabeledMathLine label="Forma 1:" tex={exercise.steps[3].expression} />
+          <LabeledMathLine label="Forma 2:" tex={exercise.steps[4].expression} />
+        </FormGrid>
+      ) : (
+        <MathLine tex={exercise.steps[2].expression} />
+      )}
+
+      {exercise.steps.length > 3 ? (
+        <>
+          <SummaryText>{exercise.steps[4].summary}</SummaryText>
+          <FormGrid>
+            <LabeledMathLine
+              label="Forma 1:"
+              tex={`(${exercise.steps[3].answers[0].answer})${exercise.steps[3].displayResult}`}
+            />
+            <LabeledMathLine
+              label="Forma 2:"
+              tex={`(${exercise.steps[4].answers[0].answer})${exercise.steps[4].displayResult}`}
+            />
+          </FormGrid>
+        </>
+      ) : (
+        <>
+          <SummaryText>{exercise.steps[2].summary}</SummaryText>
+          <MathLine
+            tex={`(${exercise.steps[2].answers[0].answer})${exercise.steps[2].displayResult}`}
+          />
+        </>
+      )}
+    </SummaryShell>
   );
 };
 
 export const DCsummary = ({ exercise }) => {
   return (
-    <Box>
-      <Alert.Root status="info">
-        <Wrap>
-          <Heading w="100%" fontSize="xl" textAlign="center">
-            Resumen
-          </Heading>
-          <Text w="100%" />
-          &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent tex={String.raw`${exercise.steps[0].expression}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{exercise.steps[0].summary}</Text>
-          <Text>
-            {" "}
-            Forma 1:{" "}
-            <MathComponent tex={String.raw`${exercise.steps[1].displayResult}`} display={false} />
-          </Text>
-          <Spacer />
-          <Text>
-            {" "}
-            Forma 2:
-            <MathComponent tex={String.raw`${exercise.steps[2].displayResult}`} display={false} />
-          </Text>
-          <Spacer />
-          <Text>
-            {" "}
-            Forma 3:{" "}
-            <MathComponent tex={String.raw`${exercise.steps[3].displayResult}`} display={false} />
-          </Text>
-          <Spacer />
-          <Text>
-            {" "}
-            Forma 4:
-            <MathComponent tex={String.raw`${exercise.steps[4].displayResult}`} display={false} />
-          </Text>
-          <Spacer />
-          <Text w="100%">{exercise.steps[1].summary}</Text>
-          <Text>
-            {" "}
-            Forma 1:{" "}
-            <MathComponent
-              tex={String.raw`(${exercise.steps[1].answers[0].answer[0]})(${exercise.steps[1].answers[0].answer[1]})`}
-              display={false}
-            />
-          </Text>
-          <Spacer />
-          <Text>
-            {" "}
-            Forma 2:
-            <MathComponent
-              tex={String.raw`(${exercise.steps[2].answers[0].answer[0]})(${exercise.steps[2].answers[0].answer[1]})`}
-              display={false}
-            />
-          </Text>
-          <Spacer />
-          <Text>
-            {" "}
-            Forma 3:{" "}
-            <MathComponent
-              tex={String.raw`(${exercise.steps[3].answers[0].answer[0]})(${exercise.steps[3].answers[0].answer[1]})`}
-              display={false}
-            />
-          </Text>
-          <Spacer />
-          <Text>
-            {" "}
-            Forma 4:
-            <MathComponent
-              tex={String.raw`(${exercise.steps[4].answers[0].answer[0]})(${exercise.steps[4].answers[0].answer[1]})`}
-              display={false}
-            />
-          </Text>
-          <Spacer />
-        </Wrap>
-      </Alert.Root>
-      <RatingQuestion />
-    </Box>
+    <SummaryShell>
+      <ExpressionLine tex={exercise.steps[0].expression} />
+      <SummaryText>{exercise.steps[0].summary}</SummaryText>
+
+      <FormGrid>
+        <LabeledMathLine label="Forma 1:" tex={exercise.steps[1].displayResult} />
+        <LabeledMathLine label="Forma 2:" tex={exercise.steps[2].displayResult} />
+        <LabeledMathLine label="Forma 3:" tex={exercise.steps[3].displayResult} />
+        <LabeledMathLine label="Forma 4:" tex={exercise.steps[4].displayResult} />
+      </FormGrid>
+
+      <SummaryText>{exercise.steps[1].summary}</SummaryText>
+
+      <FormGrid>
+        <LabeledMathLine
+          label="Forma 1:"
+          tex={`(${exercise.steps[1].answers[0].answer[0]})(${exercise.steps[1].answers[0].answer[1]})`}
+        />
+        <LabeledMathLine
+          label="Forma 2:"
+          tex={`(${exercise.steps[2].answers[0].answer[0]})(${exercise.steps[2].answers[0].answer[1]})`}
+        />
+        <LabeledMathLine
+          label="Forma 3:"
+          tex={`(${exercise.steps[3].answers[0].answer[0]})(${exercise.steps[3].answers[0].answer[1]})`}
+        />
+        <LabeledMathLine
+          label="Forma 4:"
+          tex={`(${exercise.steps[4].answers[0].answer[0]})(${exercise.steps[4].answers[0].answer[1]})`}
+        />
+      </FormGrid>
+    </SummaryShell>
   );
 };
 
 export const DSCsummary = ({ step1, step2 }) => {
   return (
-    <Box>
-      <Alert.Root status="info">
-        <Wrap>
-          <Heading w="100%" fontSize="xl" textAlign="center">
-            Resumen
-          </Heading>
-          <Text w="100%" />
-          &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent tex={String.raw`${step1.expression}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{step1.summary}</Text>
-          <MathComponent tex={String.raw`${step1.displayResult}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{step2.summary}</Text>
-          <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
-        </Wrap>
-      </Alert.Root>
-      <RatingQuestion />
-    </Box>
+    <SummaryShell>
+      <ExpressionLine tex={step1.expression} />
+      <SummaryText>{step1.summary}</SummaryText>
+      <MathLine tex={step1.displayResult} />
+      <SummaryText>{step2.summary}</SummaryText>
+      <MathLine tex={step2.displayResult} />
+    </SummaryShell>
   );
 };
 
 export const TCsummary = ({ step1, step2, step3, step4, step5 }) => {
   return (
-    <Box>
-      <Alert.Root status="info">
-        <Wrap>
-          <Heading w="100%" fontSize="xl" textAlign="center">
-            Resumen
-          </Heading>
-          <Text w="100%" />
-          &nbsp;Expresión: &nbsp;&nbsp;&nbsp;
-          <MathComponent tex={String.raw`${step1.expression}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{step1.summary}</Text>
-          <MathComponent tex={String.raw`${step1.displayResult}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{step2.summary}</Text>
-          <MathComponent tex={String.raw`${step2.displayResult}`} display={false} />
-          <Text w="100%" />
-          <Text w="100%">{step3.summary}</Text>
-          <Text w="100%">{step3.displayResult}</Text>
-          {step4 && (
-            <>
-              <Text w="100%" />
-              <Text w="100%">{step4.summary}</Text>
-              <MathComponent tex={String.raw`${step4.displayResult}`} display={false} />
-              <Text w="100%">{step5.summary}</Text>
-              <MathComponent tex={String.raw`${step5.displayResult}`} display={false} />
-            </>
-          )}
-        </Wrap>
-      </Alert.Root>
-      <RatingQuestion />
-    </Box>
+    <SummaryShell>
+      <ExpressionLine tex={step1.expression} />
+      <SummaryText>{step1.summary}</SummaryText>
+      <MathLine tex={step1.displayResult} />
+      <SummaryText>{step2.summary}</SummaryText>
+      <MathLine tex={step2.displayResult} />
+      <SummaryText>{step3.summary}</SummaryText>
+      <SummaryText fontWeight="semibold">{step3.displayResult}</SummaryText>
+      {step4 && (
+        <>
+          <SummaryText>{step4.summary}</SummaryText>
+          <MathLine tex={step4.displayResult} />
+          <SummaryText>{step5.summary}</SummaryText>
+          <MathLine tex={step5.displayResult} />
+        </>
+      )}
+    </SummaryShell>
   );
 };

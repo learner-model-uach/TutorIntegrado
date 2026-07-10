@@ -4,7 +4,6 @@ import type { ExLog } from "./Tools/ExcerciseType2";
 import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
 import ShowSteps from "./ShowSteps";
-import { sessionState } from "../SessionState";
 
 const StepComponent = ({ exc, nStep, topicId }: { exc: ExLog; nStep: number; topicId: string }) => {
   //console.log(exc?.code)
@@ -16,10 +15,10 @@ const StepComponent = ({ exc, nStep, topicId }: { exc: ExLog; nStep: number; top
   useEffect(() => {
     action({
       verbName: "loadContent",
-      contentID: sessionState.currentContent.code,
+      contentID: exc.code,
       topicID: topicId,
     });
-  }, [action, topicId]);
+  }, [action, exc.code, topicId]);
 
   return (
     <>

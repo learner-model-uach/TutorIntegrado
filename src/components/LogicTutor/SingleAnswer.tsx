@@ -125,11 +125,7 @@ const SinglePlaceholder = ({
             Símbolos especiales en el teclado virtual{" "}
             <FaRegKeyboard style={{ marginBottom: "4px" }} />
           </Text>
-          <Mathfield
-            readOnly
-            value={`\\large ${exc.steps[nStep].expression} \\quad`}
-            onChange={modify}
-          />
+          <Mathfield readOnly value={`${exc.steps[nStep].expression} \\quad`} onChange={modify} />
         </Box>
       </Center>
 

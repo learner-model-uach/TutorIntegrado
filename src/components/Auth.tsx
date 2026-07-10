@@ -22,17 +22,16 @@ export const AuthState = proxy<{
   user: null,
   project: null,
   isLoading: true,
+  authorizationToken: undefined,
 });
 
 export function SyncAuth() {
-  const { user, getIdTokenClaims, isLoading } = useAuth0();
-  const { authorization } = useSnapshot(rqGQLClient.headers);
-
+  const { user, getIdTokenClaims, isLoading: auth0IsLoading } = useAuth0();
   const latestGetIdToken = useLatestRef(getIdTokenClaims);
 
-  const hasAuthorizationToken = !!authorization;
+  const { authorizationToken } = useSnapshot(AuthState);
 
-  const { isLoading: currentUserIsLoading } = useGQLQuery(
+  const { refetch: refetchCurrentUser } = useGQLQuery(
     gql(/* GraphQL */ `
       query currentUser {
         currentUser {
@@ -63,10 +62,15 @@ export function SyncAuth() {
     `),
     undefined,
     {
-      enabled: hasAuthorizationToken,
+      enabled: false,
       onSuccess(data) {
         AuthState.user = data.currentUser;
         AuthState.project = data.project;
+      },
+      onError() {
+        AuthState.user = null;
+        AuthState.project = null;
+        AuthState.isLoading = false;
       },
       onSettled() {
         AuthState.isLoading = false;
@@ -75,25 +79,73 @@ export function SyncAuth() {
   );
 
   useEffect(() => {
-    AuthState.isLoading = currentUserIsLoading || isLoading;
-  }, [isLoading, currentUserIsLoading]);
-
-  useEffect(() => {
     AuthState.auth0User = user || null;
   }, [user]);
 
   useEffect(() => {
-    if (user) {
+    if (auth0IsLoading) {
       AuthState.isLoading = true;
-      latestGetIdToken.current().then(data => {
-        AuthState.authorizationToken = rqGQLClient.headers.authorization = data
-          ? `Bearer ${data.__raw}`
-          : undefined;
-
-        AuthState.isLoading = true;
-      });
+      return;
     }
-  }, [user, latestGetIdToken]);
+
+    if (!user) {
+      AuthState.isLoading = false;
+      AuthState.user = null;
+      AuthState.project = null;
+      AuthState.authorizationToken = undefined;
+      rqGQLClient.headers.authorization = undefined;
+      return;
+    }
+
+    if (!authorizationToken) {
+      AuthState.isLoading = true;
+    }
+  }, [auth0IsLoading, authorizationToken, user]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    let cancelled = false;
+
+    const run = async () => {
+      try {
+        AuthState.isLoading = true;
+        AuthState.user = null;
+        AuthState.project = null;
+
+        const data = await latestGetIdToken.current();
+
+        if (cancelled) return;
+
+        const token = data ? `Bearer ${data.__raw}` : undefined;
+
+        AuthState.authorizationToken = token;
+        rqGQLClient.headers.authorization = token;
+
+        if (!token) {
+          AuthState.isLoading = false;
+          return;
+        }
+
+        await refetchCurrentUser();
+      } catch (err) {
+        if (cancelled) return;
+
+        console.error("[SyncAuth] ERROR:", err);
+        AuthState.authorizationToken = undefined;
+        rqGQLClient.headers.authorization = undefined;
+        AuthState.user = null;
+        AuthState.project = null;
+        AuthState.isLoading = false;
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, latestGetIdToken, refetchCurrentUser]);
 
   return <OnStart />;
 }
@@ -107,9 +159,9 @@ const OnStart = memo(function OnStart() {
 
   const projectId = project?.id;
   const { updateModel } = useUpdateModel();
+
   useEffect(() => {
     if (projectId) {
-      //lógica al iniciar sesión, lógica de sessionState
       sessionStateInitial(AuthState.user, AuthState.auth0User);
       startAction();
       updateModel({
@@ -117,7 +169,7 @@ const OnStart = memo(function OnStart() {
         domainID: "1",
       });
     }
-  }, [projectId, startAction]);
+  }, [projectId, startAction, updateModel]);
 
   return null;
 });

@@ -63,29 +63,45 @@ export const TCstep3 = ({
   };
   return (
     <>
-      <Wrap padding="15px 10px 10px 10px">
-        <WrapItem>
-          <Center>
-            <RadioGroup.Root value={value} onValueChange={({ value }) => setValue(value)}>
-              <Stack>
-                <RadioGroup.Item value="1" disabled={step3Valid != null}>
+      <Wrap className="tc-step3-options" padding="15px 10px 10px 10px">
+        <WrapItem className="tc-step3-choice-section">
+          <Center className="tc-step3-choice-center">
+            <RadioGroup.Root
+              className="tc-step3-choice-root"
+              value={value}
+              onValueChange={({ value }) => setValue(value)}
+            >
+              <Stack className="tc-step3-choice-list">
+                <RadioGroup.Item
+                  className="tc-step3-choice-item"
+                  value="1"
+                  disabled={step3Valid != null}
+                >
                   <RadioGroup.ItemHiddenInput />
-                  <RadioGroup.ItemIndicator />
-                  <RadioGroup.ItemText>
+                  <RadioGroup.ItemIndicator className="tc-step3-choice-indicator" />
+                  <RadioGroup.ItemText className="tc-step3-choice-text">
                     Factorizable con diferentes raíces reales
                   </RadioGroup.ItemText>
                 </RadioGroup.Item>
 
-                <RadioGroup.Item value="2" disabled={step3Valid != null}>
+                <RadioGroup.Item
+                  className="tc-step3-choice-item"
+                  value="2"
+                  disabled={step3Valid != null}
+                >
                   <RadioGroup.ItemHiddenInput />
-                  <RadioGroup.ItemIndicator />
+                  <RadioGroup.ItemIndicator className="tc-step3-choice-indicator" />
                   <RadioGroup.ItemText>Factorizable con raíces reales iguales</RadioGroup.ItemText>
                 </RadioGroup.Item>
 
-                <RadioGroup.Item value="3" disabled={step3Valid != null}>
+                <RadioGroup.Item
+                  className="tc-step3-choice-item"
+                  value="3"
+                  disabled={step3Valid != null}
+                >
                   <RadioGroup.ItemHiddenInput />
-                  <RadioGroup.ItemIndicator />
-                  <RadioGroup.ItemText>
+                  <RadioGroup.ItemIndicator className="tc-step3-choice-indicator" />
+                  <RadioGroup.ItemText className="tc-step3-choice-text">
                     Factorizable con raíces complejas conjugadas
                   </RadioGroup.ItemText>
                 </RadioGroup.Item>
@@ -94,7 +110,7 @@ export const TCstep3 = ({
           </Center>
         </WrapItem>
 
-        <WrapItem padding="25px 0px 0px 70px">
+        <WrapItem className="tc-step3-actions" padding="25px 0px 0px 70px">
           {step3Valid == null && (
             <>
               <Button

@@ -14,30 +14,61 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
 import { ErrorToast, queryClient, rqGQLClient } from "../rqClient";
 import { Toaster } from "../components/ui/toaster";
+import { AuthCallbackHandler } from "../components/AuthCallbackHandler";
+import {
+  AUTH0_DOMAIN,
+  getAuth0ClientId,
+  getNativeRedirectUri,
+  getWebRedirectUri,
+  isWrapper,
+} from "../utils/auth0Platform";
 import "../app.css";
 import "mathquill/build/mathquill.css";
 import "katex/dist/katex.min.css";
 import "mathlive/static.css";
 import { Analytics } from "@vercel/analytics/next";
+
 export default function App({ Component, pageProps }: AppProps) {
-  const isMobile = false;
+  const wrapper = typeof window !== "undefined" ? isWrapper() : false;
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || window.navigator.maxTouchPoints > 0);
+  const useTouchDrag = wrapper || isTouchDevice;
+
+  const redirectUri =
+    typeof window !== "undefined"
+      ? wrapper
+        ? getNativeRedirectUri()
+        : getWebRedirectUri()
+      : undefined;
+
+  const clientId =
+    typeof window !== "undefined" ? getAuth0ClientId() : process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!;
+
   return (
     <>
       <Auth0Provider
-        domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
-        clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
+        domain={AUTH0_DOMAIN}
+        clientId={clientId}
+        cacheLocation={wrapper ? "localstorage" : "memory"}
+        useRefreshTokens={wrapper}
+        useRefreshTokensFallback={wrapper ? false : true}
         onRedirectCallback={appState => {
-          Router.replace(appState?.returnTo || "/start");
+          Router.replace((appState as { returnTo?: string } | undefined)?.returnTo || "/start");
         }}
         authorizationParams={{
-          redirect_uri: typeof window !== "undefined" ? window.location.origin : undefined,
+          redirect_uri: redirectUri,
         }}
       >
         <CombinedRQGQLProvider client={queryClient} rqGQLClient={rqGQLClient}>
           <ChakraProvider value={system}>
             <ColorModeProvider>
               <Toaster />
-              <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
+              <DndProvider
+                backend={useTouchDrag ? TouchBackend : HTML5Backend}
+                options={useTouchDrag ? { enableMouseEvents: true } : undefined}
+              >
+                <AuthCallbackHandler />
                 <SyncAuth />
                 <ErrorToast />
                 <MainLayout>

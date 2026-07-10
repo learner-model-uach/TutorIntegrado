@@ -1,7 +1,9 @@
 import { Alert, Button, Stack, Box, HStack, VStack } from "@chakra-ui/react";
 import { useState, memo, useEffect, useRef } from "react";
+import { Camera, CameraResultType, CameraSource, type Photo } from "@capacitor/camera";
 import { addStyles, EditableMathField, MathField } from "react-mathquill";
 import { FaPencilAlt } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 //se importa el componente hint desarrollado por Miguel Nahuelpan
 import Hint from "../../Hint";
 import MQPostfixSolver from "../../../utils/MQPostfixSolver";
@@ -16,6 +18,11 @@ import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
 import type { NormalizedMathpixResponse } from "../../whiteboard/mathpixClient";
 import { MathPixBoard } from "../../whiteboard/MathPixBoard";
+import { isWrapper } from "../../../utils/auth0Platform";
+import {
+  requestMathpixImage,
+  type NormalizedMathpixResponse,
+} from "../../whiteboard/mathpixClient";
 
 addStyles();
 
@@ -127,12 +134,14 @@ const Mq2 = ({
   topicId,
   disablehint,
   canUseHwBoard = false,
+  canUseCamera = false,
 }: {
   step: Step;
   content: string;
   topicId: string;
   disablehint: boolean;
   canUseHwBoard?: boolean;
+  canUseCamera?: boolean;
 }) => {
   const mqSnap = useSnapshot(MQProxy);
   const action = useAction();
@@ -153,8 +162,10 @@ const Mq2 = ({
   >();
   const [alertMsg, setAlertMsg] = useState("");
   const [alertHidden, setAlertHidden] = useState(true);
+  const [isCameraProcessing, setIsCameraProcessing] = useState(false);
 
   const result = useRef(false);
+  const capturedPhotoRef = useRef<Photo | null>(null);
 
   useEffect(() => {
     if (!showBoardTip) return;
@@ -326,6 +337,100 @@ const Mq2 = ({
     });
     setShowBoardTip(false);
     setIsBoardOpen(true);
+  const getRecognizedLatex = (mathpixResponse: NormalizedMathpixResponse) => {
+    const lastExpression = mathpixResponse.expressions?.[mathpixResponse.expressions.length - 1];
+    return (
+      lastExpression ||
+      mathpixResponse.text ||
+      mathpixResponse.latex_styled ||
+      mathpixResponse.latex ||
+      ""
+    ).trim();
+  };
+
+  const writeRecognizedLatex = (recognizedLatex: string) => {
+    setPlaceholder(false);
+    setLatex(recognizedLatex);
+    ta?.latex(recognizedLatex);
+  };
+
+  const openCameraCapture = async () => {
+    if (!isWrapper() || isCameraProcessing) return;
+
+    try {
+      setIsCameraProcessing(true);
+      setAlertHidden(true);
+      capturedPhotoRef.current = await Camera.getPhoto({
+        allowEditing: false,
+        correctOrientation: true,
+        quality: 85,
+        resultType: CameraResultType.DataUrl,
+        saveToGallery: false,
+        source: CameraSource.Camera,
+      });
+
+      const photoSrc =
+        capturedPhotoRef.current.dataUrl ||
+        (capturedPhotoRef.current.base64String
+          ? `data:image/${capturedPhotoRef.current.format || "jpeg"};base64,${
+              capturedPhotoRef.current.base64String
+            }`
+          : "");
+
+      if (!photoSrc) {
+        throw new Error("No se pudo obtener la imagen capturada.");
+      }
+
+      const mathpixResponse = await requestMathpixImage({
+        src: photoSrc,
+        formats: ["latex_styled"],
+      });
+      const recognizedLatex = getRecognizedLatex(mathpixResponse);
+
+      if (!recognizedLatex) {
+        throw new Error("Mathpix no devolvio una expresion reconocible.");
+      }
+
+      writeRecognizedLatex(recognizedLatex);
+      action({
+        verbName: "mathpixPhotoRequest",
+        stepID: "" + step.stepId,
+        contentID: content,
+        topicID: topicId,
+        result: 1,
+        kcsIDs: step.KCs,
+        extra: {
+          response: [recognizedLatex],
+          attempts: attempts,
+          hints: mqSnap.hints,
+          mathpixResponse,
+        },
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message.toLowerCase() : "";
+      if (message.includes("cancel")) return;
+
+      console.error("[Mq2] No se pudo abrir la camara:", error);
+      setAlertType("error");
+      setAlertMsg("No se pudo reconocer la expresion desde la foto.");
+      setAlertHidden(false);
+      action({
+        verbName: "mathpixPhotoRequest",
+        stepID: "" + step.stepId,
+        contentID: content,
+        topicID: topicId,
+        result: 0,
+        kcsIDs: step.KCs,
+        extra: {
+          response: [latex],
+          attempts: attempts,
+          hints: mqSnap.hints,
+          error: error instanceof Error ? error.message : "Error desconocido.",
+        },
+      });
+    } finally {
+      setIsCameraProcessing(false);
+    }
   };
 
   return (
@@ -580,6 +685,210 @@ const Mq2 = ({
         stepTitle={step.stepTitle}
         stepExpression={step.expression}
       />
+      <VStack alignItems="center" justifyContent="center" margin={"auto"}>
+        <MQStaticMathField
+          exp={step.expression}
+          currentExpIndex={
+            parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+              ? true
+              : false
+          }
+        />
+        <Box>
+          <Stack gap={4} direction="row" align="center" pb={4}>
+            {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("(");
+              }}
+            >
+              {"("}
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools(")");
+              }}
+            >
+              {")"}
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("^");
+              }}
+            >
+              <MQStaticMathField
+                exp={"x^y"}
+                currentExpIndex={
+                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                    ? true
+                    : false
+                }
+              />
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("\\sqrt");
+              }}
+            >
+              <MQStaticMathField
+                exp={"\\sqrt{x}"}
+                currentExpIndex={
+                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                    ? true
+                    : false
+                }
+              />
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("\\nthroot");
+              }}
+            >
+              <MQStaticMathField
+                exp={"\\sqrt[y]{x}"}
+                currentExpIndex={
+                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                    ? true
+                    : false
+                }
+              />
+            </Button>
+          </Stack>
+          <Stack gap={4} direction="row" align="center" pb={4}>
+            {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
+                           Ademas con mousedown se puede usar preventDefault*/}
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("+");
+              }}
+            >
+              +
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("-");
+              }}
+            >
+              -
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("*");
+              }}
+            >
+              *
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                MQtools("\\frac");
+              }}
+            >
+              /
+            </Button>
+            <Button
+              width={"40px"}
+              height={"40px"}
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                clear();
+              }}
+            >
+              C
+            </Button>
+          </Stack>
+          <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
+            <Button
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                if (ta != undefined) ta.keystroke("Left");
+              }}
+              size="xs"
+            >
+              L
+            </Button>
+            <EditableMathField
+              key={"EMF" + entero}
+              latex={latex}
+              style={EMFStyle}
+              onMouseDown={() => {
+                if (placeholder) {
+                  setPlaceholder(false);
+                  setLatex("");
+                }
+              }}
+              onChange={mathField => {
+                //if(placeholder){setLatex("\\text{Ingresa la expresion aqui}")}
+                setLatex(() => mathField.latex());
+                refMQElement(mathField);
+              }}
+            ></EditableMathField>
+            <Button
+              colorPalette="teal"
+              onMouseDown={e => {
+                e.preventDefault();
+                if (ta != undefined) ta.keystroke("Right");
+              }}
+              size="xs"
+            >
+              R
+            </Button>
+            {canUseCamera && (
+              <Button
+                aria-label="Tomar foto de la respuesta"
+                colorPalette="teal"
+                onMouseDown={e => {
+                  e.preventDefault();
+                }}
+                onClick={() => {
+                  void openCameraCapture();
+                }}
+                loading={isCameraProcessing}
+                size="xs"
+              >
+                <FaCamera />
+              </Button>
+            )}
+          </HStack>
+        </Box>
+      </VStack>
       <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
         <Box>
           <Button

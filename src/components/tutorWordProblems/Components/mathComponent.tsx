@@ -246,6 +246,7 @@ const MathComponent = ({ meta, hints, correctMsg }: Props) => {
     <Flex flexDirection="column">
       <Box width="100%" textAlign="center" mb={4}>
         <MathField
+          className="word-problem-math-field"
           readOnly={readonly}
           value={expression}
           onChange={handleMathFieldChange}

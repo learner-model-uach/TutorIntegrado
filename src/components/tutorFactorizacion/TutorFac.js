@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import React from "react";
 
@@ -18,7 +18,7 @@ const DynamicTutorTC = dynamic(() =>
 
 export const TutorFac = ({ exercise, topicId }) => {
   return (
-    <>
+    <Box w="100%" maxW="100%" minW={0} overflowX="hidden">
       {exercise?.type == "fc1s" ? (
         <DynamicTutorFC exercise={exercise} topic={topicId} />
       ) : exercise?.type == "fcc3s" ? (
@@ -32,6 +32,6 @@ export const TutorFac = ({ exercise, topicId }) => {
       ) : (
         <p>error en exercise.type, exercise.type != FC,FCC,DC,DSC,TC </p>
       )}
-    </>
+    </Box>
   );
 };

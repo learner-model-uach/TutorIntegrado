@@ -1,11 +1,41 @@
 import { useState } from "react";
 import { Stack, Heading, Box, VStack, Text, Button, Image, Link } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Browser } from "@capacitor/browser";
 import { MdAdsClick } from "react-icons/md";
+import { isWrapper } from "../../utils/auth0Platform";
 
 export function NewUser() {
   const { loginWithRedirect } = useAuth0();
   const [isRedirecting, setIsRedirecting] = useState(false);
+
+  const doLogin = async () => {
+    try {
+      setIsRedirecting(true);
+
+      if (isWrapper()) {
+        await loginWithRedirect({
+          appState: {
+            returnTo: "/start",
+          },
+          async openUrl(url) {
+            await Browser.open({
+              url,
+              windowName: "_self",
+            });
+          },
+        });
+      } else {
+        await loginWithRedirect({
+          appState: {
+            returnTo: "/start",
+          },
+        });
+      }
+    } finally {
+      setIsRedirecting(false);
+    }
+  };
 
   return (
     <VStack
@@ -63,14 +93,7 @@ export function NewUser() {
                 bg="tangerine.500"
                 borderRadius="2xl"
                 w={{ base: "100%", sm: "200px" }}
-                onClick={() => {
-                  setIsRedirecting(true);
-                  loginWithRedirect({
-                    appState: {
-                      returnTo: "/start",
-                    },
-                  });
-                }}
+                onClick={doLogin}
                 loading={isRedirecting}
                 disabled={isRedirecting}
               >

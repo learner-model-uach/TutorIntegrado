@@ -1,5 +1,6 @@
 import { Alert, Collapsible } from "@chakra-ui/react";
 import Latex from "react-latex-next";
+import { normalizeLatexForRender } from "../../../utils/latexRendering";
 import { AlertStatus } from "../types";
 
 interface AlertProps {
@@ -23,7 +24,7 @@ const ResAlert = ({
           <Alert.Content>
             {title ? <Alert.Title>{title}</Alert.Title> : null}
             <Alert.Description width="100%" whiteSpace="normal" maxW="100%">
-              <Latex>{text}</Latex>
+              <Latex>{normalizeLatexForRender(text)}</Latex>
             </Alert.Description>
           </Alert.Content>
         </Alert.Root>

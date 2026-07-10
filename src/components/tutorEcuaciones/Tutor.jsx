@@ -10,6 +10,7 @@ import { useAction } from "../../utils/action";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAuth } from "../Auth";
 import RatingQuestion from "../RatingQuestion";
+import { DragPreviewLayer } from "./DragDrop/DragPreviewLayer";
 
 export function Tutor({ exercise, topicId }) {
   const [idExercise, setIdExercise] = useState("");
@@ -46,6 +47,7 @@ export function Tutor({ exercise, topicId }) {
   };
   return (
     <>
+      <DragPreviewLayer />
       {exerciseSelected && (
         <>
           <Stack textAlign="center" fontSize={{ base: "15px", sm: "20px", lg: "25px" }}>

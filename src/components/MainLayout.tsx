@@ -82,11 +82,12 @@ export function MainLayout({ children }: { children: ReactNode }) {
               {false && <SearchInput />}
             </Flex>
             <Flex
-              overflowY="auto"
+              className="app-scroll-container"
               direction="column"
               flex="1"
               minW={0}
-              overflow="auto"
+              overflowY="auto"
+              overflowX="hidden"
               padding="12px"
               px={{
                 md: "10",
