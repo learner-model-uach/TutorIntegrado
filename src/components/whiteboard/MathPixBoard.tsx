@@ -2,7 +2,11 @@ import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaEraser, FaPencilAlt, FaRegCircle, FaTimes } from "react-icons/fa";
 import MQStaticMathField from "../../utils/MQStaticMathField";
-import { normalizeMathpixResponse, requestMathpixStrokes, NormalizedMathpixResponse } from "./mathpixClient";
+import {
+  normalizeMathpixResponse,
+  requestMathpixStrokes,
+  NormalizedMathpixResponse,
+} from "./mathpixClient";
 
 export interface MathPixBoardProps {
   isOpen: boolean;
@@ -38,21 +42,18 @@ export const MathPixBoard = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const drawGuidelines = useCallback(
-    (width: number, height: number) => {
-      if (!contextRef.current) return;
-      const spacing =65;
-      contextRef.current.strokeStyle = "rgba(0, 0, 0, 0.20)";
-      contextRef.current.lineWidth = 1;
-      for (let y = spacing; y < height; y += spacing) {
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(0, y);
-        contextRef.current.lineTo(width, y);
-        contextRef.current.stroke();
-      }
-    },
-    []
-  );
+  const drawGuidelines = useCallback((width: number, height: number) => {
+    if (!contextRef.current) return;
+    const spacing = 65;
+    contextRef.current.strokeStyle = "rgba(0, 0, 0, 0.20)";
+    contextRef.current.lineWidth = 1;
+    for (let y = spacing; y < height; y += spacing) {
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(0, y);
+      contextRef.current.lineTo(width, y);
+      contextRef.current.stroke();
+    }
+  }, []);
 
   const resizeCanvas = useCallback(() => {
     if (!canvasRef.current || !contextRef.current) return;
@@ -161,7 +162,11 @@ export const MathPixBoard = ({
     lastPointRef.current = null;
     contextRef.current?.closePath();
 
-    if (tool === "draw" && currentStrokeRef.current?.x.length && currentStrokeRef.current.x.length > 1) {
+    if (
+      tool === "draw" &&
+      currentStrokeRef.current?.x.length &&
+      currentStrokeRef.current.x.length > 1
+    ) {
       strokesRef.current.x.push(currentStrokeRef.current.x.map(v => Math.round(v)));
       strokesRef.current.y.push(currentStrokeRef.current.y.map(v => Math.round(v)));
     }
@@ -269,15 +274,12 @@ export const MathPixBoard = ({
               ) : null}
               {stepExpression ? (
                 <>
-                  <style>{
-                    ".mathpix-step-expression .mq-root-block, .mathpix-step-expression .mq-math-mode { color: #000 !important; }"
-                  }</style>
-                  <Box
-                    mt={2}
-                    overflow="visible"
-                    color="black"
-                    className="mathpix-step-expression"
-                  >
+                  <style>
+                    {
+                      ".mathpix-step-expression .mq-root-block, .mathpix-step-expression .mq-math-mode { color: #000 !important; }"
+                    }
+                  </style>
+                  <Box mt={2} overflow="visible" color="black" className="mathpix-step-expression">
                     <MQStaticMathField exp={stepExpression} currentExpIndex={true} />
                   </Box>
                 </>
@@ -293,12 +295,7 @@ export const MathPixBoard = ({
               ) : null}
             </Box>
 
-            <Box
-              position="relative"
-              px={{ base: 3, md: 4 }}
-              py={{ base: 3, md: 4 }}
-              minH={0}
-            >
+            <Box position="relative" px={{ base: 3, md: 4 }} py={{ base: 3, md: 4 }} minH={0}>
               <Box
                 h="100%"
                 border="1px solid"

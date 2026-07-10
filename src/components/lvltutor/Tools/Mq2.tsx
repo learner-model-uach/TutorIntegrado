@@ -285,7 +285,8 @@ const Mq2 = ({
   };
 
   const handleBoardCapture = (capturedMathpix: NormalizedMathpixResponse) => {
-    let capturedLatex = capturedMathpix.text || capturedMathpix.latex_styled || capturedMathpix.latex || "";
+    let capturedLatex =
+      capturedMathpix.text || capturedMathpix.latex_styled || capturedMathpix.latex || "";
 
     try {
       const lastExpression = capturedMathpix.expressions?.[capturedMathpix.expressions.length - 1];
@@ -481,8 +482,7 @@ const Mq2 = ({
                     <MQStaticMathField
                       exp={"x^y"}
                       currentExpIndex={
-                        parseInt(step.stepId) ==
-                        mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                        parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
                           ? true
                           : false
                       }
@@ -500,8 +500,7 @@ const Mq2 = ({
                     <MQStaticMathField
                       exp={"\\sqrt{x}"}
                       currentExpIndex={
-                        parseInt(step.stepId) ==
-                        mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                        parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
                           ? true
                           : false
                       }
@@ -519,8 +518,7 @@ const Mq2 = ({
                     <MQStaticMathField
                       exp={"\\sqrt[y]{x}"}
                       currentExpIndex={
-                        parseInt(step.stepId) ==
-                        mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
+                        parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
                           ? true
                           : false
                       }
