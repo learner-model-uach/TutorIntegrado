@@ -16,7 +16,6 @@ import { useSnapshot } from "valtio";
 import MQProxy from "./MQProxy";
 import MQPostfixstrict from "../../../utils/MQPostfixstrict";
 import MQStaticMathField from "../../../utils/MQStaticMathField";
-import type { NormalizedMathpixResponse } from "../../whiteboard/mathpixClient";
 import { MathPixBoard } from "../../whiteboard/MathPixBoard";
 import { isWrapper } from "../../../utils/auth0Platform";
 import {
