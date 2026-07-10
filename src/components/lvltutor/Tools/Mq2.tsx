@@ -46,19 +46,12 @@ const Enabledhint = ({
 }) => {
   const mqSnap = useSnapshot(MQProxy);
 
-  const [error, setError] = useState(false);
   const [hints, setHints] = useState(0);
 
   useEffect(() => {
-    MQProxy.error = error;
-  }, [error]);
-
-  useEffect(() => {
-    setError(mqSnap.error);
-  }, [mqSnap.error]);
-
-  useEffect(() => {
-    MQProxy.hints = hints;
+    if (MQProxy.hints !== hints) {
+      MQProxy.hints = hints;
+    }
   }, [hints]);
 
   if (disablehint) {
@@ -72,8 +65,12 @@ const Enabledhint = ({
         stepId={step.stepId}
         matchingError={step.matchingError}
         response={[latex]}
-        error={error}
-        setError={setError}
+        error={mqSnap.error}
+        setError={(value: boolean) => {
+          if (MQProxy.error !== value) {
+            MQProxy.error = value;
+          }
+        }}
         hintCount={hints}
         setHints={setHints}
         setLastHint={setLastHint}
@@ -675,6 +672,22 @@ const Mq2 = ({
               >
                 R
               </Button>
+              {canUseCamera && (
+                <Button
+                  aria-label="Tomar foto de la respuesta"
+                  colorPalette="teal"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                  }}
+                  onClick={() => {
+                    void openCameraCapture();
+                  }}
+                  loading={isCameraProcessing}
+                  size="xs"
+                >
+                  <FaCamera />
+                </Button>
+              )}
             </HStack>
           </Box>
         </VStack>
@@ -686,210 +699,6 @@ const Mq2 = ({
         stepTitle={step.stepTitle}
         stepExpression={step.expression}
       />
-      <VStack alignItems="center" justifyContent="center" margin={"auto"}>
-        <MQStaticMathField
-          exp={step.expression}
-          currentExpIndex={
-            parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-              ? true
-              : false
-          }
-        />
-        <Box>
-          <Stack gap={4} direction="row" align="center" pb={4}>
-            {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("(");
-              }}
-            >
-              {"("}
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools(")");
-              }}
-            >
-              {")"}
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("^");
-              }}
-            >
-              <MQStaticMathField
-                exp={"x^y"}
-                currentExpIndex={
-                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-                    ? true
-                    : false
-                }
-              />
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("\\sqrt");
-              }}
-            >
-              <MQStaticMathField
-                exp={"\\sqrt{x}"}
-                currentExpIndex={
-                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-                    ? true
-                    : false
-                }
-              />
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("\\nthroot");
-              }}
-            >
-              <MQStaticMathField
-                exp={"\\sqrt[y]{x}"}
-                currentExpIndex={
-                  parseInt(step.stepId) == mqSnap.defaultIndex[mqSnap.defaultIndex.length - 1]
-                    ? true
-                    : false
-                }
-              />
-            </Button>
-          </Stack>
-          <Stack gap={4} direction="row" align="center" pb={4}>
-            {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
-                           Ademas con mousedown se puede usar preventDefault*/}
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("+");
-              }}
-            >
-              +
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("-");
-              }}
-            >
-              -
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("*");
-              }}
-            >
-              *
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                MQtools("\\frac");
-              }}
-            >
-              /
-            </Button>
-            <Button
-              width={"40px"}
-              height={"40px"}
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                clear();
-              }}
-            >
-              C
-            </Button>
-          </Stack>
-          <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
-            <Button
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                if (ta != undefined) ta.keystroke("Left");
-              }}
-              size="xs"
-            >
-              L
-            </Button>
-            <EditableMathField
-              key={"EMF" + entero}
-              latex={latex}
-              style={EMFStyle}
-              onMouseDown={() => {
-                if (placeholder) {
-                  setPlaceholder(false);
-                  setLatex("");
-                }
-              }}
-              onChange={mathField => {
-                //if(placeholder){setLatex("\\text{Ingresa la expresion aqui}")}
-                setLatex(() => mathField.latex());
-                refMQElement(mathField);
-              }}
-            ></EditableMathField>
-            <Button
-              colorPalette="teal"
-              onMouseDown={e => {
-                e.preventDefault();
-                if (ta != undefined) ta.keystroke("Right");
-              }}
-              size="xs"
-            >
-              R
-            </Button>
-            {canUseCamera && (
-              <Button
-                aria-label="Tomar foto de la respuesta"
-                colorPalette="teal"
-                onMouseDown={e => {
-                  e.preventDefault();
-                }}
-                onClick={() => {
-                  void openCameraCapture();
-                }}
-                loading={isCameraProcessing}
-                size="xs"
-              >
-                <FaCamera />
-              </Button>
-            )}
-          </HStack>
-        </Box>
-      </VStack>
       <HStack gap="4px" alignItems="center" justifyContent="center" margin={"auto"}>
         <Box>
           <Button
