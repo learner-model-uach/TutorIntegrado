@@ -76,6 +76,7 @@ const Steporans = ({
   content,
   i,
   answer,
+  canUseHwBoard = false,
   canUseCamera,
 }: {
   step: Step;
@@ -83,6 +84,7 @@ const Steporans = ({
   content: string;
   i: number;
   answer?: string;
+  canUseHwBoard?: boolean;
   canUseCamera?: boolean;
 }) => {
   const [currentComponent, setCC] = useState(<></>);
@@ -120,6 +122,11 @@ const Steporans = ({
             content={content}
             topicId={topicId}
             disablehint={false}
+            canUseHwBoard={canUseHwBoard}
+          />,
+        );
+    }
+  }, [answer, step, content, topicId, i, canUseHwBoard]);
             canUseCamera={canUseCamera}
           />,
         );
@@ -133,10 +140,12 @@ const Solver2 = ({
   topicId,
   steps,
   canUseCamera = false,
+  canUseHwBoard = false,
 }: {
   topicId: string;
   steps: ExType;
   canUseCamera?: boolean;
+  canUseHwBoard?: boolean;
 }) => {
   const mqSnap = useSnapshot(MQProxy);
 
@@ -445,6 +454,7 @@ const Solver2 = ({
                           content={steps.code}
                           i={i}
                           answer={test[parseInt(step.stepId)]?.value?.ans}
+                          canUseHwBoard={canUseHwBoard}
                           canUseCamera={canUseCamera}
                         />
                       </>

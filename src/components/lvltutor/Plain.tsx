@@ -17,6 +17,7 @@ const CAMERA_TAG = "hw-photo";
 
 export const Plain = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
   const { user } = useAuth();
+  const canUseHwBoard = user?.tags?.includes("hw-board") ?? false;
   const groupSelection = useSnapshot(gSelect);
   const canUseCamera =
     isWrapper() &&
@@ -26,6 +27,7 @@ export const Plain = ({ topicId, steps }: { topicId: string; steps: ExType }) =>
   return (
     <>
       {steps?.type == "lvltutor" ? (
+        <Lvltutor key={steps.code} topicId={topicId} steps={steps} canUseHwBoard={canUseHwBoard} />
         <Lvltutor key={steps.code} topicId={topicId} steps={steps} canUseCamera={canUseCamera} />
       ) : (
         "potato"
