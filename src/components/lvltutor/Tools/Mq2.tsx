@@ -337,6 +337,7 @@ const Mq2 = ({
     });
     setShowBoardTip(false);
     setIsBoardOpen(true);
+  };
   const getRecognizedLatex = (mathpixResponse: NormalizedMathpixResponse) => {
     const lastExpression = mathpixResponse.expressions?.[mathpixResponse.expressions.length - 1];
     return (

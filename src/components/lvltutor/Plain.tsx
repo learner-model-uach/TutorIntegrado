@@ -27,8 +27,13 @@ export const Plain = ({ topicId, steps }: { topicId: string; steps: ExType }) =>
   return (
     <>
       {steps?.type == "lvltutor" ? (
-        <Lvltutor key={steps.code} topicId={topicId} steps={steps} canUseHwBoard={canUseHwBoard} />
-        <Lvltutor key={steps.code} topicId={topicId} steps={steps} canUseCamera={canUseCamera} />
+        <Lvltutor
+          key={steps.code}
+          topicId={topicId}
+          steps={steps}
+          canUseHwBoard={canUseHwBoard}
+          canUseCamera={canUseCamera}
+        />
       ) : (
         "potato"
       )}

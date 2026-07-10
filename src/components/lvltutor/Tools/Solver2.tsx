@@ -123,15 +123,11 @@ const Steporans = ({
             topicId={topicId}
             disablehint={false}
             canUseHwBoard={canUseHwBoard}
-          />,
-        );
-    }
-  }, [answer, step, content, topicId, i, canUseHwBoard]);
             canUseCamera={canUseCamera}
           />,
         );
     }
-  }, [answer, step, content, topicId, i, canUseCamera]);
+  }, [answer, step, content, topicId, i, canUseHwBoard, canUseCamera]);
 
   return currentComponent;
 };
