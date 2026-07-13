@@ -446,7 +446,7 @@ const Mq2 = ({
           <Box position="relative">
             <HStack gap={6} alignItems="center" justifyContent="center" pb={4}>
               <VStack gap={4} alignItems="center">
-                <Stack gap={4} direction="row" align="center">
+                <Stack gap={{ base: 2, md: 4 }} direction="row" align="center">
                   {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input*/}
                   <Button
                     width={"40px"}
@@ -524,8 +524,25 @@ const Mq2 = ({
                       }
                     />
                   </Button>
+                  {canUseHwBoard ? (
+                    <Button
+                      width={"40px"}
+                      height={"40px"}
+                      bg="gray.900"
+                      color="white"
+                      borderRadius="md"
+                      aria-label="Abrir pizarra"
+                      display={{ base: "inline-flex", md: "none" }}
+                      onMouseDown={e => {
+                        e.preventDefault();
+                      }}
+                      onClick={handleOpenBoard}
+                    >
+                      <FaPencilAlt />
+                    </Button>
+                  ) : null}
                 </Stack>
-                <Stack gap={4} direction="row" align="center">
+                <Stack gap={{ base: 2, md: 4 }} direction="row" align="center">
                   {/*importante la distincion de onMouseDown vs onClick, con el evento onMouseDown aun no se pierde el foco del input,
                                Ademas con mousedown se puede usar preventDefault*/}
                   <Button
@@ -583,6 +600,24 @@ const Mq2 = ({
                   >
                     C
                   </Button>
+                  {canUseCamera ? (
+                    <Button
+                      width={"40px"}
+                      height={"40px"}
+                      colorPalette="teal"
+                      aria-label="Tomar foto de la respuesta"
+                      display={{ base: "inline-flex", md: "none" }}
+                      onMouseDown={e => {
+                        e.preventDefault();
+                      }}
+                      onClick={() => {
+                        void openCameraCapture();
+                      }}
+                      loading={isCameraProcessing}
+                    >
+                      <FaCamera />
+                    </Button>
+                  ) : null}
                 </Stack>
               </VStack>
             </HStack>
@@ -595,6 +630,7 @@ const Mq2 = ({
                 borderRadius="md"
                 aria-label="Abrir pizarra"
                 position="absolute"
+                display={{ base: "none", md: "inline-flex" }}
                 right="-52px"
                 top="8px"
                 zIndex={1}
@@ -610,6 +646,7 @@ const Mq2 = ({
                 top="-38px"
                 bg="#1f2a3b"
                 color="white"
+                display={{ base: "none", md: "block" }}
                 px={3}
                 py={2}
                 borderRadius="md"
@@ -673,6 +710,7 @@ const Mq2 = ({
                 <Button
                   aria-label="Tomar foto de la respuesta"
                   colorPalette="teal"
+                  display={{ base: "none", md: "inline-flex" }}
                   onMouseDown={e => {
                     e.preventDefault();
                   }}
