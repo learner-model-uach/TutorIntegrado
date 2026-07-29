@@ -140,7 +140,7 @@ export const StepPanel = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });
@@ -166,7 +166,7 @@ export const StepPanel = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });

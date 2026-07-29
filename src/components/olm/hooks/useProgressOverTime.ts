@@ -14,6 +14,7 @@ type Bucket = "DAY" | "WEEK" | "MONTH";
 type UseProgressOverTimeArgs = {
   userId?: string;
   groupId?: string;
+  includeGroup?: boolean;
 
   projectsIds?: string[];
   projectId?: string; // fallback para llamadas antiguas
@@ -64,6 +65,7 @@ export function useProgressOverTime(args: UseProgressOverTimeArgs) {
   const {
     userId,
     groupId,
+    includeGroup = true,
     projectsIds,
     projectId,
     domainId,
@@ -83,6 +85,7 @@ export function useProgressOverTime(args: UseProgressOverTimeArgs) {
           : [],
     [projectsIds, projectId],
   );
+  const withGroup = Boolean(includeGroup && groupId);
 
   const canRun = Boolean(
     enabled &&
@@ -95,7 +98,7 @@ export function useProgressOverTime(args: UseProgressOverTimeArgs) {
     kcCodes.length > 0,
   );
 
-  // Variables: aunque groupId no exista, se mantien groupInput válido y se conttrola ejecución con @include
+  // GraphQL valida groupInput aunque @include omita groupBkt, por eso groupId nunca puede ser "".
   const variables = useMemo(
     () => ({
       userInput: {
@@ -109,7 +112,7 @@ export function useProgressOverTime(args: UseProgressOverTimeArgs) {
       },
       groupInput: {
         projectsIds: resolvedProjectsIds,
-        groupId: groupId ?? "",
+        groupId: groupId ?? "0",
         currentUserId: userId ?? undefined, // se excluye al usuario actual del promedio
         domainId: domainId ?? "",
         startDate,
@@ -117,9 +120,19 @@ export function useProgressOverTime(args: UseProgressOverTimeArgs) {
         bucket,
         kcCodes,
       },
-      withGroup: Boolean(groupId),
+      withGroup,
     }),
-    [resolvedProjectsIds, userId, groupId, domainId, startDate, endDate, bucket, kcCodes],
+    [
+      resolvedProjectsIds,
+      userId,
+      groupId,
+      domainId,
+      startDate,
+      endDate,
+      bucket,
+      kcCodes,
+      withGroup,
+    ],
   );
 
   const q = useGQLQuery(ProgressOverTimeBktDocument, variables, {

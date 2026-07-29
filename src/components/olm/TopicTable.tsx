@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Table, Center, Box, Text } from "@chakra-ui/react";
 import { ImUsers } from "react-icons/im";
 import { useSnapshot } from "valtio";
 import { useAuth } from "../Auth";
 import { gSelect } from "../GroupSelect";
 import { useGQLQuery } from "rq-gql";
-import { progresscalc } from "../progressbar/progresscalc";
+import { progressCal } from "../progressbar/progressCal";
 import TopicAccordionRow from "./TopicAccordionRow";
 import { useSubtopics, PARENT_IDS, useKcsByTopics } from "./hooks/useOlmTopics";
 import { useUserModel, useGroupModel } from "./hooks/useOlmModels";
@@ -19,24 +19,30 @@ import { getStableProgressEndDate } from "./utils/progressQueryDates";
 
 const OLM_STALE_TIME = 5 * 60 * 1000;
 
-export default function TopicTable() {
+type TopicTableProps = {
+  showGroupProgress?: boolean;
+  showEfficiency?: boolean;
+  showEffort?: boolean;
+};
+
+export default function TopicTable({
+  showGroupProgress = true,
+  showEfficiency = true,
+  showEffort = true,
+}: TopicTableProps) {
   const { user, isLoading: authLoading, project } = useAuth();
   const groupSelection = useSnapshot(gSelect);
   const parentIds = PARENT_IDS;
   const { topics: subtopics, isLoading: subtopicLoading } = useSubtopics(parentIds);
   const { modelData: userModel, isLoading: userModelLoading } = useUserModel(user?.id);
-  const selectedGroup = groupSelection.group ?? user?.groups?.[0];
+  const selectedGroup = showGroupProgress ? (groupSelection.group ?? user?.groups?.[0]) : undefined;
   const { modelData: groupModel, isLoading: groupModelLoading } = useGroupModel(
     selectedGroup?.id,
     project?.code,
   );
-  const [topicCodes, setTopicCodes] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (subtopics.length > 0) {
-      const codes = subtopics.flatMap(t => t.childrens?.map(c => c.code) ?? []);
-      setTopicCodes(codes);
-    }
+  const topicCodes = useMemo(() => {
+    return subtopics.flatMap(t => t.childrens?.map(c => c.code) ?? []);
   }, [subtopics]);
 
   const { kcByTopic, isLoading: exerciseLoading } = useKcsByTopics(topicCodes);
@@ -63,16 +69,13 @@ export default function TopicTable() {
     useUserActions,
     { endDate, verbNames: ["tryStep"] },
     {
+      enabled: showEfficiency,
       staleTime: OLM_STALE_TIME,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },
   );
 
-  const [completeContentIds, setCompleteContentIds] = useState<Set<string>>(new Set());
-
-  // Complete Actions by subtopics
-  const [excerciseCountsByChild, setExcerciseCountsByChild] = useState<Record<number, number>>({});
   const childIdSet = useMemo(() => {
     const set = new Set<number>();
     for (const t of subtopics) {
@@ -83,29 +86,32 @@ export default function TopicTable() {
     return set;
   }, [subtopics]);
 
-  // tryStep (result === 1) por subtópico
-  const [tryStepResult1ByChild, setTryStepResult1ByChild] = useState<Record<number, number>>({});
-  // tryStep (result === 1, attempts === 0, hints === 0) por subtópico
-  const [tryStepResult1NoHelpByChild, setTryStepResult1NoHelpByChild] = useState<
-    Record<number, number>
-  >({});
+  const { exerciseCountsByChild, completeContentIds } = useMemo(() => {
+    if (authLoading || actionsLoading || actionsError || !dataActions?.actionsTopic) {
+      return {
+        exerciseCountsByChild: {} as Record<number, number>,
+        completeContentIds: new Set<string>(),
+      };
+    }
 
-  //Complete Content
-  useEffect(() => {
-    if (authLoading || actionsLoading || actionsError || !dataActions?.actionsTopic) return;
-    const { exerciseCountsByChild, completeContentIds } = aggregateCompleteContentActions(
-      dataActions,
-      childIdSet,
-    );
-    setExcerciseCountsByChild(exerciseCountsByChild);
-    setCompleteContentIds(completeContentIds);
-  }, [authLoading, actionsLoading, actionsError, dataActions?.actionsTopic, childIdSet]);
+    return aggregateCompleteContentActions(dataActions, childIdSet);
+  }, [authLoading, actionsLoading, actionsError, dataActions, childIdSet]);
 
-  //se cuentan los tryStep solo si hay un completeContent
+  const { tryStepResult1ByChild, tryStepResult1NoHelpByChild } = useMemo(() => {
+    if (
+      !showEfficiency ||
+      authLoading ||
+      tryStepLoading ||
+      tryStepError ||
+      !tryStepData?.actionsTopic ||
+      completeContentIds.size === 0
+    ) {
+      return {
+        tryStepResult1ByChild: {} as Record<number, number>,
+        tryStepResult1NoHelpByChild: {} as Record<number, number>,
+      };
+    }
 
-  useEffect(() => {
-    if (authLoading || tryStepLoading || tryStepError || !tryStepData?.actionsTopic) return;
-    if (completeContentIds.size === 0) return;
     const byChildResult1: Record<number, number> = {};
     const byChildResult1NoHelp: Record<number, number> = {};
 
@@ -119,7 +125,12 @@ export default function TopicTable() {
         if (!completeContentIds.has(contentId)) continue;
         // Extra puede que no exista
         const extra = isTryStepActionExtra(a.extra) ? a.extra : undefined;
-        const attempts = typeof extra?.attempts === "number" ? extra.attempts : undefined;
+        const attempts =
+          typeof extra?.attempts === "number"
+            ? extra.attempts
+            : typeof extra?.attemps === "number"
+              ? extra.attemps
+              : undefined;
         const hints = typeof extra?.hints === "number" ? extra.hints : undefined;
 
         for (const t of a.content?.topics ?? []) {
@@ -137,11 +148,11 @@ export default function TopicTable() {
         }
       }
     }
-    setTryStepResult1ByChild(byChildResult1);
-    setTryStepResult1NoHelpByChild(byChildResult1NoHelp);
 
-    // console.log("tryStep result=1 por subtópico:", byChildResult1);
-    // console.log("tryStep result=1, attempts=0, hints=0 por subrópico:", byChildResult1NoHelp);
+    return {
+      tryStepResult1ByChild: byChildResult1,
+      tryStepResult1NoHelpByChild: byChildResult1NoHelp,
+    };
   }, [
     authLoading,
     tryStepLoading,
@@ -149,9 +160,12 @@ export default function TopicTable() {
     tryStepData?.actionsTopic,
     childIdSet,
     completeContentIds,
+    showEfficiency,
   ]);
 
   const efficiencyByChild = useMemo(() => {
+    if (!showEfficiency) return {};
+
     const result: Record<number, number> = {};
     for (const key of Object.keys(tryStepResult1ByChild)) {
       const childId = Number(key);
@@ -165,24 +179,47 @@ export default function TopicTable() {
       }
     }
     return result;
-  }, [tryStepResult1ByChild, tryStepResult1NoHelpByChild]);
+  }, [showEfficiency, tryStepResult1ByChild, tryStepResult1NoHelpByChild]);
 
-  // Count complete content by parent topic
-  const getParentTotal = (parentId: number) => {
-    const parent = subtopics.find(t => Number(t.id) === parentId);
-    if (!parent) return 0;
-    const childs = parent.childrens ?? [];
-    return childs.reduce((sum, child) => sum + (excerciseCountsByChild[Number(child.id)] ?? 0), 0);
-  };
-  if (
-    authLoading ||
-    subtopicLoading ||
-    exerciseLoading ||
-    userModelLoading ||
-    groupModelLoading ||
-    actionsLoading ||
-    tryStepLoading
-  ) {
+  const parentExerciseTotals = useMemo(() => {
+    const totals: Record<number, number> = {};
+    for (const parent of subtopics) {
+      const parentId = Number(parent.id);
+      totals[parentId] = (parent.childrens ?? []).reduce(
+        (sum, child) => sum + (exerciseCountsByChild[Number(child.id)] ?? 0),
+        0,
+      );
+    }
+    return totals;
+  }, [subtopics, exerciseCountsByChild]);
+
+  const orderedTopics = useMemo(() => {
+    return parentIds
+      .map(id => subtopics.find(t => String(t.id) === id))
+      .filter((topic): topic is Topic => Boolean(topic));
+  }, [parentIds, subtopics]);
+
+  const parentProgressByTopic = useMemo(() => {
+    const progressByTopic: Record<string, { progress: number; groupProgress: number }> = {};
+
+    for (const topic of orderedTopics) {
+      const kcs = (topic.childrens ?? []).flatMap(child =>
+        (kcByTopic[child.id] ?? []).map(kc => kc.code),
+      );
+
+      progressByTopic[String(topic.id)] = {
+        progress: Math.round(progressCal(kcs, userModel) * 100),
+        groupProgress:
+          showGroupProgress && groupModel?.length
+            ? Math.round(progressCal(kcs, groupModel) * 100)
+            : 0,
+      };
+    }
+
+    return progressByTopic;
+  }, [groupModel, kcByTopic, orderedTopics, showGroupProgress, userModel]);
+
+  if (authLoading || subtopicLoading || exerciseLoading || userModelLoading || groupModelLoading) {
     return (
       <Box w="full" minW={0}>
         <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
@@ -219,10 +256,6 @@ export default function TopicTable() {
       </Box>
     );
   }
-  const orderedTopics = parentIds
-    .map(id => subtopics.find(t => String(t.id) === id))
-    .filter((topic): topic is Topic => Boolean(topic));
-
   return (
     <Box w="full" minW={0}>
       <Text display={{ base: "block", md: "none" }} fontSize="xs" color="fg.muted" mb="2" px="1">
@@ -255,23 +288,25 @@ export default function TopicTable() {
                   PROGRESO
                 </Table.ColumnHeader>
                 <Table.ColumnHeader htmlWidth="10%"></Table.ColumnHeader>
-                <Table.ColumnHeader
-                  fontWeight="bold"
-                  color={"heading"}
-                  htmlWidth="5%"
-                  textAlign="center"
-                >
-                  <Center w="100%">
-                    <Tooltip
-                      showArrow
-                      content="Mostrar progreso de grupo"
-                      positioning={{ placement: "top" }}
-                      contentProps={{ css: { "--tooltip-bg": "colors.gray.700" } }}
-                    >
-                      <ImUsers size={18} />
-                    </Tooltip>
-                  </Center>
-                </Table.ColumnHeader>
+                {showGroupProgress && (
+                  <Table.ColumnHeader
+                    fontWeight="bold"
+                    color={"heading"}
+                    htmlWidth="5%"
+                    textAlign="center"
+                  >
+                    <Center w="100%">
+                      <Tooltip
+                        showArrow
+                        content="Mostrar progreso de grupo"
+                        positioning={{ placement: "top" }}
+                        contentProps={{ css: { "--tooltip-bg": "colors.gray.700" } }}
+                      >
+                        <ImUsers size={18} />
+                      </Tooltip>
+                    </Center>
+                  </Table.ColumnHeader>
+                )}
                 <Table.ColumnHeader
                   htmlWidth="30%"
                   fontWeight="bold"
@@ -286,32 +321,27 @@ export default function TopicTable() {
             </Table.Header>
             <Table.Body>
               {orderedTopics.map((topic, index) => {
-                const childs = topic.childrens ?? [];
-                const kcs = childs.flatMap(child => (kcByTopic[child.id] ?? []).map(kc => kc.code));
                 const modelData = userModel;
                 const groupModelData = groupModel;
-                // console.log("childs", childs);
-                // console.log("groupModel", groupModel);
-                const progress = Math.round(progresscalc(kcs, modelData) * 100);
-                const groupProgress = groupModelData?.length
-                  ? Math.round(progresscalc(kcs, groupModelData) * 100)
-                  : 0;
-                // const count1 = topicExerciseCounts[Number(topic.id)] ?? 0;
-                const count2 = getParentTotal(Number(topic.id));
+                const parentProgress = parentProgressByTopic[String(topic.id)] ?? {
+                  progress: 0,
+                  groupProgress: 0,
+                };
                 return (
                   <TopicAccordionRow
                     key={topic.id}
                     topic={topic}
-                    progress={progress}
-                    groupProgress={groupProgress}
-                    exerciseCount={count2}
+                    progress={parentProgress.progress}
+                    groupProgress={parentProgress.groupProgress}
+                    exerciseCount={parentExerciseTotals[Number(topic.id)] ?? 0}
                     defaultOpen={index === 0}
+                    showGroupProgress={showGroupProgress}
+                    showEfficiency={showEfficiency}
+                    showEffort={showEffort}
                     model={modelData}
-                    groupModel={groupModelData}
-                    kcsByTopic={Object.fromEntries(
-                      Object.entries(kcByTopic).map(([k, v]) => [k, v.map(kc => ({ ...kc }))]),
-                    )}
-                    exerciseCountsByChild={excerciseCountsByChild}
+                    groupModel={showGroupProgress ? groupModelData : undefined}
+                    kcsByTopic={kcByTopic}
+                    exerciseCountsByChild={exerciseCountsByChild}
                     efficiencyByChild={efficiencyByChild}
                   />
                 );

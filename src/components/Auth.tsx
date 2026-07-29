@@ -94,13 +94,18 @@ export function SyncAuth() {
       AuthState.project = null;
       AuthState.authorizationToken = undefined;
       rqGQLClient.headers.authorization = undefined;
+      AuthState.isLoading = false;
       return;
     }
 
     if (!authorizationToken) {
       AuthState.isLoading = true;
     }
-  }, [auth0IsLoading, authorizationToken, user]);
+  }, [auth0IsLoading, user, authorizationToken, refetchCurrentUser]);
+
+  useEffect(() => {
+    AuthState.auth0User = user || null;
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
@@ -159,9 +164,9 @@ const OnStart = memo(function OnStart() {
 
   const projectId = project?.id;
   const { updateModel } = useUpdateModel();
-
   useEffect(() => {
     if (projectId) {
+      //lógica al iniciar sesión, lógica de sessionState
       sessionStateInitial(AuthState.user, AuthState.auth0User);
       startAction();
       updateModel({

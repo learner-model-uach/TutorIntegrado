@@ -181,6 +181,9 @@ const config = defineConfig({
         algebra_pol_52: {
           value: { base: "#338052" },
         },
+        mayorActividad: {
+          value: { base: "{colors.teal.600}", _dark: "{colors.indigo.100}" },
+        },
       },
     },
   },

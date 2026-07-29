@@ -14,6 +14,7 @@ interface TopicParentRowProps {
   groupProgress?: number;
   exerciseCount: number;
   isOpen: boolean;
+  showGroupProgress: boolean;
   showGroupParent: boolean;
   onToggleGroup: () => void;
   onToggleSubtopics: () => void;
@@ -59,6 +60,7 @@ export default function TopicParentRow({
   groupProgress,
   exerciseCount,
   isOpen,
+  showGroupProgress,
   showGroupParent,
   onToggleGroup,
   onToggleSubtopics,
@@ -100,15 +102,17 @@ export default function TopicParentRow({
         />
       </Table.Cell>
 
-      <Table.Cell
-        onClick={onToggleGroup}
-        cursor="pointer"
-        color={{ base: "gray.600", _dark: "indigo.50" }}
-      >
-        <Box display="grid" placeItems="center">
-          {showGroupParent ? <FaEye size={18} /> : <FaRegEyeSlash size={18} />}
-        </Box>
-      </Table.Cell>
+      {showGroupProgress && (
+        <Table.Cell
+          onClick={onToggleGroup}
+          cursor="pointer"
+          color={{ base: "gray.600", _dark: "indigo.50" }}
+        >
+          <Box display="grid" placeItems="center">
+            {showGroupParent ? <FaEye size={18} /> : <FaRegEyeSlash size={18} />}
+          </Box>
+        </Table.Cell>
+      )}
 
       <Table.Cell
         textAlign="end"

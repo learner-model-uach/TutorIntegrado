@@ -1,7 +1,9 @@
-import { Heading, Highlight, Stack, Text, Tabs, Link, Box } from "@chakra-ui/react";
+import { Heading, Highlight, Stack, Text, Tabs } from "@chakra-ui/react";
 import { useEffect, useMemo } from "react";
+import { useSnapshot } from "valtio";
 import { withAuth, useAuth } from "../components/Auth";
 import { gSelect } from "../components/GroupSelect";
+import { getDashboardPermissions } from "../components/olm/dashboardTags";
 import TopicTable from "../components/olm/TopicTable";
 import ProgressOverTime from "../components/olm/ProgressOverTime";
 import { ProgressOverTimeContainer } from "../components/olm/charts/ProgressOverTimeChartTab";
@@ -9,58 +11,37 @@ import { getStableProgressEndDate } from "../components/olm/utils/progressQueryD
 import { FaBarsProgress } from "react-icons/fa6";
 import { GiProgression } from "react-icons/gi";
 import { useAction } from "../utils/action";
-import { useSnapshot } from "valtio";
 
 function OlmDashboard() {
   const { project, user } = useAuth();
   const groupSelection = useSnapshot(gSelect);
   const action = useAction();
   const progressEndDate = useMemo(() => getStableProgressEndDate(), []);
-  const testSessionTags = useMemo(
-    () => [...(user?.tags ?? []), ...(groupSelection.group?.tags ?? [])],
-    [groupSelection.group?.tags, user?.tags],
-  );
-  const showTestSessionBox = testSessionTags.includes("sesion-prueba-dashboard");
+  const dashboardPermissions = getDashboardPermissions(user, groupSelection.group);
 
   useEffect(() => {
-    if (!project?.id) return;
+    if (!project?.id || !dashboardPermissions.canViewDashboard) return;
 
     action({
       verbName: "dshbDisplayPage",
     });
-  }, [action, project?.id]);
+  }, [action, dashboardPermissions.canViewDashboard, project?.id]);
+
+  if (!dashboardPermissions.canViewDashboard) {
+    return (
+      <Stack width="100%" padding="1rem" alignItems="center">
+        <Heading as="h1" size="xl" color="heading">
+          Dashboard no disponible
+        </Heading>
+        <Text color="text_info">
+          Tu usuario o grupo seleccionado no tiene habilitado el acceso al dashboard.
+        </Text>
+      </Stack>
+    );
+  }
 
   return (
     <>
-      {/* solo para la sesión de prueba */}
-      {showTestSessionBox && (
-        <Box
-          mb={4}
-          w="50%"
-          mx="auto"
-          px="4"
-          py="3"
-          borderRadius="md"
-          bg={{ base: "orange.50", _dark: "teal.900" }}
-          borderWidth="1px"
-          borderColor={{ base: "orange.emphasized", _dark: "teal.700" }}
-        >
-          <Text>
-            Por favor responde las siguientes preguntas en este{" "}
-            <Link
-              href="https://forms.gle/HYhKyahyBMLfToym6"
-              color="yellow.600"
-              fontWeight="bold"
-              textDecoration="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              formulario
-            </Link>
-          </Text>
-        </Box>
-      )}
-      {/* solo para sesion de prueba  */}
       <Stack width="100%" padding="1rem" alignItems="center">
         <Heading as="h1" size="3xl" color={"heading"} mb={"1rem"} fontWeight="bold">
           Mi Progreso en Mateo
@@ -81,7 +62,7 @@ function OlmDashboard() {
           </Highlight>
         </Text>
       </Stack>
-      {/*'line' | 'subtle' | 'enclosed' | 'outline' | 'plain'*/}
+
       <Tabs.Root
         lazyMount
         variant="outline"
@@ -118,10 +99,14 @@ function OlmDashboard() {
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="totalprogress" minW={0}>
-          <TopicTable />
+          <TopicTable
+            showGroupProgress={dashboardPermissions.showGroupProgress}
+            showEfficiency={dashboardPermissions.showEfficiency}
+            showEffort={dashboardPermissions.showEffort}
+          />
         </Tabs.Content>
         <Tabs.Content value="progressovertime" minW={0}>
-          <ProgressOverTimeContainer />
+          <ProgressOverTimeContainer showGroupProgress={dashboardPermissions.showGroupProgress} />
           <ProgressOverTime endDate={progressEndDate} />
         </Tabs.Content>
       </Tabs.Root>

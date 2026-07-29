@@ -114,7 +114,7 @@ export const StepInput = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });
@@ -144,7 +144,7 @@ export const StepInput = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });

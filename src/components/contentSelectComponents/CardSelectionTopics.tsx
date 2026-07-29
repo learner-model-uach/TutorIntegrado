@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import PBLoad from "../progressbar/pbload";
-import { progresscalc } from "../progressbar/progresscalc";
+import { progressCal } from "../progressbar/progressCal";
 import { gModel, kcsyejercicio, selectedExcercise, uModel } from "../../utils/startModel";
 import dynamic from "next/dynamic";
 import type { ComponentProps } from "react";
@@ -96,11 +96,11 @@ export const CardSelectionTopic = ({
   };
 
   if (!uModel.isLoading) {
-    pbValues.uservalues = progresscalc(listakcs(KCs), uModel.data);
+    pbValues.uservalues = progressCal(listakcs(KCs), uModel.data);
     if (uModel.osml) {
       pbValues["info"] =
         "La barra de progreso muestra tu avance en las habilidades del tópico. Cada vez que respondes correctamente, Mateo incrementa la barra. Si usas pistas (hints) o respondes incorrectamente, Mateo puede disminuir la barra. La barra del grupo promedia el progreso de todos los estudiantes del grupo que han usado el sistema.";
-      pbValues["groupvalues"] = progresscalc(listakcs(KCs), gModel.data);
+      pbValues["groupvalues"] = progressCal(listakcs(KCs), gModel.data);
       let diff = pbValues.uservalues - pbValues.groupvalues;
       let sample3 = Surveys.data[Surveys.tagXindex["motiv-msg"]];
       if (
@@ -147,7 +147,7 @@ export const CardSelectionTopic = ({
           kcsyejercicio.title = label;
         }
         if (uModel.sprog) {
-          let ouval = progresscalc(kcsyejercicio.lista, InitialModel.data);
+          let ouval = progressCal(kcsyejercicio.lista, InitialModel.data);
           let diff = pbValues.uservalues - ouval;
           pbValues["deltau"] = (diff * 100).toFixed(0);
         }

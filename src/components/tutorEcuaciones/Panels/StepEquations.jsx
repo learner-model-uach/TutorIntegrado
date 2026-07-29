@@ -153,7 +153,7 @@ export const StepEquations = ({
             kcsIDs: step.KCs,
             extra: {
               response: { answerLeft, answerRigth },
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });
@@ -179,7 +179,7 @@ export const StepEquations = ({
             kcsIDs: step.KCs,
             extra: {
               response: { answerLeft, answerRigth },
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });

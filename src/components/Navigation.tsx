@@ -1,14 +1,21 @@
 import { Stack, Text } from "@chakra-ui/react";
 import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch, FaChartLine } from "react-icons/fa";
+import { useSnapshot } from "valtio";
 import { useAuth } from "./Auth";
+import { gSelect } from "./GroupSelect";
+import { getDashboardPermissions } from "./olm/dashboardTags";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
 
 export function Navigation() {
   const { user, isLoading } = useAuth();
+  const groupSelection = useSnapshot(gSelect);
 
   const admin = (user?.role ?? "") == "ADMIN" ? true : false;
   const isPreLogin = !isLoading && !user;
+  const dashboardPermissions = getDashboardPermissions(user, groupSelection.group);
+  const canShowDashboardLink =
+    !!user && !user.tags.includes("wp-test-user") && dashboardPermissions.canViewDashboard;
 
   if (isPreLogin) {
     return (
@@ -39,7 +46,7 @@ export function Navigation() {
         <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
           Tutorial
         </SidebarLink>
-        {user && !user.tags.includes("wp-test-user") && (
+        {canShowDashboardLink && (
           <>
             <SidebarLink icon={<FaChartLine />} href="/progress">
               Mi progreso

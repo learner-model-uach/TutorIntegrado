@@ -30,7 +30,7 @@ const pval = (kcnames: Array<string>, uservalues: Record<string, model>): number
   return val;
 };
 
-export const progresscalc = (
+export const progressCal = (
   kcnames: Array<string>,
   values: Array<{ id: string; json: Record<string, model> }>,
 ): number => {

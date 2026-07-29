@@ -12,6 +12,21 @@ import { serializeError } from "serialize-error";
 import { proxy, useSnapshot } from "valtio";
 import { API_URL } from "./utils/constants";
 
+const isPrismaConnectionPoolError = (err: unknown) => {
+  const message = err instanceof Error ? err.message : JSON.stringify(serializeError(err));
+
+  return (
+    message.includes("Timed out fetching a new connection from the connection pool") ||
+    message.includes("prisma.topic.findMany")
+  );
+};
+
+const shouldRetryQuery = (failureCount: number, err: unknown) => {
+  if (isPrismaConnectionPoolError(err)) return false;
+
+  return failureCount < 1;
+};
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
@@ -24,6 +39,10 @@ export const queryClient = new QueryClient({
       },
     },
     queries: {
+      retry: shouldRetryQuery,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      staleTime: 30 * 1000,
       onError(err) {
         if (err instanceof Error) {
           errorState.message = err.message;

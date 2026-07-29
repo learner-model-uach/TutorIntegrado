@@ -10,6 +10,9 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
   groupProgress,
   exerciseCount,
   defaultOpen = false,
+  showGroupProgress = true,
+  showEfficiency = true,
+  showEffort = true,
   model,
   groupModel,
   kcsByTopic,
@@ -17,11 +20,14 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
   efficiencyByChild,
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [hasOpened, setHasOpened] = useState(defaultOpen);
   const [showGroupParent, setShowGroupParent] = useState(false);
   const [showGroupByChild, setShowGroupByChild] = useState<Record<number, boolean>>({});
   const action = useAction();
 
   const handleParentGroupVisibility = () => {
+    if (!showGroupProgress) return;
+
     if (!showGroupParent) {
       action({
         verbName: "dshbShowGroupProgress",
@@ -42,6 +48,8 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
     groupSubtopicPercent: number,
     userSubtopicPercent: number,
   ) => {
+    if (!showGroupProgress) return;
+
     if (!showGroupChild) {
       action({
         verbName: "dshbShowGroupProgress",
@@ -71,7 +79,11 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
       });
     }
 
-    setIsOpen(prev => !prev);
+    setIsOpen(prev => {
+      const nextIsOpen = !prev;
+      if (nextIsOpen) setHasOpened(true);
+      return nextIsOpen;
+    });
   };
 
   return (
@@ -82,7 +94,8 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
         groupProgress={groupProgress}
         exerciseCount={exerciseCount}
         isOpen={isOpen}
-        showGroupParent={showGroupParent}
+        showGroupProgress={showGroupProgress}
+        showGroupParent={showGroupProgress && showGroupParent}
         onToggleGroup={handleParentGroupVisibility}
         onToggleSubtopics={handleSubtopicDisplay}
       />
@@ -90,6 +103,10 @@ const TopicAccordionRow: React.FC<TopicAccordionRowProps> = ({
       <SubtopicDetailsTable
         topic={topic}
         isOpen={isOpen}
+        shouldRenderContent={hasOpened}
+        showGroupProgress={showGroupProgress}
+        showEfficiency={showEfficiency}
+        showEffort={showEffort}
         model={model}
         groupModel={groupModel}
         kcsByTopic={kcsByTopic}

@@ -63,7 +63,7 @@ export function ProgressBarSegment({ dataActions }: Props) {
   }
 
   return (
-    <BarSegment.Root chart={chart}>
+    <BarSegment.Root chart={chart} pt="8px">
       <BarSegment.Content>
         <BarSegment.Value />
         <BarSegment.Bar />

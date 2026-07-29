@@ -1,7 +1,10 @@
 import { Avatar, Box, Button, Heading, HStack, Highlight, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FaArrowRight, FaBookOpen, FaHistory, FaPencilAlt } from "react-icons/fa";
+import { useSnapshot } from "valtio";
 import { useAuth } from "../Auth";
+import { gSelect } from "../GroupSelect";
+import { getDashboardPermissions } from "../olm/dashboardTags";
 import { useCompletedExercisesTotal } from "../olm/hooks/useCompletedExercisesTotal";
 import { useProjectUserSummary } from "./useProjectUserSummary";
 
@@ -52,6 +55,8 @@ function InfoCard({
 
 export const AssigndUser = () => {
   const { user, project } = useAuth();
+  const groupSelection = useSnapshot(gSelect);
+  const dashboardPermissions = getDashboardPermissions(user, groupSelection.group);
   const userName = user?.name?.trim().split(/\s+/)[0] || "usuario";
   const {
     totalCompletedExercises,
@@ -89,15 +94,6 @@ export const AssigndUser = () => {
               </Avatar.Root>
 
               <Stack gap="1">
-                <Text
-                  color="tangerine.600"
-                  fontWeight="bold"
-                  textTransform="uppercase"
-                  letterSpacing="0.08em"
-                  fontSize="sm"
-                >
-                  Tu espacio de aprendizaje
-                </Text>
                 <Heading
                   color="heading"
                   fontWeight="bold"
@@ -111,7 +107,7 @@ export const AssigndUser = () => {
 
             <Text maxW="3xl" fontSize={{ base: "md", md: "lg" }} color="text_info">
               <Highlight
-                query="Tutor Inteligente"
+                query="Mateo"
                 styles={{ px: "0.5", color: "tangerine.600", fontWeight: "semibold" }}
               >
                 Mateo es un Tutor Inteligente que te ayuda a aprender y ejercitar tus habilidades de
@@ -120,12 +116,7 @@ export const AssigndUser = () => {
               </Highlight>
             </Text>
             <Text maxW="3xl" fontSize={{ base: "md", md: "lg" }} color="text_info">
-              <Highlight
-                query="tópico"
-                styles={{ px: "0.5", color: "tangerine.600", fontWeight: "semibold" }}
-              >
-                Comienza escogiendo un tópico en barra de navegación izquierda.
-              </Highlight>
+              Comienza escogiendo un tópico en barra de navegación izquierda.
             </Text>
 
             <HStack flexWrap="wrap" gap="4" align="stretch">
@@ -164,19 +155,21 @@ export const AssigndUser = () => {
                 Acceso rápido
               </Text>
               <Stack gap="3">
-                <Button
-                  asChild
-                  bg="tangerine.500"
-                  color="white"
-                  borderRadius="2xl"
-                  size="lg"
-                  variant="outline"
-                >
-                  <NextLink href="/progress">
-                    Ver Mi progreso
-                    <FaArrowRight />
-                  </NextLink>
-                </Button>
+                {dashboardPermissions.canViewDashboard && (
+                  <Button
+                    asChild
+                    bg="tangerine.500"
+                    color="white"
+                    borderRadius="2xl"
+                    size="lg"
+                    variant="outline"
+                  >
+                    <NextLink href="/progress">
+                      Ver Mi progreso
+                      <FaArrowRight />
+                    </NextLink>
+                  </Button>
+                )}
 
                 <Button
                   asChild

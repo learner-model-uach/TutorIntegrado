@@ -5,11 +5,13 @@ import { useGQLQuery } from "rq-gql";
 import { useSnapshot } from "valtio";
 import { useAuth } from "../../Auth";
 import { gSelect } from "../../GroupSelect";
-import { PROGRESS_OVER_TIME_USER_AND_GROUP } from "../graphql/progressOverTime";
+import { aggregateCompleteContentActions } from "../helpers/actionAggregates";
+import { useUserActions } from "../hooks/useOlmActions";
+import { useProgressOverTime } from "../hooks/useProgressOverTime";
 import { useSubtopics, useKcsByTopics, PARENT_IDS } from "../hooks/useOlmTopics";
 import { getStableProgressEndDate, subtractMonths } from "../utils/progressQueryDates";
 import { ProgressOverTimeAvgLevelArea } from "./ProgressOverTimeAvgLevelArea";
-import type { ProgressOverTimeGroupPoint, ProgressOverTimeUserPoint } from "../types";
+import type { ProgressOverTimeBucketGroupPoint, ProgressOverTimeBucketUserPoint } from "../types";
 
 type MergedPoint = {
   at: string;
@@ -18,12 +20,33 @@ type MergedPoint = {
   nUsers?: number | null;
 };
 
+type ActivityReferencePoint = {
+  date: string;
+  count: number;
+};
+
 const QUERY_MONTHS = 12;
-const VISIBLE_MONTHS = 4;
+const MAX_VISIBLE_MONTHS = 4;
+const MIN_VISIBLE_DAYS = 28;
+const START_PADDING_DAYS = 7;
 const OLM_STALE_TIME = 5 * 60 * 1000;
 
 function getDateKey(iso: string) {
   return iso.slice(0, 10);
+}
+
+function subtractDays(dateIso: string, days: number) {
+  const nextDate = new Date(dateIso);
+  nextDate.setUTCDate(nextDate.getUTCDate() - days);
+  return nextDate.toISOString();
+}
+
+function minIsoDate(a: string, b: string) {
+  return a < b ? a : b;
+}
+
+function maxIsoDate(a: string, b: string) {
+  return a > b ? a : b;
 }
 
 function buildDailyDateKeys(startDate: string, endDate: string) {
@@ -43,10 +66,42 @@ function buildDailyDateKeys(startDate: string, endDate: string) {
 
   return dates;
 }
-[0, 0, 2];
 function carryProgress(value: number | null | undefined, previous: number | null) {
   if (typeof value === "number" && Number.isFinite(value)) return value;
   return previous ?? 0;
+}
+
+function hasProgressValue(point: { avgLevel?: number | null }) {
+  return typeof point.avgLevel === "number" && Number.isFinite(point.avgLevel);
+}
+
+function getFirstProgressDate(points: Array<{ at: string; avgLevel?: number | null }>) {
+  return points.reduce<string | null>((firstDate, point) => {
+    if (!hasProgressValue(point)) return firstDate;
+    if (!firstDate || point.at < firstDate) return point.at;
+    return firstDate;
+  }, null);
+}
+
+function getAdaptiveVisibleStartDate({
+  userPoints,
+  groupPoints,
+  endDate,
+}: {
+  userPoints: ProgressOverTimeBucketUserPoint[];
+  groupPoints: ProgressOverTimeBucketGroupPoint[];
+  endDate: string;
+}) {
+  const maxVisibleStartDate = subtractMonths(endDate, MAX_VISIBLE_MONTHS);
+  const minVisibleStartDate = subtractDays(endDate, MIN_VISIBLE_DAYS);
+  const firstProgressDate = getFirstProgressDate([...userPoints, ...groupPoints]);
+
+  if (!firstProgressDate) return minVisibleStartDate;
+
+  const paddedStartDate = subtractDays(firstProgressDate, START_PADDING_DAYS);
+  const cappedStartDate = maxIsoDate(maxVisibleStartDate, paddedStartDate);
+
+  return minIsoDate(cappedStartDate, minVisibleStartDate);
 }
 
 function ProgressOverTimeQuery({
@@ -54,44 +109,41 @@ function ProgressOverTimeQuery({
   userId,
   groupId,
   kcCodes,
+  childIdSet,
+  showGroupProgress,
 }: {
   projectsIds: string[];
   userId: string;
   groupId: string;
   kcCodes: string[];
+  childIdSet: Set<number>;
+  showGroupProgress: boolean;
 }) {
-  const { queryStartDate, visibleStartDate, endDate } = useMemo(() => {
+  const { queryStartDate, endDate } = useMemo(() => {
     const stableEndDate = getStableProgressEndDate();
 
     return {
       queryStartDate: subtractMonths(stableEndDate, QUERY_MONTHS),
-      visibleStartDate: subtractMonths(stableEndDate, VISIBLE_MONTHS),
       endDate: stableEndDate,
     };
   }, []);
 
-  const { data, isLoading, error } = useGQLQuery(
-    PROGRESS_OVER_TIME_USER_AND_GROUP,
+  const progressQuery = useProgressOverTime({
+    projectsIds,
+    userId,
+    groupId,
+    includeGroup: showGroupProgress,
+    domainId: "1",
+    startDate: queryStartDate,
+    endDate,
+    bucket: "DAY",
+    kcCodes,
+  });
+  const { data: actionData } = useGQLQuery(
+    useUserActions,
     {
-      userInput: {
-        projectsIds,
-        userId,
-        domainId: "1",
-        startDate: queryStartDate,
-        endDate,
-        bucket: "DAY",
-        kcCodes,
-      },
-      groupInput: {
-        projectsIds,
-        groupId,
-        currentUserId: userId,
-        domainId: "1",
-        startDate: queryStartDate,
-        endDate,
-        bucket: "DAY",
-        kcCodes,
-      },
+      endDate,
+      verbNames: ["completeContent"],
     },
     {
       staleTime: OLM_STALE_TIME,
@@ -100,8 +152,11 @@ function ProgressOverTimeQuery({
     },
   );
 
-  const userPoints = data?.progressOverTime?.userBkt?.points ?? [];
-  const groupPoints = data?.progressOverTime?.groupBkt?.points ?? [];
+  const userPoints = progressQuery.userRaw;
+  const groupPoints = useMemo(
+    () => (showGroupProgress ? progressQuery.groupRaw : []),
+    [progressQuery.groupRaw, showGroupProgress],
+  );
 
   const dateKeys = useMemo(
     () => buildDailyDateKeys(queryStartDate, endDate),
@@ -109,13 +164,18 @@ function ProgressOverTimeQuery({
   );
 
   const userMap = useMemo(
-    () => new Map(userPoints.map((p: ProgressOverTimeUserPoint) => [getDateKey(p.at), p])),
+    () => new Map(userPoints.map((p: ProgressOverTimeBucketUserPoint) => [getDateKey(p.at), p])),
     [userPoints],
   );
 
   const groupMap = useMemo(
-    () => new Map(groupPoints.map((p: ProgressOverTimeGroupPoint) => [getDateKey(p.at), p])),
+    () => new Map(groupPoints.map((p: ProgressOverTimeBucketGroupPoint) => [getDateKey(p.at), p])),
     [groupPoints],
+  );
+
+  const visibleStartDate = useMemo(
+    () => getAdaptiveVisibleStartDate({ userPoints, groupPoints, endDate }),
+    [userPoints, groupPoints, endDate],
   );
 
   const merged: MergedPoint[] = useMemo(() => {
@@ -126,34 +186,66 @@ function ProgressOverTimeQuery({
       const u = userMap.get(dateKey);
       const g = groupMap.get(dateKey);
       const userAvg = carryProgress(u?.avgLevel, previousUserAvg);
-      const groupAvg = carryProgress(g?.avgLevel, previousGroupAvg);
+      const groupAvg = showGroupProgress ? carryProgress(g?.avgLevel, previousGroupAvg) : null;
 
       previousUserAvg = userAvg;
-      previousGroupAvg = groupAvg;
+      if (showGroupProgress) previousGroupAvg = groupAvg;
 
       return {
         at: `${dateKey}T00:00:00.000Z`,
         userAvg,
         groupAvg,
-        nUsers: g?.nUsers ?? null,
+        nUsers: showGroupProgress ? (g?.nUsers ?? null) : null,
       };
     });
 
     const visibleStartKey = getDateKey(visibleStartDate);
     return fullRange.filter(point => getDateKey(point.at) >= visibleStartKey);
-  }, [dateKeys, userMap, groupMap, visibleStartDate]);
+  }, [dateKeys, groupMap, showGroupProgress, userMap, visibleStartDate]);
 
-  if (isLoading) return <Text textAlign="center">Cargando evolución de progreso…</Text>;
+  const visibleDateSet = useMemo(
+    () => new Set(merged.map(point => getDateKey(point.at))),
+    [merged],
+  );
 
-  if (error) {
-    console.error(error);
+  const mostActiveDay = useMemo<ActivityReferencePoint | null>(() => {
+    const { exerciseCountsByDate } = aggregateCompleteContentActions(actionData, childIdSet);
+
+    return Object.entries(exerciseCountsByDate)
+      .sort(([dateA], [dateB]) => dateA.localeCompare(dateB))
+      .reduce<ActivityReferencePoint | null>((highest, [date, count]) => {
+        if (!visibleDateSet.has(date)) return highest;
+        if (count <= 0) return highest;
+        if (!highest || count > highest.count) return { date, count };
+
+        return highest;
+      }, null);
+  }, [actionData, childIdSet, visibleDateSet]);
+
+  if (progressQuery.isLoading)
+    return <Text textAlign="center">Cargando evolución de progreso…</Text>;
+
+  if (progressQuery.error) {
+    console.error(progressQuery.error);
     return <div>Error cargando progreso</div>;
   }
 
-  return <ProgressOverTimeAvgLevelArea points={merged} />;
+  return (
+    <ProgressOverTimeAvgLevelArea
+      points={merged}
+      activityReferencePoint={mostActiveDay}
+      showGroupProgress={showGroupProgress}
+    />
+  );
 }
 
-export function ProgressOverTimeContainer() {
+type ProgressOverTimeContainerProps = {
+  showGroupProgress?: boolean;
+};
+
+export function ProgressOverTimeContainer({
+  showGroupProgress = true,
+}: ProgressOverTimeContainerProps) {
   const { user, project, isLoading: authLoading } = useAuth();
   const groupSelection = useSnapshot(gSelect);
 
@@ -168,8 +260,21 @@ export function ProgressOverTimeContainer() {
   const { topics, isLoading: topicsLoading } = useSubtopics(PARENT_IDS);
 
   const topicCodes = useMemo(() => {
-    const codes = topics.flatMap((t: any) => (t.childrens ?? []).map((c: any) => c.code)) ?? [];
+    const codes = topics.flatMap(topic => (topic.childrens ?? []).map(child => child.code));
     return Array.from(new Set(codes)).filter(Boolean);
+  }, [topics]);
+  const childIdSet = useMemo(() => {
+    const set = new Set<number>();
+
+    for (const topic of topics) {
+      for (const child of topic.childrens ?? []) {
+        if (child?.id != null) {
+          set.add(Number(child.id));
+        }
+      }
+    }
+
+    return set;
   }, [topics]);
 
   const { kcCodes, isLoading: kcsLoading } = useKcsByTopics(topicCodes);
@@ -184,8 +289,8 @@ export function ProgressOverTimeContainer() {
   if (!user) return <div>No autenticado</div>;
   if (!userId) return <div>No autenticado</div>;
   if (!projectId) return <div>Proyecto no disponible</div>;
-  if (groups.length === 0) return <div>No tienes grupo asignado</div>;
-  if (!groupId) return <div>Selecciona un grupo</div>;
+  if (showGroupProgress && groups.length === 0) return <div>No tienes grupo asignado</div>;
+  if (showGroupProgress && !groupId) return <div>Selecciona un grupo</div>;
   if (kcCodes.length === 0) return <div>No hay KCs para graficar</div>;
 
   return (
@@ -194,6 +299,8 @@ export function ProgressOverTimeContainer() {
       userId={userId}
       groupId={groupId}
       kcCodes={kcCodes}
+      childIdSet={childIdSet}
+      showGroupProgress={showGroupProgress}
     />
   );
 }

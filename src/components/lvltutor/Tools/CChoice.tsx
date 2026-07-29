@@ -72,14 +72,14 @@ function handleAnswer(
   oans: option,
   ans: Array<option>,
   uans: string,
-  attemps: number,
+  attempts: number,
   stepid: string,
 ) {
   let correctAns = false;
   let at: "info" | "warning" | "success" | "error" | undefined;
   let output = {
     result: 0,
-    attempts: attemps,
+    attempts: attempts,
     alerttype: at,
     alertmsg: "potato",
     alerthidden: false,
@@ -115,7 +115,7 @@ function handleAnswer(
   }
 
   MQProxy.submit = true;
-  output.attempts = attemps + 1;
+  output.attempts = attempts + 1;
 
   return output;
 }

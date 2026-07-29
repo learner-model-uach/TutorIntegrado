@@ -20,6 +20,7 @@ export type UserActionContent = NonNullable<UserAction["content"]>;
 export type UserActionTopic = UserActionContent["topics"][number];
 export type TryStepActionExtra = Record<string, unknown> & {
   attempts?: number;
+  attemps?: number;
   hints?: number;
 };
 
@@ -57,6 +58,9 @@ export interface TopicAccordionRowProps {
   groupProgress?: number;
   exerciseCount: number;
   defaultOpen?: boolean;
+  showGroupProgress?: boolean;
+  showEfficiency?: boolean;
+  showEffort?: boolean;
   model: OlmModelState[];
   groupModel?: OlmModelState[];
   kcsByTopic: KcByTopicMap;

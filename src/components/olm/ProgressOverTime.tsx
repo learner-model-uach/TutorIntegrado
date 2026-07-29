@@ -149,6 +149,7 @@ export default function ProgressOverTime({ endDate }: Props) {
             ))}
           </BarChart>
         </Chart.Root>
+
         <ProgressBarSegment dataActions={data} />
       </Box>
     </>

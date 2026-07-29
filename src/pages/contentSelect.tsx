@@ -20,7 +20,7 @@ import {
   InitialModel,
 } from "../utils/startModel";
 import { gSelect } from "../components/GroupSelect";
-import { progresscalc } from "../components/progressbar/progresscalc";
+import { progressCal } from "../components/progressbar/progressCal";
 import { reset, Surveys, SVP } from "../components/csurvey/Answers";
 import { SurveyViewer } from "../components/csurvey/SurveyViewer";
 import { sessionState } from "../components/SessionState";
@@ -185,11 +185,11 @@ export default withAuth(function ContentSelect() {
 
   //!uModel.isLoading && !gModel.isLoading && !InitialModel.isLoading
   if (!uModel.isLoading) {
-    pbValues.uservalues = progresscalc(kcsyejercicio.lista, uModel.data);
+    pbValues.uservalues = progressCal(kcsyejercicio.lista, uModel.data);
     if (uModel.osml) {
       pbValues["info"] =
         "La barra de progreso muestra tu avance en las habilidades del tópico. Cada vez que respondes correctamente, Mateo incrementa la barra. Si usas pistas (hints) o respondes incorrectamente, Mateo puede disminuir la barra. La barra del grupo promedia el progreso de todos los estudiantes del grupo que han usado el sistema.";
-      pbValues["groupvalues"] = progresscalc(kcsyejercicio.lista, gModel.data);
+      pbValues["groupvalues"] = progressCal(kcsyejercicio.lista, gModel.data);
       let diff = pbValues.uservalues - pbValues.groupvalues;
       let sample3 = Surveys.data[Surveys.tagXindex["motiv-msg"]];
       if (
@@ -210,7 +210,7 @@ export default withAuth(function ContentSelect() {
       pbValues["info"] =
         "La barra de progreso muestra tu avance en habilidades del tópico. Cada vez que respondes un paso de un ejercicio correctamente, Mateo incrementa la barra. Si usas pistas (hints) o respondes incorrectamente, Mateo puede disminuir la barra.";
     if (uModel.sprog) {
-      let ouval = progresscalc(kcsyejercicio.lista, InitialModel.data);
+      let ouval = progressCal(kcsyejercicio.lista, InitialModel.data);
       let diff = pbValues.uservalues - ouval;
       pbValues["deltau"] = (diff * 100).toFixed(0);
     }

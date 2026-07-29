@@ -31,7 +31,9 @@ export const useSubtopics = (parentIds: string[] = []) => {
     },
   );
 
-  return { topics: (data?.topics ?? []) as Topic[], isLoading };
+  const topics = useMemo(() => (data?.topics ?? []) as Topic[], [data?.topics]);
+
+  return { topics, isLoading };
 };
 
 export const useKcsByTopics = (topicCodes?: string[]) => {
@@ -55,17 +57,20 @@ export const useKcsByTopics = (topicCodes?: string[]) => {
     },
   );
 
-  const kcByTopic: KcByTopicMap = {};
-  if (data?.kcsByContentByTopics) {
-    data.kcsByContentByTopics.forEach(({ topic, kcs }) => {
-      kcByTopic[topic.id] = kcs;
-    });
-  }
+  const kcByTopic = useMemo(() => {
+    const byTopic: KcByTopicMap = {};
+    if (data?.kcsByContentByTopics) {
+      data.kcsByContentByTopics.forEach(({ topic, kcs }) => {
+        byTopic[topic.id] = kcs;
+      });
+    }
+    return byTopic;
+  }, [data?.kcsByContentByTopics]);
 
   const kcCodes = useMemo(() => {
     const all = Object.values(kcByTopic).flatMap(kcs => kcs.map(k => k.code));
     return Array.from(new Set(all)).filter(Boolean);
-  }, [data]); // suficiente
+  }, [kcByTopic]);
 
   return { kcByTopic, kcCodes, isLoading };
 };

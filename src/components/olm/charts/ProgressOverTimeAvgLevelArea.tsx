@@ -7,6 +7,7 @@ import {
   AreaChart,
   CartesianGrid,
   Legend,
+  ReferenceLine,
   Tooltip,
   XAxis,
   YAxis,
@@ -14,6 +15,17 @@ import {
 } from "recharts";
 import type { MergedProgressPoint, ProgressAreaDatum } from "../types";
 import ProgressOverTimeBoxInfo from "../ProgressOverTimeBoxInfo";
+
+type ActivityReferencePoint = {
+  date: string;
+  count: number;
+};
+
+type ProgressOverTimeAvgLevelAreaProps = {
+  points: MergedProgressPoint[];
+  activityReferencePoint?: ActivityReferencePoint | null;
+  showGroupProgress?: boolean;
+};
 
 const MONTH_LABELS = [
   "ene",
@@ -118,7 +130,11 @@ function CustomProgressTooltip({ active, payload, label, percentFmt }: CustomPro
   );
 }
 
-export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgressPoint[] }) {
+export function ProgressOverTimeAvgLevelArea({
+  points,
+  activityReferencePoint,
+  showGroupProgress = true,
+}: ProgressOverTimeAvgLevelAreaProps) {
   const data: ProgressAreaDatum[] = useMemo(
     () =>
       points.map(p => ({
@@ -130,13 +146,19 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
     [points],
   );
   const xAxisTicks = useMemo(() => buildXAxisTicks(data.map(point => point.date)), [data]);
+  const series = useMemo(
+    () => [
+      { name: "userAvg" as keyof ProgressAreaDatum, color: "blue.500" },
+      ...(showGroupProgress
+        ? [{ name: "groupAvg" as keyof ProgressAreaDatum, color: "teal.500" }]
+        : []),
+    ],
+    [showGroupProgress],
+  );
 
   const chart = useChart({
     data,
-    series: [
-      { name: "userAvg", color: "blue.500" },
-      { name: "groupAvg", color: "teal.500" },
-    ],
+    series,
   });
 
   const percentFmt = useMemo(
@@ -151,8 +173,17 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
   return (
     <>
       <ProgressOverTimeBoxInfo
-        message="Aquí podrás revisar la evolución de tu progreso y el progreso de tu grupo durante los últimos 4 meses. Si notas una caída drástica en el progreso del grupal, se debe a que se han registrados nuevos usuarios dentro de  tu grupo que han empezado a resolver ejercicios."
-        highlightQuery={["últimos 4 meses", "tu progreso", "progreso de tu grupo"]}
+        message={
+          showGroupProgress
+            ? "Aquí podrás revisar la evolución de tu progreso y el progreso de tu grupo durante un período máximo de 4 meses. Si notas una caída drástica en el progreso grupal se debe a que nuevos usuarios dentro de tu grupo han empezado a resolver ejercicios."
+            : "Aquí podrás revisar la evolución de tu progreso durante un período máximo de 4 meses."
+        }
+        highlightQuery={[
+          "periodo más relevante",
+          "máximo de 4 meses",
+          "tu progreso",
+          ...(showGroupProgress ? ["progreso de tu grupo"] : []),
+        ]}
       />
       <Text
         color="heading"
@@ -193,14 +224,16 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
             </linearGradient>
           </defs>
 
-          <Area
-            type="monotone"
-            dataKey={chart.key("groupAvg")}
-            stroke={"#d8881e"}
-            fill="url(#colorGroup)"
-            connectNulls
-            name="Progreso Grupo"
-          />
+          {showGroupProgress && (
+            <Area
+              type="monotone"
+              dataKey={chart.key("groupAvg")}
+              stroke={"#d8881e"}
+              fill="url(#colorGroup)"
+              connectNulls
+              name="Progreso Grupo"
+            />
+          )}
 
           <Area
             type="monotone"
@@ -210,6 +243,21 @@ export function ProgressOverTimeAvgLevelArea({ points }: { points: MergedProgres
             connectNulls
             name="Mi progreso"
           />
+
+          {activityReferencePoint && (
+            <ReferenceLine
+              x={activityReferencePoint.date}
+              stroke={chart.color("mayorActividad")}
+              strokeDasharray="4 4"
+              strokeWidth={2}
+              label={{
+                value: `Mayor actividad: ${activityReferencePoint.count}`,
+                position: "insideTopRight",
+                fill: chart.color("mayorActividad"),
+                fontSize: 12,
+              }}
+            />
+          )}
         </AreaChart>
       </Chart.Root>
     </>
