@@ -87,6 +87,9 @@ export function Navigation() {
             <SidebarLink key="9" href={"topicSelect?&registerTopic=37"}>
               Lógica y Teoría de Conjuntos
             </SidebarLink>
+            <SidebarLink key="10" href={"/pruebaEstudiantes"}>
+              Prueba estudiantes
+            </SidebarLink>
             <Stack fontWeight="black" pb="6">
               <SidebarLink icon={<FaBookOpen />} href="/challenge">
                 Desafíos
