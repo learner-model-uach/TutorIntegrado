@@ -114,7 +114,7 @@ export default withAuth(function PruebaEstudiantes() {
     } catch (e) {
       console.warn("No se pudo restaurar el progreso previo:", e);
     }
-  }, [currentSeed, storageKey]);
+  }, [action, currentSeed, storageKey, userIdentifier]);
 
   // GUARDAR AUTOMÁTICAMENTE EL PROGRESO EN LOCALSTORAGE TRAS CADA CAMBIO
   useEffect(() => {
@@ -222,53 +222,64 @@ export default withAuth(function PruebaEstudiantes() {
   };
 
   // Transición al siguiente ejercicio o fase de Encuesta Final registrando la duración exacta
-  const advanceToNextExercise = (finalLatex: string) => {
-    if (!currentExercise) return;
+  const advanceToNextExercise = useCallback(
+    (finalLatex: string) => {
+      if (!currentExercise) return;
 
-    const endTime = Date.now();
-    const startTime = exerciseStartTimeRef.current;
-    const timeSpentMs = Math.max(0, endTime - startTime);
-    const timeSpentSec = Number((timeSpentMs / 1000).toFixed(2));
+      const endTime = Date.now();
+      const startTime = exerciseStartTimeRef.current;
+      const timeSpentMs = Math.max(0, endTime - startTime);
+      const timeSpentSec = Number((timeSpentMs / 1000).toFixed(2));
 
-    const updatedSubmitted = { ...submittedLatex, [currentExercise.id]: finalLatex };
-    setSubmittedLatex(updatedSubmitted);
+      const updatedSubmitted = { ...submittedLatex, [currentExercise.id]: finalLatex };
+      setSubmittedLatex(updatedSubmitted);
 
-    // Registrar acción en API con métricas de tiempo del ejercicio
-    action({
-      verbName: "thesisSubmitExercise",
-      extra: {
-        exerciseId: currentExercise.id,
-        seed: currentSeed,
-        mode: currentMode,
-        inputLatex: finalLatex,
-        targetLatex: currentExercise.targetLatex,
-        user: userIdentifier,
-        timeSpentMs,
-        timeSpentSec,
-        startTime,
-        endTime,
-      },
-    });
-
-    // Limpiar entrada
-    setStudentLatex("");
-
-    // Avanzar al siguiente ejercicio o a la encuesta final de salida
-    if (currentExerciseIndex < EXPERIMENT_EXERCISES.length - 1) {
-      const nextIdx = currentExerciseIndex + 1;
-      setCurrentExerciseIndex(nextIdx);
-      exerciseStartTimeRef.current = Date.now();
-    } else {
-      setPhase("post_survey");
+      // Registrar acción en API con métricas de tiempo del ejercicio
       action({
-        verbName: "thesisFinishExercises",
+        verbName: "thesisSubmitExercise",
         extra: {
+          exerciseId: currentExercise.id,
           seed: currentSeed,
+          mode: currentMode,
+          inputLatex: finalLatex,
+          targetLatex: currentExercise.targetLatex,
           user: userIdentifier,
+          timeSpentMs,
+          timeSpentSec,
+          startTime,
+          endTime,
         },
       });
-    }
-  };
+
+      // Limpiar entrada
+      setStudentLatex("");
+
+      // Avanzar al siguiente ejercicio o a la encuesta final de salida
+      if (currentExerciseIndex < EXPERIMENT_EXERCISES.length - 1) {
+        const nextIdx = currentExerciseIndex + 1;
+        setCurrentExerciseIndex(nextIdx);
+        exerciseStartTimeRef.current = Date.now();
+      } else {
+        setPhase("post_survey");
+        action({
+          verbName: "thesisFinishExercises",
+          extra: {
+            seed: currentSeed,
+            user: userIdentifier,
+          },
+        });
+      }
+    },
+    [
+      action,
+      currentExercise,
+      currentExerciseIndex,
+      currentMode,
+      currentSeed,
+      submittedLatex,
+      userIdentifier,
+    ],
+  );
 
   // Captura de respuesta desde Pizarra Digital
   const handleCapturePizarra = useCallback(
@@ -298,7 +309,7 @@ export default withAuth(function PruebaEstudiantes() {
         advanceToNextExercise(captured);
       }
     },
-    [action, currentExercise?.id, currentSeed, userIdentifier],
+    [action, advanceToNextExercise, currentExercise?.id, currentSeed, userIdentifier],
   );
 
   return (
@@ -569,7 +580,7 @@ export default withAuth(function PruebaEstudiantes() {
                   </Text>
                   {!hasClickedEntryForm && (
                     <Badge colorPalette="amber" variant="subtle" ml="auto">
-                      <Icon as={FaLock} mr="1" /> Haz clic en "Abrir Encuesta" primero
+                      <Icon as={FaLock} mr="1" /> Haz clic en &quot;Abrir Encuesta&quot; primero
                     </Badge>
                   )}
                 </HStack>
@@ -954,7 +965,8 @@ export default withAuth(function PruebaEstudiantes() {
                   </Text>
                   {!hasClickedExitForm && (
                     <Badge colorPalette="amber" variant="subtle" ml="auto">
-                      <Icon as={FaLock} mr="1" /> Haz clic en "Abrir Encuesta Final" primero
+                      <Icon as={FaLock} mr="1" /> Haz clic en &quot;Abrir Encuesta Final&quot;
+                      primero
                     </Badge>
                   )}
                 </HStack>
