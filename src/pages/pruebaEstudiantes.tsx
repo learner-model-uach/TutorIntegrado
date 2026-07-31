@@ -26,6 +26,9 @@ import {
   FaHistory,
   FaTrashAlt,
   FaLock,
+  FaBrain,
+  FaTachometerAlt,
+  FaSmile,
 } from "react-icons/fa";
 import { MathPixBoard } from "../components/whiteboard/MathPixBoard";
 import MQStaticMathField from "../utils/MQStaticMathField";
@@ -33,26 +36,193 @@ import { useAction } from "../utils/action";
 import {
   EXPERIMENT_EXERCISES,
   getSeedFromUser,
+  getSeedExerciseSequence,
   SEED_ASSIGNMENTS,
   InputMode,
 } from "../utils/thesisSeeds";
-import { addStyles, EditableMathField } from "react-mathquill";
+import dynamic from "next/dynamic";
 
-addStyles();
+const EditableMathFieldComponent = dynamic(
+  () =>
+    import("react-mathquill").then(mod => {
+      if (typeof window !== "undefined") {
+        mod.addStyles();
+      }
+      return mod.EditableMathField;
+    }),
+  { ssr: false },
+);
 
 type Phase = "intro" | "survey" | "exercise" | "post_survey" | "finished";
 
-// URLs por defecto de Google Forms para la encuesta inicial y de salida (configurables por env)
+// URLs por defecto de Google Forms para la encuesta inicial y de salida
 const ENTRY_FORMS_URL =
-  process.env.NEXT_PUBLIC_THESIS_ENTRY_FORMS_URL || "https://forms.google.com/";
-const EXIT_FORMS_URL = process.env.NEXT_PUBLIC_THESIS_EXIT_FORMS_URL || "https://forms.google.com/";
+  process.env.NEXT_PUBLIC_THESIS_ENTRY_FORMS_URL ||
+  "https://docs.google.com/forms/d/e/1FAIpQLSf4SzzQiRMjpj0nQefb_KlhtWsbwQY-s5BgBleTMQUJSF-tOQ/viewform?usp=pp_url&entry.666946759=USUARIO_AQUI";
+const EXIT_FORMS_URL =
+  process.env.NEXT_PUBLIC_THESIS_EXIT_FORMS_URL ||
+  "https://docs.google.com/forms/d/e/1FAIpQLSdu3rXVZ8vk4KbYHY8IUeqF0ejLGOdWVlxtRO8RXdGBE8qn1g/viewform?usp=pp_url&entry.1804015926=USUARIO_AQUI";
+
+interface NasaTlxData {
+  mentalDemand: number; // 1 a 10
+  effort: number; // 1 a 10
+  frustration: number; // 1 a 10
+}
+
+// Componente Deslizador (Slider 1 a 10) con arrastre universal fluido (Mouse + Tablet Touch)
+function RatingScale({
+  value,
+  onChange,
+  minLabel,
+  maxLabel,
+}: {
+  value: number;
+  onChange: (val: number) => void;
+  minLabel: string;
+  maxLabel: string;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const updateValue = useCallback(
+    (clientX: number) => {
+      if (!trackRef.current) return;
+      const rect = trackRef.current.getBoundingClientRect();
+      const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+      const percentage = rect.width > 0 ? offsetX / rect.width : 0;
+      const newValue = Math.max(1, Math.min(10, Math.round(1 + percentage * 9)));
+      onChange(newValue);
+    },
+    [onChange],
+  );
+
+  const handleStart = (clientX: number) => {
+    setIsDragging(true);
+    updateValue(clientX);
+
+    const handleMove = (e: MouseEvent | TouchEvent) => {
+      const x =
+        "touches" in e && e.touches.length > 0 ? e.touches[0].clientX : (e as MouseEvent).clientX;
+      updateValue(x);
+    };
+
+    const handleEnd = () => {
+      setIsDragging(false);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleEnd);
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleEnd);
+      window.removeEventListener("touchcancel", handleEnd);
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", handleEnd);
+    window.addEventListener("touchmove", handleMove, { passive: true });
+    window.addEventListener("touchend", handleEnd);
+    window.addEventListener("touchcancel", handleEnd);
+  };
+
+  // Porcentaje visual del botón sobre la pista (0% a 100%)
+  const fillPercent = ((value - 1) / 9) * 100;
+
+  return (
+    <VStack align="stretch" gap="2" w="full" py="2">
+      {/* Pista e Indicador Deslizante */}
+      <Box
+        ref={trackRef}
+        position="relative"
+        w="full"
+        h="44px"
+        display="flex"
+        alignItems="center"
+        cursor="pointer"
+        px="2"
+        style={{ touchAction: "none", userSelect: "none" }}
+        onMouseDown={e => {
+          e.preventDefault();
+          handleStart(e.clientX);
+        }}
+        onTouchStart={e => {
+          if (e.touches.length > 0) {
+            handleStart(e.touches[0].clientX);
+          }
+        }}
+      >
+        {/* Fondo de la Pista (Track) */}
+        <Box
+          w="full"
+          h="14px"
+          bg={{ base: "gray.200", _dark: "gray.700" }}
+          borderRadius="full"
+          position="relative"
+          overflow="hidden"
+        >
+          {/* Relleno de Progreso */}
+          <Box
+            h="full"
+            w={`${fillPercent}%`}
+            bg="teal.500"
+            borderRadius="full"
+            transition={isDragging ? "none" : "width 0.15s ease-out"}
+          />
+        </Box>
+
+        {/* Botón Deslizante Tactil Grande (Thumb 36px) */}
+        <Box
+          position="absolute"
+          left={`calc(${fillPercent}% + ${8 - (fillPercent / 100) * 16}px)`}
+          w="36px"
+          h="36px"
+          bg="teal.500"
+          color="white"
+          borderRadius="full"
+          shadow="lg"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          transform="translateX(-50%)"
+          transition={isDragging ? "none" : "left 0.15s ease-out"}
+          border="3px solid white"
+          _hover={{ transform: "translateX(-50%) scale(1.1)" }}
+          _active={{ transform: "translateX(-50%) scale(1.15)" }}
+          fontWeight="bold"
+          fontSize="sm"
+          userSelect="none"
+        >
+          {value}
+        </Box>
+      </Box>
+
+      {/* Indicadores Visuales de Menos a Más */}
+      <Flex justify="space-between" align="center" px="1">
+        <HStack gap="1.5">
+          <Badge colorPalette="gray" variant="subtle" size="sm">
+            ◄ Menos
+          </Badge>
+          <Text fontSize="xs" fontWeight="bold" color="fg.muted">
+            {minLabel}
+          </Text>
+        </HStack>
+
+        <HStack gap="1.5">
+          <Text fontSize="xs" fontWeight="bold" color="fg.muted">
+            {maxLabel}
+          </Text>
+          <Badge colorPalette="teal" variant="solid" size="sm">
+            Más ►
+          </Badge>
+        </HStack>
+      </Flex>
+    </VStack>
+  );
+}
 
 export default withAuth(function PruebaEstudiantes() {
-  const { user, auth0User } = useAuth();
+  const { user } = useAuth();
   const action = useAction();
 
   // Detección de cuenta y semilla asignada (semilla fija según la cuenta)
-  const userIdentifier = auth0User?.nickname || user?.email || user?.name || "";
+  const userIdentifier = user?.nickname || user?.email || user?.name || "";
   const detected = getSeedFromUser(userIdentifier);
   const currentSeed = detected.seed;
 
@@ -71,16 +241,24 @@ export default withAuth(function PruebaEstudiantes() {
   const [hasClickedExitForm, setHasClickedExitForm] = useState<boolean>(false);
   const [isExitSurveyCompleted, setIsExitSurveyCompleted] = useState<boolean>(false);
 
+  // Estado para el modal de evaluación NASA-TLX por ejercicio
+  const [isNasaTlxOpen, setIsNasaTlxOpen] = useState<boolean>(false);
+  const [nasaMental, setNasaMental] = useState<number>(5);
+  const [nasaEffort, setNasaEffort] = useState<number>(5);
+  const [nasaFrustration, setNasaFrustration] = useState<number>(5);
+  const [pendingExerciseTimeMs, setPendingExerciseTimeMs] = useState<number>(0);
+  const [submittedNasaTlx, setSubmittedNasaTlx] = useState<Record<string, NasaTlxData>>({});
+
   // Clave única de almacenamiento local según el usuario
   const storageKey = `thesis_progress_${userIdentifier || "guest"}`;
 
   // Registro del tiempo de inicio del ejercicio activo
   const exerciseStartTimeRef = useRef<number>(Date.now());
 
-  const seedConfig = SEED_ASSIGNMENTS[currentSeed] || SEED_ASSIGNMENTS[0];
-  const currentExercise = EXPERIMENT_EXERCISES[currentExerciseIndex];
-  const currentModeInfo = seedConfig.exerciseModes.find(m => m.exerciseId === currentExercise?.id);
-  const currentMode: InputMode = currentModeInfo?.mode || "teclado";
+  const seedSequence = getSeedExerciseSequence(currentSeed);
+  const currentStep = seedSequence[currentExerciseIndex] || seedSequence[0];
+  const currentExercise = currentStep.exercise;
+  const currentMode: InputMode = currentStep.mode;
 
   // RESTAURAR PROGRESO DESDE LOCALSTORAGE AL CARGAR LA PÁGINA
   useEffect(() => {
@@ -98,6 +276,7 @@ export default withAuth(function PruebaEstudiantes() {
           setHasClickedExitForm(Boolean(parsed.hasClickedExitForm));
           setIsExitSurveyCompleted(Boolean(parsed.isExitSurveyCompleted));
           setSubmittedLatex(parsed.submittedLatex || {});
+          setSubmittedNasaTlx(parsed.submittedNasaTlx || {});
           setIsRestored(true);
 
           action({
@@ -129,6 +308,7 @@ export default withAuth(function PruebaEstudiantes() {
         hasClickedExitForm,
         isExitSurveyCompleted,
         submittedLatex,
+        submittedNasaTlx,
         seed: currentSeed,
         timestamp: Date.now(),
       };
@@ -144,6 +324,7 @@ export default withAuth(function PruebaEstudiantes() {
     hasClickedExitForm,
     isExitSurveyCompleted,
     submittedLatex,
+    submittedNasaTlx,
     currentSeed,
     storageKey,
   ]);
@@ -163,10 +344,10 @@ export default withAuth(function PruebaEstudiantes() {
 
   // Reiniciar el cronómetro al cambiar de ejercicio o entrar a la fase de ejercicios
   useEffect(() => {
-    if (phase === "exercise") {
+    if (phase === "exercise" && !isNasaTlxOpen) {
       exerciseStartTimeRef.current = Date.now();
     }
-  }, [phase, currentExerciseIndex]);
+  }, [phase, currentExerciseIndex, isNasaTlxOpen]);
 
   // Función para reiniciar el experimento completamente de cero
   const handleResetProgress = () => {
@@ -175,12 +356,14 @@ export default withAuth(function PruebaEstudiantes() {
     } catch {}
     setStudentLatex("");
     setSubmittedLatex({});
+    setSubmittedNasaTlx({});
     setCurrentExerciseIndex(0);
     setPhase("intro");
     setHasClickedEntryForm(false);
     setIsEntrySurveyCompleted(false);
     setHasClickedExitForm(false);
     setIsExitSurveyCompleted(false);
+    setIsNasaTlxOpen(false);
     setIsRestored(false);
   };
 
@@ -202,27 +385,57 @@ export default withAuth(function PruebaEstudiantes() {
     }
   };
 
-  // Apertura de enlaces a Google Forms con habilitación del Checkbox
+  // Apertura de enlaces a Google Forms con rellenado automático de usuario y habilitación del Checkbox
   const handleOpenEntryForm = () => {
     setHasClickedEntryForm(true);
-    window.open(ENTRY_FORMS_URL, "_blank", "noopener,noreferrer");
+    const account = detected.accountName || userIdentifier || "invitado";
+    let targetUrl = ENTRY_FORMS_URL;
+
+    if (targetUrl.includes("USUARIO_AQUI")) {
+      targetUrl = targetUrl.replace("USUARIO_AQUI", encodeURIComponent(account));
+    } else if (targetUrl.includes("entry.666946759=")) {
+      targetUrl = targetUrl.replace(
+        /entry\.666946759=[^&]*/,
+        `entry.666946759=${encodeURIComponent(account)}`,
+      );
+    } else {
+      const sep = targetUrl.includes("?") ? "&" : "?";
+      targetUrl += `${sep}entry.666946759=${encodeURIComponent(account)}`;
+    }
+
+    window.open(targetUrl, "_blank", "noopener,noreferrer");
     action({
       verbName: "thesisOpenEntryForm",
-      extra: { seed: currentSeed, user: userIdentifier },
+      extra: { seed: currentSeed, user: userIdentifier, account, formUrl: targetUrl },
     });
   };
 
   const handleOpenExitForm = () => {
     setHasClickedExitForm(true);
-    window.open(EXIT_FORMS_URL, "_blank", "noopener,noreferrer");
+    const account = detected.accountName || userIdentifier || "invitado";
+    let targetUrl = EXIT_FORMS_URL;
+
+    if (targetUrl.includes("USUARIO_AQUI")) {
+      targetUrl = targetUrl.replace("USUARIO_AQUI", encodeURIComponent(account));
+    } else if (targetUrl.includes("entry.1804015926=")) {
+      targetUrl = targetUrl.replace(
+        /entry\.1804015926=[^&]*/,
+        `entry.1804015926=${encodeURIComponent(account)}`,
+      );
+    } else {
+      const sep = targetUrl.includes("?") ? "&" : "?";
+      targetUrl += `${sep}entry.1804015926=${encodeURIComponent(account)}`;
+    }
+
+    window.open(targetUrl, "_blank", "noopener,noreferrer");
     action({
       verbName: "thesisOpenExitForm",
-      extra: { seed: currentSeed, user: userIdentifier },
+      extra: { seed: currentSeed, user: userIdentifier, account, formUrl: targetUrl },
     });
   };
 
-  // Transición al siguiente ejercicio o fase de Encuesta Final registrando la duración exacta
-  const advanceToNextExercise = useCallback(
+  // Registrar respuesta del ejercicio y desplegar la evaluación NASA-TLX
+  const advanceToNasaTlx = useCallback(
     (finalLatex: string) => {
       if (!currentExercise) return;
 
@@ -231,10 +444,12 @@ export default withAuth(function PruebaEstudiantes() {
       const timeSpentMs = Math.max(0, endTime - startTime);
       const timeSpentSec = Number((timeSpentMs / 1000).toFixed(2));
 
+      setPendingExerciseTimeMs(timeSpentMs);
+
       const updatedSubmitted = { ...submittedLatex, [currentExercise.id]: finalLatex };
       setSubmittedLatex(updatedSubmitted);
 
-      // Registrar acción en API con métricas de tiempo del ejercicio
+      // Registrar acción de envío del ejercicio
       action({
         verbName: "thesisSubmitExercise",
         extra: {
@@ -251,35 +466,59 @@ export default withAuth(function PruebaEstudiantes() {
         },
       });
 
-      // Limpiar entrada
+      // Limpiar entrada y abrir el modal NASA-TLX
       setStudentLatex("");
-
-      // Avanzar al siguiente ejercicio o a la encuesta final de salida
-      if (currentExerciseIndex < EXPERIMENT_EXERCISES.length - 1) {
-        const nextIdx = currentExerciseIndex + 1;
-        setCurrentExerciseIndex(nextIdx);
-        exerciseStartTimeRef.current = Date.now();
-      } else {
-        setPhase("post_survey");
-        action({
-          verbName: "thesisFinishExercises",
-          extra: {
-            seed: currentSeed,
-            user: userIdentifier,
-          },
-        });
-      }
+      setNasaMental(5);
+      setNasaEffort(5);
+      setNasaFrustration(5);
+      setIsNasaTlxOpen(true);
     },
-    [
-      action,
-      currentExercise,
-      currentExerciseIndex,
-      currentMode,
-      currentSeed,
-      submittedLatex,
-      userIdentifier,
-    ],
+    [action, currentExercise, currentMode, currentSeed, submittedLatex, userIdentifier],
   );
+
+  // Guardar respuestas de NASA-TLX y avanzar al siguiente ejercicio o fase post_survey
+  const handleConfirmNasaTlx = () => {
+    if (!currentExercise) return;
+
+    const nasaData: NasaTlxData = {
+      mentalDemand: nasaMental,
+      effort: nasaEffort,
+      frustration: nasaFrustration,
+    };
+
+    setSubmittedNasaTlx(prev => ({ ...prev, [currentExercise.id]: nasaData }));
+
+    // Registrar evaluación NASA-TLX en la API
+    action({
+      verbName: "thesisSubmitNasaTlx",
+      extra: {
+        exerciseId: currentExercise.id,
+        seed: currentSeed,
+        mode: currentMode,
+        user: userIdentifier,
+        nasaTlx: nasaData,
+        exerciseTimeSpentMs: pendingExerciseTimeMs,
+      },
+    });
+
+    setIsNasaTlxOpen(false);
+
+    // Avanzar al siguiente ejercicio o a la encuesta final de salida
+    if (currentExerciseIndex < seedSequence.length - 1) {
+      const nextIdx = currentExerciseIndex + 1;
+      setCurrentExerciseIndex(nextIdx);
+      exerciseStartTimeRef.current = Date.now();
+    } else {
+      setPhase("post_survey");
+      action({
+        verbName: "thesisFinishExercises",
+        extra: {
+          seed: currentSeed,
+          user: userIdentifier,
+        },
+      });
+    }
+  };
 
   // Captura de respuesta desde Pizarra Digital
   const handleCapturePizarra = useCallback(
@@ -304,18 +543,18 @@ export default withAuth(function PruebaEstudiantes() {
         },
       });
 
-      // Avanzar automáticamente tras capturar de la pizarra
+      // Abrir evaluación NASA-TLX tras capturar de la pizarra
       if (captured.trim()) {
-        advanceToNextExercise(captured);
+        advanceToNasaTlx(captured);
       }
     },
-    [action, advanceToNextExercise, currentExercise?.id, currentSeed, userIdentifier],
+    [action, advanceToNasaTlx, currentExercise?.id, currentSeed, userIdentifier],
   );
 
   return (
     <Container maxW="5xl" py="8">
       <VStack align="stretch" gap="6">
-        {/* Banner Superior Principal (Compatible con Modo Claro y Oscuro) */}
+        {/* Banner Superior Principal */}
         <Box
           bg={{ base: "indigo.800", _dark: "indigo.950" }}
           color="white"
@@ -460,7 +699,8 @@ export default withAuth(function PruebaEstudiantes() {
 
                 <Text fontSize="sm" color="fg.muted">
                   El orden de los ejercicios y la herramienta a utilizar han sido predefinidos
-                  automáticamente según tu cuenta asignada (Semilla #{currentSeed}).
+                  automáticamente según tu cuenta asignada (Semilla #{currentSeed}). Al finalizar
+                  cada ejercicio, responderás brevemente 3 preguntas de carga de trabajo (NASA-TLX).
                 </Text>
               </VStack>
 
@@ -502,7 +742,7 @@ export default withAuth(function PruebaEstudiantes() {
                 continuación y responde la encuesta inicial.
               </Text>
 
-              {/* Contenedor de Google Forms adaptado */}
+              {/* Contenedor de Google Forms */}
               <Box
                 p="6"
                 borderRadius="xl"
@@ -530,7 +770,7 @@ export default withAuth(function PruebaEstudiantes() {
                 </VStack>
               </Box>
 
-              {/* Checkbox de Confirmación (Habilitado sólo al hacer clic en abrir el form) */}
+              {/* Checkbox de Confirmación */}
               <Box
                 p="4"
                 borderRadius="xl"
@@ -611,7 +851,7 @@ export default withAuth(function PruebaEstudiantes() {
         )}
 
         {/* FASE 3: RESOLUCIÓN DE EJERCICIOS (UNO A UNO) */}
-        {phase === "exercise" && currentExercise && (
+        {phase === "exercise" && currentExercise && !isNasaTlxOpen && (
           <VStack align="stretch" gap="6">
             {/* Barra de Progreso del Ejercicio Actual */}
             <Card.Root
@@ -623,7 +863,7 @@ export default withAuth(function PruebaEstudiantes() {
             >
               <Flex justify="space-between" align="center" mb="2">
                 <Text fontSize="sm" fontWeight="bold" color="heading">
-                  Ejercicio {currentExerciseIndex + 1} de {EXPERIMENT_EXERCISES.length}
+                  Ejercicio {currentExerciseIndex + 1} de {seedSequence.length}
                 </Text>
                 <Badge colorPalette={currentMode === "pizarra" ? "purple" : "blue"} variant="solid">
                   <Icon as={currentMode === "pizarra" ? FaPencilAlt : FaKeyboard} mr="1.5" />
@@ -631,14 +871,14 @@ export default withAuth(function PruebaEstudiantes() {
                 </Badge>
               </Flex>
               <Progress.Root
-                value={((currentExerciseIndex + 1) / EXPERIMENT_EXERCISES.length) * 100}
+                value={((currentExerciseIndex + 1) / seedSequence.length) * 100}
                 colorPalette="teal"
               >
                 <Progress.Track />
               </Progress.Root>
             </Card.Root>
 
-            {/* Contenedor Único del Ejercicio y Componente de Entrada Solicitado */}
+            {/* Contenedor Único del Ejercicio */}
             <Card.Root
               bg="bg.secondary"
               borderRadius="2xl"
@@ -647,7 +887,7 @@ export default withAuth(function PruebaEstudiantes() {
               borderColor="border"
             >
               <VStack align="stretch" gap="6">
-                {/* Título e Instrucción del Ejercicio */}
+                {/* Título e Instrucción */}
                 <VStack align="center" textAlign="center" gap="1">
                   <Heading size="lg" color="heading">
                     {currentExercise.title}
@@ -657,7 +897,7 @@ export default withAuth(function PruebaEstudiantes() {
                   </Text>
                 </VStack>
 
-                {/* Expresión Matemática a Copiar (Caja Destacada de Alto Contraste) */}
+                {/* Expresión Matemática a Copiar */}
                 <Box
                   p="6"
                   borderRadius="2xl"
@@ -681,7 +921,7 @@ export default withAuth(function PruebaEstudiantes() {
                   </Box>
                 </Box>
 
-                {/* COMPONENTE MQ2 (MODO TECLADO): Muestra únicamente botones, input MathQuill e Enviar */}
+                {/* MODO TECLADO: Botones + Campo MathQuill + Botón Enviar */}
                 {currentMode === "teclado" && (
                   <Box
                     p="6"
@@ -692,7 +932,7 @@ export default withAuth(function PruebaEstudiantes() {
                     mt="2"
                   >
                     <VStack align="center" gap="4">
-                      {/* Fila 1 de Botones Matemáticos Mq2 */}
+                      {/* Botones de Teclado Mq2 */}
                       <HStack gap="3" flexWrap="wrap" justify="center">
                         <Button
                           colorPalette="teal"
@@ -736,7 +976,6 @@ export default withAuth(function PruebaEstudiantes() {
                         </Button>
                       </HStack>
 
-                      {/* Fila 2 de Botones Matemáticos Mq2 */}
                       <HStack gap="3" flexWrap="wrap" justify="center">
                         <Button
                           colorPalette="teal"
@@ -791,9 +1030,9 @@ export default withAuth(function PruebaEstudiantes() {
                         </Button>
                       </HStack>
 
-                      {/* Campo MathQuill de Ingreso */}
+                      {/* Campo MathQuill */}
                       <Box w="full" maxW="400px" my="2">
-                        <EditableMathField
+                        <EditableMathFieldComponent
                           latex={studentLatex}
                           style={{
                             width: "100%",
@@ -814,13 +1053,13 @@ export default withAuth(function PruebaEstudiantes() {
                         />
                       </Box>
 
-                      {/* Botón Enviar de Mq2 */}
+                      {/* Botón Enviar */}
                       <Button
                         size="lg"
                         colorPalette="teal"
                         px="8"
                         disabled={!studentLatex.trim()}
-                        onClick={() => advanceToNextExercise(studentLatex)}
+                        onClick={() => advanceToNasaTlx(studentLatex)}
                       >
                         Enviar
                       </Button>
@@ -828,7 +1067,7 @@ export default withAuth(function PruebaEstudiantes() {
                   </Box>
                 )}
 
-                {/* COMPONENTE WHITEBOARD (MODO PIZARRA): Muestra únicamente el botón para abrir la pizarra manuscrita */}
+                {/* MODO PIZARRA: Botón Abrir Pizarra */}
                 {currentMode === "pizarra" && (
                   <Box
                     p="8"
@@ -866,6 +1105,124 @@ export default withAuth(function PruebaEstudiantes() {
               </VStack>
             </Card.Root>
           </VStack>
+        )}
+
+        {/* COMPONENTE INTERACTIVO NASA-TLX (CUESTIONARIO TRAS CADA EJERCICIO) */}
+        {phase === "exercise" && isNasaTlxOpen && currentExercise && (
+          <Card.Root
+            bg="bg.secondary"
+            borderRadius="2xl"
+            p={{ base: 6, md: 8 }}
+            border="2px solid"
+            borderColor="teal.500"
+            shadow="xl"
+          >
+            <VStack align="stretch" gap="6">
+              <VStack align="center" textAlign="center" gap="1">
+                <Badge colorPalette="teal" size="lg" px="3" py="1">
+                  Evaluación de Carga de Trabajo (NASA-TLX)
+                </Badge>
+                <Heading size="lg" color="heading" mt="2">
+                  ¿Cómo percibiste el Ejercicio {currentExerciseIndex + 1}?
+                </Heading>
+                <Text fontSize="sm" color="fg.muted">
+                  Por favor responde sinceramente estas 3 preguntas evaluando la herramienta usada (
+                  {currentMode === "pizarra" ? "Pizarra Digital" : "Teclado Matemático"}).
+                </Text>
+              </VStack>
+
+              {/* Pregunta 1: Exigencia Mental */}
+              <Box
+                p="5"
+                borderRadius="xl"
+                bg={{ base: "indigo.50", _dark: "gray.900" }}
+                border="1px solid"
+                borderColor={{ base: "indigo.200", _dark: "gray.700" }}
+              >
+                <VStack align="start" gap="3">
+                  <HStack>
+                    <Icon as={FaBrain} color="indigo.500" boxSize="5" />
+                    <Text fontWeight="bold" color="heading" fontSize="md">
+                      1. Exigencia Mental y Dificultad
+                    </Text>
+                  </HStack>
+                  <Text fontSize="sm" color="text_info">
+                    ¿Cuánta actividad mental fue necesaria para copiar esta expresión (pensar,
+                    decidir, buscar símbolos)? ¿Fue fácil o difícil?
+                  </Text>
+                  <RatingScale
+                    value={nasaMental}
+                    onChange={setNasaMental}
+                    minLabel="Muy fácil / Mínima"
+                    maxLabel="Muy difícil / Máxima"
+                  />
+                </VStack>
+              </Box>
+
+              {/* Pregunta 2: Esfuerzo Requerido */}
+              <Box
+                p="5"
+                borderRadius="xl"
+                bg={{ base: "purple.50", _dark: "gray.900" }}
+                border="1px solid"
+                borderColor={{ base: "purple.200", _dark: "gray.700" }}
+              >
+                <VStack align="start" gap="3">
+                  <HStack>
+                    <Icon as={FaTachometerAlt} color="purple.500" boxSize="5" />
+                    <Text fontWeight="bold" color="heading" fontSize="md">
+                      2. Esfuerzo Requerido
+                    </Text>
+                  </HStack>
+                  <Text fontSize="sm" color="text_info">
+                    ¿Qué tanto tuviste que trabajar (mental y físicamente) para lograr ingresar
+                    correctamente la fórmula?
+                  </Text>
+                  <RatingScale
+                    value={nasaEffort}
+                    onChange={setNasaEffort}
+                    minLabel="Mínimo esfuerzo"
+                    maxLabel="Esfuerzo extremo"
+                  />
+                </VStack>
+              </Box>
+
+              {/* Pregunta 3: Frustración y Estrés */}
+              <Box
+                p="5"
+                borderRadius="xl"
+                bg={{ base: "teal.50", _dark: "gray.900" }}
+                border="1px solid"
+                borderColor={{ base: "teal.200", _dark: "gray.700" }}
+              >
+                <VStack align="start" gap="3">
+                  <HStack>
+                    <Icon as={FaSmile} color="teal.500" boxSize="5" />
+                    <Text fontWeight="bold" color="heading" fontSize="md">
+                      3. Nivel de Frustración y Estado Emocional
+                    </Text>
+                  </HStack>
+                  <Text fontSize="sm" color="text_info">
+                    ¿Qué tan estresado, molesto o inseguro vs seguro, contento y relajado te
+                    sentiste durante la tarea?
+                  </Text>
+                  <RatingScale
+                    value={nasaFrustration}
+                    onChange={setNasaFrustration}
+                    minLabel="1: Seguro, contento y relajado"
+                    maxLabel="10: Estresado, molesto e inseguro"
+                  />
+                </VStack>
+              </Box>
+
+              {/* Botón de Confirmación NASA-TLX */}
+              <Flex justify="flex-end" pt="2">
+                <Button size="lg" colorPalette="teal" px="8" onClick={handleConfirmNasaTlx}>
+                  Guardar y Continuar al Siguiente Ejercicio <Icon as={FaArrowRight} ml="2" />
+                </Button>
+              </Flex>
+            </VStack>
+          </Card.Root>
         )}
 
         {/* FASE 4: ENCUESTA FINAL GOOGLE FORMS (POST-SURVEY) */}
@@ -1032,8 +1389,8 @@ export default withAuth(function PruebaEstudiantes() {
                   Resumen de Participación:
                 </Text>
                 <Text fontSize="xs" color="fg.muted" mt="1">
-                  Ejercicios resueltos: {EXPERIMENT_EXERCISES.length} | Cuenta:{" "}
-                  {detected.accountName} | Encuestas: Entrada y Salida Completadas
+                  Ejercicios resueltos: {seedSequence.length} | Cuenta: {detected.accountName} |
+                  Encuestas NASA-TLX: Completadas
                 </Text>
               </Box>
 
