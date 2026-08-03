@@ -64,12 +64,12 @@ const EXIT_FORMS_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSdu3rXVZ8vk4KbYHY8IUeqF0ejLGOdWVlxtRO8RXdGBE8qn1g/viewform?usp=pp_url&entry.1804015926=USUARIO_AQUI";
 
 interface NasaTlxData {
-  mentalDemand: number; // 1 a 10
-  effort: number; // 1 a 10
-  frustration: number; // 1 a 10
+  mentalDemand: number; // 0 a 100 (intervalos de 5)
+  effort: number; // 0 a 100 (intervalos de 5)
+  frustration: number; // 0 a 100 (intervalos de 5)
 }
 
-// Componente Deslizador (Slider 1 a 10) con arrastre universal fluido (Mouse + Tablet Touch)
+// Componente Deslizador (Slider 0 a 100 en intervalos de 5) con arrastre universal fluido (Mouse + Tablet Touch)
 function RatingScale({
   value,
   onChange,
@@ -90,7 +90,8 @@ function RatingScale({
       const rect = trackRef.current.getBoundingClientRect();
       const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
       const percentage = rect.width > 0 ? offsetX / rect.width : 0;
-      const newValue = Math.max(1, Math.min(10, Math.round(1 + percentage * 9)));
+      const rawValue = percentage * 100;
+      const newValue = Math.max(0, Math.min(100, Math.round(rawValue / 5) * 5));
       onChange(newValue);
     },
     [onChange],
@@ -123,7 +124,7 @@ function RatingScale({
   };
 
   // Porcentaje visual del botón sobre la pista (0% a 100%)
-  const fillPercent = ((value - 1) / 9) * 100;
+  const fillPercent = Math.max(0, Math.min(100, value));
 
   return (
     <VStack align="stretch" gap="2" w="full" py="2">
@@ -167,12 +168,12 @@ function RatingScale({
           />
         </Box>
 
-        {/* Botón Deslizante Tactil Grande (Thumb 36px) */}
+        {/* Botón Deslizante Tactil Grande (Thumb 38px) con número actual */}
         <Box
           position="absolute"
           left={`calc(${fillPercent}% + ${8 - (fillPercent / 100) * 16}px)`}
-          w="36px"
-          h="36px"
+          w="38px"
+          h="38px"
           bg="teal.500"
           color="white"
           borderRadius="full"
@@ -186,30 +187,24 @@ function RatingScale({
           _hover={{ transform: "translateX(-50%) scale(1.1)" }}
           _active={{ transform: "translateX(-50%) scale(1.15)" }}
           fontWeight="bold"
-          fontSize="sm"
+          fontSize="xs"
           userSelect="none"
         >
           {value}
         </Box>
       </Box>
 
-      {/* Indicadores Visuales de Menos a Más */}
+      {/* Indicadores Visuales de Muy bajo a Muy alto */}
       <Flex justify="space-between" align="center" px="1">
         <HStack gap="1.5">
           <Badge colorPalette="gray" variant="subtle" size="sm">
-            ◄ Menos
+            ◄ {minLabel}
           </Badge>
-          <Text fontSize="xs" fontWeight="bold" color="fg.muted">
-            {minLabel}
-          </Text>
         </HStack>
 
         <HStack gap="1.5">
-          <Text fontSize="xs" fontWeight="bold" color="fg.muted">
-            {maxLabel}
-          </Text>
           <Badge colorPalette="teal" variant="solid" size="sm">
-            Más ►
+            {maxLabel} ►
           </Badge>
         </HStack>
       </Flex>
@@ -243,9 +238,9 @@ export default withAuth(function PruebaEstudiantes() {
 
   // Estado para el modal de evaluación NASA-TLX por ejercicio
   const [isNasaTlxOpen, setIsNasaTlxOpen] = useState<boolean>(false);
-  const [nasaMental, setNasaMental] = useState<number>(5);
-  const [nasaEffort, setNasaEffort] = useState<number>(5);
-  const [nasaFrustration, setNasaFrustration] = useState<number>(5);
+  const [nasaMental, setNasaMental] = useState<number>(50);
+  const [nasaEffort, setNasaEffort] = useState<number>(50);
+  const [nasaFrustration, setNasaFrustration] = useState<number>(50);
   const [pendingExerciseTimeMs, setPendingExerciseTimeMs] = useState<number>(0);
   const [submittedNasaTlx, setSubmittedNasaTlx] = useState<Record<string, NasaTlxData>>({});
 
@@ -468,9 +463,9 @@ export default withAuth(function PruebaEstudiantes() {
 
       // Limpiar entrada y abrir el modal NASA-TLX
       setStudentLatex("");
-      setNasaMental(5);
-      setNasaEffort(5);
-      setNasaFrustration(5);
+      setNasaMental(50);
+      setNasaEffort(50);
+      setNasaFrustration(50);
       setIsNasaTlxOpen(true);
     },
     [action, currentExercise, currentMode, currentSeed, submittedLatex, userIdentifier],
@@ -1129,9 +1124,30 @@ export default withAuth(function PruebaEstudiantes() {
                   Por favor responde sinceramente estas 3 preguntas evaluando la herramienta usada (
                   {currentMode === "pizarra" ? "Pizarra Digital" : "Teclado Matemático"}).
                 </Text>
+                {/* Nota de Escala de 0 a 100 en intervalos de 5 */}
+                <Box
+                  p="3"
+                  px="4"
+                  borderRadius="lg"
+                  bg={{ base: "blue.50", _dark: "indigo.950" }}
+                  border="1px solid"
+                  borderColor={{ base: "blue.200", _dark: "indigo.800" }}
+                  w="full"
+                  mt="1"
+                >
+                  <Text
+                    fontSize="xs"
+                    fontWeight="medium"
+                    color={{ base: "blue.800", _dark: "blue.200" }}
+                    textAlign="center"
+                  >
+                    <strong>Nota:</strong> Escala de 0 a 100, con intervalos de 5 puntos (Muy bajo a
+                    la izquierda, Muy alto a la derecha).
+                  </Text>
+                </Box>
               </VStack>
 
-              {/* Pregunta 1: Exigencia Mental */}
+              {/* Pregunta 1: Carga Mental */}
               <Box
                 p="5"
                 borderRadius="xl"
@@ -1140,21 +1156,18 @@ export default withAuth(function PruebaEstudiantes() {
                 borderColor={{ base: "indigo.200", _dark: "gray.700" }}
               >
                 <VStack align="start" gap="3">
-                  <HStack>
-                    <Icon as={FaBrain} color="indigo.500" boxSize="5" />
+                  <HStack align="start">
+                    <Icon as={FaBrain} color="indigo.500" boxSize="5" mt="0.5" />
                     <Text fontWeight="bold" color="heading" fontSize="md">
-                      1. Exigencia Mental y Dificultad
+                      1 - ¿Cuánta carga mental implicó copiar esta expresión (pensar, decidir,
+                      recordar o buscar símbolos)?
                     </Text>
                   </HStack>
-                  <Text fontSize="sm" color="text_info">
-                    ¿Cuánta actividad mental fue necesaria para copiar esta expresión (pensar,
-                    decidir, buscar símbolos)? ¿Fue fácil o difícil?
-                  </Text>
                   <RatingScale
                     value={nasaMental}
                     onChange={setNasaMental}
-                    minLabel="Muy fácil / Mínima"
-                    maxLabel="Muy difícil / Máxima"
+                    minLabel="Muy bajo"
+                    maxLabel="Muy alto"
                   />
                 </VStack>
               </Box>
@@ -1168,21 +1181,18 @@ export default withAuth(function PruebaEstudiantes() {
                 borderColor={{ base: "purple.200", _dark: "gray.700" }}
               >
                 <VStack align="start" gap="3">
-                  <HStack>
-                    <Icon as={FaTachometerAlt} color="purple.500" boxSize="5" />
+                  <HStack align="start">
+                    <Icon as={FaTachometerAlt} color="purple.500" boxSize="5" mt="0.5" />
                     <Text fontWeight="bold" color="heading" fontSize="md">
-                      2. Esfuerzo Requerido
+                      2.- ¿Qué tanto esfuerzo (mental y físico) tuviste que realizar para ingresar
+                      correctamente la expresión matemática?
                     </Text>
                   </HStack>
-                  <Text fontSize="sm" color="text_info">
-                    ¿Qué tanto tuviste que trabajar (mental y físicamente) para lograr ingresar
-                    correctamente la fórmula?
-                  </Text>
                   <RatingScale
                     value={nasaEffort}
                     onChange={setNasaEffort}
-                    minLabel="Mínimo esfuerzo"
-                    maxLabel="Esfuerzo extremo"
+                    minLabel="Muy bajo"
+                    maxLabel="Muy alto"
                   />
                 </VStack>
               </Box>
@@ -1196,21 +1206,18 @@ export default withAuth(function PruebaEstudiantes() {
                 borderColor={{ base: "teal.200", _dark: "gray.700" }}
               >
                 <VStack align="start" gap="3">
-                  <HStack>
-                    <Icon as={FaSmile} color="teal.500" boxSize="5" />
+                  <HStack align="start">
+                    <Icon as={FaSmile} color="teal.500" boxSize="5" mt="0.5" />
                     <Text fontWeight="bold" color="heading" fontSize="md">
-                      3. Nivel de Frustración y Estado Emocional
+                      3.- ¿Qué tan estresado(a), desalentado(a) o frustrado(a) te sentiste durante
+                      la tarea?
                     </Text>
                   </HStack>
-                  <Text fontSize="sm" color="text_info">
-                    ¿Qué tan estresado, molesto o inseguro vs seguro, contento y relajado te
-                    sentiste durante la tarea?
-                  </Text>
                   <RatingScale
                     value={nasaFrustration}
                     onChange={setNasaFrustration}
-                    minLabel="1: Seguro, contento y relajado"
-                    maxLabel="10: Estresado, molesto e inseguro"
+                    minLabel="Muy bajo"
+                    maxLabel="Muy alto"
                   />
                 </VStack>
               </Box>
