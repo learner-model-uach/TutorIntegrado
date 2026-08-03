@@ -234,6 +234,7 @@ const isMathVirtualKeyboardTarget = (event: Event) =>
 
 export type MathEditorProps = {
   readOnly?: boolean;
+  disabled?: boolean;
   value: string;
   onChange: (latex: string, prompts: Record<string, string>) => void;
   className?: string;
@@ -539,6 +540,17 @@ const Mathfield = (props: MathEditorProps) => {
 
   useEffect(() => {
     if (!mfe) return;
+    mfe.disabled = props.disabled ?? false;
+    if (props.disabled) {
+      mfe.blur();
+      mfe.executeCommand("hideVirtualKeyboard");
+      getMathVirtualKeyboard()?.hide({ animate: false });
+      deactivateMathVirtualKeyboardViewport(ACTIVE_KEYBOARD_CLASS, wrapperRef.current);
+    }
+  }, [mfe, props.disabled]);
+
+  useEffect(() => {
+    if (!mfe) return;
     setSafeMathFieldClassName(
       mfe,
       [
@@ -615,6 +627,7 @@ const Mathfield = (props: MathEditorProps) => {
         type="button"
         aria-label="Mostrar u ocultar teclado matematico"
         className="logic-keyboard-toggle"
+        disabled={props.disabled}
         onPointerDown={handleKeyboardButtonPointerDown}
         onClick={handleKeyboardButtonClick}
       >

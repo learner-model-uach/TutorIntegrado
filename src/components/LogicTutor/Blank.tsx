@@ -26,19 +26,21 @@ const Blank = ({
   const [attempts, setAttempts] = useState(0);
   const action = useAction();
   const evaluar = () => {
-    console.log("Input:", inputText);
-    let respuesta = false;
-    console.log("Respuesta esperada:", exc.steps[nStep].answers[0].answer[0]);
+    if (isCorrectValue) return;
+
+    const respuesta = inputText === exc.steps[nStep].answers[0].answer[0];
+    const nextAttempts = attempts + 1;
+
     setRespuestas(prevRespuestas => [...prevRespuestas, inputText]);
     setFirstTime(false);
-    if (inputText === exc.steps[nStep].answers[0].answer[0]) {
+    setError(!respuesta);
+    setAttempts(nextAttempts);
+
+    if (respuesta) {
       setIsCorrectvalue(true);
-      respuesta = true;
       setCompleted(true);
-    } else {
-      setError(true);
     }
-    setAttempts(attempts + 1);
+
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
@@ -47,13 +49,14 @@ const Blank = ({
       result: respuesta ? 1 : 0,
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
-        response: [Response],
-        attempts: attempts,
-        hints: hints,
+        response: [inputText],
+        attempts: nextAttempts,
+        hints,
       },
     });
   };
   const handleButtonClick = (symbol: string) => {
+    if (isCorrectValue) return;
     setInputText(prevText => prevText + symbol);
   };
   return (
@@ -71,16 +74,40 @@ const Blank = ({
           maxW={{ base: "100%", sm: "xs" }}
           type="text"
           value={inputText}
+          disabled={isCorrectValue}
           onChange={e => setInputText(e.target.value)}
         />
-        <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center">
-          <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("[")}>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          gap={2}
+          justifyContent="center"
+          aria-disabled={isCorrectValue}
+          pointerEvents={isCorrectValue ? "none" : "auto"}
+          opacity={isCorrectValue ? 0.6 : 1}
+        >
+          <Button
+            bg="#3b82f6"
+            size="sm"
+            disabled={isCorrectValue}
+            onClick={() => handleButtonClick("[")}
+          >
             [
           </Button>
-          <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("]")}>
+          <Button
+            bg="#3b82f6"
+            size="sm"
+            disabled={isCorrectValue}
+            onClick={() => handleButtonClick("]")}
+          >
             ]
           </Button>
-          <Button bg="#3b82f6" size="sm" onClick={() => handleButtonClick("∞")}>
+          <Button
+            bg="#3b82f6"
+            size="sm"
+            disabled={isCorrectValue}
+            onClick={() => handleButtonClick("∞")}
+          >
             ∞
           </Button>
         </Box>

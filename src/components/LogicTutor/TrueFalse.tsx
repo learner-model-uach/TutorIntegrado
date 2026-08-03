@@ -32,6 +32,10 @@ const TrueFalse = ({
     //{console.log("valor: "+valor)}
   }
   const evaluar = (Response: string) => {
+    if (isCorrectValue) return;
+
+    const nextAttempts = attempts + 1;
+
     setRespuestas(prevRespuestas => [...prevRespuestas, Response]);
     let respuesta = false;
     if (Response === exc.steps[nStep].answers[0].answer[0]) {
@@ -42,7 +46,7 @@ const TrueFalse = ({
       setError(true);
     }
     setFirstTime(false);
-    setAttempts(attempts + 1);
+    setAttempts(nextAttempts);
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
@@ -52,7 +56,7 @@ const TrueFalse = ({
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
         response: [Response],
-        attempts: attempts,
+        attempts: nextAttempts,
         hints: hints,
       },
     });
@@ -66,33 +70,35 @@ const TrueFalse = ({
             <Latex>{"$$" + exc.steps[nStep].expression + "$$"}</Latex>
           </Center>
         </Box>
-        <Stack
-          gap={4}
-          m={2}
-          direction={{ base: "column", sm: "row" }}
-          align="center"
-          justifyContent="center"
-        >
-          <Button colorPalette="teal" size="sm" onClick={() => evaluar("V")}>
-            Verdadero
-          </Button>
-          <Button colorPalette="red" size="sm" onClick={() => evaluar("F")}>
-            Falso
-          </Button>
-          <Hint
-            hints={exc.steps[nStep].hints}
-            contentId={exc.code}
-            topicId={topic}
-            stepId={exc.steps[nStep].stepId}
-            matchingError={exc.steps[nStep].matchingError}
-            response={respuestas}
-            error={error}
-            setError={setError}
-            hintCount={hints}
-            setHints={setHints}
-            setLastHint={setLastHint}
-          ></Hint>
-        </Stack>
+        {!isCorrectValue && (
+          <Stack
+            gap={4}
+            m={2}
+            direction={{ base: "column", sm: "row" }}
+            align="center"
+            justifyContent="center"
+          >
+            <Button colorPalette="teal" size="sm" onClick={() => evaluar("V")}>
+              Verdadero
+            </Button>
+            <Button colorPalette="red" size="sm" onClick={() => evaluar("F")}>
+              Falso
+            </Button>
+            <Hint
+              hints={exc.steps[nStep].hints}
+              contentId={exc.code}
+              topicId={topic}
+              stepId={exc.steps[nStep].stepId}
+              matchingError={exc.steps[nStep].matchingError}
+              response={respuestas}
+              error={error}
+              setError={setError}
+              hintCount={hints}
+              setHints={setHints}
+              setLastHint={setLastHint}
+            ></Hint>
+          </Stack>
+        )}
       </>
       {firstTime ? null : !isCorrectValue ? (
         <Alert.Root status="error">

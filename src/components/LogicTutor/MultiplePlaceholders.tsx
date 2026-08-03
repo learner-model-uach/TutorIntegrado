@@ -36,6 +36,10 @@ const MultiplePlaceholders = ({
   }, [isCorrectValue, setCompleted]);
 
   const evaluar = () => {
+    if (isCorrectValue) return;
+
+    const nextAttempts = attempts + 1;
+
     setError(false);
     interface values {
       values: Array<value>;
@@ -54,7 +58,7 @@ const MultiplePlaceholders = ({
 
     if (!hasAllValues) {
       setError(true);
-      setAttempts(a => a + 1);
+      setAttempts(nextAttempts);
       action({
         verbName: "tryStep",
         stepID: "" + exc.steps[nStep].stepId,
@@ -64,7 +68,7 @@ const MultiplePlaceholders = ({
         kcsIDs: [...exc.steps[nStep].KCs],
         extra: {
           response: ValuesArray,
-          attempts: attempts + 1,
+          attempts: nextAttempts,
           hints: hints,
         },
       });
@@ -93,7 +97,7 @@ const MultiplePlaceholders = ({
       }
     }
 
-    setAttempts(a => a + 1);
+    setAttempts(nextAttempts);
 
     action({
       verbName: "tryStep",
@@ -104,7 +108,7 @@ const MultiplePlaceholders = ({
       kcsIDs: [...exc.steps[nStep].KCs],
       extra: {
         response: ValuesArray,
-        attempts: attempts + 1,
+        attempts: nextAttempts,
         hints: hints,
       },
     });
@@ -123,6 +127,9 @@ const MultiplePlaceholders = ({
           w="100%"
           maxW={{ base: "100%" }}
           p={2}
+          aria-disabled={isCorrectValue}
+          pointerEvents={isCorrectValue ? "none" : "auto"}
+          opacity={isCorrectValue ? 0.8 : 1}
           // borderColor="red"
           borderWidth={1}
           borderRadius="lg"
@@ -147,6 +154,7 @@ const MultiplePlaceholders = ({
           <Box display="flex" justifyContent="center" w="100%">
             <Mathfield
               readOnly={true}
+              disabled={isCorrectValue}
               value={`${exc.steps[nStep].expression}\\;`}
               onChange={test}
             />

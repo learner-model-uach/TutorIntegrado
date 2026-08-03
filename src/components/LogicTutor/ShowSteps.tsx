@@ -42,7 +42,7 @@ const ShowSteps = ({
       setColor("accordion_success");
       setTexColor("accordion_success_text");
       if (next !== -1) setStep(next);
-      if (report) {
+      if (report && next === -1) {
         action({
           verbName: "completeContent",
           contentID: exc.code,

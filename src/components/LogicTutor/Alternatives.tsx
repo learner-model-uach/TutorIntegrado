@@ -34,6 +34,10 @@ const Alternatives = ({
   }, [valores_a_elegir, firstTime]);
 
   const evaluar = (valor: { id: number; text: string; correct: boolean }) => {
+    if (isCorrectValue) return;
+
+    const nextAttempts = attempts + 1;
+
     setResponse(valor.id);
     setFirstTime(false);
 
@@ -44,7 +48,7 @@ const Alternatives = ({
     } else {
       setShowError(true);
     }
-    setAttempts(attempts + 1);
+    setAttempts(nextAttempts);
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
@@ -54,7 +58,7 @@ const Alternatives = ({
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
         response: [valor.id],
-        attempts: attempts + 1,
+        attempts: nextAttempts,
         hints: hints,
       },
     });

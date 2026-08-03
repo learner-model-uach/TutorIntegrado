@@ -45,6 +45,8 @@ const SinglePlaceholder = ({
   }, [isCorrectValue, setCompleted]);
 
   function evaluar(_: unknown, val: string) {
+    if (isCorrectValue) return;
+
     if (typeof val !== "string" || val.trim() === "") {
       setFirstTime(false);
       setError(true);
@@ -112,6 +114,9 @@ const SinglePlaceholder = ({
           w="full"
           maxW={{ base: "100%" }}
           p={2}
+          aria-disabled={isCorrectValue}
+          pointerEvents={isCorrectValue ? "none" : "auto"}
+          opacity={isCorrectValue ? 0.8 : 1}
           borderWidth={1}
           borderRadius="lg"
           overflowX="auto"
@@ -122,7 +127,12 @@ const SinglePlaceholder = ({
             Símbolos especiales en el teclado virtual{" "}
             <FaRegKeyboard style={{ marginBottom: "4px" }} />
           </Text>
-          <Mathfield readOnly value={`${exc.steps[nStep].expression} \\quad`} onChange={modify} />
+          <Mathfield
+            readOnly
+            disabled={isCorrectValue}
+            value={`${exc.steps[nStep].expression} \\quad`}
+            onChange={modify}
+          />
         </Box>
       </Center>
 

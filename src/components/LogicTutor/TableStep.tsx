@@ -7,7 +7,7 @@ import Hint from "../Hint";
 import Latex from "react-latex-next";
 import { useAction } from "../../utils/action";
 
-function BotonAlternar({ valores, setValor }) {
+function BotonAlternar({ valores, setValor, disabled = false }) {
   const [indice, setIndice] = useState(0); // Estado para almacenar el índice del valor actual
 
   // Función para cambiar el valor del botón cuando se hace clic
@@ -21,7 +21,7 @@ function BotonAlternar({ valores, setValor }) {
   };
 
   return (
-    <Button bg="#3b82f6" size="sm" onClick={handleClick}>
+    <Button bg="#3b82f6" size="sm" onClick={handleClick} disabled={disabled}>
       {valores[indice]}
     </Button>
   );
@@ -53,6 +53,10 @@ const TableStep = ({
   const [attempts, setAttempts] = useState(0);
   const action = useAction();
   const evaluar = () => {
+    if (isCorrectValue) return;
+
+    const nextAttempts = attempts + 1;
+
     let respuesta = false;
     const isCorrect = userAnswers.every(
       (userAnswer, index) => userAnswer === exc.steps[nStep].answers[0].answer[index],
@@ -62,7 +66,7 @@ const TableStep = ({
     isCorrect
       ? (setIsCorrectValue(true), (respuesta = true), setCompleted(true))
       : (setFirstTime(false), setError(true));
-    setAttempts(attempts + 1);
+    setAttempts(nextAttempts);
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
@@ -72,7 +76,7 @@ const TableStep = ({
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
         response: [userAnswers],
-        attempts: attempts,
+        attempts: nextAttempts,
         hints: hints,
       },
     });
@@ -120,13 +124,18 @@ const TableStep = ({
                     >
                       {value === "a" ? (
                         <Center>
-                          <BotonAlternar valores={exc.steps[nStep].button[0]} setValor={setValor} />
+                          <BotonAlternar
+                            valores={exc.steps[nStep].button[0]}
+                            setValor={setValor}
+                            disabled={isCorrectValue}
+                          />
                         </Center>
                       ) : value === "b" ? (
                         <Center>
                           <BotonAlternar
                             valores={exc.steps[nStep].button[1]}
                             setValor={setValor1}
+                            disabled={isCorrectValue}
                           />
                         </Center>
                       ) : value === "c" ? (
@@ -134,6 +143,7 @@ const TableStep = ({
                           <BotonAlternar
                             valores={exc.steps[nStep].button[2]}
                             setValor={setValor2}
+                            disabled={isCorrectValue}
                           />
                         </Center>
                       ) : value === "d" ? (
@@ -141,6 +151,7 @@ const TableStep = ({
                           <BotonAlternar
                             valores={exc.steps[nStep].button[3]}
                             setValor={setValor3}
+                            disabled={isCorrectValue}
                           />
                         </Center>
                       ) : (

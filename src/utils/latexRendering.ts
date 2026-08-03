@@ -19,7 +19,9 @@ const looksLikeProse = (value: string) => {
   return (words?.length ?? 0) >= 3;
 };
 
-export const normalizeLatexForRender = (value: string, display = false) => {
+export const normalizeLatexForRender = (value?: string | null, display = false) => {
+  if (typeof value !== "string") return "";
+
   const normalized = unwrapLatexText(value);
 
   if (!normalized || hasMathDelimiters(normalized)) return normalized;
