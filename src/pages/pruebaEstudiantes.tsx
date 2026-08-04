@@ -6,7 +6,6 @@ import {
   Heading,
   HStack,
   Icon,
-  SimpleGrid,
   Text,
   VStack,
   Badge,
@@ -34,10 +33,8 @@ import { MathPixBoard } from "../components/whiteboard/MathPixBoard";
 import MQStaticMathField from "../utils/MQStaticMathField";
 import { useAction } from "../utils/action";
 import {
-  EXPERIMENT_EXERCISES,
   getSeedFromUser,
   getSeedExerciseSequence,
-  SEED_ASSIGNMENTS,
   InputMode,
 } from "../utils/thesisSeeds";
 import dynamic from "next/dynamic";
@@ -213,11 +210,11 @@ function RatingScale({
 }
 
 export default withAuth(function PruebaEstudiantes() {
-  const { user } = useAuth();
+  const { user, auth0User } = useAuth();
   const action = useAction();
 
   // Detección de cuenta y semilla asignada (semilla fija según la cuenta)
-  const userIdentifier = user?.nickname || user?.email || user?.name || "";
+  const userIdentifier = auth0User?.nickname || user?.email || user?.name || "";
   const detected = getSeedFromUser(userIdentifier);
   const currentSeed = detected.seed;
 
