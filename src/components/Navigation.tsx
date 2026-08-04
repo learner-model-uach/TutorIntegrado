@@ -90,6 +90,9 @@ export function Navigation() {
             <SidebarLink key="10" href={"/pruebaEstudiantes"}>
               Prueba estudiantes
             </SidebarLink>
+            <SidebarLink key="11" href={"/practicaEstudiantes"}>
+              Práctica estudiantes
+            </SidebarLink>
             <Stack fontWeight="black" pb="6">
               <SidebarLink icon={<FaBookOpen />} href="/challenge">
                 Desafíos
