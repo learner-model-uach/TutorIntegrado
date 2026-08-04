@@ -1,6 +1,17 @@
 "use client";
-import { StaticMathField } from "react-mathquill";
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+
+const StaticMathFieldComponent = dynamic(
+  () =>
+    import("react-mathquill").then(mod => {
+      if (typeof window !== "undefined") {
+        mod.addStyles();
+      }
+      return mod.StaticMathField;
+    }),
+  { ssr: false },
+);
 
 const mqo = {
   overflow: "visible",
@@ -16,6 +27,6 @@ const MQStaticMathField = ({ exp, currentExpIndex }: { exp: string; currentExpIn
       }, 10);
   }, [exp, currentExpIndex]);
 
-  return <StaticMathField style={mqo}>{texExp}</StaticMathField>;
+  return <StaticMathFieldComponent style={mqo}>{texExp}</StaticMathFieldComponent>;
 };
 export default MQStaticMathField;
