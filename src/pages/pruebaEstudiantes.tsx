@@ -32,11 +32,7 @@ import {
 import { MathPixBoard } from "../components/whiteboard/MathPixBoard";
 import MQStaticMathField from "../utils/MQStaticMathField";
 import { useAction } from "../utils/action";
-import {
-  getSeedFromUser,
-  getSeedExerciseSequence,
-  InputMode,
-} from "../utils/thesisSeeds";
+import { getSeedFromUser, getSeedExerciseSequence, InputMode } from "../utils/thesisSeeds";
 import dynamic from "next/dynamic";
 
 const EditableMathFieldComponent = dynamic(
