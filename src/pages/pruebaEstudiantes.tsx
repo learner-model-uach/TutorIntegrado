@@ -492,8 +492,9 @@ export default withAuth(function PruebaEstudiantes() {
 
   // Captura de respuesta desde Pizarra Digital
   const handleCapturePizarra = useCallback(
-    (response: { expressions: string[]; text?: string }) => {
+    (response: { expressions: string[]; text?: string; request_id?: string }) => {
       const captured = response.expressions?.[0] || response.text || "";
+      const requestId = response.request_id || null;
       setStudentLatex(captured);
 
       const endTime = Date.now();
@@ -507,6 +508,7 @@ export default withAuth(function PruebaEstudiantes() {
           exerciseId: currentExercise?.id,
           seed: currentSeed,
           capturedLatex: captured,
+          requestId,
           user: userIdentifier,
           timeSpentMs,
           timeSpentSec,
