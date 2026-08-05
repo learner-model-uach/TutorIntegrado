@@ -59,39 +59,15 @@ export function Navigation() {
       <Stack>
         {user && !user.tags.includes("wp-test-user") && (
           <>
-            <Text fontWeight="black">Tópicos</Text>
-            <SidebarLink key="1" href={"topicSelect?&registerTopic=44"}>
-              Productos Notables
+            <Text fontWeight="black">Evaluación e Investigación</Text>
+            <SidebarLink key="1" href={"/encuestaInicial"}>
+              Encuesta inicial
             </SidebarLink>
-            <SidebarLink key="2" href={"topicSelect?&registerTopic=4"}>
-              Factorización
-            </SidebarLink>
-            <SidebarLink key="3" href={"topicSelect?&registerTopic=19"}>
-              Potencias
-            </SidebarLink>
-            <SidebarLink key="4" href={"topicSelect?&registerTopic=68"}>
-              Raíces
-            </SidebarLink>
-            <SidebarLink key="5" href={"topicSelect?&registerTopic=31"}>
-              Fracciones
-            </SidebarLink>
-            <SidebarLink key="6" href={"topicSelect?&registerTopic=24"}>
-              Ecuaciones
-            </SidebarLink>
-            <SidebarLink key="7" href={"topicSelect?&registerTopic=52"}>
-              Álgebra de Polinomios
-            </SidebarLink>
-            <SidebarLink key="8" href={"wpExercises?topic=34,35&registerTopic=34"}>
-              Ejercicios en contexto
-            </SidebarLink>
-            <SidebarLink key="9" href={"topicSelect?&registerTopic=37"}>
-              Lógica y Teoría de Conjuntos
-            </SidebarLink>
-            <SidebarLink key="10" href={"/pruebaEstudiantes"}>
-              Prueba estudiantes
-            </SidebarLink>
-            <SidebarLink key="11" href={"/practicaEstudiantes"}>
+            <SidebarLink key="2" href={"/practicaEstudiantes"}>
               Práctica estudiantes
+            </SidebarLink>
+            <SidebarLink key="3" href={"/pruebaEstudiantes"}>
+              Prueba estudiantes
             </SidebarLink>
             <Stack fontWeight="black" pb="6">
               <SidebarLink icon={<FaBookOpen />} href="/challenge">

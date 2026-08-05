@@ -48,10 +48,7 @@ const EditableMathFieldComponent = dynamic(
 
 type Phase = "intro" | "survey" | "exercise" | "post_survey" | "finished";
 
-// URLs por defecto de Google Forms para la encuesta inicial y de salida
-const ENTRY_FORMS_URL =
-  process.env.NEXT_PUBLIC_THESIS_ENTRY_FORMS_URL ||
-  "https://docs.google.com/forms/d/e/1FAIpQLSf4SzzQiRMjpj0nQefb_KlhtWsbwQY-s5BgBleTMQUJSF-tOQ/viewform?usp=pp_url&entry.666946759=USUARIO_AQUI";
+// URL por defecto de Google Forms para la encuesta de salida
 const EXIT_FORMS_URL =
   process.env.NEXT_PUBLIC_THESIS_EXIT_FORMS_URL ||
   "https://docs.google.com/forms/d/e/1FAIpQLSdu3rXVZ8vk4KbYHY8IUeqF0ejLGOdWVlxtRO8RXdGBE8qn1g/viewform?usp=pp_url&entry.1804015926=USUARIO_AQUI";
@@ -240,8 +237,8 @@ export default withAuth(function PruebaEstudiantes() {
   // Clave única de almacenamiento local según el usuario
   const storageKey = `thesis_progress_${userIdentifier || "guest"}`;
 
-  // Registro del tiempo de inicio del ejercicio activo
-  const exerciseStartTimeRef = useRef<number>(Date.now());
+  // Registro del tiempo de inicio del ejercicio activo (inicia en null hasta la primera interacción)
+  const exerciseStartTimeRef = useRef<number | null>(null);
 
   const seedSequence = getSeedExerciseSequence(currentSeed);
   const currentStep = seedSequence[currentExerciseIndex] || seedSequence[0];
@@ -330,12 +327,19 @@ export default withAuth(function PruebaEstudiantes() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [phase]);
 
-  // Reiniciar el cronómetro al cambiar de ejercicio o entrar a la fase de ejercicios
+  // Reiniciar el cronómetro a null al cambiar de ejercicio o entrar a la fase de ejercicios
   useEffect(() => {
     if (phase === "exercise" && !isNasaTlxOpen) {
-      exerciseStartTimeRef.current = Date.now();
+      exerciseStartTimeRef.current = null;
     }
   }, [phase, currentExerciseIndex, isNasaTlxOpen]);
+
+  // Función para asegurar que el cronómetro ha comenzado tras la primera interacción del alumno
+  const ensureTimerStarted = useCallback(() => {
+    if (exerciseStartTimeRef.current === null) {
+      exerciseStartTimeRef.current = Date.now();
+    }
+  }, []);
 
   // Función para reiniciar el experimento completamente de cero
   const handleResetProgress = () => {
@@ -357,6 +361,7 @@ export default withAuth(function PruebaEstudiantes() {
 
   // Insertar símbolos en MathQuill
   const handleMQTool = (command: string) => {
+    ensureTimerStarted();
     if (ta) {
       if (command === "clear") {
         setStudentLatex("");
@@ -373,30 +378,7 @@ export default withAuth(function PruebaEstudiantes() {
     }
   };
 
-  // Apertura de enlaces a Google Forms con rellenado automático de usuario y habilitación del Checkbox
-  const handleOpenEntryForm = () => {
-    setHasClickedEntryForm(true);
-    const account = detected.accountName || userIdentifier || "invitado";
-    let targetUrl = ENTRY_FORMS_URL;
 
-    if (targetUrl.includes("USUARIO_AQUI")) {
-      targetUrl = targetUrl.replace("USUARIO_AQUI", encodeURIComponent(account));
-    } else if (targetUrl.includes("entry.666946759=")) {
-      targetUrl = targetUrl.replace(
-        /entry\.666946759=[^&]*/,
-        `entry.666946759=${encodeURIComponent(account)}`,
-      );
-    } else {
-      const sep = targetUrl.includes("?") ? "&" : "?";
-      targetUrl += `${sep}entry.666946759=${encodeURIComponent(account)}`;
-    }
-
-    window.open(targetUrl, "_blank", "noopener,noreferrer");
-    action({
-      verbName: "thesisOpenEntryForm",
-      extra: { seed: currentSeed, user: userIdentifier, account, formUrl: targetUrl },
-    });
-  };
 
   const handleOpenExitForm = () => {
     setHasClickedExitForm(true);
@@ -428,8 +410,8 @@ export default withAuth(function PruebaEstudiantes() {
       if (!currentExercise) return;
 
       const endTime = Date.now();
-      const startTime = exerciseStartTimeRef.current;
-      const timeSpentMs = Math.max(0, endTime - startTime);
+      const startTime = exerciseStartTimeRef.current ?? endTime;
+      const timeSpentMs = exerciseStartTimeRef.current !== null ? Math.max(0, endTime - startTime) : 0;
       const timeSpentSec = Number((timeSpentMs / 1000).toFixed(2));
 
       setPendingExerciseTimeMs(timeSpentMs);
@@ -495,7 +477,7 @@ export default withAuth(function PruebaEstudiantes() {
     if (currentExerciseIndex < seedSequence.length - 1) {
       const nextIdx = currentExerciseIndex + 1;
       setCurrentExerciseIndex(nextIdx);
-      exerciseStartTimeRef.current = Date.now();
+      exerciseStartTimeRef.current = null;
     } else {
       setPhase("post_survey");
       action({
@@ -515,8 +497,8 @@ export default withAuth(function PruebaEstudiantes() {
       setStudentLatex(captured);
 
       const endTime = Date.now();
-      const startTime = exerciseStartTimeRef.current;
-      const timeSpentMs = Math.max(0, endTime - startTime);
+      const startTime = exerciseStartTimeRef.current ?? endTime;
+      const timeSpentMs = exerciseStartTimeRef.current !== null ? Math.max(0, endTime - startTime) : 0;
       const timeSpentSec = Number((timeSpentMs / 1000).toFixed(2));
 
       action({
@@ -697,7 +679,7 @@ export default withAuth(function PruebaEstudiantes() {
                   size="lg"
                   colorPalette="blue"
                   onClick={() => {
-                    setPhase("survey");
+                    setPhase("exercise");
                     action({
                       verbName: "thesisStartIntro",
                       extra: { seed: currentSeed, user: userIdentifier },
@@ -707,133 +689,6 @@ export default withAuth(function PruebaEstudiantes() {
                   Iniciar Prueba <Icon as={FaArrowRight} ml="2" />
                 </Button>
               </Box>
-            </VStack>
-          </Card.Root>
-        )}
-
-        {/* FASE 2: VERIFICACIÓN DE ENCUESTA INICIAL GOOGLE FORMS */}
-        {phase === "survey" && (
-          <Card.Root
-            bg="bg.secondary"
-            borderRadius="2xl"
-            p={{ base: 6, md: 8 }}
-            border="1px solid"
-            borderColor="border"
-          >
-            <VStack align="stretch" gap="6">
-              <Heading size="lg" color="heading">
-                Paso 1: Encuesta Inicial
-              </Heading>
-
-              <Text color="text_info" fontSize="md">
-                Antes de comenzar a resolver los ejercicios, por favor ingresa al enlace a
-                continuación y responde la encuesta inicial.
-              </Text>
-
-              {/* Contenedor de Google Forms */}
-              <Box
-                p="6"
-                borderRadius="xl"
-                bg={{ base: "indigo.50", _dark: "gray.900" }}
-                border="1px solid"
-                borderColor={{ base: "indigo.200", _dark: "gray.700" }}
-                textAlign="center"
-              >
-                <VStack gap="4">
-                  <Icon
-                    as={FaExternalLinkAlt}
-                    boxSize={8}
-                    color={{ base: "teal.600", _dark: "teal.300" }}
-                  />
-                  <Heading size="sm" color="heading">
-                    Encuesta de Entrada en Google Forms
-                  </Heading>
-                  <Text fontSize="sm" color="fg.muted">
-                    Haz clic en el botón para abrir la encuesta en una nueva pestaña y respóndela
-                    completamente.
-                  </Text>
-                  <Button colorPalette="teal" size="md" onClick={handleOpenEntryForm}>
-                    Abrir Encuesta en Google Forms <Icon as={FaExternalLinkAlt} ml="2" />
-                  </Button>
-                </VStack>
-              </Box>
-
-              {/* Checkbox de Confirmación */}
-              <Box
-                p="4"
-                borderRadius="xl"
-                bg={
-                  hasClickedEntryForm
-                    ? { base: "teal.50", _dark: "indigo.900" }
-                    : { base: "gray.100", _dark: "gray.800" }
-                }
-                border="1px solid"
-                borderColor={
-                  hasClickedEntryForm
-                    ? { base: "teal.200", _dark: "indigo.700" }
-                    : { base: "gray.300", _dark: "gray.700" }
-                }
-                opacity={hasClickedEntryForm ? 1 : 0.75}
-                mt="2"
-              >
-                <HStack
-                  gap="3"
-                  align="center"
-                  cursor={hasClickedEntryForm ? "pointer" : "not-allowed"}
-                  onClick={() => {
-                    if (hasClickedEntryForm) {
-                      setIsEntrySurveyCompleted(!isEntrySurveyCompleted);
-                    }
-                  }}
-                >
-                  <Box
-                    w="24px"
-                    h="24px"
-                    borderRadius="md"
-                    border="2px solid"
-                    borderColor={
-                      hasClickedEntryForm
-                        ? { base: "teal.600", _dark: "teal.300" }
-                        : { base: "gray.400", _dark: "gray.500" }
-                    }
-                    bg={isEntrySurveyCompleted ? "teal.500" : "transparent"}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {isEntrySurveyCompleted && <Icon as={FaCheck} color="white" boxSize="14px" />}
-                  </Box>
-                  <Text fontSize="md" fontWeight="semibold" color="heading">
-                    Confirmo que he respondido la encuesta inicial en Google Forms
-                  </Text>
-                  {!hasClickedEntryForm && (
-                    <Badge colorPalette="amber" variant="subtle" ml="auto">
-                      <Icon as={FaLock} mr="1" /> Haz clic en &quot;Abrir Encuesta&quot; primero
-                    </Badge>
-                  )}
-                </HStack>
-              </Box>
-
-              {/* Botón para comenzar ejercicios */}
-              <Flex justify="space-between" pt="4" align="center">
-                <Button variant="outline" onClick={() => setPhase("intro")}>
-                  Atrás
-                </Button>
-                <Button
-                  size="lg"
-                  colorPalette="blue"
-                  disabled={!isEntrySurveyCompleted}
-                  onClick={() => {
-                    setPhase("exercise");
-                    action({
-                      verbName: "thesisSurveyCompleted",
-                      extra: { seed: currentSeed, user: userIdentifier },
-                    });
-                  }}
-                >
-                  Comenzar Ejercicios <Icon as={FaArrowRight} ml="2" />
-                </Button>
-              </Flex>
             </VStack>
           </Card.Root>
         )}
@@ -1019,7 +874,7 @@ export default withAuth(function PruebaEstudiantes() {
                       </HStack>
 
                       {/* Campo MathQuill */}
-                      <Box w="full" maxW="400px" my="2">
+                      <Box w="full" maxW="400px" my="2" onClick={ensureTimerStarted}>
                         <EditableMathFieldComponent
                           latex={studentLatex}
                           style={{
@@ -1033,6 +888,7 @@ export default withAuth(function PruebaEstudiantes() {
                             color: "#000",
                           }}
                           onChange={mathField => {
+                            ensureTimerStarted();
                             setStudentLatex(mathField.latex());
                           }}
                           mathquillDidMount={mathfield => {
@@ -1082,7 +938,10 @@ export default withAuth(function PruebaEstudiantes() {
                         px="10"
                         py="6"
                         fontSize="lg"
-                        onClick={() => setIsBoardOpen(true)}
+                        onClick={() => {
+                          ensureTimerStarted();
+                          setIsBoardOpen(true);
+                        }}
                       >
                         <Icon as={FaPencilAlt} mr="3" />
                         Abrir Pizarra Digital
