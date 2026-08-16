@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useAuth, withAuth } from "../components/Auth";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../graphql-hooks";
 import {
   FaTrashAlt,
   FaPaperPlane,
@@ -1388,7 +1388,8 @@ export default withAuth(function ChallengesPage() {
     },
     {
       staleTime: 0,
-      cacheTime: 0,
+      // v5 renombró cacheTime -> gcTime.
+      gcTime: 0,
       refetchOnMount: true,
       refetchOnWindowFocus: true,
     },
@@ -1397,11 +1398,17 @@ export default withAuth(function ChallengesPage() {
   const { data: dataGroupUsersWithModelStates, isLoading: isGroupUsersWithModelStatesLoading } =
     useGQLQuery(queryGroupUsersWithModelStates, undefined, {
       staleTime: 0,
-      cacheTime: 0,
+      // v5 renombró cacheTime -> gcTime.
+      gcTime: 0,
       refetchOnMount: true,
       refetchOnWindowFocus: true,
     });
 
+  // NOTA: mutationUpdateChallenge es una mutation GraphQL pero se ejecuta
+  // con useGQLQuery (patrón preexistente, no introducido en esta
+  // migración) — se dispara automáticamente vía `enabled: isUpdated` en
+  // vez de invocarse explícitamente con `.mutate()`. Se preserva el
+  // comportamiento original tal cual estaba.
   const {
     /*data: dataUpdateChallenge,
     error: errorUpdateChallenge,

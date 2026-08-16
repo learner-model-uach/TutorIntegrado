@@ -11,7 +11,10 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useGQLQuery, useGQLMutation } from "rq-gql";
+import {
+  useGraphQLQuery as useGQLQuery,
+  useGraphQLMutation as useGQLMutation,
+} from "../graphql-hooks";
 import { gql } from "../graphql";
 import "katex/dist/katex.min.css";
 import { withAuth } from "../components/Auth";
@@ -633,8 +636,8 @@ export default withAuth(function ExerciseEditor() {
           <Button
             colorPalette="teal"
             onClick={handleSave}
-            loading={updateContentMutation.isLoading}
-            disabled={updateContentMutation.isLoading}
+            loading={updateContentMutation.isPending}
+            disabled={updateContentMutation.isPending}
           >
             Guardar ejercicio
           </Button>

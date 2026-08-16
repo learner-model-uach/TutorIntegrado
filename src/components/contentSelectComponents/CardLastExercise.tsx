@@ -15,7 +15,7 @@ import { useColorModeValue } from "../ui/color-mode";
 import dynamic from "next/dynamic";
 import type { ComponentProps } from "react";
 
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../../graphql-hooks";
 import { gql } from "../../graphql";
 import TeX from "@matejmazur/react-katex";
 import parameters from "./parameters.json";

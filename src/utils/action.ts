@@ -1,7 +1,7 @@
 import { toaster } from "../components/ui/toaster";
 import { useLatestRef } from "../hooks/useLatestRef";
 import { useCallback } from "react";
-import { useGQLMutation } from "rq-gql";
+import { useGraphQLMutation as useGQLMutation } from "../graphql-hooks";
 import { useAuth } from "../components/Auth";
 import { ActionInput, gql } from "../graphql";
 import { queryClient } from "../rqClient";
@@ -25,7 +25,11 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
     `),
     {
       onSuccess() {
-        queryClient.invalidateQueries(RECENT_PROJECT_USER_ACTIVITY_QUERY_KEY);
+        // v5: invalidateQueries recibe un objeto { queryKey } en vez del
+        // string/array posicional que usaba v3/v4.
+        queryClient.invalidateQueries({
+          queryKey: [RECENT_PROJECT_USER_ACTIVITY_QUERY_KEY],
+        });
       },
       onError(err) {
         console.error(err);

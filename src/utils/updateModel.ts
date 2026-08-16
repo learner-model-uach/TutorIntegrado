@@ -1,7 +1,7 @@
 import { toaster } from "../components/ui/toaster";
 import { useLatestRef } from "../hooks/useLatestRef";
 import { useCallback } from "react";
-import { useGQLMutation } from "rq-gql";
+import { useGraphQLMutation as useGQLMutation } from "../graphql-hooks";
 import { useAuth } from "../components/Auth";
 import { gql, UpdateModelStateInput } from "../graphql";
 export type StateArguments = Omit<UpdateModelStateInput, "userID">;

@@ -1,5 +1,5 @@
 import { Center, Heading, SimpleGrid, Text } from "@chakra-ui/react";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../graphql-hooks";
 import { gql } from "../graphql";
 import { withAuth } from "../components/Auth";
 import { CardSelectionwp } from "../components/contentSelectComponents/CardSelectionWp";

@@ -13,7 +13,7 @@ import {
   defaultSystem,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../../graphql-hooks";
 import { gql } from "../../graphql";
 import "katex/dist/katex.min.css";
 import MathDisplay from "./MathDisplay";

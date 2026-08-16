@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { SimpleGrid, Center, Text, Heading, Spinner, Box } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { useAuth, withAuth } from "../components/Auth";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../graphql-hooks";
 import { gql } from "../graphql";
 import { CardSelectionDynamic } from "../components/contentSelectComponents/CardSelectionDynamic";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";

@@ -1,4 +1,4 @@
-import { useGQLMutation } from "rq-gql";
+import { useGraphQLMutation as useGQLMutation } from "../graphql-hooks";
 import { gql } from "../graphql";
 
 const MUTATION = gql(/* GraphQL */ `

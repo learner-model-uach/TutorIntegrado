@@ -1,5 +1,5 @@
 import { proxy } from "valtio";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../../graphql-hooks";
 import { gql } from "../../graphql";
 import { useEffect } from "react";
 
@@ -56,7 +56,13 @@ export const Surveys = proxy<{
 });
 
 export default function SuerveyQ(projectid: string, tags: Array<string>) {
-  const { isLoading: userModelData } = useGQLQuery(
+  const {
+    data: surveysData,
+    isLoading: userModelData,
+    isSuccess,
+    isError,
+    error,
+  } = useGQLQuery(
     gql(/* GraphQL */ `
       query surveys($projectId: IntID!, $tags: [String!]!) {
         activePolls(projectId: $projectId, tags: $tags) {
@@ -75,27 +81,39 @@ export default function SuerveyQ(projectid: string, tags: Array<string>) {
     { projectId: projectid, tags: tags },
     {
       enabled: Surveys.data.length < 1,
-      onSuccess(data) {
-        Surveys.data = data.activePolls as Array<SD>;
-        let txi: Record<string, number> = {};
-        for (var i = 0; i < Surveys.data.length; i++) {
-          for (var j = 0; j < Surveys.data[i].tags.length; j++) {
-            txi[Surveys.data[i].tags[j]] = i;
-          }
-        }
-        Surveys.tagXindex = txi;
-      },
-      onError(err) {
-        console.log("abc", err);
-      },
-      onSettled() {
-        Surveys.isLoading = false;
-      },
       refetchOnWindowFocus: false,
       //refetchOnMount: false,
       refetchOnReconnect: false,
     },
   );
+
+  // v5 eliminó onSuccess/onError/onSettled en useQuery: se reemplazan
+  // reaccionando a data/isSuccess/isError/error con useEffect.
+  useEffect(() => {
+    if (isSuccess && surveysData) {
+      Surveys.data = surveysData.activePolls as Array<SD>;
+      let txi: Record<string, number> = {};
+      for (var i = 0; i < Surveys.data.length; i++) {
+        for (var j = 0; j < Surveys.data[i].tags.length; j++) {
+          txi[Surveys.data[i].tags[j]] = i;
+        }
+      }
+      Surveys.tagXindex = txi;
+    }
+  }, [isSuccess, surveysData]);
+
+  useEffect(() => {
+    if (isError) {
+      console.log("abc", error);
+    }
+  }, [isError, error]);
+
+  useEffect(() => {
+    if (isSuccess || isError) {
+      Surveys.isLoading = false;
+    }
+  }, [isSuccess, isError]);
+
   useEffect(() => {
     Surveys.isLoading = userModelData;
   }, [userModelData]);

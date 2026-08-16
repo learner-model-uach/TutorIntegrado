@@ -57,8 +57,7 @@ export default function EditableEcuStep({
   const formBg = "gray.300";
   const stepType = localStep.type ?? "—";
 
-  const isEditing =
-    isEditingStep || isEditingMessages || isEditingAnswers || isEditingHints;
+  const isEditing = isEditingStep || isEditingMessages || isEditingAnswers || isEditingHints;
   const activeStep = isEditing ? localStepCopy : localStep;
 
   useEffect(() => {

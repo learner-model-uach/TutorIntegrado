@@ -1,4 +1,4 @@
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../../graphql-hooks";
 import { useEffect, useMemo, useState } from "react";
 import { gql } from "../../graphql";
 import {
@@ -223,11 +223,13 @@ export function useProjectUserSummary({
   } = useGQLQuery(RECENT_ACTIVITY_QUERY, recentActivityQueryVariables, {
     enabled: Boolean(projectId && userId),
     staleTime: RECENT_ACTIVITY_QUERY_STALE_TIME,
-    cacheTime: RECENT_ACTIVITY_QUERY_CACHE_TIME,
+    // v5 renombró cacheTime -> gcTime.
+    gcTime: RECENT_ACTIVITY_QUERY_CACHE_TIME,
     refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
-    keepPreviousData: true,
+    // v5 fusionó keepPreviousData dentro de placeholderData.
+    placeholderData: previousData => previousData,
   });
 
   const { currentUserTopicActions, currentUserContentActions } = useMemo(() => {

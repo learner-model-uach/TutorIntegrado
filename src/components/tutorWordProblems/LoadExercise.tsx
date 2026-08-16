@@ -1,6 +1,6 @@
 import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../../graphql-hooks";
 import { gql, PotatoqueryQuery } from "../../graphql";
 import type { ExType } from "../lvltutor/Tools/ExcerciseType";
 import { sessionState, sessionStateBD } from "../SessionState";

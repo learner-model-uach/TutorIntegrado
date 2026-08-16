@@ -3,7 +3,7 @@ import { Spinner } from "@chakra-ui/react";
 import { useLatestRef } from "../hooks/useLatestRef";
 import Router from "next/router";
 import React, { FC, memo, useEffect } from "react";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../graphql-hooks";
 import { proxy, useSnapshot } from "valtio";
 import { CurrentUserQuery, gql } from "../graphql";
 import { rqGQLClient } from "../rqClient";
@@ -32,7 +32,12 @@ export function SyncAuth() {
 
   const hasAuthorizationToken = !!authorization;
 
-  const { isLoading: currentUserIsLoading } = useGQLQuery(
+  const {
+    data: currentUserData,
+    isLoading: currentUserIsLoading,
+    isSuccess: currentUserIsSuccess,
+    isError: currentUserIsError,
+  } = useGQLQuery(
     gql(/* GraphQL */ `
       query currentUser {
         currentUser {
@@ -64,15 +69,23 @@ export function SyncAuth() {
     undefined,
     {
       enabled: hasAuthorizationToken,
-      onSuccess(data) {
-        AuthState.user = data.currentUser;
-        AuthState.project = data.project;
-      },
-      onSettled() {
-        AuthState.isLoading = false;
-      },
     },
   );
+
+  // v5 eliminó onSuccess/onSettled en useQuery: se reemplazan reaccionando
+  // a data/isSuccess/isError con useEffect.
+  useEffect(() => {
+    if (currentUserIsSuccess && currentUserData) {
+      AuthState.user = currentUserData.currentUser;
+      AuthState.project = currentUserData.project;
+    }
+  }, [currentUserIsSuccess, currentUserData]);
+
+  useEffect(() => {
+    if (currentUserIsSuccess || currentUserIsError) {
+      AuthState.isLoading = false;
+    }
+  }, [currentUserIsSuccess, currentUserIsError]);
 
   useEffect(() => {
     AuthState.isLoading = currentUserIsLoading || isLoading;

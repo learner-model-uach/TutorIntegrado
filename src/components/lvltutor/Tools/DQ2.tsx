@@ -1,4 +1,4 @@
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../../../graphql-hooks";
 import { gql, PotatoqueryQuery } from "../../../graphql";
 import { Button, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState, useRef } from "react";

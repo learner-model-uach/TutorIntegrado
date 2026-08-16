@@ -14,7 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useGQLQuery } from "rq-gql";
+import { useGraphQLQuery as useGQLQuery } from "../graphql-hooks";
 import { gql } from "../graphql";
 import "katex/dist/katex.min.css";
 import MathDisplay from "../components/challenge/MathDisplay";
@@ -439,6 +439,11 @@ export default withAuth(function ChallengesForm() {
     { enabled: isEditMode && !!challengeId },
   );
 
+  // NOTA: mutationUpdateChallenge/mutationCreateChallenge son mutations
+  // GraphQL pero se ejecutan con useGQLQuery (patrón preexistente, no
+  // introducido en esta migración) — se disparan automáticamente vía
+  // `enabled` en vez de invocarse explícitamente con `.mutate()`. Se
+  // preserva el comportamiento original tal cual estaba.
   const { error: errorUpdateChallenge } = useGQLQuery(
     mutationUpdateChallenge,
     { challengeId: challengeId, challenge: challenge },
