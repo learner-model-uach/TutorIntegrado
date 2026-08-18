@@ -125,6 +125,24 @@ export default function EditableStep({
         {stepName}
       </Heading>
 
+      {/* Vista del paso */}
+      <Box mb={4}>
+        <Accordion.Root collapsible multiple>
+          {localStepCopy && (
+            <CustomAccordionItemlvltutor
+              key={`AccordionItem-${index}`}
+              index={0}
+              step={localStepCopy}
+              test={test}
+              stepsCode={exerciseJSON?.code || ""}
+              topicId={topic?.childrens?.[0] || ""}
+              action={action}
+              setTest={setTest}
+            />
+          )}
+        </Accordion.Root>
+      </Box>
+
       {/* Edición de paso */}
       <EditButton
         width="full"
@@ -202,24 +220,6 @@ export default function EditableStep({
           </Box>
         </Box>
       )}
-
-      {/* Vista del paso */}
-      <Box>
-        <Accordion.Root collapsible multiple>
-          {localStepCopy && (
-            <CustomAccordionItemlvltutor
-              key={`AccordionItem-${index}`}
-              index={0}
-              step={localStepCopy}
-              test={test}
-              stepsCode={exerciseJSON?.code || ""}
-              topicId={topic?.childrens?.[0] || ""}
-              action={action}
-              setTest={setTest}
-            />
-          )}
-        </Accordion.Root>
-      </Box>
 
       {/* Edición de opciones de respuesta */}
       <EditButton
@@ -324,6 +324,14 @@ export default function EditableStep({
         />
       </Popover.Root>
 
+      {/* ✅ Ambos fallbackMsg usan optional chaining */}
+      <FeedbackAlertlvltutor
+        topicId={""}
+        mqMsg={localStepCopy.correctMsg}
+        fallbackMsg={step?.correctMsg}
+        status={"success"}
+      />
+
       {/* Editar mensaje de respuesta correcta */}
       <EditButton
         width="full"
@@ -360,9 +368,9 @@ export default function EditableStep({
       {/* ✅ Ambos fallbackMsg usan optional chaining */}
       <FeedbackAlertlvltutor
         topicId={""}
-        mqMsg={localStepCopy.correctMsg}
-        fallbackMsg={step?.correctMsg}
-        status={"success"}
+        mqMsg={localStepCopy.incorrectMsg}
+        fallbackMsg={step?.incorrectMsg}
+        status={"error"}
       />
 
       {/* Editar mensaje de respuesta incorrecta */}
@@ -398,15 +406,16 @@ export default function EditableStep({
         </Box>
       )}
 
-      {/* ✅ Ambos fallbackMsg usan optional chaining */}
-      <FeedbackAlertlvltutor
-        topicId={""}
-        mqMsg={localStepCopy.incorrectMsg}
-        fallbackMsg={step?.incorrectMsg}
-        status={"error"}
-      />
-
       <Stack>
+        {/* Vista del resumen */}
+        <SummarySteplvltutor
+          key={`step-${index + 1}`}
+          summary={localStepCopy.summary}
+          displayResult={localStepCopy.displayResult}
+          currentExpIndex={true}
+          stepIndex={index + 1}
+        />
+
         {/* Edición de resumen */}
         <EditButton
           isEditing={isEditingSummary}
@@ -446,14 +455,6 @@ export default function EditableStep({
             </Field.Root>
           </Box>
         )}
-
-        <SummarySteplvltutor
-          key={`step-${index + 1}`}
-          summary={localStepCopy.summary}
-          displayResult={localStepCopy.displayResult}
-          currentExpIndex={true}
-          stepIndex={index + 1}
-        />
 
         {/* Edición de KCs */}
         <EditButton

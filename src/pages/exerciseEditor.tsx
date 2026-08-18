@@ -29,6 +29,7 @@ import EditableLogicStep from "../components/exerciseEditor/EditableLogicStep";
 import EditableWPQuestion from "../components/exerciseEditor/EditableWPQuestion";
 import { EditButton } from "../components/exerciseEditor/EditButton";
 import { SaveButton } from "../components/exerciseEditor/SaveButton";
+import { ExerciseHeaderPreview } from "../components/exerciseEditor/ExerciseHeaderPreview";
 
 const queryTopics = gql(/* GraphQL */ `
   query GetTopicsForExerciseEditor {
@@ -425,8 +426,27 @@ export default withAuth(function ExerciseEditor() {
             Encabezado
           </Heading>
 
+          {/* Preview encabezado — lvltutor y logic usan Headerlvltutor */}
+          {(editorGroup === "lvltutor" || editorGroup === "logic") && (
+            <Headerlvltutor
+              title={isEditingHeader ? titleCopy : title}
+              subtitle={isEditingHeader ? textCopy : text}
+              img={(exerciseJSONCopy as any)?.img}
+              mathExp={isEditingHeader ? initialExpCopy : initialExp}
+            />
+          )}
+
+          {/* Preview encabezado — fac y ecu: mismo bloque que Tutor.jsx (título + eqc) */}
+          {(editorGroup === "fac" || editorGroup === "ecu") && (
+            <ExerciseHeaderPreview
+              title={isEditingHeader ? titleCopy : title}
+              eqc={isEditingExtra ? eqcCopy : eqc}
+            />
+          )}
+
           <EditButton
             width="full"
+            mt={4}
             isEditing={isEditingHeader}
             onClick={() => {
               if (isEditingHeader) {
@@ -480,16 +500,6 @@ export default withAuth(function ExerciseEditor() {
                 )}
               </Box>
             </Box>
-          )}
-
-          {/* Preview encabezado — solo para lvltutor y logic */}
-          {(editorGroup === "lvltutor" || editorGroup === "logic") && (
-            <Headerlvltutor
-              title={titleCopy}
-              subtitle={textCopy}
-              img={(exerciseJSONCopy as any)?.img}
-              mathExp={initialExpCopy}
-            />
           )}
         </Box>
 
