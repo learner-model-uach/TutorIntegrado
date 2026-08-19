@@ -2,6 +2,7 @@
   "name": "learner-model-gql-template",
   "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@11.3.0",
   "scripts": {
     "build": "concurrently -m 1 -r pnpm:generate \"next build\" pnpm:pretty:check",
     "predev": "pnpm generate",
@@ -73,7 +74,7 @@
     "wait-on": "^8.0.3"
   },
   "engines": {
-    "pnpm": ">=9.x"
+    "pnpm": ">=11.0.0"
   },
   "pnpm": {
     "peerDependencyRules": {
