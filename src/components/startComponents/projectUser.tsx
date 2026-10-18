@@ -21,8 +21,7 @@ function InfoCard({
     <Box
       flex="1"
       minW={{ base: "100%", md: "180px" }}
-      // bg="whiteAlpha.700"
-      bg={{ base: "whiteAlpha.700", _dark: "gray.900" }}
+      bg={{ base: "gray.100", _dark: "indigo.950" }}
       borderRadius="2xl"
       px={{ base: 4, md: 5 }}
       py={{ base: 4, md: 5 }}
@@ -76,8 +75,8 @@ export const AssigndUser = () => {
         width="100%"
         borderRadius={{ base: "2xl", md: "3xl" }}
         overflow="hidden"
-        bg={{ base: "gray.200", _dark: "indigo.950" }}
-        shadow={"xs"}
+        // bg={{ base: "gray.200", _dark: "indigo.950" }}
+        // shadow={"xs"}
       >
         <Stack
           direction={{ base: "column", lg: "row" }}
@@ -147,8 +146,9 @@ export const AssigndUser = () => {
           <Box
             w={{ base: "100%", lg: "360px" }}
             borderRadius="2xl"
-            bg={{ base: "whiteAlpha.700", _dark: "gray.900" }}
+            bg={{ base: "gray.100", _dark: "indigo.950" }}
             p={{ base: 5, md: 6 }}
+            alignSelf={{base: "stretch", lg:"flex-start"}}
           >
             <Stack gap="4">
               <Text fontSize="sm" fontWeight="bold" color="tangerine.600" textTransform="uppercase">
