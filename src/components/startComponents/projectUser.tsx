@@ -148,7 +148,7 @@ export const AssigndUser = () => {
             borderRadius="2xl"
             bg={{ base: "gray.100", _dark: "indigo.950" }}
             p={{ base: 5, md: 6 }}
-            alignSelf={{base: "stretch", lg:"flex-start"}}
+            alignSelf={{ base: "stretch", lg: "flex-start" }}
           >
             <Stack gap="4">
               <Text fontSize="sm" fontWeight="bold" color="tangerine.600" textTransform="uppercase">
