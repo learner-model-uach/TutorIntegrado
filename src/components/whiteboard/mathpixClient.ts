@@ -87,30 +87,21 @@ export const normalizeMathpixResponse = (
 
 export const requestMathpixStrokes = async (
   payload: MathpixStrokesPayload,
-  options?: { appId?: string; appKey?: string },
+  options?: { apiUrl?: string },
 ): Promise<MathpixStrokesResponse> => {
-  const appId = options?.appId ?? process.env.NEXT_PUBLIC_MATHPIX_APP_ID;
-  const appKey = options?.appKey ?? process.env.NEXT_PUBLIC_MATHPIX_APP_KEY;
-  const apiUrl =
-    process.env.NEXT_PUBLIC_MATHPIX_STROKES_API_URL ?? "https://api.mathpix.com/v3/strokes";
-
-  if (!appId || !appKey) {
-    throw new Error("Faltan credenciales de Mathpix en .env.");
-  }
+  const apiUrl = options?.apiUrl ?? "/api/mathpix/strokes";
 
   const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      app_id: appId,
-      app_key: appKey,
     },
     body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(text || "Error al procesar Mathpix.");
+    const errorData = await response.json().catch(() => null);
+    throw new Error(errorData?.error || errorData?.message || "Error al procesar Mathpix.");
   }
 
   return response.json() as Promise<MathpixStrokesResponse>;
@@ -118,29 +109,23 @@ export const requestMathpixStrokes = async (
 
 export const requestMathpixImage = async (
   payload: MathpixImagePayload,
-  options?: { appId?: string; appKey?: string },
+  options?: { apiUrl?: string },
 ): Promise<NormalizedMathpixResponse> => {
-  const appId = options?.appId ?? process.env.NEXT_PUBLIC_MATHPIX_APP_ID;
-  const appKey = options?.appKey ?? process.env.NEXT_PUBLIC_MATHPIX_APP_KEY;
-  const apiUrl = process.env.NEXT_PUBLIC_MATHPIX_IMAGE_API_URL ?? "https://api.mathpix.com/v3/text";
-
-  if (!appId || !appKey) {
-    throw new Error("Faltan credenciales de Mathpix en .env.");
-  }
+  const apiUrl = options?.apiUrl ?? "/api/mathpix/image";
 
   const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      app_id: appId,
-      app_key: appKey,
     },
     body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(text || "Error al procesar la imagen con Mathpix.");
+    const errorData = await response.json().catch(() => null);
+    throw new Error(
+      errorData?.error || errorData?.message || "Error al procesar la imagen con Mathpix.",
+    );
   }
 
   const result = (await response.json()) as MathpixStrokesResponse;
