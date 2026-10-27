@@ -8,18 +8,14 @@ export const config = {
   },
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido." });
   }
 
   const appId = process.env.MATHPIX_APP_ID;
   const appKey = process.env.MATHPIX_APP_KEY;
-  const apiUrl =
-    process.env.MATHPIX_IMAGE_API_URL ?? "https://api.mathpix.com/v3/text";
+  const apiUrl = process.env.MATHPIX_IMAGE_API_URL ?? "https://api.mathpix.com/v3/text";
 
   if (!appId || !appKey) {
     return res.status(500).json({

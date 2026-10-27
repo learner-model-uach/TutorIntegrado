@@ -1,17 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido." });
   }
 
   const appId = process.env.MATHPIX_APP_ID;
   const appKey = process.env.MATHPIX_APP_KEY;
-  const apiUrl =
-    process.env.MATHPIX_STROKES_API_URL ?? "https://api.mathpix.com/v3/strokes";
+  const apiUrl = process.env.MATHPIX_STROKES_API_URL ?? "https://api.mathpix.com/v3/strokes";
 
   if (!appId || !appKey) {
     return res.status(500).json({
