@@ -92,7 +92,7 @@ const Steporans = ({
     if (answer && answer != "") {
       setCC(
         <>
-          <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
+          <ScrollableMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
           <Alert.Root key={"Alert" + topicId + "i"} status={"success"} mt={2}>
             <Alert.Indicator key={"AlertIcon" + topicId + "i"} />
             <Alert.Content>
@@ -433,15 +433,13 @@ const Solver2 = ({
                         !isDone &&
                         step.expression &&
                         step.multipleChoice != undefined ? (
-                          <Center w="100%" maxW="100%" minW={0}>
-                            <Box mb="3" w="100%" maxW="100%" minW={0} overflowX="auto">
-                              <MQStaticMathField
-                                key={`mq-enunciado-${step.stepId}-open`}
-                                exp={step.expression}
-                                currentExpIndex={true} // ahora sí, visible
-                              />
-                            </Box>
-                          </Center>
+                          <Box mb="3" w="100%" maxW="100%" minW={0}>
+                            <ScrollableMathField
+                              key={`mq-enunciado-${step.stepId}-open`}
+                              exp={step.expression}
+                              currentExpIndex={true}
+                            />
+                          </Box>
                         ) : null}
                         <Steporans
                           key={`Steporans-${step.stepId}-${isOpen ? "open" : "closed"}`}

@@ -1,8 +1,7 @@
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import type { NextApiRequest } from "next";
 
-const domain =
-  process.env.NEXT_PUBLIC_AUTH0_DOMAIN || "learner-model-gql.us.auth0.com";
+const domain = process.env.NEXT_PUBLIC_AUTH0_DOMAIN || "learner-model-gql.us.auth0.com";
 const clientId = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID;
 
 const jwksUri = new URL(`https://${domain}/.well-known/jwks.json`);
