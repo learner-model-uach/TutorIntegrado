@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { verifyAuth } from "../../../utils/verifyAuth";
 
 export const config = {
   api: {
@@ -11,6 +12,13 @@ export const config = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido." });
+  }
+
+  const isAuthenticated = await verifyAuth(req);
+  if (!isAuthenticated) {
+    return res.status(401).json({
+      error: "No autorizado. Inicie sesión para usar este servicio.",
+    });
   }
 
   const appId = process.env.MATHPIX_APP_ID;

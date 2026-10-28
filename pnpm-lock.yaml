@@ -71,6 +71,9 @@ importers:
       immutability-helper:
         specifier: ^3.1.1
         version: 3.1.1
+      jose:
+        specifier: ^6.2.13
+        version: 6.2.13
       jsxgraph:
         specifier: ^1.11.1
         version: 1.12.2
@@ -3678,8 +3681,8 @@ packages:
     resolution: {integrity: sha512-RuCOQMIt78LWnktPoeBL0GErkNaJPTBGcYuyaBvUOQSpcpcLfWrHPPihYdOGbV5pam9VTWbeoF7TsGiHugcjGA==}
     engines: {node: '>= 20'}
 
-  jose@6.2.1:
-    resolution: {integrity: sha512-jUaKr1yrbfaImV7R2TN/b3IcZzsw38/chqMpo2XJ7i2F8AfM/lA4G1goC3JVEwg0H7UldTmSt3P68nt31W7/mw==}
+  jose@6.2.13:
+    resolution: {integrity: sha512-7TIg10ZE1x82YediN+lcrPNvGMKge9yFHQD+Qho/b8y2adfugU3AsvvHfxV0fzyFllT6l9xCjf4RWY9g/Z9PJQ==}
 
   jquery@1.12.4:
     resolution: {integrity: sha512-UEVp7PPK9xXYSk8xqXCJrkXnKZtlgWkd2GsAQbMRFK6S/ePU2JN5G2Zum8hIVjzR3CpdfSqdqAzId/xd4TJHeg==}
@@ -5470,7 +5473,7 @@ snapshots:
 
   '@auth0/auth0-auth-js@1.5.0':
     dependencies:
-      jose: 6.2.1
+      jose: 6.2.13
       openid-client: 6.8.2
 
   '@auth0/auth0-react@2.15.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
@@ -9812,7 +9815,7 @@ snapshots:
       '@hapi/topo': 6.0.2
       '@standard-schema/spec': 1.1.0
 
-  jose@6.2.1: {}
+  jose@6.2.13: {}
 
   jquery@1.12.4: {}
 
@@ -10312,7 +10315,7 @@ snapshots:
 
   openid-client@6.8.2:
     dependencies:
-      jose: 6.2.1
+      jose: 6.2.13
       oauth4webapi: 3.8.5
 
   optionator@0.9.4:

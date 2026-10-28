@@ -1,3 +1,5 @@
+import { AuthState } from "../Auth";
+
 export interface MathpixStrokesPayload {
   strokes: {
     strokes: {
@@ -87,15 +89,22 @@ export const normalizeMathpixResponse = (
 
 export const requestMathpixStrokes = async (
   payload: MathpixStrokesPayload,
-  options?: { apiUrl?: string },
+  options?: { apiUrl?: string; token?: string },
 ): Promise<MathpixStrokesResponse> => {
   const apiUrl = options?.apiUrl ?? "/api/mathpix/strokes";
+  const token = options?.token ?? AuthState.authorizationToken;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = token;
+  }
 
   const response = await fetch(apiUrl, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(payload),
   });
 
@@ -109,15 +118,22 @@ export const requestMathpixStrokes = async (
 
 export const requestMathpixImage = async (
   payload: MathpixImagePayload,
-  options?: { apiUrl?: string },
+  options?: { apiUrl?: string; token?: string },
 ): Promise<NormalizedMathpixResponse> => {
   const apiUrl = options?.apiUrl ?? "/api/mathpix/image";
+  const token = options?.token ?? AuthState.authorizationToken;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = token;
+  }
 
   const response = await fetch(apiUrl, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(payload),
   });
 
