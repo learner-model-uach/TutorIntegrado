@@ -214,9 +214,11 @@ export const HintEqSystem = ({
           disabled={isDisabledHint || allHints.length === 0}
           onClick={handOnClickHint}
           colorPalette={HINT_BUTTOM_COLOR}
-          w={{ base: "100%", xl: "auto" }}
+          size="sm"
+          h="8"
+          w="auto"
+          justifySelf="center"
           minW={0}
-          px={{ base: 3, sm: 4 }}
           whiteSpace="nowrap"
         >
           {HINT_BUTTOM_NAME}

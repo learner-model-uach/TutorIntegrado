@@ -45,12 +45,11 @@ button.shake {
   background-color: #555;
   color: white;
   text-decoration: none;
-  padding: 0 1rem;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 32px;
   min-width: 0;
   border-radius: 6px;
 }

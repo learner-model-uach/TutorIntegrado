@@ -108,6 +108,9 @@ export const Hint = ({
           disabled={disabledHint}
           onClick={handOnClickHint}
           colorPalette={HINT_BUTTOM_COLOR}
+          size="sm"
+          h="8"
+          justifySelf="center"
         >
           {HINT_BUTTOM_NAME}
           {countNotification > 0 && <span className={styles["badge"]}>{countNotification}</span>}

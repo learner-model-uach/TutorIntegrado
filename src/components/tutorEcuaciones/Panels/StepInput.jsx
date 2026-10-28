@@ -211,9 +211,10 @@ export const StepInput = ({
               alignSelf="center"
             >
               <Button
-                colorPalette="blue"
+                colorPalette="teal"
                 onClick={checkAnswers}
-                w={{ base: "100%", xl: "auto" }}
+                h="32px"
+                w="88px"
                 minW={0}
                 px={{ base: 3, sm: 4 }}
                 whiteSpace="nowrap"

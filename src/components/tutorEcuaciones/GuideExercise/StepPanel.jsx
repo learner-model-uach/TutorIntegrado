@@ -254,7 +254,7 @@ export const StepPanel = ({
                 templateColumns="repeat(2, 1fr)"
                 gap={6}
               >
-                <Button colorPalette="blue" onClick={checkAnswers}>
+                <Button colorPalette="teal" h="32px" w="88px" onClick={checkAnswers}>
                   {CORRECT_BUTTOM_NAME}
                 </Button>
 
@@ -272,7 +272,7 @@ export const StepPanel = ({
               <Stack display={{ xl: "block", base: "none" }}>
                 <Flex>
                   <div style={{ paddingRight: "5px" }}>
-                    <Button colorPalette="blue" onClick={checkAnswers}>
+                    <Button colorPalette="teal" h="32px" w="88px" onClick={checkAnswers}>
                       {CORRECT_BUTTOM_NAME}
                     </Button>
                   </div>
