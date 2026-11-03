@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Stack, VStack, Button, Text, Grid, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Stack, VStack, Button, Text, Grid } from "@chakra-ui/react";
 import TeX from "@matejmazur/react-katex";
 import styles from "./Step.module.css";
 import { ColumnDragPanel } from "../DragDrop/ColumnDragPanel";
@@ -8,10 +8,10 @@ import { MovableItem } from "../DragDrop/MovableItem";
 import {
   COLUMN1, // bottom panel
   COLUMN2, // top panel
+  ACCORDION_COLOR,
   CORRECT_BUTTOM_NAME,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
-  BACKGROUND_COLOR_PANEL,
 } from "../types";
 import { useAction } from "../../../utils/action";
 
@@ -32,8 +32,6 @@ export const StepPanel = ({
 }) => {
   const [items, setItems] = useState(null);
   const [answer, setAnswer] = useState(true);
-  const [alert, setAlert] = useState({}); // it is not being used
-  const [openAlert, setOpenAlert] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [newHintAvaliable, setNewHintAvaliable] = useState(false);
   const [firstTimeHint, setFirstTimeHint] = useState(true);
@@ -45,11 +43,9 @@ export const StepPanel = ({
   const startAction = useAction({});
   useEffect(() => {
     setItems(step.answers.map(answer => ({ ...answer, column: COLUMN1 }))); // copy the values of the "answers" field from the json and add the "column" key
-    setAlert({});
-    setOpenAlert(false);
     setAnswer(true);
     setIsCorrect(false);
-    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
+    setColor(prev => [...prev.slice(0, nStep), ACCORDION_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const checkValues = () => {
@@ -128,13 +124,9 @@ export const StepPanel = ({
     e.preventDefault();
 
     const answer = checkCorrectAnswer();
-    setOpenAlert(true);
 
     if (answer.length === 0) {
-      setAlert({
-        status: "info",
-        text: "Escoge una respuesta",
-      });
+      return;
     } else {
       updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
@@ -148,7 +140,7 @@ export const StepPanel = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });
@@ -160,10 +152,6 @@ export const StepPanel = ({
           ]);
           setNumStep(prevState => prevState + 1);
           setDisableState(prevState => [...prevState, true]);
-          setAlert({
-            status: "success",
-            text: "Respuesta Correcta",
-          });
           setIsCorrect(true);
           checkLastStep();
           setFirstTimeHint(true);
@@ -178,7 +166,7 @@ export const StepPanel = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });
@@ -186,11 +174,6 @@ export const StepPanel = ({
           setHints(getHints(answer[0].id));
           setFirstTimeHint(false);
           setNewHintAvaliable(true);
-
-          setAlert({
-            status: "error",
-            text: "Respuesta Incorrecta",
-          });
         }
       } else {
       }
@@ -202,23 +185,39 @@ export const StepPanel = ({
   };
 
   return (
-    <Stack style={{ width: "100%" }}>
-      <Stack style={{ width: "100%" }}>
+    <Stack w="100%" maxW="100%" minW={0}>
+      <Stack w="100%" maxW="100%" minW={0}>
         <VStack
-          direction={["row", "column"]}
-          style={{
-            borderRadius: 10,
-            padding: 10,
-            width: "100%",
-          }}
+          align="stretch"
+          borderRadius="10px"
+          p="10px"
+          w="100%"
+          maxW="100%"
+          minW={0}
+          overflow="hidden"
         >
-          <Stack direction={{ base: ["row", "column"], xl: ["column", "row"] }}>
-            <Flex marginRight={{ xl: "250px" }} margin={{ base: "auto" }}>
-              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
+          <Stack
+            direction={{ base: "column", xl: "row" }}
+            align={{ base: "stretch", xl: "center" }}
+            justify="center"
+            gap={{ base: 3, xl: 4 }}
+            w="100%"
+            maxW="100%"
+            minW={0}
+          >
+            <Flex
+              flex={{ base: "1", xl: "0 1 auto" }}
+              minW={0}
+              maxW="100%"
+              align="center"
+              justify="center"
+              overflow="hidden"
+            >
+              <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto", xl: 0 }}>
                 {step.left_text}
               </Text>
 
-              <Flex>
+              <Flex flexShrink={0}>
                 {step.input_labels && (
                   <TeX
                     style={{
@@ -231,7 +230,7 @@ export const StepPanel = ({
                   />
                 )}
               </Flex>
-              <Flex>
+              <Flex minW={0} maxW="100%" justify="center">
                 <ColumnDragPanel
                   title={COLUMN2}
                   className={`${styles["column"]} ${styles["second-column"]}`}
@@ -240,54 +239,39 @@ export const StepPanel = ({
                 </ColumnDragPanel>
               </Flex>
             </Flex>
-            <Stack marginLeft={{ base: "0px", xl: "-180px" }}>
-              <Grid
-                display={{ xl: "none", base: "grid" }}
-                style={{ margin: "10px" }}
-                templateColumns="repeat(2, 1fr)"
-                gap={6}
+            <Grid
+              templateColumns="repeat(2, minmax(0, 1fr))"
+              gap={{ base: 2, sm: 3 }}
+              w={{ base: "100%", xl: "auto" }}
+              maxW={{ base: "320px", xl: "none" }}
+              alignSelf="center"
+            >
+              <Button
+                colorPalette="teal"
+                onClick={checkAnswers}
+                h="32px"
+                w="88px"
+                minW={0}
+                px={{ base: 3, sm: 4 }}
+                whiteSpace="nowrap"
               >
-                <Button colorScheme="blue" onClick={checkAnswers}>
-                  {CORRECT_BUTTOM_NAME}
-                </Button>
+                {CORRECT_BUTTOM_NAME}
+              </Button>
 
-                <Hint
-                  firstTimeHint={firstTimeHint}
-                  hints={hints}
-                  setNewHintAvaliable={setNewHintAvaliable}
-                  answerId={idAnswer}
-                  newHintAvaliable={newHintAvaliable}
-                  nStep={nStep}
-                  code={code}
-                  setHintsShow={setHintsShow}
-                />
-              </Grid>
-
-              <Stack display={{ xl: "block", base: "none" }}>
-                <Flex>
-                  <div style={{ paddingRight: "5px" }}>
-                    <Button colorScheme="blue" onClick={checkAnswers}>
-                      {CORRECT_BUTTOM_NAME}
-                    </Button>
-                  </div>
-                  <div style={{ paddingRight: "5px" }}>
-                    <Hint
-                      firstTimeHint={firstTimeHint}
-                      hints={hints}
-                      nStep={nStep}
-                      setNewHintAvaliable={setNewHintAvaliable}
-                      answerId={idAnswer}
-                      newHintAvaliable={newHintAvaliable}
-                      code={code}
-                      setHintsShow={setHintsShow}
-                    />
-                  </div>
-                </Flex>
-              </Stack>
-            </Stack>
+              <Hint
+                firstTimeHint={firstTimeHint}
+                hints={hints}
+                setNewHintAvaliable={setNewHintAvaliable}
+                answerId={idAnswer}
+                newHintAvaliable={newHintAvaliable}
+                nStep={nStep}
+                code={code}
+                setHintsShow={setHintsShow}
+              />
+            </Grid>
           </Stack>
         </VStack>
-        <Flex style={{ marginTop: 30 }}>
+        <Flex mt="30px" w="100%" maxW="100%" minW={0} overflow="hidden">
           <div className={styles.container}>
             <ColumnDragPanel
               title={COLUMN1}

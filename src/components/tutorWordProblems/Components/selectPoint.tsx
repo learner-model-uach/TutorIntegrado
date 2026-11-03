@@ -1,4 +1,5 @@
-import { AlertStatus, facePoint, Hint, selectPointerMeta } from "../types.d";
+import type { Hint, selectPointerMeta } from "../types";
+import { AlertStatus, facePoint } from "../types";
 import { useEffect, useState } from "react";
 import { Box, ButtonGroup, Flex, useMediaQuery } from "@chakra-ui/react";
 import ResAlert from "../Alert/responseAlert";
@@ -17,7 +18,7 @@ export const SelectPoint = ({ meta, hints }: Props) => {
   //console.log("SelectPoint");
 
   const [answerCorrect, setAnswerCorrect] = useState(false);
-  const [isScreenLarge] = useMediaQuery("(min-width: 768px)");
+  const [isScreenLarge] = useMediaQuery(["(min-width: 768px)"]);
   const { correctPoint, data } = meta;
   const [userAnswer, setUserAnswer] = useState([]);
   const { alertTitle, alertStatus, alertMsg, alertHidden, showAlert } = useAlert(

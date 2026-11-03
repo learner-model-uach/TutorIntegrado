@@ -24,10 +24,6 @@ const DynamicTutorEcu = dynamic<ComponentProps<typeof Tutor>>(() =>
   import("../tutorEcuaciones/Tutor").then(mod => mod.Tutor),
 );
 
-const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(() =>
-  import("../tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
-);
-
 const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(() =>
   import("../tutorWordProblems/TutorWordProblem").then(mod => mod.TutorWordProblem),
 );
@@ -82,20 +78,6 @@ export default function ShowContent() {
             exercise={snap.currentContent?.json}
             topicId={snap.topic}
           ></DynamicTutorEcu>
-        ) : snap.currentContent &&
-          [
-            "areaperimetro1",
-            "areaperimetro2",
-            "pitagoras1",
-            "pitagoras2",
-            "thales1",
-            "thales2",
-          ].includes(snap.currentContent?.json?.type) ? (
-          <DynamicTutorGeom
-            key={`${snap.currentContent?.json?.type}-${snap.topic}`}
-            exercise={snap.currentContent?.json}
-            topicId={snap.topic}
-          ></DynamicTutorGeom>
         ) : snap.currentContent && snap.currentContent?.json?.type == "wordProblem" ? (
           <DynamicTutorWP
             key={`${snap.currentContent?.json?.type}-${snap.topic}`}

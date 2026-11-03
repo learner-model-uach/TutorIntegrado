@@ -1,14 +1,15 @@
 import {
+  Box,
   LinkBox,
   LinkOverlay,
   Heading,
   Text,
-  useColorModeValue,
   HStack,
   Center,
-  Divider,
+  Separator,
   Stack,
   Image,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 //import Link from "next/link";
@@ -32,6 +33,15 @@ const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").Math
     ssr: false,
   },
 );
+
+function displayCardExpression(json: ExType): string {
+  if (json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s") return json.eqc;
+  if (json.type === "wordProblem") return "";
+  if (json.initialExpression) return json.initialExpression;
+  if (json.img) return json.img;
+  return json.steps[0].expression;
+}
+
 export const CardSelection = ({
   id,
   code,
@@ -62,17 +72,26 @@ export const CardSelection = ({
   indexSelectionData: number;
 }) => {
   const action = useAction();
+  const mathContainerWidth = useBreakpointValue({ base: 240, sm: 280, md: 320, lg: 360 }) ?? 320;
+  const isPolynomialLabel = label?.toLowerCase().includes("polinomios") ?? false;
+  const currentExpression = json ? displayCardExpression(json) : "";
+  const shouldStackMath = isPolynomialLabel || currentExpression.length > 40;
+
   return (
     <>
       <LinkBox
         color="white"
-        bg={useColorModeValue("blue.700", "gray.800")}
+        bg={"cardselection_bg"}
         _hover={{
           color: "white",
-          bg: useColorModeValue("blue.900", "gray.600"),
+          bg: "cardselection_hover",
+          cursor: "pointer",
         }}
+        position="relative"
         as="article"
-        maxW="90%"
+        w="full"
+        maxW={{ base: "sm", md: "md" }}
+        mx="auto"
         p="3"
         borderWidth="1px"
         rounded="md"
@@ -111,7 +130,7 @@ export const CardSelection = ({
       >
         <Center>
           <HStack>
-            <Heading size="md" my="2" textAlign="center">
+            <Heading size="lg" my="2" textAlign="center" fontWeight={"bold"}>
               {selectionTitle}
             </Heading>
             {selectionBest && <FaStar size={20} color="yellow" />}
@@ -120,7 +139,7 @@ export const CardSelection = ({
 
         <Text fontSize={"sm"}>{selectionText}</Text>
 
-        <Divider my="3" />
+        <Separator my="3" />
 
         {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
           <TeX>{json.title}</TeX>
@@ -135,14 +154,18 @@ export const CardSelection = ({
           </Text>
         )}
 
-        <NextLink href={"showContent"} passHref>
-          <LinkOverlay>
+        <LinkOverlay asChild>
+          <NextLink
+            href={"showContent"}
+            passHref
+            aria-label={`Abrir contenido: ${selectionTitle || code || id}`}
+          >
             <Text paddingTop={"2"} fontSize={"sm"}>
               {json.text}
             </Text>
-          </LinkOverlay>
-        </NextLink>
-        <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
+          </NextLink>
+        </LinkOverlay>
+        <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"} w="full">
           {json ? (
             json.type == "lvltutor2" ? (
               json.img ? (
@@ -161,18 +184,64 @@ export const CardSelection = ({
                 </Stack>
               )
             ) : (
-              <Center fontSize={"2xl"} paddingBottom={"3"} paddingTop={"1"} overflow="hidden">
-                {json.img ? <Image src={"img/" + json.img} /> : null}
-                {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
-                  <MathComponent tex={String.raw`${json.eqc}`} display={false} />
-                ) : json.type === "wordProblem" ? (
-                  <MathComponent tex={String.raw`${""}`} display={false} />
-                ) : json.initialExpression ? (
-                  <MathComponent tex={String.raw`${json.initialExpression}`} display={false} />
-                ) : (
-                  <MathComponent tex={String.raw`${json.steps[0].expression}`} display={false} />
-                )}
-              </Center>
+              <Box
+                w="full"
+                px={{ base: 1, md: 2 }}
+                fontSize={isPolynomialLabel ? { base: "sm", md: "lg" } : { base: "lg", md: "2xl" }}
+                paddingBottom={"3"}
+                paddingTop={"1"}
+                overflow="visible"
+                maxWidth="100%"
+                css={{
+                  "& mjx-container": {
+                    maxWidth: "100% !important",
+                    overflow: "visible !important",
+                    display: shouldStackMath ? "block !important" : "inline-block !important",
+                    margin: "0 auto !important",
+                  },
+                  "& svg": {
+                    maxWidth: "100% !important",
+                    height: "auto !important",
+                  },
+                }}
+              >
+                <Center>
+                  {json.img ? <Image src={"img/" + json.img} /> : null}
+                  {json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s" ? (
+                    <MathComponent
+                      tex={String.raw`${json.eqc}`}
+                      display={shouldStackMath}
+                      settings={
+                        shouldStackMath
+                          ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                          : undefined
+                      }
+                    />
+                  ) : json.type === "wordProblem" ? (
+                    <MathComponent tex={String.raw`${""}`} display={false} />
+                  ) : json.initialExpression ? (
+                    <MathComponent
+                      tex={String.raw`${json.initialExpression}`}
+                      display={shouldStackMath}
+                      settings={
+                        shouldStackMath
+                          ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                          : undefined
+                      }
+                    />
+                  ) : (
+                    <MathComponent
+                      tex={String.raw`${json.steps[0].expression}`}
+                      display={shouldStackMath}
+                      settings={
+                        shouldStackMath
+                          ? { containerWidth: mathContainerWidth, lineWidth: 100 }
+                          : undefined
+                      }
+                    />
+                  )}
+                </Center>
+              </Box>
             )
           ) : (
             <></>

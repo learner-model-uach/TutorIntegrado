@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import update from "immutability-helper";
-import { Heading, Text, Button, Stack, Link } from "@chakra-ui/react";
+import { Heading, Text, Button, Stack, Link, Flex } from "@chakra-ui/react";
 import { shuffleCard } from "../utilities";
-import { Flex } from "@chakra-ui/react";
 import { FeedbackOrderCards } from "../Feedbacks/FeedbackOrderCards";
 import { useDrop } from "react-dnd";
 import { CardsOrderSteps } from "../DragDrop/CardsOrderSteps";
@@ -153,7 +152,7 @@ export const SortSteps = ({ code, idExercise, linkNext, setIdExercise, setNextPh
         </Stack>
         <Stack>
           <Flex style={{ justifyContent: "center" }}>
-            <Button onClick={correctOrderHandler} colorScheme="blue">
+            <Button onClick={correctOrderHandler} colorPalette="blue">
               {CHECK_ORDER_BUTTOM_NAME}
             </Button>
           </Flex>
@@ -167,7 +166,7 @@ export const SortSteps = ({ code, idExercise, linkNext, setIdExercise, setNextPh
                   <Link href={`/exercise/${(idExercise % 14) + 1}`}>
                     <Button
                       onClick={handlerNextExercise}
-                      colorScheme="twitter"
+                      colorPalette="blue"
                       marginRight="12px"
                       fontSize={{
                         base: "11px",
@@ -179,7 +178,7 @@ export const SortSteps = ({ code, idExercise, linkNext, setIdExercise, setNextPh
                     </Button>
                   </Link>
                 ) : (
-                  <Button onClick={() => setNextPhase(false)} colorScheme="twitter">
+                  <Button onClick={() => setNextPhase(false)} colorPalette="blue">
                     {NEXT_STEP_BUTTOM_NAME}
                   </Button>
                 )}

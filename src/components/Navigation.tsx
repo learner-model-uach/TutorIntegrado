@@ -1,14 +1,41 @@
 import { Stack, Text } from "@chakra-ui/react";
-import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch } from "react-icons/fa";
+import { FaBookOpen, FaHome, FaQuestionCircle, FaSearch, FaChartLine } from "react-icons/fa";
+import { useSnapshot } from "valtio";
 import { useAuth } from "./Auth";
-import { DarkModeToggle } from "./DarkModeToggle";
+import { gSelect } from "./GroupSelect";
+import { getDashboardPermissions } from "./olm/dashboardTags";
 import { ScrollArea } from "./ScrollArea";
 import { SidebarLink } from "./SidebarLink";
 
 export function Navigation() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+  const groupSelection = useSnapshot(gSelect);
 
   const admin = (user?.role ?? "") == "ADMIN" ? true : false;
+  const isPreLogin = !isLoading && !user;
+  const dashboardPermissions = getDashboardPermissions(user, groupSelection.group);
+  const canShowDashboardLink =
+    !!user && !user.tags.includes("wp-test-user") && dashboardPermissions.canViewDashboard;
+
+  if (isPreLogin) {
+    return (
+      <ScrollArea height="10vh" display="flex" flexDirection="column">
+        <Stack flex="1" justify="center">
+          <Stack>
+            <SidebarLink icon={<FaHome />} href="/">
+              Inicio
+            </SidebarLink>
+          </Stack>
+
+          <Stack fontWeight="black" pb="2">
+            <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
+              Tutorial
+            </SidebarLink>
+          </Stack>
+        </Stack>
+      </ScrollArea>
+    );
+  }
 
   return (
     <ScrollArea pt="5" pb="6">
@@ -16,17 +43,27 @@ export function Navigation() {
         <SidebarLink icon={<FaHome />} href="/">
           Inicio
         </SidebarLink>
+        <SidebarLink icon={<FaQuestionCircle />} href="/tutorial">
+          Tutorial
+        </SidebarLink>
+        {canShowDashboardLink && (
+          <>
+            <SidebarLink icon={<FaChartLine />} href="/progress">
+              Mi progreso
+            </SidebarLink>
+          </>
+        )}
         {user && admin && (
           <>
             <Text fontWeight="black">Selección por Código</Text>
-            <SidebarLink icon={<FaSearch />} href={"selectByCode"}>
+            <SidebarLink icon={<FaSearch />} href={"/selectByCode"}>
               Search by Code
             </SidebarLink>
           </>
         )}
       </Stack>
 
-      <Stack pb="6">
+      <Stack>
         {user && !user.tags.includes("wp-test-user") && (
           <>
             <Text fontWeight="black">Tópicos</Text>
@@ -58,22 +95,12 @@ export function Navigation() {
               Lógica y Teoría de Conjuntos
             </SidebarLink>
             <Stack fontWeight="black" pb="6">
-              <SidebarLink icon={<FaBookOpen />} href="challenge">
+              <SidebarLink icon={<FaBookOpen />} href="/challenge">
                 Desafíos
               </SidebarLink>
             </Stack>
           </>
         )}
-      </Stack>
-
-      <Stack fontWeight="black" pb="6">
-        <SidebarLink icon={<FaQuestionCircle />} href="tutorial">
-          Tutorial
-        </SidebarLink>
-      </Stack>
-
-      <Stack alignItems="center">
-        <DarkModeToggle />
       </Stack>
     </ScrollArea>
   );

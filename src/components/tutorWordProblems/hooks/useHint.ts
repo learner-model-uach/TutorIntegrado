@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Hint } from "../types.d";
+import type { Hint } from "../types";
 
 export const useHint = (hints: Hint[]) => {
   const [indUnlockedHint, setIndUnlockedHint] = useState(1);

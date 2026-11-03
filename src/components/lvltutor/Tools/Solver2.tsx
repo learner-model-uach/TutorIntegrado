@@ -6,15 +6,9 @@ import {
   Flex,
   Box,
   Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Heading,
   Alert,
   Text,
-  AlertIcon,
-  HStack,
   VStack,
   Center,
   Image,
@@ -40,6 +34,26 @@ const Mq2 = dynamic(
   { ssr: false },
 );
 
+const SummaryText = ({ children }: { children: React.ReactNode }) => (
+  <Text w="100%" maxW="100%" minW={0} lineHeight="1.6" overflowWrap="anywhere">
+    {children}
+  </Text>
+);
+
+const ScrollableMathField = ({
+  exp,
+  currentExpIndex,
+}: {
+  exp: string;
+  currentExpIndex: boolean;
+}) => (
+  <Box w="100%" maxW="100%" minW={0} overflowX="auto" overflowY="hidden" py="1">
+    <Box w="max-content" maxW="none" mx="auto">
+      <MQStaticMathField exp={exp} currentExpIndex={currentExpIndex} />
+    </Box>
+  </Box>
+);
+
 interface value {
   ans: string;
   att: number;
@@ -62,23 +76,31 @@ const Steporans = ({
   content,
   i,
   answer,
+  canUseHwBoard = false,
+  canUseCamera,
 }: {
   step: Step;
   topicId: string;
   content: string;
   i: number;
   answer?: string;
+  canUseHwBoard?: boolean;
+  canUseCamera?: boolean;
 }) => {
   const [currentComponent, setCC] = useState(<></>);
   useEffect(() => {
     if (answer && answer != "") {
       setCC(
         <>
-          <MQStaticMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
-          <Alert key={"Alert" + topicId + "i"} status={"success"} mt={2}>
-            <AlertIcon key={"AlertIcon" + topicId + "i"} />
-            {MQProxy.spaghettimsg ? MQProxy.spaghettimsg : step.correctMsg}
-          </Alert>
+          <ScrollableMathField key={"respuesta" + i} exp={answer} currentExpIndex={true} />
+          <Alert.Root key={"Alert" + topicId + "i"} status={"success"} mt={2}>
+            <Alert.Indicator key={"AlertIcon" + topicId + "i"} />
+            <Alert.Content>
+              <Alert.Description>
+                {MQProxy.spaghettimsg ? MQProxy.spaghettimsg : step.correctMsg}
+              </Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
         </>,
       );
     } else {
@@ -100,15 +122,27 @@ const Steporans = ({
             content={content}
             topicId={topicId}
             disablehint={false}
+            canUseHwBoard={canUseHwBoard}
+            canUseCamera={canUseCamera}
           />,
         );
     }
-  }, [answer, step, content, topicId, i]);
+  }, [answer, step, content, topicId, i, canUseHwBoard, canUseCamera]);
 
   return currentComponent;
 };
 
-const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
+const Solver2 = ({
+  topicId,
+  steps,
+  canUseCamera = false,
+  canUseHwBoard = false,
+}: {
+  topicId: string;
+  steps: ExType;
+  canUseCamera?: boolean;
+  canUseHwBoard?: boolean;
+}) => {
   const mqSnap = useSnapshot(MQProxy);
 
   const action = useAction();
@@ -290,124 +324,178 @@ const Solver2 = ({ topicId, steps }: { topicId: string; steps: ExType }) => {
   let initialExp = steps.initialExpression ? steps.initialExpression : steps.steps[0]?.expression;
 
   return (
-    <Flex key={steps.code} alignItems="center" justifyContent="center" margin={"auto"}>
+    <Flex
+      key={steps.code}
+      alignItems="center"
+      justifyContent="center"
+      margin={"auto"}
+      w="100%"
+      maxW="100%"
+      minW={0}
+      overflowX="hidden"
+    >
       <Flex
         direction="column"
         p={1}
         rounded={6}
         w="100%"
         maxW="3xl"
+        minW={0}
+        overflowX="hidden"
         alignItems="center"
         justifyContent="center"
         margin={"auto"}
       >
-        <Heading as="h1" size="lg" noOfLines={3}>
+        <Heading as="h1" size="3xl" lineClamp={3} color={"heading"} mb={"1rem"}>
           {steps.title}
         </Heading>
-        <Heading as="h5" size="sm" mt={2}>
+        <Heading as="h5" size="md" mb={"0.5rem"}>
           {steps.text}
         </Heading>
         {steps.img ? (
           <Image src={`/img/${steps.img}`} w="md" paddingY={5} alt="Imagen del ejercicio" />
         ) : (
-          <MQStaticMathField exp={initialExp || ""} currentExpIndex={true} />
+          <ScrollableMathField exp={initialExp || ""} currentExpIndex={true} />
         )}
-        <Accordion
-          onChange={algo => (MQProxy.defaultIndex = algo as Array<number>)}
-          index={MQProxy.defaultIndex}
-          allowToggle={true}
-          allowMultiple={true}
+        <Accordion.Root
+          variant={"plain"}
+          mt={"1rem"}
+          w="100%"
+          maxW="100%"
+          minW={0}
+          multiple
+          collapsible
+          value={Array.isArray(MQProxy.defaultIndex) ? MQProxy.defaultIndex.map(String) : []}
+          onValueChange={({ value }) => {
+            MQProxy.defaultIndex = (value ?? []).map(v => Number(v));
+          }}
         >
           {steps.steps.map((step, i) => (
-            <AccordionItem
-              key={"AccordionItem" + i}
-              isDisabled={test[parseInt(step.stepId)]?.disabled}
-              hidden={test[parseInt(step.stepId)]?.hidden}
+            <Accordion.Item
+              key={`AccordionItem${i}`}
+              value={String(step.stepId)}
+              disabled={Boolean(test[parseInt(step.stepId)]?.disabled)}
+              hidden={Boolean(test[parseInt(step.stepId)]?.hidden)}
             >
               <h2 key={"AIh2" + i}>
-                <Alert
-                  key={"AIAlert" + i}
-                  status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}
-                >
-                  <AccordionButton
-                    key={"AIAccordionButton" + i}
-                    onClick={() => {
-                      let potstates = test;
-                      let potstate = potstates[parseInt(step.stepId)];
-                      if (potstate) {
-                        if (!potstate.open) {
-                          action({
-                            verbName: "openStep",
-                            stepID: "" + i,
-                            contentID: steps?.code,
-                            topicID: topicId,
-                          });
-                          potstate.open = true;
-                          potstates[parseInt(step.stepId)] = potstate;
-                          setTest(potstates);
-                        } else {
-                          action({
-                            verbName: "closeStep",
-                            stepID: "" + i,
-                            contentID: steps?.code,
-                            topicID: topicId,
-                          });
-                          potstate.open = false;
-                          potstates[parseInt(step.stepId)] = potstate;
+                <Alert.Root status={test[parseInt(step.stepId)]?.answer ? "success" : "info"}>
+                  <Alert.Content>
+                    <Accordion.ItemTrigger
+                      onClick={() => {
+                        const potstates = [...test];
+                        const idx = parseInt(step.stepId);
+                        const potstate = potstates[idx];
+                        if (potstate) {
+                          if (!potstate.open) {
+                            action({
+                              verbName: "openStep",
+                              stepID: "" + i,
+                              contentID: steps?.code,
+                              topicID: topicId,
+                            });
+                            potstate.open = true;
+                          } else {
+                            action({
+                              verbName: "closeStep",
+                              stepID: "" + i,
+                              contentID: steps?.code,
+                              topicID: topicId,
+                            });
+                            potstate.open = false;
+                          }
+                          potstates[idx] = potstate;
                           setTest(potstates);
                         }
-                      }
-                    }}
-                  >
-                    <Box paddingRight={3}>
-                      <FaHandPointRight />
-                    </Box>
-                    <Box key={"AIBox" + i} flex="1" textAlign="left">
-                      {step.stepTitle}
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </Alert>
+                      }}
+                    >
+                      <Box pr={3}>
+                        <FaHandPointRight />
+                      </Box>
+                      <Box flex="1" textAlign="left">
+                        {step.stepTitle}
+                      </Box>
+                      <Accordion.ItemIndicator />
+                    </Accordion.ItemTrigger>
+                  </Alert.Content>
+                </Alert.Root>
               </h2>
-              <AccordionPanel key={"AIAccordionPanel" + i} pb={4}>
-                <Steporans
-                  step={step}
-                  topicId={topicId}
-                  content={steps.code}
-                  i={i}
-                  answer={test[parseInt(step.stepId)]?.value?.ans}
-                />
-              </AccordionPanel>
-            </AccordionItem>
+
+              <Accordion.ItemContent>
+                <Accordion.ItemBody pb={4}>
+                  {(() => {
+                    const idx = Number(step.stepId);
+                    const isOpen = (MQProxy.defaultIndex ?? []).includes(Number(step.stepId));
+                    const isDone = Boolean(test[idx]?.answer);
+
+                    return (
+                      <>
+                        {isOpen &&
+                        !isDone &&
+                        step.expression &&
+                        step.multipleChoice != undefined ? (
+                          <Box mb="3" w="100%" maxW="100%" minW={0}>
+                            <ScrollableMathField
+                              key={`mq-enunciado-${step.stepId}-open`}
+                              exp={step.expression}
+                              currentExpIndex={true}
+                            />
+                          </Box>
+                        ) : null}
+                        <Steporans
+                          key={`Steporans-${step.stepId}-${isOpen ? "open" : "closed"}`}
+                          step={step}
+                          topicId={topicId}
+                          content={steps.code}
+                          i={i}
+                          answer={test[parseInt(step.stepId)]?.value?.ans}
+                          canUseHwBoard={canUseHwBoard}
+                          canUseCamera={canUseCamera}
+                        />
+                      </>
+                    );
+                  })()}
+                </Accordion.ItemBody>
+              </Accordion.ItemContent>
+            </Accordion.Item>
           ))}
-        </Accordion>
-        <Box>
-          <Alert status="info" hidden={resumen} alignItems="top">
-            <AlertIcon />
-            <VStack w="100%" align="left">
-              <Center>
-                <Heading fontSize="xl">Resumen</Heading>
-              </Center>
-              <HStack>
-                <Text>Expresión:</Text>
-                <MQStaticMathField exp={initialExp || ""} currentExpIndex={!resumen} />
-              </HStack>
-              {steps.steps.map((step, i) => (
-                <Box key={"ResumenBox" + i}>
-                  <Text key={"ResumenText" + i} w="100%" justifyContent={"space-between"}>
-                    {step.summary}
-                  </Text>
-                  <Box key={"ResumenMCContainer" + i} display="flex" justifyContent="center">
-                    <MQStaticMathField
-                      key={"ResumenMC" + i}
-                      exp={step.displayResult[0]!}
-                      currentExpIndex={!resumen}
-                    />
-                  </Box>
+        </Accordion.Root>
+        <Box w="100%" maxW="100%" minW={0}>
+          <Alert.Root
+            status="info"
+            hidden={resumen}
+            alignItems="stretch"
+            w="100%"
+            maxW="100%"
+            minW={0}
+            overflow="hidden"
+            px={{ base: "4", md: "5" }}
+            py="4"
+            className="lvltutor-summary"
+          >
+            <Alert.Content w="100%" maxW="100%" minW={0}>
+              <VStack w="100%" maxW="100%" minW={0} align="stretch" gap="3">
+                <Center w="100%">
+                  <Heading fontSize="xl">Resumen</Heading>
+                </Center>
+                <Box w="100%" maxW="100%" minW={0}>
+                  <Text>Expresión:</Text>
+                  <ScrollableMathField exp={initialExp || ""} currentExpIndex={!resumen} />
                 </Box>
-              ))}
-            </VStack>
-          </Alert>
+                {steps.steps.map((step, i) => (
+                  <Box key={"ResumenBox" + i} w="100%" maxW="100%" minW={0}>
+                    <SummaryText key={"ResumenText" + i}>{step.summary}</SummaryText>
+                    <Box key={"ResumenMCContainer" + i} w="100%" maxW="100%" minW={0}>
+                      <ScrollableMathField
+                        key={"ResumenMC" + i}
+                        exp={step.displayResult[0]!}
+                        currentExpIndex={!resumen}
+                      />
+                    </Box>
+                  </Box>
+                ))}
+              </VStack>
+            </Alert.Content>
+          </Alert.Root>
         </Box>
         {!resumen && <RatingQuestion />}
       </Flex>

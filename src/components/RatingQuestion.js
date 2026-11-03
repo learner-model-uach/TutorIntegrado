@@ -105,6 +105,8 @@ function RatingQuestion({ useAlternateRoute = false }) {
         style={styles.button}
         disabled={currentValue != 0 && !mutation.isLoading ? false : true}
         onClick={handleClick2}
+        colorPalette={"teal"}
+        fontWeight={"semibold"}
       >
         {!mutation.isLoading && !timeToUpdateModel && parameters.ratingQuestion.buttonMsg}
         {(mutation.isLoading || timeToUpdateModel) && (
@@ -132,7 +134,6 @@ const styles = {
     paddingBottom: 5,
   },
   button: {
-    border: "1px solid #a9a9a9",
     borderRadius: 5,
     width: 300,
     padding: 10,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AlertStatus } from "../types.d";
+import { AlertStatus } from "../types";
 
 export const useAlert = (
   initialTitle: string,

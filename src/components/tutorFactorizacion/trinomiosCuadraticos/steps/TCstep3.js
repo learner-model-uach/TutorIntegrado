@@ -1,17 +1,7 @@
 import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { useAction } from "../../../../utils/action";
-import {
-  Alert,
-  AlertIcon,
-  Button,
-  Center,
-  Stack,
-  Radio,
-  RadioGroup,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
+import { Alert, Button, Center, Stack, RadioGroup, Wrap, WrapItem } from "@chakra-ui/react";
 
 export const TCstep3 = ({
   step3,
@@ -47,10 +37,12 @@ export const TCstep3 = ({
       if (value == undefined) {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Seleccione una alternativa
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Seleccione una alternativa</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -58,10 +50,12 @@ export const TCstep3 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step3.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step3.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -69,30 +63,58 @@ export const TCstep3 = ({
   };
   return (
     <>
-      <Wrap padding="15px 10px 10px 10px">
-        <WrapItem>
-          <Center>
-            <RadioGroup onChange={setValue} value={value}>
-              <Stack>
-                <Radio value="1" isReadOnly={step3Valid != null}>
-                  Factorizable con diferentes raíces reales
-                </Radio>
-                <Radio value="2" isReadOnly={step3Valid != null}>
-                  Factorizable con raíces reales iguales
-                </Radio>
-                <Radio value="3" isReadOnly={step3Valid != null}>
-                  Factorizable con raíces complejas conjugadas
-                </Radio>
+      <Wrap className="tc-step3-options" padding="15px 10px 10px 10px">
+        <WrapItem className="tc-step3-choice-section">
+          <Center className="tc-step3-choice-center">
+            <RadioGroup.Root
+              className="tc-step3-choice-root"
+              value={value}
+              onValueChange={({ value }) => setValue(value)}
+            >
+              <Stack className="tc-step3-choice-list">
+                <RadioGroup.Item
+                  className="tc-step3-choice-item"
+                  value="1"
+                  disabled={step3Valid != null}
+                >
+                  <RadioGroup.ItemHiddenInput />
+                  <RadioGroup.ItemIndicator className="tc-step3-choice-indicator" />
+                  <RadioGroup.ItemText className="tc-step3-choice-text">
+                    Factorizable con diferentes raíces reales
+                  </RadioGroup.ItemText>
+                </RadioGroup.Item>
+
+                <RadioGroup.Item
+                  className="tc-step3-choice-item"
+                  value="2"
+                  disabled={step3Valid != null}
+                >
+                  <RadioGroup.ItemHiddenInput />
+                  <RadioGroup.ItemIndicator className="tc-step3-choice-indicator" />
+                  <RadioGroup.ItemText>Factorizable con raíces reales iguales</RadioGroup.ItemText>
+                </RadioGroup.Item>
+
+                <RadioGroup.Item
+                  className="tc-step3-choice-item"
+                  value="3"
+                  disabled={step3Valid != null}
+                >
+                  <RadioGroup.ItemHiddenInput />
+                  <RadioGroup.ItemIndicator className="tc-step3-choice-indicator" />
+                  <RadioGroup.ItemText className="tc-step3-choice-text">
+                    Factorizable con raíces complejas conjugadas
+                  </RadioGroup.ItemText>
+                </RadioGroup.Item>
               </Stack>
-            </RadioGroup>
+            </RadioGroup.Root>
           </Center>
         </WrapItem>
 
-        <WrapItem padding="25px 0px 0px 70px">
+        <WrapItem className="tc-step3-actions" padding="25px 0px 0px 70px">
           {step3Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

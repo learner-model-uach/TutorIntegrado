@@ -1,0 +1,39 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.preview {
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.22);
+  color: #243047;
+  display: flex;
+  font-size: 12px;
+  height: 50px;
+  justify-content: center;
+  opacity: 0.98;
+  overflow: hidden;
+  padding: 0 12px;
+  width: min(120px, 34vw);
+}
+
+.preview :global(.katex) {
+  color: inherit;
+  font-size: inherit;
+}
+
+:global(.dark) .preview,
+:global(.chakra-theme.dark) .preview {
+  background: #2f3b54;
+  border-color: rgba(185, 201, 226, 0.22);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: #f8fafc;
+}

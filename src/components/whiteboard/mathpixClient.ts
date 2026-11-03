@@ -1,0 +1,149 @@
+import { AuthState } from "../Auth";
+
+export interface MathpixStrokesPayload {
+  strokes: {
+    strokes: {
+      x: number[][];
+      y: number[][];
+    };
+  };
+  formats?: string[];
+}
+
+export interface MathpixImagePayload {
+  src: string;
+  formats?: string[];
+  data_options?: Record<string, unknown>;
+  include_line_data?: boolean;
+  include_word_data?: boolean;
+  auto_rotate_confidence_threshold?: number;
+}
+
+export interface MathpixStrokesResponse {
+  text?: string;
+  expressions?: string[];
+  latex_styled?: string;
+  latex?: string;
+  error?: string;
+  error_info?: {
+    id?: string;
+    message?: string;
+  };
+  confidence?: number;
+  is_printed?: boolean;
+  request_id?: string;
+  is_handwritten?: boolean;
+  confidence_rate?: number;
+  auto_rotate_degrees?: number;
+  auto_rotate_confidence?: number;
+  version?: string;
+}
+
+export interface NormalizedMathpixResponse extends MathpixStrokesResponse {
+  expressions: string[];
+}
+
+const unwrapLatex = (value: string) => {
+  const trimmed = value.trim();
+  if (trimmed.startsWith("\\(") && trimmed.endsWith("\\)")) {
+    return trimmed.slice(2, -2).trim();
+  }
+
+  if (trimmed.startsWith("$") && trimmed.endsWith("$")) {
+    return trimmed.slice(1, -1).trim();
+  }
+
+  return trimmed;
+};
+
+const extractExpressions = (value: string) => {
+  const matches = [...value.matchAll(/\\\[([\s\S]*?)\\\]/g)];
+  if (matches.length > 0) {
+    return matches.map(match => unwrapLatex(match[1].replace(/\\n/g, "\n"))).filter(Boolean);
+  }
+
+  const arrayMatch = value.match(/\\begin\{array\}\{[lcr]\}([\s\S]*?)\\end\{array\}/);
+  if (arrayMatch?.[1]) {
+    return arrayMatch[1].split(/\\\\/).map(unwrapLatex).filter(Boolean);
+  }
+
+  const cleaned = unwrapLatex(value);
+  return cleaned ? [cleaned] : [];
+};
+
+export const normalizeMathpixResponse = (
+  response: MathpixStrokesResponse,
+): NormalizedMathpixResponse => {
+  const rawExpressions = response.expressions ?? [];
+  const rawText = response.text ?? response.latex_styled ?? response.latex ?? "";
+  const expressions =
+    rawExpressions.length > 0
+      ? rawExpressions.flatMap(extractExpressions)
+      : extractExpressions(rawText);
+
+  return {
+    ...response,
+    expressions,
+  };
+};
+
+export const requestMathpixStrokes = async (
+  payload: MathpixStrokesPayload,
+  options?: { apiUrl?: string; token?: string },
+): Promise<MathpixStrokesResponse> => {
+  const apiUrl = options?.apiUrl ?? "/api/mathpix/strokes";
+  const token = options?.token ?? AuthState.authorizationToken;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = token;
+  }
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null);
+    throw new Error(errorData?.error || errorData?.message || "Error al procesar Mathpix.");
+  }
+
+  return response.json() as Promise<MathpixStrokesResponse>;
+};
+
+export const requestMathpixImage = async (
+  payload: MathpixImagePayload,
+  options?: { apiUrl?: string; token?: string },
+): Promise<NormalizedMathpixResponse> => {
+  const apiUrl = options?.apiUrl ?? "/api/mathpix/image";
+  const token = options?.token ?? AuthState.authorizationToken;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  if (token) {
+    headers["Authorization"] = token;
+  }
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null);
+    throw new Error(
+      errorData?.error || errorData?.message || "Error al procesar la imagen con Mathpix.",
+    );
+  }
+
+  const result = (await response.json()) as MathpixStrokesResponse;
+  return normalizeMathpixResponse(result);
+};

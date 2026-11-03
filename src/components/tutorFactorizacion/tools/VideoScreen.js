@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  useDisclosure,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  AspectRatio,
-} from "@chakra-ui/react";
+import { useDisclosure, Button, Dialog, AspectRatio } from "@chakra-ui/react";
 
 export const VideoScreen = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -19,22 +9,26 @@ export const VideoScreen = () => {
         ver Tutorial
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Video tutorial</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <AspectRatio maxW="560px">
-              <iframe
-                title="naruto"
-                src="https://www.youtube.com/embed/QhBnZ6NPOY0"
-                allowFullScreen
-              />
-            </AspectRatio>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <Dialog.Root open={isOpen} onOpenChange={({ open }) => !open && onClose()}>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>Video tutorial</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.CloseTrigger />
+            <Dialog.Body>
+              <AspectRatio maxW="560px">
+                <iframe
+                  title="naruto"
+                  src="https://www.youtube.com/embed/QhBnZ6NPOY0"
+                  allowFullScreen
+                />
+              </AspectRatio>
+            </Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Dialog.Root>
     </>
   );
 };

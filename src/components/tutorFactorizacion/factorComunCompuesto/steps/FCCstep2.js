@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
+import { Alert, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
 const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra, setExtra }) => {
   const response1 = useRef(null); //first input response
@@ -61,10 +61,12 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta(s)</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -72,10 +74,12 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step2.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step2.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -103,10 +107,11 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
               }}
               size="sm"
               w={100}
-              focusBorderColor="#9DECF9"
               placeholder="F. común 1"
               ref={response1}
-              isReadOnly={step2Valid != null}
+              readOnly={step2Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label>)</label>
 
@@ -121,10 +126,11 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
               }}
               size="sm"
               w={100}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="F. común 2"
               ref={response2}
-              isReadOnly={step2Valid != null}
+              readOnly={step2Valid != null}
             />
             <label>)</label>
             <MathComponent
@@ -141,7 +147,7 @@ const FCCstep2 = ({ step2, setStep2Valid, step2Valid, contentID, topicID, extra,
           {step2Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MathComponent } from "../../../components/MathJax";
 import { BreadcrumbTutor } from "../tools/BreadcrumbTutor";
 import { DCstep1 } from "./steps/DCstep1";
@@ -6,20 +6,7 @@ import { DCstep2 } from "./steps/DCstep2";
 import { DCsummary } from "../tools/Summary";
 import { Loading } from "../tools/Spinner";
 import Link from "next/link";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-  Heading,
-  Alert,
-  Wrap,
-  Center,
-  Stack,
-  Button,
-} from "@chakra-ui/react";
+import { Accordion, Box, Heading, Alert, Wrap, Center, Stack } from "@chakra-ui/react";
 import { SelectStep } from "../tools/SelectStep";
 import { useAction } from "../../../utils/action";
 import { LoadContentAction } from "../tools/LoadContentAction";
@@ -27,9 +14,15 @@ import { sessionState } from "../../SessionState";
 
 export const DC = ({ exercise, topic }) => {
   LoadContentAction(exercise); // report action loadContent
+
   const [step1Valid, setStep1Valid] = useState(null); //change the value "null" when step 1 is completed
   const [step2Valid, setStep2Valid] = useState(null); //change the value "null" when step 2 is completed
-  const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
+  const STEP1 = "step-1";
+  const STEP2 = "step-2";
+
+  // const [index, setIndex] = useState([0]); //list with to indexes of tabs open, initial 0 (only tab 1 open (step 1))
+  const [openItems, setOpenItems] = useState([STEP1]);
+
   const [select, setSelect] = useState(exercise.selectSteps); //select is false when the student select the step 1 correct
   const [select2, setSelect2] = useState(exercise.selectSteps); //select is false when the student select the step 2 correct
   const steps = exercise.steps.map(i => i.stepTitle); //list of all stepTitle for selectStep
@@ -40,6 +33,10 @@ export const DC = ({ exercise, topic }) => {
   const [extra2, setExtra2] = useState({ att: 0, hints: 0, lastHint: false, duration: 0 });
   extras.steps[0] = extra1;
   extras.steps[1] = extra2;
+
+  // para detectar qué item se abrió/cerró cuando cambia el acordeón
+  const prevOpenRef = useRef(openItems);
+
   useEffect(() => {
     step2Valid &&
       action({
@@ -54,13 +51,18 @@ export const DC = ({ exercise, topic }) => {
   useEffect(() => {
     //when step 1 is completed, open new tab of step 2
     if (step1Valid != null) {
-      setIndex([1]);
+      // setIndex([1]);
+      setOpenItems([STEP2]);
     }
   }, [step1Valid]);
 
+  // status válidos en v3: "info" | "success" | "warning" | "error"
+  const step1Status = step1Valid == null ? "info" : "success";
+  const step2Status = step2Valid == null ? "info" : "success";
+
   return (
     <>
-      <Heading as="h1" size="lg" noOfLines={3}>
+      <Heading as="h1" size="lg" lineClamp={3}>
         {exercise.title}
       </Heading>
       <Heading as="h5" size="sm" mt={2}>
@@ -76,35 +78,72 @@ export const DC = ({ exercise, topic }) => {
         />
       </Wrap>
 
-      <Accordion allowToggle allowMultiple index={index} style={{ padding: 0 }}>
-        <AccordionItem isFocusable={false} isDisabled={select}>
-          <Alert colorScheme={step1Valid == null ? "blue" : "green"}>
-            <AccordionButton
-              onClick={() => {
-                if (index.some(element => element === 0)) {
-                  setIndex(index.filter(e => e !== 0));
-                  action({
-                    verbName: "closeStep",
-                    stepID: "" + exercise.steps[0].stepId,
-                    contentID: exercise.code,
-                    topicID: topic,
-                  });
-                } else {
-                  setIndex(index.concat(0));
-                  action({
-                    verbName: "openStep",
-                    stepID: "" + exercise.steps[0].stepId,
-                    contentID: exercise.code,
-                    topicID: topic,
-                  });
-                }
-              }}
-            >
-              <Box flex="1" textAlign="left">
+      {/* v3: Accordion.Root con multiple y collapsible con value={openItems} y onValueChange */}
+      <Accordion.Root
+        multiple
+        collapsible
+        value={openItems}
+        onValueChange={e => {
+          const prev = prevOpenRef.current;
+          const next = e.value ?? [];
+          setOpenItems(next);
+
+          const closed = prev.filter(p => !next.includes(p));
+          const opened = next.filter(n => !prev.includes(n));
+
+          if (opened.includes(STEP1)) {
+            action({
+              verbName: "openStep",
+              stepID: "" + exercise.steps[0].stepId,
+              contentID: exercise.code,
+              topicID: topic,
+            });
+          }
+
+          if (closed.includes(STEP1)) {
+            action({
+              verbName: "closeStep",
+              stepID: "" + exercise.steps[0].stepId,
+              contentID: exercise.code,
+              topicID: topic,
+            });
+          }
+
+          if (opened.includes(STEP2) && step1Status != null) {
+            action({
+              verbName: "openStep",
+              stepID: "" + exercise.steps[1].stepId,
+              contentID: exercise.code,
+              topicID: topic,
+            });
+          }
+          if (closed.includes(STEP2) && step1Status != null) {
+            action({
+              verbName: "closeStep",
+              stepID: "" + exercise.steps[1].stepId,
+              contentID: exercise.code,
+              topicID: topic,
+            });
+          }
+
+          prevOpenRef.current = next;
+        }}
+        p="0"
+      >
+        {/* Step1 */}
+        <Accordion.Item value={STEP1} disabled={select}>
+          <Alert.Root status={step1Status}>
+            <Accordion.ItemTrigger>
+              <Box flex="1" textAlign="left" w="full">
                 <Wrap>
                   <Center>
-                    {!select && exercise.steps[0].stepTitle}&nbsp;&nbsp;
-                    {step1Valid != null && !select && "✔ "}
+                    {!select && (
+                      <>
+                        {exercise.steps[0].stepTitle}&nbsp;&nbsp;
+                        {step1Valid != null && "✔ "}
+                      </>
+                    )}
+
                     {select && (
                       <Wrap>
                         Paso 1:
@@ -114,62 +153,47 @@ export const DC = ({ exercise, topic }) => {
                           setSelect={setSelect}
                           contentID={exercise.code}
                           topic={topic}
-                        ></SelectStep>
+                        />
                       </Wrap>
                     )}
                   </Center>
                 </Wrap>
               </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </Alert>
-          <AccordionPanel style={{ padding: 0 }}>
-            {!select && (
-              <DCstep1
-                step1={exercise.steps[0]}
-                setStep1Valid={setStep1Valid}
-                step1Valid={step1Valid}
-                contentID={exercise.code}
-                topicID={topic}
-                extra={extra1}
-                setExtra={setExtra1}
-              ></DCstep1>
-            )}
-          </AccordionPanel>
-        </AccordionItem>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+          </Alert.Root>
 
-        <AccordionItem isDisabled={select2}>
-          <Alert
-            colorScheme={step2Valid == null ? (step1Valid == null ? "gray" : "blue") : "green"}
-          >
-            <AccordionButton
-              onClick={() => {
-                if (index.some(element => element === 1)) {
-                  setIndex(index.filter(e => e !== 1));
-                  step1Valid &&
-                    action({
-                      verbName: "closeStep",
-                      stepID: "" + exercise.steps[1].stepId,
-                      contentID: exercise.code, //cambiar para leer del json
-                      topicID: topic,
-                    });
-                } else {
-                  setIndex(index.concat(1));
-                  step1Valid &&
-                    action({
-                      verbName: "openStep",
-                      stepID: "" + exercise.steps[1].stepId,
-                      contentID: exercise.code, //leer del json
-                      topicID: topic,
-                    });
-                }
-              }}
-            >
-              <Box flex="1" textAlign="left">
+          <Accordion.ItemContent p="0">
+            <Accordion.ItemBody>
+              {!select && (
+                <DCstep1
+                  step1={exercise.steps[0]}
+                  setStep1Valid={setStep1Valid}
+                  step1Valid={step1Valid}
+                  contentID={exercise.code}
+                  topicID={topic}
+                  extra={extra1}
+                  setExtra={setExtra1}
+                />
+              )}
+            </Accordion.ItemBody>
+          </Accordion.ItemContent>
+        </Accordion.Item>
+
+        {/* Stept 2 */}
+        <Accordion.Item value={STEP2} disabled={select2}>
+          <Alert.Root status={step2Status}>
+            <Accordion.ItemTrigger>
+              <Box flex="1" textAlign="left" w="full">
                 <Wrap>
                   <Center>
-                    {!select2 && exercise.steps[1].stepTitle}
-                    {step2Valid != null && !select2 && "✔ "}
+                    {!select2 && (
+                      <>
+                        {exercise.steps[1].stepTitle}
+                        {step2Valid != null && " ✔"}
+                      </>
+                    )}
+
                     {select2 && step1Valid != null && (
                       <Wrap>
                         Paso 2:
@@ -179,30 +203,33 @@ export const DC = ({ exercise, topic }) => {
                           setSelect={setSelect2}
                           contentID={exercise.code}
                           topic={topic}
-                        ></SelectStep>
+                        />
                       </Wrap>
                     )}
                   </Center>
                 </Wrap>
               </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </Alert>
-          <AccordionPanel style={{ padding: 0 }}>
-            {step1Valid != null && !select2 && (
-              <DCstep2
-                step2={exercise.steps[step1Valid]}
-                setStep2Valid={setStep2Valid}
-                step2Valid={step2Valid}
-                contentID={exercise.code}
-                topicID={topic}
-                extra={extra2}
-                setExtra={setExtra2}
-              ></DCstep2>
-            )}
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+          </Alert.Root>
+
+          <Accordion.ItemContent p="0">
+            <Accordion.ItemBody>
+              {step1Valid != null && !select2 && (
+                <DCstep2
+                  step2={exercise.steps[step1Valid]}
+                  setStep2Valid={setStep2Valid}
+                  step2Valid={step2Valid}
+                  contentID={exercise.code}
+                  topicID={topic}
+                  extra={extra2}
+                  setExtra={setExtra2}
+                />
+              )}
+            </Accordion.ItemBody>
+          </Accordion.ItemContent>
+        </Accordion.Item>
+      </Accordion.Root>
       {step2Valid != null && (
         <>
           {/*complete content acá */}

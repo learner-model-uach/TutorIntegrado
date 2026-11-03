@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useCallback, useEffect } from "react";
 import update from "immutability-helper";
-import { Heading, Text, Button, Stack, Link } from "@chakra-ui/react";
+import { Heading, Text, Button, Stack } from "@chakra-ui/react";
 import { shuffleCard } from "../../../utilities";
 import { Flex } from "@chakra-ui/react";
 import { FeedbackOrderCards } from "../Feedbacks/FeedbackOrderCards";
@@ -17,14 +17,12 @@ import {
   BACKGROUND_COLOR_ORDER_STEPS,
 } from "../types";
 import { useAction } from "../../../utils/action";
-import { useRouter } from "next/router";
 
 export const SortStepsTest = ({
   steps,
   setNextPhase,
   linkNext,
   idExercise,
-  setIdExercise,
   setTabIndex,
   setColorTab,
   content,
@@ -34,7 +32,6 @@ export const SortStepsTest = ({
   const [correctOrder, setCorrectOrder] = useState(false);
   const [cardColor, setCardColor] = useState([]);
   const startAction = useAction({});
-  const { push } = useRouter();
 
   useEffect(() => {
     if (steps) {
@@ -167,7 +164,7 @@ export const SortStepsTest = ({
         </Stack>
         <Stack>
           <Flex style={{ justifyContent: "center" }}>
-            <Button onClick={correctOrderHandler} colorScheme="blue">
+            <Button onClick={correctOrderHandler} colorPalette="blue">
               {CHECK_ORDER_BUTTOM_NAME}
             </Button>
           </Flex>
@@ -180,7 +177,7 @@ export const SortStepsTest = ({
                 {linkNext ? (
                   <Button
                     onClick={handlerNextExercise}
-                    colorScheme="twitter"
+                    colorPalette="blue"
                     marginRight="12px"
                     fontSize={{
                       base: "11px",
@@ -191,7 +188,7 @@ export const SortStepsTest = ({
                     {NEXT_EXERCISE_BUTTOM_NAME}
                   </Button>
                 ) : (
-                  <Button onClick={() => setNextPhase(false)} colorScheme="twitter">
+                  <Button onClick={() => setNextPhase(false)} colorPalette="blue">
                     {NEXT_STEP_BUTTOM_NAME}
                   </Button>
                 )}
