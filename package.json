@@ -15,7 +15,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^2.4.0",
+    "@auth0/auth0-react": "^2.30.0",
     "@capacitor/app": "^8.1.0",
     "@capacitor/browser": "^8.0.3",
     "@capacitor/camera": "8.0.0",
