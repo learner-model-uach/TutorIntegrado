@@ -38,7 +38,7 @@
     "immutability-helper": "^3.1.1",
     "jose": "^6.2.13",
     "jsxgraph": "^1.11.1",
-    "katex": "0.16.22",
+    "katex": "0.18.2",
     "localforage": "^1.10.0",
     "mathjax-react": "2.0.1",
     "mathlive": "^0.107.0",
