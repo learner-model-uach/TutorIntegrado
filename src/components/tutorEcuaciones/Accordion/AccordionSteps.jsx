@@ -1,17 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-//import styles from "./AccordionSteps.module.css";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Alert,
-  useColorModeValue,
-  Box,
-  Flex,
-} from "@chakra-ui/react";
+import { Accordion, Box, Flex } from "@chakra-ui/react";
 import { StepPanel } from "../Panels/StepPanel";
 import { AccordionAnswer } from "./AccordionAnswer";
 import { StepEquations } from "../Panels/StepEquations";
@@ -20,46 +9,80 @@ import {
   ACCORDION_COLOR,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
-  BACKGROUND_COLOR_ACCORDION,
   INPUT,
   DRAG_FIXED_TWO,
 } from "../types";
 import { useAction } from "../../../utils/action";
 
 export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
-  const inputRef = useRef([]);
   const [totalSteps, setTotalSteps] = useState(0);
   const [disableState, setDisableState] = useState([true]);
   const [numStep, setNumStep] = useState(0);
-  const [indexStep, setIndexStep] = useState([0]);
   const [stepCorrect, setStepCorrect] = useState([]);
   const [color, setColor] = useState([]);
-  const [isOpenIndexes, setIsOpenIndexes] = useState([0]);
   const [completeContentSteps, setCompleteContentSteps] = useState({}); // object used in the "steps" field for the completeContent action
   const startAction = useAction({});
 
+  const itemValues = useMemo(() => (exercise?.steps ?? []).map(s => String(s.stepId)), [exercise]);
+  const [openItems, setOpenItems] = useState([]);
+  const prevOpenRef = useRef([]);
+
+  const reportAccordionAction = (verbName, stepId) => {
+    try {
+      startAction({
+        verbName,
+        stepID: stepId,
+        contentID: exercise.code,
+        topicID: topicId,
+      });
+    } catch (error) {
+      console.error(`Unable to report ${verbName} for accordion step ${stepId}`, error);
+    }
+  };
+
+  const handleExpanded = details => {
+    const next = Array.isArray(details) ? details : (details?.value ?? []);
+    const prev = prevOpenRef.current;
+    const closed = prev.filter(value => !next.includes(value));
+    const opened = next.filter(value => !prev.includes(value));
+
+    setOpenItems(next);
+    prevOpenRef.current = next;
+
+    if (opened.length > 0) {
+      reportAccordionAction("openStep", opened[opened.length - 1]);
+    }
+
+    if (closed.length > 0) {
+      reportAccordionAction("closeStep", closed[0]);
+    }
+  };
+
   useEffect(() => {
+    if (!exercise) return;
     setTotalSteps(exercise.steps.length);
     setColor(
       Array(exercise.steps.length)
         .fill(0)
-        .map(e => "blue"),
+        .map(e => ACCORDION_COLOR),
     );
     setDisableState([true]);
-    setIndexStep([0]);
     setStepCorrect([]);
     setNumStep(0);
-  }, [exercise]);
+
+    setOpenItems(itemValues.length ? [itemValues[0]] : []);
+    prevOpenRef.current = itemValues.length ? [itemValues[0]] : [];
+  }, [exercise, itemValues]);
 
   useEffect(() => {
-    // It is in charge of opening and closing the accordions of each step.
-    if (numStep > 0) {
-      setTimeout(() => {
-        inputRef.current[numStep - 1].click(); // close the accordion of the completed step
-        if (numStep != totalSteps) inputRef.current[numStep].click(); // open the accordion of the following exercise
-      }, 1000);
+    if (numStep > 0 && numStep !== totalSteps) {
+      const next = itemValues[numStep];
+      if (next) {
+        setOpenItems([next]);
+        prevOpenRef.current = [next];
+      }
     }
-  }, [numStep]); // the numStep changes to numStep + 1 when a step is completed
+  }, [numStep, totalSteps, itemValues]);
 
   const updateObjectSteps = (stepId, attempts, hintsShow, duration) => {
     // update the data in the "steps" field of the completeContent action
@@ -75,135 +98,130 @@ export const AccordionSteps = ({ exercise, topicId, setNextExercise }) => {
     }));
   };
 
-  const onClickAccordionStep = index => {
-    if (index.length > isOpenIndexes.length) {
-      let stepID = index.at(-1);
-      startAction({
-        verbName: "openStep",
-        stepID: stepID + "",
-        contentID: exercise.code,
-        topicID: topicId,
-      });
-    } else {
-      let stepID = isOpenIndexes.filter(id => !index.includes(id));
-      startAction({
-        verbName: "closeStep",
-        stepID: stepID.at(0) + "",
-        contentID: exercise.code,
-        topicID: topicId,
-      });
+  const mapStatus = c => {
+    if (c == CORRECT_ANSWER_COLOR || c === "green") return "success";
+    if (c == INCORRECT_ANSWER_COLOR || c === "red") return "error";
+    return "info";
+  };
+
+  const getTriggerStyles = status => {
+    if (status === "success") {
+      return {
+        bg: "accordion_success",
+        color: "accordion_success_text",
+      };
     }
-    setIsOpenIndexes(index);
+
+    if (status === "error") {
+      return {
+        bg: "red.100",
+        color: "red.700",
+      };
+    }
+
+    return {
+      bg: "accordion_step",
+      color: "accordion_step_text",
+    };
   };
 
   return (
     <Flex style={{ width: "100%" }}>
-      <Accordion
-        allowMultiple={true}
-        defaultIndex={indexStep}
-        key={exercise.code}
+      <Accordion.Root
+        key={exercise?.code}
+        multiple
+        collapsible
+        value={openItems}
+        onValueChange={handleExpanded}
         style={{ width: "100%" }}
-        onChange={index => onClickAccordionStep(index)}
       >
-        {exercise &&
-          exercise.steps.map((step, index) => (
-            <AccordionItem
-              isDisabled={!disableState[index]}
-              margin={{ sm: "auto" }}
-              key={index}
-              paddingRight={{ base: 0 }}
+        {exercise?.steps?.map((step, index) => {
+          const value = String(step.stepId);
+          const disabled = !disableState[index];
+          const status = mapStatus(color[index]);
+          const triggerStyles = getTriggerStyles(status);
+          return (
+            <Accordion.Item
+              key={step.StepId ?? index}
+              value={value}
+              disabled={disabled}
               style={{ display: "block", width: "100%" }}
-              //className={styles["accordionPadding"]}
             >
-              <Alert colorScheme={color[index]}>
-                <AccordionButton
-                  ref={element => (inputRef.current[index] = element)}
-
-                  //colorScheme={color[index] === CORRECT_ANSWER_COLOR ? "green" : "blue"}
-                  //bg={useColorModeValue("blue.700", "blue.800")}
-                  /*bg={
-                  color[index] === ACCORDION_COLOR
-                    ? ""
-                    : color[index] === CORRECT_ANSWER_COLOR
-                    ? CORRECT_ANSWER_COLOR
-                    : INCORRECT_ANSWER_COLOR
-                }*/
-                >
-                  <Box flex="1" p={4} textAlign="left">
-                    <AccordionAnswer
-                      nStep={step.stepId}
-                      text={step.left_text}
-                      stepType={step.type}
-                      inputLabels={step.input_labels}
-                      answer={stepCorrect[index]}
-                    />
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </Alert>
-              <AccordionPanel
-                pb={4}
-                id="panel"
-                style={{
-                  //backgroundColor: BACKGROUND_COLOR_ACCORDION,
-                  display: "flex",
-                  alignContent: "center",
-                  justifyContent: "center",
-                }}
+              <Accordion.ItemTrigger
+                bg={triggerStyles.bg}
+                color={triggerStyles.color}
+                py={{ base: 3, md: 4 }}
+                pl={4}
               >
-                {step.type === DRAG_FIXED_TWO ? (
-                  <StepEquations
-                    step={step}
-                    key={step.stepId}
-                    setNumStep={setNumStep}
-                    nStep={numStep}
-                    setDisableState={setDisableState}
-                    totalSteps={totalSteps}
-                    setStepCorrect={setStepCorrect}
-                    setColor={setColor}
-                    code={exercise.code}
-                    setNextExercise={setNextExercise}
-                    topicId={topicId}
-                    updateObjectSteps={updateObjectSteps}
-                    completeContentSteps={completeContentSteps}
+                <Box flex="1" pl={4} textAlign="left" w="full">
+                  <AccordionAnswer
+                    nStep={step.stepId}
+                    text={step.left_text}
+                    stepType={step.type}
+                    inputLabels={step.input_labels}
+                    answer={stepCorrect[index]}
                   />
-                ) : step.type === INPUT ? (
-                  <StepInput
-                    step={step}
-                    key={step.stepId}
-                    setNumStep={setNumStep}
-                    nStep={numStep}
-                    setDisableState={setDisableState}
-                    totalSteps={totalSteps}
-                    setStepCorrect={setStepCorrect}
-                    setColor={setColor}
-                    code={exercise.code}
-                    setNextExercise={setNextExercise}
-                    topicId={topicId}
-                    updateObjectSteps={updateObjectSteps}
-                    completeContentSteps={completeContentSteps}
-                  />
-                ) : (
-                  <StepPanel
-                    step={step}
-                    key={step.stepId}
-                    setNumStep={setNumStep}
-                    nStep={numStep}
-                    setDisableState={setDisableState}
-                    totalSteps={totalSteps}
-                    setStepCorrect={setStepCorrect}
-                    setColor={setColor}
-                    code={exercise.code}
-                    setNextExercise={setNextExercise}
-                    topicId={topicId}
-                    updateObjectSteps={updateObjectSteps}
-                    completeContentSteps={completeContentSteps}
-                  />
-                )}
-              </AccordionPanel>
-            </AccordionItem>
-          ))}
-      </Accordion>
+                </Box>
+                <Accordion.ItemIndicator mr={5} />
+              </Accordion.ItemTrigger>
+
+              <Accordion.ItemContent pb={4}>
+                <Box display="flex" alignContent="center" justifyContent="center">
+                  {step.type === DRAG_FIXED_TWO ? (
+                    <StepEquations
+                      step={step}
+                      key={step.stepId}
+                      setNumStep={setNumStep}
+                      nStep={numStep}
+                      setDisableState={setDisableState}
+                      totalSteps={totalSteps}
+                      setStepCorrect={setStepCorrect}
+                      setColor={setColor}
+                      code={exercise.code}
+                      setNextExercise={setNextExercise}
+                      topicId={topicId}
+                      updateObjectSteps={updateObjectSteps}
+                      completeContentSteps={completeContentSteps}
+                    />
+                  ) : step.type === INPUT ? (
+                    <StepInput
+                      step={step}
+                      key={step.stepId}
+                      setNumStep={setNumStep}
+                      nStep={numStep}
+                      setDisableState={setDisableState}
+                      totalSteps={totalSteps}
+                      setStepCorrect={setStepCorrect}
+                      setColor={setColor}
+                      code={exercise.code}
+                      setNextExercise={setNextExercise}
+                      topicId={topicId}
+                      updateObjectSteps={updateObjectSteps}
+                      completeContentSteps={completeContentSteps}
+                    />
+                  ) : (
+                    <StepPanel
+                      step={step}
+                      key={step.stepId}
+                      setNumStep={setNumStep}
+                      nStep={numStep}
+                      setDisableState={setDisableState}
+                      totalSteps={totalSteps}
+                      setStepCorrect={setStepCorrect}
+                      setColor={setColor}
+                      code={exercise.code}
+                      setNextExercise={setNextExercise}
+                      topicId={topicId}
+                      updateObjectSteps={updateObjectSteps}
+                      completeContentSteps={completeContentSteps}
+                    />
+                  )}
+                </Box>
+              </Accordion.ItemContent>
+            </Accordion.Item>
+          );
+        })}
+      </Accordion.Root>
     </Flex>
   );
 };

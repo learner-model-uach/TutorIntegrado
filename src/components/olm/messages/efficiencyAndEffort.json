@@ -1,0 +1,12 @@
+{
+  "effort": {
+    "noneDone": "No has realizado ejercicios. Mateo estima que debes hacer {{estimatedLabel}} para completar {{subtopicLabel}}.",
+    "noneDoneAllProgress": "Las habilidades de {{subtopicLabel}} ya las practicaste en otros subtópicos",
+    "someDone": "Has realizado {{doneLabel}}. Mateo estima que debes hacer {{estimatedLabel}} para completar {{subtopicLabel}}.",
+    "allDone": "Realizaste {{doneLabel}} en {{subtopicLabel}}."
+  },
+  "mood": {
+    "high": "Tu eficiencia ha sido alta porque has demostrado con respuestas correctas y poco uso de pistas que puedes completar los ejercicios.",
+    "low": "Tu eficiencia ha sido baja. Trata de contestar los pasos de los ejercicios correctamente en el primer intento y solo usa pistas cuando las necesites."
+  }
+}

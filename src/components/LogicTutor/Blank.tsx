@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
+import { Box, Button, Stack, Input, Alert } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -26,19 +26,21 @@ const Blank = ({
   const [attempts, setAttempts] = useState(0);
   const action = useAction();
   const evaluar = () => {
-    console.log("Input:", inputText);
-    let respuesta = false;
-    console.log("Respuesta esperada:", exc.steps[nStep].answers[0].answer[0]);
+    if (isCorrectValue) return;
+
+    const respuesta = inputText === exc.steps[nStep].answers[0].answer[0];
+    const nextAttempts = attempts + 1;
+
     setRespuestas(prevRespuestas => [...prevRespuestas, inputText]);
     setFirstTime(false);
-    if (inputText === exc.steps[nStep].answers[0].answer[0]) {
+    setError(!respuesta);
+    setAttempts(nextAttempts);
+
+    if (respuesta) {
       setIsCorrectvalue(true);
-      respuesta = true;
       setCompleted(true);
-    } else {
-      setError(true);
     }
-    setAttempts(attempts + 1);
+
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
@@ -47,43 +49,79 @@ const Blank = ({
       result: respuesta ? 1 : 0,
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
-        response: [Response],
-        attempts: attempts,
-        hints: hints,
+        response: [inputText],
+        attempts: nextAttempts,
+        hints,
       },
     });
   };
   const handleButtonClick = (symbol: string) => {
+    if (isCorrectValue) return;
     setInputText(prevText => prevText + symbol);
   };
   return (
     <>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         <Input
           htmlSize={4}
-          width="auto"
+          w={{ base: "100%", sm: "auto" }}
+          maxW={{ base: "100%", sm: "xs" }}
           type="text"
           value={inputText}
+          disabled={isCorrectValue}
           onChange={e => setInputText(e.target.value)}
         />
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("[")}>
-          {" "}
-          [
-        </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("]")}>
-          {" "}
-          ]
-        </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("∞")}>
-          {" "}
-          ∞
-        </Button>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          gap={2}
+          justifyContent="center"
+          aria-disabled={isCorrectValue}
+          pointerEvents={isCorrectValue ? "none" : "auto"}
+          opacity={isCorrectValue ? 0.6 : 1}
+        >
+          <Button
+            bg="#3b82f6"
+            size="sm"
+            disabled={isCorrectValue}
+            onClick={() => handleButtonClick("[")}
+          >
+            [
+          </Button>
+          <Button
+            bg="#3b82f6"
+            size="sm"
+            disabled={isCorrectValue}
+            onClick={() => handleButtonClick("]")}
+          >
+            ]
+          </Button>
+          <Button
+            bg="#3b82f6"
+            size="sm"
+            disabled={isCorrectValue}
+            onClick={() => handleButtonClick("∞")}
+          >
+            ∞
+          </Button>
+        </Box>
       </Stack>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         {isCorrectValue ? null : (
           <>
-            <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
-              {" "}
+            <Button colorPalette="teal" h="2rem" onClick={() => evaluar()}>
               Enviar
             </Button>
             <Hint
@@ -103,15 +141,19 @@ const Blank = ({
         )}
       </Stack>
       {firstTime ? null : !isCorrectValue ? (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root status="error">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       ) : (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

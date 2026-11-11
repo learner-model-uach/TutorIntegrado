@@ -15,7 +15,7 @@ export const MobileMenuButton = (props: MobileMenuButtonProps) => {
       ml="-8"
       mr="2"
       as="button"
-      type="button"
+      // type="button"
       rounded="md"
       p="1"
       fontSize="xl"

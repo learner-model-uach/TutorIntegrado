@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./MovableItem.module.css";
 import { useDrag } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
 import TeX from "@matejmazur/react-katex";
 import { BOX, COLUMN1, COLUMN2, COLUMN3 } from "../types";
-
-const style = {
-  border: "1px dashed gray",
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
-  cursor: "move",
-};
 
 export const MovableItemEquation = ({
   value,
@@ -22,6 +15,7 @@ export const MovableItemEquation = ({
   isCorrect,
 }) => {
   const [isCorrecto, setIsCorrect] = useState(true);
+  const elementRef = useRef(null);
 
   useEffect(() => {
     setIsCorrect(!isCorrect);
@@ -45,9 +39,19 @@ export const MovableItemEquation = ({
 
   const findItemValue = value => items.find(item => item.value === value);
 
-  const [{ isDragging }, drag] = useDrag({
+  const getPreviewSize = () => {
+    const rect = elementRef.current?.getBoundingClientRect();
+    if (!rect) return undefined;
+
+    return {
+      height: rect.height,
+      width: rect.width,
+    };
+  };
+
+  const [{ isDragging }, drag, preview] = useDrag({
     canDrag: () => isCorrecto,
-    item: { value },
+    item: () => ({ previewSize: getPreviewSize(), value }),
     type: BOX,
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
@@ -97,6 +101,10 @@ export const MovableItemEquation = ({
     }),
   });
 
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: true });
+  }, [preview]);
+
   const onDoubleClick = () => {
     let existsAnswerColumn2 = findItem(COLUMN2);
     let existsAnswerColumn3 = findItem(COLUMN3);
@@ -135,14 +143,19 @@ export const MovableItemEquation = ({
     }
   };
 
-  const opacity = isDragging ? 0.2 : 1;
+  const opacity = isDragging ? 0 : 1;
+
+  const isAnswerSlotItem = column === COLUMN2 || column === COLUMN3;
 
   return (
     <div
-      ref={drag}
+      ref={node => {
+        elementRef.current = node;
+        drag(node);
+      }}
       onDoubleClick={onDoubleClick}
-      className={styles["movable-item"]}
-      style={{ style }}
+      className={`${styles["movable-item"]} ${isAnswerSlotItem ? styles["answer-slot-item"] : ""}`}
+      style={{ opacity }}
     >
       <TeX math={value} as="figcaption" style={{ alignItems: "center", fontSize: "12px" }} />
     </div>

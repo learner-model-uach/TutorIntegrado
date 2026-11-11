@@ -1,4 +1,13 @@
-import { Box, Center, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Container,
+  Heading,
+  SimpleGrid,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { withAuth, useAuth } from "../components/Auth";
 import { CardSelectionTopic } from "../components/contentSelectComponents/CardSelectionTopics";
 import { useRouter } from "next/router";
@@ -26,6 +35,30 @@ export default withAuth(function TopicSelect() {
   //console.log(registerTopic);
   const topic = parseInt(registerTopic, 10).toString(); // Convertir a string
   //const nextContentPath = router.asPath + "";
+  const currentTopicLabel =
+    registerTopic == parameters.CSMain.topic1.registerTopic
+      ? parameters.CSMain.topic1.topic
+      : registerTopic == parameters.CSMain.topic2.registerTopic
+        ? parameters.CSMain.topic2.topic
+        : registerTopic == parameters.CSMain.topic3.registerTopic
+          ? parameters.CSMain.topic3.topic
+          : registerTopic == parameters.CSMain.topic4.registerTopic
+            ? parameters.CSMain.topic4.topic
+            : registerTopic == parameters.CSMain.topic5.registerTopic
+              ? parameters.CSMain.topic5.topic
+              : registerTopic == parameters.CSMain.topic6.registerTopic
+                ? parameters.CSMain.topic6.topic
+                : registerTopic == parameters.CSMain.topic7.registerTopic
+                  ? parameters.CSMain.topic7.topic
+                  : registerTopic == parameters.CSMain.topic8.registerTopic
+                    ? parameters.CSMain.topic8.topic
+                    : registerTopic == parameters.CSMain.topic9.registerTopic
+                      ? parameters.CSMain.topic9.topic
+                      : registerTopic == parameters.CSMain.topic10.registerTopic
+                        ? parameters.CSMain.topic10.topic
+                        : registerTopic == parameters.CSMain.topic11.registerTopic
+                          ? parameters.CSMain.topic11.topic
+                          : parameters.CSMain.topic12.topic;
 
   const [topicCodes, setTopicCodes] = useState<string[]>([]);
 
@@ -40,9 +73,13 @@ export default withAuth(function TopicSelect() {
     action({
       verbName: "displaySubTopics",
       topicID: registerTopic,
+      localSummary: {
+        parentTopicLabel: currentTopicLabel,
+        topicLabel: undefined,
+      },
       //extra: { selectionData },
     });
-  }, [registerTopic, action]);
+  }, [registerTopic, currentTopicLabel, action]);
 
   // Manejo de subtópicos
   useEffect(() => {
@@ -63,7 +100,7 @@ export default withAuth(function TopicSelect() {
 
   GroupModel(gs.group ? gs.group.id : "-1", user.projects[0].code);
 
-  console.log("aa", selectedExcercise.kcXtopic, selectedExcercise.ejercicio);
+  // console.log("aa", selectedExcercise.kcXtopic, selectedExcercise.ejercicio);
 
   useEffect(() => {
     reset2();
@@ -100,60 +137,60 @@ export default withAuth(function TopicSelect() {
   else uModel.pol2 = false;
 
   if (Subtopic.isLoading || selectedExcercise.isLoading || uModel.isLoading || gModel.isLoading) {
-    return <Box p={5}> Cargando...</Box>;
+    return (
+      <VStack pt="20rem">
+        <Spinner size={"xl"} borderWidth={"3px"} />
+        <Text fontSize={"md"} fontWeight={"semibold"}>
+          Cargando...
+        </Text>
+      </VStack>
+    );
   }
 
   return (
     <>
-      <Center flexDirection="column" p={4}>
-        <Heading>
-          {parameters.CSMain.title}
-          {registerTopic == parameters.CSMain.topic1.registerTopic
-            ? parameters.CSMain.topic1.topic
-            : registerTopic == parameters.CSMain.topic2.registerTopic
-            ? parameters.CSMain.topic2.topic
-            : registerTopic == parameters.CSMain.topic3.registerTopic
-            ? parameters.CSMain.topic3.topic
-            : registerTopic == parameters.CSMain.topic4.registerTopic
-            ? parameters.CSMain.topic4.topic
-            : registerTopic == parameters.CSMain.topic5.registerTopic
-            ? parameters.CSMain.topic5.topic
-            : registerTopic == parameters.CSMain.topic6.registerTopic
-            ? parameters.CSMain.topic6.topic
-            : registerTopic == parameters.CSMain.topic7.registerTopic
-            ? parameters.CSMain.topic7.topic
-            : registerTopic == parameters.CSMain.topic8.registerTopic
-            ? parameters.CSMain.topic8.topic
-            : registerTopic == parameters.CSMain.topic9.registerTopic
-            ? parameters.CSMain.topic9.topic
-            : registerTopic == parameters.CSMain.topic10.registerTopic
-            ? parameters.CSMain.topic10.topic
-            : registerTopic == parameters.CSMain.topic11.registerTopic
-            ? parameters.CSMain.topic11.topic
-            : parameters.CSMain.topic12.topic}
-        </Heading>
-        <Text mb="5">Lista de subtópicos</Text>
-        <Box w="full" mx="auto" p={4}>
-          <SimpleGrid columns={[1, 1, 1, 1, 2, 3]} spacing={10} mt="4">
-            {!Subtopic.isLoading &&
-              !selectedExcercise.isLoading &&
-              sortedChildrens.map((ejercicio, i) =>
-                selectedExcercise.kcXtopic[ejercicio.id] &&
-                selectedExcercise.kcXtopic[ejercicio.id].length > 0 ? (
-                  <CardSelectionTopic
-                    key={ejercicio.id}
-                    id={ejercicio.id}
-                    index={i}
-                    label={ejercicio.label}
-                    //nextContentPath={nextContentPath}
-                    KCs={selectedExcercise.kcXtopic[ejercicio.id] || []} // pasar KCs correspondientes
-                  />
-                ) : (
-                  console.log("Tópico sin ejercicios")
-                ),
-              )}
-          </SimpleGrid>
-        </Box>
+      <Center as="section" py="8">
+        <Container maxW="8xl" px="4">
+          <Heading color="heading" fontSize={"3xl"} fontWeight={"bold"} mb="2" textAlign={"center"}>
+            {parameters.CSMain.title}
+            {currentTopicLabel}
+          </Heading>
+          <Text textAlign="center" mb="5" fontSize="xl" color="text_info">
+            Selecciona un subtópico
+          </Text>
+          <Box w="full" mx="auto" p={4}>
+            <SimpleGrid
+              minChildWidth={{ base: "100%", md: "320px" }}
+              gap={10}
+              mt="4"
+              justifyContent="center"
+              justifyItems="center"
+            >
+              {!Subtopic.isLoading &&
+                !selectedExcercise.isLoading &&
+                sortedChildrens
+                  .filter(ejercicio => {
+                    const hasExercises =
+                      selectedExcercise.kcXtopic[ejercicio.id] &&
+                      selectedExcercise.kcXtopic[ejercicio.id].length > 0;
+                    if (!hasExercises) {
+                      console.log("Tópico sin ejercicios", ejercicio.label);
+                    }
+                    return hasExercises;
+                  })
+                  .map((ejercicio, i) => (
+                    <CardSelectionTopic
+                      key={ejercicio.id}
+                      id={ejercicio.id}
+                      index={i}
+                      label={ejercicio.label}
+                      parentTopicLabel={currentTopicLabel}
+                      KCs={selectedExcercise.kcXtopic[ejercicio.id] || []}
+                    />
+                  ))}
+            </SimpleGrid>
+          </Box>
+        </Container>
       </Center>
     </>
   );

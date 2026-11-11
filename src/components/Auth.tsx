@@ -1,7 +1,8 @@
 import { useAuth0, User as Auth0User } from "@auth0/auth0-react";
-import { Spinner, useLatestRef } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
+import { useLatestRef } from "../hooks/useLatestRef";
 import Router from "next/router";
-import { FC, memo, useEffect } from "react";
+import React, { FC, memo, useEffect } from "react";
 import { useGQLQuery } from "rq-gql";
 import { proxy, useSnapshot } from "valtio";
 import { CurrentUserQuery, gql } from "../graphql";
@@ -21,17 +22,16 @@ export const AuthState = proxy<{
   user: null,
   project: null,
   isLoading: true,
+  authorizationToken: undefined,
 });
 
 export function SyncAuth() {
-  const { user, getIdTokenClaims, isLoading } = useAuth0();
-  const { authorization } = useSnapshot(rqGQLClient.headers);
-
+  const { user, getIdTokenClaims, isLoading: auth0IsLoading } = useAuth0();
   const latestGetIdToken = useLatestRef(getIdTokenClaims);
 
-  const hasAuthorizationToken = !!authorization;
+  const { authorizationToken } = useSnapshot(AuthState);
 
-  const { isLoading: currentUserIsLoading } = useGQLQuery(
+  const { refetch: refetchCurrentUser } = useGQLQuery(
     gql(/* GraphQL */ `
       query currentUser {
         currentUser {
@@ -62,10 +62,15 @@ export function SyncAuth() {
     `),
     undefined,
     {
-      enabled: hasAuthorizationToken,
+      enabled: false,
       onSuccess(data) {
         AuthState.user = data.currentUser;
         AuthState.project = data.project;
+      },
+      onError() {
+        AuthState.user = null;
+        AuthState.project = null;
+        AuthState.isLoading = false;
       },
       onSettled() {
         AuthState.isLoading = false;
@@ -74,25 +79,78 @@ export function SyncAuth() {
   );
 
   useEffect(() => {
-    AuthState.isLoading = currentUserIsLoading || isLoading;
-  }, [isLoading, currentUserIsLoading]);
+    AuthState.auth0User = user || null;
+  }, [user]);
+
+  useEffect(() => {
+    if (auth0IsLoading) {
+      AuthState.isLoading = true;
+      return;
+    }
+
+    if (!user) {
+      AuthState.isLoading = false;
+      AuthState.user = null;
+      AuthState.project = null;
+      AuthState.authorizationToken = undefined;
+      rqGQLClient.headers.authorization = undefined;
+      AuthState.isLoading = false;
+      return;
+    }
+
+    if (!authorizationToken) {
+      AuthState.isLoading = true;
+    }
+  }, [auth0IsLoading, user, authorizationToken, refetchCurrentUser]);
 
   useEffect(() => {
     AuthState.auth0User = user || null;
   }, [user]);
 
   useEffect(() => {
-    if (user) {
-      AuthState.isLoading = true;
-      latestGetIdToken.current().then(data => {
-        AuthState.authorizationToken = rqGQLClient.headers.authorization = data
-          ? `Bearer ${data.__raw}`
-          : undefined;
+    if (!user) return;
 
+    let cancelled = false;
+
+    const run = async () => {
+      try {
         AuthState.isLoading = true;
-      });
-    }
-  }, [user, latestGetIdToken]);
+        AuthState.user = null;
+        AuthState.project = null;
+
+        const data = await latestGetIdToken.current();
+
+        if (cancelled) return;
+
+        const token = data ? `Bearer ${data.__raw}` : undefined;
+
+        AuthState.authorizationToken = token;
+        rqGQLClient.headers.authorization = token;
+
+        if (!token) {
+          AuthState.isLoading = false;
+          return;
+        }
+
+        await refetchCurrentUser();
+      } catch (err) {
+        if (cancelled) return;
+
+        console.error("[SyncAuth] ERROR:", err);
+        AuthState.authorizationToken = undefined;
+        rqGQLClient.headers.authorization = undefined;
+        AuthState.user = null;
+        AuthState.project = null;
+        AuthState.isLoading = false;
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, latestGetIdToken, refetchCurrentUser]);
 
   return <OnStart />;
 }
@@ -116,7 +174,7 @@ const OnStart = memo(function OnStart() {
         domainID: "1",
       });
     }
-  }, [projectId, startAction]);
+  }, [projectId, startAction, updateModel]);
 
   return null;
 });
@@ -125,7 +183,7 @@ export const useAuth = () => useSnapshot(AuthState);
 
 export function withAuth<Props extends Record<string, unknown>>(Cmp: FC<Props>) {
   const WithAuth: {
-    (props: Props): JSX.Element;
+    (props: Props): React.ReactElement;
     displayName: string;
   } = function WithAuth(props: Props) {
     const { isLoading, user } = useAuth();

@@ -1,5 +1,5 @@
-import { Box, BoxProps, useColorModeValue } from "@chakra-ui/react";
-
+import { Box, BoxProps } from "@chakra-ui/react";
+import { useColorModeValue } from "./ui/color-mode";
 export const ScrollArea = (props: BoxProps) => (
   <Box
     overflowY="auto"
@@ -7,15 +7,15 @@ export const ScrollArea = (props: BoxProps) => (
     minH="px"
     maxH="full"
     {...props}
-    sx={{
+    css={{
       "&::-webkit-scrollbar-track": {
-        bg: "transparent",
+        background: "transparent",
       },
       "&::-webkit-scrollbar": {
         width: "4px",
       },
       "&::-webkit-scrollbar-thumb": {
-        bg: useColorModeValue("blue.600", "gray.700"),
+        background: useColorModeValue("blue.600", "gray.700"),
         borderRadius: "20px",
       },
     }}

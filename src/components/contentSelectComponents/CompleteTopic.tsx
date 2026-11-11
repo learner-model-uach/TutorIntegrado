@@ -26,7 +26,7 @@ export const CompleteTopic = ({ topicCodes }: { topicCodes: Array<string> }) => 
           {"¡Muy bien!, has completado el tópico: " + contentByTopic.data.content[0].label}
         </Heading>
       </Center>
-      <SimpleGrid columns={[1, 1, 1, 3]} spacing="8" p="10" textAlign="center" rounded="lg">
+      <SimpleGrid columns={[1, 1, 1, 3]} gap="8" p="10" textAlign="center" rounded="lg">
         {contentByTopic.data.content.map((content, index) => (
           <CardSelectionDynamic
             id={content.id}

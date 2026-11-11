@@ -185,7 +185,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
       } else if ("\\".localeCompare(value) == 0) {
         literal = "\\";
       } else if ((literal + bracketType).localeCompare("\\" + prefixExp + bracketType) == 0) {
-        console.log("2");
+        // console.log("2");
         stack.push(1);
         literal = "";
       } else if (typeof reservedWords[literal as keyof typeof reservedWords] != "undefined") {
@@ -212,7 +212,7 @@ const MQPostfixparser = (MQinfixInput: string) => {
     for (let i = 0; i < replacePositions.length; i++) {
       let value = replacePositions[i];
       if (!value) continue;
-      console.log("entro");
+      // console.log("entro");
       word = replaceAt(word, value + i, value + i + 1, replaceValue + bracketType3);
     }
     //let re= new RegExp(replaceValue,"g")

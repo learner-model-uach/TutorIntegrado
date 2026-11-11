@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
+import { Alert, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
 const FCCstep1 = ({
   step1,
@@ -28,7 +28,7 @@ const FCCstep1 = ({
   const compare = () => {
     setFeedbackMsg(null);
     //contador de intentos
-    setAttempts(attempts + 1);
+    setAttempts(n => n + 1);
     //parametro de entrada recibido, replace elimina "espacios" y "*", trabajar todo en minuscula
     const responseStudent = [
       response1.current.value
@@ -71,10 +71,12 @@ const FCCstep1 = ({
       if (response1.current.value == "" || response2.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta(s)</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -82,10 +84,12 @@ const FCCstep1 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step1.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step1.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -114,10 +118,11 @@ const FCCstep1 = ({
               }}
               size="sm"
               w={125}
-              focusBorderColor="#9DECF9"
               placeholder="Ingrese grupo 1"
               ref={response1}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label>)&nbsp;+&nbsp;( </label>
             <Input
@@ -128,10 +133,11 @@ const FCCstep1 = ({
               }}
               size="sm"
               w={125}
-              focusBorderColor="#9DECF9"
               placeholder="Ingrese grupo 2"
               ref={response2}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label> ) </label>
           </Center>
@@ -143,7 +149,7 @@ const FCCstep1 = ({
           {step1Valid === null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Stack, Input, Alert, AlertIcon } from "@chakra-ui/react";
+import { Box, Button, Stack, Input, Alert } from "@chakra-ui/react";
 import type { ExLog } from "./Tools/ExcerciseType2";
 import Hint from "../../components/Hint";
 import { useAction } from "../../utils/action";
@@ -26,6 +26,10 @@ const InputButtons = ({
   const action = useAction();
   const [attempts, setAttempts] = useState(0);
   const evaluar = () => {
+    if (isCorrectValue) return;
+
+    const nextAttempts = attempts + 1;
+
     //console.log('Input:', inputText);
     let respuesta = false;
     //console.log('Respuesta esperada:', exc.steps[nStep].answers[0].answer[0]);
@@ -39,7 +43,7 @@ const InputButtons = ({
     } else {
       setError(true);
     }
-    setAttempts(attempts + 1);
+    setAttempts(nextAttempts);
     action({
       verbName: "tryStep",
       stepID: "" + exc.steps[nStep].stepId,
@@ -49,106 +53,180 @@ const InputButtons = ({
       kcsIDs: exc.steps[nStep].KCs,
       extra: {
         response: [inputText],
-        attempts: attempts,
+        attempts: nextAttempts,
         hints: hints,
       },
     });
   };
 
   const handleButtonClick = (symbol: string) => {
+    if (isCorrectValue) return;
     setInputText(prevText => prevText + symbol);
   };
 
   return (
     <>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
+      <Stack
+        gap={4}
+        m={2}
+        direction={{ base: "column", sm: "row" }}
+        align="center"
+        justifyContent="center"
+      >
         <span>&#123;</span>
         <Input
           htmlSize={4}
           size="sm"
-          width="xs"
+          w={{ base: "100%", sm: "xs" }}
+          maxW={{ base: "100%", sm: "xs" }}
           type="text"
           value={inputText}
+          disabled={isCorrectValue}
           onChange={e => setInputText(e.target.value)}
         />
         <span>&#125;</span>
       </Stack>
 
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("√")}>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        gap={2}
+        m={2}
+        justifyContent="center"
+        aria-disabled={isCorrectValue}
+        pointerEvents={isCorrectValue ? "none" : "auto"}
+        opacity={isCorrectValue ? 0.6 : 1}
+      >
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("√")}
+        >
           √
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("∈")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("∈")}
+        >
           ∈
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℂ")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("ℂ")}
+        >
           ℂ
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℤ")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("ℤ")}
+        >
           ℤ
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℝ")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("ℝ")}
+        >
           ℝ
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("ℕ")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("ℕ")}
+        >
           ℕ
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("∞")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("∞")}
+        >
           ∞
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("≤")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("≤")}
+        >
           ≤
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("≥")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("≥")}
+        >
           ≥
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick(">")}>
-          {" "}
-          &lt;{" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick("<")}
+        >
+          &lt;
         </Button>
-        <Button colorScheme="blue" size="sm" onClick={() => handleButtonClick("<")}>
-          {" "}
+        <Button
+          colorScheme="blue"
+          size="sm"
+          disabled={isCorrectValue}
+          onClick={() => handleButtonClick(">")}
+        >
           &gt;
         </Button>
-      </Stack>
-      <Stack spacing={4} m={2} direction="row" justifyContent={"center"}>
-        <Button colorScheme="blue" size="sm" onClick={() => evaluar()}>
-          {" "}
-          Enviar
-        </Button>
-        <Hint
-          hints={exc.steps[nStep].hints}
-          contentId={exc.code}
-          topicId={topic}
-          stepId={exc.steps[nStep].stepId}
-          matchingError={exc.steps[nStep].matchingError}
-          response={respuestas}
-          error={error}
-          setError={setError}
-          hintCount={hints}
-          setHints={setHints}
-          setLastHint={setLastHint}
-        ></Hint>
-      </Stack>
+      </Box>
+      {!isCorrectValue && (
+        <Stack
+          gap={4}
+          m={2}
+          direction={{ base: "column", sm: "row" }}
+          align="center"
+          justifyContent="center"
+        >
+          <Button colorScheme="teal" h="2rem" onClick={() => evaluar()}>
+            Enviar
+          </Button>
+          <Hint
+            hints={exc.steps[nStep].hints}
+            contentId={exc.code}
+            topicId={topic}
+            stepId={exc.steps[nStep].stepId}
+            matchingError={exc.steps[nStep].matchingError}
+            response={respuestas}
+            error={error}
+            setError={setError}
+            hintCount={hints}
+            setHints={setHints}
+            setLastHint={setLastHint}
+          ></Hint>
+        </Stack>
+      )}
 
       {firstTime ? null : !isCorrectValue ? (
-        <Alert status="error">
-          <AlertIcon />
-          {exc.steps[nStep].incorrectMsg}
-        </Alert>
+        <Alert.Root>
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].incorrectMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       ) : (
-        <Alert status="success">
-          <AlertIcon />
-          {exc.steps[nStep].correctMsg}
-        </Alert>
+        <Alert.Root status="success">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Description>{exc.steps[nStep].correctMsg}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
       )}
     </>
   );

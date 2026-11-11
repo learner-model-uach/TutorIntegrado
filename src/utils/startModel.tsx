@@ -4,9 +4,23 @@ import { proxy } from "valtio";
 import { useEffect } from "react";
 import type { ExType } from "../components/lvltutor/Tools/ExcerciseType";
 import { gSelect } from "../components/GroupSelect";
+import type { GetKcsByTopicsQuery } from "../graphql/graphql";
 export interface model {
   mth: number;
   level: number;
+}
+
+type TopicKc = GetKcsByTopicsQuery["kcsByContentByTopics"][number]["kcs"][number];
+
+function isExerciseJson(json: Record<string, unknown> | null | undefined): json is ExType {
+  const hasPreviewExpression =
+    typeof json?.eqc === "string" ||
+    typeof json?.initialExpression === "string" ||
+    typeof json?.img === "string" ||
+    (Array.isArray(json?.steps) &&
+      typeof (json.steps[0] as { expression?: unknown } | undefined)?.expression === "string");
+
+  return typeof json?.type === "string" && hasPreviewExpression;
 }
 
 export const InitialModel = proxy<{
@@ -226,11 +240,11 @@ export const kcsyejercicio = proxy<{
 export const selectedExcercise = proxy<{
   isLoading: boolean;
   ejercicio: Array<ExType>;
-  kcXtopic: Array<Record<string, Array<{ code: string }>>>;
+  kcXtopic: Record<string, TopicKc[]>;
 }>({
   isLoading: true,
   ejercicio: [],
-  kcXtopic: [],
+  kcXtopic: {},
 });
 
 export function SelectExcercise(topicCodes: Array<string>) {
@@ -259,13 +273,12 @@ export function SelectExcercise(topicCodes: Array<string>) {
     {
       //enabled: false,
       onSuccess(data) {
-        let jl: Array<ExType> = [];
-        for (var e of data.kcsByContentByTopics) {
+        const jl: ExType[] = [];
+        for (const e of data.kcsByContentByTopics) {
           let max = 0;
-          let json;
-          //let code = e.topic.code;
-          for (var f of e.topic.content) {
-            if (max < f.kcs.length) {
+          let json: ExType | undefined;
+          for (const f of e.topic.content) {
+            if (max < f.kcs.length && isExerciseJson(f.json)) {
               max = f.kcs.length;
               json = f.json;
             }
@@ -274,9 +287,9 @@ export function SelectExcercise(topicCodes: Array<string>) {
         }
         selectedExcercise.ejercicio = jl;
 
-        let kcsByTopic = [];
+        const kcsByTopic: Record<string, TopicKc[]> = {};
         data.kcsByContentByTopics.forEach(({ topic, kcs }) => {
-          kcsByTopic[topic.id] = kcs.map(kc => kc); // Guarda el objeto completo de KCs
+          kcsByTopic[topic.id] = [...kcs];
         });
 
         selectedExcercise.kcXtopic = kcsByTopic;

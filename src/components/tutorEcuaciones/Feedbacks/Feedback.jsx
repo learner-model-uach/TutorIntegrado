@@ -156,9 +156,7 @@ export const Feedback = ({ type }) => {
   );
 
   return (
-    <Container
-      style={{ justifyContent: "center", margin: "auto", display: "flex", maxWidth: "100%" }}
-    >
+    <Container display="flex" justifyContent="center" mx="auto" maxW="100%">
       <Stack>
         <Flex
           textAlign="center"

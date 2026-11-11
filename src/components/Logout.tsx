@@ -1,61 +1,73 @@
 import { useRef } from "react";
-
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  useDisclosure,
-} from "@chakra-ui/react";
-
+import { Dialog, Button, Portal, CloseButton, Text } from "@chakra-ui/react";
+import { Browser } from "@capacitor/browser";
 import { AuthState } from "./Auth";
+import { getNativeRedirectUri, isWrapper } from "../utils/auth0Platform";
 
 export function Logout() {
   const { logout } = useAuth0();
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const cancelRef = useRef<HTMLButtonElement>(null);
 
+  const doLogout = async () => {
+    AuthState.isLoading = true;
+
+    if (isWrapper()) {
+      await logout({
+        logoutParams: {
+          returnTo: getNativeRedirectUri(),
+        },
+        async openUrl(url) {
+          await Browser.open({
+            url,
+            windowName: "_self",
+          });
+        },
+      });
+      return;
+    }
+
+    await logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+  };
+
   return (
-    <>
-      <Button colorScheme="red" onClick={onOpen}>
-        Logout
-      </Button>
-      <AlertDialog isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Logout
-            </AlertDialogHeader>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button colorPalette="red">Logout</Button>
+      </Dialog.Trigger>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>
+                <Text fontSize="lg" fontWeight="bold">
+                  Logout
+                </Text>
+              </Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Body>Are you sure you want to log out?</Dialog.Body>
 
-            <AlertDialogBody>Are you sure?</AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button
-                colorScheme="red"
-                onClick={() => {
-                  AuthState.isLoading = true;
-                  logout({
-                    returnTo: window.location.origin,
-                  });
-                  onClose();
-                }}
-                ml={3}
-              >
+            <Dialog.Footer>
+              <Dialog.ActionTrigger asChild>
+                <Button ref={cancelRef} variant="outline">
+                  Cancel
+                </Button>
+              </Dialog.ActionTrigger>
+              <Button colorPalette="red" onClick={doLogout}>
                 Confirm
               </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-    </>
+            </Dialog.Footer>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 }

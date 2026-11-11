@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
+import { Alert, Button, Input, Wrap, WrapItem, Center, Spacer } from "@chakra-ui/react";
 
 import Hint from "../../../Hint";
 
@@ -40,13 +40,16 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
     if (correctAlternatives.some(validate)) {
       setFeedbackMsg(
         <>
-          <Alert status="success">
-            <AlertIcon />
-            {step1.correctMsg}
-          </Alert>
+          <Alert.Root status="success">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>{step1.correctMsg}</Alert.Title>
+            </Alert.Content>
+          </Alert.Root>
         </>,
       );
       setStep1Valid((step1Valid = "Terminado"));
+
       extra.att = attempts;
       extra.hints = hints;
       extra.duration = (Date.now() - dateInitial) / 1000;
@@ -57,20 +60,24 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
       if (response.current.value == "") {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
         setError(true);
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="error">
-              <AlertIcon />
-              {step1.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step1.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -97,10 +104,11 @@ const FCstep1 = ({ step1, setStep1Valid, step1Valid, contentID, topicID, extra, 
               }}
               size="sm"
               w={160}
-              focusBorderColor="#9DECF9"
               placeholder="Ingrese factor común"
               ref={response}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
             />
             <label>)</label>
 

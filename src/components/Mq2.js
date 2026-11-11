@@ -295,10 +295,12 @@ const Mq2 = ({ step, setStepValid, stepValid, content, topicId }) => {
         </Box>
         {enabledhint()}
       </HStack>
-      <Alert status={alerta} mt={2} hidden={alertaVisibility}>
-        <AlertIcon />
-        {alertaMSG}
-      </Alert>
+      <Alert.Root status={alerta} mt={2} hidden={alertaVisibility}>
+        <Alert.Indicator />
+        <Alert.Content>
+          <Alert.Title>{alertaMSG}</Alert.Title>
+        </Alert.Content>
+      </Alert.Root>
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Hint from "../../../Hint";
 import { MathComponent } from "../../../MathJax";
 import { useAction } from "../../../../utils/action";
-import { Alert, AlertIcon, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
+import { Alert, Button, Center, Spacer, Input, Wrap, WrapItem } from "@chakra-ui/react";
 
 export const TCstep1 = ({
   step1,
@@ -53,10 +53,12 @@ export const TCstep1 = ({
       ) {
         setTimeout(() => {
           setFeedbackMsg(
-            <Alert status="warning">
-              <AlertIcon />
-              Ingrese respuesta(s)
-            </Alert>,
+            <Alert.Root status="warning">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>Ingrese respuesta(s)</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       } else {
@@ -64,10 +66,12 @@ export const TCstep1 = ({
         setTimeout(() => {
           setFeedbackMsg(
             //error cuando la entrada es incorrecta
-            <Alert status="error">
-              <AlertIcon />
-              {step1.incorrectMsg}
-            </Alert>,
+            <Alert.Root status="error">
+              <Alert.Indicator />
+              <Alert.Content>
+                <Alert.Title>{step1.incorrectMsg}</Alert.Title>
+              </Alert.Content>
+            </Alert.Root>,
           );
         }, 50);
       }
@@ -95,10 +99,11 @@ export const TCstep1 = ({
               }}
               size="sm"
               w={85}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="Ingrese a"
               ref={response1}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
             />
             <label> , b =</label>
             <Input
@@ -109,10 +114,11 @@ export const TCstep1 = ({
               }}
               size="sm"
               w={85}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="Ingrese b"
               ref={response2}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
             />
             <label>, c = &nbsp;</label>
             <Input
@@ -123,10 +129,11 @@ export const TCstep1 = ({
               }}
               size="sm"
               w={85}
-              focusBorderColor="#9DECF9"
+              focusRingColor="cyan.200"
+              focusRingWidth="2px"
               placeholder="Ingrese c"
               ref={response3}
-              isReadOnly={step1Valid != null}
+              readOnly={step1Valid != null}
             />
           </Center>
         </WrapItem>
@@ -137,7 +144,7 @@ export const TCstep1 = ({
           {step1Valid == null && (
             <>
               <Button
-                colorScheme="cyan"
+                colorPalette="cyan"
                 variant="outline"
                 onClick={() => {
                   compare();

@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TeX from "@matejmazur/react-katex";
-import {
-  Flex,
-  Button,
-  Grid,
-  Stack,
-  Input,
-  VStack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Flex, Button, Grid, Stack, Input, VStack, Text } from "@chakra-ui/react";
 import { Hint } from "./Hint";
 import {
+  ACCORDION_COLOR,
   CORRECT_BUTTOM_NAME,
-  BACKGROUND_COLOR_PANEL,
   CORRECT_ANSWER_COLOR,
   INCORRECT_ANSWER_COLOR,
 } from "../types";
@@ -33,21 +24,18 @@ export const StepInput = ({
   updateObjectSteps, // update the data in the "steps" field of the completeContent action
   completeContentSteps, // object used in the "steps" field of completeContent
 }) => {
-  const [alert, setAlert] = useState({});
   const [answer, setAnswer] = useState("");
-  const [answerInput, setAnswerInput] = useState("");
   const [firstTimeHint, setFirstTimeHint] = useState(true);
   const [idAnswer, setIdAnswer] = useState(-1); // id corresponding to the answer
   const [isCorrect, setIsCorrect] = useState(0);
   const [newHintAvaliable, setNewHintAvaliable] = useState(false); // hints that are displayed to the user
-  const [openAlert, setOpenAlert] = useState(false);
   const [attempts, setAttempts] = useState(0); // number of user attempts
   const [hintsShow, setHintsShow] = useState(0); // number of times a hint has been shown
   const [hints, setHints] = useState([]); // hints available according to the id of the user's response (both non-generic and generic)
 
   const startAction = useAction({});
   useEffect(() => {
-    setColor(prev => [...prev.slice(0, nStep), INCORRECT_ANSWER_COLOR, ...prev.slice(nStep + 1)]);
+    setColor(prev => [...prev.slice(0, nStep), ACCORDION_COLOR, ...prev.slice(nStep + 1)]);
   }, [step]);
 
   const onChange = e => {
@@ -110,13 +98,9 @@ export const StepInput = ({
     e.preventDefault();
 
     let idUserAnswer = getId(answer);
-    setOpenAlert(true);
 
     if (answer.length === 0) {
-      setAlert({
-        status: "info",
-        text: "Escribe alguna respuesta",
-      });
+      return;
     } else {
       updateObjectSteps(step.stepId, attempts, hintsShow, 0);
       if (step.stepId === nStep.toString()) {
@@ -130,7 +114,7 @@ export const StepInput = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
           });
@@ -142,17 +126,11 @@ export const StepInput = ({
           ]);
           setNumStep(prevState => prevState + 1);
           setDisableState(prevState => [...prevState, true]);
-
-          setAlert({
-            status: "success",
-            text: "Respuesta Correcta",
-          });
           setIsCorrect(true);
           checkLastStep();
           setFirstTimeHint(true);
         } else {
           setAttempts(prev => prev + 1);
-          setAnswerInput(answer);
           setIdAnswer(idUserAnswer);
           setHints(getHints(idUserAnswer));
           setFirstTimeHint(false);
@@ -166,13 +144,9 @@ export const StepInput = ({
             kcsIDs: step.KCs,
             extra: {
               response: answer,
-              attemps: attempts,
+              attempts: attempts,
               hints: hintsShow,
             },
-          });
-          setAlert({
-            status: "error",
-            text: "Respuesta Incorrecta",
           });
         }
       } else {
@@ -181,22 +155,38 @@ export const StepInput = ({
   };
 
   return (
-    <Stack>
-      <Stack>
+    <Stack w="100%" maxW="100%" minW={0}>
+      <Stack w="100%" maxW="100%" minW={0}>
         <VStack
-          direction={["row", "column"]}
-          style={{
-            borderRadius: 10,
-            padding: 10,
-            width: "100%",
-          }}
+          align="stretch"
+          borderRadius="10px"
+          p="10px"
+          w="100%"
+          maxW="100%"
+          minW={0}
+          overflow="hidden"
         >
-          <Stack direction={{ base: ["row", "column"], xl: ["column", "row"] }}>
-            <Flex marginRight={{ xl: "250px" }} margin={{ base: "auto" }}>
+          <Stack
+            direction={{ base: "column", xl: "row" }}
+            align={{ base: "stretch", xl: "center" }}
+            justify="center"
+            gap={{ base: 3, xl: 4 }}
+            w="100%"
+            maxW="100%"
+            minW={0}
+          >
+            <Flex
+              flex="1"
+              minW={0}
+              maxW="100%"
+              align="center"
+              justify={{ base: "center", xl: "flex-start" }}
+              overflow="hidden"
+            >
               <Text display={{ base: "none", xl: "block" }} margin={{ base: "auto" }}>
                 {step.left_text}
               </Text>
-              <Flex padding={{ base: "5px" }}>
+              <Flex padding={{ base: "5px" }} flexShrink={0}>
                 {step.input_labels && (
                   <TeX
                     style={{
@@ -208,63 +198,41 @@ export const StepInput = ({
                   />
                 )}
               </Flex>
-              <Stack style={{ width: "100px" }}>
-                <Input
-                  type="text"
-                  value={answer}
-                  onChange={onChange}
-                  style={{
-                    margin: "auto",
-                  }}
-                />
+              <Stack w={{ base: "min(100%, 180px)", xl: "100px" }} minW={0}>
+                <Input type="text" value={answer} onChange={onChange} m="auto" maxW="100%" />
               </Stack>
             </Flex>
 
-            <Stack marginLeft={{ base: "0px", xl: "-180px" }}>
-              <Grid
-                display={{ xl: "none", base: "grid" }}
-                style={{ margin: "10px" }}
-                templateColumns="repeat(2, 1fr)"
-                gap={6}
+            <Grid
+              templateColumns="repeat(2, minmax(0, 1fr))"
+              gap={{ base: 2, sm: 3 }}
+              w={{ base: "100%", xl: "auto" }}
+              maxW={{ base: "320px", xl: "none" }}
+              alignSelf="center"
+            >
+              <Button
+                colorPalette="teal"
+                onClick={checkAnswers}
+                h="32px"
+                w="88px"
+                minW={0}
+                px={{ base: 3, sm: 4 }}
+                whiteSpace="nowrap"
               >
-                <Button colorScheme="blue" onClick={checkAnswers}>
-                  {CORRECT_BUTTOM_NAME}
-                </Button>
+                {CORRECT_BUTTOM_NAME}
+              </Button>
 
-                <Hint
-                  firstTimeHint={firstTimeHint}
-                  hints={hints}
-                  setNewHintAvaliable={setNewHintAvaliable}
-                  answerId={idAnswer}
-                  newHintAvaliable={newHintAvaliable}
-                  code={code}
-                  nStep={nStep}
-                  setHintsShow={setHintsShow}
-                />
-              </Grid>
-
-              <Stack display={{ xl: "block", base: "none" }}>
-                <Flex>
-                  <div style={{ paddingRight: "5px" }}>
-                    <Button colorScheme="blue" onClick={checkAnswers}>
-                      {CORRECT_BUTTOM_NAME}
-                    </Button>
-                  </div>
-                  <div style={{ paddingRight: "5px" }}>
-                    <Hint
-                      firstTimeHint={firstTimeHint}
-                      hints={hints}
-                      setNewHintAvaliable={setNewHintAvaliable}
-                      answerId={idAnswer}
-                      newHintAvaliable={newHintAvaliable}
-                      code={code}
-                      nStep={nStep}
-                      setHintsShow={setHintsShow}
-                    />
-                  </div>
-                </Flex>
-              </Stack>
-            </Stack>
+              <Hint
+                firstTimeHint={firstTimeHint}
+                hints={hints}
+                setNewHintAvaliable={setNewHintAvaliable}
+                answerId={idAnswer}
+                newHintAvaliable={newHintAvaliable}
+                code={code}
+                nStep={nStep}
+                setHintsShow={setHintsShow}
+              />
+            </Grid>
           </Stack>
         </VStack>
       </Stack>
