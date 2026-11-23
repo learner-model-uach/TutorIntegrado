@@ -58,7 +58,9 @@ export default withAuth(function TopicSelect() {
                         ? parameters.CSMain.topic10.topic
                         : registerTopic == parameters.CSMain.topic11.registerTopic
                           ? parameters.CSMain.topic11.topic
-                          : parameters.CSMain.topic12.topic;
+                          : registerTopic == parameters.CSMain.topic13.registerTopic
+                            ? parameters.CSMain.topic13.topic
+                            : parameters.CSMain.topic12.topic;
 
   const [topicCodes, setTopicCodes] = useState<string[]>([]);
 

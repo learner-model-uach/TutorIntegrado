@@ -24,6 +24,7 @@ import type { ComponentProps } from "react";
 import TeX from "@matejmazur/react-katex";
 import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
+import { VistaPreviaGeom } from "../tutorGeometria/figuras/VistaPrevia";
 import parameters from "./parameters.json";
 import Latex from "react-latex-next";
 
@@ -37,6 +38,7 @@ const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").Math
 function displayCardExpression(json: ExType): string {
   if (json.type == "ecc5s" || json.type == "secl5s" || json.type == "ecl2s") return json.eqc;
   if (json.type === "wordProblem") return "";
+  if (json.type === "geom") return (json as any).code ?? "";
   if (json.initialExpression) return json.initialExpression;
   if (json.img) return json.img;
   return json.steps[0].expression;
@@ -167,7 +169,9 @@ export const CardSelection = ({
         </LinkOverlay>
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"} w="full">
           {json ? (
-            json.type == "lvltutor2" ? (
+            json.type == "geom" ? (
+              <VistaPreviaGeom ejercicio={json} />
+            ) : json.type == "lvltutor2" ? (
               json.img ? (
                 <Image src={"img/" + json.img} />
               ) : json.initialExpression ? (

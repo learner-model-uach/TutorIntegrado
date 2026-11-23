@@ -1,0 +1,1895 @@
+[
+  {
+    "code": "th1_1",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_1.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos líneas rectas son cortadas por un conjunto de líneas paralelas, los segmentos correspondientes de esas líneas son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si los segmentos en una línea son 3 cm y 5 cm, y los segmentos correspondientes en la otra línea son 6 cm y x cm, entonces (3 / 5) = (6 / x).",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción: 3x = 5 * 6.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["15 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Aplicando el Teorema de Thales, la proporción 3 / 5 = 6 / x resulta en 3x = 30, por lo tanto, x = 10 cm.",
+        "stepTitle": "Calcule la longitud del segmento x.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{3}{5}=\\frac{6}{x} \\Rightarrow x=10\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule la longitud del segmento correspondiente",
+    "conclusion": "Luego de aplicar el Teorema de Thales y resolver la proporción, obtenemos que la longitud del segmento es 10 cm.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 3,
+      "s2": 5,
+      "s3": 6,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "10 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_2",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_2.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos líneas rectas son cortadas por un conjunto de líneas paralelas, los segmentos correspondientes de esas líneas son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si los segmentos en una línea son 4 cm y 6 cm, y los segmentos correspondientes en la otra línea son 8 cm y x cm, entonces (4 / 6) = (8 / x).",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción: 4x = 6 * 8.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["16 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Aplicando el Teorema de Thales, la proporción 4 / 6 = 8 / x resulta en 4x = 48, por lo tanto, x = 12 cm.",
+        "stepTitle": "Determine la longitud del segmento correspondiente.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{4}{6}=\\frac{8}{x} \\Rightarrow x=12\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Determine la longitud del segmento correspondiente",
+    "conclusion": "Luego de aplicar el Teorema de Thales y resolver la proporción, obtenemos que la longitud del segmento es 12 cm.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 4,
+      "s2": 6,
+      "s3": 8,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "12 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_3",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_3.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos líneas rectas son cortadas por un conjunto de líneas paralelas, los segmentos correspondientes de esas líneas son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si los segmentos en una línea son 5 cm y 7 cm, y los segmentos correspondientes en la otra línea son 10 cm y x cm, entonces (5 / 7) = (10 / x).",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción: 5x = 7 * 10.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["15 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["13 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Aplicando el Teorema de Thales, la proporción 5 / 7 = 10 / x resulta en 5x = 70, por lo tanto, x = 14 cm.",
+        "stepTitle": "Calcule la longitud del segmento correspondiente.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{5}{7}=\\frac{10}{x} \\Rightarrow x=14\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule la longitud del segmento correspondiente",
+    "conclusion": "Luego de aplicar el Teorema de Thales y resolver la proporción, obtenemos que la longitud del segmento es 14 cm.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 5,
+      "s2": 7,
+      "s3": 10,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "14 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_4",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_4.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si una serie de líneas paralelas cortan dos transversales, los segmentos correspondientes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si en un triángulo se tienen los segmentos 5 cm y 10 cm en una línea, y los segmentos correspondientes en la otra línea son 12 cm y x cm, usa la proporción 5 / 10 = 12 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 5x = 10 * 12.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["24 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["30 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["20 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 5 / 10 = 12 / x nos lleva a 5x = 120, por lo tanto, x = 24 cm.",
+        "stepTitle": "Determine la longitud del segmento x.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{5}{10}=\\frac{12}{x} \\Rightarrow x=24\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Determine la longitud del segmento x usando el Teorema de Thales",
+    "conclusion": "Luego de aplicar el Teorema de Thales, el valor del segmento x es 24 cm.",
+    "figura": {
+      "tipo": "trianguloParalela",
+      "s1": 5,
+      "s2": 10,
+      "s3": 12,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "24 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_5",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_5.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "Según el Teorema de Thales, los segmentos correspondientes en triángulos semejantes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si tienes segmentos de 4 cm y 8 cm en un triángulo, y en otro triángulo los segmentos son 5 cm y x cm, usa la proporción 4 / 8 = 5 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción: 4x = 8 * 5.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["7 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["6 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 4 / 8 = 5 / x nos da 4x = 40, por lo tanto, x = 10 cm.",
+        "stepTitle": "Encuentre el valor de x en los triángulos semejantes.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{4}{8}=\\frac{5}{x} \\Rightarrow x=10\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el segmento desconocido en triángulos semejantes usando el Teorema de Thales",
+    "conclusion": "Aplicando el Teorema de Thales, encontramos que el segmento x es 10 cm.",
+    "figura": {
+      "tipo": "trianguloParalela",
+      "s1": 4,
+      "s2": 8,
+      "s3": 5,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "10 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_6",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_6.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si un triángulo tiene dos líneas paralelas cortadas por transversales, los segmentos correspondientes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que los segmentos en una línea son 6 cm y 9 cm, y en otra línea los segmentos son 4 cm y x cm, usa la proporción 6 / 9 = 4 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 6x = 9 * 4.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["5 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["6 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["7 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 6 / 9 = 4 / x resulta en 6x = 36, por lo tanto, x = 6 cm.",
+        "stepTitle": "Calcule el valor de x usando el Teorema de Thales.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{6}{9}=\\frac{4}{x} \\Rightarrow x=6\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el valor de x usando el Teorema de Thales",
+    "conclusion": "Luego de aplicar el Teorema de Thales, el valor de x es 6 cm.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 6,
+      "s2": 9,
+      "s3": 4,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "6 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_7",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_7.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales afirma que si un triángulo tiene líneas paralelas cortando dos transversales, los segmentos formados son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si tienes segmentos de 7 cm y 3 cm en una línea, y en otra línea los segmentos son 14 cm y x cm, usa la proporción 7 / 3 = 14 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 7x = 3 * 14.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["4 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["6 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 7 / 3 = 14 / x resulta en 7x = 42, por lo tanto, x = 6 cm.",
+        "stepTitle": "Determine el valor de x usando el Teorema de Thales.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{7}{3}=\\frac{14}{x} \\Rightarrow x=6\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Determine el valor de x usando el Teorema de Thales",
+    "conclusion": "Luego de aplicar el Teorema de Thales, el valor de x es 6 cm.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 7,
+      "s2": 3,
+      "s3": 14,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "6 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_8",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_8.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que los segmentos en triángulos semejantes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "En un triángulo, si una línea paralela corta dos lados formando segmentos de 6 cm y 15 cm en un lado, y 8 cm y x cm en el otro, usa la proporción 6 / 15 = 8 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 6x = 15 * 8.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["16 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["22 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["20 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 6 / 15 = 8 / x da 6x = 120, por lo tanto, x = 20 cm.",
+        "stepTitle": "Determine el valor de x en los triángulos semejantes.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{6}{15}=\\frac{8}{x} \\Rightarrow x=20\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentra el valor de x en triángulos semejantes",
+    "conclusion": "El valor del segmento x es 20 cm, usando el Teorema de Thales.",
+    "figura": {
+      "tipo": "trianguloParalela",
+      "s1": 6,
+      "s2": 15,
+      "s3": 8,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "20 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_9",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_9.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "En el Teorema de Thales, si dos líneas paralelas cortan dos transversales, los segmentos son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que los segmentos en una línea son 5 cm y 9 cm, y en otra línea los segmentos son 7 cm y x cm, usa la proporción 5 / 9 = 7 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 5x = 9 * 7.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["12.6 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["15 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 5 / 9 = 7 / x resulta en 5x = 63, por lo tanto, x = 12.6 cm.",
+        "stepTitle": "Encuentre el valor del segmento x en triángulos semejantes.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{5}{9}=\\frac{7}{x} \\Rightarrow x=12.6\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el valor de x en triángulos semejantes usando el Teorema de Thales",
+    "conclusion": "El valor del segmento x es 12.6 cm usando el Teorema de Thales.",
+    "figura": {
+      "tipo": "trianguloParalela",
+      "s1": 5,
+      "s2": 9,
+      "s3": 7,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "12,6 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_10",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_10.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales se usa para encontrar segmentos en triángulos semejantes cuando hay líneas paralelas.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si tienes segmentos de 7 cm y 4 cm en una línea, y en la otra línea los segmentos son 15 cm y x cm, usa la proporción 7 / 4 = 15 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 7x = 4 * 15.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["8.57 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["11 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 7 / 4 = 15 / x da 7x = 60, por lo tanto, x ≈ 8.57 cm.",
+        "stepTitle": "Determine el valor de x usando el Teorema de Thales.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{7}{4}=\\frac{15}{x} \\Rightarrow x=8.57\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el valor de x usando el Teorema de Thales.",
+    "conclusion": "El valor de x es 10.71 cm, encontrando la proporción con el Teorema de Thales.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 7,
+      "s2": 4,
+      "s3": 15,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "8,57 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_11",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_11.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "En un triángulo, si dos líneas paralelas dividen los lados en segmentos proporcionales, usa el Teorema de Thales.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si en una línea tienes 3 cm y 5 cm, y en la otra línea tienes 6 cm y x cm, usa la proporción 3 / 5 = 6 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 3x = 5 * 6.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Usando el Teorema de Thales, la proporción 3 / 5 = 6 / x resulta en 3x = 30, por lo tanto, x = 10 cm.",
+        "stepTitle": "Encuentre el valor de x usando el Teorema de Thales.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{3}{5}=\\frac{6}{x} \\Rightarrow x=10\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el valor de x en triángulos semejantes usando el Teorema de Thales",
+    "conclusion": "El valor del segmento x es 10 cm usando el Teorema de Thales.",
+    "figura": {
+      "tipo": "paralelas",
+      "s1": 3,
+      "s2": 5,
+      "s3": 6,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "10 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th1_12",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/thales/TH1_12.jpg",
+    "steps": [
+      {
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "Utiliza el Teorema de Thales para encontrar la longitud desconocida en un triángulo con líneas paralelas.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si tienes segmentos de 10 cm y 12 cm en un triángulo, y en otro triángulo los segmentos son 8 cm y x cm, usa la proporción 10 / 12 = 8 / x.",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva la proporción para encontrar x: 10x = 12 * 8.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["9.6 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["5 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["7 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["9 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Thales, la proporción 10 / 12 = 8 / x resulta en 10x = 96, por lo tanto, x = 9.6 cm.",
+        "stepTitle": "Calcule el valor de x en el triángulo usando el Teorema de Thales.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "\\frac{10}{12}=\\frac{8}{x} \\Rightarrow x=9.6\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Determina el valor de x en el triángulo usando el Teorema de Thales",
+    "conclusion": "El valor del segmento x es 6.4 cm, aplicando el Teorema de Thales.",
+    "figura": {
+      "tipo": "trianguloParalela",
+      "s1": 10,
+      "s2": 12,
+      "s3": 8,
+      "incognita": "s4",
+      "unidad": "cm",
+      "resultado": "9,6 cm",
+      "pasos": {
+        "0": ["s1", "s2", "s3"]
+      }
+    }
+  },
+  {
+    "code": "th2_1",
+    "title": "Teorema de Thales.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "En un mapa, la distancia entre dos ciudades es de 5 cm. Si la escala del mapa es 1:100,000, ¿cuál es la distancia real entre las dos ciudades?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_1.jpg",
+    "conclusion": "La distancia entre las ciudades es de 5 kms.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la distancia entre ambas ciudades es 'x', plantee el teorema de Thales como una igualdad según la figura.",
+        "summary": "1) Si la distancia entre ambas ciudades es 'x', entonces 1/100000 = 5/x",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de thales.",
+        "expression": "1/100000 = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de thales.",
+        "displayResult": "\\frac{1}{100000}=\\frac{5}{x}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos triángulos son semejantes, las longitudes de sus lados correspondientes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "En este caso podemos imaginar las distancias como los lados del triángulo.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ejercicio nos dice que una de las proporciones es que 1 es a 100000.",
+            "hintId": 2
+          },
+          {
+            "hint": "La otra proporción es 5 es a 'x'.",
+            "hintId": 3
+          },
+          {
+            "hint": "1 es a 100000 como 5 es a 'x'.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["5", "x"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Despeje y resuelva la distancia entre ambas ciudades 'x'.",
+        "summary": "2) La distancia entre ambas ciudades es de 500000 cm.",
+        "correctMsg": "La respuesta ingresada corresponde a la distancia entre ambas ciudades.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la distancia entre ambas ciudades.",
+        "displayResult": "x=500000\\text{ cm}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular la distancia entre ambas ciudades debes despejar 'x'.",
+            "hintId": 0
+          },
+          {
+            "hint": "Podemos invertir la ecuación quedandi 100000/1 = x/5.",
+            "hintId": 1
+          },
+          {
+            "hint": "Si multilpicamos ambos lados por 5 obtenemos 500000 = x.",
+            "hintId": 2
+          },
+          {
+            "hint": "La distancia entre ambas ciudades es de 500000 cm.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["500000"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["input", " cm."]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Expresa la distancia en kilómetros.",
+        "summary": "3) La distancia entre ambas ciudades es de 5 kms.",
+        "correctMsg": "La respuesta ingresada corresponde a la distancia entre ambas ciudades.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la distancia entre ambas ciudades.",
+        "displayResult": "x=5\\text{ km}",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "Debemos convertir la distancia en centímetros a kilómetros.",
+            "hintId": 0
+          },
+          {
+            "hint": "1 kilómetro es igual a 1000 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "1 metro es igual a 100 centímetros.",
+            "hintId": 2
+          },
+          {
+            "hint": "1 kilómetro es igual a 100000 centímetros.",
+            "hintId": 3
+          },
+          {
+            "hint": "5 kilómetros es igual a 500000 centímetros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["5"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " kms."]
+      }
+    ],
+    "figura": {
+      "tipo": "escala",
+      "titulos": ["Real", "Mapa (1:100.000)"],
+      "items": [
+        {
+          "id": "dist",
+          "real": "x",
+          "modelo": "5 cm",
+          "relReal": 1,
+          "relModelo": 0.3
+        }
+      ],
+      "resultado": "x = 5 km",
+      "pasos": {
+        "0": ["distReal", "distModelo"],
+        "1": ["distReal"],
+        "2": ["distReal"]
+      }
+    }
+  },
+  {
+    "code": "th2_2",
+    "title": "Teorema de Thales.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Una torre proyecta una sombra de 12 metros mientras que un poste de 3 metros de altura proyecta una sombra de 2 metros. ¿Cuál es la altura de la torre?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_2.jpg",
+    "conclusion": "La altura de la torre es de 18 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Suponiendo que ambas sombras finalizan en el mismo punto y la torre esta paralela al poste, plantee el teorema de Thales suponiento que la altura de la torre es 'x'.",
+        "summary": "1) Si la altura de la torre es 'x', entonces altura del poste / sombra del poste = altura de la torre / sombra de la torre => 3/2 = x/12",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de thales.",
+        "expression": "altura del poste / sombra del poste = 3 / 2 =  ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de thales.",
+        "displayResult": "\\frac{3}{2}=\\frac{x}{12}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos triángulos son semejantes, las longitudes de sus lados correspondientes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "En este caso como la torre con el poste son paralelos, podemos asumir que se crean dos triángulos semejantes.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una de las propociones es la altura del poste con la sombra del poste.",
+            "hintId": 2
+          },
+          {
+            "hint": "La proporción antes mencionada es 3:2.",
+            "hintId": 3
+          },
+          {
+            "hint": "La otra proporción debería ser la altura de la torre sobre la sombra de la torre.",
+            "hintId": 4
+          },
+          {
+            "hint": "La altura de la torre es x, y su sombra 12, por lo que la proporción sería x:12.",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "12"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Despeje y resuelva la altura de la torre 'x'.",
+        "summary": "2) La altura de la torre es de 18 mts.",
+        "correctMsg": "La respuesta ingresada corresponde a la altura de la torre.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la altura de la torre.",
+        "displayResult": "x=18\\text{ m}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular la altura de la torre debes despejar 'x'.",
+            "hintId": 0
+          },
+          {
+            "hint": "La ecuación es 3/2 = x/12.",
+            "hintId": 1
+          },
+          {
+            "hint": "Si multiplicamos por 12 a ambos lados obtenemos 36/2 = x.",
+            "hintId": 2
+          },
+          {
+            "hint": "Resolviendo la división obtenemos que x = 18.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["18"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " mts."]
+      }
+    ],
+    "figura": {
+      "tipo": "sombras",
+      "nombres": ["torre", "poste"],
+      "sombraGrande": 12,
+      "altoChico": 3,
+      "sombraChica": 2,
+      "incognita": "altoGrande",
+      "unidad": "m",
+      "resultado": "18 m",
+      "etiquetas": {
+        "altoGrande": "x"
+      },
+      "pasos": {
+        "0": ["altoChico", "sombraChica", "altoGrande", "sombraGrande"],
+        "1": ["altoGrande"]
+      }
+    }
+  },
+  {
+    "code": "th2_3",
+    "title": "Teorema de Thales.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un árbol proyecta una sombra de 15 metros al mismo tiempo que una vara de 1.5 metros de altura proyecta una sombra de 1 metro. ¿Cuál es la altura del árbol?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_3.jpg",
+    "conclusion": "La altura del árbol es de 22.5 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Suponiendo que ambas sombras finalizan en el mismo punto y el árbol esta paralela a la vara, plantee el teorema de Thales suponiento que la altura del árbol es 'x'.",
+        "summary": "1) Si la altura del árbol es 'x', entonces altura de la vara / sombra de la vara = altura del árbol / sombra del árbol => 1.5/1 = x/15",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de thales.",
+        "expression": "altura de la vara / sombra de la vara = 1.5 / 1 =  ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de thales.",
+        "displayResult": "\\frac{1.5}{1}=\\frac{x}{15}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos triángulos son semejantes, las longitudes de sus lados correspondientes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "En este caso como el árbol con la vara son paralelas, podemos asumir que se crean dos triángulos semejantes.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una de las propociones es la altura de la vara con la sombra de la vara.",
+            "hintId": 2
+          },
+          {
+            "hint": "La proporción antes mencionada es 1.5:1.",
+            "hintId": 3
+          },
+          {
+            "hint": "La otra proporción debería ser la altura del árbol sobre la sombra del árbol.",
+            "hintId": 4
+          },
+          {
+            "hint": "La altura del árbol es x, y su sombra 15, por lo que la proporción sería x:15.",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "15"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Despeje y resuelva la altura del árbol 'x'.",
+        "summary": "2) La altura del árbol es de 22.5 mts.",
+        "correctMsg": "La respuesta ingresada corresponde a la altura del árbol.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la altura del árbol.",
+        "displayResult": "x=22.5\\text{ m}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular la altura del árbol debes despejar 'x'.",
+            "hintId": 0
+          },
+          {
+            "hint": "La ecuación es 1.5/1 = x/15.",
+            "hintId": 1
+          },
+          {
+            "hint": "Si multiplicamos por 15 a ambos lados obtenemos 22.5/1 = x.",
+            "hintId": 2
+          },
+          {
+            "hint": "La altura del árbol es de 22.5 mts.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["22.5"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["22,5"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " mts."]
+      }
+    ],
+    "figura": {
+      "tipo": "sombras",
+      "nombres": ["árbol", "vara"],
+      "sombraGrande": 15,
+      "altoChico": 1.5,
+      "sombraChica": 1,
+      "incognita": "altoGrande",
+      "unidad": "m",
+      "resultado": "22,5 m",
+      "etiquetas": {
+        "altoGrande": "x"
+      },
+      "pasos": {
+        "0": ["altoChico", "sombraChica", "altoGrande", "sombraGrande"],
+        "1": ["altoGrande"]
+      }
+    }
+  },
+  {
+    "code": "th2_4",
+    "title": "Teorema de Thales.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "En una fotografía, un edificio de 50 metros de altura aparece con una altura de 10 cm, y una persona de 1.8 metros de altura aparece con una altura de 0.36 cm. ¿Cuál es la escala de la fotografía?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_4.jpg",
+    "conclusion": "La razón de la fotografía y el mundo real es de 1 es a 500 (1:500).",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Determina la escala de la fotografía usando la altura del edificio.",
+        "summary": "1) Calcula la escala de la fotografía dividiendo la altura real del edificio entre la altura del edificio en la fotografía.",
+        "correctMsg": "La respuesta ingresada corresponde a un cálculo correcto de la escala.",
+        "expression": "Escala = 50 m / 10 cm = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un cálculo correcto de la escala.",
+        "displayResult": "E=\\frac{5000\\text{ cm}}{10\\text{ cm}}=500:1",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "Para calcular la escala, divide la altura real del edificio entre la altura del edificio en la fotografía.",
+            "hintId": 0
+          },
+          {
+            "hint": "Convierte la altura real del edificio a centímetros antes de realizar la división.",
+            "hintId": 1
+          },
+          {
+            "hint": "La altura real del edificio es 50 metros, lo que equivale a 5000 centímetros.",
+            "hintId": 2
+          },
+          {
+            "hint": "La altura del edificio en la fotografía es 10 cm.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["500"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", ":1"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Verifica la escala de la fotografía usando la altura de la persona.",
+        "summary": "2) Verifica que la escala de la fotografía es correcta utilizando la altura de la persona.",
+        "correctMsg": "La respuesta ingresada corresponde a un cálculo correcto de la escala usando la altura de la persona.",
+        "expression": "Escala = 1.8 m / 0.36 cm = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un cálculo correcto de la escala.",
+        "displayResult": "E=\\frac{180\\text{ cm}}{0.36\\text{ cm}}=500:1",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "Divide la altura real de la persona entre su altura en la fotografía para calcular la escala.",
+            "hintId": 0
+          },
+          {
+            "hint": "Convierte la altura real de la persona a centímetros antes de realizar la división.",
+            "hintId": 1
+          },
+          {
+            "hint": "La altura real de la persona es 1.8 metros, lo que equivale a 180 centímetros.",
+            "hintId": 2
+          },
+          {
+            "hint": "La altura de la persona en la fotografía es 0.36 cm.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["500"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", ":1"]
+      }
+    ],
+    "figura": {
+      "tipo": "escala",
+      "titulos": ["Real", "Fotografía"],
+      "items": [
+        {
+          "id": "edif",
+          "real": "50 m",
+          "modelo": "10 cm",
+          "relReal": 1,
+          "relModelo": 0.35
+        },
+        {
+          "id": "pers",
+          "real": "1,8 m",
+          "modelo": "0,36 cm",
+          "relReal": 0.2,
+          "relModelo": 0.07
+        }
+      ],
+      "resultado": "Escala 500:1",
+      "pasos": {
+        "0": ["edifReal", "edifModelo"],
+        "1": ["persReal", "persModelo"]
+      }
+    }
+  },
+  {
+    "code": "th2_5",
+    "title": "Teorema de Thales.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un cartel publicitario de 4 metros de alto proyecta una sombra de 8 metros. ¿Qué altura tendría un cartel similar que proyecta una sombra de 10 metros?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_5.jpg",
+    "conclusion": "La altura del cartel que proyecta una sombra de 10 metros es de 5 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Suponiendo que ambas sombras finalizan en el mismo punto y ambos carteles están paralelos, plantee el teorema de Thales suponiendo que la altura del segundo cartel es 'x'.",
+        "summary": "1) Si la altura del segundo cartel es 'x', entonces altura del primer cartel / sombra del primer cartel = altura del segundo cartel / sombra del segundo cartel => 4/8 = x/10",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de Thales.",
+        "expression": "altura del primer cartel / sombra del primer cartel = altura del segundo cartel / sombra del segundo cartel => 4/8 = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de Thales.",
+        "displayResult": "\\frac{4}{8}=\\frac{x}{10}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El Teorema de Thales establece que si dos triángulos son semejantes, las longitudes de sus lados correspondientes son proporcionales.",
+            "hintId": 0
+          },
+          {
+            "hint": "En este caso, como ambos carteles son paralelos y las sombras finalizan en el mismo punto, podemos asumir que se crean dos triángulos semejantes.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una de las proporciones es la altura del primer cartel sobre la sombra del primer cartel.",
+            "hintId": 2
+          },
+          {
+            "hint": "La otra proporción debería ser la altura del segundo cartel sobre la sombra del segundo cartel.",
+            "hintId": 3
+          },
+          {
+            "hint": "La altura del primer cartel es 4 metros, y su sombra 8 metros. La proporción sería 4/8.",
+            "hintId": 4
+          },
+          {
+            "hint": "La sombra del segundo cartel es 10 metros, por lo que la proporción sería x/10.",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "10"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Despeje y resuelva la altura del segundo cartel 'x'.",
+        "summary": "2) La altura del segundo cartel es de 5 metros.",
+        "correctMsg": "La respuesta ingresada corresponde a la altura correcta del segundo cartel.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la altura del segundo cartel.",
+        "displayResult": "x=5\\text{ m}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular la altura del segundo cartel debes despejar 'x'.",
+            "hintId": 0
+          },
+          {
+            "hint": "La ecuación es 4/8 = x/10.",
+            "hintId": 1
+          },
+          {
+            "hint": "Si multiplicamos ambos lados por 10 obtenemos x = 5.",
+            "hintId": 2
+          },
+          {
+            "hint": "La altura del segundo cartel es de 5 metros.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["5"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "sombras",
+      "nombres": ["cartel 2", "cartel 1"],
+      "sombraGrande": 10,
+      "altoChico": 4,
+      "sombraChica": 8,
+      "incognita": "altoGrande",
+      "unidad": "m",
+      "resultado": "5 m",
+      "etiquetas": {
+        "altoGrande": "x"
+      },
+      "pasos": {
+        "0": ["altoChico", "sombraChica", "altoGrande", "sombraGrande"],
+        "1": ["altoGrande"]
+      }
+    }
+  },
+  {
+    "code": "th2_6",
+    "title": "Teorema de Thales",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un arquitecto está diseñando un edificio con una altura de 60 metros. En el modelo a escala, la altura del edificio es de 12 cm. Si una puerta en el edificio real mide 2 metros, ¿cuál será la altura de la puerta en el modelo a escala?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_6.jpg",
+    "conclusion": "La altura de la puerta en el modelo a escala es de 0.4 cm.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee la proporción entre las alturas del edificio y el modelo.",
+        "summary": "1) La altura del edificio real y la altura en el modelo a escala están en proporción. Plantee la proporción correspondiente.",
+        "correctMsg": "La proporción planteada es correcta.",
+        "expression": "altura del edificio real / altura del modelo = altura de la puerta real / altura de la puerta en el modelo => ",
+        "incorrectMsg": "La proporción planteada no es correcta.",
+        "displayResult": "\\frac{60}{12}=\\frac{2}{x}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "El edificio real y el modelo están en la misma proporción que la puerta real y la puerta en el modelo.",
+            "hintId": 0
+          },
+          {
+            "hint": "La proporción entre las alturas del edificio y el modelo es 60 / 12.",
+            "hintId": 1
+          },
+          {
+            "hint": "La proporción entre las alturas de las puertas debería ser igual a la proporción de las alturas de los edificios.",
+            "hintId": 2
+          },
+          {
+            "hint": "La proporción de las alturas de las puertas es 2 / x.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["60", "12", "2", "x"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input", " = ", "input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la proporción para encontrar la altura de la puerta en el modelo.",
+        "summary": "2) Despeje la variable 'x' para encontrar la altura de la puerta en el modelo.",
+        "correctMsg": "La respuesta ingresada corresponde a la altura correcta de la puerta en el modelo.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la altura de la puerta en el modelo.",
+        "displayResult": "x=0.4\\text{ cm}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Para encontrar 'x', debes resolver la proporción 60 / 12 = 2 / x.",
+            "hintId": 0
+          },
+          {
+            "hint": "Multiplica ambos lados de la ecuación por x para despejar 'x'.",
+            "hintId": 1
+          },
+          {
+            "hint": "Luego, multiplica ambos lados de la ecuación por 12 para resolver 'x'.",
+            "hintId": 2
+          },
+          {
+            "hint": "El resultado es 0.4 cm.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["0.4"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["0,4"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " cm."]
+      }
+    ],
+    "figura": {
+      "tipo": "escala",
+      "titulos": ["Edificio real", "Maqueta"],
+      "items": [
+        {
+          "id": "edif",
+          "real": "60 m",
+          "modelo": "12 cm",
+          "relReal": 1,
+          "relModelo": 0.4
+        },
+        {
+          "id": "puerta",
+          "real": "2 m",
+          "modelo": "x",
+          "relReal": 0.15,
+          "relModelo": 0.06
+        }
+      ],
+      "resultado": "x = 0,4 cm",
+      "pasos": {
+        "0": ["edifReal", "edifModelo", "puertaReal", "puertaModelo"],
+        "1": ["puertaModelo"]
+      }
+    }
+  },
+  {
+    "code": "th2_7",
+    "title": "Teorema de Thales",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un pintor quiere dibujar un cuadro de un edificio. Si el edificio mide 45 metros de altura y la altura en el cuadro es de 15 cm, ¿cuál es la escala del cuadro?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_7.jpg",
+    "conclusion": "La escala del cuadro es 1:300.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee la proporción entre la altura del edificio en el cuadro y la altura del edificio real.",
+        "summary": "1) La proporción entre la altura en el cuadro y la altura real se usa para encontrar la escala del cuadro.",
+        "correctMsg": "La proporción planteada es correcta.",
+        "expression": "Escala = altura del edificio en el cuadro / altura del edificio real => ",
+        "incorrectMsg": "La proporción planteada no es correcta.",
+        "displayResult": "E=\\frac{15}{4500}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "La escala es la relación entre la altura en el cuadro y la altura real del edificio.",
+            "hintId": 0
+          },
+          {
+            "hint": "Convierte todas las medidas a las mismas unidades antes de calcular la escala.",
+            "hintId": 1
+          },
+          {
+            "hint": "La altura del edificio real debe ser convertida a centímetros para coincidir con la altura en el cuadro.",
+            "hintId": 2
+          },
+          {
+            "hint": "La altura real es 45 metros, que es 4500 centímetros.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["15", "4500"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule la escala y exprese el resultado.",
+        "summary": "2) Divida la altura en el cuadro por la altura real para encontrar la escala.",
+        "correctMsg": "La respuesta ingresada corresponde a la escala correcta del cuadro.",
+        "expression": "Escala = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la escala del cuadro.",
+        "displayResult": "E=1:300",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "Para calcular la escala, divide la altura en el cuadro por la altura real.",
+            "hintId": 0
+          },
+          {
+            "hint": "La escala es 15 dividido por 4500.",
+            "hintId": 1
+          },
+          {
+            "hint": "La respuesta simplificada es 1:300.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["1", "300"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " : ", "input"]
+      }
+    ],
+    "figura": {
+      "tipo": "escala",
+      "titulos": ["Real", "Cuadro"],
+      "items": [
+        {
+          "id": "edif",
+          "real": "45 m",
+          "modelo": "15 cm",
+          "relReal": 1,
+          "relModelo": 0.35
+        }
+      ],
+      "resultado": "Escala 1:300",
+      "pasos": {
+        "0": ["edifReal", "edifModelo"],
+        "1": ["edifReal", "edifModelo"]
+      }
+    }
+  },
+  {
+    "code": "th2_8",
+    "title": "Teorema de Thales",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un estudiante mide la altura de un árbol utilizando su sombra. El estudiante, que mide 1.7 metros de altura, proyecta una sombra de 1.5 metros. Al mismo tiempo, el árbol proyecta una sombra de 9 metros. ¿Cuál es la altura del árbol?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/thales/TH2_8.jpg",
+    "conclusion": "La altura del árbol es aproximadamente 10.2 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee la proporción entre la altura y la sombra del estudiante y el árbol siendo la altura del árbol 'h' ",
+        "summary": "1) La proporción entre la altura del estudiante y su sombra es igual a la proporción entre la altura del árbol y su sombra.",
+        "correctMsg": "La proporción planteada es correcta.",
+        "expression": "Altura del estudiante / Sombra del estudiante = Altura del árbol / Sombra del árbol => ",
+        "incorrectMsg": "La proporción planteada no es correcta.",
+        "displayResult": "\\frac{1.7}{1.5}=\\frac{h}{9}",
+        "KCs": ["PlanTH"],
+        "hints": [
+          {
+            "hint": "La proporción entre la altura y la sombra del estudiante debe ser igual a la proporción entre la altura y la sombra del árbol.",
+            "hintId": 0
+          },
+          {
+            "hint": "La altura del estudiante es 1.7 metros y su sombra es 1.5 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "La sombra del árbol es 9 metros.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["1.7", "1.5", "h", "9"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " / ", "input", " = ", "input", " / ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la proporción para encontrar la altura del árbol.",
+        "summary": "2) Despeje y calcule la altura del árbol usando la proporción planteada.",
+        "correctMsg": "La respuesta ingresada corresponde a la altura correcta del árbol.",
+        "expression": "h = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la altura del árbol.",
+        "displayResult": "h=10.2\\text{ m}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Para encontrar 'h', multiplica ambos lados de la proporción por 9.",
+            "hintId": 0
+          },
+          {
+            "hint": "La ecuación es h = 9 * (1.7 / 1.5).",
+            "hintId": 1
+          },
+          {
+            "hint": "El resultado es aproximadamente 10.2 metros.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["10.2"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["10,2"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "sombras",
+      "nombres": ["árbol", "estudiante"],
+      "sombraGrande": 9,
+      "altoChico": 1.7,
+      "sombraChica": 1.5,
+      "incognita": "altoGrande",
+      "unidad": "m",
+      "resultado": "10,2 m",
+      "etiquetas": {
+        "altoGrande": "h"
+      },
+      "pasos": {
+        "0": ["altoChico", "sombraChica", "altoGrande", "sombraGrande"],
+        "1": ["altoGrande"]
+      }
+    }
+  }
+]

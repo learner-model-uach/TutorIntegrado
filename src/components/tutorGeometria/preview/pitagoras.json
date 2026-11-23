@@ -1,0 +1,2481 @@
+[
+  {
+    "code": "PIT1_1",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_1.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "El Teorema de Pitágoras dice que en un triángulo rectángulo, la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa.",
+            "hintId": 0
+          },
+          {
+            "hint": "Usa la fórmula  c² = a² + b² , donde c  es la hipotenusa, y  a  y  b  son los catetos.",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores:  c² = 6² + 8² . Luego, resuelve para  c .",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras:  c² = 6² + 8²  da  c = 10  cm.",
+        "stepTitle": "Encuentre la hipotenusa del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "c=\\sqrt{6^2+8^2}=10\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre la hipotenusa usando el Teorema de Pitágoras",
+    "conclusion": "La hipotenusa del triángulo es 10 cm aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "c",
+      "a": 6,
+      "b": 8,
+      "pasos": {
+        "0": ["a", "b"]
+      }
+    }
+  },
+  {
+    "code": "pit1_2",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_2.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Usa el Teorema de Pitágoras para encontrar el cateto faltante: a² + b² = c².",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que conoces la hipotenusa c = 13 cm y un cateto a = 5 cm, busca el otro cateto usando b² = c² - a².",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva b: b² = 13² - 5². Luego, encuentra b.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: b² = 13² - 5² da b = √(13² - 5²) = 12 cm.",
+        "stepTitle": "Encuentre el cateto faltante del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "b=\\sqrt{13^2-5^2}=12\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el cateto usando el Teorema de Pitágoras",
+    "conclusion": "El cateto faltante es 12 cm usando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "b",
+      "a": 5,
+      "c": 13,
+      "pasos": {
+        "0": ["a", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_3",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_3.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "El Teorema de Pitágoras puede aplicarse a triángulos rectángulos.",
+            "hintId": 0
+          },
+          {
+            "hint": "En un triángulo rectángulo con lados a = 9 cm y b = 10 cm, usa la fórmula c² = a² + b².",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores: c² = 9² + 10². Luego, resuelva para c.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["19 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["181 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["√181 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: c² = 9² + 10² = 181, por lo tanto, c = √181 ≈ 13.45 cm.",
+        "stepTitle": "Encuentre la hipotenusa del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "c=\\sqrt{9^2+10^2}=\\sqrt{181}\\approx 13.45\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre la hipotenusa usando el Teorema de Pitágoras",
+    "conclusion": "La hipotenusa del triángulo es 15 cm aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "c",
+      "a": 9,
+      "b": 10,
+      "pasos": {
+        "0": ["a", "b"]
+      }
+    }
+  },
+  {
+    "code": "pit1_4",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_4.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Utiliza el Teorema de Pitágoras para encontrar el cateto faltante: a² + b² = c².",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que conoces la hipotenusa c = 10 cm y un cateto a = 6 cm, busca el otro cateto usando b² = c² - a².",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva b: b² = 10² - 6². Luego, encuentre b.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["6 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["8 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["9 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["7 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: b² = 10² - 6² da b = 8 cm.",
+        "stepTitle": "Encuentre el cateto faltante del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "b=\\sqrt{10^2-6^2}=8\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el cateto usando el Teorema de Pitágoras",
+    "conclusion": "El cateto faltante es 8 cm usando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "b",
+      "a": 6,
+      "c": 10,
+      "pasos": {
+        "0": ["a", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_5",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_5.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "El Teorema de Pitágoras dice que en un triángulo rectángulo, la suma de los cuadrados de los catetos es igual al cuadrado de la hipotenusa.",
+            "hintId": 0
+          },
+          {
+            "hint": "Use la fórmula c² = a² + b² para encontrar c.",
+            "hintId": 1
+          },
+          {
+            "hint": "Dado que a = 8 cm y b = 15 cm, sustituya los valores: c² = 8² + 15².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["17 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["16 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["19 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: c² = 8² + 15² da c = 17 cm.",
+        "stepTitle": "Encuentre la hipotenusa del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "c=\\sqrt{8^2+15^2}=17\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre la hipotenusa usando el Teorema de Pitágoras",
+    "conclusion": "La hipotenusa del triángulo es 17 cm aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "c",
+      "a": 8,
+      "b": 15,
+      "pasos": {
+        "0": ["a", "b"]
+      }
+    }
+  },
+  {
+    "code": "pit1_6",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_6.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Utilize el Teorema de Pitágoras para encontrar el cateto faltante: a² + b² = c².",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que conoces la hipotenusa c = 25 cm y un cateto a = 7 cm, busca el otro cateto usando b² = c² - a².",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva b: b² = 25² - 7². Luego, encuentre b.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["24 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["23 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["22 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["26 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: b² = 25² - 7² da b = 24 cm.",
+        "stepTitle": "Encuentre el cateto faltante del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "b=\\sqrt{25^2-7^2}=24\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el cateto usando el Teorema de Pitágoras",
+    "conclusion": "El cateto faltante es 24 cm usando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "b",
+      "a": 7,
+      "c": 25,
+      "pasos": {
+        "0": ["a", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_7",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_7.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Use el Teorema de Pitágoras para verificar si un triángulo es rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si un triángulo tiene lados a = 5 cm, b = 12 cm, y c = 13 cm, verifique si a² + b² = c².",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores: 5² + 12² = 13².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["Sí"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["No"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: 5² + 12² = 25 + 144 = 169 = 13², por lo tanto, el triángulo es rectángulo.",
+        "stepTitle": "¿Es el triángulo rectángulo?",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "5^2+12^2=13^2\\ \\checkmark",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Verifique si un triángulo es rectángulo usando el Teorema de Pitágoras",
+    "conclusion": "El triángulo con lados 5 cm, 12 cm, y 13 cm es rectángulo aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": null,
+      "a": 5,
+      "b": 12,
+      "c": 13,
+      "marcarAnguloRecto": false,
+      "pasos": {
+        "0": ["a", "b", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_8",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_8.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Use el Teorema de Pitágoras para encontrar el cateto faltante: a² + b² = c².",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que conoces la hipotenusa c = 20 cm y un cateto a = 16 cm, busque el otro cateto usando b² = c² - a².",
+            "hintId": 1
+          },
+          {
+            "hint": "Resuelva b: b² = 20² - 16². Luego, encuentre b.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["15 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["10 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: b² = 20² - 16² da b = 12 cm.",
+        "stepTitle": "Encuentre el cateto faltante del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "b=\\sqrt{20^2-16^2}=12\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el cateto usando el Teorema de Pitágoras",
+    "conclusion": "El cateto faltante es 12 cm usando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "b",
+      "a": 16,
+      "c": 20,
+      "pasos": {
+        "0": ["a", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_9",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_9.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Utilize el Teorema de Pitágoras para verificar si un triángulo es rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si un triángulo tiene lados a = 7 cm, b = 24 cm, y c = 25 cm, verifica si a² + b² = c².",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores: 7² + 24² = 25².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["Sí"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["No"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: 7² + 24² = 49 + 576 = 625 = 25², por lo tanto, el triángulo es rectángulo.",
+        "stepTitle": "¿Es el triángulo rectángulo?",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "7^2+24^2=25^2\\ \\checkmark",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Verifique si un triángulo es rectángulo usando el Teorema de Pitágoras",
+    "conclusion": "El triángulo con lados 7 cm, 24 cm, y 25 cm es rectángulo aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": null,
+      "a": 7,
+      "b": 24,
+      "c": 25,
+      "marcarAnguloRecto": false,
+      "pasos": {
+        "0": ["a", "b", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_10",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_10.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Use el Teorema de Pitágoras para encontrar la longitud del lado diagonal de un rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si un rectángulo tiene lados de 9 cm y 12 cm, considere que la diagonal forma un triángulo rectángulo con estos lados.",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores: c² = 9² + 12².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["16 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["15 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["13 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: c² = 9² + 12² da c = 15 cm.",
+        "stepTitle": "Encuentre la longitud de la diagonal del rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "c=\\sqrt{9^2+12^2}=15\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre la diagonal de un rectángulo usando el Teorema de Pitágoras",
+    "conclusion": "La diagonal del rectángulo es 15 cm aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "c",
+      "a": 9,
+      "b": 12,
+      "pasos": {
+        "0": ["a", "b"]
+      },
+      "rectangulo": true
+    }
+  },
+  {
+    "code": "pit1_11",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_11.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Use el Teorema de Pitágoras para encontrar la longitud del lado faltante en un triángulo rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "Dado que conoces un cateto a = 3 cm y la hipotenusa c = 5 cm, busque el otro cateto usando b² = c² - a².",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores y resuelve: b² = 5² - 3².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["4 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["3 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["5 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["6 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: b² = 5² - 3² da b = 4 cm.",
+        "stepTitle": "Encuentre el cateto faltante del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "b=\\sqrt{5^2-3^2}=4\\ \\text{cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre el cateto usando el Teorema de Pitágoras",
+    "conclusion": "El cateto faltante es 4 cm usando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": "b",
+      "a": 3,
+      "c": 5,
+      "pasos": {
+        "0": ["a", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_12",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_12.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Utilize el Teorema de Pitágoras para verificar si un triángulo es rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si un triángulo tiene lados a = 8 cm, b = 15 cm, y c = 17 cm, verifique si a² + b² = c².",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores: 8² + 15² = 17².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["Sí"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["No"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: 8² + 15² = 64 + 225 = 289 = 17², por lo tanto, el triángulo es rectángulo.",
+        "stepTitle": "¿Es el triángulo rectángulo?",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "8^2+15^2=17^2\\ \\checkmark",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Verifique si un triángulo es rectángulo usando el Teorema de Pitágoras",
+    "conclusion": "El triángulo con lados 8 cm, 15 cm, y 17 cm es rectángulo aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "cm",
+      "incognita": null,
+      "a": 8,
+      "b": 15,
+      "c": 17,
+      "marcarAnguloRecto": false,
+      "pasos": {
+        "0": ["a", "b", "c"]
+      }
+    }
+  },
+  {
+    "code": "pit1_13",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/pitagoras/PIT1_13.jpg",
+    "steps": [
+      {
+        "KCs": ["CatHip"],
+        "hints": [
+          {
+            "hint": "Use el Teorema de Pitágoras para encontrar la hipotenusa.",
+            "hintId": 0
+          },
+          {
+            "hint": "Si conoces los catetos a = 1.5 m y b = 2 m, use la fórmula c² = a² + b².",
+            "hintId": 1
+          },
+          {
+            "hint": "Sustituya los valores y resuelve: c² = 1.5² + 2².",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["2.5 m"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["2.6 m"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["2.7 m"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["2.8 m"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "Aplicando el Teorema de Pitágoras: c² = 1.5² + 2² da c = 2.5 m.",
+        "stepTitle": "Encuentre la hipotenusa del triángulo rectángulo.",
+        "incorrectMsg": "La alternativa seleccionada no es correcta.",
+        "displayResult": "c=\\sqrt{1.5^2+2^2}=2.5\\ \\text{m}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Encuentre la hipotenusa usando el Teorema de Pitágoras",
+    "conclusion": "La hipotenusa del triángulo es 2.5 m aplicando el Teorema de Pitágoras.",
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "unidad": "m",
+      "incognita": "c",
+      "a": 1.5,
+      "b": 2,
+      "pasos": {
+        "0": ["a", "b"]
+      }
+    }
+  },
+  {
+    "code": "pit2_1",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un jardinero quiere saber la longitud de una escalera que se apoya en una pared vertical y alcanza una altura de 6 metros. La base de la escalera está a 8 metros de la pared. ¿Cuál es la longitud de la escalera?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_1.jpg",
+    "conclusion": "La longitud de la escaleta es de 10 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la longitud de la escalera es 'c'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (longitud de la escalera 'c')² = 6² + 8²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "c² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "c² = 6² + 8²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es la altura de la pared.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'c' en este caso es la escalera.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la distancia de la escalera con la pared.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es c² = 6² + 8².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["6", "8"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["8", "6"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la longitud de la escalera 'c'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la longitud de la escalera 'c' obtenemos c = √(100).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón del a longitud de la escalera.",
+        "expression": "c = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón del a longitud de la escalera.",
+        "displayResult": "c = √(100)",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 36 + 64.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que c² es igual a 100, debemos despejar 'c', la cual representa la longitud de la escalera.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud de la escalera corresponde a √(100) metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["100"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener el lardo de la escalera.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la longitud de la escalera 'c' es 10 metros.",
+        "correctMsg": "La respuesta ingresada corresponde la longitud de la escalera.",
+        "expression": "c = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde la longitud de la escalera.",
+        "displayResult": "c = 10",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 10 y -10.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud c de la escalera son 10 metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-10"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["10"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 6,
+      "b": 8,
+      "incognita": "c",
+      "unidad": "m",
+      "etiquetas": {
+        "c": "c"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      }
+    }
+  },
+  {
+    "code": "pit2_2",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un corredor necesita llegar al otro extremo de un parque rectangular. Si el parque tiene 9 km de ancho y 12 km de largo, ¿cuál es la distancia más corta que debe recorrer?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_2.jpg",
+    "conclusion": "Deberia recorrer como mínimo 15 km.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la distancia mínima a recorrer es 'x'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (distancia mínima 'x')² = 9² + 12²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "x² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "x² = 9² + 12²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es el ancho del parque.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'x' es la distancia mínima a recorrer.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es el largo del parque.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es x² = 9² + 12².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["9", "12"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["12", "9"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la distancia mínima 'x'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la distancia mínima a recorrer 'x' obtenemos x = √(225).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la distancia mínima a recorrer.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la distancia mínima a recorrer.",
+        "displayResult": "x = √(225)",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 81 + 144.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a 225, debemos despejar la variable 'x', la cual representa la distancia mínima a recorrer.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia mínima a recorrer corresponde a √(225) kms.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["225"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener la distancia mínima a recorrer.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la distancia mínima a recorrer 'x' son 15 kms.",
+        "correctMsg": "La respuesta ingresada corresponde la la distancia mínima a recorrer.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde la la distancia mínima a recorrer.",
+        "displayResult": "x = 15",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 15 y -15.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia mínima a recorrer son 15 kms.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-15"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["15"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " kms."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 9,
+      "b": 12,
+      "incognita": "c",
+      "unidad": "km",
+      "etiquetas": {
+        "c": "x"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      },
+      "rectangulo": true
+    }
+  },
+  {
+    "code": "pit2_3",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un avión vuela desde un aeropuerto hacia el este 20 km y luego hacia el norte 21 km. ¿A qué distancia está el avión del aeropuerto?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_3.jpg",
+    "conclusion": "El avión está a una distancia de 29 km del aeropuerto.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la distancia del avión con el aeropuerto es 'x'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (distancia avión - aeropuerto 'x')² = 20² + 21²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "x² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "x² = 20² + 21²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es la distancia recorrida hacia el este.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'x' es la distancia del avión con el aeropuerto.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la distancia recorrida hacia el norte.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es x² = 20² + 21².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["20", "21"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["21", "20"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la distancia del avión con el aeropuerto 'x'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la distancia del avión con el aeropuerto 'x' obtenemos x = √(841).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la distancia del avión con el aeropuerto.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la distancia del avión con el aeropuerto.",
+        "displayResult": "x = √(841)",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 400 + 441.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a 841, debemos despejar la variable 'x', la cual representa la distancia del avión con el aeropuerto.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia del avión con el aeropuerto corresponde a √(841) kms.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["841"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener la distancia del avión con el aeropuerto.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la distancia del avión con el aeropuerto 'x' son 29 kms.",
+        "correctMsg": "La respuesta ingresada corresponde la la distancia del avión con el aeropuerto.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde la la distancia del avión con el aeropuerto.",
+        "displayResult": "x = 29",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 29 y -29.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia del avión con el aeropuerto son 29 kms.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-15"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["29"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " kms."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 21,
+      "b": 20,
+      "incognita": "c",
+      "unidad": "km",
+      "etiquetas": {
+        "c": "x"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      }
+    }
+  },
+  {
+    "code": "pit2_4",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "En una pista de atletismo rectangular, un corredor quiere saber la distancia que recorrerá si corre en línea recta desde una esquina hasta la opuesta. La pista mide 24 metros de ancho y 32 metros de largo",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_4.jpg",
+    "conclusion": "El corredor recorrerá 40 metros desde una esquina hasta la esquina opuesta.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la distancia diagonal de la pista es 'x'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (distancia diagonal 'x')² = 24² + 32²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "x² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "x² = 24² + 32²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es el ancho de la pista.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'x' es la distancia diagonal de la pista.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la el largo de la pista.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es x² = 24² + 32².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["24", "32"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["32", "24"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la distancia diagonal de la pista 'x'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la distancia diagonal de la pista 'x' obtenemos x = √(1600).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la distancia diagonal de la pista.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la distancia diagonal de la pista.",
+        "displayResult": "x = √(1600)",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 576 + 1024.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a 1600, debemos despejar la variable 'x', la cual representa la distancia diagonal de la pista.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia diagonal de la pista corresponde a √(1600) metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["1600"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener la distancia diagonal de la pista.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la distancia diagonal de la pista 'x' son 40 metros.",
+        "correctMsg": "La respuesta ingresada corresponde a la distancia diagonal de la pista.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la distancia diagonal de la pista.",
+        "displayResult": "x = 40",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 40 y -40.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia diagonal de la pista son 40 metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-40"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["40"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 24,
+      "b": 32,
+      "incognita": "c",
+      "unidad": "m",
+      "etiquetas": {
+        "c": "x"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      },
+      "rectangulo": true
+    }
+  },
+  {
+    "code": "pit2_5",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un carpintero necesita cortar una tabla para que se ajuste perfectamente a la diagonal de un marco rectangular de una ventana que mide 5 metros de ancho y 12 metros de alto. ¿Qué longitud debe tener la tabla?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_5.jpg",
+    "conclusion": "La tabla debe tener una longitud de 13 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la longitud de la tabla es 'x'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (longitud de la tabla 'x')² = 5² + 12²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "x² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "x² = 5² + 12²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es el ancho del marco.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'x' es la longitud de la tabla a cortar correspondiente a la diagonal del marco.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la el largo del marco.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es x² = 5² + 12².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["5", "12"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["12", "5"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la longitud de la tabla a cortar 'x'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la longitud de la tabla a cortar 'x' obtenemos x = √(169).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la longitud de la tabla a cortar.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la longitud de la tabla a cortar.",
+        "displayResult": "x = √(169)",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 25 + 144.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a 169, debemos despejar la variable 'x', la cual representa la longitud de la tabla a cortar.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud de la tabla a cortar corresponde a √(169) metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["169"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener la longitud de la tabla a cortar.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la longitud de la tabla a cortar 'x' son 13 metros.",
+        "correctMsg": "La respuesta ingresada corresponde a la longitud de la tabla a cortar.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la longitud de la tabla a cortar.",
+        "displayResult": "x = 13",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 13 y -13.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud de la tabla a cortar son 13 metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-13"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["13"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 12,
+      "b": 5,
+      "incognita": "c",
+      "unidad": "m",
+      "etiquetas": {
+        "c": "x"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      },
+      "rectangulo": true
+    }
+  },
+  {
+    "code": "pit2_6",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un cable de antena se extiende desde la parte superior de una torre de 7 metros de altura hasta un punto en el suelo que está a 24 metros de la base de la torre. ¿Cuál es la longitud del cable?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_6.jpg",
+    "conclusion": "La longitud del cable son 25 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la longitud del cable es 'x'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (longitud del cable 'x')² = 7² + 24²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "x² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "x^2=7^2+24^2",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es la altura de la torre.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'x' es la longitud del cable.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la distancia entre el punto en el suelo y la torre.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es x² = 7² + 24².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["7", "24"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["24", "7"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la longitud del cable 'x'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la longitud del cable 'x' obtenemos x = √(625).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la longitud del cable.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la longitud del cable.",
+        "displayResult": "x=\\sqrt{625}",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 576 + 49.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a 625, debemos despejar la variable 'x', la cual representa la longitud del cable.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud del cable corresponde a √(625) metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["625"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener la longitud del cable.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la longitud del cable 'x' son 25 metros.",
+        "correctMsg": "La respuesta ingresada corresponde a la longitud del cable.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la longitud del cable.",
+        "displayResult": "x=25",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 25 y -25.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud del cable son 25 metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-25"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["25"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 7,
+      "b": 24,
+      "incognita": "c",
+      "unidad": "m",
+      "etiquetas": {
+        "c": "x"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      }
+    }
+  },
+  {
+    "code": "pit2_7",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Una escalera de incendios en un edificio se despliega desde una ventana a una altura de 9 metros y toca el suelo a 12 metros de distancia de la base del edificio. ¿Cuál es la longitud de la escalera?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_7.jpg",
+    "conclusion": "La longitud de la escalera son 15 metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la longitud de la escalera es 'x'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (longitud de la escalera 'x')² = 9² + 12²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "x² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "x² = 9² + 12²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifica los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es la altura del edificio.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'x' es la longitud de la escalera.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la distancia entre el punto en el suelo y el edificio.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es x² = 9² + 12².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["9", "12"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["12", "9"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la aritmética de la ecuación y despeje la longitud de la escalera 'x'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la longitud de la escalera 'x' obtenemos x = √(225).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la longitud de la escalera.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la longitud de la escalera.",
+        "displayResult": "x = √(225)",
+        "KCs": ["DespVarEcu", "AN"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar 81 + 144.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a 225, debemos despejar la variable 'x', la cual representa la longitud de la escalera.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud de la escalera corresponde a √(225) metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["225"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√(", "input", ")"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelva la raíz cuadrada para obtener la longitud de la escalera.",
+        "summary": "3) Resolviendo la ecuación obtenemos que la longitud de la escalera 'x' son 15 metros.",
+        "correctMsg": "La respuesta ingresada corresponde a la longitud de la escalera.",
+        "expression": "x = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a la longitud de la escalera.",
+        "displayResult": "x = 15",
+        "KCs": ["AN", "PropsRaiz", "DescSol"],
+        "hints": [
+          {
+            "hint": "Aplique la raiz cuadrada.",
+            "hintId": 0
+          },
+          {
+            "hint": "Cuando aplicamos raiz cuadrada, obtenemos dos posibles soluciones, una expresión positiva y otra expresión negativa.",
+            "hintId": 1
+          },
+          {
+            "hint": "Las soluciones de esta ecuación son 15 y -15.",
+            "hintId": 2
+          },
+          {
+            "hint": "Aplicando la respuesta al contexto del ejercicio la distancia no podría ser negativa.",
+            "hintId": 3
+          },
+          {
+            "hint": "La longitud de la escalera son 15 metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          },
+          {
+            "hint": "La distancia siempre debe ser positiva",
+            "error": ["-15"],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["15"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": 9,
+      "b": 12,
+      "incognita": "c",
+      "unidad": "m",
+      "etiquetas": {
+        "c": "x"
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"],
+        "2": ["c"]
+      }
+    }
+  },
+  {
+    "code": "pit2_8",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un ciclista viaja x km hacia el norte y luego y km hacia el este. ¿A qué distancia se encuentra el ciclista del punto de partida?",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_8.jpg",
+    "conclusion": "El ciclista se encuentra a √(x²+y²) kms del punto de partida",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si la distancia recorrida es 'd'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (distancia desde el punto de partida 'd')² = x² + y²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "d² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "d² = x² + y²",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifique los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los debería ser la disntacia recorrida hacia el norte.",
+            "hintId": 1
+          },
+          {
+            "hint": "Nuestra hipotenusa 'd' es la distancia desde el punto de partida.",
+            "hintId": 2
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 3
+          },
+          {
+            "hint": "El otro cateto es la distancia recorrida hacia el este.",
+            "hintId": 4
+          },
+          {
+            "hint": "La fórmula es d² = x² + y².",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "y"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["y", "x"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la ecuación de manera algebraica y despeje la distancia recorrida 'd'.",
+        "summary": "2) Si resolvemos la ecuación planteada en razón de la distancia recorrida 'd' obtenemos d = √(x²+y²).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón de la distancia recorrida.",
+        "expression": "d = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón de la distancia recorrida.",
+        "displayResult": "d = √(x²+y²)",
+        "KCs": ["DespVarEcu", "AA"],
+        "hints": [
+          {
+            "hint": "Resuelva la suma de los cuadrados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Debes sumar x² + y².",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez que sabemos que x² es igual a x²+y², debemos despejar la variable 'd', la cual representa la distancia recorrida.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debemos aplicar raiz en ambos lados.",
+            "hintId": 3
+          },
+          {
+            "hint": "La distancia recorrida corresponde a √(x²+y²) kms.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "y"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["y", "x"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["√((", "input", ")²", "+", "(", "input", ")²)"]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": "x",
+      "b": "y",
+      "incognita": "c",
+      "unidad": "km",
+      "etiquetas": {
+        "c": "d"
+      },
+      "resultado": "√(x² + y²)",
+      "dibujo": {
+        "a": 3,
+        "b": 4
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["c"]
+      }
+    }
+  },
+  {
+    "code": "pit2_9",
+    "title": "Teorema de Pitágoras.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "En un triángulo rectángulo, la hipotenusa mide 2x y uno de los catetos mide x. Encuentra el valor del otro cateto en términos de x.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/pitagoras/PIT2_9.jpg",
+    "conclusion": "El cateto faltante el términos de 'x' es x√3",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Si el cateto faltante es 'd'. Plantee la fórmula del teorema de pitágoras según la figura.",
+        "summary": "1) Si planteamos la fórmula del teorema de pitágoras según la figura nos queda (2x)² = x² + d²",
+        "correctMsg": "La respuesta ingresada corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "expression": "(2x)² = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde a un planteamiento correcto del teorema de pitágoras.",
+        "displayResult": "(2x)^2=x^2+d^2",
+        "KCs": ["AD", "CatHip"],
+        "hints": [
+          {
+            "hint": "Identifique los catetos y la hipotenusa según la figura.",
+            "hintId": 0
+          },
+          {
+            "hint": "Uno de los catetos es x.",
+            "hintId": 1
+          },
+          {
+            "hint": "El teorema de pitágoras plantea que hipotenusa² = cateto1² + cateto2².",
+            "hintId": 2
+          },
+          {
+            "hint": "La hipotenusa del triángulo rectángulo es 2x.",
+            "hintId": 3
+          },
+          {
+            "hint": "La fórmula es (2x)² = x² + d².",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "d"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["d", "x"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", ")²", "+", "(", "input", ")²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Resuelva la ecuación de manera algebraica y despeje el cateto 'd'.",
+        "summary": "2) Si resolvemos la ecuación planteada obtenemos d = √((2x)²-x²).",
+        "correctMsg": "La respuesta ingresada corresponde al despeje de la ecuación en razón del cateto 'd'.",
+        "expression": "d = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al despeje de la ecuación en razón del cateto 'd'.",
+        "displayResult": "d=\\sqrt{(2x)^2-x^2}",
+        "KCs": ["DespVarEcu", "AA"],
+        "hints": [
+          {
+            "hint": "Despeje la variable a buscar.",
+            "hintId": 0
+          },
+          {
+            "hint": "La variable a buscar es 'd'.",
+            "hintId": 1
+          },
+          {
+            "hint": "Una vez despejada es necesario aplicar raiz a ambos lados.",
+            "hintId": 2
+          },
+          {
+            "hint": "El cateto 'd' equivale a √((2x)²-x²).",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["2x", "x"],
+            "nextStep": 2
+          },
+          {
+            "answer": ["x", "2x"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["√((", "input", ")²", "-", "(", "input", ")²)"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Resuelta la operación y calcule 'd'.",
+        "summary": "3) Si resolvemos la operación obtenemos d = x√3.",
+        "correctMsg": "La respuesta ingresada corresponde al cálculo del cateto 'd'.",
+        "expression": "d = ",
+        "incorrectMsg": "La respuesta ingresada no corresponde al cálculo del cateto 'd'.",
+        "displayResult": "d=x\\sqrt{3}",
+        "KCs": ["PropsRaiz", "ES"],
+        "hints": [
+          {
+            "hint": "Resta las dos expresiones bajo la raiz.",
+            "hintId": 0
+          },
+          {
+            "hint": "Aplica la raíz cuadrada a 3x².",
+            "hintId": 1
+          },
+          {
+            "hint": "Recuerda que puedes separar los términos y aplicar raíz a 3 y a x² por separado.",
+            "hintId": 2
+          },
+          {
+            "hint": "El resultado es x√3.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x", "3"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["3", "x"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", "√", "(", "input", ")"]
+      }
+    ],
+    "figura": {
+      "tipo": "trianguloRectangulo",
+      "a": "x",
+      "c": "2x",
+      "incognita": "b",
+      "etiquetas": {
+        "b": "d"
+      },
+      "resultado": "x√3",
+      "dibujo": {
+        "a": 1,
+        "b": 1.732
+      },
+      "pasos": {
+        "0": ["a", "b", "c"],
+        "1": ["b"],
+        "2": ["b"]
+      }
+    }
+  }
+]

@@ -29,6 +29,11 @@ const DynamicTutorWP = dynamic<{ exercise?: Object; topicId?: string }>(
   { ssr: false },
 );
 
+const DynamicTutorGeom = dynamic<{ exercise?: Object; topicId?: string }>(
+  () => import("../components/tutorGeometria/TutorGeom").then(mod => mod.TutorGeom),
+  { ssr: false },
+);
+
 const DynamicTutorLogic = dynamic<{ exc?: ExLog; topicId?: string }>(
   () => import("../components/LogicTutor/DynamicTutorLogic"),
   { ssr: false },
@@ -67,6 +72,8 @@ const ShowContentPage = withAuth(function ShowContent() {
           <DynamicTutorEcu key="3" exercise={contentJson} topicId={topic} />
         ) : contentType == "wordProblem" ? (
           <DynamicTutorWP key="4" exercise={contentJson} topicId={topic} />
+        ) : contentType == "geom" ? (
+          <DynamicTutorGeom key="6" exercise={contentJson} topicId={topic} />
         ) : contentType == "lvltutor2" ? (
           <DynamicTutorLogic key="5" exc={contentJson as ExLog} topicId={topic} />
         ) : (

@@ -88,6 +88,9 @@ export function Navigation() {
             <SidebarLink key="7" href={"topicSelect?&registerTopic=52"}>
               Álgebra de Polinomios
             </SidebarLink>
+            <SidebarLink key="10" href={"topicSelect?&registerTopic=27"}>
+              Geometría
+            </SidebarLink>
             <SidebarLink key="8" href={"wpExercises?topic=34,35&registerTopic=34"}>
               Ejercicios en contexto
             </SidebarLink>

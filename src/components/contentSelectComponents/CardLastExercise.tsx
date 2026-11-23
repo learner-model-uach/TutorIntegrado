@@ -18,6 +18,7 @@ import type { ComponentProps } from "react";
 import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import TeX from "@matejmazur/react-katex";
+import { VistaPreviaGeom } from "../tutorGeometria/figuras/VistaPrevia";
 import parameters from "./parameters.json";
 
 const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
@@ -133,6 +134,8 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                           }
                         />
                       </Box>
+                    ) : data?.contentByCode?.json?.type == "geom" ? (
+                      <VistaPreviaGeom ejercicio={data?.contentByCode?.json} />
                     ) : data?.contentByCode?.json.initialExpression ? (
                       <Box
                         w="full"
