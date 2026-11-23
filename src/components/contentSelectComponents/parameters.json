@@ -21,7 +21,8 @@
     "topic9": { "topic": "álgebra de polinomios", "registerTopic": "52" },
     "topic10": { "topic": "ejercicios en contexto", "registerTopic": "34" },
     "topic11": { "topic": "lógica y teoría de conjuntos", "registerTopic": "37" },
-    "topic12": { "topic": "otro tópico", "registerTopic": "" }
+    "topic12": { "topic": "otro tópico", "registerTopic": "" },
+    "topic13": { "topic": "geometría", "registerTopic": "27" }
   },
   "card": {
     "text": "Ejercicio de "

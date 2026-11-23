@@ -41,6 +41,9 @@ export const useAction = (baseAction?: Partial<ActionArguments>) => {
 
   return useCallback(
     (data?: Partial<ActionArguments>) => {
+      // Vista previa local de geometría (/vistaGeometria): no registra acciones en la API
+      if (process.env.NODE_ENV === "development" && (globalThis as any).__TUTOR_PREVIEW__) return;
+
       if (!projectId) throw Error("Invalid projectId");
 
       const verbName = latestBaseAction.current?.verbName || data?.verbName;

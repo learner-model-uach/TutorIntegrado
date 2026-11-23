@@ -16,6 +16,7 @@ import { useGQLQuery } from "rq-gql";
 import { gql } from "../../graphql";
 import TeX from "@matejmazur/react-katex";
 import parameters from "./parameters.json";
+import { VistaPreviaGeom } from "../tutorGeometria/figuras/VistaPrevia";
 
 const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
   () => import("mathjax-react").then(v => v.MathComponent),
@@ -93,6 +94,8 @@ export const CardLastExercise = ({ lastExercise }: { lastExercise: string }) => 
                         tex={String.raw`${data?.contentByCode?.json?.eqc}`}
                         display={false}
                       />
+                    ) : data?.contentByCode?.json?.type == "geom" ? (
+                      <VistaPreviaGeom ejercicio={data?.contentByCode?.json} />
                     ) : data?.contentByCode?.json.initialExpression ? (
                       <MathComponent
                         tex={String.raw`${data?.contentByCode?.json.initialExpression}`}

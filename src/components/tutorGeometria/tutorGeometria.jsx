@@ -8,8 +8,7 @@ import { Conclusion } from "./tools/Conclusion";
 import { MathComponent } from "../MathJax";
 import Hint from "../Hint";
 import { useAction } from "../../utils/action";
-import jsonAP from "./json/jsonAP.json";
-import jsonAPmultiple from "./json/jsonAPmultiple.json";
+import { Figura, tieneFigura } from "./figuras/Figura";
 import {
   Accordion,
   AccordionItem,
@@ -43,11 +42,22 @@ export const GEO = ({ exercise, topicId }) => {
     AreaR: "Conocimiento del área del rectángulo",
     PerR: "Conocimiento del perímetro del rectángulo",
     PlanTh: "Plantear teorema de Thales",
+    PlanTH: "Plantear teorema de Thales",
     CatHip: "Conocimiento Catetos e Hipotenusa",
     AN: "Aritmética de números",
     AD: "Asociar Datos",
     DespVarEcu: "Despejar variable en ecuación",
+    AA: "Resolver aritméticamente una expresión algebraica",
+    ES: "Encontrar solución",
+    DescSol: "Descartar solución por contexto",
+    PropsRaiz: "Propiedades de la raíz",
+    R3: "Regla de 3",
+    NVeces: "Asociar expresión con la frase n veces",
+    ExpA: "Expresar algebraicamente",
+    IdeCoef: "Identificar coeficientes",
+    AplFormRaices: "Calcular raíces",
   };
+  const nombreKc = codigo => kc[codigo] ?? codigo;
   const action = useAction();
   const content = exercise.code;
   const steps = exercise.steps;
@@ -96,7 +106,11 @@ export const GEO = ({ exercise, topicId }) => {
           marginTop: 20,
         }}
       >
-        {exercise.image && <Image src={exercise.image} style={{ width: 300, height: 300 }} />}
+        {tieneFigura(exercise) ? (
+          <Figura figura={exercise.figura} pasoActual={currentStep} resuelto={conclusion} />
+        ) : (
+          exercise.image && <Image src={exercise.image} style={{ width: 300, height: 300 }} />
+        )}
       </Wrap>
 
       <Accordion allowToggle allowMultiple index={index} style={{ padding: 0, marginBottom: 20 }}>
@@ -128,7 +142,7 @@ export const GEO = ({ exercise, topicId }) => {
                     </Center>
                     <Box mt={2}>
                       <Text fontSize="sm" color="gray.600">
-                        KCs: {step.KCs.map(kcKey => kc[kcKey]).join("; ")}
+                        KCs: {step.KCs.map(nombreKc).join("; ")}
                       </Text>
                     </Box>
                   </Wrap>

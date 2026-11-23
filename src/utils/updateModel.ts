@@ -42,6 +42,8 @@ export const useUpdateModel = (baseState?: Partial<StateArguments>) => {
 
   const updateModel = useCallback(
     (input?: Partial<StateArguments>) => {
+      // Vista previa local de geometría (/vistaGeometria): no actualiza el modelo del estudiante
+      if (process.env.NODE_ENV === "development" && (globalThis as any).__TUTOR_PREVIEW__) return;
       if (!userID) throw Error("Invalid projectId");
       const typeModel = latestBaseState.current?.typeModel || input?.typeModel;
       if (!typeModel) throw Error("Invalid Action");

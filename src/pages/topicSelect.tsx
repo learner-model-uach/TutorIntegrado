@@ -130,6 +130,8 @@ export default withAuth(function TopicSelect() {
             ? parameters.CSMain.topic10.topic
             : registerTopic == parameters.CSMain.topic11.registerTopic
             ? parameters.CSMain.topic11.topic
+            : registerTopic == parameters.CSMain.topic13.registerTopic
+            ? parameters.CSMain.topic13.topic
             : parameters.CSMain.topic12.topic}
         </Heading>
         <Text mb="5">Lista de subtópicos</Text>

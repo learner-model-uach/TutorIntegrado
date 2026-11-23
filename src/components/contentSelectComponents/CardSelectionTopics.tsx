@@ -19,6 +19,7 @@ import { useAction } from "../../utils/action";
 import type { ExType } from "../lvltutor/Tools/ExcerciseType";
 import { InitialModel } from "../../utils/startModel";
 import Latex from "react-latex-next";
+import { VistaPreviaGeom } from "../tutorGeometria/figuras/VistaPrevia";
 
 const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
   () => import("mathjax-react").then(v => v.MathComponent),
@@ -48,6 +49,7 @@ function displayExp(e: ExType): string {
   )
     exp = ejercicio.eqc;
   else if (ejercicio.type.localeCompare("wordProblem") == 0) exp = "";
+  else if (ejercicio.type.localeCompare("geom") == 0) exp = (ejercicio as any).code ?? "";
   else if (ejercicio.initialExpression != undefined) exp = ejercicio.initialExpression;
   else if (ejercicio.img != undefined) exp = ejercicio.img;
   else exp = ejercicio.steps[0].expression;
@@ -162,7 +164,9 @@ export const CardSelectionTopic = ({
         </HStack>
       </Center>
       {selectedExcercise.ejercicio[index] ? (
-        selectedExcercise.ejercicio[index].type == "lvltutor2" ? (
+        selectedExcercise.ejercicio[index].type == "geom" ? (
+          <VistaPreviaGeom ejercicio={selectedExcercise.ejercicio[index]} />
+        ) : selectedExcercise.ejercicio[index].type == "lvltutor2" ? (
           selectedExcercise.ejercicio[index].img ? (
             <Image src={"img/" + selectedExcercise.ejercicio[index].img} />
           ) : selectedExcercise.ejercicio[index].initialExpression ? (

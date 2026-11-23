@@ -1,0 +1,2801 @@
+[
+  {
+    "code": "ap1_1",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_1.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaC"],
+        "hints": [
+          {
+            "hint": "El área de un círculo se calcule con la fórmula: A = π * r², donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del radio en la fórmula: A = π * 5².",
+            "hintId": 1
+          },
+          {
+            "hint": "Calcule 5² y luego multiplique por π para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["15π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["25π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["5π² cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["15π² cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = π * r² con r = 5, obtenemos 25π cm².",
+        "stepTitle": "Marque la alternativa correcta. ¿Cuál es el área de un círculo de radio 5 cm?",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = \\pi  \\cdot 5^2 = 25\\pi \\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un círculo",
+    "conclusion": "Luego de aplicar la fórmula A = π * r² y sustituir el valor del radio, obtenemos que el área del círculo es 25π cm².",
+    "figura": {
+      "tipo": "circulo",
+      "radio": 5,
+      "pasos": {
+        "0": ["radio"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "25π cm²"
+    }
+  },
+  {
+    "code": "ap1_2",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_2.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaC"],
+        "hints": [
+          {
+            "hint": "El área de un círculo se calcule con la fórmula: A = π * r², donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del radio en la fórmula: A = π * 7².",
+            "hintId": 1
+          },
+          {
+            "hint": "Calcule 7² y luego multiplique por π para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["49π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["14π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["21π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["35π cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = π * r² con r = 7, obtenemos 49π cm².",
+        "stepTitle": "Calcule el área de un círculo con radio de 7 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = \\pi  \\cdot 7^2 = 49\\pi \\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un círculo",
+    "conclusion": "Luego de aplicar la fórmula A = π * r² y sustituir el valor del radio, obtenemos que el área del círculo es 49π cm².",
+    "figura": {
+      "tipo": "circulo",
+      "radio": 7,
+      "pasos": {
+        "0": ["radio"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "49π cm²"
+    }
+  },
+  {
+    "code": "ap1_3",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_3.jpg",
+    "steps": [
+      {
+        "KCs": ["PerC"],
+        "hints": [
+          {
+            "hint": "El perímetro de un círculo se calcule con la fórmula: P = 2 * π * r, donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del radio en la fórmula: P = 2 * π * 10.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique 2 * 10 y luego multiplica por π para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["10π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["15π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["20π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["30π cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula P = 2 * π * r con r = 10, obtenemos 20π cm.",
+        "stepTitle": "Calcule el perímetro de un círculo con radio de 10 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 2 \\cdot \\pi  \\cdot 10 = 20\\pi \\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un círculo",
+    "conclusion": "Luego de aplicar la fórmula P = 2 * π * r y sustituir el valor del radio, obtenemos que el perímetro del círculo es 20π cm.",
+    "figura": {
+      "tipo": "circulo",
+      "radio": 10,
+      "pasos": {
+        "0": ["radio"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "20π cm"
+    }
+  },
+  {
+    "code": "ap1_4",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_4.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaC"],
+        "hints": [
+          {
+            "hint": "El área de un círculo se calcule con la fórmula: A = π * r², donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "El radio es la mitad del diámetro. Sustituya el valor del radio en la fórmula: A = π * 4².",
+            "hintId": 1
+          },
+          {
+            "hint": "Calcule 4² y luego multiplica por π para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["8π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["32π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["24π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["16π cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = π * r² con r = 4, obtenemos 16π cm².",
+        "stepTitle": "Calcule el área de un círculo con diámetro de 8 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = \\pi  \\cdot 4^2 = 16\\pi \\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un círculo",
+    "conclusion": "Luego de aplicar la fórmula A = π * r² y sustituir el valor del radio, obtenemos que el área del círculo es 16π cm².",
+    "figura": {
+      "tipo": "circulo",
+      "diametro": 8,
+      "pasos": {
+        "0": ["diametro"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "16π cm²"
+    }
+  },
+  {
+    "code": "ap1_5",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_5.jpg",
+    "steps": [
+      {
+        "KCs": ["PerC"],
+        "hints": [
+          {
+            "hint": "El perímetro de un círculo se calcule con la fórmula: P = 2 * π * r, donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "El radio es la mitad del diámetro. Sustituya el valor del radio en la fórmula: P = 2 * π * 6.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique 2 * 6 y luego multiplica por π para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["6π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["12π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["24π cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula P = 2 * π * r con r = 6 cm (la mitad del diámetro), obtenemos 12π cm.",
+        "stepTitle": "Calcule el perímetro de un círculo con diámetro de 12 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P=2\\cdot\\pi\\cdot 6=12\\pi\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un círculo",
+    "conclusion": "Luego de aplicar la fórmula P = 2 * π * r y sustituir el valor del radio, obtenemos que el perímetro del círculo es 24π cm.",
+    "figura": {
+      "tipo": "circulo",
+      "diametro": 12,
+      "pasos": {
+        "0": ["diametro"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "12π cm"
+    }
+  },
+  {
+    "code": "ap1_6",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_6.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaC"],
+        "hints": [
+          {
+            "hint": "El área de un círculo se calcule con la fórmula: A = π * r², donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del radio en la fórmula: A = π * 3².",
+            "hintId": 1
+          },
+          {
+            "hint": "Calcule 3² y luego multiplica por π para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["9π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["6π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["12π cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["15π cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = π * r² con r = 3, obtenemos 9π cm².",
+        "stepTitle": "Calcule el área de un círculo con radio de 3 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = \\pi  \\cdot 3^2 = 9\\pi \\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un círculo",
+    "conclusion": "Luego de aplicar la fórmula A = π * r² y sustituir el valor del radio, obtenemos que el área del círculo es 9π cm².",
+    "figura": {
+      "tipo": "circulo",
+      "radio": 3,
+      "pasos": {
+        "0": ["radio"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "9π cm²"
+    }
+  },
+  {
+    "code": "ap1_7",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_7.jpg",
+    "steps": [
+      {
+        "KCs": ["PerC"],
+        "hints": [
+          {
+            "hint": "El perímetro de un círculo se calcule con la fórmula: P = 2 * π * r, donde r es el radio.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del radio en la fórmula: P = 2 * π * 15.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique 2 * 15 y luego multiplica por π para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["15π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["30π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["45π cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["60π cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula P = 2 * π * r con r = 15, obtenemos 30π cm.",
+        "stepTitle": "Calcule el perímetro de un círculo con radio de 15 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 2 \\cdot \\pi  \\cdot 15 = 30\\pi \\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un círculo",
+    "conclusion": "Luego de aplicar la fórmula P = 2 * π * r y sustituir el valor del radio, obtenemos que el perímetro del círculo es 30π cm.",
+    "figura": {
+      "tipo": "circulo",
+      "radio": 15,
+      "pasos": {
+        "0": ["radio"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "30π cm"
+    }
+  },
+  {
+    "code": "ap1_8",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_8.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaT"],
+        "hints": [
+          {
+            "hint": "El área de un triángulo se calcule con la fórmula: A = (base * altura) / 2.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya los valores de la base y la altura en la fórmula: A = (8 * 5) / 2.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique la base por la altura y luego divide por 2 para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["16 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["20 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["40 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["25 cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = (base * altura) / 2 con base = 8 cm y altura = 5 cm, obtenemos 20 cm².",
+        "stepTitle": "Calcule el área de un triángulo con base de 8 cm y altura de 5 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = \\frac{8 \\cdot 5}{2} = 20\\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un triángulo",
+    "conclusion": "Luego de aplicar la fórmula A = (base * altura) / 2 y sustituir los valores de la base y la altura, obtenemos que el área del triángulo es 20 cm².",
+    "figura": {
+      "tipo": "triangulo",
+      "base": 8,
+      "altura": 5,
+      "pasos": {
+        "0": ["base", "altura"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "20 cm²"
+    }
+  },
+  {
+    "code": "ap1_9",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_9.jpg",
+    "steps": [
+      {
+        "KCs": ["PerT"],
+        "hints": [
+          {
+            "hint": "El perímetro de un triángulo se calcula sumando las longitudes de sus tres lados.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sume los valores de los lados: P = 6 + 8 + 10.",
+            "hintId": 1
+          },
+          {
+            "hint": "Realize la suma para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["20 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["24 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["26 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si sumamos las longitudes de los lados del triángulo, obtenemos 24 cm.",
+        "stepTitle": "Calcule el perímetro de un triángulo con lados de 6 cm, 8 cm y 10 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 6 + 8 + 10 = 24\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un triángulo",
+    "conclusion": "Luego de sumar las longitudes de los lados, obtenemos que el perímetro del triángulo es 24 cm.",
+    "figura": {
+      "tipo": "triangulo",
+      "forma": "rectangulo",
+      "base": 8,
+      "altura": 6,
+      "lados": true,
+      "ladosTexto": ["6 cm", "10 cm", "8 cm"],
+      "pasos": {
+        "0": ["lados"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "24 cm"
+    }
+  },
+  {
+    "code": "ap1_10",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_10.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaT"],
+        "hints": [
+          {
+            "hint": "El área de un triángulo equilátero se calcula con la fórmula: A = (√3 / 4) * lado².",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del lado en la fórmula: A = (√3 / 4) * 6².",
+            "hintId": 1
+          },
+          {
+            "hint": "Calcule 6² y luego multiplique por √3 / 4 para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["12√3 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["6√3 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18√3 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["9√3 cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = (√3 / 4) * lado² con lado = 6 cm, obtenemos 9√3 cm².",
+        "stepTitle": "Calcule el área de un triángulo equilátero con lado de 6 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A=\\frac{\\sqrt{3}}{4}\\cdot 6^2=9\\sqrt{3}\\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un triángulo equilátero",
+    "conclusion": "Luego de aplicar la fórmula A = (√3 / 4) * lado² y sustituir el valor del lado, obtenemos que el área del triángulo equilátero es 9√3 cm².",
+    "figura": {
+      "tipo": "triangulo",
+      "forma": "equilatero",
+      "lado": 6,
+      "pasos": {
+        "0": ["lados"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "9√3 cm²"
+    }
+  },
+  {
+    "code": "ap1_11",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_11.jpg",
+    "steps": [
+      {
+        "KCs": ["PerT"],
+        "hints": [
+          {
+            "hint": "El perímetro de un triángulo equilátero se calcula multiplicando la longitud de uno de sus lados por 3.",
+            "hintId": 0
+          },
+          {
+            "hint": "Multiplique el valor del lado por 3: P = 9 * 3.",
+            "hintId": 1
+          },
+          {
+            "hint": "Realize la multiplicación para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["27 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["36 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["24 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si multiplicamos la longitud del lado por 3, obtenemos 27 cm.",
+        "stepTitle": "Calcule el perímetro de un triángulo equilátero con lado de 9 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 9 \\cdot 3 = 27\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un triángulo equilátero",
+    "conclusion": "Luego de multiplicar la longitud del lado por 3, obtenemos que el perímetro del triángulo equilátero es 27 cm.",
+    "figura": {
+      "tipo": "triangulo",
+      "forma": "equilatero",
+      "lado": 9,
+      "pasos": {
+        "0": ["lados"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "27 cm"
+    }
+  },
+  {
+    "code": "ap1_12",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_12.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaT"],
+        "hints": [
+          {
+            "hint": "El área de un triángulo rectángulo se calcula con la fórmula: A = (cateto1 * cateto2) / 2.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya los valores de los catetos en la fórmula: A = (9 * 12) / 2.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique los catetos y luego divide por 2 para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["108 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["72 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["54 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["36 cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = (cateto1 * cateto2) / 2 con catetos de 9 cm y 12 cm, obtenemos 54 cm².",
+        "stepTitle": "Calcule el área de un triángulo rectángulo con catetos de 9 cm y 12 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = \\frac{9 \\cdot 12}{2} = 54\\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un triángulo rectángulo",
+    "conclusion": "Luego de aplicar la fórmula A = (cateto1 * cateto2) / 2 y sustituir los valores de los catetos, obtenemos que el área del triángulo rectángulo es 54 cm².",
+    "figura": {
+      "tipo": "triangulo",
+      "forma": "rectangulo",
+      "base": 12,
+      "altura": 9,
+      "pasos": {
+        "0": ["base", "altura"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "54 cm²"
+    }
+  },
+  {
+    "code": "ap1_13",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_13.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaR"],
+        "hints": [
+          {
+            "hint": "El área de un rectángulo se calcula con la fórmula: A = longitud * ancho.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya los valores de la longitud y el ancho en la fórmula: A = 10 * 5.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique la longitud por el ancho para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["25 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["100 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["50 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["75 cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = longitud * ancho con longitud = 10 cm y ancho = 5 cm, obtenemos 50 cm².",
+        "stepTitle": "Calcule el área de un rectángulo con longitud de 10 cm y ancho de 5 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = 10 \\cdot 5 = 50\\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un rectángulo",
+    "conclusion": "Luego de aplicar la fórmula A = longitud * ancho y sustituir los valores, obtenemos que el área del rectángulo es 50 cm².",
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": 10,
+      "ancho": 5,
+      "pasos": {
+        "0": ["largo", "ancho"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "50 cm²"
+    }
+  },
+  {
+    "code": "ap1_14",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_14.jpg",
+    "steps": [
+      {
+        "KCs": ["PerR"],
+        "hints": [
+          {
+            "hint": "El perímetro de un rectángulo se calcula con la fórmula: P = 2 * (longitud + ancho).",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya los valores de la longitud y el ancho en la fórmula: P = 2 * (12 + 7).",
+            "hintId": 1
+          },
+          {
+            "hint": "Sume la longitud y el ancho, luego multiplique por 2 para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["38 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["24 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["28 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["32 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula P = 2 * (longitud + ancho) con longitud = 12 cm y ancho = 7 cm, obtenemos 38 cm.",
+        "stepTitle": "Calcule el perímetro de un rectángulo con longitud de 12 cm y ancho de 7 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 2 \\cdot (12 + 7) = 38\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un rectángulo",
+    "conclusion": "Luego de aplicar la fórmula P = 2 * (longitud + ancho) y sustituir los valores, obtenemos que el perímetro del rectángulo es 38 cm.",
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": 12,
+      "ancho": 7,
+      "pasos": {
+        "0": ["largo", "ancho"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "38 cm"
+    }
+  },
+  {
+    "code": "ap1_15",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_15.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaR"],
+        "hints": [
+          {
+            "hint": "El área de un cuadrado se calcula con la fórmula: A = lado².",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya el valor del lado en la fórmula: A = 9².",
+            "hintId": 1
+          },
+          {
+            "hint": "Calcule 9² para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["81 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["27 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["45 cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = lado² con lado = 9 cm, obtenemos 81 cm².",
+        "stepTitle": "Calcule el área de un cuadrado con lado de 9 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = 9^2 = 81\\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un cuadrado",
+    "conclusion": "Luego de aplicar la fórmula A = lado² y sustituir el valor del lado, obtenemos que el área del cuadrado es 81 cm².",
+    "figura": {
+      "tipo": "rectangulo",
+      "cuadrado": true,
+      "largo": 9,
+      "ancho": 9,
+      "pasos": {
+        "0": ["largo"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "81 cm²"
+    }
+  },
+  {
+    "code": "ap1_16",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_16.jpg",
+    "steps": [
+      {
+        "KCs": ["PerR"],
+        "hints": [
+          {
+            "hint": "El perímetro de un cuadrado se calcula multiplicando la longitud de uno de sus lados por 4.",
+            "hintId": 0
+          },
+          {
+            "hint": "Multiplique el valor del lado por 4: P = 6 * 4.",
+            "hintId": 1
+          },
+          {
+            "hint": "Realize la multiplicación para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["12 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["18 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["30 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["24 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si multiplicamos la longitud del lado por 4, obtenemos 24 cm.",
+        "stepTitle": "Calcule el perímetro de un cuadrado con lado de 6 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 6 \\cdot 4 = 24\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un cuadrado",
+    "conclusion": "Luego de multiplicar la longitud del lado por 4, obtenemos que el perímetro del cuadrado es 24 cm.",
+    "figura": {
+      "tipo": "rectangulo",
+      "cuadrado": true,
+      "largo": 6,
+      "ancho": 6,
+      "pasos": {
+        "0": ["largo"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "24 cm"
+    }
+  },
+  {
+    "code": "ap1_17",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_17.jpg",
+    "steps": [
+      {
+        "KCs": ["AreaR"],
+        "hints": [
+          {
+            "hint": "El área de un rectángulo se calcula con la fórmula: A = longitud * ancho.",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya los valores de la longitud y el ancho en la fórmula: A = 14 * 6.",
+            "hintId": 1
+          },
+          {
+            "hint": "Multiplique la longitud por el ancho para obtener el área.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 0,
+            "answer": ["42 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 1,
+            "answer": ["84 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["96 cm²"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["108 cm²"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula A = longitud * ancho con longitud = 14 cm y ancho = 6 cm, obtenemos 84 cm².",
+        "stepTitle": "Calcule el área de un rectángulo con longitud de 14 cm y ancho de 6 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "A = 14 \\cdot 6 = 84\\text{ cm}^2",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el área de un rectángulo",
+    "conclusion": "Luego de aplicar la fórmula A = longitud * ancho y sustituir los valores, obtenemos que el área del rectángulo es 84 cm².",
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": 14,
+      "ancho": 6,
+      "pasos": {
+        "0": ["largo", "ancho"]
+      },
+      "incognita": "area",
+      "unidad": "cm",
+      "resultado": "84 cm²"
+    }
+  },
+  {
+    "code": "ap1_18",
+    "exerciseType": "seleccion",
+    "text": null,
+    "type": "geom",
+    "image": "/img/tutorGeometria/areaPerimetro/AP1_18.jpg",
+    "steps": [
+      {
+        "KCs": ["PerR"],
+        "hints": [
+          {
+            "hint": "El perímetro de un rectángulo se calcula con la fórmula: P = 2 * (longitud + ancho).",
+            "hintId": 0
+          },
+          {
+            "hint": "Sustituya los valores de la longitud y el ancho en la fórmula: P = 2 * (15 + 8).",
+            "hintId": 1
+          },
+          {
+            "hint": "Sume la longitud y el ancho, luego multiplique por 2 para obtener el perímetro.",
+            "hintId": 2
+          }
+        ],
+        "stepId": 0,
+        "answers": [
+          {
+            "correct": 1,
+            "answer": ["46 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["30 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["36 cm"],
+            "nextStep": -1
+          },
+          {
+            "correct": 0,
+            "answer": ["48 cm"],
+            "nextStep": -1
+          }
+        ],
+        "summary": "1) Si aplicamos la fórmula P = 2 * (longitud + ancho) con longitud = 15 cm y ancho = 8 cm, obtenemos 46 cm.",
+        "stepTitle": "Calcule el perímetro de un rectángulo con longitud de 15 cm y ancho de 8 cm.",
+        "incorrectMsg": "La alternativa seleccionada no corresponde a la correcta.",
+        "displayResult": "P = 2 \\cdot (15 + 8) = 46\\text{ cm}",
+        "matchingError": [
+          {
+            "hint": "No ha seleccionado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ]
+      }
+    ],
+    "title": "Calcule el perímetro de un rectángulo",
+    "conclusion": "Luego de aplicar la fórmula P = 2 * (longitud + ancho) y sustituir los valores, obtenemos que el perímetro del rectángulo es 46 cm.",
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": 15,
+      "ancho": 8,
+      "pasos": {
+        "0": ["largo", "ancho"]
+      },
+      "incognita": "perimetro",
+      "unidad": "cm",
+      "resultado": "46 cm"
+    }
+  },
+  {
+    "code": "ap2_1",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Una cancha de baloncesto tiene una longitud de 28 metros y un ancho de 15 metros. ¿Cuál es el área de la cancha y su perímetro?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_1.jpg",
+    "conclusion": "El área de la cancha es 420 m² y el perímetro es 86 m.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Defina el largo y el ancho de la cancha de baloncesto.",
+        "summary": "1) El largo de la cancha corresponde a 28 metros y el ancho a 15 metros.",
+        "correctMsg": "Las respuesta ingresadas corresponden al largo y el ancho de la cancha.",
+        "expression": "",
+        "incorrectMsg": "Las respuesta ingresadas no corresponden al largo y el ancho de la cancha.",
+        "displayResult": "L = 28\\text{ m},\\  a = 15\\text{ m}",
+        "KCs": ["AD"],
+        "hints": [
+          {
+            "hint": "Para este caso tomaremos el largo como el tramo más largo y el ancho como el tramo más corto.",
+            "hintId": 0
+          },
+          {
+            "hint": "El tramo más largo son 28 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "El tramo más corto son 15 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "El largo son 29 metros y el ancho son 15 metros.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["28", "15"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["Largo =", "input", " - ", "Ancho = ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área del la cancha de baloncesto.",
+        "summary": "2) Si multiplicamos el largo de 28 metros con el ancho de 15 metros nos da que el área es 420 m².",
+        "correctMsg": "La respuesta ingresada corresponde al área de la cancha de baloncesto.",
+        "expression": "Área = ",
+        "incorrectMsg": "La respuesta ingresada corresponde al área de la cancha de baloncesto",
+        "displayResult": "A = 420\\text{ m}^2",
+        "KCs": ["AreaR", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el área se necesita multiplicar el largo por el ancho.",
+            "hintId": 0
+          },
+          {
+            "hint": "El largo es de 28 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ancho es de 15 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "Multiplique 28 x 15 para calcular el área.",
+            "hintId": 3
+          },
+          {
+            "hint": "El área es de 420 m².",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["420"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["input", " m²"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Calcula el perímetro del la cancha de baloncesto.",
+        "summary": "3) Si sumamos todos los lados de la cancha obtenemos que el perímetro es de 86 metros.",
+        "correctMsg": "La respuesta ingresada corresponde al perimetro de la cancha de baloncesto.",
+        "expression": "Perímetro = ",
+        "incorrectMsg": "La respuesta ingresada corresponde al perimetro de la cancha de baloncesto",
+        "displayResult": "P = 86\\text{ m}",
+        "KCs": ["PerR", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro se necesita sumar todos los lados del rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "El largo es de 28 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ancho es de 15 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debe sumar 2x28 + 2x15 para calcular el perímetro.",
+            "hintId": 3
+          },
+          {
+            "hint": "El perímetro es de 86 metros.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["86"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " metros."]
+      }
+    ],
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": 28,
+      "ancho": 15,
+      "unidad": "m",
+      "incognita": "area",
+      "resultado": "420 m² · P = 86 m",
+      "pasos": {
+        "0": ["largo", "ancho"],
+        "1": ["area"],
+        "2": ["perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_2",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un estanque tiene un radio de 10 metros. ¿Cuál es el área del estanque y su perímetro?. Recuerda que para los ejercicios donde se requiera el uso de π puedes escribirlo como 'pi'",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_2.jpg",
+    "conclusion": "El área del estanque es de 100π m² y el perímetro es 20π metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Calcule el área del estanque.",
+        "summary": "1) El área del estanque es de 100π m²",
+        "correctMsg": "La respuesta ingresada corresponde al área del estanque.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área del estanque.",
+        "displayResult": "A = 100\\pi \\text{ m}^2",
+        "KCs": ["AreaC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el área debe mulpitplicar el cuadrado del radio por π.",
+            "hintId": 0
+          },
+          {
+            "hint": "Recuerda que puedes escribir el numero π simplemente como 'pi'.",
+            "hintId": 1
+          },
+          {
+            "hint": "El radio es 10 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "El área del estanque son 100π m².",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["100", "pi"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["pi", "100"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", "*", "input", " m²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el perímetro del estanque.",
+        "summary": "2) El perímetro del estanque es de 20π mts.",
+        "correctMsg": "La respuesta ingresada corresponde al perímetro del estanque.",
+        "expression": "P =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al perímetro del estanque.",
+        "displayResult": "P = 20\\pi \\text{ m}",
+        "KCs": ["PerC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro debes multiplicar el diámetro del estanque por 'pi'.",
+            "hintId": 0
+          },
+          {
+            "hint": "El diámetro es el doble del radio.",
+            "hintId": 1
+          },
+          {
+            "hint": "El diámetro es 20 mts.",
+            "hintId": 2
+          },
+          {
+            "hint": "El períemtro del estanque son 20π mts.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["20", "pi"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["pi", "20"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", "*", "input", " mts"]
+      }
+    ],
+    "figura": {
+      "tipo": "circulo",
+      "radio": 10,
+      "unidad": "m",
+      "incognita": "area",
+      "resultado": "100π m² · P = 20π m",
+      "pasos": {
+        "0": ["radio", "area"],
+        "1": ["radio", "perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_3",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un jardín tiene forma de triángulo con una base de 12 metros y una altura de 5 metros. ¿Cuál es el área del jardín?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_3.jpg",
+    "conclusion": "El área del triángulo es de 30 m².",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee la fórmula del triángulo reemplazando según la figura.",
+        "summary": "1) La fórmula para calcular el área del triángulo según la figura es A = (12 x 5) / 2",
+        "correctMsg": "La respuesta ingresada corresponde al planteamiento del área del triángulo.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del área del triángulo.",
+        "displayResult": "A=\\frac{12\\cdot 5}{2}",
+        "KCs": ["AreaT"],
+        "hints": [
+          {
+            "hint": "Para calcular es área debes sacar la mitad de la base multiplicada por la altura.",
+            "hintId": 0
+          },
+          {
+            "hint": "La altura son 5 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "La base son 12 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "El área es la mitad de 5 x 12",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["12", "5"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["5", "12"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["( ", "input", " * ", "input", ") / 2"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área del triángulo.",
+        "summary": "2) El área del triángulo es A = 30 m².",
+        "correctMsg": "La respuesta ingresada corresponde al área del triángulo.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área del triángulo.",
+        "displayResult": "A=30\\text{ m}^2",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "Multiplica la base por la altura y dividila en 2.",
+            "hintId": 0
+          },
+          {
+            "hint": "Divide 60 en 2.",
+            "hintId": 1
+          },
+          {
+            "hint": "El área son 30 metros.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["30"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " m²"]
+      }
+    ],
+    "figura": {
+      "tipo": "triangulo",
+      "base": 12,
+      "altura": 5,
+      "unidad": "m",
+      "incognita": "area",
+      "resultado": "30 m²",
+      "pasos": {
+        "0": ["base", "altura"],
+        "1": ["area"]
+      }
+    }
+  },
+  {
+    "code": "ap2_4",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un libro tiene una cubierta rectangular con dimensiones de 18 cm de largo y 12 cm de ancho. ¿Cuál es el área de la cubierta y su perímetro?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_4.jpg",
+    "conclusion": "El área de la cubierta del libro es de 216 cm² y el perímetro es 60 cm.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Defina el largo y el ancho de la cubierta del libro.",
+        "summary": "1) El largo de la cubierta del libro corresponde a 18 cm y el ancho a 12 cm.",
+        "correctMsg": "Las respuesta ingresadas corresponden al largo y el ancho de la cubierta del libro.",
+        "expression": "",
+        "incorrectMsg": "Las respuesta ingresadas no corresponden al largo y el ancho de la cubierta del libro.",
+        "displayResult": "L = 18\\text{ cm},\\  a = 12\\text{ cm}",
+        "KCs": ["AD"],
+        "hints": [
+          {
+            "hint": "Para este caso tomaremos el largo como el tramo más largo y el ancho como el tramo más corto.",
+            "hintId": 0
+          },
+          {
+            "hint": "El tramo más largo son 18 cm.",
+            "hintId": 1
+          },
+          {
+            "hint": "El tramo más corto son 12 cm.",
+            "hintId": 2
+          },
+          {
+            "hint": "El largo son 18 cm y el ancho son 12 cm.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["18", "12"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["Largo =", "input", " - ", "Ancho = ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área de la cubierta del libro.",
+        "summary": "2) Si multiplicamos el largo de 18 cm con el ancho de 12 cm nos da que el área es 216 cm².",
+        "correctMsg": "La respuesta ingresada corresponde al área de la cubierta del libro.",
+        "expression": "Área = ",
+        "incorrectMsg": "La respuesta ingresada corresponde al área de la cubierta del libro",
+        "displayResult": "A = 216\\text{ cm}^2",
+        "KCs": ["AreaR", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el área se necesita multiplicar el largo por el ancho.",
+            "hintId": 0
+          },
+          {
+            "hint": "El largo es de 18 cm.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ancho es de 12 cm.",
+            "hintId": 2
+          },
+          {
+            "hint": "Multiplique 18 x 12 para calcular el área.",
+            "hintId": 3
+          },
+          {
+            "hint": "El área es de 216 cm².",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["216"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["input", " cm²"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Calcula el perímetro del la cubierta del libro.",
+        "summary": "3) Si sumamos todos los lados de la cubierta del libro obtenemos que el perímetro es de 60 cm.",
+        "correctMsg": "La respuesta ingresada corresponde al perimetro de la cubierta del libro.",
+        "expression": "Perímetro = ",
+        "incorrectMsg": "La respuesta ingresada corresponde al perimetro de la cubierta del libro",
+        "displayResult": "P = 60\\text{ cm}",
+        "KCs": ["PerR", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro se necesita sumar todos los lados del rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "El largo es de 18 cm.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ancho es de 12 cm.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debe sumar 2x18 + 2x12 para calcular el perímetro.",
+            "hintId": 3
+          },
+          {
+            "hint": "El perímetro es de 60 cm.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["60"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " cm."]
+      }
+    ],
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": 18,
+      "ancho": 12,
+      "unidad": "cm",
+      "incognita": "area",
+      "resultado": "216 cm² · P = 60 cm",
+      "pasos": {
+        "0": ["largo", "ancho"],
+        "1": ["area"],
+        "2": ["perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_5",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un reloj tiene una esfera circular con un diámetro de 24 cm. ¿Cuál es el área del reloj y su circunferencia?.  Recuerda que para los ejercicios donde se requiera el uso de π puedes escribirlo como 'pi'",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_5.jpg",
+    "conclusion": "El área del reloj es de 144π ccm² y el perímetro es 24π cm.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Calcule el radio del reloj.",
+        "summary": "1) El radio del reloj son 12 cm.",
+        "correctMsg": "La respuesta ingresada corresponde al radio del reloj.",
+        "expression": "r =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al radio del reloj.",
+        "displayResult": "r = 12\\text{ cm}",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "El radio es la mitad del diámetro.",
+            "hintId": 0
+          },
+          {
+            "hint": "El díametro son 24 cm.",
+            "hintId": 1
+          },
+          {
+            "hint": "El radio son 12 cm.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["12"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", " cm"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área del reloj.",
+        "summary": "2) El área del reloj es de 144π cm²",
+        "correctMsg": "La respuesta ingresada corresponde al área del reloj.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área del reloj.",
+        "displayResult": "A = 144\\pi \\text{ cm}^2",
+        "KCs": ["AreaC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el área debe mulpitplicar el cuadrado del radio por π.",
+            "hintId": 0
+          },
+          {
+            "hint": "Recuerda que puedes escribir el numero π simplemente como 'pi'.",
+            "hintId": 1
+          },
+          {
+            "hint": "El radio son 12 cm.",
+            "hintId": 2
+          },
+          {
+            "hint": "El área del reloj son 144π cm².",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["144", "pi"],
+            "nextStep": 2
+          },
+          {
+            "answer": ["pi", "144"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["input", "*", "input", " cm²"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Calcule el perímetro del reloj.",
+        "summary": "3) El perímetro del reloj es de 24π cm.",
+        "correctMsg": "La respuesta ingresada corresponde al perímetro del reloj.",
+        "expression": "P =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al perímetro del reloj.",
+        "displayResult": "P = 24\\pi \\text{ cm}",
+        "KCs": ["PerC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro debes multiplicar el diámetro del reloj por 'pi'.",
+            "hintId": 0
+          },
+          {
+            "hint": "El diámetro es 24 cm.",
+            "hintId": 1
+          },
+          {
+            "hint": "El perímetro del reloj son 24π cm.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["24", "pi"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["pi", "24"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", "*", "input", " cm"]
+      }
+    ],
+    "figura": {
+      "tipo": "circulo",
+      "diametro": 24,
+      "mostrarRadio": true,
+      "unidad": "cm",
+      "incognita": "area",
+      "resultado": "144π cm² · P = 24π cm",
+      "pasos": {
+        "0": ["diametro", "radio"],
+        "1": ["area"],
+        "2": ["perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_6",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Una bandera triangular tiene una base de 8 metros y una altura de 6 metros. ¿Cuál es el área de la bandera?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_6.jpg",
+    "conclusion": "El área de la bandera es de 24 m².",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee la fórmula del área del triángulo reemplazando según la figura.",
+        "summary": "1) La fórmula para calcular el área de la bandera según la figura es A = (8 x 6) / 2",
+        "correctMsg": "La respuesta ingresada corresponde al planteamiento del área de la bandera.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del área de la bandera.",
+        "displayResult": "A=\\frac{8\\cdot 6}{2}",
+        "KCs": ["AreaT"],
+        "hints": [
+          {
+            "hint": "Para calcular es área debes sacar la mitad de la base multiplicada por la altura.",
+            "hintId": 0
+          },
+          {
+            "hint": "La altura son 6 metros.",
+            "hintId": 1
+          },
+          {
+            "hint": "La base son 8 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "El área es la mitad de 6 x 8",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["8", "6"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["6", "8"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["( ", "input", " * ", "input", ") / 2"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área de la bandera.",
+        "summary": "2) El área de la bandera es A = 24 m².",
+        "correctMsg": "La respuesta ingresada corresponde al área de la bandera.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área de la bandera.",
+        "displayResult": "A=24\\text{ m}^2",
+        "KCs": ["AN"],
+        "hints": [
+          {
+            "hint": "Multiplica la base por la altura y dividila en 2.",
+            "hintId": 0
+          },
+          {
+            "hint": "Divide 48 en 2.",
+            "hintId": 1
+          },
+          {
+            "hint": "El área son 24 metros.",
+            "hintId": 2
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 3
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["24"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " m²"]
+      }
+    ],
+    "figura": {
+      "tipo": "triangulo",
+      "base": 8,
+      "altura": 6,
+      "unidad": "m",
+      "incognita": "area",
+      "resultado": "24 m²",
+      "pasos": {
+        "0": ["base", "altura"],
+        "1": ["area"]
+      }
+    }
+  },
+  {
+    "code": "ap2_7",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un campo de golf tiene un green circular con un radio de 15 metros. ¿Cuál es el área del green y su circunferencia?. Recuerda que para los ejercicios donde se requiera el uso de π puedes escribirlo como 'pi'",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_7.jpg",
+    "conclusion": "El área del green es de 225π m² y el perímetro es 30π metros.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Calcule el área del green.",
+        "summary": "1) El área del green es de 225π m²",
+        "correctMsg": "La respuesta ingresada corresponde al área del green.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área del green.",
+        "displayResult": "A = 225\\pi \\text{ m}^2",
+        "KCs": ["AreaC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el área debe mulpitplicar el cuadrado del radio por π.",
+            "hintId": 0
+          },
+          {
+            "hint": "Recuerda que puedes escribir el numero π simplemente como 'pi'.",
+            "hintId": 1
+          },
+          {
+            "hint": "El radio es 15 metros.",
+            "hintId": 2
+          },
+          {
+            "hint": "El área del green son 225π m².",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["225", "pi"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["pi", "225"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["input", "*", "input", " m²"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el perímetro del green.",
+        "summary": "2) El perímetro del green es de 30π mts.",
+        "correctMsg": "La respuesta ingresada corresponde al perímetro del green.",
+        "expression": "P =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al perímetro del green.",
+        "displayResult": "P = 30\\pi \\text{ m}",
+        "KCs": ["PerC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro debes multiplicar el diámetro del green por 'pi'.",
+            "hintId": 0
+          },
+          {
+            "hint": "El diámetro es el doble del radio.",
+            "hintId": 1
+          },
+          {
+            "hint": "El diámetro es 30 mts.",
+            "hintId": 2
+          },
+          {
+            "hint": "El perímetro del green son 30π mts.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["30", "pi"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["pi", "30"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", "*", "input", " mts"]
+      }
+    ],
+    "figura": {
+      "tipo": "circulo",
+      "radio": 15,
+      "unidad": "m",
+      "incognita": "area",
+      "resultado": "225π m² · P = 30π m",
+      "pasos": {
+        "0": ["radio", "area"],
+        "1": ["radio", "perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_8",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un rectángulo tiene un largo de 2x+3 unidades y un ancho de x+1 unidades. ¿Cuál es el área y el perímetro del rectángulo en términos de x?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_8.jpg",
+    "conclusion": "El área del rectángulo es de 2x²+5x+3 y el perímetro es 6x+8.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Defina el largo y el ancho del rectángulo.",
+        "summary": "1) El largo del rectángulo corresponde a 2x+3 y el ancho a x+1.",
+        "correctMsg": "Las respuesta ingresadas corresponden al largo y el ancho del rectángulo.",
+        "expression": "",
+        "incorrectMsg": "Las respuesta ingresadas no corresponden al largo y el ancho del rectángulo.",
+        "displayResult": "L = 2x+3,\\  a = x+1",
+        "KCs": ["AD"],
+        "hints": [
+          {
+            "hint": "Para este caso tomaremos el largo como el tramo más largo y el ancho como el tramo más corto.",
+            "hintId": 0
+          },
+          {
+            "hint": "El tramo más largo es 2x+3.",
+            "hintId": 1
+          },
+          {
+            "hint": "El tramo más corto es x+1.",
+            "hintId": 2
+          },
+          {
+            "hint": "El largo es 2x+3 y el ancho es x+1.",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 6
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["2x+3", "x+1"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["Largo =", "input", " - ", "Ancho = ", "input"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área del rectángulo.",
+        "summary": "2) Si multiplicamos el largo de 2x+3 con el ancho de x+1 nos da que el área es 2x²+5x+3.",
+        "correctMsg": "La respuesta ingresada corresponde al área del rectángulo.",
+        "expression": "Área = ",
+        "incorrectMsg": "La respuesta ingresada corresponde al área del rectángulo",
+        "displayResult": "A = 2x^2+5x+3",
+        "KCs": ["AreaR", "AA"],
+        "hints": [
+          {
+            "hint": "Para calcular el área se necesita multiplicar el largo por el ancho.",
+            "hintId": 0
+          },
+          {
+            "hint": "El largo es de 2x+3.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ancho es de x+1.",
+            "hintId": 2
+          },
+          {
+            "hint": "Multiplique 2x+3 x x+1 para calcular el área.",
+            "hintId": 3
+          },
+          {
+            "hint": "Debes multiplicar término a término.",
+            "hintId": 4
+          },
+          {
+            "hint": "El área es de 2x²+5x+3.",
+            "hintId": 5
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["2x^2", "5x", "3"],
+            "nextStep": 2
+          },
+          {
+            "answer": ["2x^2", "x5", "3"],
+            "nextStep": 2
+          },
+          {
+            "answer": ["x^22", "5x", "3"],
+            "nextStep": 2
+          },
+          {
+            "answer": ["x^22", "x5", "3"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["input", " + ", "input", " + ", "input"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Calcula el perímetro del rectángulo.",
+        "summary": "3) Si sumamos todos los lados del rectángulo obtenemos que el perímetro es de 6x+8.",
+        "correctMsg": "La respuesta ingresada corresponde al perimetro del rectángulo.",
+        "expression": "Perímetro = ",
+        "incorrectMsg": "La respuesta ingresada corresponde al perimetro del rectángulo",
+        "displayResult": "P = 6x+8",
+        "KCs": ["PerR", "AA"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro se necesita sumar todos los lados del rectángulo.",
+            "hintId": 0
+          },
+          {
+            "hint": "El largo es de 2x+3.",
+            "hintId": 1
+          },
+          {
+            "hint": "El ancho es de x+1.",
+            "hintId": 2
+          },
+          {
+            "hint": "Debe sumar 2(2x+3) + 2(x+1) para calcular el perímetro.",
+            "hintId": 3
+          },
+          {
+            "hint": "El perímetro es de 6x+8.",
+            "hintId": 4
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 5
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["6x", "8"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["x6", "8"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", " + ", "input"]
+      }
+    ],
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": "2x+3",
+      "ancho": "x+1",
+      "dibujo": {
+        "largo": 2.5,
+        "ancho": 1.3
+      },
+      "incognita": "area",
+      "resultado": "2x²+5x+3 · P = 6x+8",
+      "pasos": {
+        "0": ["largo", "ancho"],
+        "1": ["area"],
+        "2": ["perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_9",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un círculo tiene un radio de 3x−2 unidades. ¿Cuál es el área y la circunferencia del círculo en términos de x?. Recuerda que para los ejercicios donde se requiera el uso de π puedes escribirlo como 'pi'",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_9.jpg",
+    "conclusion": "El área del círculo es de (9x²-12x+4)π y el perímetro es de 6x-4.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Calcule el área de la circunferencia.",
+        "summary": "1) El área de la circunferencia es de (9x²-12x+4)π ",
+        "correctMsg": "La respuesta ingresada corresponde al área de la circunferencia.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área de la circunferencia.",
+        "displayResult": "A = (9x^2-12x+4)\\pi ",
+        "KCs": ["AreaC", "AA"],
+        "hints": [
+          {
+            "hint": "Para calcular el área debe mulpitplicar el cuadrado del radio por π.",
+            "hintId": 0
+          },
+          {
+            "hint": "Recuerda que puedes escribir el numero π simplemente como 'pi'.",
+            "hintId": 1
+          },
+          {
+            "hint": "El radio es 3x-2.",
+            "hintId": 2
+          },
+          {
+            "hint": "El área de la circunferencia son (9x²-12x+4)π .",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["9", "-12", "4"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["(", "input", "x²", "+", "input", "x+", "input", ")π"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el perímetro de la circunferencia.",
+        "summary": "2) El perímetro de la circunferencia es de (6x-4)π.",
+        "correctMsg": "La respuesta ingresada corresponde al perímetro de la circunferencia.",
+        "expression": "P =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al perímetro de la circunferencia.",
+        "displayResult": "P = (6x-4)\\pi ",
+        "KCs": ["PerC", "AN"],
+        "hints": [
+          {
+            "hint": "Para calcular el perímetro debes multiplicar el diámetro de la circunferencia por 'pi'.",
+            "hintId": 0
+          },
+          {
+            "hint": "El diámetro es el doble del radio.",
+            "hintId": 1
+          },
+          {
+            "hint": "El diámetro es 6x-4 .",
+            "hintId": 2
+          },
+          {
+            "hint": "El perímetro de la circunferencia son (6x-4)π .",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["6x", "-4"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["(", "input", "x+", "input", ")π"]
+      }
+    ],
+    "figura": {
+      "tipo": "circulo",
+      "radio": "3x−2",
+      "incognita": "area",
+      "resultado": "(9x²−12x+4)π · P = (6x−4)π",
+      "pasos": {
+        "0": ["radio", "area"],
+        "1": ["radio", "perimetro"]
+      }
+    }
+  },
+  {
+    "code": "ap2_10",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "En un triángulo rectángulo, el largo de los catetos son x+4 y 2x−1 unidades. ¿Cuál es el área del triángulo en términos de x?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_10.jpg",
+    "conclusion": "El área del rectángulo es de x²-(7/2)x-2.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee la fórmula del área triángulo reemplazando según la figura.",
+        "summary": "1) La fórmula para calcular el área del triángulo según la figura es A = (x+4)(2x-1) / 2",
+        "correctMsg": "La respuesta ingresada corresponde al planteamiento del área del triángulo.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del área del triángulo.",
+        "displayResult": "A=\\frac{(x+4)(2x-1)}{2}",
+        "KCs": ["AreaT"],
+        "hints": [
+          {
+            "hint": "Para calcular el área debes sacar la mitad de la base multiplicada por la altura.",
+            "hintId": 0
+          },
+          {
+            "hint": "La altura son 2x-1 .",
+            "hintId": 1
+          },
+          {
+            "hint": "La base son x+4 .",
+            "hintId": 2
+          },
+          {
+            "hint": "El área es la mitad de(2x-1)(x+4)",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["x+4", "2x-1"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["2x-1", "x+4"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["( ", "input", " * ", "input", ") / 2"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Calcule el área del triángulo.",
+        "summary": "2) El área del triángulo es A = x²+(7/2)x-2.",
+        "correctMsg": "La respuesta ingresada corresponde al área del triángulo.",
+        "expression": "A =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al área del triángulo.",
+        "displayResult": "A=x^2+\\frac{7}{2}x-2",
+        "KCs": ["AA"],
+        "hints": [
+          {
+            "hint": "Multiplica la base por la altura y dividela en 2.",
+            "hintId": 0
+          },
+          {
+            "hint": "El área es x²+(7/2)x-2.",
+            "hintId": 1
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 2
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["1", "7/2", "-2"],
+            "nextStep": -1
+          },
+          {
+            "answer": ["", "7/2", "-2"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", "²", "input", "x", "input"]
+      }
+    ],
+    "figura": {
+      "tipo": "triangulo",
+      "forma": "rectangulo",
+      "base": "2x−1",
+      "altura": "x+4",
+      "dibujo": {
+        "base": 1.6,
+        "altura": 1.3
+      },
+      "incognita": "area",
+      "resultado": "x²+(7/2)x−2",
+      "pasos": {
+        "0": ["base", "altura"],
+        "1": ["area"]
+      }
+    }
+  },
+  {
+    "code": "ap2_11",
+    "title": "Área y Perímetro.",
+    "type": "geom",
+    "exerciseType": "steps",
+    "meta": {},
+    "text": "Un rectángulo tiene un largo de 3x+2 unidades y un perímetro de 20 unidades. ¿Cuál es el ancho del rectángulo en términos de x, y cuál es su área?.",
+    "selectSteps": false,
+    "image": "/img/tutorGeometria/areaPerimetro/AP2_11.jpg",
+    "conclusion": "El área del rectángulo es de 2x²+5x+3 y el perímetro es 6x+8.",
+    "steps": [
+      {
+        "stepId": 0,
+        "stepTitle": "Plantee el cálculo del perímetro del rectángulo, si nuestro ancho es 'd'.",
+        "summary": "1) El perímetro del rectángulo si nuestro ancho es 'd' es P = 2 (d + (3x+2)) = 20.",
+        "correctMsg": "La respuesta ingresada corresponde al planteamiento del perímetro del rectángulo.",
+        "expression": "20 =",
+        "incorrectMsg": "La respuesta ingresada no corresponde al planteamiento del perímetro del rectángulo.",
+        "displayResult": "20 = 2(d + (3x+2))",
+        "KCs": ["PerR"],
+        "hints": [
+          {
+            "hint": "El perímetro es 20",
+            "hintId": 0
+          },
+          {
+            "hint": "El perímetro se calcula sumando el largo y el ancho y multiplicandolo por 2.",
+            "hintId": 1
+          },
+          {
+            "hint": "El largo es 3x+2.",
+            "hintId": 2
+          },
+          {
+            "hint": "El ancho es d",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["3x+2", "d"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["2+3x", "d"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["d", "2+3x"],
+            "nextStep": 1
+          },
+          {
+            "answer": ["d", "3x+2"],
+            "nextStep": 1
+          }
+        ],
+        "inputs": ["2(", "input", " + ", "input", ")"]
+      },
+      {
+        "stepId": 1,
+        "stepTitle": "Ahora que ya sabe la ecuación para calcular el perímetro, despeje el ancho 'd'.",
+        "summary": "2) El ancho del rectángulo es 8-3x",
+        "correctMsg": "La respuesta ingresada corresponde al ancho del rectángulo.",
+        "expression": "Ancho =",
+        "incorrectMsg": "La respuesta ingresada corresponde al ancho del rectángulo.",
+        "displayResult": "a = 8-3x",
+        "KCs": ["AA"],
+        "hints": [
+          {
+            "hint": "Para calcular el ancho, debe despejar 'd'",
+            "hintId": 0
+          },
+          {
+            "hint": "Al resolver la ecuación nos queda la igualdad: 20 = 2d + 6x + 4",
+            "hintId": 1
+          },
+          {
+            "hint": "Resolviendo aritméticamente y despejando obtenemos 16 - 6x = 2d",
+            "hintId": 2
+          },
+          {
+            "hint": "Dividiendo por 2 en ambos lados obtenemos que el ancho es de 8-3x",
+            "hintId": 3
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 4
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["8-3x"],
+            "nextStep": 2
+          }
+        ],
+        "inputs": ["input"]
+      },
+      {
+        "stepId": 2,
+        "stepTitle": "Ahora que ya sabe el ancho, calcule el área del rectángulo.",
+        "summary": "3) El área es de −9x²+18x+16",
+        "correctMsg": "La respuesta ingresada corresponde al área del rectángulo.",
+        "expression": "Área=",
+        "incorrectMsg": "La respuesta ingresada corresponde al área del rectángulo.",
+        "displayResult": "A = -9x^2+18x+16",
+        "KCs": ["AreaR", "AA"],
+        "hints": [
+          {
+            "hint": "Para calcular el área debe multiplicar ambos lados",
+            "hintId": 0
+          },
+          {
+            "hint": "Luego de multiplicar ambos lados obtenemos que el área es −9x²+18x+16",
+            "hintId": 1
+          }
+        ],
+        "matchingError": [
+          {
+            "hint": "No ha ingresado respuesta",
+            "error": [""],
+            "hintId": 2
+          }
+        ],
+        "answers": [
+          {
+            "answer": ["-9", "18", "16"],
+            "nextStep": -1
+          }
+        ],
+        "inputs": ["input", "x² + ", "input", "x + ", "input"]
+      }
+    ],
+    "figura": {
+      "tipo": "rectangulo",
+      "largo": "3x+2",
+      "dibujo": {
+        "largo": 2.2,
+        "ancho": 1.2
+      },
+      "etiquetas": {
+        "ancho": "d"
+      },
+      "incognita": "area",
+      "resultado": "−9x²+18x+16 (d = 8−3x)",
+      "pasos": {
+        "0": ["perimetro", "largo", "ancho"],
+        "1": ["ancho"],
+        "2": ["area"]
+      }
+    }
+  }
+]

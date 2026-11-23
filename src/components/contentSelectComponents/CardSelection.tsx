@@ -25,6 +25,7 @@ import "katex/dist/katex.min.css";
 import { useAction } from "../../utils/action";
 import parameters from "./parameters.json";
 import Latex from "react-latex-next";
+import { VistaPreviaGeom } from "../tutorGeometria/figuras/VistaPrevia";
 
 const MathComponent = dynamic<ComponentProps<typeof import("mathjax-react").MathComponent>>(
   () => import("mathjax-react").then(v => v.MathComponent),
@@ -144,7 +145,9 @@ export const CardSelection = ({
         </NextLink>
         <Center fontSize={"1xl"} paddingBottom={"3"} paddingTop={"1"}>
           {json ? (
-            json.type == "lvltutor2" ? (
+            json.type == "geom" ? (
+              <VistaPreviaGeom ejercicio={json} />
+            ) : json.type == "lvltutor2" ? (
               json.img ? (
                 <Image src={"img/" + json.img} />
               ) : json.initialExpression ? (

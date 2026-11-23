@@ -6,7 +6,7 @@ const TutorGeometria = dynamic(() => import("./tutorGeometria").then(mod => mod.
 export const TutorGeom = ({ exercise, topicId }) => {
   return (
     <>
-      <TutorGeometria exercise={exercise} topic={topicId} />
+      <TutorGeometria exercise={exercise} topicId={topicId} />
     </>
   );
 };
