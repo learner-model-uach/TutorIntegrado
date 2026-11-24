@@ -2,6 +2,10 @@ import React from "react";
 import { Alert, Heading, Text, Box, VStack } from "@chakra-ui/react";
 import { MathComponent } from "../../MathJax";
 
+// MathJax no reconoce los superíndices Unicode (², ³): se pasan a notación TeX
+const SUPERINDICES = { "²": "^{2}", "³": "^{3}" };
+const aTex = texto => String(texto ?? "").replace(/[²³]/g, s => SUPERINDICES[s]);
+
 export const Summary = ({ expression, steps }) => (
   <Box mt={5}>
     <Alert.Root status="info">
@@ -13,7 +17,7 @@ export const Summary = ({ expression, steps }) => (
         {steps.map(step => (
           <Box key={step.stepId}>
             <Text>{step.summary}</Text>
-            <MathComponent tex={String.raw`${step.displayResult}`} display={false} />
+            <MathComponent tex={aTex(step.displayResult)} display={false} />
           </Box>
         ))}
       </VStack>

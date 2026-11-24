@@ -921,7 +921,7 @@
     "text": "Un jardinero quiere saber la longitud de una escalera que se apoya en una pared vertical y alcanza una altura de 6 metros. La base de la escalera está a 8 metros de la pared. ¿Cuál es la longitud de la escalera?",
     "selectSteps": false,
     "image": "/img/tutorGeometria/pitagoras/PIT2_1.jpg",
-    "conclusion": "La longitud de la escaleta es de 10 metros.",
+    "conclusion": "La longitud de la escalera es de 10 metros.",
     "steps": [
       {
         "stepId": 0,
@@ -1025,7 +1025,7 @@
       },
       {
         "stepId": 2,
-        "stepTitle": "Resuelva la raíz cuadrada para obtener el lardo de la escalera.",
+        "stepTitle": "Resuelva la raíz cuadrada para obtener el largo de la escalera.",
         "summary": "3) Resolviendo la ecuación obtenemos que la longitud de la escalera 'c' es 10 metros.",
         "correctMsg": "La respuesta ingresada corresponde la longitud de la escalera.",
         "expression": "c = ",
